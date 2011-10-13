@@ -1,3 +1,3 @@
 # Studlan #
 
-Insert informative text here.
+Insert informative text here...
