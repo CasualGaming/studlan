@@ -1,4 +1,7 @@
 # Django settings for studlan project.
+import os
+
+PROJECT_ROOT_DIRECTORY = os.path.dirname(globals()['__file__'])
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -102,11 +105,16 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'studlan.urls'
 
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-)
+THEME_NAME = 'standard'
+
+THEME_DIRECTORY = os.path.join(PROJECT_ROOT_DIRECTORY, 'themes', THEME_NAME)
+
+TEMPLATE_DIRS = [
+    os.path.join(PROJECT_ROOT_DIRECTORY, 'themes', THEME_NAME, 'templates'),
+    ]
+STATICFILES_DIRS = [
+    os.path.join(PROJECT_ROOT_DIRECTORY, 'themes', THEME_NAME, 'static'),
+    ]
 
 INSTALLED_APPS = (
     'django.contrib.auth',
