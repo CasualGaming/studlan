@@ -6,6 +6,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^$', include('studlan.news.urls')),
     # Examples:
     # url(r'^$', 'studlan.views.home', name='home'),
     # url(r'^studlan/', include('studlan.foo.urls')),

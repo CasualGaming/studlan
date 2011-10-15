@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>StudLan</title>
+        <link href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.css" rel="stylesheet" />
+        <style type="text/css">
+            body {
+                padding-top: 60px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="topbar">
+            <div class="topbar-inner">
+                <div class="container-fluid">
+                    <a class="brand" href="#">StudLan</a>
+                    {% block navigation %}
+                    {% endblock navigation %}
+                    <p class="pull-right">Logged in as <a href="#">participant.nick</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="sidebar">
+                <div class="well">
+                    {% block sidebar %}
+                    {% endblock sidebar %}
+                </div>
+            </div>
+            <div class="content">
+                {% block content %}
+                {% endblock content %}
+                <footer>
+                    <p>&copy; Company 2011</p>
+                </footer>
+            </div>
+        </div>
+    </body>
+</html>
