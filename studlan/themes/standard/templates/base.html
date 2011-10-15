@@ -25,7 +25,11 @@
                     {% block navigation %}
                     {% endblock navigation %}
                     {% if not user.is_authenticated %}
-                        <p class="pull-right"><a data-controls-modal="modal-from-dom" data-backdrop="true" data-keyboard="true" class="btn primary" href="#">Log in</a></p>
+                    <p class="pull-right">
+                        <a data-controls-modal="modal-from-dom-register"
+                           data-backdrop="true" data-keyboard="true" class="btn" href="#">Register</a>
+                         <a data-controls-modal="modal-from-dom-login"
+                           data-backdrop="true" data-keyboard="true" class="btn primary" href="#">Log in</a></p>
                     {% else %}
                         <p class="pull-right white-text">You are logged in as <span class="label warning">{{ user }}</span></p>
                     {% endif %}
@@ -47,7 +51,35 @@
                 </footer>
             </div>
         </div>
-        <div id="modal-from-dom" class="modal hide fade" style="display: none; ">
+        {% if not user.is_authenticated %}
+        <div id="modal-from-dom-register" class="modal hide fade" style="display: none; ">
+            <div class="modal-header">
+              <a href="#" class="close">×</a>
+              <h3>Register</h3>
+            </div>
+            <div class="modal-body">
+            <form action="#">
+                {% csrf_token %}
+                <div class="clearfix">
+                  <label for="username">Username</label>
+                  <div class="input">
+                    <input size="30" class="xlarge" id="username" type="text" name="username" />
+                  </div>
+                </div>
+                <div class="clearfix">
+                  <label for="password">Password</label>
+                  <div class="input">
+                    <input size="30" class="xlarge" id="password" type="password" name="password" />
+                  </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <input type="submit" class="btn primary" value="Register" />
+            </form>
+            </div>
+        </div>
+
+        <div id="modal-from-dom-login" class="modal hide fade" style="display: none; ">
             <div class="modal-header">
               <a href="#" class="close">×</a>
               <h3>Log in</h3>
@@ -72,6 +104,7 @@
               <input type="submit" class="btn primary" value="Log in" />
             </form>
             </div>
-          </div>
+        </div>
+        {% endif %}
     </body>
 </html>
