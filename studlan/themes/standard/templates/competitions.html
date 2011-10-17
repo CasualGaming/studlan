@@ -13,10 +13,18 @@
 
 {% block content %}
     <div class="content">
-    {% for c in competitions %}
-        <h2><a href="{% url competition c.id %}">{{ c.title }}</a></h2>
-        <span class="label info">{{ c.activity.title }}</span>
-        <p>{{ c.desc|striptags|markdown }}</h2>
-    {% endfor %}
+        <h2>Competitions</h2>
+        <table>
+            <thead><th>Title</th><th>Activity</th><th>Description</th></thead>
+            <tbody>
+                {% for c in competitions %}
+                    <tr>
+                    <td><a href="{% url competition c.id %}">{{ c.title }}</a></td>
+                    <td>{{ c.activity.title }}</td>
+                    <td>{{ c.desc|striptags|markdown }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 {% endblock content %}
