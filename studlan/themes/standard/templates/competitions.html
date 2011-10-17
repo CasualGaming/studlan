@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load markup %}
+{% block navigation %}
+    <ul class="nav">
+        <li class=""><a href="{% url news %}">News</a></li>
+        <li class="active"><a href="{% url competitions %}">Competitions</a></li>
+    </ul>
+{% endblock navigation %}
+
+{% block sidebar %}
+    <h5>Sidebar</h5>
+{% endblock sidebar %}
+
+{% block content %}
+    <div class="content">
+    {% for c in competitions %}
+        <h2><a href="{% url competition c.id %}">{{ c.title }}</a></h2>
+        <span class="label info">{{ c.activity.title }}</span>
+        <p>{{ c.desc|striptags|markdown }}</h2>
+    {% endfor %}
+    </div>
+{% endblock content %}
