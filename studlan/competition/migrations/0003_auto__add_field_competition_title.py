@@ -8,32 +8,14 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         
-        # Deleting model 'Participant'
-        db.delete_table('competition_participant')
-
-        # Adding model 'UserProfile'
-        db.create_table('competition_userprofile', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
-            ('nick', self.gf('django.db.models.fields.CharField')(max_length=20)),
-        ))
-        db.send_create_signal('competition', ['UserProfile'])
+        # Adding field 'Competition.title'
+        db.add_column('competition_competition', 'title', self.gf('django.db.models.fields.CharField')(default='none', max_length=50), keep_default=False)
 
 
     def backwards(self, orm):
         
-        # Adding model 'Participant'
-        db.create_table('competition_participant', (
-            ('first_name', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('last_name', self.gf('django.db.models.fields.CharField')(max_length=100)),
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('nick', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('email', self.gf('django.db.models.fields.CharField')(max_length=100)),
-        ))
-        db.send_create_signal('competition', ['Participant'])
-
-        # Deleting model 'UserProfile'
-        db.delete_table('competition_userprofile')
+        # Deleting field 'Competition.title'
+        db.delete_column('competition_competition', 'title')
 
 
     models = {
@@ -65,6 +47,19 @@ class Migration(SchemaMigration):
             'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
             'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'}),
             'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
+        },
+        'competition.activity': {
+            'Meta': {'object_name': 'Activity'},
+            'desc': ('django.db.models.fields.TextField', [], {}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '50'})
+        },
+        'competition.competition': {
+            'Meta': {'object_name': 'Competition'},
+            'activity': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['competition.Activity']"}),
+            'desc': ('django.db.models.fields.TextField', [], {}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         },
         'competition.userprofile': {
             'Meta': {'object_name': 'UserProfile'},
