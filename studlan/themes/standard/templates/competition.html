@@ -16,5 +16,8 @@
         <h2>{{ competition.title }}</h2>
         <span class="label info">{{ competition.activity.title }}</span>
         <p>{{ competition.desc|striptags|markdown }}</h2>
+        {% if user.is_authenticated %}
+        <a class="btn primary" href="#">Participate</a>
+        {% endif %}
     </div>
 {% endblock content %}
