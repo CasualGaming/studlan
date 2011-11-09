@@ -31,7 +31,9 @@
                          <a data-controls-modal="modal-from-dom-login"
                            data-backdrop="true" data-keyboard="true" class="btn primary" href="#">Log in</a></p>
                     {% else %}
-                        <p class="pull-right white-text">You are logged in as <span class="label warning">{{ user }}</span> <a href="#"><span class="label important">Log out</span></a></p>
+                        <p class="pull-right white-text">You are logged in as
+                        <span class="label warning">{{ user }}</span> <a
+                            href="logout.html"><span class="label important">Log out</span></a></p>
                     {% endif %}
                 </div>
             </div>
@@ -47,82 +49,11 @@
                 {% block content %}
                 {% endblock content %}
                 <footer>
-                    <p>&copy; Company 2011</p>
+                <p><a
+                    href="https://github.com/dotKom/studlan">https://github.com/dotKom/studlan</a></p>
                 </footer>
             </div>
         </div>
-        {% if not user.is_authenticated %}
-        <div id="modal-from-dom-register" class="modal hide fade" style="display: none; ">
-            <div class="modal-header">
-              <a href="#" class="close">×</a>
-              <h3>Register</h3>
-            </div>
-            <div class="modal-body">
-            <form action="#">
-                {% csrf_token %}
-                <div class="clearfix">
-                  <label for="username">Username</label>
-                  <div class="input">
-                    <input size="30" class="xlarge" id="username" type="text" name="username" />
-                  </div>
-                </div>
-                <div class="clearfix">
-                  <label for="password">Password</label>
-                  <div class="input">
-                    <input size="30" class="xlarge" id="password" type="password" name="password" />
-                  </div>
-                </div>
-                <div class="clearfix">
-                  <label for="fname">First name</label>
-                  <div class="input">
-                    <input size="30" class="xlarge" id="fname" type="text" name="fname" />
-                  </div>
-                </div>
-                <div class="clearfix">
-                  <label for="lname">Last name</label>
-                  <div class="input">
-                    <input size="30" class="xlarge" id="lname" type="text" name="lname" />
-                  </div>
-                </div>
-                <div class="clearfix">
-                  <label for="email">Email</label>
-                  <div class="input">
-                    <input size="30" class="xlarge" id="email" type="text" name="email" />
-                  </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-              <input type="submit" class="btn primary" value="Register" />
-            </form>
-            </div>
-        </div>
-
-        <div id="modal-from-dom-login" class="modal hide fade" style="display: none; ">
-            <div class="modal-header">
-              <a href="#" class="close">×</a>
-              <h3>Log in</h3>
-            </div>
-            <div class="modal-body">
-            <form action="#">
-                {% csrf_token %}
-                <div class="clearfix">
-                  <label for="username">Username</label>
-                  <div class="input">
-                    <input size="30" class="xlarge" id="username" type="text" name="username" />
-                  </div>
-                </div>
-                <div class="clearfix">
-                  <label for="password">Password</label>
-                  <div class="input">
-                    <input size="30" class="xlarge" id="password" type="password" name="password" />
-                  </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-              <input type="submit" class="btn primary" value="Log in" />
-            </form>
-            </div>
-        </div>
-        {% endif %}
+        {% include "auth.html" %}
     </body>
 </html>
