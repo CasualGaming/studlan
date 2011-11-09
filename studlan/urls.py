@@ -7,8 +7,9 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'studlan.news.views.main', name='news'),
-    url(r'^login.html', 'studlan.news.views.log_in'),
-    url(r'^logout.html', 'studlan.news.views.log_out'),
+    url(r'^login.html', 'studlan.competition.views.log_in'),
+    url(r'^logout.html', 'studlan.competition.views.log_out'),
+    url(r'^register.html', 'studlan.competition.views.register_user'),
     url(r'^competitions/', include('studlan.competition.urls')),
     # Examples:
     # url(r'^$', 'studlan.views.home', name='home'),
