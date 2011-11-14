@@ -5,7 +5,7 @@
         <h3>Register</h3>
     </div>
     <div class="modal-body">
-        <form action="register.html" method="POST">
+        <form action="{{ TEMPLATE_DIRS }}/register.html" method="POST">
         {% csrf_token %}
         <div class="clearfix">
             <label for="username">Username</label>
@@ -49,7 +49,7 @@
         <h3>{{ state }}</h3>
     </div>
     <div class="modal-body">
-        <form action="login.html" method="POST">
+        <form action="{{ TEMPLATE_DIRS }}/login.html" method="POST">
             {% csrf_token %}
             <div class="clearfix">
                 <label for="username">Username</label>

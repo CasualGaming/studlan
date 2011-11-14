@@ -1,5 +1,5 @@
 {% if user.is_authenticated %}
-<h4>{{ user.username }}</h4>
+<h4>Logged in as '{{ user.username }}'</h4>
 <dl>
 	<dt>Name:</dt>
 	<dd>{{ user.first_name }} {{ user.last_name }}</dd>
