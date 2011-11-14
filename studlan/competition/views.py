@@ -4,6 +4,7 @@ from studlan.competition.models import Activity, Competition
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template.context import RequestContext
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 
 def main(request):
 	competitions = Competition.objects.all()
@@ -42,4 +43,20 @@ def log_out(request):
     return redirect('news')
 
 def register_user(request):
-    return None
+    
+    username = password = fname = lname = email = ''
+    if request.POST:
+        uname       = request.POST.get('username')
+        pword       = request.POST.get('password')
+        fname       = request.POST.get('fname')
+        lname       = request.POST.get('lname')
+        email       = request.POST.get('email')
+        if uname is not None and pword is not None and fname is not None and lname is not None and email is not None:
+            user = User.objects.create_user(username=uname,
+                                            password=pword,
+                                            email=email)
+            user.set_password(pword)
+            user.is_active = True
+            user.save()
+
+    return redirect('news')
