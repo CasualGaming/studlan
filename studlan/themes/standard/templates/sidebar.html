@@ -1,0 +1,9 @@
+{% if user.is_authenticated %}
+<h4>{{ user.username }}</h4>
+<dl>
+	<dt>Name:</dt>
+	<dd>{{ user.first_name }} {{ user.last_name }}</dd>
+	<dt>Email:</dt>
+	<dd>{{ user.email }}</dd>
+</dl>
+{% endif %}

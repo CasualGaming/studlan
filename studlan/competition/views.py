@@ -56,6 +56,8 @@ def register_user(request):
                                             password=pword,
                                             email=email)
             user.set_password(pword)
+            user.first_name = fname
+            user.last_name = lname
             user.is_active = True
             user.save()
 
