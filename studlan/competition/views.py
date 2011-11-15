@@ -9,9 +9,19 @@ from django.contrib.auth.models import User
 def main(request):
     competitions = Competition.objects.all()
 
+    statuses = {
+        1: ['Open', 'success'],
+        2: ['Closed', 'danger'],
+        3: ['In progress', 'warning'],
+        4: ['Finished', 'info']
+    }
+
     for c in competitions:
         if len(c.desc) >= 200:
             c.desc = c.desc[:197] + '...'
+        # 0 = status, 1 = label
+        c.status_text = statuses[c.status][0]
+        c.status_label = statuses[c.status][1]
 
     return render_to_response('competitions.html', {'competitions': competitions},
                                context_instance=RequestContext(request))

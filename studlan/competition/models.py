@@ -28,6 +28,9 @@ class Competition(models.Model):
 	def __unicode__(self):
 		return self.title
 
+	class Meta:
+		ordering = ['status']
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
 

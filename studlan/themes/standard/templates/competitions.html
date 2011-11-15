@@ -11,10 +11,11 @@
     <div class="content">
         <h2>Competitions</h2>
         <table>
-            <thead><th>Title</th><th>Activity</th><th>Description</th></thead>
+            <thead><th>&nbsp;</th><th>Title</th><th>Activity</th><th>Description</th></thead>
             <tbody>
                 {% for c in competitions %}
                     <tr>
+                    <td>{{ c.status_text }}</td>
                     <td><a href="{% url competition c.id %}">{{ c.title }}</a></td>
                     <td>{{ c.activity.title }}</td>
                     <td>{{ c.desc|striptags|markdown }}</td>
