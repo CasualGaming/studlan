@@ -27,7 +27,7 @@ class Competition_Participation_Renderer(template.Node):
 				user_in += '''
 				<dt><a href="%s">%s</a></dt>
 				<dd><span class="label %s">%s</span></dd>
-				''' % ('/competitions/'+str(c.id)+'/', c.title, c.status_label(), c.status_text())
+				''' % ('/competitions/'+str(c.id)+'/', c.title, c.status_label(), c.status_text_verbose())
 		#except:
 		#		pass
 		return user_in

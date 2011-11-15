@@ -37,6 +37,9 @@ class Competition(models.Model):
 		return self.title
 
 	def status_text(self):
+		return self.STATUS_OPTIONS[self.status-1][1]
+
+	def status_text_verbose(self):
 		return self.statuses[self.status][0]
 
 	def status_label(self):
