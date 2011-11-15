@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     url(r'^logout.html', 'studlan.competition.views.log_out'),
     url(r'^register.html', 'studlan.competition.views.register_user'),
     url(r'^competitions/', include('studlan.competition.urls')),
+    url(r'^misc/remove_alerts.html', 'studlan.misc.views.remove_alerts'),
     # Examples:
     # url(r'^$', 'studlan.views.home', name='home'),
     # url(r'^studlan/', include('studlan.foo.urls')),

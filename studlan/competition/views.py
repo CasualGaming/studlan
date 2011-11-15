@@ -65,6 +65,8 @@ def log_in(request):
 
 def log_out(request):
     logout(request)
+    request.session['alert_label'] = "success"
+    request.session['alert_message'] = "You're now logged out."
     return redirect('news')
 
 def register_user(request):
@@ -85,5 +87,9 @@ def register_user(request):
             user.last_name = lname
             user.is_active = True
             user.save()
+
+            request.session['alert_label'] = "success"
+            request.session['alert_message'] = "<strong>Registration successful.</strong> You can now log in with your username and password."
+
 
     return redirect('news')

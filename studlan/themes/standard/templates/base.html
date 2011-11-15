@@ -1,3 +1,5 @@
+{% load alerts %}
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -6,7 +8,19 @@
         <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet" />
         <script src="{{ STATIC_URL }}js/jquery.min.js" type="text/javascript"></script>
         <script src="{{ STATIC_URL }}js/bootstrap-modal.js" type="text/javascript"></script>
+        <script src="{{ STATIC_URL }}js/bootstrap-alerts.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $('.alert-message').alert();
+
+            $.ajaxSetup ({  
+                cache: false  
+            }); 
         
+            console.log('loaded');
+            $("a.close").live("click", function() {
+                $(this).load('{{ TEMPLATE_DIR }}/misc/remove_alerts.html');
+            });
+        </script>
         <style type="text/css">
             body {
                 padding-top: 60px;
@@ -81,6 +95,7 @@
                 </div>
             </div>
             <div class="content">
+                {% get_alerts %}
                 {% block content %}
                 {% endblock content %}
                 <footer>
