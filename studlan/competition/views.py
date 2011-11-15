@@ -44,7 +44,6 @@ def forfeit(request, competition_id):
     return redirect('competition', competition_id=competition_id)
 
 def log_in(request):
-    state = "Please log in below..."
     username = password = ''
     if request.POST:
         username = request.POST.get('username')
@@ -54,11 +53,10 @@ def log_in(request):
             if user.is_active:
                 login(request, user)
                 messages.add_message(request, messages.SUCCESS, 'You\'ve successfully logged in.')
-                state = "You're successfully logged in!"
+            else:
+                messages.add_message(request, messages.WARNING, "Your account is not active, please try again or contact the site admin if the problem persists.")
         else:
-            state = "Your account is not active, please contact the site admin."
-    else:
-        state = "Your username and/or password were incorrect."
+            messages.add_message(request, messages.ERROR, "Wrong username/password.")
     return redirect('news')
 
 def log_out(request):
