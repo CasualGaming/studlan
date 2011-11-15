@@ -65,13 +65,21 @@
                 color: #0069D6;
                 padding: 4px;
             }
+
+            .favico {
+                width: 28px;
+                height: 28px;
+                position: fixed;
+                top: 6px;
+                left: 6px;
+            }
         </style>
     </head>
     <body>
         <div class="topbar">
             <div class="topbar-inner">
                 <div class="container-fluid">
-                    <a class="brand" href="#">StudLan</a>
+                    <a class="brand" href="#"><img class="favico" src="{{ STATIC_URL }}fav_ico.png" />&nbsp;&nbsp;&nbsp;&nbsp;StudLan</a>
                     {% block navigation %}
                     {% endblock navigation %}
                     {% if not user.is_authenticated %}
