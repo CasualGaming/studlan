@@ -4,6 +4,7 @@ from django.db import models
 
 class Activity(models.Model):
 	title = models.CharField('title', max_length=50)
+	image_url = models.CharField('image_url', max_length=100, blank=True)
 	desc = models.TextField('description')
 
 	def __unicode__(self):

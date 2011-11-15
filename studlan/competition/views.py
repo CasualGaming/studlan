@@ -40,6 +40,9 @@ def single(request, competition_id):
     competition.status_text = statuses[competition.status][0]
     competition.status_label = statuses[competition.status][1]
     
+    if not "http" in competition.activity.image_url:
+        competition.activity.image_url = 'http://placehold.it/150x150'
+
     return render_to_response('competition.html', {'competition': competition},
 							  context_instance=RequestContext(request))
 
