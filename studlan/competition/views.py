@@ -40,7 +40,7 @@ def single(request, competition_id):
     # 0 = status, 1 = label
     competition.status_text = statuses[competition.status][0]
     competition.status_label = statuses[competition.status][1]
-    
+
     if not "http" in competition.activity.image_url:
         competition.activity.image_url = 'http://placehold.it/150x150'
 

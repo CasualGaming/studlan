@@ -24,6 +24,7 @@ class Competition(models.Model):
 	title = models.CharField('title', max_length=50)
 	status = models.SmallIntegerField("status", choices=STATUS_OPTIONS)
 	activity = models.ForeignKey(Activity)
+	participants = models.ManyToManyField(User)
 	desc = models.TextField('description')
 
 	def __unicode__(self):
@@ -34,7 +35,6 @@ class Competition(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-
     nick = models.CharField('nick', max_length=20,
                             help_text='Specify a nick name (display name).')
 
