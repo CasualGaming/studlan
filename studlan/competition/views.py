@@ -47,6 +47,18 @@ def single(request, competition_id):
     return render_to_response('competition.html', {'competition': competition},
 							  context_instance=RequestContext(request))
 
+def join(request, competition_id):
+    competition = get_object_or_404(Competition, pk=competition_id)
+    competition.participants.add(request.user)
+    messages.add_message(request, messages.WARNING, 'You\'re now participating in %s.' % competition.title)
+    return redirect('competition', competition_id=competition_id)
+
+def leave(request, competition_id):
+    competition = get_object_or_404(Competition, pk=competition_id)
+    competition.participants.remove(request.user)
+    messages.add_message(request, messages.WARNING, 'You\'re no longer participating in %s.' % competition.title)
+    return redirect('competition', competition_id=competition_id)
+
 def log_in(request):
     state = "Please log in below..."
     username = password = ''

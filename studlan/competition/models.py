@@ -21,6 +21,12 @@ class Competition(models.Model):
 		(3, 'In progress'),
 		(4, 'Finished')
 	)
+	statuses = {
+        1: ['Registration open', 'success'],
+        2: ['Registration closed', 'danger'],
+        3: ['Competition in progress', 'warning'],
+        4: ['Competition finished', 'info']
+    }
 	title = models.CharField('title', max_length=50)
 	status = models.SmallIntegerField("status", choices=STATUS_OPTIONS)
 	activity = models.ForeignKey(Activity)
@@ -29,6 +35,12 @@ class Competition(models.Model):
 
 	def __unicode__(self):
 		return self.title
+
+	def status_text(self):
+		return self.statuses[self.status][0]
+
+	def status_label(self):
+		return self.statuses[self.status][1]
 
 	class Meta:
 		ordering = ['status']

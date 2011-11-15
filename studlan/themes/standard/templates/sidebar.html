@@ -9,7 +9,9 @@
 	<dd>{{ user.email }}</dd>
 </dl>
 {% endif %}
-<h4>Latest News</h4>
-<p>{% num_of_articles %} articles.</p>
 <h4>Competition info</h4>
 <p>{% num_of_competitions %} competitions active.</p>
+{% if user.is_authenticated %}
+<h5>Participating in:</h5>
+<dl>{% user_in %}</dl>
+{% endif %}

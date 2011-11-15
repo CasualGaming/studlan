@@ -16,11 +16,11 @@
         <p>{{ competition.desc|striptags|markdown }}</p>
         {% if user.is_authenticated and user not in competition.participants.all %}
             {% if competition.status == 1 %}
-                <a class="btn large primary" href="#">Join competition</a>
+                <a class="btn large primary" href="{{ TEMPLATE_DIR }}/competitions/{{ competition.id }}/join.html">Join competition</a>
             {% endif%}
         {% else %}
             {% if competition.status == 1 %}
-                <a class="btn large danger" href="#">Leave competition</a>
+                <a class="btn large danger" href="{{ TEMPLATE_DIR }}/competitions/{{ competition.id }}/leave.html">Leave competition</a>
             {% endif%}
         {% endif %}
     </div>
