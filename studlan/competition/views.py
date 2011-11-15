@@ -7,18 +7,30 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
 def main(request):
-	competitions = Competition.objects.all()
+    competitions = Competition.objects.all()
 
-	for c in competitions:
-		if len(c.desc) >= 200:
-			c.desc = c.desc[:197] + '...'
-			
-	return render_to_response('competitions.html', {'competitions': competitions},
-							  context_instance=RequestContext(request))
+    for c in competitions:
+        if len(c.desc) >= 200:
+            c.desc = c.desc[:197] + '...'
+
+    return render_to_response('competitions.html', {'competitions': competitions},
+                               context_instance=RequestContext(request))
 
 def single(request, competition_id):
-	competition = get_object_or_404(Competition, pk=competition_id)
-	return render_to_response('competition.html', {'competition': competition},
+    competition = get_object_or_404(Competition, pk=competition_id)
+    
+    statuses = {
+        1: ['Registration open', 'success'],
+        2: ['Registration closed', 'danger'],
+        3: ['Competition in progress', 'warning'],
+        4: ['Competition finished', 'info']
+    }
+
+    # 0 = status, 1 = label
+    competition.status_text = statuses[competition.status][0]
+    competition.status_label = statuses[competition.status][1]
+    
+    return render_to_response('competition.html', {'competition': competition},
 							  context_instance=RequestContext(request))
 
 def log_in(request):

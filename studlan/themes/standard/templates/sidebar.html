@@ -1,5 +1,7 @@
+{% load news_tags %}
+{% load competitions %}
 {% if user.is_authenticated %}
-<h4>Logged in as '{{ user.username }}'</h4>
+<h4>{{ user.username }}</h4>
 <dl>
 	<dt>Name:</dt>
 	<dd>{{ user.first_name }} {{ user.last_name }}</dd>
@@ -7,3 +9,7 @@
 	<dd>{{ user.email }}</dd>
 </dl>
 {% endif %}
+<h4>Latest News</h4>
+<p>{% num_of_articles %} articles.</p>
+<h4>Competition info</h4>
+<p>{% num_of_competitions %} competitions active.</p>

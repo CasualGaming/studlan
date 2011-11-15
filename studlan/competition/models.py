@@ -14,7 +14,14 @@ class Activity(models.Model):
 		verbose_name_plural = 'activities'
 
 class Competition(models.Model):
+	STATUS_OPTIONS = (
+		(1, 'Open'),
+		(2, 'Closed'),
+		(3, 'In progress'),
+		(4, 'Finished')
+	)
 	title = models.CharField('title', max_length=50)
+	status = models.SmallIntegerField("status", choices=STATUS_OPTIONS)
 	activity = models.ForeignKey(Activity)
 	desc = models.TextField('description')
 

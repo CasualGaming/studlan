@@ -9,11 +9,13 @@
 
 {% block content %}
     <div class="content">
-        <h2>{{ competition.title }}</h2>
-        <span class="label info">{{ competition.activity.title }}</span>
+        <h2>{{ competition.title }} </h2>
+        <p><span class="label {{ competition.status_label }}">{{ competition.status_text }}</span> <span class="label info">{{ competition.activity.title }}</span><p>
         <p>{{ competition.desc|striptags|markdown }}</h2>
         {% if user.is_authenticated %}
-        <a class="btn primary" href="#">Participate</a>
+            {% if competition.status == 1 %}
+                <a class="btn primary" href="#">Participate</a>
+            {% endif%}
         {% endif %}
     </div>
 {% endblock content %}

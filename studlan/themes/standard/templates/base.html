@@ -38,9 +38,9 @@
                     {% if not user.is_authenticated %}
                     <p class="pull-right">
                         <a data-controls-modal="modal-from-dom-register"
-                           data-backdrop="true" data-keyboard="true" class="btn success" href="#">Register</a>
+                           data-backdrop="true" data-keyboard="true" class="btn primary" href="#">Register</a>
                          <a data-controls-modal="modal-from-dom-login"
-                           data-backdrop="true" data-keyboard="true" class="btn primary" href="#">Log in</a></p>
+                           data-backdrop="true" data-keyboard="true" class="btn success" href="#">Log in</a></p>
                     {% else %}
                         <p class="pull-right"><a class="btn danger" href="{{ TEMPLATE_DIRS }}/logout.html">Log out</a></p>
                     {% endif %}
