@@ -2,10 +2,9 @@
 from django.http import HttpResponse
 
 # This is accessed asynchronicly to remove alerts via jquery
-def remove_alerts(request):
+def remove_alert(request):
 	try:
-		del request.session['alert_label']
-		del request.session['alert_message']
+		pass
 	except:
 		pass
-	return HttpResponse('OK')
+	return HttpResponse('')

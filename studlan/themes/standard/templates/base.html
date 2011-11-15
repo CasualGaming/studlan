@@ -1,5 +1,3 @@
-{% load alerts %}
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -16,9 +14,8 @@
                 cache: false  
             }); 
         
-            console.log('loaded');
             $("a.close").live("click", function() {
-                $(this).load('{{ TEMPLATE_DIR }}/misc/remove_alerts.html');
+                $(this).load('{{ TEMPLATE_DIR }}/misc/remove_alert.html');
             });
         </script>
         <style type="text/css">
@@ -95,7 +92,14 @@
                 </div>
             </div>
             <div class="content">
-                {% get_alerts %}
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert-message fade in {{ message.tags }}" data-alert>
+                    <a class="close" href="#">x</a>
+                    <p>{{ message }}</p>
+                </div>
+                {% endfor %}
+                {% endif %}
                 {% block content %}
                 {% endblock content %}
                 <footer>

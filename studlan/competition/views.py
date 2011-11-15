@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template.context import RequestContext
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 def main(request):
     competitions = Competition.objects.all()
@@ -56,6 +57,7 @@ def log_in(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
+                messages.add_message(request, messages.SUCCESS, 'You\'ve successfully logged in.')
                 state = "You're successfully logged in!"
         else:
             state = "Your account is not active, please contact the site admin."
@@ -65,8 +67,9 @@ def log_in(request):
 
 def log_out(request):
     logout(request)
-    request.session['alert_label'] = "success"
-    request.session['alert_message'] = "You're now logged out."
+
+    #TODO cleanup
+    messages.add_message(request, messages.SUCCESS, 'You\'ve successfully logged out.')
     return redirect('news')
 
 def register_user(request):
@@ -88,8 +91,7 @@ def register_user(request):
             user.is_active = True
             user.save()
 
-            request.session['alert_label'] = "success"
-            request.session['alert_message'] = "<strong>Registration successful.</strong> You can now log in with your username and password."
-
+            #TODO cleanup
+            messages.add_message(request, messages.SUCCESS, '<strong>Registration successful.</strong> You may now log in.')
 
     return redirect('news')
