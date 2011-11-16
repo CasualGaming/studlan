@@ -9,6 +9,9 @@ class Article(models.Model):
 
     def __unicode__(self):
         return self.title
+    
+    def count():
+    	return count(Article.objects.all())
 
     class Meta:
         ordering = ['-pub_date']
