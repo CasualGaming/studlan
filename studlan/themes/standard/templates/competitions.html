@@ -23,7 +23,7 @@ studLAN - Competitions
                     <td>{{ c.status_text }}</td>
                     <td><a href="{% url competition c.id %}">{{ c.title }}</a></td>
                     <td>{{ c.activity.title }}</td>
-                    <td>{{ c.desc|striptags|markdown }}</td>
+                    <td>{{ c.desc|markdown }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
