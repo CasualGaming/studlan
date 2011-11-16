@@ -21,7 +21,15 @@ studLAN - Competition - {{ competition.title }}
         <h3>Excisting teams</h3>
         <ul>
         {% for team in teams %}
-            <li><a href="#">[{{ team.tag }}] {{ team.title }}</a></li>
+            <li>
+                <a href="#" rel="popover" data-placement="right" data-html="true" data-content="
+                    <ul>
+                        {% for member in team.members.all %}
+                            <li>[{{ team.tag }}]{{ member }}</li>
+                        {% endfor %}
+                    </ul>
+                " data-original-title="Members">[{{ team.tag }}] {{ team.title }}</a>
+            </li>
         {% endfor %}
         </ul>
 
