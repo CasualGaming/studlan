@@ -9,12 +9,16 @@ from django.contrib import messages
 
 def main(request):
     competitions = Competition.objects.all()
+    activities = Activity.objects.all()
 
     for c in competitions:
         if len(c.desc) >= 200:
             c.desc = c.desc[:197] + '...'
 
-    return render_to_response('competitions.html', {'competitions': competitions},
+    tab = request.GET.get('tab')
+    if tab is None or tab == '': tab = 'all'
+
+    return render_to_response('competitions.html', {'competitions': competitions, 'activities': activities, 'current_tab': tab},
                                context_instance=RequestContext(request))
 
 def single(request, competition_id):

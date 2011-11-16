@@ -14,11 +14,12 @@ studLAN - News
 
 {% block content %}
     <div class="content">
-    {% for article in news.object_list %}
-        <h2>{{ article.title }}</h2>
-        <span class="label info">{{ article.pub_date }}</span>
-        <p>{{ article.body|striptags|markdown }}</h2>
-    {% endfor %}
+        <h1>News</h1>
+        {% for article in news.object_list %}
+            <h2>{{ article.title }}</h2>
+            <span class="label info">{{ article.pub_date }}</span>
+            <p>{{ article.body|striptags|markdown }}</h2>
+        {% endfor %}
     </div>
     <div class="pagination">
         <ul>

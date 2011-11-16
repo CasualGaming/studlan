@@ -12,6 +12,7 @@ class Activity(models.Model):
 		return self.title
 
 	class Meta:
+		ordering = ['title']
 		verbose_name = 'activity'
 		verbose_name_plural = 'activities'
 
