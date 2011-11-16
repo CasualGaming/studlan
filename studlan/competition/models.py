@@ -31,7 +31,7 @@ class Competition(models.Model):
 	title = models.CharField('title', max_length=50)
 	status = models.SmallIntegerField("status", choices=STATUS_OPTIONS)
 	activity = models.ForeignKey(Activity)
-	participants = models.ManyToManyField(User)
+	participants = models.ManyToManyField(User, blank=True)
 	desc = models.TextField('description')
 
 	def __unicode__(self):
@@ -47,7 +47,7 @@ class Competition(models.Model):
 		return self.statuses[self.status][1]
 
 	class Meta:
-		ordering = ['status']
+		ordering = ['status', '-activity', '-title']
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)

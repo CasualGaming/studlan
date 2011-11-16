@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 {% load markup %}
+
+{% block title %}
+studLAN - News
+{% endblock title %}
+
 {% block navigation %}
     <ul class="nav">
         <li class="active"><a href="{% url news %}">News</a></li>
