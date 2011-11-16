@@ -32,14 +32,14 @@ studLAN - Competitions
         </ul>
 
         <table class="zebra-striped">
-            <thead><th>&nbsp;</th><th>Title</th><th>Activity</th></thead>
+            <thead><th>Status</th><th>Title</th><th>Activity</th></thead>
             <tbody>
                 {% for c in competitions %}
                     {% if current_tab == 'all' or current_tab == c.activity.title %}
                         <tr>
                         <td>{{ c.status_text }}</td>
                         <td><a href="{% url competition c.id %}">{{ c.title }}</a></td>
-                        <td><a href="#" rel="popover" data-placement="below" data-html="true" data-content="{{ c.activity.desc|markdown }}" data-original-title="{{ c.activity.title }}">{{ c.activity.title }}</a></td>
+                        <td><a href="{% url competitions %}?tab={{ c.activity.title }}">{{ c.activity.title }}</a></td>
                         </tr>
                     {% endif %}
                 {% endfor %}

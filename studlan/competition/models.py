@@ -48,7 +48,7 @@ class Competition(models.Model):
 		return self.statuses[self.status][1]
 
 	class Meta:
-		ordering = ['status', '-activity', '-title']
+		ordering = ['status', 'title']
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
