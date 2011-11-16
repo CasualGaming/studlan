@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load misc %}
+
+{% block title %}
+studLAN - Competition - {{ competition.title }}
+{% endblock title %}
+
+{% block navigation %}
+    <ul class="nav">
+        <li><a href="{% url news %}">News</a></li>
+        <li><a href="{% url competitions %}">Competitions</a></li>
+        <li class="active"><a href="{% url teams %}">Teams</a></li>
+    </ul>
+{% endblock navigation %}
+
+{% block content %}
+    <div class="content">
+        <h1>Teams</h1>
+        
+        <h3>Excisting teams</h3>
+        <ul>
+        {% for team in teams %}
+            <li><a href="#">[{{ team.tag }}] {{ team.title }}</a></li>
+        {% endfor %}
+        </ul>
+
+        <hr />
+        <form>
+            <fieldset>
+                <legend>Create new team</legend>
+                <div class="clearfix">
+                    <label for="title">Title</label>
+                    <div class="input">
+                        <input class="xlarge" id="title" name="title" size="30" type="text" />
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <label for="tag">Tag</label>
+                    <div class="input">
+                        <div class="input-prepend">
+                            <span class="add-on">[tag]</span>
+                            <input class="xlarge" id="tag" name="tag" size="30" type="text" />
+                            <span class="help-block">Must be unique!</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <label for="size">Maximum number of members</label>
+                    <div class="input">
+                        <select name="size" id="size">
+                            {% for i in 99|get_range1 %}
+                                <option value="{{ i }}">{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="actions">
+                    <input type="submit" class="btn primary" value="Create team" />
+                </div>
+            </fieldset>
+        </form>
+    </div>
+{% endblock content %}

@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 
-from studlan.competition.models import Activity, Competition
+from studlan.competition.models import Activity, Competition, Team
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template.context import RequestContext
 from django.contrib.auth import authenticate, login, logout
@@ -29,6 +29,18 @@ def single(request, competition_id):
 
     return render_to_response('competition.html', {'competition': competition},
 							  context_instance=RequestContext(request))
+
+def teams(request):
+    teams = Team.objects.all()
+
+    return render_to_response('teams.html', {'teams': teams},
+                              context_instance=RequestContext(request))
+
+def create_team(request):
+    team = Team()
+    team.leader = request.user
+    team.save()
+    return redirect('teams')
 
 def join(request, competition_id):
     competition = get_object_or_404(Competition, pk=competition_id)
