@@ -33,6 +33,8 @@ class Competition(models.Model):
 	status = models.SmallIntegerField("status", choices=STATUS_OPTIONS)
 	activity = models.ForeignKey(Activity)
 	participants = models.ManyToManyField(User, blank=True)
+	teams = models.ManyToManyField('Team', blank=True)
+	use_teams = models.BooleanField('use teams', default=False, help_text="If checked, participants will be ignored, and will instead use teams. If left unchecked teams will be ignored, and participants will be used.")
 	desc = models.TextField('description')
 
 	def __unicode__(self):
@@ -56,6 +58,9 @@ class Team(models.Model):
 	size = models.CharField('size', max_length=2)
 	leader = models.ForeignKey(User, blank=False, )
 	members = models.ManyToManyField(User, related_name="team_members", blank=True)
+
+	def __unicode__(self):
+		return '[%s]%s' % (self.tag, self.title)
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)

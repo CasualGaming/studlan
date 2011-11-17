@@ -23,11 +23,31 @@ def main(request):
 
 def single(request, competition_id):
     competition = get_object_or_404(Competition, pk=competition_id)
+    leader_of_teams = Team.objects.filter(leader=request.user)
+    
+    teams_in_competition = []
+    teams_not_in_competition = []
+
+    for x in leader_of_teams:
+        if x in competition.teams.all():
+            teams_in_competition.append(x)
+        else:
+            teams_not_in_competition.append(x)
+
+    has_teams_in_competition = len(teams_in_competition) > 0
+    has_teams_not_in_competition = len(teams_not_in_competition) > 0
+    is_leader = len(leader_of_teams) > 0
 
     if not "http" in competition.activity.image_url:
         competition.activity.image_url = 'http://placehold.it/150x150'
-
-    return render_to_response('competition.html', {'competition': competition},
+    
+    return render_to_response('competition.html',
+                                {'competition': competition,
+                                 'is_leader': is_leader,
+                                 'has_teams_in_competition': has_teams_in_competition,
+                                 'has_teams_not_in_competition': has_teams_not_in_competition,
+                                 'teams_in_competition': teams_in_competition,
+                                 'teams_not_in_competition': teams_not_in_competition},
 							  context_instance=RequestContext(request))
 
 def teams(request):
@@ -55,6 +75,26 @@ def leave(request, competition_id):
     return redirect('competition', competition_id=competition_id)
 
 def forfeit(request, competition_id):
+    competition = get_object_or_404(Competition, pk=competition_id)
+    messages.add_message(request, messages.ERROR, 'Forfeit not yet implemented!')
+    return redirect('competition', competition_id=competition_id)
+
+def join_team(request, competition_id):
+    competition = get_object_or_404(Competition, pk=competition_id)
+    num = request.POST['team']
+    team = Team.objects.filter(id=int(num))
+    competition.teams.add(int(num))
+    messages.add_message(request, messages.SUCCESS, 'You\'re now participating in %s with the team.' % (competition.title))
+    return redirect('competition', competition_id=competition_id)
+
+def leave_team(request, competition_id):
+    competition = get_object_or_404(Competition, pk=competition_id)
+    num = request.POST['team']
+    competition.teams.remove(int(num))
+    messages.add_message(request, messages.WARNING, 'You\'re no longer participating in %s with the team.' % (competition.title))
+    return redirect('competition', competition_id=competition_id)
+
+def forfeit_team(request, competition_id):
     competition = get_object_or_404(Competition, pk=competition_id)
     messages.add_message(request, messages.ERROR, 'Forfeit not yet implemented!')
     return redirect('competition', competition_id=competition_id)

@@ -39,7 +39,12 @@ studLAN - Competitions
                     {% if current_tab == 'all' or current_tab == c.activity.title %}
                         <tr>
                         <td>{{ c.status_text }}</td>
-                        <td><a href="{% url competition c.id %}">{{ c.title }}</a></td>
+                        <td>
+                            <a href="{% url competition c.id %}">{{ c.title }}</a>
+                            {% if c.use_teams %}
+                                - Team competition
+                            {% endif %}
+                        </td>
                         <td>{{ c.activity.title }}</td>
                         </tr>
                     {% endif %}

@@ -1,7 +1,13 @@
 from django import template
-from studlan.competition.models import Competition
+from studlan.competition.models import Competition, Team
 
 register = template.Library()
+
+#--- For competition ---
+
+
+
+#--- For sidebar ---
 
 def do_num_of_competitions(parser, token):
 	#tag_name, format_string = token.split_contents()
@@ -23,11 +29,23 @@ class Competition_Participation_Renderer(template.Node):
 		user_in = ''
 		#try:
 		for c in Competition.objects.all():
-			if context['request'].user in c.participants.all():
-				user_in += '''
-				<dt><a href="%s">%s</a></dt>
-				<dd><span class="label %s">%s</span></dd>
-				''' % ('/competitions/'+str(c.id)+'/', c.title, c.status_label(), c.status_text_verbose())
+			if c.use_teams:
+				for t in c.teams.all():
+					if context['request'].user == t.leader or context['request'].user in t.members:
+						user_in += '''
+							<dt><a href="%s">%s</a></dt>
+							<dd>
+							''' % ('/competitions/'+str(c.id)+'/', c.title)
+						user_in += 'As [%s]%s<br/>' % (t.tag, t.title)
+						user_in += '''
+							<span class="label %s">%s</span></dd>
+							''' % (c.status_label(), c.status_text_verbose())
+			else:
+				if context['request'].user in c.participants.all():
+					user_in += '''
+				    	<dt><a href="%s">%s</a></dt>
+						<dd>As self<br/><span class="label %s">%s</span></dd>
+						''' % ('/competitions/'+str(c.id)+'/', c.title, c.status_label(), c.status_text_verbose())
 		#except:
 		#		pass
 		return user_in
