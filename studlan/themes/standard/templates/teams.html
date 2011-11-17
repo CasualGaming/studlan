@@ -34,7 +34,8 @@ studLAN - Competition - {{ competition.title }}
         </ul>
 
         <hr />
-        <form>
+        <form action="{{ TEMPLATE_DIR }}/teams/create_team.html" method="POST">
+            {% csrf_token %}
             <fieldset>
                 <legend>Create new team</legend>
                 <div class="clearfix">
