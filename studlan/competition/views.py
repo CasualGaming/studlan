@@ -62,9 +62,15 @@ def single(request, competition_id):
 def teams(request):
     teams = Team.objects.all()
 
-    return render_to_response('teams.html', {'teams': teams},
-                              context_instance=RequestContext(request))
+    for team in teams:
+        team.is_mine = (request.user is team.leader or request.user in team.members.all())
 
+    tab = request.GET.get('tab')
+    if tab is None or tab == '':
+        tab = 'all'
+
+    return render_to_response('teams.html', {'teams': teams, 'current_tab': tab},
+                              context_instance=RequestContext(request))   
 
 def create_team(request):
     team = Team()

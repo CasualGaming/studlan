@@ -3,7 +3,7 @@
 {% load misc %}
 
 {% block title %}
-studLAN - Competition - {{ competition.title }}
+studLAN - Teams
 {% endblock title %}
 
 {% block navigation %}
@@ -19,7 +19,38 @@ studLAN - Competition - {{ competition.title }}
     <div class="content">
         <h1>Teams</h1>
         
-        <h3>Exsisting teams</h3>
+        <ul class="tabs">
+            {% if current_tab == 'all' %}
+                <li class="active"><a href="{% url teams %}">All teams</a></li>
+            {% else %}
+                <li><a href="{% url teams %}">All teams</a></li>
+            {% endif %}
+            {% if current_tab == 'myteams' %}
+                <li class="active"><a href="{% url teams %}?tab=myteams">My teams</a></li>
+            {% else %}
+                <li><a href="{% url teams %}?tab=myteams">My teams</a></li>
+            {% endif %}
+            {% if current_tab == 'mycompetition' %}
+                <li class="active"><a href="{% url teams %}?tab=mycompetition">My compeition</a></li>
+            {% else %}
+                <li><a href="{% url teams %}?tab=mycompetition">My competition</a></li>
+            {% endif %}
+        </ul>
+        <table class="zebra-striped">
+            <thead><th>Tag</th><th>Title</th><th>Leader</th></thead>
+            <tbody>
+                {% for team in teams %}
+                    {% if team.is_mine and current_tab == 'myteams' or current_tab == 'all'%}
+                    <tr>
+                        <td>{{ team.tag }}</td>
+                        <td>{{ team.title }}</td>
+                        <td>{{ team.leader }}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <!--
         <ul>
         {% for team in teams %}
             <li>
@@ -35,6 +66,7 @@ studLAN - Competition - {{ competition.title }}
             </li>
         {% endfor %}
         </ul>
+        -->
         {% if user.is_authenticated %}
         <hr />
         <form action="{{ TEMPLATE_DIR }}/teams/create_team.html" method="POST">
