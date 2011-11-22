@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django.http import HttpResponse
 
-# This is accessed asynchronicly to remove alerts via jquery
+# This is accessed asynchronously to remove alerts via jquery
 def remove_alert(request):
 	try:
 		pass

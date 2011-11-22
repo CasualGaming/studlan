@@ -15,6 +15,7 @@ studLAN - Competition - {{ competition.title }}
 {% endblock navigation %}
 
 {% block content %}
+{% if user.is_authenticated %}
     <div class="content">
         <h1>Teams</h1>
         
@@ -70,4 +71,5 @@ studLAN - Competition - {{ competition.title }}
             </fieldset>
         </form>
     </div>
+{% endif %}
 {% endblock content %}

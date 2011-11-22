@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     url(r'^register.html', 'studlan.competition.views.register_user'),
     url(r'^competitions/', include('studlan.competition.urls')),
     url(r'^misc/remove_alert.html', 'studlan.misc.views.remove_alert'),
-    url(r'^teams/', 'studlan.competition.views.teams', name='teams'),
+    url(r'^teams/$', 'studlan.competition.views.teams', name='teams'),
     url(r'^teams/create_team.html', 'studlan.competition.views.create_team'),
     # Examples:
     # url(r'^$', 'studlan.views.home', name='home'),
