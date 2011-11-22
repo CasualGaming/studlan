@@ -15,7 +15,7 @@ studLAN - Competition - {{ competition.title }}
 {% endblock navigation %}
 
 {% block content %}
-{% if user.is_authenticated %}
+
     <div class="content">
         <h1>Teams</h1>
         
@@ -24,6 +24,8 @@ studLAN - Competition - {{ competition.title }}
         {% for team in teams %}
             <li>
                 <a href="#" rel="popover" data-placement="right" data-html="true" data-content="
+                    <strong>Leader: [{{ team.tag }}]{{ team.leader }}</strong>
+                    <br/><br/>
                     <ul>
                         {% for member in team.members.all %}
                             <li>[{{ team.tag }}]{{ member }}</li>
@@ -33,7 +35,7 @@ studLAN - Competition - {{ competition.title }}
             </li>
         {% endfor %}
         </ul>
-
+        {% if user.is_authenticated %}
         <hr />
         <form action="{{ TEMPLATE_DIR }}/teams/create_team.html" method="POST">
             {% csrf_token %}
@@ -70,6 +72,6 @@ studLAN - Competition - {{ competition.title }}
                 </div>
             </fieldset>
         </form>
+        {% endif %}
     </div>
-{% endif %}
 {% endblock content %}
