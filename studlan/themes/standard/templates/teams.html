@@ -25,15 +25,17 @@ studLAN - Teams
             {% else %}
                 <li><a href="{% url teams %}">All teams</a></li>
             {% endif %}
-            {% if current_tab == 'myteams' %}
-                <li class="active"><a href="{% url teams %}?tab=myteams">My teams</a></li>
-            {% else %}
-                <li><a href="{% url teams %}?tab=myteams">My teams</a></li>
-            {% endif %}
-            {% if current_tab == 'mycompetition' %}
-                <li class="active"><a href="{% url teams %}?tab=mycompetition">My compeition</a></li>
-            {% else %}
-                <li><a href="{% url teams %}?tab=mycompetition">My competition</a></li>
+            {% if user.is_authenticated %}
+                {% if current_tab == 'myteams' %}
+                    <li class="active"><a href="{% url teams %}?tab=myteams">My teams</a></li>
+                {% else %}
+                    <li><a href="{% url teams %}?tab=myteams">My teams</a></li>
+                {% endif %}
+                {% if current_tab == 'mycompetition' %}
+                    <li class="active"><a href="{% url teams %}?tab=mycompetition">My compeition</a></li>
+                {% else %}
+                    <li><a href="{% url teams %}?tab=mycompetition">My competition</a></li>
+                {% endif %}
             {% endif %}
         </ul>
         <table class="zebra-striped">

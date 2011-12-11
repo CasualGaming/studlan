@@ -7,14 +7,15 @@ body {
 }
 
 .topbar-inner {
-    background-image: -khtml-gradient(linear, left top, left bottom, from(#336699), to(#222222));
-    background-image: -moz-linear-gradient(top, #336699, #222222);
-    background-image: -ms-linear-gradient(top, #336699, #222222);
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #336699), color-stop(100%, #222222));
-    background-image: -webkit-linear-gradient(top, #336699, #222222);
-    background-image: -o-linear-gradient(top, #336699, #222222);
-    background-image: linear-gradient(top, #336699, #222222);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#336699', endColorstr='#222222', GradientType=0);
+    /* From #333333 to #222222*/
+    background-image: -khtml-gradient(linear, left top, left bottom, from(#333333), to(#222222));
+    background-image: -moz-linear-gradient(top, #333333, #222222);
+    background-image: -ms-linear-gradient(top, #333333, #222222);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #333333), color-stop(100%, #222222));
+    background-image: -webkit-linear-gradient(top, #333333, #222222);
+    background-image: -o-linear-gradient(top, #333333, #222222);
+    background-image: linear-gradient(top, #333333, #222222);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#333333', endColorstr='#222222', GradientType=0);
 }
 
 .activity_image {
@@ -57,6 +58,15 @@ body {
 }
 
 @media all and (max-width: 600px) and (min-width: 0px) {
+    
+    .topbar {
+        position: static;
+    } body {
+        padding-top: 0px;
+    } body > .container-fluid {
+        padding-top: 20px;
+    }
+    
     .sidebar {
         display: none;
         visibility: hidden;
@@ -64,7 +74,16 @@ body {
 
     .container-fluid > .content {
         margin-left: 0px;
-    }    
+    }
+    .topbar > .topbar-inner > .container-fluid > .brand {
+        display: none;
+    }
+}
+
+@media all and (max-width: 363px) and (min-width: 0px) {
+    body > .container-fluid {
+        padding-top: 60px;
+    }
 }
 
 /*form .input {

@@ -31,46 +31,56 @@ def main(request):
 
 def single(request, competition_id):
     competition = get_object_or_404(Competition, pk=competition_id)
-    leader_of_teams = Team.objects.filter(leader=request.user)
-
-    teams_in_competition = []
-    teams_not_in_competition = []
-
-    for x in leader_of_teams:
-        if x in competition.teams.all():
-            teams_in_competition.append(x)
-        else:
-            teams_not_in_competition.append(x)
-
-    has_teams_in_competition = len(teams_in_competition) > 0
-    has_teams_not_in_competition = len(teams_not_in_competition) > 0
-    is_leader = len(leader_of_teams) > 0
 
     if not 'http' in competition.activity.image_url:
         competition.activity.image_url = 'http://placehold.it/150x150'
 
-    return render_to_response('competition.html', {
-        'competition': competition,
-        'is_leader': is_leader,
-        'has_teams_in_competition': has_teams_in_competition,
-        'has_teams_not_in_competition': has_teams_not_in_competition,
-        'teams_in_competition': teams_in_competition,
-        'teams_not_in_competition': teams_not_in_competition,
-        }, context_instance=RequestContext(request))
+    if request.user.is_authenticated():
+        leader_of_teams = Team.objects.filter(leader=request.user)
+
+        teams_in_competition = []
+        teams_not_in_competition = []
+
+        for x in leader_of_teams:
+            if x in competition.teams.all():
+                teams_in_competition.append(x)
+            else:
+                teams_not_in_competition.append(x)
+
+        has_teams_in_competition = len(teams_in_competition) > 0
+        has_teams_not_in_competition = len(teams_not_in_competition) > 0
+        is_leader = len(leader_of_teams) > 0
+
+        return render_to_response('competition.html', {
+            'competition': competition,
+            'is_leader': is_leader,
+            'has_teams_in_competition': has_teams_in_competition,
+            'has_teams_not_in_competition': has_teams_not_in_competition,
+            'teams_in_competition': teams_in_competition,
+            'teams_not_in_competition': teams_not_in_competition,
+            }, context_instance=RequestContext(request))
+    else:
+
+        return render_to_response('competition.html',
+                                  {'competition': competition},
+                                  context_instance=RequestContext(request))
 
 
 def teams(request):
     teams = Team.objects.all()
 
     for team in teams:
-        team.is_mine = (request.user is team.leader or request.user in team.members.all())
+        team.is_mine = request.user is team.leader or request.user \
+            in team.members.all()
 
     tab = request.GET.get('tab')
     if tab is None or tab == '':
         tab = 'all'
 
-    return render_to_response('teams.html', {'teams': teams, 'current_tab': tab},
-                              context_instance=RequestContext(request))   
+    return render_to_response('teams.html', {'teams': teams,
+                              'current_tab': tab},
+                              context_instance=RequestContext(request))
+
 
 def create_team(request):
     team = Team()
@@ -78,7 +88,8 @@ def create_team(request):
     team.title = request.POST.get('title')
     team.tag = request.POST.get('tag')
     team.size = request.POST.get('size')
-    messages.add_message(request, messages.SUCCESS, 'Team %s has been created.' % team.title)
+    messages.add_message(request, messages.SUCCESS,
+                         'Team %s has been created.' % team.title)
     team.save()
 
     return redirect('teams')
@@ -115,8 +126,8 @@ def join_team(request, competition_id):
     team = Team.objects.filter(id=int(num))
     competition.teams.add(int(num))
     messages.add_message(request, messages.SUCCESS,
-                         'You\'re now participating in %s with the '
-                         'team.' % competition.title)
+                         "You're now participating in %s with the team."
+                          % competition.title)
     return redirect('competition', competition_id=competition_id)
 
 
@@ -125,8 +136,8 @@ def leave_team(request, competition_id):
     num = request.POST['team']
     competition.teams.remove(int(num))
     messages.add_message(request, messages.WARNING,
-                         'You\'re no longer participating in %s with '
-                         'the team.' % competition.title)
+                         "You're no longer participating in %s with "
+                         "the team." % competition.title)
     return redirect('competition', competition_id=competition_id)
 
 
@@ -154,6 +165,7 @@ def log_in(request):
                         'or contact the site admin if the problem '
                         'persists.')
         else:
+
             messages.add_message(request, messages.ERROR,
                                  'Wrong username/password.')
     return redirect('news')
@@ -161,8 +173,6 @@ def log_in(request):
 
 def log_out(request):
     logout(request)
-
-    # TODO cleanup
 
     messages.add_message(request, messages.SUCCESS,
                          'You\'ve successfully logged out.')
@@ -188,7 +198,7 @@ def register_user(request):
             user.is_active = True
             user.save()
 
-            # TODO cleanup
+            # TODO review this
 
             messages.add_message(request, messages.SUCCESS,
                                  '<strong>Registration '

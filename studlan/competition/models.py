@@ -47,7 +47,15 @@ class Competition(models.Model):
                                     'unchecked teams will be ignored, '
                                     'and participants will be used.')
 
-    desc = models.TextField('description')
+    desc = models.TextField('description',
+                            help_text='Markdown-enabled. You may also '
+                            'use regular (x)HTML markup. For '
+                            'blockquotes use the following '
+                            'markup:<br/><br/>&lt;blockquote&gt;<br/>&n'
+                            'bsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Quote-text&'
+                            'lt;/p&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;'
+                            'small&gt;Reference&lt;/small&gt;<br/>&lt;/'
+                            'blockquote&gt;')
 
     def __unicode__(self):
         return self.title
@@ -77,6 +85,10 @@ class Team(models.Model):
 
     def __unicode__(self):
         return '[%s]%s' % (self.tag, self.title)
+
+    class Meta:
+
+        ordering = ['tag', 'title']
 
 
 class UserProfile(models.Model):

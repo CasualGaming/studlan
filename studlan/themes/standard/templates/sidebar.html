@@ -1,15 +1,17 @@
 {% load news_tags %}
 {% load competitions %}
 {% if user.is_authenticated %}
-<h4>{{ user.username }}</h4>
+<h4>User Info</h4>
 <dl>
+	<dt>Username:</dt>
+	<dd>{{ user.username }}</dd>
 	<dt>Name:</dt>
 	<dd>{{ user.first_name }} {{ user.last_name }}</dd>
 	<dt>Email:</dt>
 	<dd>{{ user.email }}</dd>
 </dl>
 {% endif %}
-<h4>Competition info</h4>
+<h4>Competition Info</h4>
 <p>{% num_of_competitions %} competitions active.</p>
 {% if user.is_authenticated %}
 <h5>Participating in:</h5>
