@@ -97,6 +97,7 @@ studLAN - Competition - {{ competition.title }}
         <ul class="breadcrumb">
             <li><a href="{% url news %}">studLAN</a> <span class="divider">/</span></li>
             <li><a href="{% url competitions %}">Competitions</a> <span class="divider">/</span></li>
+            <li><a href="{% url competitions %}?tab={{ competition.activity.title }}">{{ competition.activity.title }}</a> <span class="divider">/</span></li>
             <li class="active">{{ competition.title }}</li>
         </ul>
 
