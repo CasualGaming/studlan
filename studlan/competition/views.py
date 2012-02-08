@@ -48,7 +48,7 @@ def single(request, competition_id):
                 teams_not_in_competition.append(x)
 
         has_teams_in_competition = len(teams_in_competition) > 0
-        has_teams_not_in_competition = (len(teams_not_in_competition) > 0) and not has_teams_in_competition
+        has_teams_not_in_competition = (len(teams_not_in_competition) > 0) and not has_teams_in_competition	
         is_leader = len(leader_of_teams) > 0
 
         return render_to_response('competition.html', {
@@ -70,8 +70,10 @@ def teams(request):
     teams = Team.objects.all()
 
     for team in teams:
-        team.is_mine = request.user is team.leader or request.user \
-            in team.members.all()
+        if request.user == team.leader or request.user in team.members.all():
+            team.is_mine = True
+        else:
+            team.is_mine = False
 
     tab = request.GET.get('tab')
     if tab is None or tab == '':

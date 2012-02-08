@@ -28,7 +28,7 @@ studLAN - Teams
             {% if user.is_authenticated %}
                 {% if current_tab == 'myteams' %}
                     <li class="active"><a href="{% url teams %}?tab=myteams">My teams</a></li>
-                {% else %}
+           	     {% else %}
                     <li><a href="{% url teams %}?tab=myteams">My teams</a></li>
                 {% endif %}
                 {% if current_tab == 'mycompetition' %}
@@ -42,12 +42,14 @@ studLAN - Teams
             <thead><th>Tag</th><th>Title</th><th>Leader</th></thead>
             <tbody>
                 {% for team in teams %}
-                    {% if team.is_mine and current_tab == 'myteams' or current_tab == 'all'%}
-                    <tr>
-                        <td>{{ team.tag }}</td>
-                        <td>{{ team.title }}</td>
-                        <td>{{ team.leader }}</td>
-                    </tr>
+                    {% if team.is_mine %}
+	                    	{% if current_tab == 'myteams' or current_tab == 'all' %}
+				                    <tr>
+				                        <td>{{ team.tag }}</td>
+				                        <td>{{ team.title }}</td>
+				                        <td>{{ team.leader }}</td>
+				                    </tr>
+	                    	{% endif %}
                     {% endif %}
                 {% endfor %}
             </tbody>
