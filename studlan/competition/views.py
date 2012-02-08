@@ -48,7 +48,7 @@ def single(request, competition_id):
                 teams_not_in_competition.append(x)
 
         has_teams_in_competition = len(teams_in_competition) > 0
-        has_teams_not_in_competition = len(teams_not_in_competition) > 0
+        has_teams_not_in_competition = len(teams_not_in_competition) <= 1
         is_leader = len(leader_of_teams) > 0
 
         return render_to_response('competition.html', {
