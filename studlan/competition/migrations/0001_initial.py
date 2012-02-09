@@ -23,6 +23,7 @@ class Migration(SchemaMigration):
             ('title', self.gf('django.db.models.fields.CharField')(max_length=50)),
             ('status', self.gf('django.db.models.fields.SmallIntegerField')()),
             ('activity', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['competition.Activity'])),
+            ('use_teams', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('desc', self.gf('django.db.models.fields.TextField')()),
         ))
         db.send_create_signal('competition', ['Competition'])
@@ -35,14 +36,13 @@ class Migration(SchemaMigration):
         ))
         db.create_unique('competition_competition_participants', ['competition_id', 'user_id'])
 
-        # Adding model 'Participator'
-        db.create_table('competition_participator', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('team', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['competition.Team'], blank=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], blank=True)),
-            ('what', self.gf('django.db.models.fields.SmallIntegerField')()),
+        # Adding M2M table for field teams on 'Competition'
+        db.create_table('competition_competition_teams', (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('competition', models.ForeignKey(orm['competition.competition'], null=False)),
+            ('team', models.ForeignKey(orm['competition.team'], null=False))
         ))
-        db.send_create_signal('competition', ['Participator'])
+        db.create_unique('competition_competition_teams', ['competition_id', 'team_id'])
 
         # Adding model 'Team'
         db.create_table('competition_team', (
@@ -58,9 +58,9 @@ class Migration(SchemaMigration):
         db.create_table('competition_team_members', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('team', models.ForeignKey(orm['competition.team'], null=False)),
-            ('participator', models.ForeignKey(orm['competition.participator'], null=False))
+            ('user', models.ForeignKey(orm['auth.user'], null=False))
         ))
-        db.create_unique('competition_team_members', ['team_id', 'participator_id'])
+        db.create_unique('competition_team_members', ['team_id', 'user_id'])
 
         # Adding model 'UserProfile'
         db.create_table('competition_userprofile', (
@@ -82,8 +82,8 @@ class Migration(SchemaMigration):
         # Removing M2M table for field participants on 'Competition'
         db.delete_table('competition_competition_participants')
 
-        # Deleting model 'Participator'
-        db.delete_table('competition_participator')
+        # Removing M2M table for field teams on 'Competition'
+        db.delete_table('competition_competition_teams')
 
         # Deleting model 'Team'
         db.delete_table('competition_team')
@@ -139,20 +139,15 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'participants': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.User']", 'symmetrical': 'False', 'blank': 'True'}),
             'status': ('django.db.models.fields.SmallIntegerField', [], {}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '50'})
-        },
-        'competition.participator': {
-            'Meta': {'object_name': 'Participator'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'team': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['competition.Team']", 'blank': 'True'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'blank': 'True'}),
-            'what': ('django.db.models.fields.SmallIntegerField', [], {})
+            'teams': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['competition.Team']", 'symmetrical': 'False', 'blank': 'True'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
+            'use_teams': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
         },
         'competition.team': {
-            'Meta': {'object_name': 'Team'},
+            'Meta': {'ordering': "['tag', 'title']", 'object_name': 'Team'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'leader': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"}),
-            'members': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "'team_members'", 'blank': 'True', 'to': "orm['competition.Participator']"}),
+            'members': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "'team_members'", 'blank': 'True', 'to': "orm['auth.User']"}),
             'size': ('django.db.models.fields.CharField', [], {'max_length': '2'}),
             'tag': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '10'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '50'})

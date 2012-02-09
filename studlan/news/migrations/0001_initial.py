@@ -13,7 +13,7 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('title', self.gf('django.db.models.fields.CharField')(max_length=50)),
             ('body', self.gf('django.db.models.fields.TextField')()),
-            ('published_datetime', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
+            ('pub_date', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
         ))
         db.send_create_signal('news', ['Article'])
 
@@ -26,10 +26,10 @@ class Migration(SchemaMigration):
 
     models = {
         'news.article': {
-            'Meta': {'ordering': "['-published_datetime']", 'object_name': 'Article'},
+            'Meta': {'ordering': "['-pub_date']", 'object_name': 'Article'},
             'body': ('django.db.models.fields.TextField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'published_datetime': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
+            'pub_date': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         }
     }
