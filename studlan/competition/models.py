@@ -84,7 +84,6 @@ class Team(models.Model):
 
     title = models.CharField('title', max_length=50)
     tag = models.CharField('tag', max_length=10, unique=True)
-    size = models.CharField('size', max_length=2)
     leader = models.ForeignKey(User, blank=False)
     members = models.ManyToManyField(User, related_name='team_members',
             blank=True)

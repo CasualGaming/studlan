@@ -90,7 +90,6 @@ def create_team(request):
     team.leader = request.user
     team.title = request.POST.get('title')
     team.tag = request.POST.get('tag')
-    team.size = request.POST.get('size')
     messages.add_message(request, messages.SUCCESS,
                          'Team %s has been created.' % team.title)
     team.save()

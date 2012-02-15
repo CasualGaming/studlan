@@ -95,16 +95,6 @@ studLAN - Teams
                         </div>
                     </div>
                 </div>
-                <div class="clearfix">
-                    <label for="size">Maximum number of members</label>
-                    <div class="input">
-                        <select name="size" id="size">
-                            {% for i in 99|get_range1 %}
-                                <option value="{{ i }}">{{ i }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </div>
                 <div class="actions">
                     <input type="submit" class="btn primary" value="Create team" />
                 </div>
