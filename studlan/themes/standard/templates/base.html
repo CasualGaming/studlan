@@ -22,16 +22,23 @@
                     {% block navigation %}
                     {% endblock navigation %}
                     {% if not user.is_authenticated %}
-                    <p class="pull-right">
-                        <a data-controls-modal="modal-from-dom-register"
-                           data-backdrop="true" data-keyboard="true" class="" href="#">Register</a>
-                        <!-- For spacing similar to .nav -->
-                        &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a data-controls-modal="modal-from-dom-login"
-                           data-backdrop="true" data-keyboard="true" class="" href="#">Log in</a>
-                    </p>
+                        <p class="pull-right">
+                            <a data-controls-modal="modal-from-dom-register"
+                               data-backdrop="true" data-keyboard="true" class="" href="#">Register</a>
+                            <!-- For spacing similar to .nav -->
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <a data-controls-modal="modal-from-dom-login"
+                               data-backdrop="true" data-keyboard="true" class="" href="#">Log in</a>
+                        </p>
                     {% else %}
-                        <p class="pull-right"><a class="" href="{{ TEMPLATE_DIRS }}/logout.html">Log out</a></p>
+                        <p class="pull-right">
+                            {% if user.is_staff %}
+                                <a class="" href="{{ TEMPLATE_DIRS }}/admin">Admin</a>
+                                <!-- For spacing similar to .nav -->
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                            {% endif %}
+                            <a class="" href="{{ TEMPLATE_DIRS }}/logout.html">Log out</a>
+                        </p>
                     {% endif %}
                 </div>
             </div>
