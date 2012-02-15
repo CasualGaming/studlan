@@ -23,7 +23,12 @@ studLAN - Competition - {{ competition.title }}
             <li><a href="{% url competitions %}?tab={{ competition.activity.title }}">{{ competition.activity.title }}</a> <span class="divider">/</span></li>
             <li class="active">{{ competition.title }}</li>
         </ul>
-        
+        {% if not user.is_authenticated %}
+            <div class="alert-message fade in {{ message.tags }}" data-alert>
+                <a class="close" href="#">x</a>
+                <p>Please log in to register for the competition.</p>
+            </div>
+        {% endif %}        
         <p>
             <span class="label {{ competition.status_label }}">{{ competition.status_text_verbose }}</span>
             <a href="#" class="label info" rel="popover" data-placement="below" data-html="true" data-content="{{ competition.activity.desc|markdown }}" data-original-title="{{ competition.activity.title }}">{{ competition.activity.title }}</a>
