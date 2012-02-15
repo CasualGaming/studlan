@@ -60,6 +60,12 @@ class Competition(models.Model):
     def __unicode__(self):
         return self.title
 
+    def get_teams(self):
+        if self.use_teams:
+            return self.teams.all()
+        else:
+            return None
+
     def status_text(self):
         return self.STATUS_OPTIONS[self.status - 1][1]
 

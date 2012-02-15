@@ -14,6 +14,5 @@
 <h4>Competition Info</h4>
 <p>{% num_of_competitions %} competitions active.</p>
 {% if user.is_authenticated %}
-<h5>Participating in:</h5>
 <dl>{% user_in %}</dl>
 {% endif %}

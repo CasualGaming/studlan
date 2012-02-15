@@ -68,12 +68,13 @@ def single(request, competition_id):
 
 def teams(request):
     teams = Team.objects.all()
-
+    competitions = Competition.objects.all()
+    
     for team in teams:
         if request.user == team.leader or request.user in team.members.all():
             team.is_mine = True
         else:
-            team.is_mine = False
+            team.is_mine = False        
 
     tab = request.GET.get('tab')
     if tab is None or tab == '':

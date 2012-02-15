@@ -31,25 +31,27 @@ studLAN - Teams
            	     {% else %}
                     <li><a href="{% url teams %}?tab=myteams">My teams</a></li>
                 {% endif %}
-                {% if current_tab == 'mycompetition' %}
-                    <li class="active"><a href="{% url teams %}?tab=mycompetition">My compeition</a></li>
-                {% else %}
-                    <li><a href="{% url teams %}?tab=mycompetition">My competition</a></li>
-                {% endif %}
             {% endif %}
         </ul>
         <table class="zebra-striped">
             <thead><th>Tag</th><th>Title</th><th>Leader</th></thead>
             <tbody>
                 {% for team in teams %}
-                    {% if team.is_mine %}
-	                    	{% if current_tab == 'myteams' or current_tab == 'all' %}
-				                    <tr>
-				                        <td>{{ team.tag }}</td>
-				                        <td>{{ team.title }}</td>
-				                        <td>{{ team.leader }}</td>
-				                    </tr>
-	                    	{% endif %}
+                    {% if current_tab == 'all' %}
+                        <!-- All teams -->
+                        <tr>
+                            <td>{{ team.tag }}</td>
+                            <td>{{ team.title }}</td>
+                            <td>{{ team.leader }}</td>
+                        </tr>
+                    {% endif %}
+                    {% if current_tab == 'myteams' and user.is_authenticated and team.is_mine %}
+                        <!-- My teams -->
+                        <tr>
+                            <td>{{ team.tag }}</td>
+                            <td>{{ team.title }}</td>
+                            <td>{{ team.leader }}</td>
+                        </tr>
                     {% endif %}
                 {% endfor %}
             </tbody>

@@ -26,7 +26,7 @@ class Competition_Renderer(template.Node):
 class Competition_Participation_Renderer(template.Node):
 	#def __init__(self):
 	def render(self, context):
-		user_in = ' '
+		user_in = ''
 		# TODO Fix this derp
 		try:
 			for c in Competition.objects.all():
@@ -50,7 +50,10 @@ class Competition_Participation_Renderer(template.Node):
 		except:
 			pass
 		finally:
-			return user_in
+			if user_in != '':
+				return '<h5>Participating in</h5>' + user_in
+			else:
+				return user_in
 
 register.tag('num_of_competitions', do_num_of_competitions)
 register.tag('user_in', get_competitions_user_is_participating_in)
