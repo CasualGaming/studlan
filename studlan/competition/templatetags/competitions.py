@@ -26,29 +26,31 @@ class Competition_Renderer(template.Node):
 class Competition_Participation_Renderer(template.Node):
 	#def __init__(self):
 	def render(self, context):
-		user_in = ''
-		#try:
-		for c in Competition.objects.all():
-			if c.use_teams:
-				for t in c.teams.all():
-					if context['request'].user == t.leader or context['request'].user in t.members:
+		user_in = ' '
+		# TODO Fix this derp
+		try:
+			for c in Competition.objects.all():
+				if c.use_teams:
+					for t in c.teams.all():
+						if context['request'].user == t.leader or context['request'].user in t.members:
+							user_in += '''
+								<dt><a href="%s">%s</a></dt>
+								<dd>
+								''' % ('/competitions/'+str(c.id)+'/', c.title)
+							user_in += 'As [%s]%s<br/>' % (t.tag, t.title)
+							user_in += '''
+								<span class="label %s">%s</span></dd>
+								''' % (c.status_label(), c.status_text_verbose())
+				else:
+					if context['request'].user in c.participants.all():
 						user_in += '''
-							<dt><a href="%s">%s</a></dt>
-							<dd>
-							''' % ('/competitions/'+str(c.id)+'/', c.title)
-						user_in += 'As [%s]%s<br/>' % (t.tag, t.title)
-						user_in += '''
-							<span class="label %s">%s</span></dd>
-							''' % (c.status_label(), c.status_text_verbose())
-			else:
-				if context['request'].user in c.participants.all():
-					user_in += '''
-				    	<dt><a href="%s">%s</a></dt>
-						<dd>As self<br/><span class="label %s">%s</span></dd>
-						''' % ('/competitions/'+str(c.id)+'/', c.title, c.status_label(), c.status_text_verbose())
-		#except:
-		#		pass
-		return user_in
+					    	<dt><a href="%s">%s</a></dt>
+							<dd>As self<br/><span class="label %s">%s</span></dd>
+							''' % ('/competitions/'+str(c.id)+'/', c.title, c.status_label(), c.status_text_verbose())
+		except:
+			pass
+		finally:
+			return user_in
 
 register.tag('num_of_competitions', do_num_of_competitions)
 register.tag('user_in', get_competitions_user_is_participating_in)
