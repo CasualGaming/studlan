@@ -204,8 +204,8 @@ def register_user(request):
             # TODO review this
 
             messages.add_message(request, messages.SUCCESS,
-                                 '<strong>Registration '
-                                 'successful.</strong> You may now log '
+                                 'Registration '
+                                 'successful. You may now log '
                                  'in.')
 
     return redirect('news')
