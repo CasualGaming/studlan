@@ -6,13 +6,13 @@
 
 * Activites
   
-  > Used for having several competitions under the same activity (usually a game).
+		Used for having several competitions under the same activity (usually a game).
 
 * Competitions
 
 	* User or Team participation
 
-	  > A competition can for either users or teams.
+			A competition can for either users or teams.
 
 * Teams
 
@@ -36,14 +36,16 @@
 
 	* Automatic bracket creation/Tournament system.
 	  
-	  > Takes seeding into account.
+			Takes seeding into account.
 
 * Bootstrap 2.0 upgrade
 
 * Non-fluid responsive layout
 
 ## Requirements ##
+
 * Django 1.3
+
 * South
 
 ## Initialization ##
