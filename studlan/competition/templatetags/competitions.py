@@ -1,5 +1,6 @@
 from django import template
 from studlan.competition.models import Competition, Team
+import logging
 
 register = template.Library()
 
@@ -25,6 +26,7 @@ class Competition_Renderer(template.Node):
 
 class Competition_Participation_Renderer(template.Node):
 	#def __init__(self):
+
 	def render(self, context):
 		user_in = ''
 		# TODO Fix this derp
@@ -48,6 +50,8 @@ class Competition_Participation_Renderer(template.Node):
 							<dd>As self<br/><span class="label %s">%s</span></dd>
 							''' % ('/competitions/'+str(c.id)+'/', c.title, c.status_label(), c.status_text_verbose())
 		except:
+			#TODO: fix team participations in sidebar.
+			print "TODO: fix team participations in sidebar."
 			pass
 		finally:
 			if user_in != '':
