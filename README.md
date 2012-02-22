@@ -3,10 +3,10 @@
 ## Features ##
 * News
 * Activites
-Used for having several competitions under the same activity (usually a game).
+  _Used for having several competitions under the same activity (usually a game)._
 * Competitions
 	* User or Team participation
-	A competition can for either users or teams.
+	  _A competition can for either users or teams._
 * Teams
 	* Team Leader
 		* Can add members
