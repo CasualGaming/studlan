@@ -8,6 +8,7 @@ from django.template.context import RequestContext
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.http import Http404
 
 
 def main(request):
@@ -105,6 +106,8 @@ def team(request, team_tag):
 
 def add_member(request, team_tag):
     team = get_object_or_404(Team, tag=team_tag)
+    if request.user != team.leader:
+        raise Http404
     uid = request.POST.get("selectMember")
     user = User.objects.get(pk=uid)
     #user = get_object_or_404(User, username=username)
