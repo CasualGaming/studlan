@@ -13,7 +13,10 @@ urlpatterns = patterns('',
     url(r'^competitions/', include('studlan.competition.urls')),
     url(r'^misc/remove_alert.html', 'studlan.misc.views.remove_alert'),
     url(r'^teams/$', 'studlan.competition.views.teams', name='teams'),
+    url(r'^team/(?P<team_tag>\w+)', 'studlan.competition.views.team', name='team'),
+    url(r'^team/(?P<team_tag>\w+)/add_member.html', 'studlan.competition.views.add_member', 'add_member'),
     url(r'^teams/create_team.html', 'studlan.competition.views.create_team'),
+
     # Examples:
     # url(r'^$', 'studlan.views.home', name='home'),
     # url(r'^studlan/', include('studlan.foo.urls')),

@@ -36,11 +36,12 @@ studLAN - Teams
         <table class="zebra-striped">
             <thead><th>Tag</th><th>Title</th><th>Leader</th></thead>
             <tbody>
+                <!-- TODO url'ify -->
                 {% for team in teams %}
                     {% if current_tab == 'all' %}
                         <!-- All teams -->
                         <tr>
-                            <td>{{ team.tag }}</td>
+                            <td><a href="/team/{{ team.tag }}">{{ team.tag }}</a></td>
                             <td>{{ team.title }}</td>
                             <td>{{ team.leader }}</td>
                         </tr>
@@ -48,7 +49,7 @@ studLAN - Teams
                     {% if current_tab == 'myteams' and user.is_authenticated and team.is_mine %}
                         <!-- My teams -->
                         <tr>
-                            <td>{{ team.tag }}</td>
+                            <td><a href="/team/{{ team.tag }}">{{ team.tag }}</a></td>
                             <td>{{ team.title }}</td>
                             <td>{{ team.leader }}</td>
                         </tr>

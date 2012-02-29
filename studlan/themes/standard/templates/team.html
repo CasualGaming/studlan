@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load misc %}
+
+{% block title %}
+studLAN - Team
+{% endblock title %}
+
+{% block navigation %}
+    <ul class="nav">
+        <li><a href="{% url news %}">News</a></li>
+        <li><a href="{% url competitions %}">Competitions</a></li>
+        <li class="active"><a href="{% url teams %}">Teams</a></li>
+    </ul>
+{% endblock navigation %}
+
+{% block content %}
+
+	<h2>[{{ team.tag }}] {{ team.title }}</h2>
+	
+	<h3>Leader</h3>
+	<p>{{ team.leader }}</p>
+
+	<h3>Members</h3>
+	<ul>
+	{% for member in team.members.all %}
+		<li>{{ member }}</li>
+	{% endfor %}
+	</ul>
+	
+	<!-- TODO url'ify -->
+	{% if team.is_mine %}
+		<hr />
+		<form action="{{ TEMPLATE_DIR }}/team/{{ team.tag }}/add_member.html" method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Members</legend>
+                <div class="clearfix">
+                	<label for="select">Select</label>
+                	<div class="input">
+	                	<select id="selectMember">
+	                		{% for user in users %}
+	                			<option value="{{ user.id }}">{{ user }}</option>
+	                		{% endfor %}
+	                	</select>
+                	</div>
+                </div>
+                <div class="actions">
+                    <input type="submit" class="btn primary" value="Add member" />
+                </div>
+            </fieldset>
+        </form>
+	{% endif %}
+
+{% endblock content %}

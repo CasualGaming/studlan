@@ -84,6 +84,33 @@ def teams(request):
                               'current_tab': tab},
                               context_instance=RequestContext(request))
 
+def team(request, team_tag):
+    team = get_object_or_404(Team, tag=team_tag)
+    if request.user == team.leader:
+        team.is_mine = True
+    else:
+        team.is_mine = False
+
+    users = User.objects.all()
+    users2 = []
+    for user in users:
+        if user != team.leader:
+            if user not in team.members.all():
+                users2.append(user)
+
+    return render_to_response(  'team.html', {
+                                'team': team,
+                                'users': users2},
+                                context_instance=RequestContext(request))
+
+def add_member(request, team_tag):
+    team = get_object_or_404(Team, tag=team_tag)
+    team.members.add(request.POST.get('selectMember'))
+    team.save()
+    messages.add_message(request, messages.SUCCESS,
+                        'User %s added.' % request.POST.get('selectMember'))
+    #return redirect('team', team_tag=team_tag)
+    return redirect('news')
 
 def create_team(request):
     team = Team()
