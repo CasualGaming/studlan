@@ -24,11 +24,20 @@ studLAN - Team
 	</ul>
 
 	<h3>Members</h3>
-	<ul>
-	{% for member in team.members.all %}
-		<li>{{ member }}</li>
-	{% endfor %}
-	</ul>
+	{% if request.user == team.leader %}
+		<ul>
+		{% for member in team.members.all %}
+	            {% csrf_token %}
+	            <li>{{ member }} <a href="{{ TEMPLATE_DIR }}/team/{{ team.tag }}/remove/{{ member.id }}">Remove</a></li>
+        {% endfor %}
+    	</ul>
+	{% else %}
+		<ul>
+		{% for member in team.members.all %}
+			<li>{{ member }}</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
 	
 	<!-- TODO url'ify -->
 	{% if team.is_mine %}
@@ -40,7 +49,7 @@ studLAN - Team
                 <div class="clearfix">
                 	<label for="select">Select</label>
                 	<div class="input">
-	                	<select id="selectMember" name="selectMember">
+	                	<select id="selectMember">
 	                		{% for user in users %}
 	                			<option value="{{ user.id }}">{{ user }}</option>
 	                		{% endfor %}

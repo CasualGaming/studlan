@@ -124,7 +124,7 @@ def create_team(request):
                          'Team %s has been created.' % team.title)
     team.save()
 
-    return redirect('teams')
+    return redirect('team', team_tag=team.tag)
 
 
 def join(request, competition_id):
