@@ -112,7 +112,15 @@ def add_member(request, team_tag):
     team.save()
     messages.add_message(request, messages.SUCCESS,
                         'User %s added.' % user.username)
-    #return redirect('team', team_tag=team_tag)
+
+    return redirect('team', team_tag=team_tag)
+
+def remove_member(request, team_tag, member_id):
+    team = get_object_or_404(Team, tag=team_tag)
+    user = User.objects.get(pk=member_id)
+    team.members.remove(user)
+    team.save()
+
     return redirect('team', team_tag=team_tag)
 
 def create_team(request):
