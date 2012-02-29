@@ -28,7 +28,7 @@ studLAN - Team
 		<ul>
 		{% for member in team.members.all %}
 	            {% csrf_token %}
-	            <li>{{ member }} <a href="{{ TEMPLATE_DIR }}/team/{{ team.tag }}/remove/{{ member.id }}">Remove</a></li>
+	            <li>{{ member }} <a href="{% url root %}/team/{{ team.tag }}/remove/{{ member.id }}">Remove</a></li>
         {% endfor %}
     	</ul>
 	{% else %}
@@ -42,7 +42,7 @@ studLAN - Team
 	<!-- TODO url'ify -->
 	{% if team.is_mine %}
 		<hr />
-		<form action="{{ TEMPLATE_DIR }}/team/{{ team.tag }}/add_member.html" method="POST">
+		<form action="{% url root %}/team/{{ team.tag }}/add_member.html" method="POST">
             {% csrf_token %}
             <fieldset>
                 <legend>Members</legend>
