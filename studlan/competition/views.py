@@ -120,9 +120,13 @@ def add_member(request, team_tag):
 
 def remove_member(request, team_tag, member_id):
     team = get_object_or_404(Team, tag=team_tag)
+    if request.user != team.leader:
+        raise Http404
     user = User.objects.get(pk=member_id)
     team.members.remove(user)
     team.save()
+    messages.add_message(request, messages.SUCCESS,
+                        'User %s removed.' % user.username)
 
     return redirect('team', team_tag=team_tag)
 
