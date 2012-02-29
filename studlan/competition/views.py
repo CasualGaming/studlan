@@ -215,7 +215,7 @@ def log_in(request):
 
             messages.add_message(request, messages.ERROR,
                                  'Wrong username/password.')
-    return redirect('news')
+    return redirect('root')
 
 
 def log_out(request):
@@ -223,7 +223,7 @@ def log_out(request):
 
     messages.add_message(request, messages.SUCCESS,
                          'You\'ve successfully logged out.')
-    return redirect('news')
+    return redirect('root')
 
 
 def register_user(request):
@@ -252,4 +252,4 @@ def register_user(request):
                                  'successful. You may now log '
                                  'in.')
 
-    return redirect('news')
+    return redirect('root')

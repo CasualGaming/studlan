@@ -6,7 +6,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', 'studlan.news.views.main', name='news'),
+    url(r'^$', 'studlan.news.views.main', name='root'),
     url(r'^login.html', 'studlan.competition.views.log_in'),
     url(r'^logout.html', 'studlan.competition.views.log_out'),
     url(r'^register.html', 'studlan.competition.views.register_user'),

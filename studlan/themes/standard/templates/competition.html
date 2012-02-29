@@ -7,7 +7,7 @@ studLAN - Competition - {{ competition.title }}
 
 {% block navigation %}
     <ul class="nav">
-        <li><a href="{% url news %}">News</a></li>
+        <li><a href="{% url root %}">News</a></li>
         <li class="active"><a href="{% url competitions %}">Competitions</a></li>
         <li><a href="{% url teams %}">Teams</a></li>
     </ul>
@@ -18,7 +18,7 @@ studLAN - Competition - {{ competition.title }}
         <h2>{{ competition.title }}</h2>
 
         <ul class="breadcrumb">
-            <li><a href="{% url news %}">studLAN</a> <span class="divider">/</span></li>
+            <li><a href="{% url root %}">studLAN</a> <span class="divider">/</span></li>
             <li><a href="{% url competitions %}">Competitions</a> <span class="divider">/</span></li>
             <li><a href="{% url competitions %}?tab={{ competition.activity.title }}">{{ competition.activity.title }}</a> <span class="divider">/</span></li>
             <li class="active">{{ competition.title }}</li>
@@ -122,7 +122,7 @@ studLAN - Competition - {{ competition.title }}
         <h3>Description</h3>
         <p>{{ competition.desc|markdown }}</p>
         <ul class="breadcrumb">
-            <li><a href="{% url news %}">studLAN</a> <span class="divider">/</span></li>
+            <li><a href="{% url root %}">studLAN</a> <span class="divider">/</span></li>
             <li><a href="{% url competitions %}">Competitions</a> <span class="divider">/</span></li>
             <li><a href="{% url competitions %}?tab={{ competition.activity.title }}">{{ competition.activity.title }}</a> <span class="divider">/</span></li>
             <li class="active">{{ competition.title }}</li>
