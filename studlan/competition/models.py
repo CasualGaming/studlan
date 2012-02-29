@@ -104,6 +104,7 @@ class UserProfile(models.Model):
     nick = models.CharField('nick', max_length=20,
                             help_text='Specify a nick name (display '
                             'name).')
+
     signed_up = models.BooleanField('Signed up')
     has_payed = models.BooleanField('Has payed')
     wants_to_sit_with = models.TextField('Wants to sit with', help_text='Names/nicks of people this user wants to sit with.', blank=True)
@@ -117,16 +118,9 @@ class UserProfile(models.Model):
         return self.user.username
 
 
-def create_user_profile(
-    sender,
-    instance,
-    created,
-    **kwargs
-    ):
-
+def create_user_profile(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
-
 
 post_save.connect(create_user_profile, sender=User,
                   dispatch_uid='users-profilecreation-signal')
