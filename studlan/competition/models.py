@@ -4,7 +4,7 @@
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.db import models
-
+import datetime
 
 class Activity(models.Model):
 
@@ -98,10 +98,20 @@ class Team(models.Model):
 
 class UserProfile(models.Model):
 
+    GENDERS = ((1, 'MALE'), (2, 'FEMALE'))
+
     user = models.OneToOneField(User)
     nick = models.CharField('nick', max_length=20,
                             help_text='Specify a nick name (display '
                             'name).')
+    signed_up = models.BooleanField('Signed up')
+    has_payed = models.BooleanField('Has payed')
+    wants_to_sit_with = models.TextField('Wants to sit with', help_text='Names/nicks of people this user wants to sit with.', blank=True)
+    gender = models.SmallIntegerField('Gender', choices=GENDERS, default=1)
+    date_of_birth = models.DateField('Date of birth', default=datetime.date.today)
+    address = models.TextField('Street address', blank=True)
+    zip_code = models.IntegerField('Zip code', blank=True, default=0)
+    phone = models.CharField('Phone number', max_length=20, blank=True)
 
     def __unicode__(self):
         return self.user.username
