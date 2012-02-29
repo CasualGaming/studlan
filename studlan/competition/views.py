@@ -48,7 +48,7 @@ def single(request, competition_id):
                 teams_not_in_competition.append(x)
 
         has_teams_in_competition = len(teams_in_competition) > 0
-        has_teams_not_in_competition = (len(teams_not_in_competition) > 0) and not has_teams_in_competition	
+        has_teams_not_in_competition = (len(teams_not_in_competition) > 0) and not has_teams_in_competition
         is_leader = len(leader_of_teams) > 0
 
         return render_to_response('competition.html', {
@@ -69,12 +69,12 @@ def single(request, competition_id):
 def teams(request):
     teams = Team.objects.all()
     competitions = Competition.objects.all()
-    
+
     for team in teams:
         if request.user == team.leader or request.user in team.members.all():
             team.is_mine = True
         else:
-            team.is_mine = False        
+            team.is_mine = False
 
     tab = request.GET.get('tab')
     if tab is None or tab == '':
@@ -105,12 +105,15 @@ def team(request, team_tag):
 
 def add_member(request, team_tag):
     team = get_object_or_404(Team, tag=team_tag)
-    team.members.add(request.POST.get('selectMember'))
+    uid = request.POST.get("selectMember")
+    user = User.objects.get(pk=uid)
+    #user = get_object_or_404(User, username=username)
+    team.members.add(user)
     team.save()
     messages.add_message(request, messages.SUCCESS,
-                        'User %s added.' % request.POST.get('selectMember'))
+                        'User %s added.' % user.username)
     #return redirect('team', team_tag=team_tag)
-    return redirect('news')
+    return redirect('team', team_tag=team_tag)
 
 def create_team(request):
     team = Team()
