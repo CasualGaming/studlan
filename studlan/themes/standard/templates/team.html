@@ -49,7 +49,7 @@ studLAN - Team
                 <div class="clearfix">
                 	<label for="select">Select</label>
                 	<div class="input">
-	                	<select id="selectMember">
+	                	<select id="selectMember" name="selectMember">
 	                		{% for user in users %}
 	                			<option value="{{ user.id }}">{{ user }}</option>
 	                		{% endfor %}
