@@ -18,6 +18,13 @@ body {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#333333', endColorstr='#222222', GradientType=0);
 }
 
+.brand img {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    height: 30px;
+}
+
 .activity_image {
     height: 140px;
     overflow: hidden;
