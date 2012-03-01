@@ -33,19 +33,18 @@ studLAN - Competitions
         </ul>
 
         <table class="zebra-striped">
-            <thead><th>Status</th><th>Title</th><th>Activity</th></thead>
+            <thead><th>Status</th><th>Title</th></thead>
             <tbody>
                 {% for c in competitions %}
                     {% if current_tab == 'all' or current_tab == c.activity.title %}
                         <tr>
                             <td>{{ c.status_text }}</td>
                             <td>
-                                <a href="{% url competition c.id %}">{{ c.title }}</a>
+                                <a href="{% url competition c.id %}">{{ c }}</a>
                                 {% if c.use_teams %}
                                     - Team competition
                                 {% endif %}
                             </td>
-                            <td>{{ c.activity.title }}</td>
                         </tr>
                     {% endif %}
                 {% endfor %}

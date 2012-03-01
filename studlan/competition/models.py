@@ -58,7 +58,7 @@ class Competition(models.Model):
                             'blockquote&gt;')
 
     def __unicode__(self):
-        return self.title
+        return self.activity.title + " " + self.title
 
     def get_teams(self):
         if self.use_teams:
