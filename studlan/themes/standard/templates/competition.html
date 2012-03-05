@@ -65,13 +65,13 @@ studLAN - Competition - {{ competition.title }}
             <p>
             {% if competition.status == 1 %}
                 {% if user not in competition.participants.all %}
-                    <a class="btn large primary" href="{% url root %}/competitions/{{ competition.id }}/join.html">Join competition</a>
+                    <a class="btn large primary" href="/competitions/{{ competition.id }}/join.html">Join competition</a>
                 {% else %}
-                    <a class="btn large danger" href="{% url root %}/competitions/{{ competition.id }}/leave.html">Leave competition</a>
+                    <a class="btn large danger" href="/competitions/{{ competition.id }}/leave.html">Leave competition</a>
                 {% endif %}
             {% endif %}
             {% if competition.status == 3 %}
-                <a class="btn large danger" href="{% url root %}/competitions/{{ competition.id }}/forfeit.html">Forfeit competition</a>
+                <a class="btn large danger" href="/competitions/{{ competition.id }}/forfeit.html">Forfeit competition</a>
             {% endif %}
             </p>
         {% endif %}
@@ -81,7 +81,7 @@ studLAN - Competition - {{ competition.title }}
             {% if competition.status == 1 %}
 
                 {% if has_teams_not_in_competition %}
-                    <form action="{% url root %}/competitions/{{ competition.id }}/join_team.html" method="POST">
+                    <form action="/competitions/{{ competition.id }}/join_team.html" method="POST">
                         {% csrf_token %}
                         <select name="team" id="team">
                             {% for team in teams_not_in_competition %}
@@ -93,7 +93,7 @@ studLAN - Competition - {{ competition.title }}
                 {% endif %}
 
                 {% if has_teams_in_competition %}
-                    <form action="{% url root %}/competitions/{{ competition.id }}/leave_team.html" method="POST">
+                    <form action="/competitions/{{ competition.id }}/leave_team.html" method="POST">
                         {% csrf_token %}
                         <select name="team" id="team">
                             {% for team in teams_in_competition %}
@@ -108,7 +108,7 @@ studLAN - Competition - {{ competition.title }}
             {% if competition.status == 3 %}
 
                 {% if has_teams_in_competition %}
-                    <form action="{% url root %}/competitions/{{ competition.id }}/forfeit_team.html" method="POST">
+                    <form action="/competitions/{{ competition.id }}/forfeit_team.html" method="POST">
                         {% csrf_token %}
                         <select name="team" id="team">
                             {% for team in teams_in_competition %}
