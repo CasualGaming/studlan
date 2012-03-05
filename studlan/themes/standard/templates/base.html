@@ -33,11 +33,11 @@
                     {% else %}
                         <p class="pull-right">
                             {% if user.is_staff %}
-                                <a class="" href="{% url root %}/admin">Admin</a>
+                                <a class="" href="/admin">Admin</a>
                                 <!-- For spacing similar to .nav -->
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                             {% endif %}
-                            <a class="" href="{% url root %}/logout.html">Log out</a>
+                            <a class="" href="/logout.html">Log out</a>
                         </p>
                     {% endif %}
                 </div>
