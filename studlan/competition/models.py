@@ -117,6 +117,12 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return self.user.username
 
+    def getMonth(self):
+        return ('%02d' % self.date_of_birth.month)
+
+    def getDay(self):
+        return ('%02d' % self.date_of_birth.day)
+
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 
 def create_user_profile(sender, instance, created, **kwargs):

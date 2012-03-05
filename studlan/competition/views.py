@@ -280,12 +280,12 @@ def user_profile(request, username):
                               context_instance=RequestContext(request))
 
 def update_profile(request):
+    print request.POST
     if not request.user.is_authenticated():
         raise Http404
     else:
-        username = request.user.username
-        user = get_object_or_404(User, username=username)
-        profile = user.profile
+        user = request.user
+        profile = user.get_profile()
         profile.nick = request.POST.get('nick')
         profile.signed_up = request.POST.get('signedup')
         profile.wants_to_sit_with = request.POST.get('sitwith')
@@ -296,6 +296,6 @@ def update_profile(request):
         profile.phone = request.POST.get('phone')
         profile.save()
         user.save()
-        return redirect('my_profile')
+        return redirect('myprofile')
 
 

@@ -44,7 +44,7 @@ studLAN - Team
 			</div>
 			<hr />
 			<div>
-				<form action="/profile/update" method="POST">
+				<form action="{% url root %}/profile/update" method="POST">
 		            {% csrf_token %}
 		            <fieldset>
 		                <legend>Update information</legend>
@@ -76,18 +76,18 @@ studLAN - Team
 		                    <label for="genderRadio">Gender</label>
 		                    <div class="input">
 		                    	{% if profile.gender == 1 %}
-		                    		<input type="radio" name="genderRadio" value="MALE" checked> Male</input>
-		                    		<input type="radio" name="genderRadio" value="FEMALE"> Female</input>
+		                    		<input type="radio" name="genderRadio" value="1" checked> Male</input>
+		                    		<input type="radio" name="genderRadio" value="2"> Female</input>
 		                    	{% else %}
-                    				<input type="radio" name="genderRadio" value="MALE"> Male</input>
-		                    		<input type="radio" name="genderRadio" value="FEMALE" checked> Female</input>
+                    				<input type="radio" name="genderRadio" value="1"> Male</input>
+		                    		<input type="radio" name="genderRadio" value="2" checked> Female</input>
 		                    	{% endif %}
 		                    </div>
 		                </div>
 		                <div class="clearfix">
 		                    <label for="dateofbirth">Date of birth</label>
 		                    <div class="input">
-		                    	<input class="xlarge" type="text" name="dateofbirth" value="{{ profile.date_of_birth }}" />
+		                    	<input class="xlarge" type="text" name="dateofbirth" value="{{ profile.date_of_birth.year }}-{{ profile.getMonth }}-{{ profile.getDay }}" />
 		                    	<span class="help-inline">Format: YYYY-MM-DD</span>
 		                    </div>
 		                </div>
