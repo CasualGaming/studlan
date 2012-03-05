@@ -3,7 +3,7 @@
 {% load misc %}
 
 {% block title %}
-studLAN - Team
+studLAN - Profile
 {% endblock title %}
 
 {% block navigation %}
@@ -44,7 +44,7 @@ studLAN - Team
 			</div>
 			<hr />
 			<div>
-				<form action="{% url root %}/profile/update" method="POST">
+				<form action="/profile/update" method="POST">
 		            {% csrf_token %}
 		            <fieldset>
 		                <legend>Update information</legend>
