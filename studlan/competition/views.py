@@ -269,7 +269,6 @@ def my_profile(request):
         return redirect('root')
 
 def user_profile(request, username):
-
     user = get_object_or_404(User, username=username)
     profile = user.profile
 
@@ -279,3 +278,24 @@ def user_profile(request, username):
     else:
         return render_to_response('profile.html', {'user': user, 'profile': profile},
                               context_instance=RequestContext(request))
+
+def update_profile(request):
+    if not request.user.is_authenticated():
+        raise Http404
+    else:
+        username = request.user.username
+        user = get_object_or_404(User, username=username)
+        profile = user.profile
+        profile.nick = request.POST.get('nick')
+        profile.signed_up = request.POST.get('signedup')
+        profile.wants_to_sit_with = request.POST.get('sitwith')
+        profile.gender = request.POST.get('genderRadio')
+        profile.date_of_birth = request.POST.get('dateofbirth')
+        profile.address = request.POST.get('address')
+        profile.zip_code = request.POST.get('zip_code')
+        profile.phone = request.POST.get('phone')
+        profile.save()
+        user.save()
+        return redirect('my_profile')
+
+
