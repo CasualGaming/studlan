@@ -222,7 +222,7 @@ def log_in(request):
 
             messages.add_message(request, messages.ERROR,
                                  'Wrong username/password.')
-    return redirect('root')
+    return redirect('myprofile')
 
 
 def log_out(request):
@@ -261,8 +261,12 @@ def register_user(request):
     return redirect('root')
 
 def my_profile(request):
-    user = request.user
-    return user_profile(request, user.username)
+    if request.user.is_authenticated():
+        user = request.user
+        return user_profile(request, user.username)
+    else:
+        messages.add_message(request, messages.WARNING, 'You must be logged in in order to view a profile.')
+        return redirect('root')
 
 def user_profile(request, username):
 

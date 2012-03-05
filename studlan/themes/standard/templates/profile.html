@@ -9,7 +9,9 @@ studLAN - Team
 {% block navigation %}
     <ul class="nav">
         <li><a href="{% url root %}">News</a></li>
-        <li class="active"><a href="{% url myprofile %}">Profile</a></li>
+		{% if request.user.is_authenticated %}
+            <li class="active"><a href="{% url myprofile %}">Profile</a></li>
+        {% endif %}
         <li><a href="{% url competitions %}">Competitions</a></li>
         <li><a href="{% url teams %}">Teams</a></li>
     </ul>
@@ -38,6 +40,80 @@ studLAN - Team
 				<p>Street address: {{ profile.address }}</p>
 				<p>Zip/Postal code: {{ profile.zip_code }}</p>
 				<p>Phone: {{ profile.phone }}</p>
+				<em>Only visible to you and studLAN administrators.</em>
+			</div>
+			<hr />
+			<div>
+				<form action="{% url root %}/profile/update" method="POST">
+		            {% csrf_token %}
+		            <fieldset>
+		                <legend>Update information</legend>
+		                <div class="clearfix">
+		                    <label for="nick">Nick</label>
+		                    <div class="input">
+		                        <input class="xlarge" name="nick" size="30" type="text" value="{{ profile.nick }}"/>
+		                    </div>
+		                </div>
+		                <div class="clearfix">
+		                    <label for="signedup">Signed up</label>
+		                    <div class="input">
+		                    	{% if profile.signed_up %}
+		                    		<input class="" name="signedup" type="checkbox" value="signedup" checked></input>
+		                    	{% else %}
+		                    		<input class="" name="signedup" type="checkbox" value="signedup"></input>
+		                    	{% endif %}
+		                    	<span class="help-inline">Sign up for LAN participation!</span>
+		                    </div>
+		                </div>
+		                <div class="clearfix">
+		                    <label for="sitwith">I want to sit with</label>
+		                    <div class="input">
+		                    	<textarea class="xxlarge" if="sitwith" name="sitwith">{{ profile.wants_to_sit_with }}</textarea>
+		                    	<span class="help-block">Full names or usernames of the people you want to be seated with.</span>
+		                    </div>
+		                </div>
+		                <div class="clearfix">
+		                    <label for="genderRadio">Gender</label>
+		                    <div class="input">
+		                    	{% if profile.gender == 1 %}
+		                    		<input type="radio" name="genderRadio" value="MALE" checked> Male</input>
+		                    		<input type="radio" name="genderRadio" value="FEMALE"> Female</input>
+		                    	{% else %}
+                    				<input type="radio" name="genderRadio" value="MALE"> Male</input>
+		                    		<input type="radio" name="genderRadio" value="FEMALE" checked> Female</input>
+		                    	{% endif %}
+		                    </div>
+		                </div>
+		                <div class="clearfix">
+		                    <label for="dateofbirth">Date of birth</label>
+		                    <div class="input">
+		                    	<input class="xlarge" type="text" name="dateofbirth" value="{{ profile.date_of_birth }}" />
+		                    	<span class="help-inline">Format: YYYY-MM-DD</span>
+		                    </div>
+		                </div>
+		                <div class="clearfix">
+		                    <label for="address">Street address</label>
+		                    <div class="input">
+		                    	<input class="xlarge" type="text" name="address" value="{{ profile.address }}"/>
+		                    </div>
+		                </div>
+		                <div class="clearfix">
+		                    <label for="zip_code">Zip/postal code</label>
+		                    <div class="input">
+		                    	<input class="xlarge" type="text" name="zip_code" value="{{ profile.zip_code }}"/>
+		                    </div>
+		                </div>
+		                <div class="clearfix">
+		                    <label for="phone">Phone</label>
+		                    <div class="input">
+		                    	<input class="xlarge" type="text" name="phone" value="{{ profile.phone }}" />
+		                    </div>
+		                </div>
+		                <div class="actions">
+		                    <input type="submit" class="btn primary" value="Update" />
+		                </div>
+		            </fieldset>
+		        </form>
 			</div>
 		{% endif %}
 	</div>
