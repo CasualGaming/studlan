@@ -44,7 +44,7 @@ studLAN - Teams
                     {% if current_tab == 'all' %}
                         <!-- All teams -->
                         <tr>
-                            <td><a href="{% url root %}/team/{{ team.tag }}">{{ team.tag }}</a></td>
+                            <td><a href="/team/{{ team.tag }}">{{ team.tag }}</a></td>
                             <td>{{ team.title }}</td>
                             <td>{{ team.leader }}</td>
                         </tr>
@@ -52,7 +52,7 @@ studLAN - Teams
                     {% if current_tab == 'myteams' and user.is_authenticated and team.is_mine %}
                         <!-- My teams -->
                         <tr>
-                            <td><a href="{% url root %}/team/{{ team.tag }}">{{ team.tag }}</a></td>
+                            <td><a href="/team/{{ team.tag }}">{{ team.tag }}</a></td>
                             <td>{{ team.title }}</td>
                             <td>{{ team.leader }}</td>
                         </tr>
