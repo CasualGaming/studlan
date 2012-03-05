@@ -17,6 +17,8 @@ urlpatterns = patterns('',
     url(r'^team/(?P<team_tag>\w+)/add_member.html', 'studlan.competition.views.add_member'),
     url(r'^team/(?P<team_tag>\w+)/remove/(?P<member_id>\d+)$', 'studlan.competition.views.remove_member'),
     url(r'^teams/create_team.html', 'studlan.competition.views.create_team'),
+    url(r'^profile/$', 'studlan.competition.views.my_profile', name='myprofile'),
+    url(r'^profile/(?P<username>\w+)$', 'studlan.competition.views.user_profile', name='profile'),
 
     # Examples:
     # url(r'^$', 'studlan.views.home', name='home'),

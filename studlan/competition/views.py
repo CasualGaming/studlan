@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from studlan.competition.models import Activity, Competition, Team
+from studlan.competition.models import Activity, Competition, Team, UserProfile
 from django.shortcuts import render_to_response, redirect, \
     get_object_or_404
 from django.template.context import RequestContext
@@ -49,7 +49,8 @@ def single(request, competition_id):
                 teams_not_in_competition.append(x)
 
         has_teams_in_competition = len(teams_in_competition) > 0
-        has_teams_not_in_competition = (len(teams_not_in_competition) > 0) and not has_teams_in_competition
+        has_teams_not_in_competition = len(teams_not_in_competition) \
+            > 0 and not has_teams_in_competition
         is_leader = len(leader_of_teams) > 0
 
         return render_to_response('competition.html', {
@@ -72,7 +73,8 @@ def teams(request):
     competitions = Competition.objects.all()
 
     for team in teams:
-        if request.user == team.leader or request.user in team.members.all():
+        if request.user == team.leader or request.user \
+            in team.members.all():
             team.is_mine = True
         else:
             team.is_mine = False
@@ -84,6 +86,7 @@ def teams(request):
     return render_to_response('teams.html', {'teams': teams,
                               'current_tab': tab},
                               context_instance=RequestContext(request))
+
 
 def team(request, team_tag):
     team = get_object_or_404(Team, tag=team_tag)
@@ -99,24 +102,27 @@ def team(request, team_tag):
             if user not in team.members.all():
                 users2.append(user)
 
-    return render_to_response(  'team.html', {
-                                'team': team,
-                                'users': users2},
-                                context_instance=RequestContext(request))
+    return render_to_response('team.html', {'team': team,
+                              'users': users2},
+                              context_instance=RequestContext(request))
+
 
 def add_member(request, team_tag):
     team = get_object_or_404(Team, tag=team_tag)
     if request.user != team.leader:
         raise Http404
-    uid = request.POST.get("selectMember")
+    uid = request.POST.get('selectMember')
     user = User.objects.get(pk=uid)
-    #user = get_object_or_404(User, username=username)
+
+    # user = get_object_or_404(User, username=username)
+
     team.members.add(user)
     team.save()
-    messages.add_message(request, messages.SUCCESS,
-                        'User %s added.' % user.username)
+    messages.add_message(request, messages.SUCCESS, 'User %s added.'
+                         % user.username)
 
     return redirect('team', team_tag=team_tag)
+
 
 def remove_member(request, team_tag, member_id):
     team = get_object_or_404(Team, tag=team_tag)
@@ -125,10 +131,11 @@ def remove_member(request, team_tag, member_id):
     user = User.objects.get(pk=member_id)
     team.members.remove(user)
     team.save()
-    messages.add_message(request, messages.SUCCESS,
-                        'User %s removed.' % user.username)
+    messages.add_message(request, messages.SUCCESS, 'User %s removed.'
+                         % user.username)
 
     return redirect('team', team_tag=team_tag)
+
 
 def create_team(request):
     team = Team()
@@ -248,8 +255,23 @@ def register_user(request):
             # TODO review this
 
             messages.add_message(request, messages.SUCCESS,
-                                 'Registration '
-                                 'successful. You may now log '
-                                 'in.')
+                                 'Registration successful. You may now '
+                                 'log in.')
 
     return redirect('root')
+
+def my_profile(request):
+    user = request.user
+    return user_profile(request, user.username)
+
+def user_profile(request, username):
+
+    user = get_object_or_404(User, username=username)
+    profile = user.profile
+
+    if user != request.user:
+        return render_to_response('profile.html', {'user': user},
+                              context_instance=RequestContext(request))
+    else:
+        return render_to_response('profile.html', {'user': user, 'profile': profile},
+                              context_instance=RequestContext(request))

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load misc %}
+
+{% block title %}
+studLAN - Team
+{% endblock title %}
+
+{% block navigation %}
+    <ul class="nav">
+        <li><a href="{% url root %}">News</a></li>
+        <li class="active"><a href="{% url myprofile %}">Profile</a></li>
+        <li><a href="{% url competitions %}">Competitions</a></li>
+        <li><a href="{% url teams %}">Teams</a></li>
+    </ul>
+{% endblock navigation %}
+
+{% block content %}
+
+	<div class="content">
+		<div>
+			<h1>Profile</h1>
+			<p>Username: {{ user.username }}</p>
+			<p>First name: {{ user.first_name }}</p>
+			<p>Last name: {{ user.last_name }}</p>
+			<p>email: {{ user.email }}</p>
+		</div>
+		{% if user == request.user %}
+			<hr />
+			<div>
+				<h1>Additional information</h1>
+				<p>Nick: {{ profile.nick }}</p>
+				<p>Signed up: {{ profile.signed_up }}</p>
+				<p>Has payed: {{ profile.has_payed }}</p>
+				<p>Wants to sit with: {{ profile.wants_to_sit_with }}</p>
+				<p>Gender: {{ profile.gender }}</p>
+				<p>Date of birth: {{ profile.date_of_birth }}</p>
+				<p>Street address: {{ profile.address }}</p>
+				<p>Zip/Postal code: {{ profile.zip_code }}</p>
+				<p>Phone: {{ profile.phone }}</p>
+			</div>
+		{% endif %}
+	</div>
+
+{% endblock content %}

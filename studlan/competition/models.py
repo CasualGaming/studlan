@@ -117,6 +117,7 @@ class UserProfile(models.Model):
     def __unicode__(self):
         return self.user.username
 
+User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
