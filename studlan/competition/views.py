@@ -102,6 +102,8 @@ def team(request, team_tag):
             if user not in team.members.all():
                 users2.append(user)
 
+    users2.sort(key=lambda x: x.username.lower(), reverse=False)
+
     return render_to_response('team.html', {'team': team,
                               'users': users2},
                               context_instance=RequestContext(request))
