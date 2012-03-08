@@ -24,7 +24,7 @@ studLAN - Team - {{ team }}
 	
 	<h3>Leader</h3>
 	<ul>
-		<li>{{ team.leader }}</li>
+		<li><a href="{% url profile team.leader.username %}">{{ team.leader }}</a></li>
 	</ul>
 
 	<h3>Members</h3>
@@ -32,13 +32,13 @@ studLAN - Team - {{ team }}
 		<ul>
 		{% for member in team.members.all %}
 	            {% csrf_token %}
-	            <li>{{ member }} <a href="/team/{{ team.tag }}/remove/{{ member.id }}">Remove</a></li>
+	            <li><a href="{% url profile member.username %}">{{ member }}</a> - <a href="/team/{{ team.tag }}/remove/{{ member.id }}">Remove</a></li>
         {% endfor %}
     	</ul>
 	{% else %}
 		<ul>
 		{% for member in team.members.all %}
-			<li>{{ member }}</li>
+			<li><a href="{% url profile member.username %}">{{ member }}</a></li>
 		{% endfor %}
 		</ul>
 	{% endif %}
