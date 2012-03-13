@@ -20,6 +20,8 @@ urlpatterns = patterns('',
     url(r'^profile/update$', 'studlan.competition.views.update_profile', name='update_profile'),
     url(r'^profile/$', 'studlan.competition.views.my_profile', name='myprofile'),
     url(r'^profile/(?P<username>\w+)$', 'studlan.competition.views.user_profile', name='profile'),
+    url(r'^arrivals/$', 'studlan.misc.views.arrivals', name='arrivals'),
+    url(r'^arrivals/toggle/(?P<user_id>\d+)$', 'studlan.misc.views.toggle_arrival', name='toggle_arrival'),
 
     # Examples:
     # url(r'^$', 'studlan.views.home', name='home'),

@@ -282,7 +282,6 @@ def user_profile(request, username):
                               context_instance=RequestContext(request))
 
 def update_profile(request):
-    print request.POST
     if not request.user.is_authenticated():
         raise Http404
     else:
