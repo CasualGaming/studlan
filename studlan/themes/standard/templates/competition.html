@@ -65,13 +65,23 @@ studLAN - Competition - {{ competition.title }}
             <p>
             {% if competition.status == 1 %}
                 {% if user not in competition.participants.all %}
-                    <a class="btn large primary" href="/competitions/{{ competition.id }}/join.html">Join competition</a>
+                    <form action="/competitions/{{ competition.id }}/join.html" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ competition.id }}" />
+                        <input type="submit" class="btn large success" value="Join competition" />
+                    </form>
                 {% else %}
-                    <a class="btn large danger" href="/competitions/{{ competition.id }}/leave.html">Leave competition</a>
+                    <form action="/competitions/{{ competition.id }}/leave.html" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ competition.id }}" />
+                        <input type="submit" class="btn large danger" value="Leave competition" />
+                    </form>
                 {% endif %}
             {% endif %}
             {% if competition.status == 3 %}
+                <!-- not implemented...
                 <a class="btn large danger" href="/competitions/{{ competition.id }}/forfeit.html">Forfeit competition</a>
+                -->
             {% endif %}
             </p>
         {% endif %}

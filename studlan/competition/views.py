@@ -152,7 +152,7 @@ def create_team(request):
 
 
 def join(request, competition_id):
-    competition = get_object_or_404(Competition, pk=competition_id)
+    competition = get_object_or_404(Competition, pk=request.POST['id'])
     competition.participants.add(request.user)
     messages.add_message(request, messages.WARNING,
                          'You\'re now participating in %s.'
@@ -161,7 +161,7 @@ def join(request, competition_id):
 
 
 def leave(request, competition_id):
-    competition = get_object_or_404(Competition, pk=competition_id)
+    competition = get_object_or_404(Competition, pk=request.POST['id'])
     competition.participants.remove(request.user)
     messages.add_message(request, messages.WARNING,
                          'You\'re no longer participating in %s.'
