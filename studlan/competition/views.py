@@ -290,6 +290,7 @@ def update_profile(request):
         profile = user.get_profile()
         profile.nick = request.POST.get('nick')
         profile.signed_up = request.POST.get('signedup')
+        if(profile.signed_up == None): profile.signed_up = False
         profile.wants_to_sit_with = request.POST.get('sitwith')
         profile.gender = request.POST.get('genderRadio')
         profile.date_of_birth = request.POST.get('dateofbirth')
