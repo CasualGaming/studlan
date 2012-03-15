@@ -17,19 +17,14 @@ urlpatterns = patterns('',
     url(r'^team/(?P<team_tag>\w+)/add_member.html', 'studlan.competition.views.add_member'),
     url(r'^team/(?P<team_tag>\w+)/remove/(?P<member_id>\d+)$', 'studlan.competition.views.remove_member'),
     url(r'^teams/create_team.html', 'studlan.competition.views.create_team'),
-    url(r'^profile/update$', 'studlan.competition.views.update_profile', name='update_profile'),
     url(r'^profile/$', 'studlan.competition.views.my_profile', name='myprofile'),
     url(r'^profile/(?P<username>\w+)$', 'studlan.competition.views.user_profile', name='profile'),
     url(r'^arrivals/$', 'studlan.misc.views.arrivals', name='arrivals'),
     url(r'^arrivals/toggle/(?P<user_id>\d+)$', 'studlan.misc.views.toggle_arrival', name='toggle_arrival'),
 
-    # Examples:
-    # url(r'^$', 'studlan.views.home', name='home'),
-    # url(r'^studlan/', include('studlan.foo.urls')),
-
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
+    # app urls
+    url(r'^auth/', include('studlan.auth.urls')),
+    
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 )

@@ -23,6 +23,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 MANAGERS = ADMINS
 
 AUTH_PROFILE_MODULE = 'competition.UserProfile'
+LOGIN_URL = '/auth/login/'
 
 DATABASES = {
     'default': {

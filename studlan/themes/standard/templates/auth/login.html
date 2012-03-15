@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}
+studLAN - Login
+{% endblock title %}
+
+{% block navigation %}
+    <ul class="nav">
+        <li><a href="{% url root %}">News</a></li>
+		{% if user.is_authenticated %}
+            <li><a href="{% url myprofile %}">Profile</a></li>
+        {% endif %}
+        <li><a href="{% url competitions %}">Competitions</a></li>
+        <li><a href="{% url teams %}">Teams</a></li>
+    </ul>
+{% endblock navigation %}
+
+{% block content %}
+    <div class="content">
+        {{ form.non_field_errors }}
+        <form method="post" action="{% url auth_login %}">{% csrf_token %}
+            <fieldset>
+		    <legend>Login</legend>
+            {% for field in form %} 
+		        <div class="clearfix">
+                    {{ field.errors }}
+                    <label>{{ field.label_tag }}</label>
+                    <div class="input">
+                        {{ field }}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="actions">
+                <input type="submit" class="btn primary" value="Login" />
+            </div>
+            </fieldset>
+            <input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}{{ request.path }}{% endif %}"/>
+        </form>
+    </div>
+
+{% endblock content %}
