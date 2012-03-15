@@ -288,25 +288,3 @@ def user_profile(request, username):
     profile = quser.get_profile()
     
     return render(request, 'profile.html', {'quser': quser, 'profile': profile})
-
-@login_required
-def update_profile(request):
-    if not request.user.is_authenticated():
-        raise Http404
-    else:
-        user = request.user
-        profile = user.get_profile()
-        profile.nick = request.POST.get('nick')
-        profile.signed_up = request.POST.get('signedup')
-        if(profile.signed_up == None): profile.signed_up = False
-        profile.wants_to_sit_with = request.POST.get('sitwith')
-        profile.gender = request.POST.get('genderRadio')
-        profile.date_of_birth = request.POST.get('dateofbirth')
-        profile.address = request.POST.get('address')
-        profile.zip_code = request.POST.get('zip_code')
-        profile.phone = request.POST.get('phone')
-        profile.save()
-        user.save()
-        return redirect('myprofile')
-
-
