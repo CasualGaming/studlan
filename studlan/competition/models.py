@@ -100,11 +100,9 @@ class UserProfile(models.Model):
 
     GENDERS = ((1, 'MALE'), (2, 'FEMALE'))
 
-    user = models.OneToOneField(User)
-    nick = models.CharField('nick', max_length=20,
-                            help_text='Specify a nick name (display '
-                            'name).')
-
+    user = models.OneToOneField(User, editable=False)
+    nick = models.CharField('nick', max_length=20, 
+        help_text='Specify a nick name (display name).')
     signed_up = models.BooleanField('Signed up')
     has_payed = models.BooleanField('Has payed')
     wants_to_sit_with = models.TextField('Wants to sit with', help_text='Names/nicks of people this user wants to sit with.', blank=True)

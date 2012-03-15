@@ -1,15 +1,15 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from studlan.competition.models import Activity, Competition, Team, UserProfile
-from django.shortcuts import render_to_response, redirect, \
-    get_object_or_404
-from django.template.context import RequestContext
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import Http404
+from django.shortcuts import render_to_response, render, redirect, get_object_or_404
+from django.template.context import RequestContext
 
+from studlan.competition.models import Activity, Competition, Team, UserProfile
+from studlan.competition.forms import UserProfileForm
 
 def main(request):
     competitions = Competition.objects.all()
@@ -262,25 +262,34 @@ def register_user(request):
 
     return redirect('root')
 
+@login_required
 def my_profile(request):
-    if request.user.is_authenticated():
-        user = request.user
-        return user_profile(request, user.username)
+    user = request.user
+    if request.method == 'GET':
+        form = UserProfileForm(instance=request.user.get_profile())
     else:
-        messages.add_message(request, messages.WARNING, 'You must be logged in in order to view a profile.')
-        return redirect('root')
+        form = UserProfileForm(request.POST, instance=request.user.get_profile())
+        if form.is_valid():
+            form.save()
+    
+    profile = user.get_profile()
+
+    return render(request, 'profile.html', {'quser': request.user, 'profile': profile, 'form': form})
 
 def user_profile(request, username):
-    user = get_object_or_404(User, username=username)
-    profile = user.profile
+    # Using quser for "queried user", as "user" is a reserved variable name in templates
+    quser = get_object_or_404(User, username=username)
 
-    if user != request.user:
-        return render_to_response('profile.html', {'user': user},
-                              context_instance=RequestContext(request))
-    else:
-        return render_to_response('profile.html', {'user': user, 'profile': profile},
-                              context_instance=RequestContext(request))
+    # If the user is authenticated and are doing a lookup on themselves, also create
+    # the form for updating and showing update information.
+    if request.user.is_authenticated() and request.user == quser:
+        return my_profile(request)
 
+    profile = quser.get_profile()
+    
+    return render(request, 'profile.html', {'quser': quser, 'profile': profile})
+
+@login_required
 def update_profile(request):
     if not request.user.is_authenticated():
         raise Http404
