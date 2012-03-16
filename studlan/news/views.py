@@ -9,7 +9,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def main(request):
     objects = Article.objects.all()
-    paginator = Paginator(objects, 5)
+    paginator = Paginator(objects, 10)
 
     page = request.GET.get('page')
     try:

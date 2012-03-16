@@ -49,7 +49,7 @@ class Competition_Participation_Renderer(template.Node):
 						user_in += '''
 					    	<dt><a href="%s">%s</a></dt>
 							<dd>As self<br/><span class="label %s">%s</span></dd>
-							''' % (reverse("root")+'/competitions/'+str(c.id)+'/', c.title, c.status_label(), c.status_text_verbose())
+							''' % (reverse("single", args=[c.id]), c.title, c.status_label(), c.status_text_verbose())
 		except:
 			#TODO: fix team participations in sidebar.
 			print "TODO: fix team participations in sidebar."
