@@ -22,10 +22,10 @@ studLAN - Profile
 	<div class="content">
 		<div>
 			<h1>Profile</h1>
-			<p>Username: {{ user.username }}</p>
-			<p>First name: {{ user.first_name }}</p>
+			<p>Username: {{ quser.username }}</p>
+			<p>First name: {{ quser.first_name }}</p>
             {% if user == quser or user.is_staff %}
-			<p>Last name: {{ user.last_name }}</p>
+			<p>Last name: {{ quser.last_name }}</p>
             {% endif %}
 		</div>
 		{% if user == quser or user.is_staff %}
