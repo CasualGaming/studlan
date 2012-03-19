@@ -19,6 +19,21 @@ def do_num_of_competitions(parser, token):
 def get_competitions_user_is_participating_in(parser, token):
 	return Competition_Participation_Renderer()
 
+def get_sponsors(parser, token):
+    return Sponsor_Renderer()
+
+#TODO: MOVE OUT OF THIS APP
+#TODO: Make something dynamic that can be configured in admin with pictures and whatnot :)
+class Sponsor_Renderer(template.Node):
+    def render(self, context):
+        return """
+<p><a href="http://datakjeden.no">Datakjeden</a></p>
+<p><a href="http://outland.no">Outland</a></p>
+<p><a href="http://fretex.no">Fretex</a></p>
+<p><a href="http://online.ntnu.no">Online</a></p>
+<p><a href="http://www.nabla.ntnu.no">Nabla</a></p>
+"""
+
 class Competition_Renderer(template.Node):
 	def __init__(self, num_of_competitions):
 		self.num_of_competitions = num_of_competitions
@@ -39,7 +54,7 @@ class Competition_Participation_Renderer(template.Node):
 							user_in += '''
 								<dt><a href="%s">%s</a></dt>
 								<dd>
-								''' % (reverse("root")+'/competitions/'+str(c.id)+'/', c.title)
+								''' % (reverse("competition", args=[c.id]), unicode(c))
 							user_in += 'As [%s]%s<br/>' % (t.tag, t.title)
 							user_in += '''
 								<span class="label %s">%s</span></dd>
@@ -49,7 +64,7 @@ class Competition_Participation_Renderer(template.Node):
 						user_in += '''
 					    	<dt><a href="%s">%s</a></dt>
 							<dd>As self<br/><span class="label %s">%s</span></dd>
-							''' % (reverse("root")+'/competitions/'+str(c.id)+'/', c.title, c.status_label(), c.status_text_verbose())
+							''' % (reverse("competition", args=[c.id]), unicode(c), c.status_label(), c.status_text_verbose())
 		except:
 			#TODO: fix team participations in sidebar.
 			print "TODO: fix team participations in sidebar."
@@ -62,3 +77,4 @@ class Competition_Participation_Renderer(template.Node):
 
 register.tag('num_of_competitions', do_num_of_competitions)
 register.tag('user_in', get_competitions_user_is_participating_in)
+register.tag('sponsors', get_sponsors)
