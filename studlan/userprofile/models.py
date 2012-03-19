@@ -10,7 +10,7 @@ class UserProfile(models.Model):
 
     GENDERS = ((1, 'MALE'), (2, 'FEMALE'))
 
-    user = models.OneToOneField(User, editable=False, related_name="newuserprofile")
+    user = models.OneToOneField(User, editable=False)
 
     nick = models.CharField('nick', max_length=20, 
         help_text='Specify a nick name (display name).')
