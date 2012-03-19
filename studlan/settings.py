@@ -22,7 +22,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 MANAGERS = ADMINS
 
-AUTH_PROFILE_MODULE = 'competition.UserProfile'
+AUTH_PROFILE_MODULE = 'userprofile.UserProfile'
 LOGIN_URL = '/auth/login/'
 
 DATABASES = {
@@ -132,6 +132,8 @@ STATICFILES_DIRS = [
     ]
 
 INSTALLED_APPS = (
+    # django apps
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -139,14 +141,15 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.markup',
-    # Uncomment the next line to enable the admin:
-    'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+
+    # studlan apps
+    'studlan.news',
+    'studlan.competition',
+    'studlan.misc',
+    'studlan.userprofile',
+
+    # other apps
     'south',
-    'news',
-    'competition',
-    'misc'
 )
 
 # A sample logging configuration. The only tangible logging
