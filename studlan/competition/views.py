@@ -8,8 +8,7 @@ from django.http import Http404
 from django.shortcuts import render_to_response, render, redirect, get_object_or_404
 from django.template.context import RequestContext
 
-from studlan.competition.models import Activity, Competition, Team, UserProfile
-from studlan.competition.forms import UserProfileForm
+from studlan.competition.models import Activity, Competition, Team
 
 def main(request):
     competitions = Competition.objects.all()
@@ -261,30 +260,3 @@ def register_user(request):
                                  'log in.')
 
     return redirect('root')
-
-@login_required
-def my_profile(request):
-    user = request.user
-    if request.method == 'GET':
-        form = UserProfileForm(instance=request.user.get_profile())
-    else:
-        form = UserProfileForm(request.POST, instance=request.user.get_profile())
-        if form.is_valid():
-            form.save()
-    
-    profile = user.get_profile()
-
-    return render(request, 'profile.html', {'quser': request.user, 'profile': profile, 'form': form})
-
-def user_profile(request, username):
-    # Using quser for "queried user", as "user" is a reserved variable name in templates
-    quser = get_object_or_404(User, username=username)
-
-    # If the user is authenticated and are doing a lookup on themselves, also create
-    # the form for updating and showing update information.
-    if request.user.is_authenticated() and request.user == quser:
-        return my_profile(request)
-
-    profile = quser.get_profile()
-    
-    return render(request, 'profile.html', {'quser': quser, 'profile': profile})
