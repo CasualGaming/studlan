@@ -24,8 +24,9 @@ studLAN - Profile
 			<h1>Profile</h1>
 			<p>Username: {{ quser.username }}</p>
 			<p>First name: {{ quser.first_name }}</p>
-            {% if user == quser or user.is_staff %}
 			<p>Last name: {{ quser.last_name }}</p>
+            {% if user == quser or user.is_staff %}
+            <p>Email: {{ quser.email }}</p>
             {% endif %}
 		</div>
 		{% if user == quser or user.is_staff %}
