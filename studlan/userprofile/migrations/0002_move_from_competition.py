@@ -7,10 +7,14 @@ from django.db import models
 class Migration(DataMigration):
 
     def forwards(self, orm):
+        # Fetch all objects from old model
         old_profiles = orm['competition.UserProfile'].objects.all()
 
         for old_profile in old_profiles:
+            # Instantiate new model
             new_profile = orm.UserProfile()
+            
+            # Copying fields
             new_profile.user = old_profile.user
             new_profile.nick = old_profile.nick
             new_profile.signed_up = old_profile.signed_up
@@ -21,6 +25,8 @@ class Migration(DataMigration):
             new_profile.address = old_profile.address
             new_profile.zip_code = old_profile.zip_code
             new_profile.phone = old_profile.phone
+            
+            # Save new model
             new_profile.save()
 
     def backwards(self, orm):
