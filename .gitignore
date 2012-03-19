@@ -7,4 +7,4 @@
 .nfs*
 .idea/
 static/
-studlan/dev.db
+studlan/dev.db*
