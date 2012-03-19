@@ -14,7 +14,7 @@ class Migration(DataMigration):
             new_profile.user = old_profile.user
             new_profile.nick = old_profile.nick
             new_profile.signed_up = old_profile.signed_up
-            new_profile.has_payed = old_profile.has_payed
+            new_profile.has_paid = old_profile.has_payed
             new_profile.wants_to_sit_with = old_profile.wants_to_sit_with
             new_profile.gender = old_profile.gender
             new_profile.date_of_birth = old_profile.date_of_birth
@@ -108,7 +108,7 @@ class Migration(DataMigration):
             'address': ('django.db.models.fields.TextField', [], {}),
             'date_of_birth': ('django.db.models.fields.DateField', [], {'default': 'datetime.date.today'}),
             'gender': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
-            'has_payed': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'has_paid': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'nick': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '20'}),

@@ -15,7 +15,7 @@ class UserProfile(models.Model):
     nick = models.CharField('nick', max_length=20, 
         help_text='Specify a nick name (display name).')
     signed_up = models.BooleanField('Signed up')
-    has_payed = models.BooleanField('Has payed')
+    has_paid = models.BooleanField('Has payed')
     wants_to_sit_with = models.TextField('Wants to sit with', help_text='Names/nicks of people this user wants to sit with.', blank=True)
     gender = models.SmallIntegerField('Gender', choices=GENDERS, default=1)
     date_of_birth = models.DateField('Date of birth', default=date.today)
