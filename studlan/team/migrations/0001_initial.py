@@ -17,13 +17,14 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('team', ['Team'])
 
-        # Adding M2M table for field members on 'Team'
-        db.create_table('team_team_members', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('team', models.ForeignKey(orm['team.team'], null=False)),
-            ('user', models.ForeignKey(orm['auth.user'], null=False))
+        # Adding model 'Member'
+        db.create_table('team_member', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('team', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['team.Team'])),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+            ('date_joined', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
-        db.create_unique('team_team_members', ['team_id', 'user_id'])
+        db.send_create_signal('team', ['Member'])
 
 
     def backwards(self, orm):
@@ -31,8 +32,8 @@ class Migration(SchemaMigration):
         # Deleting model 'Team'
         db.delete_table('team_team')
 
-        # Removing M2M table for field members on 'Team'
-        db.delete_table('team_team_members')
+        # Deleting model 'Member'
+        db.delete_table('team_member')
 
 
     models = {
@@ -72,11 +73,18 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
+        'team.member': {
+            'Meta': {'object_name': 'Member'},
+            'date_joined': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'team': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['team.Team']"}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
+        },
         'team.team': {
             'Meta': {'ordering': "['tag', 'title']", 'object_name': 'Team'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'leader': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'newteamleader'", 'to': "orm['auth.User']"}),
-            'members': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "'new_team_members'", 'blank': 'True', 'to': "orm['auth.User']"}),
+            'members': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'new_team_members'", 'symmetrical': 'False', 'through': "orm['team.Member']", 'to': "orm['auth.User']"}),
             'tag': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '10'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         }

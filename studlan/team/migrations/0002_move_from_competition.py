@@ -13,15 +13,23 @@ class Migration(DataMigration):
         for old_team in old_teams:
             # Instantiate new model
             new_team = orm.Team()
-            
+
             # Copying fields
             new_team.title = old_team.title
             new_team.tag = old_team.tag
             new_team.leader = old_team.leader
-            new_team.members = old_team.members
-            
+
             # Save new model
             new_team.save()
+
+            # Fix members
+            for muser in old_team.members.all():
+                member = orm.Member()
+
+                member.team = new_team
+                member.user = muser
+
+                member.save()
 
     def backwards(self, orm):
         raise RuntimeError("Cannot reverse this migration.")
@@ -89,11 +97,18 @@ class Migration(DataMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
+        'team.member': {
+            'Meta': {'object_name': 'Member'},
+            'date_joined': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'team': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['team.Team']"}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
+        },
         'team.team': {
             'Meta': {'ordering': "['tag', 'title']", 'object_name': 'Team'},
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'leader': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'newteamleader'", 'to': "orm['auth.User']"}),
-            'members': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "'new_team_members'", 'blank': 'True', 'to': "orm['auth.User']"}),
+            'members': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'new_team_members'", 'symmetrical': 'False', 'through': "orm['team.Member']", 'to': "orm['auth.User']"}),
             'tag': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '10'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         }
