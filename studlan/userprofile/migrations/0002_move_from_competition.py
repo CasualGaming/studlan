@@ -10,7 +10,17 @@ class Migration(DataMigration):
         old_profiles = orm['competition.UserProfile'].objects.all()
 
         for old_profile in old_profiles:
-            new_profile = orm.UserProfile(instance=old_profile)
+            new_profile = orm.UserProfile()
+            new_profile.user = old_profile.user
+            new_profile.nick = old_profile.nick
+            new_profile.signed_up = old_profile.signed_up
+            new_profile.has_payed = old_profile.has_payed
+            new_profile.wants_to_sit_with = old_profile.wants_to_sit_with
+            new_profile.gender = old_profile.gender
+            new_profile.date_of_birth = old_profile.date_of_birth
+            new_profile.address = old_profile.address
+            new_profile.zip_code = old_profile.zip_code
+            new_profile.phone = old_profile.phone
             new_profile.save()
 
     def backwards(self, orm):
@@ -72,6 +82,20 @@ class Migration(DataMigration):
             'tag': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '10'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         },
+        'competition.userprofile': {
+            'Meta': {'object_name': 'UserProfile'},
+            'address': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
+            'date_of_birth': ('django.db.models.fields.DateField', [], {'default': 'datetime.date.today'}),
+            'gender': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
+            'has_payed': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'nick': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
+            'phone': ('django.db.models.fields.CharField', [], {'max_length': '20', 'blank': 'True'}),
+            'signed_up': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'}),
+            'wants_to_sit_with': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
+            'zip_code': ('django.db.models.fields.IntegerField', [], {'default': '0', 'blank': 'True'})
+        },
         'contenttypes.contenttype': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
             'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
@@ -89,7 +113,7 @@ class Migration(DataMigration):
             'nick': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'signed_up': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'}),
+            'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'newuserprofile'", 'unique': 'True', 'to': "orm['auth.User']"}),
             'wants_to_sit_with': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'zip_code': ('django.db.models.fields.IntegerField', [], {})
         }
