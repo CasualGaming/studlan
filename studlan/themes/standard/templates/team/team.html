@@ -46,7 +46,7 @@ studLAN - Team - {{ team }}
 	<!-- TODO url'ify -->
 	{% if team.is_mine %}
 		<hr />
-		<form action="/team/{{ team.tag }}/add_member.html" method="POST">
+		<form action="/team/{{ team.tag }}/add/" method="POST">
             {% csrf_token %}
             <fieldset>
                 <legend>Members</legend>

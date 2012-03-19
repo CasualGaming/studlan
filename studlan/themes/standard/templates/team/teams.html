@@ -79,7 +79,7 @@ studLAN - Teams
         -->
         {% if user.is_authenticated %}
         <hr />
-        <form action="/teams/create_team.html" method="POST">
+        <form action="{% url create_team %}" method="POST">
             {% csrf_token %}
             <fieldset>
                 <legend>Create new team</legend>
