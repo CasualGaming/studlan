@@ -1,2 +1,10 @@
 *.pyc
+*.*.swp
+*.swp
+*.project
+*.settings
+*.pydevproject
+.nfs*
+.idea/
+static/
 studlan/dev.db
