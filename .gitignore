@@ -8,3 +8,4 @@
 .idea/
 static/
 studlan/dev.db*
+local.py
