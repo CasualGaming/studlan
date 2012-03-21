@@ -8,7 +8,7 @@ from django.http import Http404
 from django.shortcuts import render_to_response, render, redirect, get_object_or_404
 from django.template.context import RequestContext
 
-from studlan.competition.models import Activity, Competition, Team
+from studlan.competition.models import Activity, Competition
 
 def main(request):
     competitions = Competition.objects.all()

@@ -1,7 +1,10 @@
-from django import template
-from studlan.competition.models import Competition, Team
+
 import logging
+
+from django import template
 from django.core.urlresolvers import reverse
+
+from studlan.competition.models import Competition
 
 register = template.Library()
 
