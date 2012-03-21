@@ -9,17 +9,14 @@ import datetime
 class Activity(models.Model):
 
     title = models.CharField('title', max_length=50)
-    image_url = models.CharField('Image url', max_length=100,
-                                 blank=True,
-                                 help_text='Use a mirrored image of at '
-                                 'least a height of 150px.')
+    image_url = models.CharField('Image url', max_length=100, blank=True,
+        help_text='Use a mirrored image of at least a height of 150px.')
     desc = models.TextField('description')
 
     def __unicode__(self):
         return self.title
 
     class Meta:
-
         ordering = ['title']
         verbose_name = 'activity'
         verbose_name_plural = 'activities'
@@ -38,8 +35,6 @@ class Competition(models.Model):
     title = models.CharField('title', max_length=50)
     status = models.SmallIntegerField('status', choices=STATUS_OPTIONS)
     activity = models.ForeignKey(Activity)
-    participants = models.ManyToManyField(User, blank=True)
-    teams = models.ManyToManyField('Team', blank=True)
     use_teams = models.BooleanField('use teams', default=False,
                                     help_text='If checked, participants'
                                     ' will be ignored, and will '
@@ -62,7 +57,7 @@ class Competition(models.Model):
 
     def get_teams(self):
         if self.use_teams:
-            return self.teams.all()
+            return map(lambda x: getattr(x, 'team'), Participation.objects.filter(competition=self))
         else:
             return None
 
@@ -76,21 +71,27 @@ class Competition(models.Model):
         return self.statuses[self.status][1]
 
     class Meta:
-
         ordering = ['status', 'title']
 
-
-class Team(models.Model):
-
-    title = models.CharField('title', max_length=50)
-    tag = models.CharField('tag', max_length=10, unique=True)
-    leader = models.ForeignKey(User, blank=False)
-    members = models.ManyToManyField(User, related_name='team_members',
-            blank=True)
+class Participant(models.Model):
+    user = models.ForeignKey(User, null=True)
+    team = models.ForeignKey('team.Team', null=True)
+    competition = models.ForeignKey(Competition)
 
     def __unicode__(self):
-        return '[%s]%s' % (self.tag, self.title)
+        if user:
+            return user.get_full_name()
+        else:
+            return team.title
+
+    def get_participant(self):
+        if user:
+            return user
+        else:
+            return team
 
     class Meta:
-
-        ordering = ['tag', 'title']
+        unique_together = (
+            ('user', 'competition',),
+            ('team', 'competition',),
+        )
