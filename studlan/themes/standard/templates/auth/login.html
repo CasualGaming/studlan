@@ -6,7 +6,7 @@ studLAN - Login
 
 {% block navigation %}
     <ul class="nav">
-        <li><a href="{% url root %}">News</a></li>
+        <li><a href="/">News</a></li>
 		{% if user.is_authenticated %}
             <li><a href="{% url myprofile %}">Profile</a></li>
         {% endif %}

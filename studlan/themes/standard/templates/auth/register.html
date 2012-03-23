@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}
+studLAN - Register
+{% endblock title %}
+
+{% block navigation %}
+    <ul class="nav">
+        <li><a href="/">News</a></li>
+		{% if user.is_authenticated %}
+            <li><a href="{% url myprofile %}">Profile</a></li>
+        {% endif %}
+        <li><a href="{% url competitions %}">Competitions</a></li>
+        <li><a href="{% url teams %}">Teams</a></li>
+    </ul>
+{% endblock navigation %}
+
+{% block content %}
+    <div class="content">
+        {{ form.non_field_errors }}
+        <form method="post" action="{% url auth_register %}">{% csrf_token %}
+            <fieldset>
+		    <legend>Register new user</legend>
+            {% for field in form %}
+                {% comment %}
+                Code optimization for RadioSelect widget and bootstrap.
+                This way of printing radiobuttons will be implemented in django 1.4
+                {% ifequal field.label 'Gender' %}
+                    <div class="clearfix">
+                        {{ field.label_tag }}
+                        <ul class="inputs-list">
+                        {% for radio in form.gender %}
+                            <li>{{ radio }}</li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                {% endcomment %}
+                <div class="clearfix">
+                    {{ field.errors }}
+                    {{ field.label_tag }}
+                    <div class="input">
+                        {{ field }}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="actions">
+                <input type="submit" class="btn primary" value="Register" />
+            </div>
+            </fieldset>
+        </form>
+    </div>
+
+{% endblock content %}
