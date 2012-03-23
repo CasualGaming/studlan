@@ -130,8 +130,7 @@ def log_in(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                messages.add_message(request, messages.SUCCESS,
-                        'You\'ve successfully logged in.')
+                messages.success(request, 'You have successfully logged in.')
             else:
                 messages.add_message(request, messages.WARNING,
                         'Your account is not active, please try again '
@@ -147,8 +146,7 @@ def log_in(request):
 def log_out(request):
     logout(request)
 
-    messages.add_message(request, messages.SUCCESS,
-                         'You\'ve successfully logged out.')
+    messages.success(request, 'You have successfully logged out.')
     return redirect('root')
 
 
