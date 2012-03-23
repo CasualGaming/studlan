@@ -119,7 +119,7 @@ class Migration(DataMigration):
             'nick': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'signed_up': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'user': ('django.db.models.fields.related.OneToOneField', [], {'related_name': "'newuserprofile'", 'unique': 'True', 'to': "orm['auth.User']"}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'newuserprofile'", 'unique': 'True', 'to': "orm['auth.User']"}),
             'wants_to_sit_with': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'zip_code': ('django.db.models.fields.IntegerField', [], {})
         }

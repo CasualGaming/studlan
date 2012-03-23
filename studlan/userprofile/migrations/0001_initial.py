@@ -11,15 +11,15 @@ class Migration(SchemaMigration):
         # Adding model 'UserProfile'
         db.create_table('userprofile_userprofile', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], unique=True)),
             ('nick', self.gf('django.db.models.fields.CharField')(max_length=20)),
             ('signed_up', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('has_paid', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('wants_to_sit_with', self.gf('django.db.models.fields.TextField')(blank=True)),
             ('gender', self.gf('django.db.models.fields.SmallIntegerField')(default=1)),
             ('date_of_birth', self.gf('django.db.models.fields.DateField')(default=datetime.date.today)),
-            ('address', self.gf('django.db.models.fields.TextField')()),
-            ('zip_code', self.gf('django.db.models.fields.IntegerField')()),
+            ('address', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('zip_code', self.gf('django.db.models.fields.CharField')(max_length=4)),
             ('phone', self.gf('django.db.models.fields.CharField')(max_length=20)),
         ))
         db.send_create_signal('userprofile', ['UserProfile'])
@@ -70,7 +70,7 @@ class Migration(SchemaMigration):
         },
         'userprofile.userprofile': {
             'Meta': {'object_name': 'UserProfile'},
-            'address': ('django.db.models.fields.TextField', [], {}),
+            'address': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'date_of_birth': ('django.db.models.fields.DateField', [], {'default': 'datetime.date.today'}),
             'gender': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
             'has_paid': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
@@ -78,9 +78,9 @@ class Migration(SchemaMigration):
             'nick': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'signed_up': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'unique': 'True'}),
             'wants_to_sit_with': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'zip_code': ('django.db.models.fields.IntegerField', [], {})
+            'zip_code': ('django.db.models.fields.CharField', [], {'max_length': '4'})
         }
     }
 
