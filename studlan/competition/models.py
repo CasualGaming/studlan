@@ -57,7 +57,7 @@ class Competition(models.Model):
 
     def get_teams(self):
         if self.use_teams:
-            return map(lambda x: getattr(x, 'team'), Participation.objects.filter(competition=self))
+            return map(lambda x: getattr(x, 'team'), Participant.objects.filter(competition=self))
         else:
             return None
 
