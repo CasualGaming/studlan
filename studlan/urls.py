@@ -16,7 +16,7 @@ urlpatterns = patterns('',
     url(r'^arrivals/toggle/(?P<user_id>\d+)$', 'studlan.misc.views.toggle_arrival', name='toggle_arrival'),
 
     # app urls
-    url(r'^auth/',      include('studlan.auth.urls')),
+    url(r'^auth/',      include('studlan.authentication.urls')),
     url(r'^profile/',   include('studlan.userprofile.urls')),
     url(r'^team/',      include('studlan.team.urls')),
 

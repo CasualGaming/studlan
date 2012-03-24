@@ -74,6 +74,11 @@ class RegisterForm(forms.Form):
             if User.objects.filter(username=username).count() > 0:
                 raise forms.ValidationError("There is already a user with that username.")    
 
+            # Check email
+            email = cleaned_data['email']
+            if User.objects.filter(email=email).count() > 0:
+                raise forms.ValidationError("There is already a user with that email.")    
+
             # ZIP code digits only
             zip_code = cleaned_data['zip_code']
             if len(zip_code) != 4 or not zip_code.isdigit():

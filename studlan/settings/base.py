@@ -119,6 +119,7 @@ INSTALLED_APPS = (
     'django.contrib.markup',
 
     # studlan apps
+    'studlan.authentication',
     'studlan.competition',
     'studlan.misc',
     'studlan.news',
