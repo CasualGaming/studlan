@@ -55,31 +55,35 @@ def add_member(request, team_tag):
         if request.user != team.leader:
             messages.error(request, "You are not the team leader, you cannot remove team members.")
         else:
-            uid = request.POST.get('selectMember')
-            user = get_object_or_404(User, pk=uid)
-            
-            member = Member()
-            member.team = team
-            member.user = user
-            member.save()
+            user_id = request.POST.get('selectMember')
+            user = get_object_or_404(User, pk=user_id)
+            if len(Member.objects.filter(user=user, team=team)) > 0:
+                messages.error(request, "%s is already on your team." % user)
+            else:
+                member = Member()
+                member.team = team
+                member.user = user
+                member.save()
 
-            messages.success(request, 'User %s added.' % user.username)
+                messages.success(request, 'User %s added.' % user.username)
 
-    return redirect('team', team_tag=team_tag)
+    return redirect(team)
 
 
 def remove_member(request, team_tag, user_id):
     team = get_object_or_404(Team, tag=team_tag)
-    if request.user != team.leader:
-        messages.error(request, "You are not the team leader, you cannot remove team members.")
+    user = get_object_or_404(User, pk=user_id)
+    if request.user != team.leader and request.user != user:
+        messages.error(request, "You are not the team leader, you cannot remove other team members.")
     else:
-        user = User.objects.get(id = user_id)
-        member = get_object_or_404(Member, user=user)
+        member = get_object_or_404(Member, user=user, team=team)
         member.delete()
-        messages.success(request, 'User %s removed.' % user.username)
+        if request.user == user:
+            messages.success(request, 'You have left team %s' % team)
+        else:
+            messages.success(request, 'User %s removed.' % user.username)
 
-    return redirect('team', team_tag=team_tag)
-
+    return redirect(team)
 
 def create_team(request):
     if Team.objects.filter(leader=request.user).count() >= MAX_TEAMS:
@@ -92,6 +96,16 @@ def create_team(request):
         team.tag = request.POST.get('tag')
         team.save()
 
-        messages.success(request, 'Team %s has been created.' % team.title)
-        
-        return redirect('team', team_tag=team.tag)
+        messages.success(request, 'Team %s has been created.' % team)
+        return redirect(team)
+
+def disband_team(request, team_id):
+    team = get_object_or_404(Team, pk=team_id)
+    if request.user != team.leader:
+        messages.error(request, "You can only disband teams that you are leader of.")
+        return redirect(team)
+    else:
+        team.delete()
+
+        messages.success(request, "Team %s was successfully deleted." % team)
+        return redirect('teams')

@@ -20,34 +20,29 @@ studLAN - Team - {{ team }}
 
 {% block content %}
 
-	<h2>[{{ team.tag }}] {{ team.title }}</h2>
+	<h2>{{ team }} {% if team.is_mine %}<a href="{% url disband_team team.id %}">Disband Team</a>{% endif %}</h2>
 	
 	<h3>Leader</h3>
 	<ul>
-		<li><a href="{% url profile team.leader.username %}">{{ team.leader }}</a></li>
+		<li><a href="{% url profile team.leader %}">{{ team.leader }}</a></li>
 	</ul>
 
 	<h3>Members</h3>
-	{% if request.user == team.leader %}
-		<ul>
-		{% for member in team.members.all %}
-	            {% csrf_token %}
-	            <li><a href="{% url profile member.username %}">{{ member }}</a> - <a href="/team/{{ team.tag }}/remove/{{ member.id }}">Remove</a></li>
-        {% endfor %}
-    	</ul>
-	{% else %}
-		<ul>
-		{% for member in team.members.all %}
-			<li><a href="{% url profile member.username %}">{{ member }}</a></li>
-		{% endfor %}
-		</ul>
-	{% endif %}
+    <ul>
+    {% for member in team.members.all %}
+        <li><a href="{% url profile member %}">{{ member }}</a>
+        {% if user == team.leader %}
+            - <a href="{% url remove_member team.tag member.id %}">Remove</a>
+        {% else %}{% if user == member %}
+            - <a href="{% url remove_member team.tag user.id %}">Leave team</a>
+        {% endif %}
+        {% endif %}</li>
+    {% endfor %}
+    </ul>
 	
-	<!-- TODO url'ify -->
-	{% if team.is_mine %}
+	{% if team.is_mine and users|length > 0 %}
 		<hr />
-		<form action="/team/{{ team.tag }}/add/" method="POST">
-            {% csrf_token %}
+		<form action="{% url add_member team.tag %}" method="POST">{% csrf_token %}
             <fieldset>
                 <legend>Members</legend>
                 <div class="clearfix">
