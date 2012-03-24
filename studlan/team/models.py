@@ -12,8 +12,12 @@ class Team(models.Model):
     leader = models.ForeignKey(User, blank=False, related_name="newteamleader")
     members = models.ManyToManyField(User, related_name='new_team_members', through='Member')
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('team', (), {'team_tag': self.tag})
+
     def __unicode__(self):
-        return '[%s]%s' % (self.tag, self.title)
+        return '[%s] %s' % (self.tag, self.title)
 
     class Meta:
         ordering = ['tag', 'title']
