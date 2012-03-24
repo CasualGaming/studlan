@@ -7,6 +7,7 @@ from django.shortcuts import render_to_response, render, redirect, get_object_or
 from django.template.context import RequestContext
 
 from studlan.team.models import Team, Member
+from studlan.settings import MAX_TEAMS
 
 def teams(request):
     teams = Team.objects.all()
@@ -81,12 +82,16 @@ def remove_member(request, team_tag, user_id):
 
 
 def create_team(request):
-    team = Team()
-    team.leader = request.user
-    team.title = request.POST.get('title')
-    team.tag = request.POST.get('tag')
-    messages.add_message(request, messages.SUCCESS,
-                         'Team %s has been created.' % team.title)
-    team.save()
+    if Team.objects.filter(leader=request.user).count() >= MAX_TEAMS:
+        messages.error(request, "You cannot be leader of more than %i teams." % MAX_TEAMS)
+        return redirect('teams')
+    else:
+        team = Team()
+        team.leader = request.user
+        team.title = request.POST.get('title')
+        team.tag = request.POST.get('tag')
+        team.save()
 
-    return redirect('team', team_tag=team.tag)
+        messages.success(request, 'Team %s has been created.' % team.title)
+        
+        return redirect('team', team_tag=team.tag)

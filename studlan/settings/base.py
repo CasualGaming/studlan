@@ -8,6 +8,8 @@ PROJECT_ROOT_DIRECTORY = os.path.join(os.path.dirname(globals()['__file__']),'..
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+MAX_TEAMS = 10
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
     ('dotKom', 'dotkom@online.ntnu.no'),
