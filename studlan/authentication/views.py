@@ -4,10 +4,12 @@ import uuid
 
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.core.mail import send_mail
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 
 from studlan.authentication.forms import LoginForm, RegisterForm
+from studlan.authentication.models import RegisterToken
 from studlan.userprofile.models import UserProfile
 
 def login(request):
@@ -45,6 +47,7 @@ def register(request):
                     username=cleaned['desired_username'], 
                     first_name=cleaned['first_name'], 
                     last_name=cleaned['last_name'],
+                    email=cleaned['email'],
                 )
                 user.set_password(cleaned['password'])
                 user.is_active = False
@@ -72,13 +75,16 @@ You have registered an account at studlan.no.
 
 To use the account you need to verify it. You can do this by visiting the link below.
 
-http://studlan.no/auth/verify/%s/
+http://%s/auth/verify/%s/
 
-""" % (token)
- 
+""" % (request.META['HTTP_HOST'], token)
+
+                send_mail('Verify your account', email_message, 'studlan@online.ntnu.no', [user.email,])
+
                 messages.success(request, 'Registration successful. Check your email for verification instructions.')
 
                 return HttpResponseRedirect('/')        
+
         else:
             form = RegisterForm()
 
