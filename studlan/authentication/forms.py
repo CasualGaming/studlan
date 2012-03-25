@@ -65,26 +65,26 @@ class RegisterForm(forms.Form):
             # currently only checks that it is not after today
             date = cleaned_data['date_of_birth']
             if date >= datetime.date.today():
-                raise forms.ValidationError("You seem to be from the future, please enter a more believable date of birth.")
+                self._errors['date_of_birth'] = self.error_class(["You seem to be from the future, please enter a more believable date of birth."])
 
             # Check passwords
             if cleaned_data['password'] != cleaned_data['repeat_password']:
-                raise forms.ValidationError("Your password do not match.")
+                self._errors['repeat_password'] = self.error_class(["Passwords did not match."])
 
             # Check username
             username = cleaned_data['desired_username']
             if User.objects.filter(username=username).count() > 0:
-                raise forms.ValidationError("There is already a user with that username.")    
+                self._errors['desired_username'] = self.error_class(["There is already a user with that username."])
 
             # Check email
             email = cleaned_data['email']
             if User.objects.filter(email=email).count() > 0:
-                raise forms.ValidationError("There is already a user with that email.")    
+                self._errors['email'] = self.error_class(["There is already a user with that email."])
 
             # ZIP code digits only
             zip_code = cleaned_data['zip_code']
             if len(zip_code) != 4 or not zip_code.isdigit():
-                raise forms.ValidationError("The ZIP code must be 4 digit number.")
+                self._errors['zip_code'] = self.error_class(["The ZIP code must be 4 digit number."])
 
             return cleaned_data 
 
