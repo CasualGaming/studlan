@@ -21,6 +21,7 @@ def login(request):
             if redirect_url:
                 return HttpResponseRedirect(redirect_url)
             return HttpResponseRedirect('/')
+        else: form = LoginForm(request.POST, auto_id=True, error_class=DivErrorList)
     else:
         form = LoginForm()
 
