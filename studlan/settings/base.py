@@ -125,6 +125,7 @@ INSTALLED_APPS = (
     'studlan.competition',
     'studlan.misc',
     'studlan.news',
+    'studlan.sponsor',
     'studlan.team',
     'studlan.userprofile',
 
