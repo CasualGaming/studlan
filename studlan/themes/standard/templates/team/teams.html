@@ -24,42 +24,47 @@ studLAN - Teams
         
         <ul class="tabs">
             {% if current_tab == 'all' %}
-                <li class="active"><a href="{% url teams %}">All teams</a></li>
+                <li class="active"><a href="{% url teams %}?tab=all">All teams</a></li>
             {% else %}
-                <li><a href="{% url teams %}">All teams</a></li>
+                <li><a href="{% url teams %}?tab=all">All teams</a></li>
             {% endif %}
             {% if user.is_authenticated %}
                 {% if current_tab == 'myteams' %}
-                    <li class="active"><a href="{% url teams %}?tab=myteams">My teams</a></li>
+                    <li class="active"><a href="{% url teams %}">My teams</a></li>
            	     {% else %}
-                    <li><a href="{% url teams %}?tab=myteams">My teams</a></li>
+                    <li><a href="{% url teams %}">My teams</a></li>
                 {% endif %}
             {% endif %}
         </ul>
-        <table class="zebra-striped">
-            <thead><th>Tag</th><th>Title</th><th>Leader</th></thead>
-            <tbody>
-                <!-- TODO url'ify -->
-                {% for team in teams %}
-                    {% if current_tab == 'all' %}
-                        <!-- All teams -->
-                        <tr>
-                            <td><a href="/team/{{ team.tag }}">{{ team.tag }}</a></td>
-                            <td>{{ team.title }}</td>
-                            <td>{{ team.leader }}</td>
-                        </tr>
-                    {% endif %}
-                    {% if current_tab == 'myteams' and user.is_authenticated and team.is_mine %}
-                        <!-- My teams -->
-                        <tr>
-                            <td><a href="/team/{{ team.tag }}">{{ team.tag }}</a></td>
-                            <td>{{ team.title }}</td>
-                            <td>{{ team.leader }}</td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
+        {% if has_teams and current_tab == 'my_teams' or current_tab == 'all' %}
+            <table class="zebra-striped">
+                <thead><th>Tag</th><th>Title</th><th>Leader</th></thead>
+                <tbody>
+                    <!-- TODO url'ify -->
+                    {% for team in teams %}
+                        {% if current_tab == 'all' %}
+                            <!-- All teams -->
+                            <tr>
+                                <td><a href="/team/{{ team.tag }}">{{ team.tag }}</a></td>
+                                <td>{{ team.title }}</td>
+                                <td>{{ team.leader }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if current_tab == 'myteams' and user.is_authenticated and team.is_mine %}
+                            <!-- My teams -->
+                            <tr>
+                                <td><a href="/team/{{ team.tag }}">{{ team.tag }}</a></td>
+                                <td>{{ team.title }}</td>
+                                <td>{{ team.leader }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <!-- My teams, and I have no teams... -->
+            <p>You are currently not a member of any team.</a>
+        {% endif %}
         <!--
         <ul>
         {% for team in teams %}

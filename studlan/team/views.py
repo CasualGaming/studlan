@@ -12,19 +12,24 @@ from studlan.settings import MAX_TEAMS
 def teams(request):
     teams = Team.objects.all()
 
+    has_teams = 0
+    
     for team in teams:
         if request.user == team.leader or request.user \
             in team.members.all():
             team.is_mine = True
+            has_teams += 1
         else:
             team.is_mine = False
 
     tab = request.GET.get('tab')
     if tab is None or tab == '':
-        tab = 'all'
+        tab = 'myteams'
 
-    return render_to_response('team/teams.html', {'teams': teams,
-                              'current_tab': tab},
+    return render_to_response('team/teams.html', {
+                              'teams': teams,
+                              'current_tab': tab,
+                              'has_teams': has_teams},
                               context_instance=RequestContext(request))
 
 
