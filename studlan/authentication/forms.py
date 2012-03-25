@@ -5,6 +5,8 @@ import datetime
 from django import forms
 from django.contrib import auth
 from django.contrib.auth.models import User
+from django.forms.util import ErrorList
+from django.utils.safestring import mark_safe
 
 from studlan.userprofile.models import GENDERS
 
@@ -85,3 +87,10 @@ class RegisterForm(forms.Form):
                 raise forms.ValidationError("The ZIP code must be 4 digit number.")
 
             return cleaned_data 
+
+class DivErrorList(ErrorList):
+    def __unicode__(self):
+        return self.as_divs()
+    def as_divs(self):
+        if not self: return u''
+        return mark_safe(u'<div class="errorlist">%s</div>' % ''.join([u'<div class="alert-message block-message error">%s</div>' % e for e in self]))

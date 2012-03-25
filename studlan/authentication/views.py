@@ -8,7 +8,7 @@ from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 
-from studlan.authentication.forms import LoginForm, RegisterForm
+from studlan.authentication.forms import LoginForm, RegisterForm, DivErrorList
 from studlan.authentication.models import RegisterToken
 from studlan.userprofile.models import UserProfile
 
@@ -84,7 +84,8 @@ http://%s/auth/verify/%s/
                 messages.success(request, 'Registration successful. Check your email for verification instructions.')
 
                 return HttpResponseRedirect('/')        
-
+            else:
+                form = RegisterForm(request.POST, auto_id=True, error_class=DivErrorList)
         else:
             form = RegisterForm()
 
