@@ -1,5 +1,7 @@
 {% load news_tags %}
 {% load competitions %}
+{% load sponsor_tags %}
+
 {% if user.is_authenticated %}
 <h4>User Info</h4>
 <dl>
@@ -17,4 +19,4 @@
 <dl>{% user_in %}</dl>
 {% endif %}
 <h4>Sponsors</h4>
-<dl>{% sponsors %}</dl>
+<dl>{% show_sponsor_list %}</dl>
