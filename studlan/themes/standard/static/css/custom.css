@@ -18,6 +18,10 @@ body {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#333333', endColorstr='#222222', GradientType=0);
 }
 
+.brand:hover {
+    text-decoration: none;
+}
+
 .brand img {
     position: absolute;
     top: 4px;
