@@ -23,10 +23,10 @@ studLAN - Login
 		    <legend>Login</legend>
             {% for field in form %} 
 		        <div class="clearfix">
-                    {{ field.errors }}
                     <label>{{ field.label_tag }}</label>
                     <div class="input">
                         {{ field }}
+                        {{ field.errors }}
                     </div>
                 </div>
             {% endfor %}

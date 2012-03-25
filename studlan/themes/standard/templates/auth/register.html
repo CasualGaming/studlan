@@ -36,10 +36,10 @@ studLAN - Register
                     </div>
                 {% endcomment %}
                 <div class="clearfix">
-                    {{ field.errors }}
                     {{ field.label_tag }}
                     <div class="input">
                         {{ field }}
+                        {{ field.errors }}
                     </div>
                 </div>
             {% endfor %}

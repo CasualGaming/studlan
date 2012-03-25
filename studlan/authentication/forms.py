@@ -94,3 +94,10 @@ class DivErrorList(ErrorList):
     def as_divs(self):
         if not self: return u''
         return mark_safe(u'<div class="errorlist">%s</div>' % ''.join([u'<div class="alert-message block-message error">%s</div>' % e for e in self]))
+
+class InlineSpanErrorList(ErrorList):
+    def __unicode__(self):
+        return self.as_spans()
+    def as_spans(self):
+        if not self: return u''
+        return mark_safe(''.join([u'<span class="help-inline alert-message warning">%s</span>' % e for e in self]))

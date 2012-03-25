@@ -8,7 +8,7 @@ from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 
-from studlan.authentication.forms import LoginForm, RegisterForm, DivErrorList
+from studlan.authentication.forms import LoginForm, RegisterForm, DivErrorList, InlineSpanErrorList
 from studlan.authentication.models import RegisterToken
 from studlan.userprofile.models import UserProfile
 
@@ -21,7 +21,7 @@ def login(request):
             if redirect_url:
                 return HttpResponseRedirect(redirect_url)
             return HttpResponseRedirect('/')
-        else: form = LoginForm(request.POST, auto_id=True, error_class=DivErrorList)
+        else: form = LoginForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
     else:
         form = LoginForm()
 
@@ -86,7 +86,7 @@ http://%s/auth/verify/%s/
 
                 return HttpResponseRedirect('/')        
             else:
-                form = RegisterForm(request.POST, auto_id=True, error_class=DivErrorList)
+                form = RegisterForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
         else:
             form = RegisterForm()
 
