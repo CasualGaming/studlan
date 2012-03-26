@@ -32,9 +32,9 @@ studLAN - Team - {{ team }}
     {% for member in team.members.all %}
         <li><a href="{% url profile member %}">{{ member }}</a>
         {% if user == team.leader %}
-            - <a href="{% url remove_member team.tag member.id %}">Remove</a>
+            - <a href="{% url remove_member team.id member.id %}">Remove</a>
         {% else %}{% if user == member %}
-            - <a href="{% url remove_member team.tag user.id %}">Leave team</a>
+            - <a href="{% url remove_member team.id user.id %}">Leave team</a>
         {% endif %}
         {% endif %}</li>
     {% endfor %}
@@ -42,7 +42,7 @@ studLAN - Team - {{ team }}
 	
 	{% if team.is_mine and users|length > 0 %}
 		<hr />
-		<form action="{% url add_member team.tag %}" method="POST">{% csrf_token %}
+		<form action="{% url add_member team.id %}" method="POST">{% csrf_token %}
             <fieldset>
                 <legend>Members</legend>
                 <div class="clearfix">

@@ -4,13 +4,13 @@
 {% load team_tags %}
 
 {% block title %}
-    studLAN - Teams
+    studLAN - My teams
 {% endblock title %}
 
-{% block tabs %}       
+{% block tabs %}
     <ul class="tabs">
-        <li class="active"><a href="{% url teams %}">All teams</a></li>
-        <li><a href="{% url my_teams %}">My teams</a></li>
+        <li><a href="{% url teams %}">All teams</a></li>
+        <li class="active"><a href="{% url my_teams %}">My teams</a></li>
         <li><a href="{% url create_team %}">Create team</a></li>
     </ul>
 {% endblock tabs %}

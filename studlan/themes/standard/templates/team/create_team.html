@@ -1,0 +1,44 @@
+{% extends "team/team_base.html" %}
+{% load markup %}
+{% load misc %}
+{% load team_tags %}
+
+{% block title %}
+    studLAN - Teams
+{% endblock title %}
+
+{% block tabs %}
+    <ul class="tabs">
+        <li><a href="{% url teams %}">All teams</a></li>
+        <li><a href="{% url my_teams %}">My teams</a></li>
+        <li class="active"><a href="{% url create_team %}">Create team</a></li>
+    </ul>
+{% endblock tabs %}
+
+{% block teampage %}
+    <form action="{% url create_team %}" method="POST">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Create new team</legend>
+            <div class="clearfix">
+                <label for="title">Title</label>
+                <div class="input">
+                    <input class="xlarge" id="title" name="title" size="30" type="text" />
+                </div>
+            </div>
+            <div class="clearfix">
+                <label for="tag">Tag</label>
+                <div class="input">
+                    <div class="input-prepend">
+                        <span class="add-on">[tag]</span>
+                        <input class="xlarge" id="tag" name="tag" size="30" type="text" />
+                        <span class="help-block">Must be unique!</span>
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <input type="submit" class="btn primary" value="Create team" />
+            </div>
+        </fieldset>
+    </form>
+{% endblock teampage %}

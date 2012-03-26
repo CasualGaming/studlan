@@ -3,8 +3,6 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-
-
 class Team(models.Model):
     
     title = models.CharField('title', max_length=50)
@@ -14,7 +12,7 @@ class Team(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('team', (), {'team_tag': self.tag})
+        return ('show_team', (), {'team_id': self.id})
 
     def __unicode__(self):
         return '[%s] %s' % (self.tag, self.title)
