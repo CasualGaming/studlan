@@ -9,8 +9,7 @@ class Article(models.Model):
 
     title = models.CharField('title', max_length=50)
     body = models.TextField('body')
-    pub_date = models.DateTimeField('published',
-                                    default=datetime.datetime.now)
+    pub_date = models.DateTimeField('published', default=datetime.datetime.now)
 
     def __unicode__(self):
         return self.title
@@ -19,5 +18,4 @@ class Article(models.Model):
         return len(Article.objects.all())
 
     class Meta:
-
         ordering = ['-pub_date']

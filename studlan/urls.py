@@ -8,19 +8,20 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', 'studlan.news.views.main', name='root'),
+    url(r'^$', 'studlan.news.views.main', name='root', kwargs={'page': 1}),
     url(r'^login.html', 'studlan.competition.views.log_in'),
     url(r'^logout.html', 'studlan.competition.views.log_out'),
     url(r'^register.html', 'studlan.competition.views.register_user'),
-    url(r'^competitions/', include('studlan.competition.urls')),
     url(r'^misc/remove_alert.html', 'studlan.misc.views.remove_alert'),
     url(r'^arrivals/$', 'studlan.misc.views.arrivals', name='arrivals'),
     url(r'^arrivals/toggle/(?P<user_id>\d+)$', 'studlan.misc.views.toggle_arrival', name='toggle_arrival'),
 
     # app urls
-    url(r'^auth/',      include('studlan.authentication.urls')),
-    url(r'^profile/',   include('studlan.userprofile.urls')),
-    url(r'^team/',      include('studlan.team.urls')),
+    url(r'^auth/',          include('studlan.authentication.urls')),
+    url(r'^competitions/',  include('studlan.competition.urls')),
+    url(r'^news/',          include('studlan.news.urls')),
+    url(r'^profile/',       include('studlan.userprofile.urls')),
+    url(r'^team/',          include('studlan.team.urls')),
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),

@@ -2,16 +2,15 @@
 # -*- coding: utf-8 -*-
 
 from studlan.news.models import Article
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render, get_object_or_404
 from django.template.context import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-def main(request):
+def main(request, page):
     objects = Article.objects.all()
     paginator = Paginator(objects, 10)
 
-    page = request.GET.get('page')
     try:
         articles = paginator.page(page)
     except PageNotAnInteger:
@@ -30,5 +29,4 @@ def main(request):
 
         articles = paginator.page(1)
 
-    return render_to_response('news.html', {'news': articles},
-                              context_instance=RequestContext(request))
+    return render(request, 'news/news.html', {'articles': articles, 'page': page})
