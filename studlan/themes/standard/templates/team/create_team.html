@@ -8,11 +8,7 @@
 {% endblock title %}
 
 {% block tabs %}
-    <ul class="tabs">
-        <li><a href="{% url teams %}">All teams</a></li>
-        <li><a href="{% url my_teams %}">My teams</a></li>
-        <li class="active"><a href="{% url create_team %}">Create team</a></li>
-    </ul>
+    {% team_tabs 'create' %}
 {% endblock tabs %}
 
 {% block teampage %}
