@@ -25,9 +25,9 @@ class LoginForm(forms.Form):
             if user.is_active:
                 self.user = user
             else:
-                raise forms.ValidationError("Your account is inactive, contact xxx@xxx.xxx")
+                self._errors['username'] = self.error_class(["Your account is inactive, contact studlan@online.ntnu.no"])
         else:
-            raise forms.ValidationError("Your account does not exist or the user/password combination is incorrect. Did you remember to register?")
+            self._errors['username'] = self.error_class(["The account does not exist, or username/password combination is incorrect."])
         return self.cleaned_data
 
     def login(self, request):
