@@ -1,16 +1,24 @@
 {% if teams|length > 0 %}
-    <table class="zebra-striped">
-        <thead><th>Tag</th><th>Title</th><th>Leader</th></thead>
-        <tbody>
-            {% for team in teams %}
-            <tr>
-                <td><a href="{{ team.get_absolute_url }}">{{ team.tag }}</a></td>
-                <td>{{ team.title }}</td>
-                <td>{{ team.leader }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="span12">
+            <table class="table table-bordered table-striped">
+                <thead><th>Tag</th><th>Title</th><th>Leader</th></thead>
+                <tbody>
+                    {% for team in teams %}
+                    <tr>
+                        <td><a href="{{ team.get_absolute_url }}">{{ team.tag }}</a></td>
+                        <td>{{ team.title }}</td>
+                        <td>{{ team.leader }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>  
+    </div>
 {% else %}
-    <p>No teams to list.</p>
+    <div class="row">
+        <div class="span12">
+            <p>No teams to list.</p>
+        </div>
+    </div>
 {% endif %}
