@@ -8,7 +8,9 @@ from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 
-from studlan.authentication.forms import LoginForm, RegisterForm, DivErrorList, InlineSpanErrorList
+from studlan.authentication.forms import (LoginForm, RegisterForm, 
+                            RecoveryForm, ChangePasswordForm,
+                            DivErrorList, InlineSpanErrorList)
 from studlan.authentication.models import RegisterToken
 from studlan.userprofile.models import UserProfile
 
@@ -93,13 +95,90 @@ http://%s/auth/verify/%s/
         return render(request, 'auth/register.html', {'form': form, })
 
 def verify(request, token):
-    rt = get_object_or_404(RegisterToken, token=token)
+    if request.user.is_authenticated():
+        return HttpResponseRedirect('/')
+    else:
+        rt = get_object_or_404(RegisterToken, token=token)
 
-    user = getattr(rt, 'user')
+        user = getattr(rt, 'user')
 
-    user.is_active = True
-    user.save()
+        user.is_active = True
+        user.save()
+        rt.delete()
 
-    messages.success(request, "User %s successfully activated. You can now log in." % (user.username))
+        messages.success(request, "User %s successfully activated. You can now log in." % user.username)
 
-    return redirect('auth_login')
+        return redirect('auth_login')
+
+def recover(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect('/')
+    else:
+        if request.method == 'POST':
+            form = RecoveryForm(request.POST)
+            if form.is_valid():
+                email = form.cleaned_data['email']
+                users = User.objects.filter(email=email)
+
+                if len(users) == 0:
+                    messages.error(request, "That email is not registered.")
+                    return HttpResponseRedirect('/')        
+
+                user = users[0]
+                user.is_active = False
+                user.save()
+    
+                # Create the registration token
+                token = uuid.uuid4().hex
+                rt = RegisterToken(user=user, token=token)
+                rt.save()
+
+                email_message = u"""
+You have requested a password recovery for the account bound to %s.
+
+If you did not ask for this password recovery, please ignore this email.
+
+Otherwise, click the link below to reset your password;
+http://%s/auth/set_password/%s/
+""" % (email, request.META['HTTP_HOST'], token)
+                
+
+                send_mail('Account recovery', email_message, 'studlan@online.ntnu.no', [email,])
+
+                messages.success(request, 'A recovery link has been sent to %s.' % email)
+
+                return HttpResponseRedirect('/')        
+            else:
+                form = RecoveryForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
+        else:
+            form = RecoveryForm()
+
+        return render(request, 'auth/recover.html', {'form': form})
+
+def set_password(request, token=None): 
+    if request.user.is_authenticated():
+        return HttpResponseRedirect('/')
+    else:
+        rt = get_object_or_404(RegisterToken, token=token)
+       
+        if request.method == 'POST':
+            form = ChangePasswordForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
+            if form.is_valid():
+                user = getattr(rt, 'user')
+
+                user.is_active = True
+                user.set_password(form.cleaned_data['new_password'])
+                user.save()
+                
+                rt.delete()
+
+                messages.success(request, "User %s successfully had it's password changed. You can now log in." % user)
+                
+                return HttpResponseRedirect('/')        
+        else:
+            
+            form = ChangePasswordForm()
+
+            messages.success(request, "Token accepted. Please insert your new password.")
+
+        return render(request, 'auth/set_password.html', {'form': form, 'token': token})

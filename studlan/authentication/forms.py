@@ -25,7 +25,7 @@ class LoginForm(forms.Form):
             if user.is_active:
                 self.user = user
             else:
-                self._errors['username'] = self.error_class(["Your account is inactive, contact studlan@online.ntnu.no"])
+                self._errors['username'] = self.error_class(["Your account is inactive, try to recover it."])
         else:
             self._errors['username'] = self.error_class(["The account does not exist, or username/password combination is incorrect."])
         return self.cleaned_data
@@ -87,6 +87,25 @@ class RegisterForm(forms.Form):
                 self._errors['zip_code'] = self.error_class(["The ZIP code must be 4 digit number."])
 
             return cleaned_data 
+
+class RecoveryForm(forms.Form):
+    email = forms.EmailField(label="Email", max_length=50)
+
+class ChangePasswordForm(forms.Form):
+    old_password = forms.CharField(widget=forms.PasswordInput(render_value=False), label="Old password", required=False)
+    new_password = forms.CharField(widget=forms.PasswordInput(render_value=False), label="New password")
+    repeat_password = forms.CharField(widget=forms.PasswordInput(render_value=False), label="Repeat new password")
+
+    def clean(self):
+        super(ChangePasswordForm, self).clean()
+        if self.is_valid():
+            cleaned_data = self.cleaned_data
+
+            # Check passwords
+            if cleaned_data['new_password'] != cleaned_data['repeat_password']:
+                self._errors['repeat_password'] = self.error_class(["Passwords did not match."])
+
+            return cleaned_data
 
 class DivErrorList(ErrorList):
     def __unicode__(self):
