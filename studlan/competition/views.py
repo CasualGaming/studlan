@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.http import Http404
-from django.shortcuts import render_to_response, render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.template.context import RequestContext
 
 from studlan.competition.models import Activity, Competition, Participant
@@ -85,10 +85,7 @@ def competition_details(request, competition_id):
 
         context['owned_teams'] = owned_teams
 
-        return render(request, 'competition/competition.html', context)
-        
-    else:
-        return render(request, 'competition/competition.html', context)
+    return render(request, 'competition/competition.html', context)
 
 @login_required
 def join(request, competition_id):
