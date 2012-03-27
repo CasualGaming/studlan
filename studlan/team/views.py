@@ -88,9 +88,10 @@ def show_team(request, team_id):
     breadcrumbs = (
         ('studLAN', '/'),
         ('Teams', reverse('teams')),
+        (team, ''),
     )
 
-    return render(request, 'team/team.html', {'team': team, 'users': users2})
+    return render(request, 'team/team.html', {'team': team, 'users': users2, 'breadcrumbs': breadcrumbs})
 
 @login_required
 def add_member(request, team_id):
