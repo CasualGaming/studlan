@@ -10,6 +10,9 @@ register = template.Library()
 
 #--- For competition ---
 
+@register.inclusion_tag('competition/competition_tabs.html')
+def competition_tabs(activities, active):
+    return {'activities': activities, 'active': active}
 
 
 #--- For sidebar ---

@@ -16,6 +16,10 @@ class Activity(models.Model):
     def __unicode__(self):
         return self.title
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('activity_details', (), {'activity_id': self.id})
+
     class Meta:
         ordering = ['title']
         verbose_name = 'activity'
@@ -53,13 +57,36 @@ class Competition(models.Model):
                             'blockquote&gt;')
 
     def __unicode__(self):
-        return self.activity.title + " " + self.title
+        return self.title
 
     def get_teams(self):
         if self.use_teams:
             return map(lambda x: getattr(x, 'team'), Participant.objects.filter(competition=self))
         else:
             return None
+
+    def get_users(self):
+        return map(lambda x: getattr(x, 'user'), Participant.objects.filter(competition=self))
+
+    def get_participants(self):
+        participants = Participant.objects.filter(competition=self)
+        teams = []
+        users = []
+        for participant in participants:
+            if participant.is_team():
+                teams.append(participant.team)
+            else:
+                users.append(participant.user)
+
+        return teams, users
+
+    def has_participant(self, user):
+        if user in self.get_users():
+            return True
+        if self.use_teams:
+            for team in self.get_teams():
+                if user == team.leader or user in team.members.all():
+                    return True
 
     def status_text(self):
         return self.STATUS_OPTIONS[self.status - 1][1]
@@ -70,6 +97,10 @@ class Competition(models.Model):
     def status_label(self):
         return self.statuses[self.status][1]
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('competition_details', (), {'competition_id': self.id})
+
     class Meta:
         ordering = ['status', 'title']
 
@@ -79,19 +110,20 @@ class Participant(models.Model):
     competition = models.ForeignKey(Competition)
 
     def __unicode__(self):
-        if user:
-            return user.get_full_name()
+        if self.user:
+            return self.user.get_full_name()
         else:
-            return team.title
+            return str(self.team)
 
-    def get_participant(self):
-        if user:
-            return user
+    def is_team(self):
+        if self.user:
+            return False
         else:
-            return team
+            return True
 
     class Meta:
         unique_together = (
             ('user', 'competition',),
             ('team', 'competition',),
         )
+        ordering = ['user', 'team']

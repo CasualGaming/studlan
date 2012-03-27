@@ -1,0 +1,92 @@
+{% extends "competition/competition_base.html" %}
+{% load markup %}
+
+{% block title %}
+studLAN - Competition - {{ competition.title }}
+{% endblock title %}
+
+{% block content %}
+    <div class="content">
+        {% if not user.is_authenticated %}
+            <div class="alert-message fade in {{ message.tags }}" data-alert>
+                <a class="close" href="#">x</a>
+                <p>Please log in to register for the competition.</p>
+            </div>
+        {% endif %}        
+        
+        <h2>{{ competition }}</h2>
+        
+        <p>
+            <span class="label {{ competition.status_label }}">{{ competition.status_text_verbose }}</span>
+            <a href="#" class="label info" rel="popover" data-placement="below" data-html="true" data-content="{{ competition.activity.desc|markdown }}" data-original-title="{{ competition.activity.title }}">{{ competition.activity.title }}</a>
+        </p>
+        <div class="activity_image" style="background: url('{{ competition.activity.image_url }}');"></div>
+        <br />
+
+        {% comment %}
+            Show participating teams
+        {% endcomment %}
+        {% if teams|length > 0 %}
+            <h3>Participating teams</h3>
+            <table class="zebra-striped">
+                <thead><th>Team</th><th>Leader</th></thead>
+                <tbody>
+                    {% for team in teams %}
+                        <tr>
+                            <td>{{ team }}</td>
+                            <td>{{ team.leader }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+        {% if users %}
+            <h3>Participants{% if teams %} without a team{% endif %}</h3>
+            <ul>
+                {% for user in users %}
+                    <li><a href="{% url profile user %}">{{ user }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% comment %}
+             Participation form
+        {% endcomment %}
+        <hr />
+        {% if user.is_authenticated %}
+            {% if competition.status == 1 %}
+                <p>
+                {% if not participating %}
+                    {% if competition.use_teams and owned_teams|length > 0 %}
+                        <form action="{% url join_comp competition.id %}" method="POST">
+                            {% csrf_token %}
+                            <select name="team" id="team">
+                                {% for team in owned_teams %}
+                                    <option value="{{ team.id }}">{{ team }}</option>
+                                {% endfor %}
+                            </select>
+                            <input class="btn success" type="submit" value="Join competition (team)"/>
+                        </form>
+                    {% endif %} 
+                    <form action="{% url join_comp competition.id %}" method="POST">{% csrf_token %}
+                        <input type="submit" class="btn success" value="Join competition (solo)" />
+                    </form>
+                {% else %}
+                    <form action="{% url leave_comp competition.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" class="btn danger" value="Leave competition" />
+                    </form>
+                {% endif %}
+                </p>
+            {% endif %}
+            {% if competition.status == 3 %}
+                <!-- not implemented...
+                <a class="btn large danger" href="/competition/{{ competition.id }}/forfeit.html">Forfeit competition</a>
+                -->
+            {% endif %}
+        {% endif %}
+        <h3>Description</h3>
+        <p>{{ competition.desc|markdown }}</p>
+
+    </div>
+{% endblock content %}

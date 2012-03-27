@@ -4,123 +4,155 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.shortcuts import render_to_response, render, redirect, get_object_or_404
 from django.template.context import RequestContext
 
-from studlan.competition.models import Activity, Competition
+from studlan.competition.models import Activity, Competition, Participant
+from studlan.team.models import Team
 
 def main(request):
+    context = {}
     competitions = Competition.objects.all()
-    activities = Activity.objects.all()
+    competitions = shorten_descriptions(competitions, 200)
 
+    context['activities'] = Activity.objects.all()
+    context['competitions'] = competitions
+    context['active'] = 'all'
+
+    breadcrumbs = (
+        ('studLAN', '/'),
+        ('Competitions', ''),
+    )
+    context['breadcrumbs'] = breadcrumbs
+
+    return render(request, 'competition/competitions.html', context)
+
+def activity_details(request, activity_id):
+    activity = get_object_or_404(Activity, pk=activity_id)
+    
+    context = {}
+    competitions = Competition.objects.filter(activity=activity)
+    competitions = shorten_descriptions(competitions, 200)
+
+    context['active'] = activity.id
+    context['activities'] = Activity.objects.all()
+    context['competitions'] = competitions
+
+    breadcrumbs = (
+        ('studLAN', '/'),
+        ('Competitions', reverse('competitions')),
+        (activity, ''),
+    )
+    context['breadcrumbs'] = breadcrumbs
+
+    return render(request, 'competition/competitions.html', context)
+
+def shorten_descriptions(competitions, length):
     for c in competitions:
-        if len(c.desc) >= 200:
-            c.desc = c.desc[:197] + '...'
+        if len(c.desc) > length:
+            c.desc = c.desc[:length-3] + '...'
+    return competitions
 
-    tab = request.GET.get('tab')
-    if tab is None or tab == '':
-        tab = 'all'
+def competition_details(request, competition_id):
+    context = {}
 
-    return render_to_response('competitions.html',
-                              {'competitions': competitions,
-                              'activities': activities,
-                              'current_tab': tab},
-                              context_instance=RequestContext(request))
-
-
-def single(request, competition_id):
     competition = get_object_or_404(Competition, pk=competition_id)
 
-    if not 'http' in competition.activity.image_url:
+    breadcrumbs = (
+        ('studLAN', '/'),
+        ('Competitions', reverse('competitions')),
+        (competition.activity, reverse('activity_details', kwargs={'activity_id': competition.activity.id})),
+        (competition, ''),
+    )
+    
+    context['competition'] = competition
+    context['breadcrumbs'] = breadcrumbs
+
+    teams, users = competition.get_participants()
+
+    context['teams'] = teams
+    context['users'] = users
+    context['participating'] = competition.has_participant(request.user)
+
+    # Insert placeholder image if the image_url is empty
+    if not competition.activity.image_url:
         competition.activity.image_url = 'http://placehold.it/150x150'
 
     if request.user.is_authenticated():
-        leader_of_teams = Team.objects.filter(leader=request.user)
+        owned_teams =  Team.objects.filter(leader=request.user)
 
-        teams_in_competition = []
-        teams_not_in_competition = []
+        context['owned_teams'] = owned_teams
 
-        for x in leader_of_teams:
-            if x in competition.teams.all():
-                teams_in_competition.append(x)
-            else:
-                teams_not_in_competition.append(x)
-
-        has_teams_in_competition = len(teams_in_competition) > 0
-        has_teams_not_in_competition = len(teams_not_in_competition) \
-            > 0 and not has_teams_in_competition
-        is_leader = len(leader_of_teams) > 0
-
-        return render_to_response('competition.html', {
-            'competition': competition,
-            'is_leader': is_leader,
-            'has_teams_in_competition': has_teams_in_competition,
-            'has_teams_not_in_competition': has_teams_not_in_competition,
-            'teams_in_competition': teams_in_competition,
-            'teams_not_in_competition': teams_not_in_competition,
-            }, context_instance=RequestContext(request))
+        return render(request, 'competition/competition.html', context)
+        
     else:
+        return render(request, 'competition/competition.html', context)
 
-        return render_to_response('competition.html',
-                                  {'competition': competition},
-                                  context_instance=RequestContext(request))
-
-
-
+@login_required
 def join(request, competition_id):
-    competition = get_object_or_404(Competition, pk=request.POST['id'])
-    competition.participants.add(request.user)
-    messages.add_message(request, messages.WARNING,
-                         'You\'re now participating in %s.'
-                         % competition.title)
-    return redirect('competition', competition_id=competition_id)
+    competition = get_object_or_404(Competition, pk=competition_id)
+    teams, users = competition.get_participants()
+    
+    # Checks if the user is already in the competition
+    if request.user in users:
+        messages.error(request, "You are already in this competition as a solo player.")
+        return redirect(competition)
+    for team in teams:
+        if request.user == team.leader or request.user in team.members.all():
+            messages.error(request, "You are already in this competition with %s." % team)
+            return redirect(competition)
+    
+    # Checks that a form was posted, and if it contains a team id.
+    if request.method == 'POST':
+        team_id = request.POST.get('team')
+        if team_id:
+            team = get_object_or_404(Team, pk=team_id)
+            participant = Participant(team=team, competition=competition)
+            participant.save()
+        else:
+            participant = Participant(user=request.user, competition=competition)
+            participant.save()
+    
+        messages.success(request, "You have entered %s for this competition." % participant)
+    return redirect(competition)
 
-
+@login_required
 def leave(request, competition_id):
-    competition = get_object_or_404(Competition, pk=request.POST['id'])
-    competition.participants.remove(request.user)
-    messages.add_message(request, messages.WARNING,
-                         'You\'re no longer participating in %s.'
-                         % competition.title)
-    return redirect('competition', competition_id=competition_id)
+    competition = get_object_or_404(Competition, pk=competition_id)
 
+    # If not participating, do nothing
+    if not competition.has_participant(request.user):
+        messages.error(request, "You are not participating in this competition.")
+    else:
+        if request.method == 'POST':
+            if request.user in competition.get_users():
+                participant = Participant.objects.get(user=request.user, competition=competition) 
+                participant.delete()
+                messages.success(request, "You are no longer participating in %s." % competition)
+            else:
+                was_leader = False
+                for team in competition.get_teams():
+                    if request.user == team.leader:
+                        was_leader = True
+                        participant = Participant.objects.get(team=team, competition=competition)
+                        participant.delete()
+                        messages.success(request, "You are have removed %s from %s." % (team, competition))
+                if not was_leader:
+                    messages.error(request, "You cannot remove %s from %S, you are not the team leader." % (team, competition))
 
+    return redirect(competition)
+
+@login_required
 def forfeit(request, competition_id):
     competition = get_object_or_404(Competition, pk=competition_id)
-    messages.add_message(request, messages.ERROR,
-                         'Forfeit not yet implemented!')
-    return redirect('competition', competition_id=competition_id)
+    messages.error(request, 'Forfeit not yet implemented!')
+    return redirect(competition)
 
-
-def join_team(request, competition_id):
-    competition = get_object_or_404(Competition, pk=competition_id)
-    num = request.POST['team']
-    team = Team.objects.filter(id=int(num))
-    competition.teams.add(int(num))
-    messages.add_message(request, messages.SUCCESS,
-                         "You're now participating in %s with the team."
-                          % competition.title)
-    return redirect('competition', competition_id=competition_id)
-
-
-def leave_team(request, competition_id):
-    competition = get_object_or_404(Competition, pk=competition_id)
-    num = request.POST['team']
-    competition.teams.remove(int(num))
-    messages.add_message(request, messages.WARNING,
-                         "You're no longer participating in %s with "
-                         "the team." % competition.title)
-    return redirect('competition', competition_id=competition_id)
-
-
-def forfeit_team(request, competition_id):
-    competition = get_object_or_404(Competition, pk=competition_id)
-    messages.add_message(request, messages.ERROR,
-                         'Forfeit not yet implemented!')
-    return redirect('competition', competition_id=competition_id)
-
-
+# TODO
+# Mode these view out of competition and into auth, 
+# and make some kind of fallback on the plain forms
 def log_in(request):
     username = password = ''
     if request.POST:

@@ -3,14 +3,16 @@
 
 from django.conf.urls.defaults import patterns, url
 
-urlpatterns = patterns(
-    'studlan.competition.views',
+urlpatterns = patterns('studlan.competition.views',
+    # Main comp oversight
     url(r'^$', 'main', name='competitions'),
-    url(r'^(?P<competition_id>\d+)/$', 'single', name='competition'),
-    url(r'^(?P<competition_id>\d+)/join.html', 'join'),
-    url(r'^(?P<competition_id>\d+)/leave.html', 'leave'),
-    url(r'^(?P<competition_id>\d+)/forfeit.html', 'forfeit'),
-    url(r'^(?P<competition_id>\d+)/join_team.html', 'join_team'),
-    url(r'^(?P<competition_id>\d+)/leave_team.html', 'leave_team'),
-    url(r'^(?P<competition_id>\d+)/forfeit_team.html', 'forfeit_team'),
-    )
+
+    # Competition related
+    url(r'^(?P<competition_id>\d+)/$', 'competition_details', name='competition_details'),
+    url(r'^(?P<competition_id>\d+)/join/', 'join', name='join_comp'),
+    url(r'^(?P<competition_id>\d+)/leave/', 'leave', name='leave_comp'),
+    url(r'^(?P<competition_id>\d+)/forfeit/', 'forfeit', name='forfeit_comp'),
+
+    # Activiy related
+    url(r'^activity/(?P<activity_id>\d+)/$', 'activity_details', name='activity_details'),
+)

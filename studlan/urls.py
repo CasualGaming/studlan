@@ -18,7 +18,7 @@ urlpatterns = patterns('',
 
     # app urls
     url(r'^auth/',          include('studlan.authentication.urls')),
-    url(r'^competitions/',  include('studlan.competition.urls')),
+    url(r'^competition/',   include('studlan.competition.urls')),
     url(r'^news/',          include('studlan.news.urls')),
     url(r'^profile/',       include('studlan.userprofile.urls')),
     url(r'^team/',          include('studlan.team.urls')),
