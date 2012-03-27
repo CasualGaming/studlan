@@ -25,7 +25,7 @@ studLAN - Register Arrivals
 	<span>Filter: </span><input type="text" id="FilterTextBox" name="FilterTextBox" />
 	<br /><br />
 	<table class="zebra-striped filterable">
-		<thead><th>Username</th><th>Full name</th><th>Email Address</th><th>Signed Up</th><th>Arrived</th></thead>
+		<thead><th>Username</th><th>Full name</th><th>Email Address</th><th>Signed Up</th><th>Paid</th></thead>
 		<tbody>
 			{% for user in users %}
 				<tr>
@@ -38,7 +38,7 @@ studLAN - Register Arrivals
 						<td><input type="checkbox" disabled /></td>
 					{% endif %}
 					<td>
-					{% if user.get_profile.has_payed %}
+					{% if user.get_profile.has_paid %}
 						<input type="checkbox" name="arrived" disabled checked /> <a class="label success" href="{% url toggle_arrival user.id %}">Toggle</a>
 					{% else %}
 						<input type="checkbox" name="arrived" disabled /> <a class="label error" href="{% url toggle_arrival user.id %}">Toggle</a>
