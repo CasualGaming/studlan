@@ -10,7 +10,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.template.context import RequestContext
 
 from studlan.competition.models import Activity, Competition, Participant
-from studlan.team.models import Team
 
 def main(request):
     context = {}
