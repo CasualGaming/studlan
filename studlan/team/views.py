@@ -37,6 +37,7 @@ def create_team(request):
     else:
         return render(request, 'team/create_team.html', {})
 
+@login_required
 def disband_team(request, team_id):
     team = get_object_or_404(Team, pk=team_id)
     if request.user != team.leader:
@@ -68,7 +69,7 @@ def show_team(request, team_id):
                               'users': users2},
                               context_instance=RequestContext(request))
 
-
+@login_required
 def add_member(request, team_id):
     if request.method == 'POST':
         team = get_object_or_404(Team, pk=team_id)
@@ -89,7 +90,7 @@ def add_member(request, team_id):
 
     return redirect(team)
 
-
+@login_required
 def remove_member(request, team_id, user_id):
     team = get_object_or_404(Team, pk=team_id)
     user = get_object_or_404(User, pk=user_id)
