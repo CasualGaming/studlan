@@ -98,7 +98,7 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 ROOT_URLCONF = 'studlan.urls'
 
-THEME_NAME = 'standard'
+THEME_NAME = 'bootstrap202'
 
 THEME_DIRECTORY = os.path.join(PROJECT_ROOT_DIRECTORY, 'themes', THEME_NAME)
 

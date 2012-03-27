@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block navigation %}
+    <ul class="nav">
+        <li><a href="{% url root %}">News</a></li>
+        {% if request.user.is_authenticated %}
+            <li><a href="{% url myprofile %}">Profile</a></li>
+        {% endif %}
+        <li><a href="{% url competitions %}">Competitions</a></li>
+        <li class="active"><a href="{% url teams %}">Teams</a></li>
+    </ul>
+{% endblock navigation %}
+
+{% block content %}
+    <div class="content">
+        <h1>Teams</h1>
+        
+        {% block tabs %}
+        {% endblock tabs %}
+        
+        {% block teampage %}
+        {% endblock teampage %}
+
+    </div>
+{% endblock content %}

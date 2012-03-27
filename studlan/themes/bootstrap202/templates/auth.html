@@ -1,0 +1,73 @@
+{% if not user.is_authenticated %}
+<div id="modal-from-dom-register" class="modal hide fade" style="display: none; ">
+    <div class="modal-header">
+        <a href="#" class="close">x</a>
+        <h3>Register</h3>
+    </div>
+    <div class="modal-body">
+        <form action="/register.html" method="POST">
+        {% csrf_token %}
+        <div class="clearfix">
+            <label for="username">Username</label>
+            <div class="input">
+                <input size="30" class="xlarge" id="username" type="text" name="username" />
+            </div>
+        </div>
+        <div class="clearfix">
+            <label for="password">Password</label>
+            <div class="input">
+                <input size="30" class="xlarge" id="password" type="password" name="password" />
+            </div>
+        </div>
+        <div class="clearfix">
+            <label for="fname">First name</label>
+            <div class="input">
+                <input size="30" class="xlarge" id="fname" type="text" name="fname" />
+            </div>
+        </div>
+        <div class="clearfix">
+            <label for="lname">Last name</label>
+            <div class="input">
+                <input size="30" class="xlarge" id="lname" type="text" name="lname" />
+            </div>
+        </div>
+        <div class="clearfix">
+            <label for="email">Email</label>
+            <div class="input">
+                <input size="30" class="xlarge" id="email" type="text" name="email" />
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <input type="submit" class="btn primary" value="Register" />
+        </form>
+    </div>
+</div>
+<div id="modal-from-dom-login" class="modal hide fade" style="display: none; ">
+    <div class="modal-header">
+        <a href="#" class="close">x</a>
+        <h3>Please log in below</h3>
+    </div>
+    <div class="modal-body">
+        <form action="/login.html" method="POST">
+            {% csrf_token %}
+            <div class="clearfix">
+                <label for="username">Username</label>
+                <div class="input">
+                    <input size="30" class="xlarge" id="username" type="text" name="username" />
+                </div>
+            </div>
+            <div class="clearfix">
+                <label for="password">Password</label>
+                <div class="input">
+                    <input size="30" class="xlarge" id="password" type="password" name="password" />
+                </div>
+            </div>
+    </div>
+    <div class="modal-footer">
+        <input type="submit" class="btn primary" value="Log in" />
+        </form>
+    </div>
+</div>
+{% endif %}
+

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load misc %}
+
+{% block title %}
+studLAN - Profile
+{% endblock title %}
+
+{% block navigation %}
+    <ul class="nav">
+        <li><a href="{% url root %}">News</a></li>
+		{% if user.is_authenticated %}
+            <li class="active"><a href="{% url myprofile %}">Profile</a></li>
+        {% endif %}
+        <li><a href="{% url competitions %}">Competitions</a></li>
+        <li><a href="{% url teams %}">Teams</a></li>
+    </ul>
+{% endblock navigation %}
+
+{% block content %}
+
+	<div class="content">
+		<div>
+			<h1>Profile</h1>
+			<p>Username: {{ quser.username }}</p>
+			<p>First name: {{ quser.first_name }}</p>
+			<p>Last name: {{ quser.last_name }}</p>
+            {% if user == quser or user.is_staff %}
+            <p>Email: {{ quser.email }}</p>
+            {% endif %}
+		</div>
+		{% if user == quser or user.is_staff %}
+			<hr />
+			<div>
+				<h1>Additional information</h1>
+				<p>Nick: {{ profile.nick }}</p>
+				<p>Signed up: {{ profile.signed_up }}</p>
+				<p>Has payed: {{ profile.has_payed }}</p>
+				<p>Wants to sit with: {{ profile.wants_to_sit_with }}</p>
+				<p>Gender: {{ profile.get_gender_display|lower|capfirst }}</p>
+				<p>Date of birth: {{ profile.date_of_birth }}</p>
+				<p>Street address: {{ profile.address }}</p>
+				<p>Zip/Postal code: {{ profile.zip_code }}</p>
+				<p>Phone: {{ profile.phone }}</p>
+				<em>Only visible to you and studLAN administrators.</em>
+			</div>
+        {% endif %}
+        {% if form %}
+			<hr />
+			<div>
+				<form action="/profile/" method="POST">{% csrf_token %}
+		            <fieldset>
+		                <legend>Update information</legend>
+                        {% for field in form %}
+		                <div class="clearfix">
+		                    <label>{{ field.label_tag }}</label>
+		                    <div class="input">
+                                {{ field }}
+		                    </div>
+		                </div>
+		                {% endfor %}
+		                <div class="actions">
+		                    <input type="submit" class="btn primary" value="Update" />
+		                </div>
+		            </fieldset>
+		        </form>
+			</div>
+		{% endif %}
+	</div>
+
+{% endblock content %}
