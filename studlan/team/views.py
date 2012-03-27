@@ -3,8 +3,9 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.db.models import Q
-from django.shortcuts import render_to_response, render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.template.context import RequestContext
 
 from studlan.team.models import Team, Member
@@ -12,12 +13,25 @@ from studlan.settings import MAX_TEAMS
 
 def teams(request):
     teams = Team.objects.all()
-    return render(request, 'team/teams.html', {'teams': teams})
+
+    breadcrumbs = (
+        ('studLAN', '/'),
+        ('Teams', ''),
+    )
+
+    return render(request, 'team/teams.html', {'teams': teams, 'breadcrumbs': breadcrumbs})
 
 @login_required
 def my_teams(request):
     teams = Team.objects.filter(Q(leader=request.user) | Q(members=request.user))
-    return render(request, 'team/my_teams.html', {'teams': teams})
+
+    breadcrumbs = (
+        ('studLAN', '/'),
+        ('Teams', reverse('teams')),
+        ('My teams', ''),
+    )
+
+    return render(request, 'team/my_teams.html', {'teams': teams, 'breadcrumbs': breadcrumbs})
 
 @login_required
 def create_team(request):
@@ -35,7 +49,13 @@ def create_team(request):
             messages.success(request, 'Team %s has been created.' % team)
             return redirect(team)
     else:
-        return render(request, 'team/create_team.html', {})
+        breadcrumbs = (
+            ('studLAN', '/'),
+            ('Teams', reverse('teams')),
+            ('Create team', ''),
+        )
+
+        return render(request, 'team/create_team.html', {'breadcrumbs': breadcrumbs})
 
 @login_required
 def disband_team(request, team_id):
@@ -64,10 +84,13 @@ def show_team(request, team_id):
                 users2.append(user)
 
     users2.sort(key=lambda x: x.username.lower(), reverse=False)
+    
+    breadcrumbs = (
+        ('studLAN', '/'),
+        ('Teams', reverse('teams')),
+    )
 
-    return render_to_response('team/team.html', {'team': team,
-                              'users': users2},
-                              context_instance=RequestContext(request))
+    return render(request, 'team/team.html', {'team': team, 'users': users2})
 
 @login_required
 def add_member(request, team_id):
