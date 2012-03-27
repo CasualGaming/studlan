@@ -53,16 +53,42 @@
                 </div>
             </div>
             <div class="content">
-                {% if messages %}
-                {% for message in messages %}
-                <div class="alert-message fade in {{ message.tags }}" data-alert>
-                    <a class="close" href="#">x</a>
-                    <p>{{ message }}</p>
-                </div>
-                {% endfor %}
+                {% if breadcrumbs %}
+                    <ul class="breadcrumb">
+                    {% for text, link in breadcrumbs %}
+                        {% if not forloop.last %}
+                            <li><a href="{{ link }}">{{ text }}</a> <span class="divider">/</span></li>
+                        {% else %}
+                            <li class="active">{{ text }}</li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
                 {% endif %}
+
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert-message fade in {{ message.tags }}" data-alert>
+                        <a class="close" href="#">x</a>
+                        <p>{{ message }}</p>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+
                 {% block content %}
                 {% endblock content %}
+
+                {% if breadcrumbs %}
+                    <ul class="breadcrumb">
+                    {% for text, link in breadcrumbs %}
+                        {% if not forloop.last %}
+                            <li><a href="{{ link }}">{{ text }}</a> <span class="divider">/</span></li>
+                        {% else %}
+                            <li class="active">{{ text }}</li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+
                 <footer>
                 <p><a
                     href="https://github.com/dotKom/studlan">https://github.com/dotKom/studlan</a></p>
