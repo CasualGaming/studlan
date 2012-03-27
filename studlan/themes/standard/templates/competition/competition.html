@@ -33,8 +33,8 @@ studLAN - Competition - {{ competition.title }}
                 <tbody>
                     {% for team in teams %}
                         <tr>
-                            <td>{{ team }}</td>
-                            <td>{{ team.leader }}</td>
+                            <td><a href="{{ team.get_absolute_url }}">{{ team }}</a></td>
+                            <td><a href="{% url profile team.leader %}">{{ team.leader }}</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
