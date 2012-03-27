@@ -99,7 +99,7 @@ def remove_member(request, team_id, user_id):
         member = get_object_or_404(Member, user=user, team=team)
         member.delete()
         if request.user == user:
-            messages.success(request, 'You have left team %s' % team)
+            messages.success(request, 'You have left team %s.' % team)
         else:
             messages.success(request, 'User %s removed.' % user.username)
 
