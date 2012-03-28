@@ -12,29 +12,33 @@
 {% endblock tabs %}
 
 {% block teampage %}
-    <form action="{% url create_team %}" method="POST">
-        {% csrf_token %}
-        <fieldset>
-            <legend>Create new team</legend>
-            <div class="clearfix">
-                <label for="title">Title</label>
-                <div class="input">
-                    <input class="xlarge" id="title" name="title" size="30" type="text" />
-                </div>
-            </div>
-            <div class="clearfix">
-                <label for="tag">Tag</label>
-                <div class="input">
-                    <div class="input-prepend">
-                        <span class="add-on">[tag]</span>
-                        <input class="xlarge" id="tag" name="tag" size="30" type="text" />
-                        <span class="help-block">Must be unique!</span>
+    <div class="row">
+        <div class="span12">
+            <form class="form-horizontal" action="{% url create_team %}" method="POST">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>Create new team</legend>
+                    <div class="control-group">
+                        <label class="control-label" for="title">Title</label>
+                        <div class="controls">
+                            <input class="input-xlarge" id="title" name="title" size="30" type="text" />
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="actions">
-                <input type="submit" class="btn primary" value="Create team" />
-            </div>
-        </fieldset>
-    </form>
+                    <div class="control-group">
+                        <label class="control-label" for="tag">Tag</label>
+                        <div class="controls">
+                            <div class="input-prepend">
+                                <span class="add-on">[tag]</span>
+                                <input class="input-xlarge" id="tag" name="tag" size="30" type="text" />
+                                <span class="help-block">Must be unique!</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <input type="submit" class="btn btn-primary" value="Create team" />
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
 {% endblock teampage %}
