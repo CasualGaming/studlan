@@ -21,6 +21,31 @@
                     <a class="brand" href="{% url root %}"><img src="{{ STATIC_URL }}mushroom.png" />&nbsp;&nbsp;&nbsp;&nbsp;studLAN</a>
                     {% block navigation %}
                     {% endblock navigation %}
+
+                    {% if not user.is_authenticated %}
+                        <p class="pull-right">
+                            <a href="{% url auth_register %}">Register</a>
+                            <!-- For spacing similar to .nav -->
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="{% url auth_login %}">Log in</a>
+                        </p>
+                    {% else %}
+                        <p class="pull-right">
+                            {% if user.is_staff %}
+                                <a class="" href="/arrivals">Register Arrivals</a>
+                                <!-- For spacing similar to .nav -->
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <a class="" href="/admin">Admin</a>
+                                <!-- For spacing similar to .nav -->
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                            {% endif %}
+                            <a href="{% url auth_logout %}">Log out ({{ user }})</a>
+                        </p>
+                    {% endif %}
+                    {% comment %}
+
+                    This is template code used with the floating login and register forms.
+
                     {% if not user.is_authenticated %}
                         <p class="pull-right">
                             <a data-controls-modal="modal-from-dom-register"
@@ -43,6 +68,7 @@
                             <a class="" href="/logout.html">Log out ({{ user }})</a>
                         </p>
                     {% endif %}
+                    {% endcomment %}
                 </div>
             </div>
         </div>
