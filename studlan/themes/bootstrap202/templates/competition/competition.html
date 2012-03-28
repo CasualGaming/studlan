@@ -7,6 +7,20 @@ studLAN - Competition - {{ competition.title }}
 
 {% block content %}
     <div class="row">
+        <div class="span12">
+            <ul class="breadcrumb">
+                {% for b in breadcrumbs %}
+                    {% if b.1 != '' %}
+                        <li><a href="{{ b.1 }}">{{ b.0 }}</a><span class="divider">/</span></li>
+                    {% else %}
+                        <li>{{ b.0 }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    
+    <div class="row">
         <div class="span12"><h2>{{ competition }}</h2></div>
     </div>
     <div class="row">
@@ -76,9 +90,9 @@ studLAN - Competition - {{ competition.title }}
                 <div class="span12">
                     {% if not participating %}
                         {% if competition.use_teams and owned_teams|length > 0 %}
-                            <form action="{% url join_comp competition.id %}" method="POST">
+                            <form class="well form-inline" action="{% url join_comp competition.id %}" method="POST">
                                 {% csrf_token %}
-                                <select name="team" id="team">
+                                <select class="input-small" name="team" id="team">
                                     {% for team in owned_teams %}
                                         <option value="{{ team.id }}">{{ team }}</option>
                                     {% endfor %}
@@ -86,11 +100,11 @@ studLAN - Competition - {{ competition.title }}
                                 <input class="btn btn-success" type="submit" value="Join competition (team)"/>
                             </form>
                         {% endif %} 
-                        <form action="{% url join_comp competition.id %}" method="POST">{% csrf_token %}
+                        <form class="well form-inline" action="{% url join_comp competition.id %}" method="POST">{% csrf_token %}
                             <input type="submit" class="btn btn-success" value="Join competition (solo)" />
                         </form>
                     {% else %}
-                        <form action="{% url leave_comp competition.id %}" method="POST">
+                        <form class="well form-inline" action="{% url leave_comp competition.id %}" method="POST">
                             {% csrf_token %}
                             <input type="submit" class="btn btn-danger" value="Leave competition" />
                         </form>

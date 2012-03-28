@@ -18,8 +18,8 @@
     <body>
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
-                <div class="container-fluid">
-                    <a class="brand" href="{% url root %}"><img src="{{ STATIC_URL }}mushroom.png" />&nbsp;&nbsp;&nbsp;&nbsp;studLAN beta</a>
+                <div class="container">
+                    <a class="brand" href="{% url root %}"><img src="{{ STATIC_URL }}mushroom.png" />studLAN</a>
                     {% block navigation %}
                     {% endblock navigation %}
                     {% if not user.is_authenticated %}
