@@ -9,6 +9,7 @@ from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 
+from studlan import settings
 from studlan.authentication.forms import (LoginForm, RegisterForm, 
                             RecoveryForm, ChangePasswordForm,
                             DivErrorList, InlineSpanErrorList)
@@ -81,9 +82,12 @@ To use the account you need to verify it. You can do this by visiting the link b
 
 http://%s/auth/verify/%s/
 
+Note that tokens have a valid lifetime of 24 hours. If you do not use this
+link within 24 hours, it will be invalid, and you will need to use the password
+recovery option to get your account verified.
 """ % (request.META['HTTP_HOST'], token)
 
-                send_mail('Verify your account', email_message, 'studlan@online.ntnu.no', [user.email,])
+                send_mail('Verify your account', email_message, settings.STUDLAN_FROM_MAIL, [user.email,])
 
                 messages.success(request, 'Registration successful. Check your email for verification instructions.')
 
@@ -100,16 +104,21 @@ def verify(request, token):
         return HttpResponseRedirect('/')
     else:
         rt = get_object_or_404(RegisterToken, token=token)
+        
+        if rt.is_valid:
+            user = getattr(rt, 'user')
 
-        user = getattr(rt, 'user')
+            user.is_active = True
+            user.save()
+            rt.delete()
 
-        user.is_active = True
-        user.save()
-        rt.delete()
+            messages.success(request, "User %s successfully activated. You can now log in." % user.username)
 
-        messages.success(request, "User %s successfully activated. You can now log in." % user.username)
-
-        return redirect('auth_login')
+            return redirect('auth_login')
+        else:
+            messages.error(request, "The token has expired. Please use the password recovery to get a new token.")
+            return HttpResponseRedirect('/')        
+            
 
 def recover(request):
     if request.user.is_authenticated():
@@ -141,10 +150,14 @@ If you did not ask for this password recovery, please ignore this email.
 
 Otherwise, click the link below to reset your password;
 http://%s/auth/set_password/%s/
+
+Note that tokens have a valid lifetime of 24 hours. If you do not use this
+link within 24 hours, it will be invalid, and you will need to use the password
+recovery option again to get your account verified.
 """ % (email, request.META['HTTP_HOST'], token)
                 
 
-                send_mail('Account recovery', email_message, 'studlan@online.ntnu.no', [email,])
+                send_mail('Account recovery', email_message, settings.STUDLAN_FROM_MAIL, [email,])
 
                 messages.success(request, 'A recovery link has been sent to %s.' % email)
 
@@ -162,24 +175,29 @@ def set_password(request, token=None):
     else:
         rt = get_object_or_404(RegisterToken, token=token)
        
-        if request.method == 'POST':
-            form = ChangePasswordForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
-            if form.is_valid():
-                user = getattr(rt, 'user')
+        if rt.is_valid:
+            if request.method == 'POST':
+                form = ChangePasswordForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
+                if form.is_valid():
+                    user = getattr(rt, 'user')
 
-                user.is_active = True
-                user.set_password(form.cleaned_data['new_password'])
-                user.save()
-                
-                rt.delete()
+                    user.is_active = True
+                    user.set_password(form.cleaned_data['new_password'])
+                    user.save()
+                    
+                    rt.delete()
 
-                messages.success(request, "User %s successfully had it's password changed. You can now log in." % user)
+                    messages.success(request, "User %s successfully had it's password changed. You can now log in." % user)
+                    
+                    return HttpResponseRedirect('/')        
+            else:
                 
-                return HttpResponseRedirect('/')        
+                form = ChangePasswordForm()
+
+                messages.success(request, "Token accepted. Please insert your new password.")
+
+            return render(request, 'auth/set_password.html', {'form': form, 'token': token})
+
         else:
-            
-            form = ChangePasswordForm()
-
-            messages.success(request, "Token accepted. Please insert your new password.")
-
-        return render(request, 'auth/set_password.html', {'form': form, 'token': token})
+            messages.error(request, "The token has expired. Please use the password recovery to get a new token.")
+            return HttpResponseRedirect('/')        
