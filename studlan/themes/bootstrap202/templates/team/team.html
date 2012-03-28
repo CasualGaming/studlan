@@ -20,46 +20,72 @@ studLAN - Team - {{ team }}
 
 {% block content %}
 
-	<h2>{{ team }} {% if team.is_mine %}<a href="{% url disband_team team.id %}">Disband Team</a>{% endif %}</h2>
+    <div class="row">
+        <div class="span12">
+            <h2>{{ team }} {% if team.is_mine %}<a class="btn btn-large btn-danger" href="{% url disband_team team.id %}"><i class="icon-remove icon-white"></i> Disband Team</a>{% endif %}</h2>
+        </div>
+    </div>
 	
-	<h3>Leader</h3>
-	<ul>
-		<li><a href="{% url profile team.leader %}">{{ team.leader }}</a></li>
-	</ul>
+    <div class="row">
+        <div class="span12">
+            <h3>Leader</h3>
+        </div>
+    </div>
 
-	<h3>Members</h3>
-    <ul>
-    {% for member in team.members.all %}
-        <li><a href="{% url profile member %}">{{ member }}</a>
-        {% if user == team.leader %}
-            - <a href="{% url remove_member team.id member.id %}">Remove</a>
-        {% else %}{% if user == member %}
-            - <a href="{% url remove_member team.id user.id %}">Leave team</a>
-        {% endif %}
-        {% endif %}</li>
-    {% endfor %}
-    </ul>
+    <div class="row">
+        <div class="span12">
+            <ul>
+                <li><a href="{% url profile team.leader %}">{{ team.leader }}</a></li>
+            </ul>
+        </div>
+    </div>
+	
+    <div class="row">
+        <div class="span12">
+            <h3>Members</h3>
+        </div>
+    </div>
+	<div class="row">
+        <div class="span12">
+            <ul>
+            {% for member in team.members.all %}
+                <li><a href="{% url profile member %}">{{ member }}</a>
+                {% if user == team.leader %}
+                    - <a href="{% url remove_member team.id member.id %}">Remove</a>
+                {% else %}{% if user == member %}
+                    - <a href="{% url remove_member team.id user.id %}">Leave team</a>
+                {% endif %}
+                {% endif %}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+    
 	
 	{% if team.is_mine and users|length > 0 %}
-		<hr />
-		<form action="{% url add_member team.id %}" method="POST">{% csrf_token %}
-            <fieldset>
-                <legend>Members</legend>
-                <div class="clearfix">
-                	<label for="select">Select</label>
-                	<div class="input">
-	                	<select id="selectMember" name="selectMember">
-	                		{% for user in users %}
-	                			<option value="{{ user.id }}">{{ user }}</option>
-	                		{% endfor %}
-	                	</select>
-                	</div>
-                </div>
-                <div class="actions">
-                    <input type="submit" class="btn primary" value="Add member" />
-                </div>
-            </fieldset>
-        </form>
+        <div class="row">
+            <div class="span12">
+                <form class="form-horizontal" action="{% url add_member team.id %}" method="POST">{% csrf_token %}
+                    <fieldset>
+                        <legend>Add member</legend>
+                        <div class="control-group">
+                            <label class="control-label" for="select">Select</label>
+                            <div class="controls">
+                                <select id="selectMember" name="selectMember">
+                                    {% for user in users %}
+                                        <option value="{{ user.id }}">{{ user }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <input type="submit" class="btn btn-primary" value="Add member" />
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+		
 	{% endif %}
 
 {% endblock content %}
