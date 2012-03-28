@@ -32,8 +32,8 @@
                     {% else %}
                         <ul class="pull-right">
                             <div class="btn-group">
-                                <a class="btn btn-primary" href="{% url myprofile %}"><i class="icon-user icon-white"></i> {{ user }}</a>
-                                <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                                <a class="btn btn-inverse" href="{% url myprofile %}"><i class="icon-user icon-white"></i> {{ user }}</a>
+                                <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="{% url myprofile %}"><i class="icon-pencil"></i> Edit profile</a></li>
                                     {% if user.is_staff %}
