@@ -18,7 +18,7 @@ studLAN - News
 
 {% block content %}
     <div class="row"><div class="span12"><h1>News</h1></div></div>
-    {% for article in news.object_list %}
+    {% for article in articles.object_list %}
         <div class="row">
             <div class="span12">
                 <h2>{{ article.title }}</h2>
@@ -32,26 +32,26 @@ studLAN - News
             <div class="span12">
                 <ul>
                     <span class="step-links">
-                        {% if news.has_previous %}
+                        {% if articles.has_previous %}
                             <li class="prev">
-                                <a href="?page={{ news.previous_page_number }}">&larr; Previous</a>
+                                <a href="{% url news articles.previous_page_number %}">&larr; Previous</a>
                         {% else %}
                             <li class="prev disabled">
                                 <a href="#">&larr; Previous</a>
                         {% endif %}
                             </li>
 
-                        {% for page in news.paginator.page_range %}
+                        {% for page in articles.paginator.page_range %}
                             {% if news.number == page %}
-                                <li class="active"><a href="?page={{ page }}">{{ page }}</a></li>
+                                <li class="active"><a href="{% url news page %}">{{ page }}</a></li>
                             {% else %}
-                                <li><a href="?page={{ page }}">{{ page }}</a></li>
+                                <li><a href="{% url news page %}">{{ page }}</a></li>
                             {% endif %}
                         {% endfor %}
 
-                        {% if news.has_next %}
+                        {% if articles.has_next %}
                             <li class="next">
-                                <a href="?page={{ news.next_page_number }}">Next &rarr;</a>
+                                <a href="{% url news articles.next_page_number %}">Next &rarr;</a>
                         {% else %}
                             <li class="next disabled">
                                 <a href="#">Next &rarr;</a>

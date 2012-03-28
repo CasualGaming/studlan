@@ -1,0 +1,33 @@
+{% extends "competition/competition_base.html" %}
+{% load markup %}
+{% load competition_tags %}
+
+{% block content %}
+    <div class="row">
+        <div class="span12"><h1>Competitions</h1></div>
+    </div>
+    
+    {% competition_tabs activities active %}
+
+    <div class="row">
+        <div class="span12">
+            <table class="table table-bordered table-striped">
+                <thead><th>Status</th><th>Title</th></thead>
+                <tbody>
+                    {% for c in competitions %}
+                    <tr>
+                        <td>{{ c.status_text }}</td>
+                        <td>
+                            <a href="{% url competition_details c.id %}">{{ c }}</a>
+                            {% if c.use_teams %}
+                                - Team competition
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}
+
