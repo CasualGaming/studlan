@@ -3,12 +3,16 @@ html, body {
 }
 
 body {
-    padding-top: 60px;
+    /*padding-top: 60px;*/
     background: url("../img/bg.png") repeat-x scroll 0 -160px transparent;
 }
 
 h1 {
     margin-bottom: 0.5em;
+}
+
+body > div.container {
+    padding-top: 60px;
 }
 
 .white-text {
