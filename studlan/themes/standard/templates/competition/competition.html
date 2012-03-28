@@ -7,13 +7,6 @@ studLAN - Competition - {{ competition.title }}
 
 {% block content %}
     <div class="content">
-        {% if not user.is_authenticated %}
-            <div class="alert-message fade in {{ message.tags }}" data-alert>
-                <a class="close" href="#">x</a>
-                <p>Please log in to register for the competition.</p>
-            </div>
-        {% endif %}        
-        
         <h2>{{ competition }}</h2>
         
         <p>

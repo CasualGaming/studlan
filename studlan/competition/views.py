@@ -84,7 +84,8 @@ def competition_details(request, competition_id):
         owned_teams =  Team.objects.filter(leader=request.user)
 
         context['owned_teams'] = owned_teams
-
+    else:
+        messages.warning(request, "Please log in to register for the competition.")
     return render(request, 'competition/competition.html', context)
 
 @login_required

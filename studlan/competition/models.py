@@ -63,7 +63,7 @@ class Competition(models.Model):
         if self.use_teams:
             return map(lambda x: getattr(x, 'team'), Participant.objects.filter(competition=self))
         else:
-            return None
+            return []
 
     def get_users(self):
         return map(lambda x: getattr(x, 'user'), Participant.objects.filter(competition=self))
@@ -83,10 +83,9 @@ class Competition(models.Model):
     def has_participant(self, user):
         if user in self.get_users():
             return True
-        if self.use_teams:
-            for team in self.get_teams():
-                if user == team.leader or user in team.members.all():
-                    return True
+        for team in self.get_teams():
+            if user == team.leader or user in team.members.all():
+                return True
 
     def status_text(self):
         return self.STATUS_OPTIONS[self.status - 1][1]
