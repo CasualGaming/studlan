@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
 from django.db import models
+from django.db.models import Q
+from django.db.models.signals import post_save
 import datetime
 
 class Activity(models.Model):
@@ -61,12 +62,12 @@ class Competition(models.Model):
 
     def get_teams(self):
         if self.use_teams:
-            return map(lambda x: getattr(x, 'team'), Participant.objects.filter(competition=self))
+            return map(lambda x: getattr(x, 'team'), Participant.objects.filter(~Q(team=None), Q(competition=self)))
         else:
             return []
 
     def get_users(self):
-        return map(lambda x: getattr(x, 'user'), Participant.objects.filter(competition=self))
+        return map(lambda x: getattr(x, 'user'), Participant.objects.filter(~Q(user=None), Q(competition=self)))
 
     def get_participants(self):
         participants = Participant.objects.filter(competition=self)
