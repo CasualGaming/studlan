@@ -4,8 +4,7 @@ html, body {
 
 body {
     padding-top: 60px;
-    background: url('../img/bg.png') repeat-x;
-    background-position-y: -160px;
+    background: url("../img/bg.png") repeat-x scroll 0 -160px transparent;
 }
 
 h1 {
