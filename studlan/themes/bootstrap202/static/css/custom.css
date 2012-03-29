@@ -7,12 +7,12 @@ body {
     background: url("../img/bg.png") repeat-x scroll 0 -160px transparent;
 }
 
-h1 {
-    margin-bottom: 0.5em;
-}
-
 body > div.container {
     padding-top: 60px;
+}
+
+div.row {
+    margin-bottom: 2em;
 }
 
 .white-text {
