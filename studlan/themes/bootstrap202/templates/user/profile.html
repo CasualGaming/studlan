@@ -97,9 +97,15 @@ studLAN - Profile
 		                <legend>Update information</legend>
 	                    {% for field in form %}
 		                <div class="control-group">
-		                    <label class="control-label">{{ field.label_tag }}</label>
+		                	<label class="control-label">{{ field.label_tag }}</label>
 		                    <div class="controls">
+		                    	{% ifequal field.label 'Signed up' %}
+			                    <label class="checkbox">
 	                            {{ field }}
+	                            Sign up for studLAN!
+	                            {% else %}
+	                            {{ field }}
+	                            {% endifequal %}
 	                            {{ field.errors }}
 		                    </div>
 		                </div>
