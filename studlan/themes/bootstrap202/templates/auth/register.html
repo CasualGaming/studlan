@@ -13,38 +13,40 @@ studLAN - Register
 {% endblock navigation %}
 
 {% block content %}
-    <div class="content">
-        {{ form.non_field_errors }}
-        <form method="post" action="{% url auth_register %}">{% csrf_token %}
-            <fieldset>
-		    <legend>Register new user</legend>
-            {% for field in form %}
-                {% comment %}
-                Code optimization for RadioSelect widget and bootstrap.
-                This way of printing radiobuttons will be implemented in django 1.4
-                {% ifequal field.label 'Gender' %}
-                    <div class="clearfix">
-                        {{ field.label_tag }}
-                        <ul class="inputs-list">
-                        {% for radio in form.gender %}
-                            <li>{{ radio }}</li>
-                        {% endfor %}
-                        </ul>
+    <div class="row">
+        <div class="span12">
+            {{ form.non_field_errors }}
+            <form class="form-horizontal" method="post" action="{% url auth_register %}">{% csrf_token %}
+                <fieldset>
+                    <legend>Register new user</legend>
+                    {% for field in form %}
+                        {% comment %}
+                        Code optimization for RadioSelect widget and bootstrap.
+                        This way of printing radiobuttons will be implemented in django 1.4
+                        {% ifequal field.label 'Gender' %}
+                            <div class="control-group">
+                                {{ field.label_tag }}
+                                <ul class="inputs-list">
+                                {% for radio in form.gender %}
+                                    <li>{{ radio }}</li>
+                                {% endfor %}
+                                </ul>
+                            </div>
+                        {% endcomment %}
+                        <div class="control-group">
+                            <div class="control-label">{{ field.label_tag }}</div>
+                            <div class="controls">
+                                {{ field }}
+                                {{ field.errors }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="form-actions">
+                        <input type="submit" class="btn btn-primary" value="Register" />
                     </div>
-                {% endcomment %}
-                <div class="clearfix">
-                    {{ field.label_tag }}
-                    <div class="input">
-                        {{ field }}
-                        {{ field.errors }}
-                    </div>
-                </div>
-            {% endfor %}
-            <div class="actions">
-                <input type="submit" class="btn primary" value="Register" />
-            </div>
-            </fieldset>
-        </form>
+                </fieldset>
+            </form>
+        </div>
     </div>
 
 {% endblock content %}

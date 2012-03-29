@@ -119,4 +119,4 @@ class InlineSpanErrorList(ErrorList):
         return self.as_spans()
     def as_spans(self):
         if not self: return u''
-        return mark_safe(''.join([u'<span class="help-inline alert-message warning">%s</span>' % e for e in self]))
+        return mark_safe(''.join([u'<span class="help-inline alert alert-error">%s</span>' % e for e in self]))
