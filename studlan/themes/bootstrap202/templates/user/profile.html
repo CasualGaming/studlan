@@ -3,7 +3,11 @@
 {% load misc %}
 
 {% block title %}
+	{% if user == quser %}
+studLAN - My Profile
+	{% else %}
 studLAN - Profile
+	{% endif %}
 {% endblock title %}
 
 {% block navigation %}
@@ -19,14 +23,22 @@ studLAN - Profile
 	<div class="row">
 		{% if user == quser or user.is_staff %}
 		<div class="span6">
+			{% if user == quser %}
+			<h1>My Profile</h1>
+			{% else %}
 			<h1>Profile</h1>
+			{% endif %}
 		</div>
 		<div class="span6">
 			<h1>Additional Information</h1>
 		</div>
 		{% else %}
 		<div class="span12">
+			{% if user == quser %}
+			<h1>My Profile</h1>
+			{% else %}
 			<h1>Profile</h1>
+			{% endif %}
 		</div>{% endif %}
 	</div>
 
@@ -68,7 +80,7 @@ studLAN - Profile
 					<tr><td>Gender</td><td>{{ profile.get_gender_display|lower|capfirst }}</td></tr>
 					<tr><td>Date of birth</td><td>{{ profile.date_of_birth }}</td></tr>
 					<tr><td>Street address</td><td>{{ profile.address }}</td></tr>
-					<tr><td>Zip/Postal code:</td><td>{{ profile.zip_code }}</td></tr>
+					<tr><td>Zip/Postal code</td><td>{{ profile.zip_code }}</td></tr>
 					<tr><td>Phone</td><td>{{ profile.phone }}</td></tr>
 				</tbody>
 			</table>
