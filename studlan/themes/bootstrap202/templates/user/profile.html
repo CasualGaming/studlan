@@ -16,9 +16,10 @@ studLAN - Profile
 
 {% block content %}
 
-	<div class="content">
-		<div>
-			<h1>Profile</h1>
+	<div class="row"><div class="span12"><h1>Profile</h1></div></div>
+
+	<div class="row">
+		<div class="span12">
 			<p>Username: {{ quser.username }}</p>
 			<p>First name: {{ quser.first_name }}</p>
 			<p>Last name: {{ quser.last_name }}</p>
@@ -26,43 +27,48 @@ studLAN - Profile
             <p>Email: {{ quser.email }}</p>
             {% endif %}
 		</div>
-		{% if user == quser or user.is_staff %}
-			<hr />
-			<div>
-				<h1>Additional information</h1>
-				<p>Nick: {{ profile.nick }}</p>
-				<p>Signed up: {{ profile.signed_up }}</p>
-				<p>Has payed: {{ profile.has_payed }}</p>
-				<p>Wants to sit with: {{ profile.wants_to_sit_with }}</p>
-				<p>Gender: {{ profile.get_gender_display|lower|capfirst }}</p>
-				<p>Date of birth: {{ profile.date_of_birth }}</p>
-				<p>Street address: {{ profile.address }}</p>
-				<p>Zip/Postal code: {{ profile.zip_code }}</p>
-				<p>Phone: {{ profile.phone }}</p>
-				<em>Only visible to you and studLAN administrators.</em>
-			</div>
-        {% endif %}
-        {% if form %}
-			<hr />
-			<div>
-				<form action="/profile/" method="POST">{% csrf_token %}
+	</div>
+
+	{% if user == quser or user.is_staff %}
+	<div class="row">
+		<div class="span12">
+			<h2>Additional information</h2>
+			<p>Nick: {{ profile.nick }}</p>
+			<p>Signed up: {{ profile.signed_up }}</p>
+			<p>Has payed: {{ profile.has_payed }}</p>
+			<p>Wants to sit with: {{ profile.wants_to_sit_with }}</p>
+			<p>Gender: {{ profile.get_gender_display|lower|capfirst }}</p>
+			<p>Date of birth: {{ profile.date_of_birth }}</p>
+			<p>Street address: {{ profile.address }}</p>
+			<p>Zip/Postal code: {{ profile.zip_code }}</p>
+			<p>Phone: {{ profile.phone }}</p>
+			<em>Only visible to you and studLAN administrators.</em>
+		</div>
+	</div>	
+	{% endif %}
+
+    {% if form %}
+		<div class="row">
+			<div class="span12">
+				<form class="form-horizontal" action="/profile/" method="POST">{% csrf_token %}
 		            <fieldset>
 		                <legend>Update information</legend>
-                        {% for field in form %}
-		                <div class="clearfix">
-		                    <label>{{ field.label_tag }}</label>
-		                    <div class="input">
-                                {{ field }}
+	                    {% for field in form %}
+		                <div class="control-group">
+		                    <label class="control-label">{{ field.label_tag }}</label>
+		                    <div class="controls">
+	                            {{ field }}
+	                            {{ field.errors }}
 		                    </div>
 		                </div>
 		                {% endfor %}
-		                <div class="actions">
-		                    <input type="submit" class="btn primary" value="Update" />
+		                <div class="form-actions">
+		                    <input type="submit" class="btn btn-primary" value="Update" />
 		                </div>
 		            </fieldset>
 		        </form>
 			</div>
-		{% endif %}
-	</div>
+		</div>
+	{% endif %}
 
 {% endblock content %}
