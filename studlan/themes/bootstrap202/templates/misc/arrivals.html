@@ -17,11 +17,16 @@ studLAN - Register Arrivals
 
 {% block content %}
 
-	<h2>Register Arrivals</h2>
-	<br />
-	<span>Filter: </span><input type="text" id="FilterTextBox" name="FilterTextBox" />
-	<br /><br />
-	<table class="zebra-striped filterable">
+	<div class="row"><div class="span12"><h1>Register Arrivals</h1></div></div>
+	<div class="row">
+		<div class="span12">
+			<form class="form-inline">
+				<input type="text" class="span12" id="FilterTextBox" name="FilterTextBox" placehoder="Filter..." />
+			</form>
+		</div>
+	</div>
+
+	<table class="table table-bordered table-striped filterable">
 		<thead><th>Username</th><th>Full name</th><th>Email Address</th><th>Signed Up</th><th>Arrived</th></thead>
 		<tbody>
 			{% for user in users %}
@@ -30,15 +35,15 @@ studLAN - Register Arrivals
 					<td>{{ user.first_name }} {{ user.last_name }}</td>
 					<td>{{ user.email }}</td>
 					{% if user.get_profile.signed_up %}
-						<td><input type="checkbox" disabled checked /></td>
+						<td><span class="label label-success"><i class="icon-ok-sign icon-white"></i></span></td>
 					{% else %}
-						<td><input type="checkbox" disabled /></td>
+						<td><span class="label label-important"><i class="icon-remove-sign icon-white"></i></span></td>
 					{% endif %}
 					<td>
 					{% if user.get_profile.has_payed %}
-						<input type="checkbox" name="arrived" disabled checked /> <a class="label success" href="{% url toggle_arrival user.id %}">Toggle</a>
+						<span class="label label-success"><i class="icon-ok-sign icon-white"></i> </span>&nbsp;&nbsp;<a class="btn btn-mini btn-success" href="{% url toggle_arrival user.id %}">Toggle</a>
 					{% else %}
-						<input type="checkbox" name="arrived" disabled /> <a class="label error" href="{% url toggle_arrival user.id %}">Toggle</a>
+						<span class="label label-important"><i class="icon-remove-sign icon-white"></i></span>&nbsp;&nbsp;<a class="btn btn-mini btn-danger" href="{% url toggle_arrival user.id %}">Toggle</a>
 					{% endif %}
 					</td>
 				</tr>
