@@ -25,8 +25,8 @@ studLAN - Competition - {{ competition.title }}
     </div>
     <div class="row">
         <div class="span12">
-            <span class="label {{ competition.status_label }}">{{ competition.status_text_verbose }}</span>
-            <a href="#" class="label info" rel="popover" data-placement="below" data-html="true" data-content="{{ competition.activity.desc|markdown }}" data-original-title="{{ competition.activity.title }}">{{ competition.activity.title }}</a>
+            <span class="label label-{{ competition.status_label }}">{{ competition.status_text_verbose }}</span>
+            <a href="#" class="label label-info" rel="popover" data-placement="below" data-html="true" data-content="{{ competition.activity.desc|markdown }}" data-original-title="{{ competition.activity.title }}">{{ competition.activity.title }}</a>
         </div>
     </div>
     <div class="row">
