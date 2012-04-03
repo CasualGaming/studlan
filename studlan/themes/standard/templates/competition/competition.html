@@ -49,8 +49,8 @@ studLAN - Competition - {{ competition.title }}
         {% if user.is_authenticated %}
             {% if competition.status == 1 %}
                 <p>
-                {% if not participating %}
-                    {% if competition.use_teams and owned_teams|length > 0 %}
+                {% if participating != 'team' %}
+                    {% if competition.use_teams and owned_teams|length > 0 and participating != 'team' %}
                         <form action="{% url join_comp competition.id %}" method="POST">
                             {% csrf_token %}
                             <select name="team" id="team">
@@ -61,13 +61,20 @@ studLAN - Competition - {{ competition.title }}
                             <input class="btn success" type="submit" value="Join competition (team)"/>
                         </form>
                     {% endif %} 
-                    <form action="{% url join_comp competition.id %}" method="POST">{% csrf_token %}
-                        <input type="submit" class="btn success" value="Join competition (solo)" />
-                    </form>
-                {% else %}
+                    {% if not participating %}
+                        <form action="{% url join_comp competition.id %}" method="POST">{% csrf_token %}
+                            <input type="submit" class="btn success" value="Join competition (solo)" />
+                        </form>
+                    {% endif %}
+                {% endif %}
+                {% if participating %}
                     <form action="{% url leave_comp competition.id %}" method="POST">
                         {% csrf_token %}
-                        <input type="submit" class="btn danger" value="Leave competition" />
+                        {% if participating == 'team' %}
+                            <input type="submit" class="btn danger" value="Remove team from competition" />
+                        {% else %}
+                            <input type="submit" class="btn danger" value="Leave competition" />
+                        {% endif %}
                     </form>
                 {% endif %}
                 </p>

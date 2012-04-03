@@ -74,7 +74,12 @@ def competition_details(request, competition_id):
 
     context['teams'] = teams
     context['users'] = users
-    context['participating'] = competition.has_participant(request.user)
+
+    if competition.has_participant(request.user):
+        if request.user in users:
+            context['participating'] = 'solo'
+        else:
+            context['participating'] = 'team'
 
     # Insert placeholder image if the image_url is empty
     if not competition.activity.image_url:
@@ -93,25 +98,42 @@ def join(request, competition_id):
     competition = get_object_or_404(Competition, pk=competition_id)
     teams, users = competition.get_participants()
     
-    # Checks if the user is already in the competition
-    if request.user in users:
-        messages.error(request, "You are already in this competition as a solo player.")
-        return redirect(competition)
+    # Checks if the user is already in the competition with a team, solo queue should be
+    # overridden by team signup, but not other way around
     for team in teams:
         if request.user == team.leader or request.user in team.members.all():
             messages.error(request, "You are already in this competition with %s." % team)
             return redirect(competition)
     
-    # Checks that a form was posted, and if it contains a team id.
+    # Checks that a form was posted, and if it contains a team id
     if request.method == 'POST':
         team_id = request.POST.get('team')
         if team_id:
             team = get_object_or_404(Team, pk=team_id)
+           
+            # Go through all members of the team and delete their individual participation entries 
+            if request.user in users:
+                participant = Participant.objects.get(user=request.user, competition=competition)
+                participant.delete()
+            
+            members = team.members.all()
+            participants = Participant.objects.filter(user__in=members)
+            
+            for participant in participants:
+                participant.delete()
+
+            # Add the team
             participant = Participant(team=team, competition=competition)
             participant.save()
+
         else:
-            participant = Participant(user=request.user, competition=competition)
-            participant.save()
+            # If solo signup and already signed
+            if request.user in users:
+                messages.error(request, "You are already in this competition as a solo player.")
+                return redirect(competition)
+            else:
+                participant = Participant(user=request.user, competition=competition)
+                participant.save()
     
         messages.success(request, "You have entered %s for this competition." % participant)
     return redirect(competition)
