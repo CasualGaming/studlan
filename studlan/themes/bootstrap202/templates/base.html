@@ -84,32 +84,16 @@
                 <!-- Content goes here -->
             {% endblock content %}
 
-            {% if breadcrumbs %}
-            <div class="row">
-                <div class="span12">
-                    <ul class="breadcrumb">
-                    {% for text, link in breadcrumbs %}
-                        {% if not forloop.last %}
-                            <li><a href="{{ link }}">{{ text }}</a><span class="divider">/</span></li>
-                        {% else %}
-                            <li>{{ text }}</li>
-                        {% endif %}
-                    {% endfor %}
-                    </ul>
-                </div>
-            </div>
-            {% endif %}
-
             <footer>
-                <div class="row"><div class="span12"><hr /></div></div>
                 <div class="row">
                     <div class="span12">
+                        <hr />
                         <p><a href="https://github.com/dotKom/studlan">https://github.com/dotKom/studlan</a></p>
                     </div>
                 </div>
             </footer>
 
         </div>
-        {% include "auth.html" %}
+        
     </body>
 </html>
