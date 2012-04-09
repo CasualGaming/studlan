@@ -123,6 +123,7 @@ INSTALLED_APPS = (
     # studlan apps
     'studlan.authentication',
     'studlan.competition',
+    'studlan.lan',
     'studlan.misc',
     'studlan.news',
     'studlan.sponsor',
