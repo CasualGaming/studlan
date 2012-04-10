@@ -32,7 +32,7 @@
                     {% else %}
                         <p class="pull-right">
                             {% if user.is_staff %}
-                                <a class="" href="/arrivals">Register Arrivals</a>
+                                <a class="" href="{% url arrival_home %}">Register Arrivals</a>
                                 <!-- For spacing similar to .nav -->
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <a class="" href="/admin">Admin</a>
