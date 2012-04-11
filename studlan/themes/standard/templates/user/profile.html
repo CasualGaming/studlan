@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load markup %}
 {% load misc %}
+{% load profile_tags %}
 
 {% block title %}
 studLAN - Profile
@@ -18,10 +19,12 @@ studLAN - Profile
 {% endblock navigation %}
 
 {% block content %}
-
 	<div class="content">
-		<div>
-			<h1>Profile</h1>
+		<h1>Profile</h1>
+
+        {% profile_tabs 'profile' %}
+
+        <div>
 			<p>Username: {{ quser.username }}</p>
 			<p>First name: {{ quser.first_name }}</p>
 			<p>Last name: {{ quser.last_name }}</p>
@@ -43,27 +46,6 @@ studLAN - Profile
 				<em>Only visible to you and studLAN administrators.</em>
 			</div>
         {% endif %}
-        {% if form %}
-			<hr />
-			<div>
-				<form action="/profile/" method="POST">{% csrf_token %}
-		            <fieldset>
-		                <legend>Update information</legend>
-                        {% for field in form %}
-		                <div class="clearfix">
-		                    <label>{{ field.label_tag }}</label>
-		                    <div class="input">
-                                {{ field }}
-		                    </div>
-		                </div>
-		                {% endfor %}
-		                <div class="actions">
-		                    <input type="submit" class="btn primary" value="Update" />
-		                </div>
-		            </fieldset>
-		        </form>
-			</div>
-		{% endif %}
 	</div>
 
 {% endblock content %}

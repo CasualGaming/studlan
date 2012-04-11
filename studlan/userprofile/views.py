@@ -1,25 +1,31 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 
+from studlan.lan.models import Attendee, LAN
 from studlan.userprofile.forms import UserProfileForm
 from studlan.userprofile.models import UserProfile
 
 @login_required
 def my_profile(request):
-    user = request.user
+    profile = request.user.get_profile()
+
+    return render(request, 'user/profile.html', {'quser': request.user, 'profile': profile})
+
+def update_profile(request):
     if request.method == 'GET':
         form = UserProfileForm(instance=request.user.get_profile())
     else:
         form = UserProfileForm(request.POST, instance=request.user.get_profile())
         if form.is_valid():
             form.save()
-    
-    profile = user.get_profile()
+            return redirect('myprofile')
 
-    return render(request, 'user/profile.html', {'quser': request.user, 'profile': profile, 'form': form})
+    return render(request, 'user/update.html', {'form': form})
 
 def user_profile(request, username):
     # Using quser for "queried user", as "user" is a reserved variable name in templates
@@ -33,3 +39,8 @@ def user_profile(request, username):
     profile = quser.get_profile()
     
     return render(request, 'user/profile.html', {'quser': quser, 'profile': profile})
+
+def history(request):
+    attended = Attendee.objects.filter(user=request.user)
+
+    return render(request, 'user/history.html', {'attended': attended})
