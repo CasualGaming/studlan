@@ -12,6 +12,10 @@ class LAN(models.Model):
     location = models.CharField("location", max_length=100)
     description = models.TextField("description")
 
+    @property
+    def attendees(self):
+        return map(lambda x: getattr(x, 'user'), Attendee.objects.filter(lan=self))
+
     def status(self):
         now = datetime.now()
         if now < start_date:
