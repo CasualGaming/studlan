@@ -80,6 +80,11 @@ div.row {
 } .sidebar .nav {
     text-align: center;
     margin: 0px -1px;
+    padding: 0px;
+} .sidebar .nav li {
+    overflow-x: hidden;
 } .sidebar .nav li:not(.active) {
     padding: 4px 0px;
+    margin-left: 1px;
+    margin-right: 1px;
 }
