@@ -23,12 +23,10 @@
                     {% block navigation %}
                     {% endblock navigation %}
                     {% if not user.is_authenticated %}
-                        <div class="nav-collape">
-                            <ul class="nav pull-right">
-                                <li><a href="{% url auth_register %}">Register</a></li>
-                                <li><a href="{% url auth_login %}">Login</a></li>
-                            </ul>
-                        </div>
+                        <ul class="nav pull-right">
+                            <li><a href="{% url auth_register %}">Register</a></li>
+                            <li><a href="{% url auth_login %}">Login</a></li>
+                        </ul>
                     {% else %}
                         <ul class="pull-right">
                             <div class="btn-group">
@@ -50,7 +48,15 @@
                 </div>
             </div>
         </div>
+        
+        <div class="sidebar">
+            <div class="well">
+                {% include "sidebar.html" %}
+            </div>
+        </div>
+
         <div class="container">
+            
             {% if breadcrumbs %}
             <div class="row">
                 <div class="span12">
