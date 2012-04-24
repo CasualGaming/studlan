@@ -10,7 +10,8 @@ $("a.close").live("click", function() {
 $(function () {
     $("a[rel=popover]")
         .popover({
-            offset: 10
+            animation: true,
+            trigger: "hover"
         })
         .click(function(e) {
             e.preventDefault()
