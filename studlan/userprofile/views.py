@@ -4,16 +4,16 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
 
-from studlan.userprofile.forms import UserProfileForm
+from studlan.userprofile.forms import UserProfileForm, InlineSpanErrorList
 from studlan.userprofile.models import UserProfile
 
 @login_required
 def my_profile(request):
     user = request.user
     if request.method == 'GET':
-        form = UserProfileForm(instance=request.user.get_profile())
+        form = UserProfileForm(instance=request.user.get_profile(), auto_id=True, error_class=InlineSpanErrorList)
     else:
-        form = UserProfileForm(request.POST, instance=request.user.get_profile())
+        form = UserProfileForm(request.POST, instance=request.user.get_profile(), auto_id=True, error_class=InlineSpanErrorList)
         if form.is_valid():
             form.save()
     
