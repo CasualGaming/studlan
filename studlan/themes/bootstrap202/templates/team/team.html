@@ -18,19 +18,19 @@ studLAN - Team - {{ team }}
 {% block content %}
 
     <div class="row">
-        <div class="span12">
+        <div class="span9">
             <h2>{{ team }} {% if team.is_mine %}<a class="btn btn-large btn-danger" href="{% url disband_team team.id %}"><i class="icon-remove icon-white"></i> Disband Team</a>{% endif %}</h2>
         </div>
     </div>
 	
     <div class="row">
-        <div class="span12">
+        <div class="span9">
             <h3>Leader</h3>
         </div>
     </div>
 
     <div class="row">
-        <div class="span12">
+        <div class="span9">
             <ul>
                 <li><a href="{% url profile team.leader %}">{{ team.leader }}</a></li>
             </ul>
@@ -38,12 +38,12 @@ studLAN - Team - {{ team }}
     </div>
 	
     <div class="row">
-        <div class="span12">
+        <div class="span9">
             <h3>Members</h3>
         </div>
     </div>
 	<div class="row">
-        <div class="span12">
+        <div class="span9">
             <ul>
             {% for member in team.members.all %}
                 <li><a href="{% url profile member %}">{{ member }}</a>
@@ -61,7 +61,7 @@ studLAN - Team - {{ team }}
 	
 	{% if team.is_mine and users|length > 0 %}
         <div class="row">
-            <div class="span12">
+            <div class="span9">
                 <form class="form-horizontal" action="{% url add_member team.id %}" method="POST">{% csrf_token %}
                     <fieldset>
                         <legend>Add member</legend>

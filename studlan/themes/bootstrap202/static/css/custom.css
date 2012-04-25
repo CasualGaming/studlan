@@ -69,12 +69,21 @@ div.row {
     min-width: 0px;
 }
 
+div.breadcrumbs {
+    margin-bottom: 0px;
+}
+
+div.table-tabs {
+    margin-bottom: 0px;
+}
+
 .sidebar {
     position: fixed;
     left: 50%;
     top: 60px;
-    width: 200px;
-    margin-left: -700px;
+    width: 220px;                   /* Same width as .span3 */
+    /*margin-left: -700px;*/
+    margin-left: 250px;
 } .sidebar .well {
     padding: 0em 0px ;
 } .sidebar .nav {

@@ -17,42 +17,46 @@ studLAN - Register Arrivals
 
 {% block content %}
 
-	<div class="row"><div class="span12"><h1>Register Arrivals</h1></div></div>
+	<div class="row"><div class="span9"><h1>Register Arrivals</h1></div></div>
 	<div class="row">
 		<div class="span1">
 			<h2>Filter</h2>
 		</div>
-		<div class="span11">
+		<div class="span8">
 			<form class="form-inline">
-				<input type="text" class="span11" id="FilterTextBox" name="FilterTextBox" placehoder="Filter..." />
+				<input type="text" class="span8" id="FilterTextBox" name="FilterTextBox" placehoder="Filter..." />
 			</form>
 		</div>
 	</div>
 
-	<table class="table table-bordered table-striped filterable">
-		<thead><th>Username</th><th>Full name</th><th>Email Address</th><th>Signed Up</th><th>Arrived</th></thead>
-		<tbody>
-			{% for user in users %}
-				<tr>
-					<td>{{ user.username }}</td>
-					<td>{{ user.first_name }} {{ user.last_name }}</td>
-					<td>{{ user.email }}</td>
-					{% if user.get_profile.signed_up %}
-						<td><span class="label label-success"><i class="icon-ok-sign icon-white"></i></span></td>
-					{% else %}
-						<td><span class="label label-important"><i class="icon-remove-sign icon-white"></i></span></td>
-					{% endif %}
-					<td>
-					{% if user.get_profile.has_payed %}
-						<span class="label label-success"><i class="icon-ok-sign icon-white"></i> </span>&nbsp;&nbsp;<a class="btn btn-mini btn-success" href="{% url toggle_arrival user.id %}">Toggle</a>
-					{% else %}
-						<span class="label label-important"><i class="icon-remove-sign icon-white"></i></span>&nbsp;&nbsp;<a class="btn btn-mini btn-danger" href="{% url toggle_arrival user.id %}">Toggle</a>
-					{% endif %}
-					</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+	<div class="row">
+		<div class="span9">
+			<table class="table table-bordered table-striped filterable">
+				<thead><th>Username</th><th>Full name</th><th>Email Address</th><th>Signed Up</th><th>Arrived</th></thead>
+				<tbody>
+					{% for user in users %}
+						<tr>
+							<td>{{ user.username }}</td>
+							<td>{{ user.first_name }} {{ user.last_name }}</td>
+							<td>{{ user.email }}</td>
+							{% if user.get_profile.signed_up %}
+								<td><span class="label label-success"><i class="icon-ok-sign icon-white"></i></span></td>
+							{% else %}
+								<td><span class="label label-important"><i class="icon-remove-sign icon-white"></i></span></td>
+							{% endif %}
+							<td>
+							{% if user.get_profile.has_payed %}
+								<span class="label label-success"><i class="icon-ok-sign icon-white"></i> </span>&nbsp;&nbsp;<a class="btn btn-mini btn-success" href="{% url toggle_arrival user.id %}">Toggle</a>
+							{% else %}
+								<span class="label label-important"><i class="icon-remove-sign icon-white"></i></span>&nbsp;&nbsp;<a class="btn btn-mini btn-danger" href="{% url toggle_arrival user.id %}">Toggle</a>
+							{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
 
 	<script language="javascript">
 		$(document).ready(function(){
