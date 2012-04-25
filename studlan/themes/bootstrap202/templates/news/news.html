@@ -39,7 +39,7 @@ studLAN - News
                             </li>
 
                         {% for page in articles.paginator.page_range %}
-                            {% if news.number == page %}
+                            {% if articles.number == page %}
                                 <li class="active"><a href="{% url news page %}">{{ page }}</a></li>
                             {% else %}
                                 <li><a href="{% url news page %}">{{ page }}</a></li>
