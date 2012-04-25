@@ -1,3 +1,16 @@
+function toggleArticle(article) {
+    // Expand
+    console.log(article);
+    if($(article).attr('class').indexOf("hidden") >= 0) {
+        $(article).slideDown("slow").removeClass("hidden");
+    }
+    // Shrink
+    else {
+        $(article).slideUp("slow");
+        setTimeout('$(article).addClass("hidden");',500);
+    }
+}
+
 $('.alert-message').alert();
 
 $.ajaxSetup ({  
