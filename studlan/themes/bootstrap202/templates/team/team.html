@@ -19,21 +19,23 @@ studLAN - Team - {{ team }}
 
     <div class="row">
         <div class="span9">
-            <h2>{{ team }} {% if team.is_mine %}<a class="btn btn-large btn-danger" href="{% url disband_team team.id %}"><i class="icon-remove icon-white"></i> Disband Team</a>{% endif %}</h2>
+            <h2>
+                {{ team }}
+                {% if team.is_mine %}
+                    <a class="pull-right btn btn-small btn-danger" href="{% url disband_team team.id %}">
+                        <i class="icon-remove icon-white"></i> Disband Team
+                    </a>
+                {% endif %}
+            </h2>
         </div>
     </div>
 	
     <div class="row">
         <div class="span9">
             <h3>Leader</h3>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="span9">
-            <ul>
-                <li><a href="{% url profile team.leader %}">{{ team.leader }}</a></li>
-            </ul>
+            <h4>
+                <a href="{% url profile team.leader %}">{{ team.leader }} ({{ team.leader.first_name }} {{ team.leader.last_name }})</a>
+            </h4>
         </div>
     </div>
 	
@@ -44,17 +46,18 @@ studLAN - Team - {{ team }}
     </div>
 	<div class="row">
         <div class="span9">
-            <ul>
-            {% for member in team.members.all %}
-                <li><a href="{% url profile member %}">{{ member }}</a>
-                {% if user == team.leader %}
-                    - <a href="{% url remove_member team.id member.id %}">Remove</a>
-                {% else %}{% if user == member %}
-                    - <a href="{% url remove_member team.id user.id %}">Leave team</a>
-                {% endif %}
-                {% endif %}</li>
-            {% endfor %}
-            </ul>
+            <table class="table table-bordered table-striped">
+                <thead><th>User name</th><th>Full name</th></thead>
+                <tbody>
+
+                    {% for member in team.members.all %}
+                        <tr>
+                            <td><a href="{% url profile member %}">{{ member }}</a></td>
+                            <td>{{ member.first_name }} {{ member.last_name }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
     
