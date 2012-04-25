@@ -14,16 +14,28 @@ studLAN - News
 {% endblock navigation %}
 
 {% block content %}
+
     <div class="row"><div class="span9"><h1>News</h1></div></div>
+
     {% for article in articles.object_list %}
-        <div class="row">
-            <div class="span9">
-                <h2>{{ article.title }}</h2>
-                <span class="label info">{{ article.pub_date }}</span>
-                <p>{{ article.body|striptags|markdown }}</h2>
+        {% if forloop.counter < 3 %}
+            <div class="row">
+                <div class="span9">
+                    <h2>{{ article.title }}</h2>
+                    <span class="label info">{{ article.pub_date }}</span>
+                    <p>{{ article.body|striptags|markdown }}</p>
+                </div>
             </div>
-        </div>
+        {% else %}
+            <div class="row">
+                <div class="span9">
+                    <h3><a href="javascript:toggleArticle(b{{ forloop.counter }});" class="btn btn-small"><i class="icon icon-chevron-up"></i></a> {{ article.title }}</h3>
+                    <div class="hidden" id="b{{ forloop.counter }}">{{ article.body|striptags|markdown }}</div>
+                </div>
+            </div>
+        {% endif %}
     {% endfor %}
+
     <div class="row">
         <div class="pagination">
             <div class="span9">
@@ -59,4 +71,5 @@ studLAN - News
             </div>
         </div>
     </div>
+
 {% endblock content %}
