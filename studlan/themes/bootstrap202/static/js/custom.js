@@ -1,13 +1,16 @@
 function toggleArticle(article) {
+    var curId = $(article).attr("id");
     // Expand
-    console.log(article);
-    if($(article).attr('class').indexOf("hidden") >= 0) {
-        $(article).slideDown("slow").removeClass("hidden");
+    if($("#"+curId).attr('style').indexOf("display: none;") >= 0) {
+        $("#"+curId).slideToggle("slow", "linear", function() {
+            $("#"+curId+"-icon").removeClass("icon-chevron-right").addClass("icon-chevron-down");
+        });
     }
     // Shrink
     else {
-        $(article).slideUp("slow");
-        setTimeout('$(article).addClass("hidden");',500);
+        $("#"+curId).slideToggle("slow", "linear", function() {
+            $("#"+curId+"-icon").removeClass("icon-chevron-down").addClass("icon-chevron-right");
+        });
     }
 }
 
