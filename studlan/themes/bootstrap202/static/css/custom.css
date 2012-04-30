@@ -97,3 +97,10 @@ div.table-tabs {
     margin-left: 1px;
     margin-right: 1px;
 }
+
+div#btn-profile {
+    min-width: 220px;                       /* equal to .span2 */
+} div#btn-profile a:not(.dropdown-toggle) { /* child element, but not the dropdown-widget */
+    text-align: left;
+    min-width: 173px;                       /* equal to .span2 - the dropdown widget (26px) - derp adjustments*/
+}
