@@ -28,9 +28,18 @@ studLAN - News
             </div>
         {% else %}
             <div class="row">
-                <div class="span9">
-                    <h3><a href="javascript:toggleArticle(b{{ forloop.counter }});" class="btn btn-small"><i id="b{{ forloop.counter}}-icon" class="icon icon-chevron-right"></i></a> {{ article.title }}</h3>
-                    <div style="display: none;" id="b{{ forloop.counter }}">{{ article.body|striptags|markdown }}</div>
+                <div class="span4">
+                    <h2>{{ article.title }}</h2>
+                    <span class="label info">{{ article.pub_date }}</span>
+                    <p>{{ article.body|striptags|markdown }}</p>
+                </div>
+                <div class="span1">
+                    &nbsp;
+                </div>
+                <div class="span4">
+                    <h2>{{ article.title }}</h2>
+                    <span class="label info">{{ article.pub_date }}</span>
+                    <p>{{ article.body|striptags|markdown }}</p>
                 </div>
             </div>
         {% endif %}
