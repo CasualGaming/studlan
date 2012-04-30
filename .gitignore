@@ -6,6 +6,6 @@
 *.pydevproject
 .nfs*
 .idea/
-
+static/
 studlan/dev.db*
 local.py
