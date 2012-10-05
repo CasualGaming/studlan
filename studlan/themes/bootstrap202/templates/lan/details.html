@@ -13,29 +13,36 @@ studLAN - {{ lan }}
 {% endblock navigation %}
 
 {% block content %}
-    <div class="content">
-
-        <h2>{{ lan }}</h2>
-
-        <div>
-            <p>Start date: {{ lan.start_date|date:"d. F Y" }} - {{ lan.start_date|time:"H:i" }}</p> 
-            <p>End date: {{ lan.end_date|date:"d. F Y" }} - {{ lan.end_date|time:"H:i" }}</p> 
-            <p>Location: {{ lan.location }}</p> 
+    <div class="row">
+        <div class="span9">
+            <h1>{{ lan }}</h1>
         </div>
+    </div>
 
-        <hr />
+    <div class="row">
+        <div class="span9">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr><td>Start date:</td><td>{{ lan.start_date|date:"d. F Y" }} - {{ lan.start_date|time:"H:i" }}</td></tr> 
+                    <tr><td>End date:</td><td>{{ lan.end_date|date:"d. F Y" }} - {{ lan.end_date|time:"H:i" }}</td></tr>
+                    <tr><td>Location:</td><td>{{ lan.location }}</td></tr> 
+                </tbody>
+            </table>
 
-        <p>
-        {% if status == 'attending' %}
-            <a class="btn danger" href="{% url lan_unattend lan.id %}">Remove attendance</a>
-        {% else %}
-            <a class="btn success" href="{% url lan_attend lan.id %}">Sign up</a>
-        {% endif %}
-        </p>
-    
-        <hr />
+            <hr />
 
-        {{ lan.description }} 
+            <p>
+            {% if status == 'attending' %}
+                <a class="btn danger" href="{% url lan_unattend lan.id %}">Remove attendance</a>
+            {% else %}
+                <a class="btn success" href="{% url lan_attend lan.id %}">Sign up</a>
+            {% endif %}
+            </p>
+        
+            <hr />
 
+            {{ lan.description }} 
+
+        </div>
     </div>
 {% endblock content %}
