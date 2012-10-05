@@ -122,7 +122,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.markup',
+)
 
+PROJECT_APPS = (
     # studlan apps
     'studlan.authentication',
     'studlan.competition',
@@ -133,6 +135,8 @@ INSTALLED_APPS = (
     'studlan.team',
     'studlan.userprofile',
 )
+
+INSTALLED_APPS += PROJECT_APPS
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
