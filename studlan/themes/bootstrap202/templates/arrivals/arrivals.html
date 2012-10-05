@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load misc %}
+
+{% block title %}
+studLAN - Register Arrivals
+{% endblock title %}
+
+{% block navigation %}
+    <ul class="nav">
+        <li><a href="{% url root %}">News</a></li>
+        {% if request.user.is_authenticated %}
+            <li><a href="{% url myprofile %}">Profile</a></li>
+        {% endif %}
+        <li><a href="{% url competitions %}">Competitions</a></li>
+        <li><a href="{% url teams %}">Teams</a></li>
+    </ul>
+{% endblock navigation %}
+
+{% block content %}
+
+	<h2>Register Arrivals</h2>
+	<br />
+    {% if attendees %}
+        <span>Filter: </span><input type="text" id="FilterTextBox" name="FilterTextBox" />
+        <br /><br />
+        <table class="zebra-striped filterable">
+            <thead><th>Username</th><th>Full name</th><th>Email Address</th><th>Paid</th></thead>
+            <tbody>
+                {% for attendee in attendees %}
+                    <tr>
+                        <td>{{ attendee.user.username }}</td>
+                        <td>{{ attendee.user.get_full_name }}</td>
+                        <td>{{ attendee.user.email }}</td>
+                        <td>
+                        {% if attendee.has_paid %}
+                            <input type="checkbox" name="arrived" disabled checked /> <a class="label success" href="{% url toggle_arrival lan.id attendee.user.id %}">Toggle</a>
+                        {% else %}
+                            <input type="checkbox" name="arrived" disabled /> <a class="label error" href="{% url toggle_arrival lan.id attendee.user.id %}">Toggle</a>
+                        {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <script language="javascript">
+            $(document).ready(function(){
+             //add index column with all content.
+             $(".filterable tr:has(td)").each(function(){
+               var t = $(this).text().toLowerCase(); //all row text
+               $("<td class='indexColumn'></td>")
+                .hide().text(t).appendTo(this);
+             });//each tr
+             $("#FilterTextBox").keyup(function(){
+               var s = $(this).val().toLowerCase().split(" ");
+               //show all rows.
+               $(".filterable tr:hidden").show();
+               $.each(s, function(){
+                   $(".filterable tr:visible .indexColumn:not(:contains('"
+                      + this + "'))").parent().hide();
+               });//each
+             });//key up.
+             $("input:text:visible:first").focus();
+            });//document.ready
+        </script>
+    {% else %}
+        <p>There are no attendees for this LAN.</p>
+    {% endif %}
+
+{% endblock content %}

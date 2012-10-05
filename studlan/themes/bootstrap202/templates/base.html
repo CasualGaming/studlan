@@ -36,7 +36,7 @@
                                     <li><a href="{% url myprofile %}"><i class="icon-pencil"></i> Edit profile</a></li>
                                     {% if user.is_staff %}
                                         <li class="divider"></li>
-                                        <li><a href="{% url arrivals %}"><i class="icon-list-alt"></i> Register arrivals</a></li>
+                                        <li><a href="{% url arrival_home %}"><i class="icon-list-alt"></i> Register arrivals</a></li>
                                         <li><a href="/admin"><i class="icon-road"></i> Admin</a></li>
                                     {% endif%}
                                     <li class="divider"></li>
