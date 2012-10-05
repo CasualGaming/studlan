@@ -33,7 +33,7 @@ studLAN - Login
                         <a href="{% url auth_recover %}" class="btn btn-info">Recover password</a>
                     </div>
                 </fieldset>
-                <input type="hidden" name="next" value="{% if next %}{{ next }}{% else %}{{ request.path }}{% endif %}"/>
+                <input type="hidden" name="next" value="{% if next %}{{ next }}{% endif %}"/>
             </form>
         </div>
     </div>
