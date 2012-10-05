@@ -126,14 +126,14 @@ INSTALLED_APPS = (
 
 PROJECT_APPS = (
     # studlan apps
-    'studlan.authentication',
+    'studlan.userprofile',
+    'studlan.team',
     'studlan.competition',
+    'studlan.authentication',
     'studlan.lan',
     'studlan.misc',
     'studlan.news',
     'studlan.sponsor',
-    'studlan.team',
-    'studlan.userprofile',
 )
 
 INSTALLED_APPS += PROJECT_APPS
