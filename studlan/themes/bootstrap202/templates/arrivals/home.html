@@ -14,9 +14,18 @@ studLAN - {% if upcoming %}Upcoming{% else %}Previous{% endif %} LANs
 {% endblock navigation %}
 
 {% block content %}
-    <ul>
-    {% for lan in lans %}
-        <li><a href="{% url arrivals lan.id %}">{{ lan }}</a></li>
-    {% endfor %}
-    </ul>
+    <div class="row">
+        <div class="span9">
+            <h1>Arrivals - choose a LAN</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span9">
+            <ul>
+            {% for lan in lans %}
+                <li><a href="{% url arrivals lan.id %}">{{ lan }}</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
 {% endblock content %}
