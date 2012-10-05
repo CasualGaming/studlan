@@ -165,12 +165,12 @@ for settings_module in ['local']:
     if not os.path.exists(PROJECT_ROOT_DIRECTORY + '/settings/' + settings_module + '.py'):
         sys.stderr.write('Could not find settings module settings/%s.py\n' % (settings_module))
         if settings_module == 'local':
-            print "You need to copy the settings file 'settings/example-local.py' to 'settings/local.py'."
+            sys.stderr.write("You need to copy the settings file 'settings/example-local.py' to 'settings/local.py'.\n")
         sys.exit(1)
     try:
-        #TODO: __import__('onlineweb.settings.' +settings_module, fromlist=['*']) does not seem to work
-        if settings_module == 'local':
-            from studlan.settings.local import *
+        exec('from %s import *' % settings_module)
     except ImportError, e:
         print 'Could not import settings for', settings_module, ': ', str(e)
         pass
+
+
