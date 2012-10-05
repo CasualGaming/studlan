@@ -110,6 +110,9 @@ STATICFILES_DIRS = [
     ]
 
 INSTALLED_APPS = (
+    # third party apps
+    'south',
+
     # django apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -129,9 +132,6 @@ INSTALLED_APPS = (
     'studlan.sponsor',
     'studlan.team',
     'studlan.userprofile',
-
-    # other apps
-    'south',
 )
 
 # A sample logging configuration. The only tangible logging
