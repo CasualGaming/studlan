@@ -31,7 +31,7 @@ studLAN - Update profile
                 <tbody>
                     {% for attend in attended %}
                     <tr>
-                        <td>{{ attend.lan }}</td>
+                        <td><a href="{{ attend.lan.get_absolute_url }}">{{ attend.lan }}</a></td>
                         <td>{{ attend.lan.start_date }} - {{ attend.lan.end_date }}</td>
                         <td>{{ attend.has_paid }}</td>
                     </tr>
