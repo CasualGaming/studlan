@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}
+studLAN - Account recovery
+{% endblock title %}
+
+{% block navigation %}
+    <ul class="nav">
+        <li><a href="/">News</a></li>
+        <li><a href="{% url competitions %}">Competitions</a></li>
+        <li><a href="{% url teams %}">Teams</a></li>
+    </ul>
+{% endblock navigation %}
+
+{% block content %}
+    <div class="row">
+        <div class="span9">
+            {{ form.non_field_errors }}
+            <form class="form-horizontal" method="post" action="{% url auth_recover %}">{% csrf_token %}
+                <fieldset>
+                    <legend>Account recovery</legend>
+                    {% for field in form %} 
+                        <div class="control-group">
+                            <label class="control-label">{{ field.label_tag }}</label>
+                            <div class="controls">
+                                {{ field }}
+                                {{ field.errors }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="form-actions">
+                        <input type="submit" class="btn btn-primary" value="Recover" />
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+{% endblock content %}
