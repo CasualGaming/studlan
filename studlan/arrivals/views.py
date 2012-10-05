@@ -16,7 +16,7 @@ def home(request):
     lans = LAN.objects.filter(end_date__gte=datetime.now())
     upcoming = True
     if lans.count() == 1:
-        return arrivals(request, lans[0].id)
+        return redirect('arrivals', lan_id=lans[0].id)
     if lans.count == 0:
         lans = LAN.objects.all()
         upcoming = False 

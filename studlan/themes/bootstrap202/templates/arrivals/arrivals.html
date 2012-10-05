@@ -16,16 +16,27 @@ studLAN - Register Arrivals
 {% endblock navigation %}
 
 {% block content %}
-
-	<h2>Register Arrivals</h2>
-	<br />
+    <div class="row">
+        <div class="span9">
+	        <h1>Register Arrivals</h1>
+        </div>
+    </div>
+    
+    <div class="row">
     {% if attendees %}
-        <span>Filter: </span><input type="text" id="FilterTextBox" name="FilterTextBox" />
-        <br /><br />
-        <table class="zebra-striped filterable">
-            <thead><th>Username</th><th>Full name</th><th>Email Address</th><th>Paid</th></thead>
-            <tbody>
-                {% for attendee in attendees %}
+        <div class="span9">
+            <span>Filter: </span><input type="text" id="FilterTextBox" name="FilterTextBox" />
+        </div>
+    </div>
+        
+    <div class="row">
+        <div class="span9">
+            <table class="table table-bordered table-striped filterable">
+                <thead>
+                    <th>Username</th><th>Full name</th><th>Email Address</th><th>Paid</th>
+                </thead>
+                <tbody>
+                    {% for attendee in attendees %}
                     <tr>
                         <td>{{ attendee.user.username }}</td>
                         <td>{{ attendee.user.get_full_name }}</td>
@@ -38,9 +49,9 @@ studLAN - Register Arrivals
                         {% endif %}
                         </td>
                     </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                    {% endfor %}
+                </tbody>
+            </table>
 
         <script language="javascript">
             $(document).ready(function(){
@@ -62,8 +73,10 @@ studLAN - Register Arrivals
              $("input:text:visible:first").focus();
             });//document.ready
         </script>
+        </div
     {% else %}
         <p>There are no attendees for this LAN.</p>
     {% endif %}
+    </div>
 
 {% endblock content %}
