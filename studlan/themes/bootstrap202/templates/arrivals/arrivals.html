@@ -6,12 +6,10 @@
 studLAN - Register Arrivals
 {% endblock title %}
 
+
 {% block navigation %}
     <ul class="nav">
         <li><a href="{% url root %}">News</a></li>
-        {% if request.user.is_authenticated %}
-            <li><a href="{% url myprofile %}">Profile</a></li>
-        {% endif %}
         <li><a href="{% url competitions %}">Competitions</a></li>
         <li><a href="{% url teams %}">Teams</a></li>
     </ul>
