@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load profile_tags %}
+
+{% block title %}
+studLAN - Update profile
+{% endblock title %}
+
+{% block navigation %}
+    <ul class="nav">
+        <li><a href="{% url root %}">News</a></li>
+		{% if user.is_authenticated %}
+            <li class="active"><a href="{% url myprofile %}">Profile</a></li>
+        {% endif %}
+        <li><a href="{% url competitions %}">Competitions</a></li>
+        <li><a href="{% url teams %}">Teams</a></li>
+    </ul>
+{% endblock navigation %}
+
+{% block content %}
+	<div class="content">
+		<h1>Edit profile</h1>
+
+        {% profile_tabs 'update' %}
+
+		<div>
+            {% if form %}
+                <hr />
+                <div>
+                    <form action="{% url update_profile %}" method="POST">{% csrf_token %}
+                        <fieldset>
+                            <legend>Update information</legend>
+                            {% for field in form %}
+                            <div class="clearfix">
+                                <label>{{ field.label_tag }}</label>
+                                <div class="input">
+                                    {{ field }}
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <div class="actions">
+                                <input type="submit" class="btn primary" value="Update" />
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+{% endblock content %}

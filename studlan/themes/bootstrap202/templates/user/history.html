@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load profile_tags %}
+
+{% block title %}
+studLAN - Update profile
+{% endblock title %}
+
+{% block navigation %}
+    <ul class="nav">
+        <li><a href="{% url root %}">News</a></li>
+		{% if user.is_authenticated %}
+            <li class="active"><a href="{% url myprofile %}">Profile</a></li>
+        {% endif %}
+        <li><a href="{% url competitions %}">Competitions</a></li>
+        <li><a href="{% url teams %}">Teams</a></li>
+    </ul>
+{% endblock navigation %}
+
+{% block content %}
+	<div class="content">
+		<h1>History</h1>
+            
+        {% profile_tabs 'history' %}
+		
+        <div>
+            <table class="zebra-striped filterable">
+                <thead><th>LAN</th><th>Time span</th><th>Paid</th></thead>
+                <tbody>
+                    {% for attend in attended %}
+                        <tr>
+                            <td>{{ attend.lan }}</td>
+                            <td>{{ attend.lan.start_date }} - {{ attend.lan.end_date }}</td>
+                            <td>{{ attend.has_paid }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    
+{% endblock content %}
