@@ -21,7 +21,6 @@ studLAN - Profile
 
 {% block content %}
     
-    {% profile_tabs 'profile' %}
 	
     <div class="row">
         {% if user == quser or user.is_staff %}
@@ -46,6 +45,11 @@ studLAN - Profile
         </div>
         {% endif %}
     </div>
+
+    {% if user == quser %}
+        {% profile_tabs 'profile' %}
+    {% endif %}
+
     <div class="row">
         {% if user == quser or user.is_staff %}
         <div class="span4">

@@ -4,6 +4,7 @@ from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 
 from studlan.lan.models import Attendee, LAN
@@ -14,7 +15,13 @@ from studlan.userprofile.models import UserProfile
 def my_profile(request):
     profile = request.user.get_profile()
 
-    return render(request, 'user/profile.html', {'quser': request.user, 'profile': profile})
+    breadcrumbs = (
+        ('studLAN', '/'),
+        ('Profile', reverse('myprofile')),
+        (request.user.get_full_name(), ''),
+    )
+
+    return render(request, 'user/profile.html', {'quser': request.user, 'profile': profile, 'breadcrumbs': breadcrumbs})
 
 def update_profile(request):
     if request.method == 'GET':
@@ -24,8 +31,14 @@ def update_profile(request):
         if form.is_valid():
             form.save()
             return redirect('myprofile')
+    
+    breadcrumbs = (
+        ('studLAN', '/'),
+        ('Profile', reverse('myprofile')),
+        ('Edit', ''),
+    )
 
-    return render(request, 'user/update.html', {'form': form})
+    return render(request, 'user/update.html', {'form': form, 'breadcrumbs': breadcrumbs})
 
 def user_profile(request, username):
     # Using quser for "queried user", as "user" is a reserved variable name in templates
@@ -38,9 +51,21 @@ def user_profile(request, username):
 
     profile = quser.get_profile()
     
-    return render(request, 'user/profile.html', {'quser': quser, 'profile': profile})
+    breadcrumbs = (
+        ('studLAN', '/'),
+        ('Profile', reverse('myprofile')),
+        (quser.get_full_name(), ''),
+    )
+    
+    return render(request, 'user/profile.html', {'quser': quser, 'profile': profile, 'breadcrumbs': breadcrumbs})
 
 def history(request):
     attended = Attendee.objects.filter(user=request.user)
 
-    return render(request, 'user/history.html', {'attended': attended})
+    breadcrumbs = (
+        ('studLAN', '/'),
+        ('Profile', reverse('myprofile')),
+        ('LAN History', ''),
+    )
+
+    return render(request, 'user/history.html', {'attended': attended, 'breadcrumbs': breadcrumbs})
