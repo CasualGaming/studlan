@@ -1,0 +1,82 @@
+
+{% extends "base.html" %}
+{% load markup %}
+{% load misc %}
+
+{% block title %}
+studLAN - Register Arrivals
+{% endblock title %}
+
+{% block navigation %}
+    <ul class="nav">
+        <li><a href="{% url root %}">News</a></li>
+        <li><a href="{% url competitions %}">Competitions</a></li>
+        <li><a href="{% url teams %}">Teams</a></li>
+    </ul>
+{% endblock navigation %}
+
+{% block content %}
+
+	<div class="row"><div class="span9"><h1>Register Arrivals</h1></div></div>
+	<div class="row">
+		<div class="span1">
+			<h2>Filter</h2>
+		</div>
+		<div class="span8">
+			<form class="form-inline">
+				<input type="text" class="span8" id="FilterTextBox" name="FilterTextBox" placehoder="Filter..." />
+			</form>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="span9">
+			<table class="table table-bordered table-striped filterable">
+				<thead><th>Username</th><th>Full name</th><th>Email Address</th><th>Signed Up</th><th>Arrived</th></thead>
+				<tbody>
+					{% for user in users %}
+						<tr>
+							<td>{{ user.username }}</td>
+							<td>{{ user.first_name }} {{ user.last_name }}</td>
+							<td>{{ user.email }}</td>
+							{% if user.get_profile.signed_up %}
+								<td><span class="label label-success"><i class="icon-ok-sign icon-white"></i></span></td>
+							{% else %}
+								<td><span class="label label-important"><i class="icon-remove-sign icon-white"></i></span></td>
+							{% endif %}
+							<td>
+							{% if user.get_profile.has_payed %}
+								<span class="label label-success"><i class="icon-ok-sign icon-white"></i> </span>&nbsp;&nbsp;<a class="btn btn-mini btn-success" href="{% url toggle_arrival user.id %}">Toggle</a>
+							{% else %}
+								<span class="label label-important"><i class="icon-remove-sign icon-white"></i></span>&nbsp;&nbsp;<a class="btn btn-mini btn-danger" href="{% url toggle_arrival user.id %}">Toggle</a>
+							{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<script language="javascript">
+		$(document).ready(function(){
+		 //add index column with all content.
+		 $(".filterable tr:has(td)").each(function(){
+		   var t = $(this).text().toLowerCase(); //all row text
+		   $("<td class='indexColumn'></td>")
+		    .hide().text(t).appendTo(this);
+		 });//each tr
+		 $("#FilterTextBox").keyup(function(){
+		   var s = $(this).val().toLowerCase().split(" ");
+		   //show all rows.
+		   $(".filterable tr:hidden").show();
+		   $.each(s, function(){
+		       $(".filterable tr:visible .indexColumn:not(:contains('"
+		          + this + "'))").parent().hide();
+		   });//each
+		 });//key up.
+		 $("input:text:visible:first").focus();
+		});//document.ready
+	</script>
+
+{% endblock content %}

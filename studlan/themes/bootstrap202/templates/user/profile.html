@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load misc %}
+
+{% block title %}
+	{% if user == quser %}
+studLAN - My Profile
+	{% else %}
+studLAN - Profile
+	{% endif %}
+{% endblock title %}
+
+{% block navigation %}
+    <ul class="nav">
+        <li><a href="{% url root %}">News</a></li>
+        <li><a href="{% url competitions %}">Competitions</a></li>
+        <li><a href="{% url teams %}">Teams</a></li>
+    </ul>
+{% endblock navigation %}
+
+{% block content %}
+
+	<div class="row">
+		{% if user == quser or user.is_staff %}
+		<div class="span4">
+			{% if user == quser %}
+			<h1>My Profile</h1>
+			{% else %}
+			<h1>Profile</h1>
+			{% endif %}
+		</div>
+		<div class="span5">
+			<h1>Additional Information</h1>
+		</div>
+		{% else %}
+		<div class="span9">
+			{% if user == quser %}
+			<h1>My Profile</h1>
+			{% else %}
+			<h1>Profile</h1>
+			{% endif %}
+		</div>
+		{% endif %}
+	</div>
+
+	<div class="row">
+		{% if user == quser or user.is_staff %}
+		<div class="span4">
+		{% else %}
+		<div class="span9">
+		{% endif %}
+			<table class="well table table-condensed">
+				<thead>
+					<tr>
+						<th>Field</th><th>Value</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><td>User name</td><td>{{ quser.username }}</td/></tr>
+					<tr><td>First name</td><td>{{ quser.first_name }}</td/></tr>
+					<tr><td>Last name</td><td>{{ quser.last_name }}</td/></tr>
+		            {% if user == quser or user.is_staff %}
+		            <tr><td>Email</td><td>{{ quser.email }}</td/></tr>
+		            {% endif %}
+				</tbody>
+			</table>
+		</div>
+		{% if user == quser or user.is_staff %}
+		<div class="span5">
+			<table class="well table table-condensed">
+				<thead>
+					<tr>
+						<th>Field</th><th>Value</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr><td>Nick</td><td>{{ profile.nick }}</td></tr>
+					<tr><td>Signed up</td><td>{{ profile.signed_up }}</td></tr>
+					<tr><td>Has payed</td><td>{{ profile.has_payed }}</td></tr>
+					<tr><td>Wants to sit with</td><td>{{ profile.wants_to_sit_with }}</td></tr>
+					<tr><td>Gender</td><td>{{ profile.get_gender_display|lower|capfirst }}</td></tr>
+					<tr><td>Date of birth</td><td>{{ profile.date_of_birth }}</td></tr>
+					<tr><td>Street address</td><td>{{ profile.address }}</td></tr>
+					<tr><td>Zip/Postal code</td><td>{{ profile.zip_code }}</td></tr>
+					<tr><td>Phone</td><td>{{ profile.phone }}</td></tr>
+				</tbody>
+			</table>
+			<em>Only visible to you and studLAN administrators.</em>
+		</div>
+		{% endif %}
+	</div>
+
+    {% if form %}
+		<div class="row">
+			<div class="span9">
+				<form class="form-horizontal" action="/profile/" method="POST">{% csrf_token %}
+		            <fieldset>
+		                <legend>Update information</legend>
+	                    {% for field in form %}
+		                <div class="control-group">
+		                	<label class="control-label">{{ field.label_tag }}</label>
+		                    <div class="controls">
+		                    	{% ifequal field.label 'Signed up' %}
+			                    <label class="checkbox">
+	                            {{ field }}
+	                            Sign up for studLAN!
+	                            {% else %}
+	                            {{ field }}
+	                            {% endifequal %}
+	                            {{ field.errors }}
+		                    </div>
+		                </div>
+		                {% endfor %}
+		                <div class="form-actions">
+		                    <input type="submit" class="btn btn-primary" value="Update" />
+		                </div>
+		            </fieldset>
+		        </form>
+			</div>
+		</div>
+	{% endif %}
+
+{% endblock content %}

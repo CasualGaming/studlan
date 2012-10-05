@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load misc %}
+
+{% block title %}
+studLAN - Error 500
+{% endblock title %}
+
+{% block navigation %}
+    <ul class="nav">
+        <li><a href="{% url root %}">News</a></li>
+        {% if request.user.is_authenticated %}
+            <li><a href="{% url myprofile %}">Profile</a></li>
+        {% endif %}
+        <li><a href="{% url competitions %}">Competitions</a></li>
+        <li><a href="{% url teams %}">Teams</a></li>
+    </ul>
+{% endblock navigation %}
+
+{% block content %}
+
+    <h1>Error: 500</h1>
+    <p>We've encountered an internal server error. Administrators have been notified.</p>
+    
+{% endblock content %}

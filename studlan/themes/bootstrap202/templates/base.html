@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>{% block title %}{% endblock title %}</title>
+        <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet" />
+        <link href="{{ STATIC_URL }}css/custom.css" rel="stylesheet" />
+        <link rel="shortcut icon" href="{{ STATIC_URL }}favicon.ico" />
+        <script src="{{ STATIC_URL }}js/jquery.min.js" type="text/javascript"></script>
+        <script src="{{ STATIC_URL }}js/jquery.fitvids.js" type="text/javascript"></script>
+        <script src="{{ STATIC_URL }}js/bootstrap-modal.js" type="text/javascript"></script>
+        <script src="{{ STATIC_URL }}js/bootstrap-alert.js" type="text/javascript"></script>
+        <script src="{{ STATIC_URL }}js/bootstrap-tooltip.js" type="text/javascript"></script>
+        <script src="{{ STATIC_URL }}js/bootstrap-popover.js" type="text/javascript"></script>
+        <script src="{{ STATIC_URL }}js/bootstrap-dropdown.js" type="text/javascript"></script>
+        <script src="{{ STATIC_URL }}js/custom.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="{% url root %}"><img src="{{ STATIC_URL }}mushroom_small.png" />studLAN</a>
+                    {% block navigation %}
+                    {% endblock navigation %}
+                    {% if not user.is_authenticated %}
+                        <ul class="nav pull-right">
+                            <li><a href="{% url auth_register %}">Register</a></li>
+                            <li><a href="{% url auth_login %}">Login</a></li>
+                        </ul>
+                    {% else %}
+                        <ul class="pull-right">
+                            <div class="btn-group" id="btn-profile">
+                                <a class="btn btn-inverse" href="{% url myprofile %}"><i class="icon-user icon-white"></i> {{ user }}</a>
+                                <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{% url myprofile %}"><i class="icon-pencil"></i> Edit profile</a></li>
+                                    {% if user.is_staff %}
+                                        <li class="divider"></li>
+                                        <li><a href="{% url arrivals %}"><i class="icon-list-alt"></i> Register arrivals</a></li>
+                                        <li><a href="/admin"><i class="icon-road"></i> Admin</a></li>
+                                    {% endif%}
+                                    <li class="divider"></li>
+                                    <li><a href="{% url auth_logout %}"><i class="icon-off"></i> Log out</a></li>
+                                </ul>
+                            </div>
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="sidebar">
+            <div class="well">
+                {% include "sidebar.html" %}
+            </div>
+        </div>
+
+        <div class="container">
+            
+            {% if breadcrumbs %}
+            <div class="row breadcrumbs">
+                <div class="span9">
+                    <ul class="breadcrumb">
+                    {% for text, link in breadcrumbs %}
+                        {% if not forloop.last %}
+                            <li><a href="{{ link }}">{{ text }}</a><span class="divider">/</span></li>
+                        {% else %}
+                            <li>{{ text }}</li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="row">
+                        <div class="span9">
+                            <div class="alert alert-block fade in alert-{{ message.tags }}">
+                                <a class="close" data-dismiss="alert" href="#">×</a>
+                                <p>{{ message }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% block content %}
+                <!-- Content goes here -->
+            {% endblock content %}
+
+            <footer>
+                <div class="row">
+                    <div class="span12">
+                        <hr />
+                        <p><a href="https://github.com/dotKom/studlan">https://github.com/dotKom/studlan</a></p>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        
+    </body>
+</html>
