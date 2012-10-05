@@ -4,8 +4,8 @@ from datetime import datetime
 
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
-
 
 from studlan.lan.models import LAN, Attendee
 
@@ -21,7 +21,12 @@ def home(request):
         lans = LAN.objects.all()
         upcoming = False 
 
-    return render(request, 'arrivals/home.html', {'lans': lans, 'upcoming': upcoming})
+    breadcrumbs = (
+        ('studLAN', '/'),
+        ('Arrivals', '')
+    )
+
+    return render(request, 'arrivals/home.html', {'lans': lans, 'upcoming': upcoming, 'breadcrumbs': breadcrumbs})
     
 
 def arrivals(request, lan_id):
@@ -39,7 +44,13 @@ def arrivals(request, lan_id):
     #    sorted_users.append(u)
     #sorted_users.sort(key=lambda x: x.username.lower(), reverse=False)
 
-    return render(request, 'arrivals/arrivals.html', {'attendees': attendees, 'lan': lan})
+    breadcrumbs = (
+        ('studLAN', '/'),
+        ('Arrivals', reverse('arrival_home')),
+        (lan, ''),
+    )
+
+    return render(request, 'arrivals/arrivals.html', {'attendees': attendees, 'lan': lan, 'breadcrumbs': breadcrumbs})
  
 def toggle_arrival(request, lan_id, user_id):
     if not request.user.is_staff:
