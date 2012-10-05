@@ -1,0 +1,91 @@
+
+{% extends "base.html" %}
+{% load markup %}
+{% load misc %}
+
+{% block title %}
+studLAN - Team - {{ team }}
+{% endblock title %}
+
+{% block navigation %}
+    <ul class="nav">
+        <li><a href="{% url root %}">News</a></li>
+        <li><a href="{% url competitions %}">Competitions</a></li>
+        <li class="active"><a href="{% url teams %}">Teams</a></li>
+    </ul>
+{% endblock navigation %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="span9">
+            <h2>
+                {{ team }}
+                {% if team.is_mine %}
+                    <a class="pull-right btn btn-small btn-danger" href="{% url disband_team team.id %}">
+                        <i class="icon-remove icon-white"></i> Disband Team
+                    </a>
+                {% endif %}
+            </h2>
+        </div>
+    </div>
+	
+    <div class="row">
+        <div class="span9">
+            <h3>Leader</h3>
+            <h4>
+                <a href="{% url profile team.leader %}">{{ team.leader }} ({{ team.leader.first_name }} {{ team.leader.last_name }})</a>
+            </h4>
+        </div>
+    </div>
+	
+    <div class="row">
+        <div class="span9">
+            <h3>Members</h3>
+        </div>
+    </div>
+	<div class="row">
+        <div class="span9">
+            <table class="table table-bordered table-striped">
+                <thead><th>User name</th><th>Full name</th></thead>
+                <tbody>
+
+                    {% for member in team.members.all %}
+                        <tr>
+                            <td><a href="{% url profile member %}">{{ member }}</a></td>
+                            <td>{{ member.first_name }} {{ member.last_name }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+	
+	{% if team.is_mine and users|length > 0 %}
+        <div class="row">
+            <div class="span9">
+                <form class="form-horizontal" action="{% url add_member team.id %}" method="POST">{% csrf_token %}
+                    <fieldset>
+                        <legend>Add member</legend>
+                        <div class="control-group">
+                            <label class="control-label" for="select">Select</label>
+                            <div class="controls">
+                                <select id="selectMember" name="selectMember">
+                                    {% for user in users %}
+                                        <option value="{{ user.id }}">{{ user }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <input type="submit" class="btn btn-primary" value="Add member" />
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+		
+	{% endif %}
+
+{% endblock content %}

@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load markup %}
+
+{% block title %}
+studLAN - News
+{% endblock title %}
+
+{% block navigation %}
+    <ul class="nav">
+        <li class="active"><a href="{% url root %}">News</a></li>
+        <li><a href="{% url competitions %}">Competitions</a></li>
+        <li><a href="{% url teams %}">Teams</a></li>
+    </ul>
+{% endblock navigation %}
+
+{% block content %}
+
+    <div class="row"><div class="span9"><h1>News</h1></div></div>
+
+    {% for article in articles.object_list %}
+        {% if forloop.counter < 3 %}
+            <div class="row">
+                <div class="span9">
+                    <h2>{{ article.title }}</h2>
+                    <span class="label info">{{ article.pub_date }}</span>
+                    <p>{{ article.body|striptags|markdown }}</p>
+                </div>
+            </div>
+        {% else %}
+            {% if not forloop.counter|divisibleby:"2" %}
+            <div class="row">
+                <div class="span4">
+                    <h2>{{ article.title }}</h2>
+                    <span class="label info">{{ article.pub_date }}</span>
+                    <p>{{ article.body|striptags|markdown }}</p>
+                </div>
+
+                <div class="span1">
+                    &nbsp;
+                </div>
+                
+            {% else %}
+                <div class="span4">
+                    <h2>{{ article.title }}</h2>
+                    <span class="label info">{{ article.pub_date }}</span>
+                    <p>{{ article.body|striptags|markdown }}</p>
+                </div>
+            </div>
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    <div class="row">
+        <div class="pagination">
+            <div class="span9">
+                <ul>
+                    <span class="step-links">
+                        {% if articles.has_previous %}
+                            <li class="prev">
+                                <a href="{% url news articles.previous_page_number %}">&larr; Previous</a>
+                        {% else %}
+                            <li class="prev disabled">
+                                <a href="#">&larr; Previous</a>
+                        {% endif %}
+                            </li>
+
+                        {% for page in articles.paginator.page_range %}
+                            {% if articles.number == page %}
+                                <li class="active"><a href="{% url news page %}">{{ page }}</a></li>
+                            {% else %}
+                                <li><a href="{% url news page %}">{{ page }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if articles.has_next %}
+                            <li class="next">
+                                <a href="{% url news articles.next_page_number %}">Next &rarr;</a>
+                        {% else %}
+                            <li class="next disabled">
+                                <a href="#">Next &rarr;</a>
+                        {% endif %}
+                            </li>
+                    </span>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

@@ -18,9 +18,9 @@ def my_profile(request):
 
 def update_profile(request):
     if request.method == 'GET':
-        form = UserProfileForm(instance=request.user.get_profile())
+        form = UserProfileForm(instance=request.user.get_profile(), auto_id=True, error_class=InlineSpanErrorList)
     else:
-        form = UserProfileForm(request.POST, instance=request.user.get_profile())
+        form = UserProfileForm(request.POST, instance=request.user.get_profile(), auto_id=True, error_class=InlineSpanErrorList)
         if form.is_valid():
             form.save()
             return redirect('myprofile')
