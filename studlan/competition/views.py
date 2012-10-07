@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
+
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -14,21 +16,26 @@ from studlan.lan.models import LAN
 from studlan.team.models import Team
 
 def main(request):
-    context = {}
-    competitions = Competition.objects.all()
-    competitions = shorten_descriptions(competitions, 200)
+    lans = LAN.objects.filter(end_date__gte=datetime.now())
+    if lans:
+        next_lan = lans[0]
+        return redirect('competitions_show_lan', lan_id=next_lan.id)
+    else:
+        context = {}
+        competitions = Competition.objects.all()
+        competitions = shorten_descriptions(competitions, 200)
 
-    context['activities'] = Activity.objects.all()
-    context['competitions'] = competitions
-    context['active'] = 'all'
+        context['activities'] = Activity.objects.all()
+        context['competitions'] = competitions
+        context['active'] = 'all'
 
-    breadcrumbs = (
-        ('studLAN', '/'),
-        ('Competitions', ''),
-    )
-    context['breadcrumbs'] = breadcrumbs
+        breadcrumbs = (
+            ('studLAN', '/'),
+            ('Competitions', ''),
+        )
+        context['breadcrumbs'] = breadcrumbs
 
-    return render(request, 'competition/competitions.html', context)
+        return render(request, 'competition/competitions.html', context)
 
 def main_filtered(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
