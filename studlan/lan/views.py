@@ -13,7 +13,7 @@ def home(request):
     lans = LAN.objects.filter(end_date__gte=datetime.now())
     if lans.count() == 1:
         next_lan = lans[0]
-        return details(request, next_lan.id)
+        return redirect('lan_details', lan_id=next_lan.id)
     else:
         return listing(request)
 
