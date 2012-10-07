@@ -10,6 +10,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.template.context import RequestContext
 
 from studlan.competition.models import Activity, Competition, Participant
+from studlan.lan.models import LAN
 from studlan.team.models import Team
 
 def main(request):
@@ -29,11 +30,52 @@ def main(request):
 
     return render(request, 'competition/competitions.html', context)
 
+def main_filtered(request, lan_id):
+    lan = get_object_or_404(LAN, pk=lan_id)
+
+    context = {}
+    competitions = Competition.objects.filter(lan=lan)
+    competitions = shorten_descriptions(competitions, 200)
+
+    context['activities'] = Activity.objects.all()
+    context['competitions'] = competitions
+    context['active'] = 'all'
+
+    breadcrumbs = (
+        ('studLAN', '/'),
+        ('Competitions', reverse('competitions')),
+        (lan, '')
+    )
+    context['breadcrumbs'] = breadcrumbs
+
+    return render(request, 'competition/competitions.html', context)
+
 def activity_details(request, activity_id):
     activity = get_object_or_404(Activity, pk=activity_id)
     
     context = {}
     competitions = Competition.objects.filter(activity=activity)
+    competitions = shorten_descriptions(competitions, 200)
+
+    context['active'] = activity.id
+    context['activities'] = Activity.objects.all()
+    context['competitions'] = competitions
+
+    breadcrumbs = (
+        ('studLAN', '/'),
+        ('Competitions', reverse('competitions')),
+        (activity, ''),
+    )
+    context['breadcrumbs'] = breadcrumbs
+
+    return render(request, 'competition/competitions.html', context)
+
+def activity_details_filtered(request, lan_id, activity_id):
+    lan = get_object_or_404(LAN, pk=lan_id)
+    activity = get_object_or_404(Activity, pk=activity_id)
+
+    context = {}
+    competitions = Competition.objects.filter(lan=lan, activity=activity)
     competitions = shorten_descriptions(competitions, 200)
 
     context['active'] = activity.id
