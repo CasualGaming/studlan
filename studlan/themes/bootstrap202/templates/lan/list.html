@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}
+studLAN - LAN list
+{% endblock title %}
+
+{% block navigation %}
+    <ul class="nav">
+        <li><a href="{% url root %}">News</a></li>
+        <li><a href="{% url competitions %}">Competitions</a></li>
+        <li><a href="{% url teams %}">Teams</a></li>
+    </ul>
+{% endblock navigation %}
+
+{% block content %}
+    {% if upcoming %}
+    <div class="row">
+        <div class="span9">
+            <h1>Upcoming LANs</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="span9">
+            <table class="table table-bordered table-striped">
+                <thead><th>LAN</th><th>Start</th><th>End</th></thead>
+                <tbody>
+                    {% for lan in upcoming %}
+                    <tr>
+                        <td><a href="{{ lan.get_absolute_url }}">{{ lan }}</a></td>
+                        <td>{{ lan.start_date }}</td>
+                        <td>{{ lan.end_date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if previous %}
+    <div class="row">
+        <div class="span9">
+            <h1>Previous LANs</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="span9">
+            <table class="table table-bordered table-striped">
+                <thead><th>LAN</th><th>Start</th><th>End</th></thead>
+                <tbody>
+                    {% for lan in previous %}
+                    <tr>
+                        <td><a href="{{ lan.get_absolute_url }}">{{ lan }}</a></td>
+                        <td>{{ lan.start_date }}</td>
+                        <td>{{ lan.end_date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+{% endblock content %}

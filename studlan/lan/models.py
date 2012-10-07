@@ -34,7 +34,7 @@ class LAN(models.Model):
         return self.title
 
     class Meta:
-        ordering = ['-start_date']
+        ordering = ['start_date']
 
 class Attendee(models.Model):
     user = models.ForeignKey(User)
