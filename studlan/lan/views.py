@@ -4,10 +4,19 @@ from datetime import datetime
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 
 from studlan.lan.models import LAN, Attendee
+
+def dispatch(request):
+    lans = LAN.objects.filter(end_date__gte=datetime.now())
+    if lans:
+        next_lan = lans[0]
+        return redirect('/%s/' % next_lan.slug)
+    else:
+        return listing(request)
 
 def home(request):
     lans = LAN.objects.filter(end_date__gte=datetime.now())

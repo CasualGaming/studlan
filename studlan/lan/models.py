@@ -7,6 +7,7 @@ from django.db import models
 
 class LAN(models.Model):
     title = models.CharField("title", max_length=100)
+    slug = models.CharField("slug", max_length=7, help_text="Syntax: <month><year> i.e. oct2012")
     start_date = models.DateTimeField("start date")
     end_date = models.DateTimeField("end date")
     location = models.CharField("location", max_length=100)
@@ -42,7 +43,7 @@ class Attendee(models.Model):
     has_paid = models.BooleanField("has paid")
 
     def __unicode__(self):
-        return user.get_full_name() + " - " + lan.title
+        return self.user.get_full_name() + " - " + self.lan.title
 
     class Meta:
         ordering = ['user', 'lan',]
