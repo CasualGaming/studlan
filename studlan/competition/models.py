@@ -1,11 +1,14 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import datetime
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
 from django.db.models.signals import post_save
-import datetime
+
+from studlan.lan.models import LAN
 
 class Activity(models.Model):
 
@@ -36,26 +39,22 @@ class Competition(models.Model):
         2: ['Registration closed', 'danger'],
         3: ['Competition in progress', 'warning'],
         4: ['Competition finished', 'info'],
-        }
+    }
+
     title = models.CharField('title', max_length=50)
     status = models.SmallIntegerField('status', choices=STATUS_OPTIONS)
     activity = models.ForeignKey(Activity)
+    lan = models.ForeignKey(LAN)
     use_teams = models.BooleanField('use teams', default=False,
-                                    help_text='If checked, participants'
-                                    ' will be ignored, and will '
-                                    'instead use teams. If left '
-                                    'unchecked teams will be ignored, '
-                                    'and participants will be used.')
+        help_text='If checked, participants will be ignored, and will '
+        'instead use teams. If left unchecked teams will be ignored, '
+        'and participants will be used.')
 
     desc = models.TextField('description',
-                            help_text='Markdown-enabled. You may also '
-                            'use regular (x)HTML markup. For '
-                            'blockquotes use the following '
-                            'markup:<br/><br/>&lt;blockquote&gt;<br/>&n'
-                            'bsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Quote-text&'
-                            'lt;/p&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;'
-                            'small&gt;Reference&lt;/small&gt;<br/>&lt;/'
-                            'blockquote&gt;')
+        help_text='Markdown-enabled. You may also use regular (x)HTML markup. For '
+        'blockquotes use the following markup:<br/><br/>&lt;blockquote&gt;<br/>&n'
+        'bsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Quote-text& lt;/p&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;'
+        'small&gt;Reference&lt;/small&gt;<br/>&lt;/blockquote&gt;')
 
     def __unicode__(self):
         return self.title

@@ -11,16 +11,17 @@ from studlan.lan.models import LAN, Attendee
 
 def home(request):
     lans = LAN.objects.filter(end_date__gte=datetime.now())
-    if lans:
+    if lans.count() == 1:
         next_lan = lans[0]
-        return details(request, next_lan.id)
+        return redirect('lan_details', lan_id=next_lan.id)
     else:
         return listing(request)
 
 def listing(request):
-    lans = LAN.objects.all()
+    upcoming_lans = LAN.objects.filter(end_date__gte=datetime.now())
+    previous_lans = LAN.objects.filter(end_date__lt=datetime.now())
 
-    return render(request, 'lan/list.html', {'lans': lans})
+    return render(request, 'lan/list.html', {'upcoming': upcoming_lans, 'previous': previous_lans})
 
 def details(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
