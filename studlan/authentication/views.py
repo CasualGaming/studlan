@@ -136,7 +136,6 @@ def recover(request):
                     return HttpResponseRedirect('/')        
 
                 user = users[0]
-                user.is_active = False
                 user.save()
     
                 # Create the registration token
