@@ -47,7 +47,8 @@ def main_filtered(request, lan_id):
     context['activities'] = Activity.objects.all()
     context['competitions'] = competitions
     context['active'] = 'all'
-
+    context['lan'] = lan
+    
     breadcrumbs = (
         ('studLAN', '/'),
         ('Competitions', reverse('competitions')),
@@ -58,24 +59,29 @@ def main_filtered(request, lan_id):
     return render(request, 'competition/competitions.html', context)
 
 def activity_details(request, activity_id):
-    activity = get_object_or_404(Activity, pk=activity_id)
-    
-    context = {}
-    competitions = Competition.objects.filter(activity=activity)
-    competitions = shorten_descriptions(competitions, 200)
+    lans = LAN.objects.filter(end_date__gte=datetime.now())
+    if lans:
+        next_lan = lans[0]
+        return redirect('activity_details_show_lan', lan_id=next_lan.id, activity_id=activity_id)
+    else:
+        activity = get_object_or_404(Activity, pk=activity_id)
+        
+        context = {}
+        competitions = Competition.objects.filter(activity=activity)
+        competitions = shorten_descriptions(competitions, 200)
 
-    context['active'] = activity.id
-    context['activities'] = Activity.objects.all()
-    context['competitions'] = competitions
+        context['active'] = activity.id
+        context['activities'] = Activity.objects.all()
+        context['competitions'] = competitions
 
-    breadcrumbs = (
-        ('studLAN', '/'),
-        ('Competitions', reverse('competitions')),
-        (activity, ''),
-    )
-    context['breadcrumbs'] = breadcrumbs
+        breadcrumbs = (
+            ('studLAN', '/'),
+            ('Competitions', reverse('competitions')),
+            (activity, ''),
+        )
+        context['breadcrumbs'] = breadcrumbs
 
-    return render(request, 'competition/competitions.html', context)
+        return render(request, 'competition/competitions.html', context)
 
 def activity_details_filtered(request, lan_id, activity_id):
     lan = get_object_or_404(LAN, pk=lan_id)
@@ -88,10 +94,12 @@ def activity_details_filtered(request, lan_id, activity_id):
     context['active'] = activity.id
     context['activities'] = Activity.objects.all()
     context['competitions'] = competitions
+    context['lan'] = lan
 
     breadcrumbs = (
         ('studLAN', '/'),
         ('Competitions', reverse('competitions')),
+        (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
         (activity, ''),
     )
     context['breadcrumbs'] = breadcrumbs
