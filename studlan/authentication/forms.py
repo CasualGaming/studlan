@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime
+import re
 
 from django import forms
 from django.contrib import auth
@@ -75,6 +76,8 @@ class RegisterForm(forms.Form):
             username = cleaned_data['desired_username']
             if User.objects.filter(username=username).count() > 0:
                 self._errors['desired_username'] = self.error_class(["There is already a user with that username."])
+            if not re.match("^[a-zA-Z0-9_-]+$", username):
+                self._errors['desired_username'] = self.error_class(["You desired username contains illegal characters. Valid: a-Z 0-9 - _"])
 
             # Check email
             email = cleaned_data['email']
