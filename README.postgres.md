@@ -14,12 +14,14 @@ Install notes if you want to use Postgresql when deploying Studlan.
 
 ## Django 1.4>= ##
 
-4. pip install psycopg2 
+1. pip install psycopg2 
 
 ## Django Django1.3 or less ##
 
-TODO: Figure out how to pass "-I/virtualenv/full/path/site-packages/mx" so psycopg2 builds postgres python adapter with bindings from egenix-mx-base (mx.DateTime) in our virtualenv.
-WARNING: Wont work before TODO fixed for Django1.3... be free to figure it out or just be a good boy and use lateast Django 1.4!
-DOH: Shouldn't really care about this issue as it is Django 1.2 in Debian Squeeze (current stable) and Debian Wheezy which is next stable will have Django 1.4 anyway!
+* TODO: Figure out how to pass "-I/virtualenv/full/path/site-packages/mx" so psycopg2 builds postgres python adapter with bindings from egenix-mx-base (mx.DateTime) in our virtualenv.
 
-4. pip install psycopg2==2.4.1
+* WARNING: Wont work before TODO fixed for Django1.3... be free to figure it out or just be a good boy and use lateast Django 1.4!
+
+* DOH: Shouldn't really care about this issue as it is Django 1.2 in Debian Squeeze (current stable) and Debian Wheezy which is next stable will have Django 1.4 anyway!
+
+1. pip install psycopg2==2.4.1
