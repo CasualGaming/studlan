@@ -16,7 +16,7 @@ studLAN - Register
     <div class="row">
         <div class="span9">
             {{ form.non_field_errors }}
-            <form class="form-horizontal" method="post" action="{% url auth_register %}">{% csrf_token %}
+            <form id="register-form"class="form-horizontal" method="post" action="{% url auth_register %}">{% csrf_token %}
                 <fieldset>
                     <legend>Register new user</legend>
                     {% for field in form %}
@@ -49,4 +49,30 @@ studLAN - Register
         </div>
     </div>
 
+    <script language="javascript">
+        $(document).ready(function(){
+            $("#register-form").submit(function(){
+                validateUsername(event, "register-form");
+            });
+
+            function validateUsername(event, formId) {
+                var el = $("input[name='desired_username']");
+                var errString = "Only a-Z, 0-9, -, _ allowed.";
+
+                // If username contains other chars than alphanumerical + -+ _
+                if (! /^[a-zA-Z0-9-_]+$/.test(el.val()) || el.val() == undefined) {
+                    // If span element already exists - i.e. we've already gotten errors from the server
+                    if(el.parent().has($("span.help-inline")).length) {
+                        el.parent().find($("span.help-inline")).text(errString);
+                    } else {
+                        el.after("<span class='help-inline alert alert-error'>"+errString+"</span>");
+                    }
+                    event.preventDefault();
+                }
+
+                // ELSE: Submit as usual
+            }
+
+        });//document.ready
+    </script>
 {% endblock content %}
