@@ -1,13 +1,13 @@
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
         # Adding model 'Team'
         db.create_table('team_team', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -26,9 +26,14 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal('team', ['Member'])
 
+        # Adding unique constraint on 'Member', fields ['team', 'user']
+        db.create_unique('team_member', ['team_id', 'user_id'])
+
 
     def backwards(self, orm):
-        
+        # Removing unique constraint on 'Member', fields ['team', 'user']
+        db.delete_unique('team_member', ['team_id', 'user_id'])
+
         # Deleting model 'Team'
         db.delete_table('team_team')
 
@@ -74,7 +79,7 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         'team.member': {
-            'Meta': {'object_name': 'Member'},
+            'Meta': {'ordering': "['user']", 'unique_together': "(('team', 'user'),)", 'object_name': 'Member'},
             'date_joined': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'team': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['team.Team']"}),

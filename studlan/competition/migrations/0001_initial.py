@@ -1,13 +1,13 @@
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
         # Adding model 'Activity'
         db.create_table('competition_activity', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -23,76 +23,43 @@ class Migration(SchemaMigration):
             ('title', self.gf('django.db.models.fields.CharField')(max_length=50)),
             ('status', self.gf('django.db.models.fields.SmallIntegerField')()),
             ('activity', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['competition.Activity'])),
+            ('lan', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['lan.LAN'])),
             ('use_teams', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('desc', self.gf('django.db.models.fields.TextField')()),
         ))
         db.send_create_signal('competition', ['Competition'])
 
-        # Adding M2M table for field participants on 'Competition'
-        db.create_table('competition_competition_participants', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('competition', models.ForeignKey(orm['competition.competition'], null=False)),
-            ('user', models.ForeignKey(orm['auth.user'], null=False))
-        ))
-        db.create_unique('competition_competition_participants', ['competition_id', 'user_id'])
-
-        # Adding M2M table for field teams on 'Competition'
-        db.create_table('competition_competition_teams', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('competition', models.ForeignKey(orm['competition.competition'], null=False)),
-            ('team', models.ForeignKey(orm['competition.team'], null=False))
-        ))
-        db.create_unique('competition_competition_teams', ['competition_id', 'team_id'])
-
-        # Adding model 'Team'
-        db.create_table('competition_team', (
+        # Adding model 'Participant'
+        db.create_table('competition_participant', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=50)),
-            ('tag', self.gf('django.db.models.fields.CharField')(unique=True, max_length=10)),
-            ('size', self.gf('django.db.models.fields.CharField')(max_length=2)),
-            ('leader', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], null=True)),
+            ('team', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['team.Team'], null=True)),
+            ('competition', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['competition.Competition'])),
         ))
-        db.send_create_signal('competition', ['Team'])
+        db.send_create_signal('competition', ['Participant'])
 
-        # Adding M2M table for field members on 'Team'
-        db.create_table('competition_team_members', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('team', models.ForeignKey(orm['competition.team'], null=False)),
-            ('user', models.ForeignKey(orm['auth.user'], null=False))
-        ))
-        db.create_unique('competition_team_members', ['team_id', 'user_id'])
+        # Adding unique constraint on 'Participant', fields ['user', 'competition']
+        db.create_unique('competition_participant', ['user_id', 'competition_id'])
 
-        # Adding model 'UserProfile'
-        db.create_table('competition_userprofile', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
-            ('nick', self.gf('django.db.models.fields.CharField')(max_length=20)),
-        ))
-        db.send_create_signal('competition', ['UserProfile'])
+        # Adding unique constraint on 'Participant', fields ['team', 'competition']
+        db.create_unique('competition_participant', ['team_id', 'competition_id'])
 
 
     def backwards(self, orm):
-        
+        # Removing unique constraint on 'Participant', fields ['team', 'competition']
+        db.delete_unique('competition_participant', ['team_id', 'competition_id'])
+
+        # Removing unique constraint on 'Participant', fields ['user', 'competition']
+        db.delete_unique('competition_participant', ['user_id', 'competition_id'])
+
         # Deleting model 'Activity'
         db.delete_table('competition_activity')
 
         # Deleting model 'Competition'
         db.delete_table('competition_competition')
 
-        # Removing M2M table for field participants on 'Competition'
-        db.delete_table('competition_competition_participants')
-
-        # Removing M2M table for field teams on 'Competition'
-        db.delete_table('competition_competition_teams')
-
-        # Deleting model 'Team'
-        db.delete_table('competition_team')
-
-        # Removing M2M table for field members on 'Team'
-        db.delete_table('competition_team_members')
-
-        # Deleting model 'UserProfile'
-        db.delete_table('competition_userprofile')
+        # Deleting model 'Participant'
+        db.delete_table('competition_participant')
 
 
     models = {
@@ -137,26 +104,17 @@ class Migration(SchemaMigration):
             'activity': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['competition.Activity']"}),
             'desc': ('django.db.models.fields.TextField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'participants': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.User']", 'symmetrical': 'False', 'blank': 'True'}),
+            'lan': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['lan.LAN']"}),
             'status': ('django.db.models.fields.SmallIntegerField', [], {}),
-            'teams': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['competition.Team']", 'symmetrical': 'False', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '50'}),
             'use_teams': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
         },
-        'competition.team': {
-            'Meta': {'ordering': "['tag', 'title']", 'object_name': 'Team'},
+        'competition.participant': {
+            'Meta': {'ordering': "['user', 'team']", 'unique_together': "(('user', 'competition'), ('team', 'competition'))", 'object_name': 'Participant'},
+            'competition': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['competition.Competition']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'leader': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"}),
-            'members': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "'team_members'", 'blank': 'True', 'to': "orm['auth.User']"}),
-            'size': ('django.db.models.fields.CharField', [], {'max_length': '2'}),
-            'tag': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '10'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '50'})
-        },
-        'competition.userprofile': {
-            'Meta': {'object_name': 'UserProfile'},
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'nick': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
-            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'})
+            'team': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['team.Team']", 'null': 'True'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True'})
         },
         'contenttypes.contenttype': {
             'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
@@ -164,6 +122,30 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+        },
+        'lan.lan': {
+            'Meta': {'ordering': "['start_date']", 'object_name': 'LAN'},
+            'description': ('django.db.models.fields.TextField', [], {}),
+            'end_date': ('django.db.models.fields.DateTimeField', [], {}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'location': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'start_date': ('django.db.models.fields.DateTimeField', [], {}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+        },
+        'team.member': {
+            'Meta': {'ordering': "['user']", 'unique_together': "(('team', 'user'),)", 'object_name': 'Member'},
+            'date_joined': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'team': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['team.Team']"}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']"})
+        },
+        'team.team': {
+            'Meta': {'ordering': "['tag', 'title']", 'object_name': 'Team'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'leader': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'newteamleader'", 'to': "orm['auth.User']"}),
+            'members': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'new_team_members'", 'symmetrical': 'False', 'through': "orm['team.Member']", 'to': "orm['auth.User']"}),
+            'tag': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '10'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         }
     }
 
