@@ -52,10 +52,10 @@ studLAN - Register
     <script language="javascript">
         $(document).ready(function(){
             $("#register-form").submit(function(){
-                validateUsername(event, "register-form");
+                validateUsername(event);
             });
 
-            function validateUsername(event, formId) {
+            function validateUsername(event) {
                 var el = $("input[name='desired_username']");
                 var errString = "Only a-Z, 0-9, -, _ allowed.";
 
