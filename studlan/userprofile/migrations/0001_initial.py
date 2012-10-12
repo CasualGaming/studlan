@@ -1,20 +1,18 @@
-# encoding: utf-8
+# -*- coding: utf-8 -*-
 import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
         # Adding model 'UserProfile'
         db.create_table('userprofile_userprofile', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'], unique=True)),
             ('nick', self.gf('django.db.models.fields.CharField')(max_length=20)),
-            ('signed_up', self.gf('django.db.models.fields.BooleanField')(default=False)),
-            ('has_paid', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('wants_to_sit_with', self.gf('django.db.models.fields.TextField')(blank=True)),
             ('gender', self.gf('django.db.models.fields.SmallIntegerField')(default=1)),
             ('date_of_birth', self.gf('django.db.models.fields.DateField')(default=datetime.date.today)),
@@ -26,7 +24,6 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
         # Deleting model 'UserProfile'
         db.delete_table('userprofile_userprofile')
 
@@ -73,11 +70,9 @@ class Migration(SchemaMigration):
             'address': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'date_of_birth': ('django.db.models.fields.DateField', [], {'default': 'datetime.date.today'}),
             'gender': ('django.db.models.fields.SmallIntegerField', [], {'default': '1'}),
-            'has_paid': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'nick': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
-            'signed_up': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'unique': 'True'}),
             'wants_to_sit_with': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             'zip_code': ('django.db.models.fields.CharField', [], {'max_length': '4'})
