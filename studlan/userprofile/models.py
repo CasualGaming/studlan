@@ -31,4 +31,11 @@ class UserProfile(models.Model):
     def getDay(self):
         return ('%02d' % self.date_of_birth.day)
 
+    def has_address(self):
+        if self.address and self.zip_code:
+            if not self.address.strip() or not self.zip_code.strip():
+                return False
+            return True
+        return False
+
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])

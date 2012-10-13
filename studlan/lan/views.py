@@ -40,13 +40,16 @@ def history(request, lan_id, user_id):
 def attend(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
     
-    if request.user in lan.attendees:
-        messages.error(request, "You are already in the attendee list for %s" % lan)
+    if not request.user.get_profile().has_address():
+        messages.error(request, "You need to fill in your address and zip code in order to sign up for a LAN.")
     else:
-        attendee = Attendee(lan=lan, user=request.user)
-        attendee.save()
+        if request.user in lan.attendees:
+            messages.error(request, "You are already in the attendee list for %s" % lan)
+        else:
+            attendee = Attendee(lan=lan, user=request.user)
+            attendee.save()
 
-        messages.success(request, "Successfully added you to attendee list for %s" % lan)
+            messages.success(request, "Successfully added you to attendee list for %s" % lan)
         
     return redirect(lan)
 
