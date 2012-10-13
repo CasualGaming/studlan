@@ -44,6 +44,7 @@ class LoginForm(forms.Form):
 
 class RegisterForm(forms.Form):
     desired_username = forms.CharField(label="Desired username", max_length=20)
+    ntnu_username = forms.CharField(label="NTNU username", max_length=20)
     first_name = forms.CharField(label="First name", max_length=50)
     last_name = forms.CharField(label="Last name", max_length=50)
     date_of_birth = forms.DateField(label="Date of birth", initial=datetime.date.today)

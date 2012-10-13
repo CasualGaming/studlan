@@ -7,4 +7,4 @@ from studlan.userprofile.models import UserProfile
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('nick', 'wants_to_sit_with', 'gender', 'date_of_birth', 'address', 'zip_code', 'phone',)
+        fields = ('nick', 'ntnu_username', 'wants_to_sit_with', 'gender', 'date_of_birth', 'address', 'zip_code', 'phone',)

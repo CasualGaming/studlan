@@ -20,6 +20,7 @@ class UserProfile(models.Model):
     address = models.CharField('Street address', max_length=100)
     zip_code = models.CharField('Zip code', max_length=4)
     phone = models.CharField('Phone number', max_length=20)
+    ntnu_username = models.CharField('NTNU username', max_length=20, blank=True, null=True)
 
     def __unicode__(self):
         return self.user.username
