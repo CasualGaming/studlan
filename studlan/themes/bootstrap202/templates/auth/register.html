@@ -51,12 +51,12 @@ studLAN - Register
 
     <script language="javascript">
         $(document).ready(function(){
-            $("#register-form").submit(function(){
-                validateUsername(event);
+            var el = $("input[name='desired_username']");
+            el.keyup(function(){
+                validateUsername(event, el);
             });
 
-            function validateUsername(event) {
-                var el = $("input[name='desired_username']");
+            function validateUsername(event, el) {
                 var errString = "Only a-Z, 0-9, -, _ allowed.";
 
                 // If username contains other chars than alphanumerical + -+ _
@@ -67,10 +67,11 @@ studLAN - Register
                     } else {
                         el.after("<span class='help-inline alert alert-error'>"+errString+"</span>");
                     }
-                    event.preventDefault();
+                } else {
+                    if(el.parent().has($("span.help-inline")).length) {
+                        el.parent().find($("span.help-inline")).remove();
+                    }
                 }
-
-                // ELSE: Submit as usual
             }
 
         });//document.ready
