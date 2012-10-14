@@ -40,9 +40,10 @@ class Attendee(models.Model):
     user = models.ForeignKey(User)
     lan = models.ForeignKey(LAN)
     has_paid = models.BooleanField("has paid")
+    arrived = models.BooleanField("has arrived")
 
     def __unicode__(self):
         return user.get_full_name() + " - " + lan.title
 
     class Meta:
-        ordering = ['user', 'lan',]
+        ordering = ['-user', 'lan',]
