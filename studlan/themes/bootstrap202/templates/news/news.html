@@ -21,7 +21,7 @@ studLAN - News
         {% if forloop.counter < 3 and page == 1 %}
             <div class="row">
                 <div class="span9">
-                    <h2><a href="{% url news_single article.id %}">{{ article.title }}</a></h2>
+                    <h2><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h2>
                     <span class="label info">{{ article.pub_date }}</span>
                     <p>{{ article.body|striptags|markdown }}</p>
                 </div>
@@ -30,7 +30,7 @@ studLAN - News
             {% if not forloop.counter|divisibleby:"2" %}
             <div class="row">
                 <div class="span4">
-                    <h2><a href="{% url news_single article.id %}">{{ article.title }}</a></h2>
+                    <h2><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h2>
                     <span class="label info">{{ article.pub_date }}</span>
                     <p>{{ article.body|striptags|markdown }}</p>
                 </div>
@@ -41,7 +41,7 @@ studLAN - News
                 
             {% else %}
                 <div class="span4">
-                    <h2><a href="{% url news_single article.id %}">{{ article.title }}</a></h2>
+                    <h2><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h2>
                     <span class="label info">{{ article.pub_date }}</span>
                     <p>{{ article.body|striptags|markdown }}</p>
                 </div>
