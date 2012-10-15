@@ -6,9 +6,8 @@ import re
 from django import forms
 from django.contrib import auth
 from django.contrib.auth.models import User
-from django.forms.util import ErrorList
-from django.utils.safestring import mark_safe
 
+from studlan.misc.forms import InlineSpanErrorList
 from studlan.userprofile.models import GENDERS
 
 class LoginForm(forms.Form):
@@ -78,7 +77,7 @@ class RegisterForm(forms.Form):
             if User.objects.filter(username=username).count() > 0:
                 self._errors['desired_username'] = self.error_class(["There is already a user with that username."])
             if not re.match("^[a-zA-Z0-9_-]+$", username):
-                self._errors['desired_username'] = self.error_class(["You desired username contains illegal characters. Valid: a-Z 0-9 - _"])
+                self._errors['desired_username'] = self.error_class(["Your desired username contains illegal characters. Valid: a-Z 0-9 - _"])
 
             # Check email
             email = cleaned_data['email']
@@ -110,17 +109,3 @@ class ChangePasswordForm(forms.Form):
                 self._errors['repeat_password'] = self.error_class(["Passwords did not match."])
 
             return cleaned_data
-
-class DivErrorList(ErrorList):
-    def __unicode__(self):
-        return self.as_divs()
-    def as_divs(self):
-        if not self: return u''
-        return mark_safe(u'<div class="errorlist">%s</div>' % ''.join([u'<div class="alert-message block-message error">%s</div>' % e for e in self]))
-
-class InlineSpanErrorList(ErrorList):
-    def __unicode__(self):
-        return self.as_spans()
-    def as_spans(self):
-        if not self: return u''
-        return mark_safe(''.join([u'<span class="help-inline alert alert-error">%s</span>' % e for e in self]))
