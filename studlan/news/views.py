@@ -30,3 +30,8 @@ def main(request, page):
         articles = paginator.page(1)
 
     return render(request, 'news/news.html', {'articles': articles, 'page': page})
+
+
+def single(request, article_id):
+    article = get_object_or_404(Article, pk=article_id)
+    return render(request, 'news/single.html', {'article': article})

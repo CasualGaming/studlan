@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load markup %}
+
+{% block title %}
+studLAN - News
+{% endblock title %}
+
+{% block navigation %}
+    <ul class="nav">
+        <li class="active"><a href="{% url root %}">News</a></li>
+        <li><a href="{% url competitions %}">Competitions</a></li>
+        <li><a href="{% url teams %}">Teams</a></li>
+    </ul>
+{% endblock navigation %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="span9">
+            <h1>{{ article.title }}</h1>
+            <span class="label info">{{ article.pub_date }}</span>
+            <p>{{ article.body|striptags|markdown }}</p>
+        </div>
+    </div>
+
+{% endblock content %}
