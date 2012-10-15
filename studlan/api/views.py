@@ -29,7 +29,6 @@ def change_arrived(request, api_key, lan_id, username, status):
         else:
             messages.warning(request, "Status '%s' unrecognized." % status)
 
-        messages.success(request, "lan/deltakelse finnes.")
         return redirect('/')
 
 def change_paid(request, api_key, lan_id, username, status):
@@ -53,7 +52,6 @@ def change_paid(request, api_key, lan_id, username, status):
         else:
             messages.warning(request, "Status '%s' unrecognized." % status)
 
-        messages.success(request, "lan/deltakelse finnes.")
         return redirect('/')
 
 
