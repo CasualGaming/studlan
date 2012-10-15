@@ -3,12 +3,14 @@
 from datetime import datetime
 
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 
 from studlan.lan.models import LAN, Attendee
 
+@login_required
 def home(request):
     if not request.user.is_staff:
         raise Http404
@@ -28,21 +30,13 @@ def home(request):
 
     return render(request, 'arrivals/home.html', {'lans': lans, 'upcoming': upcoming, 'breadcrumbs': breadcrumbs})
     
-
+@login_required
 def arrivals(request, lan_id):
     if not request.user.is_staff:
         raise Http404
     
     lan = get_object_or_404(LAN, pk=lan_id)
     attendees = Attendee.objects.filter(lan=lan)
-
-    # This is the old sorting code for the user entries. It should be obsolete since ordering
-    # is now done on the model layer.
-    #users = User.objects.all()
-    #sorted_users = []
-    #for u in users:
-    #    sorted_users.append(u)
-    #sorted_users.sort(key=lambda x: x.username.lower(), reverse=False)
 
     breadcrumbs = (
         ('studLAN', '/'),
@@ -51,7 +45,8 @@ def arrivals(request, lan_id):
     )
 
     return render(request, 'arrivals/arrivals.html', {'attendees': attendees, 'lan': lan, 'breadcrumbs': breadcrumbs})
- 
+
+@login_required
 def toggle_arrival(request, lan_id, user_id):
     if not request.user.is_staff:
         raise Http404
@@ -61,11 +56,30 @@ def toggle_arrival(request, lan_id, user_id):
     try:
         attendee = Attendee.objects.get(lan=lan, user=user)
 
+        if attendee.arrived:
+            attendee.arrived = False
+        else:
+            attendee.arrived = True
+        attendee.save()
+
+    except Attendee.DoesNotExist:
+        messages.error(request, "%s was not found in attendees for %s" % (user, lan))
+
+    return redirect('arrivals', lan_id=lan_id)
+
+@login_required
+def toggle_paid(request, lan_id, user_id):
+    if not request.user.is_staff:
+        raise Http404
+
+    lan = get_object_or_404(LAN, pk=lan_id)
+    user = get_object_or_404(User, pk=user_id)
+    try:
+        attendee = Attendee.objects.get(lan=lan, user=user)
+
         if attendee.has_paid:
-            print 'had paid'
             attendee.has_paid = False
         else:
-            print 'had not paid'
             attendee.has_paid = True
         attendee.save()
 

@@ -33,7 +33,7 @@ studLAN - Register Arrivals
         <div class="span9">
             <table class="table table-bordered table-striped filterable">
                 <thead>
-                    <th>Username</th><th>Full name</th><th>Email Address</th><th>Paid</th>
+                    <th>Username</th><th>Full name</th><th>Email Address</th><th>Paid</th><th>Arrived</th>
                 </thead>
                 <tbody>
                     {% for attendee in attendees %}
@@ -43,9 +43,20 @@ studLAN - Register Arrivals
                         <td>{{ attendee.user.email }}</td>
                         <td>
                         {% if attendee.has_paid %}
-                            <input type="checkbox" name="arrived" disabled checked /> <a class="label success" href="{% url toggle_arrival lan.id attendee.user.id %}">Toggle</a>
+                            <input type="checkbox" name="paid" disabled checked />
+                            <a class="label label-success" href="{% url toggle_paid lan.id attendee.user.id %}">Toggle</a>
                         {% else %}
-                            <input type="checkbox" name="arrived" disabled /> <a class="label error" href="{% url toggle_arrival lan.id attendee.user.id %}">Toggle</a>
+                            <input type="checkbox" name="paid" disabled />
+                            <a class="label label-important" href="{% url toggle_paid lan.id attendee.user.id %}">Toggle</a>
+                        {% endif %}
+                        </td>
+                        <td>
+                        {% if attendee.arrived %}
+                            <input type="checkbox" name="arrived" disabled checked /> 
+                            <a class="label label-success" href="{% url toggle_arrival lan.id attendee.user.id %}">Toggle</a>
+                        {% else %}
+                            <input type="checkbox" name="arrived" disabled /> 
+                            <a class="label label-important" href="{% url toggle_arrival lan.id attendee.user.id %}">Toggle</a>
                         {% endif %}
                         </td>
                     </tr>
