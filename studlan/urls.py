@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^misc/remove_alert.html', 'studlan.misc.views.remove_alert'),
 
     # app urls
+    url(r'^api/',           include('studlan.api.urls')),
     url(r'^arrivals/',      include('studlan.arrivals.urls')),
     url(r'^auth/',          include('studlan.authentication.urls')),
     url(r'^competition/',   include('studlan.competition.urls')),

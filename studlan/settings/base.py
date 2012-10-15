@@ -126,6 +126,7 @@ INSTALLED_APPS = (
 
 PROJECT_APPS = (
     # studlan apps
+    'studlan.api',
     'studlan.authentication',
     'studlan.competition',
     'studlan.lan',

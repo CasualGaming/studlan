@@ -26,14 +26,27 @@ studLAN - Update profile
         <div class="span9">
             <table class="well table">
                 <thead>
-                    <th>LAN</th><th>Time span</th><th>Paid</th>
+                    <th>LAN</th><th>Time span</th><th>Paid</th><th>Arrived</th>
                 </thead>
                 <tbody>
                     {% for attend in attended %}
                     <tr>
                         <td><a href="{{ attend.lan.get_absolute_url }}">{{ attend.lan }}</a></td>
                         <td>{{ attend.lan.start_date }} - {{ attend.lan.end_date }}</td>
-                        <td>{{ attend.has_paid }}</td>
+                        <td>
+                        {% if attend.has_paid %}
+                            <span class="label label-success">Yes</span>
+                        {% else %}
+                            <span class="label label-important">No</span>
+                        {% endif %}
+                        </td>
+                        <td>
+                        {% if attend.arrived %}
+                            <span class="label label-success">Yes</span>
+                        {% else %}
+                            <span class="label label-important">No</span>
+                        {% endif %}
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
