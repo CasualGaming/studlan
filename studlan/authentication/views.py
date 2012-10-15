@@ -12,9 +12,9 @@ from django.http import HttpResponseRedirect
 
 from studlan import settings
 from studlan.authentication.forms import (LoginForm, RegisterForm, 
-                            RecoveryForm, ChangePasswordForm,
-                            DivErrorList, InlineSpanErrorList)
+                            RecoveryForm, ChangePasswordForm)
 from studlan.authentication.models import RegisterToken
+from studlan.misc.forms import InlineSpanErrorList
 from studlan.userprofile.models import UserProfile
 
 def login(request):
