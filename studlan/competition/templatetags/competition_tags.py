@@ -1,10 +1,12 @@
 
+from datetime import datetime
 import logging
 
 from django import template
 from django.core.urlresolvers import reverse
 
 from studlan.competition.models import Competition
+from studlan.lan.models import LAN
 
 register = template.Library()
 
@@ -18,9 +20,11 @@ def competition_tabs(activities, active):
 #--- For sidebar ---
 
 def do_num_of_competitions(parser, token):
-	#tag_name, format_string = token.split_contents()
-	
-	return Competition_Renderer(len(Competition.objects.all()))
+    lans = LAN.objects.filter(end_date__gte=datetime.now())
+    if lans.count() < 1:
+        return Competition_Renderer(0)
+    else:
+        return Competition_Renderer(Competition.objects.filter(lan=lans[0]).count())
 
 def get_competitions_user_is_participating_in(parser, token):
 	return Competition_Participation_Renderer()
