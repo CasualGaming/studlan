@@ -23,6 +23,7 @@ def my_profile(request):
 
     return render(request, 'user/profile.html', {'quser': request.user, 'profile': profile, 'breadcrumbs': breadcrumbs})
 
+@login_required
 def update_profile(request):
     if request.method == 'GET':
         form = UserProfileForm(instance=request.user.get_profile(), auto_id=True)
