@@ -5,14 +5,6 @@
 studLAN - {% if upcoming %}Upcoming{% else %}Previous{% endif %} LANs 
 {% endblock title %}
 
-{% block navigation %}
-    <ul class="nav">
-        <li><a href="{% url root %}">News</a></li>
-        <li><a href="{% url competitions %}">Competitions</a></li>
-        <li class="active"><a href="{% url teams %}">Teams</a></li>
-    </ul>
-{% endblock navigation %}
-
 {% block content %}
     <div class="row">
         <div class="span9">

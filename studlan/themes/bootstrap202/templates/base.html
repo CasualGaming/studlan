@@ -20,8 +20,7 @@
             <div class="navbar-inner">
                 <div class="container">
                     <a class="brand" href="{% url root %}"><img src="{{ STATIC_URL }}mushroom_small.png" />studLAN</a>
-                    {% block navigation %}
-                    {% endblock navigation %}
+                    {% include "navigation.html" %}
                     {% if not user.is_authenticated %}
                         <ul class="nav pull-right">
                             <li><a href="{% url auth_register %}">Register</a></li>
