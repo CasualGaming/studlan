@@ -19,19 +19,21 @@
                 <fieldset>
                     <legend>Create new team</legend>
                     <div class="control-group">
-                        <label class="control-label" for="title">Title</label>
+                        <label class="control-label" for="title">{{ form.title.label }}</label>
                         <div class="controls">
-                            <input class="input-xlarge" id="title" name="title" size="30" type="text" />
+                            <input class="input-xlarge" id="title" name="title" size="30" type="text" value="{% if form.title.value %}{{ form.title.value }}{% endif %}" />
+                            {{ form.title.errors }}
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="tag">Tag</label>
+                        <label class="control-label" for="tag">{{ form.tag.label }}</label>
                         <div class="controls">
                             <div class="input-prepend">
-                                <span class="add-on">[tag]</span>
-                                <input class="input-xlarge" id="tag" name="tag" size="30" type="text" />
+                                <span class="add-on">[{{ form.tag.label|lower }}]</span>
+                                <input class="input-xlarge" id="tag" name="tag" size="30" type="text" value="{% if form.tag.value %}{{ form.tag.value }}{% endif %}" />
                                 <span class="help-block">Must be unique!</span>
                             </div>
+                            {{ form.tag.errors }}
                         </div>
                     </div>
                     <div class="form-actions">

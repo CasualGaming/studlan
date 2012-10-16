@@ -8,7 +8,9 @@ from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.context import RequestContext
 
+from studlan.misc.forms import InlineSpanErrorList
 from studlan.team.models import Team, Member
+from studlan.team.forms import TeamCreationForm 
 from studlan.settings import MAX_TEAMS
 
 def teams(request):
@@ -36,26 +38,36 @@ def my_teams(request):
 @login_required
 def create_team(request):
     if request.method == 'POST':
+        # Stop if a person tries to create more than the allowed ammount of teams.        
         if Team.objects.filter(leader=request.user).count() >= MAX_TEAMS:
             messages.error(request, "You cannot be leader of more than %i teams." % MAX_TEAMS)
             return redirect('teams')
-        else:
-            team = Team()
-            team.leader = request.user
-            team.title = request.POST.get('title')
-            team.tag = request.POST.get('tag')
+
+        form = TeamCreationForm(request.POST)
+        if form.is_valid():
+            cleaned = form.cleaned_data
+
+            team = Team(
+                leader = request.user,
+                title = cleaned['title'],
+                tag = cleaned['tag'],
+            )
             team.save()
 
             messages.success(request, 'Team %s has been created.' % team)
             return redirect(team)
+        else:
+            form = TeamCreationForm(request.POST, auto_id=True, error_class=InlineSpanErrorList) 
     else:
-        breadcrumbs = (
-            ('studLAN', '/'),
-            ('Teams', reverse('teams')),
-            ('Create team', ''),
-        )
+        form = TeamCreationForm()
 
-        return render(request, 'team/create_team.html', {'breadcrumbs': breadcrumbs})
+    breadcrumbs = (
+        ('studLAN', '/'),
+        ('Teams', reverse('teams')),
+        ('Create team', ''),
+    )
+
+    return render(request, 'team/create_team.html', {'breadcrumbs': breadcrumbs, 'form': form})
 
 @login_required
 def disband_team(request, team_id):
