@@ -87,6 +87,9 @@ studLAN - Competition - {{ competition.title }}
                             </form>
                         {% endif %} 
                         <form class="well form-inline" action="{% url join_comp competition.id %}" method="POST">{% csrf_token %}
+                            <p>Signing up for a team compo as a solo player does not mean you are a participant. 
+                                Try to find other players that sign up solo, make a team and sign up as a team.</p>
+                            <p><b>When you sign up as a team, your solo participation will be overriden.</b></p>
                             <input type="submit" class="btn btn-success" value="Join competition (solo)" />
                         </form>
                     {% else %}
