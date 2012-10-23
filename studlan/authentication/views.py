@@ -147,6 +147,8 @@ def recover(request):
                 email_message = u"""
 You have requested a password recovery for the account bound to %s.
 
+Username: %s
+
 If you did not ask for this password recovery, please ignore this email.
 
 Otherwise, click the link below to reset your password;
@@ -155,7 +157,7 @@ http://%s/auth/set_password/%s/
 Note that tokens have a valid lifetime of 24 hours. If you do not use this
 link within 24 hours, it will be invalid, and you will need to use the password
 recovery option again to get your account verified.
-""" % (email, request.META['HTTP_HOST'], token)
+""" % (email, user.username, request.META['HTTP_HOST'], token)
                 
 
                 send_mail('Account recovery', email_message, settings.STUDLAN_FROM_MAIL, [email,])
