@@ -4,7 +4,7 @@ from datetime import datetime
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 
 from studlan.lan.models import LAN, Attendee
@@ -32,9 +32,6 @@ def details(request, lan_id):
         status = 'open'
 
     return render(request, 'lan/details.html', {'lan': lan, 'status': status})
-
-def history(request, lan_id, user_id):
-    return HttpResponseRedirect('/')
 
 @login_required
 def attend(request, lan_id):
@@ -66,3 +63,13 @@ def unattend(request, lan_id):
         messages.success(request, "Successfully removed you from attendee list for %s" % lan)
         
     return redirect(lan)
+
+@login_required
+def attendee_ntnu_usernames(request, lan_id):
+    if not request.user.is_staff:
+        raise Http404
+
+    else: 
+        lan = get_object_or_404(LAN, pk=lan_id)
+    
+        return render(request, 'lan/attendee_ntnu_usernames.html', {'attendees': lan.attendee_ntnu_usernames})
