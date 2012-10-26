@@ -47,13 +47,20 @@ studLAN - Team - {{ team }}
 	<div class="row">
         <div class="span9">
             <table class="table table-bordered table-striped">
-                <thead><th>User name</th><th>Full name</th></thead>
+                <thead><th>User name</th><th>Full name</th><th>Options</th></thead>
                 <tbody>
 
                     {% for member in team.members.all %}
                         <tr>
                             <td><a href="{% url profile member %}">{{ member }}</a></td>
                             <td>{{ member.first_name }} {{ member.last_name }}</td>
+                            <td>
+                            {% if user == team.leader %}
+                                <a href="{% url remove_member team.id member.id %}">Remove</a>
+                            {% else %}{% if user == member %}
+                                <a href="{% url remove_member team.id user.id %}">Leave team</a>
+                            {% endif %}{% endif %}
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
