@@ -66,7 +66,7 @@ class Attendee(models.Model):
     arrived = models.BooleanField("has arrived")
 
     def __unicode__(self):
-        return user.get_full_name() + " - " + lan.title
+        return self.user.get_full_name() + " - " + self.lan.title
 
     class Meta:
         ordering = ['-user', 'lan',]
