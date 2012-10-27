@@ -217,7 +217,7 @@ def leave(request, competition_id):
                         participant.delete()
                         messages.success(request, "You are have removed %s from %s." % (team, competition))
                 if not was_leader:
-                    messages.error(request, "You cannot remove %s from %S, you are not the team leader." % (team, competition))
+                    messages.error(request, "You cannot remove %s from %s, you are not the team leader." % (team, competition))
 
     return redirect(competition)
 
