@@ -19,6 +19,10 @@ class LAN(models.Model):
         return map(lambda x: getattr(x, 'user'), Attendee.objects.filter(lan=self))
 
     @property
+    def paid_attendees(self):
+        return map(lambda x: getattr(x, 'user'), Attendee.objects.filter(lan=self, has_paid=True))
+
+    @property
     def attendee_ntnu_usernames(self):
         ntnu = []
         for attendee in self.attendees:

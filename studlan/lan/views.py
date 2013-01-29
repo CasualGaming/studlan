@@ -1,10 +1,10 @@
-# -*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
 
 from datetime import datetime
 
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, Http404
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
 from studlan.lan.models import LAN, Attendee
@@ -37,6 +37,10 @@ def details(request, lan_id):
 def attend(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
     
+    if lan.end_date < datetime.now():
+        messages.error(request, "This LAN has finished and can no longer be attended")
+        return redirect(lan)
+    
     if not request.user.get_profile().has_address():
         messages.error(request, "You need to fill in your address and zip code in order to sign up for a LAN.")
     else:
@@ -53,6 +57,10 @@ def attend(request, lan_id):
 @login_required
 def unattend(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
+
+    if lan.start_date < datetime.now():
+        messages.error(request, "This LAN has already started, you can not retract your signup")
+        return redirect(lan)
     
     if request.user not in lan.attendees:
         messages.error(request, "You are not in the attendee list for %s" % lan)
@@ -73,3 +81,27 @@ def attendee_ntnu_usernames(request, lan_id):
         lan = get_object_or_404(LAN, pk=lan_id)
     
         return render(request, 'lan/attendee_ntnu_usernames.html', {'attendees': lan.attendee_ntnu_usernames})
+
+@user_passes_test(lambda u: u.is_staff)
+def list_paid(request, lan_id):
+    import xlwt
+    lan = get_object_or_404(LAN, pk=lan_id)
+
+    response = HttpResponse(mimetype="application/ms-excel")
+    response["Content-Disposition"] = "attachment; filename=paid_attendees.xls"
+
+    doc = xlwt.Workbook()
+    sheet = doc.add_sheet("Betalte deltakere")
+
+    for i, person in enumerate(lan.paid_attendees):
+        profile = person.get_profile()
+        sheet.write(i, 0, "{0} {1}".format(person.first_name, person.last_name))
+        sheet.write(i, 1, "{0}.{1}.{2}".format(profile.date_of_birth.day, 
+                                               profile.date_of_birth.month, 
+                                               profile.date_of_birth.year))
+        sheet.write(i, 2, profile.address)
+        sheet.write(i, 3, profile.zip_code)
+        sheet.write(i, 4, person.email)
+
+    doc.save(response)
+    return response
