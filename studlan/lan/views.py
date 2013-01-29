@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
 
 from datetime import datetime
 
@@ -95,14 +95,13 @@ def list_paid(request, lan_id):
 
     for i, person in enumerate(lan.paid_attendees):
         profile = person.get_profile()
-        sheet.write(i, 0, person.first_name)
-        sheet.write(i, 1, person.last_name)
-        sheet.write(i, 2, "{0}.{1}.{2}".format(profile.date_of_birth.day, 
+        sheet.write(i, 0, "{0} {1}".format(person.first_name, person.last_name))
+        sheet.write(i, 1, "{0}.{1}.{2}".format(profile.date_of_birth.day, 
                                                profile.date_of_birth.month, 
                                                profile.date_of_birth.year))
-        sheet.write(i, 3, profile.address)
-        sheet.write(i, 4, profile.zip_code)
-        sheet.write(i, 5, person.email)
+        sheet.write(i, 2, profile.address)
+        sheet.write(i, 3, profile.zip_code)
+        sheet.write(i, 4, person.email)
 
     doc.save(response)
     return response
