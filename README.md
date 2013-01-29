@@ -25,11 +25,12 @@
 * Non-fluid responsive layout
 
 ## Requirements ##
-Quicklist: `pip install django south markdown`
+Quicklist: `pip install django south markdown xlwt`
 
 * Django 1.3 `pip install django`
 * South `pip install south`
 * markdown `pip install markdown`
+* xlwt `pip install xlwt`
 
 
 
