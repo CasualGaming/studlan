@@ -3,8 +3,8 @@
 from datetime import datetime
 
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.http import Http404
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
 from studlan.lan.models import LAN, Attendee
@@ -81,3 +81,28 @@ def attendee_ntnu_usernames(request, lan_id):
         lan = get_object_or_404(LAN, pk=lan_id)
     
         return render(request, 'lan/attendee_ntnu_usernames.html', {'attendees': lan.attendee_ntnu_usernames})
+
+@user_passes_test(lambda u: u.is_staff)
+def list_paid(request, lan_id):
+    import xlwt
+    lan = get_object_or_404(LAN, pk=lan_id)
+
+    response = HttpResponse(mimetype="application/ms-excel")
+    response["Content-Disposition"] = "attachment; filename=paid_attendees.xls"
+
+    doc = xlwt.Workbook()
+    sheet = doc.add_sheet("Betalte deltakere")
+
+    for i, person in enumerate(lan.paid_attendees):
+        profile = person.get_profile()
+        sheet.write(i, 0, person.first_name)
+        sheet.write(i, 1, person.last_name)
+        sheet.write(i, 2, "{0}.{1}.{2}".format(profile.date_of_birth.day, 
+                                               profile.date_of_birth.month, 
+                                               profile.date_of_birth.year))
+        sheet.write(i, 3, profile.address)
+        sheet.write(i, 4, profile.zip_code)
+        sheet.write(i, 5, person.email)
+
+    doc.save(response)
+    return response
