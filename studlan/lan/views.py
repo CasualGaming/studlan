@@ -4,7 +4,7 @@ from datetime import datetime
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, Http404
+from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 
 from studlan.lan.models import LAN, Attendee
@@ -37,6 +37,10 @@ def details(request, lan_id):
 def attend(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
     
+    if lan.end_date < datetime.now():
+        messages.error(request, "This LAN has finished and can no longer be attended")
+        return redirect(lan)
+    
     if not request.user.get_profile().has_address():
         messages.error(request, "You need to fill in your address and zip code in order to sign up for a LAN.")
     else:
@@ -53,6 +57,10 @@ def attend(request, lan_id):
 @login_required
 def unattend(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
+
+    if lan.start_date < datetime.now():
+        messages.error(request, "This LAN has already started, you can not retract your signup")
+        return redirect(lan)
     
     if request.user not in lan.attendees:
         messages.error(request, "You are not in the attendee list for %s" % lan)
