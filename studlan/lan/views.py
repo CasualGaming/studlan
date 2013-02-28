@@ -88,14 +88,14 @@ def list_paid(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
 
     response = HttpResponse(mimetype="application/ms-excel")
-    response["Content-Disposition"] = "attachment; filename=paid_attendees.xls"
+    response["Content-Disposition"] = "attachment; filename=paid_attendees_lan-{0}.xls".format(lan_id)
 
-    doc = xlwt.Workbook()
+    doc = xlwt.Workbook(encoding='UTF-8')
     sheet = doc.add_sheet("Betalte deltakere")
 
     for i, person in enumerate(lan.paid_attendees):
         profile = person.get_profile()
-        sheet.write(i, 0, "{0} {1}".format(person.first_name, person.last_name))
+        sheet.write(i, 0, "{0} {1}".format(person.first_name.encode("UTF-8"), person.last_name.encode("UTF-8")))
         sheet.write(i, 1, "{0}.{1}.{2}".format(profile.date_of_birth.day, 
                                                profile.date_of_birth.month, 
                                                profile.date_of_birth.year))
