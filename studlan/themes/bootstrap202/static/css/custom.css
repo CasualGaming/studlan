@@ -103,3 +103,10 @@ div#btn-profile {
     text-align: left;
     min-width: 173px;                       /* equal to .span2 - the dropdown widget (26px) - derp adjustments*/
 }
+
+
+.attendee-counts span
+{
+    margin-right: 20px;
+    font-weight: bold;
+}

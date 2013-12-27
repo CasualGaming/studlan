@@ -44,8 +44,17 @@ def arrivals(request, lan_id):
         ('Arrivals', reverse('arrival_home')),
         (lan, ''),
     )
+    
+    paid_count = 0
+    arrived_count = 0
+    for attendee in attendees:
+        if attendee.has_paid:
+            paid_count += 1
+        if attendee.arrived:
+            arrived_count += 1
 
-    return render(request, 'arrivals/arrivals.html', {'attendees': attendees, 'lan': lan, 'breadcrumbs': breadcrumbs})
+    return render(request, 'arrivals/arrivals.html', {'attendees': attendees, 'lan': lan, 'paid_count' : paid_count, 
+        'arrived_count' : arrived_count, 'breadcrumbs': breadcrumbs})
 
 @login_required
 def toggle_arrival(request, lan_id, user_id):
