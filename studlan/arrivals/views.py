@@ -48,49 +48,6 @@ def arrivals(request, lan_id):
     return render(request, 'arrivals/arrivals.html', {'attendees': attendees, 'lan': lan, 'breadcrumbs': breadcrumbs})
 
 @login_required
-def toggle_arrival(request, lan_id, user_id):
-    if not request.user.is_staff:
-        raise Http404
-
-    lan = get_object_or_404(LAN, pk=lan_id)
-    user = get_object_or_404(User, pk=user_id)
-    try:
-        attendee = Attendee.objects.get(lan=lan, user=user)
-
-        if attendee.arrived:
-            attendee.arrived = False
-        else:
-            attendee.arrived = True
-        attendee.save()
-
-    except Attendee.DoesNotExist:
-        messages.error(request, "%s was not found in attendees for %s" % (user, lan))
-
-    return redirect('arrivals', lan_id=lan_id)
-
-@login_required
-def toggle_paid(request, lan_id, user_id):
-    if not request.user.is_staff:
-        raise Http404
-
-    lan = get_object_or_404(LAN, pk=lan_id)
-    user = get_object_or_404(User, pk=user_id)
-    try:
-        attendee = Attendee.objects.get(lan=lan, user=user)
-
-        if attendee.has_paid:
-            attendee.has_paid = False
-        else:
-            attendee.has_paid = True
-        attendee.save()
-
-    except Attendee.DoesNotExist:
-        messages.error(request, "%s was not found in attendees for %s" % (user, lan))
-
-    return redirect('arrivals', lan_id=lan_id)
-
-
-@login_required
 def toggle(request, lan_id):
     if request.method == 'GET':
         username = request.GET.get('username')
