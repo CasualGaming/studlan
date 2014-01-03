@@ -103,3 +103,13 @@ div#btn-profile {
     text-align: left;
     min-width: 173px;                       /* equal to .span2 - the dropdown widget (26px) - derp adjustments*/
 }
+
+.paid
+{
+    cursor:pointer;
+}
+
+.arrived
+{
+    cursor:pointer;
+}

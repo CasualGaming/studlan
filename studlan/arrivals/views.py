@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
 from studlan.lan.models import LAN, Attendee
@@ -88,3 +88,40 @@ def toggle_paid(request, lan_id, user_id):
         messages.error(request, "%s was not found in attendees for %s" % (user, lan))
 
     return redirect('arrivals', lan_id=lan_id)
+
+
+@login_required
+def toggle(request, lan_id):
+    if request.method == 'GET':
+        username = request.GET.get('username')
+        toggle_type = request.GET.get('type')
+        previous_value = request.GET.get('prev')
+
+        
+        lan = get_object_or_404(LAN, pk=lan_id)
+        user = get_object_or_404(User, username=username)
+        try:
+            attendee = Attendee.objects.get(lan=lan, user=user)
+
+
+            print not 0
+            if int(toggle_type) == 0:
+                attendee.has_paid = reverse(previous_value)
+            elif int(toggle_type) == 1:
+                attendee.arrived = reverse(previous_value)
+            else:
+                return HttpResponse(status=404)            
+
+            attendee.save()
+
+        except Attendee.DoesNotExist:
+            messages.error(request, "%s was not found in attendees for %s" % (user, lan))
+        
+        return HttpResponse(status = 200)
+    return HttpResponse(status=404)
+    
+def reverse(val):
+    if val == "True":
+        return False
+    elif val == "False":
+        return True
