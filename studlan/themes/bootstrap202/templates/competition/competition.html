@@ -28,7 +28,7 @@ studLAN - Competition - {{ competition.title }}
     {% endcomment %}
     {% if teams|length > 0 %}
         <div class="row">
-            <div class="span9"><h3>Participating teams</h3></div>
+            <div class="span9"><h3>Participating teams: {{ teams|length }}</h3></div>
         </div>
         <div class="row">
             <div class="span9">
@@ -50,7 +50,7 @@ studLAN - Competition - {{ competition.title }}
     {% if users %}
         <div class="row">
             <div class="span9">
-                <h3>Participants{% if teams %} without a team{% endif %}</h3>
+                <h3>Participants{% if teams %} without a team{% endif %}: {{ users|length }}</h3>
             </div>
         </div>
         
