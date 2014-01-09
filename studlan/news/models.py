@@ -24,4 +24,4 @@ class ArticleTranslation(get_translation_model(Article, "Article")):
     
     @models.permalink
     def get_absolute_url(self):
-        return ('news_single', (), {'article_id': self.id})
+        return ('news_single', (), {'article_id': self.model_id})
