@@ -18,7 +18,7 @@
                     <tr>
                         <td>{{ c.status_text }}</td>
                         <td>
-                            <a href="{% url competition_details c.id %}">{{ c }}</a>
+                            <a href="{{ c.get_absolute_url }}">{{ c }}</a>
                             {% if c.use_teams %}
                                 - Team competition
                             {% endif %}
