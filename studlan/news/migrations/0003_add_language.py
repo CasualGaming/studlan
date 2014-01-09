@@ -9,16 +9,11 @@ class Migration(DataMigration):
     def forwards(self, orm):
         for article in orm.Article.objects.all():
             at = orm.ArticleTranslation(article)
+            at.translated_title = article.title
+            at.translated_body = article.body
             at.language = 'nb'
-            article.translated_title = article.title
-            article.translated_body = article.body
+            at.model_id = article.id
             at.save()
-            article.save()
-            #article.translated_title = article.title
-            #article.translated_body = article.body
-            #article.model_id = article.id
-            #article.language = 'nb'
-            #article.save()
 
     def backwards(self, orm):
         raise RuntimeError("Cannot reverse this migration.")

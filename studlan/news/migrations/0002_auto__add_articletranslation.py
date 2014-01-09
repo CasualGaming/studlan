@@ -11,9 +11,9 @@ class Migration(SchemaMigration):
         # Adding model 'ArticleTranslation'
         db.create_table('news_articletranslation', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('translated_model', self.gf('django.db.models.fields.related.ForeignKey')(related_name='translations', to=orm['news.Article'])),
+            ('model', self.gf('django.db.models.fields.related.ForeignKey')(related_name='translations', to=orm['news.Article'])),
             ('language', self.gf('django.db.models.fields.CharField')(max_length=15)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=50)),
+            ('translated_title', self.gf('django.db.models.fields.CharField')(max_length=50)),
             ('translated_body', self.gf('django.db.models.fields.TextField')()),
         ))
         db.send_create_signal('news', ['ArticleTranslation'])
