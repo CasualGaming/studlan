@@ -9,6 +9,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'studlan.news.views.main', name='root', kwargs={'page': 1}),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^login.html', 'studlan.competition.views.log_in'),
     url(r'^logout.html', 'studlan.competition.views.log_out'),
     url(r'^register.html', 'studlan.competition.views.register_user'),
