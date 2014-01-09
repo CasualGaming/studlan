@@ -13,18 +13,18 @@ studLAN - News
         {% if forloop.counter < 3 and page == 1 %}
             <div class="row">
                 <div class="span9">
-                    <h2><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h2>
+                    <h2><a href="{{ article.get_absolute_url }}">{{ article.translated_title }}</a></h2>
                     <span class="label info">{{ article.pub_date|date:"d/m/Y" }} {{article.pub_date|time:"H:i" }}</span>
-                    <p>{{ article.body|striptags|markdown }}</p>
+                    <p>{{ article.translated_body|striptags|markdown }}</p>
                 </div>
             </div>
         {% else %}
             {% if not forloop.counter|divisibleby:"2" %}
             <div class="row">
                 <div class="span4">
-                    <h2><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h2>
+                    <h2><a href="{{ article.get_absolute_url }}">{{ article.translated_title }}</a></h2>
                     <span class="label info">{{ article.pub_date|date:"d/m/Y" }} {{article.pub_date|time:"H:i" }}</span>
-                    <p>{{ article.body|striptags|markdown }}</p>
+                    <p>{{ article.translated_body|striptags|markdown }}</p>
                 </div>
 
                 <div class="span1">
@@ -33,9 +33,9 @@ studLAN - News
                 
             {% else %}
                 <div class="span4">
-                    <h2><a href="{{ article.get_absolute_url }}">{{ article.title }}</a></h2>
+                    <h2><a href="{{ article.get_absolute_url }}">{{ article.translated_title }}</a></h2>
                     <span class="label info">{{ article.pub_date|date:"d/m/Y" }} {{article.pub_date|time:"H:i" }}</span>
-                    <p>{{ article.body|striptags|markdown }}</p>
+                    <p>{{ article.translated_body|striptags|markdown }}</p>
                 </div>
             </div>
             {% endif %}

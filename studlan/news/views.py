@@ -13,10 +13,11 @@ from studlan.news.models import Article
 def main(request, page):
     objects = Article.objects.all()
 
+    articles = []
+
     for article in objects:
-        if article.has_translation():
-            article.get_translation(language=translation.get_language())
-    paginator = Paginator(objects, 10) #Articles per page
+        articles.append(article.get_translation(language=translation.get_language()))
+    paginator = Paginator(articles, 10) #Articles per page
 
     try:
         articles = paginator.page(page)
