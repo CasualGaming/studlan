@@ -1,8 +1,20 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from django.contrib import admin
-from competition.models import Activity, Competition, Participant
+from django.conf import settings
+
+from competition.models import Activity, Competition, Participant, CompetitionTranslation
+
+class CompetitionTranslationInlineAdmin(admin.StackedInline):
+    verbose_name = "Competition"
+    verbose_name_plural = "Competitions"
+    model = CompetitionTranslation
+    max_num = len(settings.LANGUAGES)
+    extra = 1
+
+class CompetitionAdmin(admin.ModelAdmin):
+    inlines = [CompetitionTranslationInlineAdmin,]
 
 admin.site.register(Activity)
-admin.site.register(Competition)
+admin.site.register(Competition, CompetitionAdmin)
 admin.site.register(Participant)
