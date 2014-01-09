@@ -2,6 +2,7 @@ Django==1.4.1
 Markdown==2.2.0
 South==0.7.6
 wsgiref==0.1.2
+django-translatable==0.1.1
 
 # PostgreSQL plugin for python
 psycopg2==2.4.5
@@ -9,3 +10,4 @@ psycopg2==2.4.5
 # Shell tools. iPython needs readline for cli magic.
 ipython==0.13
 readline==6.2.2
+
