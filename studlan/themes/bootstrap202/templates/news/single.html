@@ -9,9 +9,9 @@ studLAN - News
 
     <div class="row">
         <div class="span9">
-            <h1>{{ article.title }}</h1>
+            <h1>{{ article.translated_title }}</h1>
             <span class="label info">{{ article.pub_date }}</span>
-            <p>{{ article.body|striptags|markdown }}</p>
+            <p>{{ article.translated_body|striptags|markdown }}</p>
         </div>
     </div>
 
