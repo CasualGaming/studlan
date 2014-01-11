@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load markup %}
+
+{% block title %}
+studLAN - {{ lottery }}
+{% endblock title %}
+
+{% block content %}
+    <div class="row">
+        <div class="span9">
+            <h1>{{ lottery }}</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="span9">
+            <p>
+            {% if user.is_authenticated %}
+                {% if lottery.registration_open %}
+                    {% if signed_up %}
+                        <a class="btn btn-danger" href="{% url sign_off lottery.id %}">Unsign</a>
+                    {% else %}
+                        <a class="btn btn-primary" href="{% url sign_up lottery.id %}">Sign up</a>
+                    {% endif %}
+                {% else %}
+                    <p>Registration closed</p>
+                {% endif %}
+            {% else %}
+                You need to login to register.
+            {% endif %}
+            </p>
+        
+            <hr />
+
+            {{ lottery.description|markdown }} 
+
+        </div>
+    </div>
+{% endblock content %}
