@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+from random import randint
 
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import translation
+from django.contrib.auth.decorators import login_required
 
 from studlan.lottery.models import Lottery, LotteryParticipant, LotteryWinner
 from studlan.lan.models import LAN, Attendee
@@ -36,4 +38,23 @@ def sign_off(request, lottery_id):
         participant.delete()
 
     return redirect(index)
+
+@login_required
+def drawing(request, lottery_id):
+    winner = False
+    lottery = get_object_or_404(Lottery, pk=lottery_id)
+    winners = LotteryWinner.objects.filter(lottery=lottery)
+    if winners:
+        winner = winners[len(winners) -1]
+    return render(request, 'lottery/drawing.html',{'lottery':lottery, 'winner': winner}) 
+   
+@login_required
+def draw(request, lottery_id):
+    lottery = get_object_or_404(Lottery, pk=lottery_id)
+    participants = lottery.lotteryparticipant_set.all()
+    print participants
+    winner_id = randint(0, len(participants) -1)
+    winner = participants[winner_id].user
+    LotteryWinner.objects.create(user = winner, lottery=lottery)
+    return redirect(drawing, lottery_id) 
     

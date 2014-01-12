@@ -3,13 +3,6 @@
 
 {% block content %}
 {% if lan %}
-    <div class="row">
-        <div class="span9">
-            <h1>{{ lan }}</h1>
-        </div>
-    </div>
-
-
     {% for lottery, lottery_translated, signed_up in lotteries %}
     <div class="row">
         <div class="span9">
@@ -35,6 +28,6 @@
     </div>
     {% endfor %}
 {% else %}
-    <span class="label btn-danger">There are currently no active lan</span>
+    <span class="label btn-danger">There are currently no active lans</span>
 {% endif %}
 {% endblock content %}

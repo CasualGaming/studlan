@@ -34,11 +34,11 @@ class LotteryParticipant(models.Model):
     user = models.ForeignKey(User)
     
     def __unicode__(self):
-        return self.user
+        return unicode(self.user)
 
 class LotteryWinner(models.Model):
     lottery = models.ForeignKey(Lottery)
     user = models.ForeignKey(User)
     
     def __unicode__(self):
-        return self.user
+        return unicode(self.user)
