@@ -1,39 +1,40 @@
 {% extends "base.html" %}
 {% load markup %}
 
-{% block title %}
-studLAN - {{ lottery }}
-{% endblock title %}
-
 {% block content %}
+{% if lan %}
     <div class="row">
         <div class="span9">
-            <h1>{{ lottery }}</h1>
+            <h1>{{ lan }}</h1>
         </div>
     </div>
 
+
+    {% for lottery, lottery_translated, signed_up in lotteries %}
     <div class="row">
         <div class="span9">
+            <h2>{{ lottery_translated.title }}</h2>
+            {{ lottery_translated.description|markdown }} 
+            <hr />
             <p>
             {% if user.is_authenticated %}
                 {% if lottery.registration_open %}
                     {% if signed_up %}
                         <a class="btn btn-danger" href="{% url sign_off lottery.id %}">Unsign</a>
                     {% else %}
-                        <a class="btn btn-primary" href="{% url sign_up lottery.id %}">Sign up</a>
+                        <a class="btn btn-success" href="{% url sign_up lottery.id %}">Sign up</a>
                     {% endif %}
                 {% else %}
-                    <p>Registration closed</p>
+                    <span class="label btn-danger">Registration closed</span>
                 {% endif %}
             {% else %}
-                You need to login to register.
+                <span class="label btn-danger">You need to login in to register</span>
             {% endif %}
             </p>
-        
-            <hr />
-
-            {{ lottery.description|markdown }} 
-
         </div>
     </div>
+    {% endfor %}
+{% else %}
+    <span class="label btn-danger">There are currently no active lan</span>
+{% endif %}
 {% endblock content %}
