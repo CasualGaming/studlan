@@ -9,6 +9,7 @@ from studlan.lan.models import LAN, Attendee
 class Lottery(TranslatableModel):
     lan = models.ForeignKey(LAN)
     registration_open = models.BooleanField('Open', default=False)
+    multiple_winnings = models.BooleanField('Multiple winnings', default=False, help_text='Allows a user to win more than one price')
 
     def is_participating(self, user):
         for participant in self.lotteryparticipant_set.all():
@@ -16,6 +17,14 @@ class Lottery(TranslatableModel):
                 return True
 
         return False
+    
+    def has_won(self, user):
+        for winner in self.lotterywinner_set.all():
+            if winner.user == user:
+                return True
+
+        return False
+
 
     class Meta:
         verbose_name_plural = "Lotteries"

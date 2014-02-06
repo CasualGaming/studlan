@@ -26,7 +26,7 @@ def index(request):
 
 def sign_up(request, lottery_id):
     lottery = get_object_or_404(Lottery, pk=lottery_id)
-    if lottery.registration_open:
+    if lottery.registration_open and not lottery.is_participating(request.user):
         LotteryParticipant.objects.create(user=request.user, lottery=lottery)
 
     return redirect(index)
@@ -52,9 +52,10 @@ def drawing(request, lottery_id):
 def draw(request, lottery_id):
     lottery = get_object_or_404(Lottery, pk=lottery_id)
     participants = lottery.lotteryparticipant_set.all()
-    print participants
     winner_id = randint(0, len(participants) -1)
     winner = participants[winner_id].user
+    if not lottery.multiple_winnings:
+        if lottery.has_won(request.user):
+            return redirect(draw, lottery_id)
     LotteryWinner.objects.create(user = winner, lottery=lottery)
     return redirect(drawing, lottery_id) 
-    

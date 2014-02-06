@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.conf import settings
 from studlan.lottery.models import Lottery, LotteryTranslation
+from studlan.lottery.models import LotteryParticipant
 
 class LotteryTranslationInlineAdmin(admin.StackedInline):
     verbose_name = "Translation"
@@ -12,4 +13,8 @@ class LotteryTranslationInlineAdmin(admin.StackedInline):
 class LotteryAdmin(admin.ModelAdmin):
     inlines = [LotteryTranslationInlineAdmin,]
 
+class LotteryParticipantAdmin(admin.ModelAdmin):
+    model = LotteryParticipant
+
+admin.site.register(LotteryParticipant, LotteryParticipantAdmin)
 admin.site.register(Lottery, LotteryAdmin)
