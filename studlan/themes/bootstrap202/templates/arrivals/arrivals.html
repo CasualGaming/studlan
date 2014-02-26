@@ -29,25 +29,21 @@ studLAN - Register Arrivals
                 <tbody>
                     {% for attendee in attendees %}
                     <tr>
-                        <td>{{ attendee.user.username }}</td>
+                        <td class="username">{{ attendee.user.username }}</td>
                         <td>{{ attendee.user.get_full_name }}</td>
                         <td>{{ attendee.user.email }}</td>
                         <td>
                         {% if attendee.has_paid %}
-                            <input type="checkbox" name="paid" disabled checked />
-                            <a class="label label-success" href="{% url toggle_paid lan.id attendee.user.id %}">Toggle</a>
+                            <span class="paid label label-success" value="True">Toggle</span>
                         {% else %}
-                            <input type="checkbox" name="paid" disabled />
-                            <a class="label label-important" href="{% url toggle_paid lan.id attendee.user.id %}">Toggle</a>
+                            <span class="paid label label-important" value="False">Toggle</span>
                         {% endif %}
                         </td>
                         <td>
                         {% if attendee.arrived %}
-                            <input type="checkbox" name="arrived" disabled checked /> 
-                            <a class="label label-success" href="{% url toggle_arrival lan.id attendee.user.id %}">Toggle</a>
+                            <span class="arrived label label-success" value="True">Toggle</span>
                         {% else %}
-                            <input type="checkbox" name="arrived" disabled /> 
-                            <a class="label label-important" href="{% url toggle_arrival lan.id attendee.user.id %}">Toggle</a>
+                            <span class="arrived label label-important" value="False">Toggle</span>
                         {% endif %}
                         </td>
                     </tr>
@@ -82,5 +78,6 @@ studLAN - Register Arrivals
         </div>
     {% endif %}
     </div>
+    <script src="{{ STATIC_URL }}js/arrival.js"></script>
 
 {% endblock content %}
