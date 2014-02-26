@@ -9,7 +9,7 @@ class ArticleTranslationInlineAdmin(admin.StackedInline):
     verbose_name_plural = "Translations"
     model = ArticleTranslation
     max_num = len(settings.LANGUAGES)
-    extra = 1
+    extra = 2
 
 class ArticleAdmin(admin.ModelAdmin):
     inlines = [ArticleTranslationInlineAdmin,]
