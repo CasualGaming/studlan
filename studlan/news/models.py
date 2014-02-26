@@ -11,6 +11,10 @@ class Article(TranslatableModel):
 
     def count(self):
         return len(Article.objects.all())
+    
+    @models.permalink
+    def get_absolute_url(self):
+        return ('news_single', (), {'article_id': self.id})
 
     class Meta:
         ordering = ['-pub_date']
@@ -22,6 +26,3 @@ class ArticleTranslation(get_translation_model(Article, "Article")):
     def __unicode__(self):
         return self.translated_title
     
-    @models.permalink
-    def get_absolute_url(self):
-        return ('news_single', (), {'article_id': self.model_id})

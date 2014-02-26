@@ -10,12 +10,7 @@ from studlan.news.models import Article
 
 
 def main(request, page):
-    objects = Article.objects.all()
-
-    articles = []
-
-    for article in objects:
-        articles.append(article.get_translation(language=translation.get_language()))
+    articles = Article.objects.all()
     paginator = Paginator(articles, 10) #Articles per page
 
     try:
@@ -42,6 +37,5 @@ def main(request, page):
 
 def single(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
-    article = article.get_translation(language=translation.get_language())
     return render(request, 'news/single.html', {'article': article})
 
