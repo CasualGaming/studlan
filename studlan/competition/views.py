@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.context import RequestContext
+from django.utils import translation
 
 from studlan.competition.models import Activity, Competition, Participant
 from studlan.lan.models import LAN
@@ -108,8 +109,8 @@ def activity_details_filtered(request, lan_id, activity_id):
 
 def shorten_descriptions(competitions, length):
     for c in competitions:
-        if len(c.desc) > length:
-            c.desc = c.desc[:length-3] + '...'
+        if len(c.get_translation().translated_description) > length:
+            c.get_translation().translated_description = c.get_translation().translated_description[:length-3] + '...'
     return competitions
 
 def competition_details(request, competition_id):
@@ -124,7 +125,6 @@ def competition_details(request, competition_id):
         (competition, ''),
     )
     
-    context['competition'] = competition
     context['breadcrumbs'] = breadcrumbs
 
     teams, users = competition.get_participants()
@@ -148,6 +148,7 @@ def competition_details(request, competition_id):
         context['owned_teams'] = owned_teams
     else:
         messages.warning(request, "Please log in to register for the competition.")
+    context['competition'] = competition
     return render(request, 'competition/competition.html', context)
 
 @login_required
@@ -285,3 +286,9 @@ def register_user(request):
                                  'log in.')
 
     return redirect('root')
+    
+def translate_competitions(competitions):
+    translated_competitions = []
+    for competition in competitions:
+        translated_competitions.append(competition.get_translation(language=translation.get_language()))
+    return translated_competitions

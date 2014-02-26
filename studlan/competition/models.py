@@ -2,11 +2,13 @@
 # -*- coding: utf-8 -*-
 
 import datetime
+from translatable.models import TranslatableModel, get_translation_model
 
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
 from django.db.models.signals import post_save
+from django.utils import translation
 
 from studlan.lan.models import LAN
 
@@ -16,6 +18,7 @@ class Activity(models.Model):
     image_url = models.CharField('Image url', max_length=100, blank=True,
         help_text='Use a mirrored image of at least a height of 150px.')
     desc = models.TextField('description')
+    
 
     def __unicode__(self):
         return self.title
@@ -30,7 +33,7 @@ class Activity(models.Model):
         verbose_name_plural = 'activities'
 
 
-class Competition(models.Model):
+class Competition(TranslatableModel):
 
     STATUS_OPTIONS = ((1, 'Open'), (2, 'Closed'), (3, 'In progress'),
                       (4, 'Finished'))
@@ -41,7 +44,6 @@ class Competition(models.Model):
         4: ['Competition finished', 'info'],
     }
 
-    title = models.CharField('title', max_length=50)
     status = models.SmallIntegerField('status', choices=STATUS_OPTIONS)
     activity = models.ForeignKey(Activity)
     lan = models.ForeignKey(LAN)
@@ -49,16 +51,7 @@ class Competition(models.Model):
         help_text='If checked, participants will be ignored, and will '
         'instead use teams. If left unchecked teams will be ignored, '
         'and participants will be used.')
-
-    desc = models.TextField('description',
-        help_text='Markdown-enabled. You may also use regular (x)HTML markup. For '
-        'blockquotes use the following markup:<br/><br/>&lt;blockquote&gt;<br/>&n'
-        'bsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Quote-text& lt;/p&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;'
-        'small&gt;Reference&lt;/small&gt;<br/>&lt;/blockquote&gt;')
-
-    def __unicode__(self):
-        return self.title
-
+    
     def get_teams(self):
         if self.use_teams:
             return map(lambda x: getattr(x, 'team'), Participant.objects.filter(~Q(team=None), Q(competition=self)))
@@ -95,14 +88,26 @@ class Competition(models.Model):
 
     def status_label(self):
         return self.statuses[self.status][1]
-
+    
     @models.permalink
     def get_absolute_url(self):
-        return ('competition_details', (), {'competition_id': self.id})
+       return ('competition_details', (), {'competition_id': self.id})
 
     class Meta:
-        ordering = ['status', 'title']
+        ordering = ['status',]
 
+
+class CompetitionTranslation(get_translation_model(Competition, "competition")):
+    translated_title = models.CharField('title', max_length=50)
+    translated_description = models.TextField('description',
+        help_text='Markdown-enabled. You may also use regular (x)HTML markup. For '
+        'blockquotes use the following markup:<br/><br/>&lt;blockquote&gt;<br/>&n'
+        'bsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Quote-text& lt;/p&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;'
+        'small&gt;Reference&lt;/small&gt;<br/>&lt;/blockquote&gt;')
+    
+    def __unicode__(self):
+        return self.translated_title
+    
 class Participant(models.Model):
     user = models.ForeignKey(User, null=True)
     team = models.ForeignKey('team.Team', null=True)

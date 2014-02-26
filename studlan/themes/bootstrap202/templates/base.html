@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+{% load i18n %}
+<html>
     <head>
         <meta charset="utf-8" />
         <title>{% block title %}{% endblock title %}</title>
@@ -21,13 +22,28 @@
                 <div class="container">
                     <a class="brand" href="{% url root %}"><img src="{{ STATIC_URL }}mushroom_small.png" />studLAN</a>
                     {% include "navigation.html" %}
-                    {% if not user.is_authenticated %}
+                        <ul class="nav pull-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Language<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                {% for lang in LANGUAGES %}
+                                    <li>
+                                        <form name="setLang{{ lang.1}}" action="/i18n/setlang/" method="POST">{% csrf_token %}
+                                            <input name="next" type="hidden" value="" />
+                                            <input type="hidden" name="language" value="{{ lang.0 }}" />
+                                            <a href="#" onclick="document.setLang{{ lang.1 }}.submit();return false;">{{ lang.1 }}</a>
+                                        </form>
+                                    </li>
+                                {% endfor %}    
+                                </ul>
+                            </li>
+                        {% if not user.is_authenticated %}
                         <ul class="nav pull-right">
                             <li><a href="{% url auth_register %}">Register</a></li>
                             <li><a href="{% url auth_login %}">Login</a></li>
                         </ul>
-                    {% else %}
-                        <ul class="pull-right">
+                        {% else %}
+                            <ul class="pull-right">
                             <div class="btn-group" id="btn-profile">
                                 <a class="btn btn-inverse" href="{% url myprofile %}"><i class="icon-user icon-white"></i> {{ user }}</a>
                                 <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>

@@ -2,7 +2,7 @@
 import os
 import sys
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 
 
 PROJECT_ROOT_DIRECTORY = os.path.join(os.path.dirname(globals()['__file__']),'..')
@@ -40,8 +40,8 @@ USE_I18N = True
 USE_L10N = True
 
 LANGUAGES = (
-    ('nb', _('Norwegian')),
-    ('en', _('English')),
+    ('nb', _(u'Norwegian')),
+    ('en', _(u'English')),
 )
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
