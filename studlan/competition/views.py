@@ -23,12 +23,8 @@ def main(request):
         return redirect('competitions_show_lan', lan_id=next_lan.id)
     else:
         context = {}
-        competitions = Competition.objects.all()
-        comps = []
-        for competition in competitions:
-            comps.append(competition.get_translation(language=translation.get_language()))
-
-        competitions = shorten_descriptions(comps, 200)
+        competitions = translate_competitions(Competition.objects.all())
+        competitions = shorten_descriptions(competitions, 200)
 
         context['activities'] = Activity.objects.all()
         context['competitions'] = competitions
@@ -46,11 +42,8 @@ def main_filtered(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
 
     context = {}
-    competitions = Competition.objects.filter(lan=lan)
-    comps = []
-    for competition in competitions:
-        comps.append(competition.get_translation(language=translation.get_language()))
-    competitions = shorten_descriptions(comps, 200)
+    competitions = translate_competitions(Competition.objects.filter(lan=lan))
+    competitions = shorten_descriptions(competitions, 200)
 
     context['activities'] = Activity.objects.all()
     context['competitions'] = competitions
@@ -75,11 +68,8 @@ def activity_details(request, activity_id):
         activity = get_object_or_404(Activity, pk=activity_id)
         
         context = {}
-        competitions = Competition.objects.filter(activity=activity)
-        comps = []
-        for competition in competitions:
-            comps.append(competition.get_translation(language=translation.get_language()))
-        competitions = shorten_descriptions(comps, 200)
+        competitions = translate_competitions(Competition.objects.filter(activity=activity))
+        competitions = shorten_descriptions(competitions, 200)
 
         context['active'] = activity.id
         context['activities'] = Activity.objects.all()
@@ -99,10 +89,7 @@ def activity_details_filtered(request, lan_id, activity_id):
     activity = get_object_or_404(Activity, pk=activity_id)
 
     context = {}
-    competitions = Competition.objects.filter(lan=lan, activity=activity)
-    comps = []
-    for competition in competitions:
-        comps.append(competition.get_translation(language=translation.get_language()))
+    competitions = translate_competitions(Competition.objects.filter(lan=lan, activity=activity))
     competitions = shorten_descriptions(comps, 200)
 
     context['active'] = activity.id
@@ -300,3 +287,9 @@ def register_user(request):
                                  'log in.')
 
     return redirect('root')
+    
+def translate_competitions(competitions):
+    translated_competitions = []
+    for competition in competitions:
+        translated_competitions.append(competition.get_translation(language=translation.get_language()))
+    return translated_competitions

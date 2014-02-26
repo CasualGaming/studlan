@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
 from django.db.models.signals import post_save
+from django.utils import translation
 
 from studlan.lan.models import LAN
 
@@ -17,6 +18,7 @@ class Activity(models.Model):
     image_url = models.CharField('Image url', max_length=100, blank=True,
         help_text='Use a mirrored image of at least a height of 150px.')
     desc = models.TextField('description')
+    
 
     def __unicode__(self):
         return self.title
@@ -49,7 +51,7 @@ class Competition(TranslatableModel):
         help_text='If checked, participants will be ignored, and will '
         'instead use teams. If left unchecked teams will be ignored, '
         'and participants will be used.')
-
+    
     def get_teams(self):
         if self.use_teams:
             return map(lambda x: getattr(x, 'team'), Participant.objects.filter(~Q(team=None), Q(competition=self)))
