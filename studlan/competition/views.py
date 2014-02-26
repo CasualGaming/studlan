@@ -23,7 +23,7 @@ def main(request):
         return redirect('competitions_show_lan', lan_id=next_lan.id)
     else:
         context = {}
-        competitions = translate_competitions(Competition.objects.all())
+        competitions = Competition.objects.all()
         competitions = shorten_descriptions(competitions, 200)
 
         context['activities'] = Activity.objects.all()
@@ -42,7 +42,7 @@ def main_filtered(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
 
     context = {}
-    competitions = translate_competitions(Competition.objects.filter(lan=lan))
+    competitions = Competition.objects.filter(lan=lan)
     competitions = shorten_descriptions(competitions, 200)
 
     context['activities'] = Activity.objects.all()
@@ -68,7 +68,7 @@ def activity_details(request, activity_id):
         activity = get_object_or_404(Activity, pk=activity_id)
         
         context = {}
-        competitions = translate_competitions(Competition.objects.filter(activity=activity))
+        competitions = Competition.objects.filter(activity=activity)
         competitions = shorten_descriptions(competitions, 200)
 
         context['active'] = activity.id
@@ -89,8 +89,8 @@ def activity_details_filtered(request, lan_id, activity_id):
     activity = get_object_or_404(Activity, pk=activity_id)
 
     context = {}
-    competitions = translate_competitions(Competition.objects.filter(lan=lan, activity=activity))
-    competitions = shorten_descriptions(comps, 200)
+    competitions = Competition.objects.filter(lan=lan, activity=activity)
+    competitions = shorten_descriptions(competitions, 200)
 
     context['active'] = activity.id
     context['activities'] = Activity.objects.all()
@@ -109,8 +109,8 @@ def activity_details_filtered(request, lan_id, activity_id):
 
 def shorten_descriptions(competitions, length):
     for c in competitions:
-        if len(c.translated_description) > length:
-            c.translated_description = c.translated_description[:length-3] + '...'
+        if len(c.get_translation().translated_description) > length:
+            c.get_translation().translated_description = c.get_translation().translated_description[:length-3] + '...'
     return competitions
 
 def competition_details(request, competition_id):
@@ -148,7 +148,6 @@ def competition_details(request, competition_id):
         context['owned_teams'] = owned_teams
     else:
         messages.warning(request, "Please log in to register for the competition.")
-    competition = competition.get_translation(language=translation.get_language())
     context['competition'] = competition
     return render(request, 'competition/competition.html', context)
 

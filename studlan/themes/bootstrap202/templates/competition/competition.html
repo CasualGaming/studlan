@@ -2,7 +2,7 @@
 {% load markup %}
 
 {% block title %}
-studLAN - Competition - {{ competition.title }}
+studLAN - Competition - {{ competition.get_translation.title }}
 {% endblock title %}
 
 {% block content %}
@@ -109,6 +109,6 @@ studLAN - Competition - {{ competition.title }}
     {% endif %}
 
     <div class="row"><div class="span9"><h3>Description</h3></div></div>
-    <div class="row"><div class="span9"><p>{{ competition.translated_description|markdown }}</p></div></div>
+    <div class="row"><div class="span9"><p>{{ competition.get_translation.translated_description|markdown }}</p></div></div>
         
 {% endblock content %}

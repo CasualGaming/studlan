@@ -89,6 +89,9 @@ class Competition(TranslatableModel):
     def status_label(self):
         return self.statuses[self.status][1]
     
+    @models.permalink
+    def get_absolute_url(self):
+       return ('competition_details', (), {'competition_id': self.id})
 
     class Meta:
         ordering = ['status',]
@@ -105,10 +108,6 @@ class CompetitionTranslation(get_translation_model(Competition, "competition")):
     def __unicode__(self):
         return self.translated_title
     
-    @models.permalink
-    def get_absolute_url(self):
-        return ('competition_details', (), {'competition_id': self.model_id})
-
 class Participant(models.Model):
     user = models.ForeignKey(User, null=True)
     team = models.ForeignKey('team.Team', null=True)
