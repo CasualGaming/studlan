@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     url(r'^news/',          include('studlan.news.urls')),
     url(r'^profile/',       include('studlan.userprofile.urls')),
     url(r'^team/',          include('studlan.team.urls')),
+    url(r'^lottery/',       include('studlan.lottery.urls')),
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),

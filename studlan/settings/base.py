@@ -2,6 +2,8 @@
 import os
 import sys
 
+from django.utils.translation import ugettext_lazy as _
+
 
 PROJECT_ROOT_DIRECTORY = os.path.join(os.path.dirname(globals()['__file__']),'..')
 
@@ -36,6 +38,11 @@ LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
 USE_I18N = True
 USE_L10N = True
+
+LANGUAGES = (
+    ('nb', _('Norwegian')),
+    ('en', _('English')),
+)
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
@@ -87,8 +94,9 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -135,6 +143,7 @@ PROJECT_APPS = (
     'studlan.sponsor',
     'studlan.team',
     'studlan.userprofile',
+    'studlan.lottery',
 )
 
 INSTALLED_APPS += PROJECT_APPS
