@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import translation
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from studlan.lottery.models import Lottery, LotteryParticipant, LotteryWinner
 from studlan.lan.models import LAN, Attendee
@@ -40,9 +41,12 @@ def sign_off(request, lottery_id):
     return redirect(index)
 
 @login_required
-def drawing(request, lottery_id):
+def drawing(request, lottery_id=False):
     winner = False
-    lottery = get_object_or_404(Lottery, pk=lottery_id)
+    if lottery_id:
+        lottery = get_object_or_404(Lottery, pk=lottery_id)
+    else:
+        lottery = Lottery.objects.latest('pk')
     winners = LotteryWinner.objects.filter(lottery=lottery)
     if winners:
         winner = winners[len(winners) -1]
@@ -51,11 +55,20 @@ def drawing(request, lottery_id):
 @login_required
 def draw(request, lottery_id):
     lottery = get_object_or_404(Lottery, pk=lottery_id)
-    participants = lottery.lotteryparticipant_set.all()
+    if lottery.multiple_winnings:
+        participants = lottery.lotteryparticipant_set.all()
+    else:
+        participants = lottery.lotteryparticipant_set.all().exclude(has_won = True)
+
+    print lottery.lotterywinner_set.all()
+
+    if len(participants) < 1:
+        messages.error(request, 'No eligible participants')
+        return redirect(drawing, lottery_id)
+        
     winner_id = randint(0, len(participants) -1)
     winner = participants[winner_id].user
-    if not lottery.multiple_winnings:
-        if lottery.has_won(request.user):
-            return redirect(draw, lottery_id)
+    participants[winner_id].has_won = True
+    participants[winner_id].save()
     LotteryWinner.objects.create(user = winner, lottery=lottery)
     return redirect(drawing, lottery_id) 

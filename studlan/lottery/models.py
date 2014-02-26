@@ -25,7 +25,6 @@ class Lottery(TranslatableModel):
 
         return False
 
-
     class Meta:
         verbose_name_plural = "Lotteries"
 
@@ -41,6 +40,7 @@ class LotteryTranslation(get_translation_model(Lottery, 'lottery')):
 class LotteryParticipant(models.Model):
     lottery = models.ForeignKey(Lottery)
     user = models.ForeignKey(User)
+    has_won = models.BooleanField('has won')
     
     def __unicode__(self):
         return unicode(self.user)
