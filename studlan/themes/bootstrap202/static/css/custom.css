@@ -113,3 +113,9 @@ div#btn-profile {
 {
     cursor:pointer;
 }
+
+.attendee-counts span
+{
+    margin-right: 20px;
+    font-weight: bold;
+}
