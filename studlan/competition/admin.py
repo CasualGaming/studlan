@@ -10,7 +10,7 @@ class CompetitionTranslationInlineAdmin(admin.StackedInline):
     verbose_name_plural = "Competitions"
     model = CompetitionTranslation
     max_num = len(settings.LANGUAGES)
-    extra = 1
+    extra = 2
 
 class CompetitionAdmin(admin.ModelAdmin):
     inlines = [CompetitionTranslationInlineAdmin,]
