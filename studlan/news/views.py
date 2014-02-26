@@ -5,7 +5,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.template.context import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils import translation
-from django.http import HttpResponseRedirect
 
 from studlan.news.models import Article
 
