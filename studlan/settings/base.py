@@ -40,8 +40,8 @@ USE_I18N = True
 USE_L10N = True
 
 LANGUAGES = (
-    ('nb', _('Norwegian')),
-    ('en', _('English')),
+    ('nb', _(u'Norwegian')),
+    ('en', _(u'English')),
 )
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
