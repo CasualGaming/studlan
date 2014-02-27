@@ -6,7 +6,7 @@
 *.pydevproject
 .nfs*
 .idea/
-static/
+studlan/static/
 studlan/dev.db*
 *.db
 local.py
