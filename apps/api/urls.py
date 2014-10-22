@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls import patterns, url
 
 urlpatterns = patterns('studlan.api.views',
         url(r'(?P<api_key>\w+)/arrived/(?P<lan_id>\d+)/(?P<username>\w+)/(?P<status>\d)/$', 'change_arrived', name='api_change_arrived'),

@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *
+from django.conf.urls import *
 
 urlpatterns = patterns('studlan.userprofile.views',
     url(r'^$', 'my_profile', name='myprofile'),

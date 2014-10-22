@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.conf.urls.defaults import *
+from django.conf.urls import *
 
 urlpatterns = patterns('studlan.arrivals.views',
     url(r'^$', 'home', name='arrival_home'),
