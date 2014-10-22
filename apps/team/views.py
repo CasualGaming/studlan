@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -11,7 +12,6 @@ from django.template.context import RequestContext
 from apps.misc.forms import InlineSpanErrorList
 from apps.team.models import Team, Member
 from apps.team.forms import TeamCreationForm 
-from apps.settings import MAX_TEAMS
 
 def teams(request):
     teams = Team.objects.all()
@@ -39,8 +39,8 @@ def my_teams(request):
 def create_team(request):
     if request.method == 'POST':
         # Stop if a person tries to create more than the allowed ammount of teams.        
-        if Team.objects.filter(leader=request.user).count() >= MAX_TEAMS:
-            messages.error(request, "You cannot be leader of more than %i teams." % MAX_TEAMS)
+        if Team.objects.filter(leader=request.user).count() >= settings.MAX_TEAMS:
+            messages.error(request, "You cannot be leader of more than %i teams." % settings.MAX_TEAMS)
             return redirect('teams')
 
         form = TeamCreationForm(request.POST)
