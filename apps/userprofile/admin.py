@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
-from studlan.userprofile.models import UserProfile
+from apps.userprofile.models import UserProfile
 
 admin.site.unregister(User)
 

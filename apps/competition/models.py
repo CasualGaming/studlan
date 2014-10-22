@@ -10,7 +10,7 @@ from django.db.models import Q
 from django.db.models.signals import post_save
 from django.utils import translation
 
-from studlan.lan.models import LAN
+from apps.lan.models import LAN
 
 class Activity(models.Model):
 

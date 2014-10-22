@@ -5,7 +5,7 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.db import models
 
-from studlan.userprofile.models import UserProfile
+from apps.userprofile.models import UserProfile
 
 class LAN(models.Model):
     title = models.CharField("title", max_length=100)

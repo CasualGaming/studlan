@@ -12,9 +12,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.template.context import RequestContext
 from django.utils import translation
 
-from studlan.competition.models import Activity, Competition, Participant
-from studlan.lan.models import LAN
-from studlan.team.models import Team
+from apps.competition.models import Activity, Competition, Participant
+from apps.lan.models import LAN
+from apps.team.models import Team
 
 def main(request):
     lans = LAN.objects.filter(end_date__gte=datetime.now())

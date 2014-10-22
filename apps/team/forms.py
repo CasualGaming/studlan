@@ -4,7 +4,7 @@ import re
 
 from django import forms
 
-from studlan.team.models import Team
+from apps.team.models import Team
 
 class TeamCreationForm(forms.Form):
     title = forms.CharField(label="Title", max_length=50)

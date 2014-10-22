@@ -6,7 +6,7 @@ from django.template.context import RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils import translation
 
-from studlan.news.models import Article
+from apps.news.models import Article
 
 
 def main(request, page):

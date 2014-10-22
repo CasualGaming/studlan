@@ -7,9 +7,9 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 
-from studlan.lan.models import Attendee, LAN
-from studlan.userprofile.forms import UserProfileForm
-from studlan.userprofile.models import UserProfile
+from apps.lan.models import Attendee, LAN
+from apps.userprofile.forms import UserProfileForm
+from apps.userprofile.models import UserProfile
 
 @login_required
 def my_profile(request):

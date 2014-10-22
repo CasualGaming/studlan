@@ -5,9 +5,9 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, get_object_or_404
 
-from studlan.api.models import Key
-from studlan.lan.models import LAN, Attendee
-from studlan.userprofile.models import UserProfile
+from apps.api.models import Key
+from apps.lan.models import LAN, Attendee
+from apps.userprofile.models import UserProfile
 
 def change_arrived(request, api_key, lan_id, username, status):
     keys = Key.objects.filter(content=api_key)

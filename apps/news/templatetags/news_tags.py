@@ -1,5 +1,5 @@
 from django import template
-from studlan.news.models import Article
+from apps.news.models import Article
 
 register = template.Library()
 

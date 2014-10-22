@@ -2,7 +2,7 @@
 
 from django import template
 
-from studlan.sponsor.models import Sponsor
+from apps.sponsor.models import Sponsor
 
 register = template.Library()
 

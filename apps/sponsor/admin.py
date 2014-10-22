@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 
-from studlan.sponsor.models import Sponsor
+from apps.sponsor.models import Sponsor
 
 class SponsorAdmin(admin.ModelAdmin):
     model = Sponsor

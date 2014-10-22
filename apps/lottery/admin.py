@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.conf import settings
-from studlan.lottery.models import Lottery, LotteryTranslation
-from studlan.lottery.models import LotteryParticipant
+from apps.lottery.models import Lottery, LotteryTranslation
+from apps.lottery.models import LotteryParticipant
 
 class LotteryTranslationInlineAdmin(admin.StackedInline):
     verbose_name = "Translation"

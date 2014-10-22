@@ -4,7 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from translatable.models import TranslatableModel, get_translation_model
 
-from studlan.lan.models import LAN, Attendee
+from apps.lan.models import LAN, Attendee
 
 class Lottery(TranslatableModel):
     lan = models.ForeignKey(LAN)

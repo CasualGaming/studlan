@@ -9,8 +9,8 @@ from django.utils import translation
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from studlan.lottery.models import Lottery, LotteryParticipant, LotteryWinner
-from studlan.lan.models import LAN, Attendee
+from apps.lottery.models import Lottery, LotteryParticipant, LotteryWinner
+from apps.lan.models import LAN, Attendee
 
 def index(request):
     lans = LAN.objects.filter(end_date__gte=datetime.now())

@@ -4,7 +4,7 @@ import uuid
 
 from django.contrib import admin
 
-from studlan.api.models import Key
+from apps.api.models import Key
 
 class KeyAdmin(admin.ModelAdmin):
     list_display = ['owner', 'content',]

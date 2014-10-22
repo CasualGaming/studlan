@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
-from studlan.lan.models import LAN, Attendee
+from apps.lan.models import LAN, Attendee
 
 def home(request):
     lans = LAN.objects.filter(end_date__gte=datetime.now())

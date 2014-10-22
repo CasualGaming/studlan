@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 
-from studlan.lan.models import LAN
+from apps.lan.models import LAN
 
 class LANAdmin(admin.ModelAdmin):
     model = LAN

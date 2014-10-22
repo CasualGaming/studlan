@@ -8,10 +8,10 @@ from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.context import RequestContext
 
-from studlan.misc.forms import InlineSpanErrorList
-from studlan.team.models import Team, Member
-from studlan.team.forms import TeamCreationForm 
-from studlan.settings import MAX_TEAMS
+from apps.misc.forms import InlineSpanErrorList
+from apps.team.models import Team, Member
+from apps.team.forms import TeamCreationForm 
+from apps.settings import MAX_TEAMS
 
 def teams(request):
     teams = Team.objects.all()

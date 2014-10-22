@@ -5,8 +5,8 @@ import logging
 from django import template
 from django.core.urlresolvers import reverse
 
-from studlan.competition.models import Competition
-from studlan.lan.models import LAN
+from apps.competition.models import Competition
+from apps.lan.models import LAN
 
 register = template.Library()
 

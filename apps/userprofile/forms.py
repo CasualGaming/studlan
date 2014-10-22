@@ -2,7 +2,7 @@
 
 from django import forms
 
-from studlan.userprofile.models import UserProfile
+from apps.userprofile.models import UserProfile
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
