@@ -5,7 +5,7 @@ $.ajaxSetup ({
 }); 
 
 $("a.close").live("click", function() {
-    $(this).load('{% url root %}/misc/remove_alert.html');
+    $(this).load('{% url 'root' %}/misc/remove_alert.html');
 });
 $(function () {
     $("a[rel=popover]")
