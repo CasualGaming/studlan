@@ -5,7 +5,3 @@ django-translatable==0.1.1
 
 # PostgreSQL plugin for python
 psycopg2==2.4.5
-
-# Shell tools. iPython needs readline for cli magic.
-ipython==2.3.0
-readline==6.2.4.1
