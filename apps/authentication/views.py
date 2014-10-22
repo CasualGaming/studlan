@@ -2,6 +2,7 @@
 
 import uuid
 
+from django.contrib import settings
 from django.contrib import auth
 from django.contrib import messages
 from django.contrib import auth
@@ -10,7 +11,6 @@ from django.core.mail import send_mail
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
 
-from studlan import settings
 from apps.authentication.forms import (LoginForm, RegisterForm, 
                             RecoveryForm, ChangePasswordForm)
 from apps.authentication.models import RegisterToken
