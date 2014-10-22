@@ -38,6 +38,7 @@ LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
 USE_I18N = True
 USE_L10N = True
+SECRET_KEY = 'override-this-in-local.py'
 
 LANGUAGES = (
     ('nb', _(u'Norwegian')),
@@ -82,9 +83,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
-
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = 'change-this-in-production'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
