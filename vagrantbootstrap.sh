@@ -114,3 +114,4 @@ prepare_and_run_studlan
 
 # Support for pip install inside the VM
 curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | python
+rm setuptools-7.0.zip
