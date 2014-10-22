@@ -91,7 +91,7 @@ function install_lessc() {
 function prepare_and_run_studlan() {
     workon studlan
     cd /vagrant
-    cp studlan4/settings/example-local.py studlan4/settings/local.py
+    cp studlan/settings/example-local.py studlan/settings/local.py
     echo "creating tables"
     progress python manage.py syncdb
     if $RUNSERVER
