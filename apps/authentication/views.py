@@ -2,7 +2,7 @@
 
 import uuid
 
-from django.contrib import settings
+from django.conf import settings
 from django.contrib import auth
 from django.contrib import messages
 from django.contrib import auth
