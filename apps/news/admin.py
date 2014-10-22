@@ -1,8 +1,9 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
-from django.contrib import admin
+
 from django.conf import settings
-from news.models import Article, ArticleTranslation
+from django.contrib import admin
+
+from apps.news.models import Article, ArticleTranslation
 
 class ArticleTranslationInlineAdmin(admin.StackedInline):
     verbose_name = "Translation"

@@ -3,7 +3,7 @@
 from django.contrib import admin
 from django.conf import settings
 
-from competition.models import Activity, Competition, Participant, CompetitionTranslation
+from apps.competition.models import Activity, Competition, Participant, CompetitionTranslation
 
 class CompetitionTranslationInlineAdmin(admin.StackedInline):
     verbose_name = "Competition"
