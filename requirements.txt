@@ -1,6 +1,5 @@
-Django==1.4.1
+Django==1.7.1
 Markdown==2.2.0
-South==0.7.6
 wsgiref==0.1.2
 django-translatable==0.1.1
 
