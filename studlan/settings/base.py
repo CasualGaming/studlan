@@ -110,20 +110,16 @@ ROOT_URLCONF = 'studlan.urls'
 
 WSGI_APPLICATION = 'studlan.wsgi.application'
 
-THEME_NAME = 'bootstrap202'
-
-THEME_DIRECTORY = os.path.join(PROJECT_ROOT_DIRECTORY, 'themes', THEME_NAME)
-
 TEMPLATE_DIRS = [
-    os.path.join(PROJECT_ROOT_DIRECTORY, 'themes', THEME_NAME, 'templates'),
-    ]
+    os.path.join(PROJECT_ROOT_DIRECTORY, 'templates'),
+]
+
 STATICFILES_DIRS = [
-    os.path.join(PROJECT_ROOT_DIRECTORY, 'themes', THEME_NAME, 'static'),
-    ]
+    os.path.join(PROJECT_ROOT_DIRECTORY, 'files'),
+]
 
 INSTALLED_APPS = (
     # third party apps
-    'south',
 
     # django apps
     'django.contrib.admin',
@@ -138,16 +134,16 @@ INSTALLED_APPS = (
 
 PROJECT_APPS = (
     # studlan apps
-    'studlan.api',
-    'studlan.authentication',
-    'studlan.competition',
-    'studlan.lan',
-    'studlan.misc',
-    'studlan.news',
-    'studlan.sponsor',
-    'studlan.team',
-    'studlan.userprofile',
-    'studlan.lottery',
+    'apps.api',
+    'apps.authentication',
+    'apps.competition',
+    'apps.lan',
+    'apps.misc',
+    'apps.news',
+    'apps.sponsor',
+    'apps.team',
+    'apps.userprofile',
+    'apps.lottery',
 )
 
 INSTALLED_APPS += PROJECT_APPS
