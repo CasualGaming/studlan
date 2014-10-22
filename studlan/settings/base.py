@@ -1,11 +1,12 @@
 # Django settings for studlan project.
+
 import os
 import sys
 
-from django.utils.translation import ugettext as _
-
-
-PROJECT_ROOT_DIRECTORY = os.path.join(os.path.dirname(globals()['__file__']),'..')
+# Directory that contains this file.
+PROJECT_SETTINGS_DIRECTORY = os.path.dirname(globals()['__file__'])
+# Root directory. Contains manage.py
+PROJECT_ROOT_DIRECTORY = os.path.join(PROJECT_SETTINGS_DIRECTORY, '..', '..')
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -41,8 +42,8 @@ USE_L10N = True
 SECRET_KEY = 'override-this-in-local.py'
 
 LANGUAGES = (
-    ('nb', _(u'Norwegian')),
-    ('en', _(u'English')),
+    ('nb', u'Norsk'),
+    ('en', u'English'),
 )
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
@@ -128,9 +129,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.markup',
-)
 
-PROJECT_APPS = (
     # studlan apps
     'apps.api',
     'apps.authentication',
@@ -143,8 +142,6 @@ PROJECT_APPS = (
     'apps.userprofile',
     'apps.lottery',
 )
-
-INSTALLED_APPS += PROJECT_APPS
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -169,16 +166,19 @@ LOGGING = {
     }
 }
 
-for settings_module in ['local']:
-    if not os.path.exists(PROJECT_ROOT_DIRECTORY + '/settings/' + settings_module + '.py'):
-        sys.stderr.write('Could not find settings module settings/%s.py\n' % (settings_module))
+# Remember to keep 'local' last, so it can override any setting.
+for settings_module in ['local']:  # local last
+    if not os.path.exists(os.path.join(PROJECT_SETTINGS_DIRECTORY,
+            settings_module + ".py")):
+        sys.stderr.write("Could not find settings module '%s'.\n" %
+                settings_module)
         if settings_module == 'local':
-            sys.stderr.write("You need to copy the settings file 'settings/example-local.py' to 'settings/local.py'.\n")
+            sys.stderr.write("You need to copy the settings file "
+                             "'studlan/settings/example-local.py' to "
+                             "'studlan/settings/local.py'.\n")
         sys.exit(1)
     try:
         exec('from %s import *' % settings_module)
     except ImportError, e:
-        print 'Could not import settings for', settings_module, ': ', str(e)
-        pass
-
-
+        print "Could not import settings for '%s' : %s" % (settings_module,
+                str(e))
