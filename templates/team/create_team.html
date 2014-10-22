@@ -14,7 +14,7 @@
 {% block teampage %}
     <div class="row">
         <div class="span9">
-            <form class="form-horizontal" action="{% url create_team %}" method="POST">
+            <form class="form-horizontal" action="{% url 'create_team' %}" method="POST">
                 {% csrf_token %}
                 <fieldset>
                     <legend>Create new team</legend>

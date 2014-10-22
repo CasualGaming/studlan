@@ -8,7 +8,7 @@ studLAN - Account recovery
     <div class="row">
         <div class="span9">
             {{ form.non_field_errors }}
-            <form class="form-horizontal" method="post" action="{% url auth_recover %}">{% csrf_token %}
+            <form class="form-horizontal" method="post" action="{% url 'auth_recover' %}">{% csrf_token %}
                 <fieldset>
                     <legend>Account recovery</legend>
                     {% for field in form %} 

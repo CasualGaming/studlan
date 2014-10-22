@@ -5,13 +5,13 @@
 <ul class="nav nav-list">
 
 {% if user.is_authenticated %}
-<li class="active"><a href="{% url myprofile %}">User Info</a></li>
+<li class="active"><a href="{% url 'myprofile' %}">User Info</a></li>
 <li><strong>User name:</strong><br/>{{ user.username }}</li>
 <li><strong>Name:</strong><br/>{{ user.first_name }} {{ user.last_name }}</li>
 <li><strong>Email:</strong><br/>{{ user.email }}</li>
 {% endif %}
 
-<li class="active"><a href="{% url competitions %}">Competition Info</a></li>
+<li class="active"><a href="{% url 'competitions' %}">Competition Info</a></li>
 <li>{% num_of_competitions %} competitions active.</li>
 
 <li class="active"><a href="#">Sponsors</a></li>

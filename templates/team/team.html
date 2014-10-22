@@ -9,9 +9,9 @@ studLAN - Team - {{ team }}
 
 {% block navigation %}
     <ul class="nav">
-        <li><a href="{% url root %}">News</a></li>
-        <li><a href="{% url competitions %}">Competitions</a></li>
-        <li class="active"><a href="{% url teams %}">Teams</a></li>
+        <li><a href="{% url 'root' %}">News</a></li>
+        <li><a href="{% url 'competitions' %}">Competitions</a></li>
+        <li class="active"><a href="{% url 'teams' %}">Teams</a></li>
     </ul>
 {% endblock navigation %}
 
@@ -22,7 +22,7 @@ studLAN - Team - {{ team }}
             <h2>
                 {{ team }}
                 {% if team.is_mine %}
-                    <a class="pull-right btn btn-small btn-danger" href="{% url disband_team team.id %}">
+                    <a class="pull-right btn btn-small btn-danger" href="{% url 'disband_team' team.id %}">
                         <i class="icon-remove icon-white"></i> Disband Team
                     </a>
                 {% endif %}
@@ -34,7 +34,7 @@ studLAN - Team - {{ team }}
         <div class="span9">
             <h3>Leader</h3>
             <h4>
-                <a href="{% url profile team.leader %}">{{ team.leader }} ({{ team.leader.first_name }} {{ team.leader.last_name }})</a>
+                <a href="{% url 'profile' team.leader %}">{{ team.leader }} ({{ team.leader.first_name }} {{ team.leader.last_name }})</a>
             </h4>
         </div>
     </div>
@@ -52,13 +52,13 @@ studLAN - Team - {{ team }}
 
                     {% for member in team.members.all %}
                         <tr>
-                            <td><a href="{% url profile member %}">{{ member }}</a></td>
+                            <td><a href="{% url 'profile' member %}">{{ member }}</a></td>
                             <td>{{ member.first_name }} {{ member.last_name }}</td>
                             <td>
                             {% if user == team.leader %}
-                                <a href="{% url remove_member team.id member.id %}">Remove</a>
+                                <a href="{% url 'remove_member' team.id member.id %}">Remove</a>
                             {% else %}{% if user == member %}
-                                <a href="{% url remove_member team.id user.id %}">Leave team</a>
+                                <a href="{% url 'remove_member' team.id user.id %}">Leave team</a>
                             {% endif %}{% endif %}
                             </td>
                         </tr>
@@ -72,7 +72,7 @@ studLAN - Team - {{ team }}
 	{% if team.is_mine and users|length > 0 %}
         <div class="row">
             <div class="span9">
-                <form class="form-horizontal" action="{% url add_member team.id %}" method="POST">{% csrf_token %}
+                <form class="form-horizontal" action="{% url 'add_member' team.id %}" method="POST">{% csrf_token %}
                     <fieldset>
                         <legend>Add member</legend>
                         <div class="control-group">

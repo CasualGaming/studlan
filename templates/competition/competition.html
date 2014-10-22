@@ -38,7 +38,7 @@ studLAN - Competition - {{ competition.get_translation.title }}
                         {% for team in teams %}
                             <tr>
                                 <td><a href="{{ team.get_absolute_url }}">{{ team }}</a></td>
-                                <td><a href="{% url profile team.leader %}">{{ team.leader }}</a></td>
+                                <td><a href="{% url 'profile' team.leader %}">{{ team.leader }}</a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -58,7 +58,7 @@ studLAN - Competition - {{ competition.get_translation.title }}
             <div class="span9">
                 <ul>
                     {% for user in users %}
-                        <li><a href="{% url profile user %}">{{ user }}</a></li>
+                        <li><a href="{% url 'profile' user %}">{{ user }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -76,7 +76,7 @@ studLAN - Competition - {{ competition.get_translation.title }}
                 <div class="span9">
                     {% if not participating %}
                         {% if competition.use_teams and owned_teams|length > 0 %}
-                            <form class="well form-inline" action="{% url join_comp competition.id %}" method="POST">
+                            <form class="well form-inline" action="{% url 'join_comp' competition.id %}" method="POST">
                                 {% csrf_token %}
                                 <select class="input-small" name="team" id="team">
                                     {% for team in owned_teams %}
@@ -86,14 +86,14 @@ studLAN - Competition - {{ competition.get_translation.title }}
                                 <input class="btn btn-success" type="submit" value="Join competition (team)"/>
                             </form>
                         {% endif %} 
-                        <form class="well form-inline" action="{% url join_comp competition.id %}" method="POST">{% csrf_token %}
+                        <form class="well form-inline" action="{% url 'join_comp' competition.id %}" method="POST">{% csrf_token %}
                             <p>Signing up for a team compo as a solo player does not mean you are a participant. 
                                 Try to find other players that sign up solo, make a team and sign up as a team.</p>
                             <p><b>When you sign up as a team, your solo participation will be overriden.</b></p>
                             <input type="submit" class="btn btn-success" value="Join competition (solo)" />
                         </form>
                     {% else %}
-                        <form class="well form-inline" action="{% url leave_comp competition.id %}" method="POST">
+                        <form class="well form-inline" action="{% url 'leave_comp' competition.id %}" method="POST">
                             {% csrf_token %}
                             <input type="submit" class="btn btn-danger" value="Leave competition" />
                         </form>

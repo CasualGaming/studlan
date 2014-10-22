@@ -49,7 +49,7 @@ studLAN - News
                     <span class="step-links">
                         {% if articles.has_previous %}
                             <li class="prev">
-                                <a href="{% url news articles.previous_page_number %}">&larr; Previous</a>
+                                <a href="{% url 'news' articles.previous_page_number %}">&larr; Previous</a>
                         {% else %}
                             <li class="prev disabled">
                                 <a href="#">&larr; Previous</a>
@@ -58,15 +58,15 @@ studLAN - News
 
                         {% for page in articles.paginator.page_range %}
                             {% if articles.number == page %}
-                                <li class="active"><a href="{% url news page %}">{{ page }}</a></li>
+                                <li class="active"><a href="{% url 'news' page %}">{{ page }}</a></li>
                             {% else %}
-                                <li><a href="{% url news page %}">{{ page }}</a></li>
+                                <li><a href="{% url 'news' page %}">{{ page }}</a></li>
                             {% endif %}
                         {% endfor %}
 
                         {% if articles.has_next %}
                             <li class="next">
-                                <a href="{% url news articles.next_page_number %}">Next &rarr;</a>
+                                <a href="{% url 'news' articles.next_page_number %}">Next &rarr;</a>
                         {% else %}
                             <li class="next disabled">
                                 <a href="#">Next &rarr;</a>

@@ -1,9 +1,9 @@
 <div class="row table-tabs">
     <div class="span9">
         <ul class="nav nav-tabs">
-            <li{% if active == 'all' %} class="active"{% endif %}><a href="{% url teams %}">All teams</a></li>
-            <li{% if active == 'mine' %} class="active"{% endif %}><a href="{% url my_teams %}">My teams</a></li>
-            <li{% if active == 'create' %} class="active"{% endif %}><a href="{% url create_team %}">Create team</a></li>
+            <li{% if active == 'all' %} class="active"{% endif %}><a href="{% url 'teams' %}">All teams</a></li>
+            <li{% if active == 'mine' %} class="active"{% endif %}><a href="{% url 'my_teams' %}">My teams</a></li>
+            <li{% if active == 'create' %} class="active"{% endif %}><a href="{% url 'create_team' %}">Create team</a></li>
         </ul>
     </div>
 </div>

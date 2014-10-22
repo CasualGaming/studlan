@@ -13,9 +13,9 @@
             {% if user.is_authenticated %}
                 {% if lottery.registration_open %}
                     {% if signed_up %}
-                        <a class="btn btn-danger" href="{% url sign_off lottery.id %}">Unsign</a>
+                        <a class="btn btn-danger" href="{% url 'sign_off' lottery.id %}">Unsign</a>
                     {% else %}
-                        <a class="btn btn-success" href="{% url sign_up lottery.id %}">Sign up</a>
+                        <a class="btn btn-success" href="{% url 'sign_up' lottery.id %}">Sign up</a>
                     {% endif %}
                 {% else %}
                     <span class="label btn-danger">Registration closed</span>

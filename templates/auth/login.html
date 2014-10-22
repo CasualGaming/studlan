@@ -8,7 +8,7 @@ studLAN - Login
     <div class="row">
         <div class="span9">
             {{ form.non_field_errors }}
-            <form class="form-horizontal" method="post" action="{% url auth_login %}">{% csrf_token %}
+            <form class="form-horizontal" method="post" action="{% url 'auth_login' %}">{% csrf_token %}
                 <fieldset>
                     <legend>Login</legend>
                     {% for field in form %} 
@@ -22,7 +22,7 @@ studLAN - Login
                     {% endfor %}
                     <div class="form-actions">
                         <input type="submit" class="btn btn-primary" value="Login" />
-                        <a href="{% url auth_recover %}" class="btn btn-info">Recover password</a>
+                        <a href="{% url 'auth_recover' %}" class="btn btn-info">Recover password</a>
                     </div>
                 </fieldset>
                 <input type="hidden" name="next" value="{% if next %}{{ next }}{% endif %}"/>

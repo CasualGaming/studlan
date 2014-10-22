@@ -20,7 +20,7 @@
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
-                    <a class="brand" href="{% url root %}"><img src="{{ STATIC_URL }}mushroom_small.png" />studLAN</a>
+                    <a class="brand" href="{% url 'root' %}"><img src="{{ STATIC_URL }}mushroom_small.png" />studLAN</a>
                     {% include "navigation.html" %}
                         <ul class="nav pull-right">
                             <li class="dropdown">
@@ -39,24 +39,24 @@
                             </li>
                         {% if not user.is_authenticated %}
                         <ul class="nav pull-right">
-                            <li><a href="{% url auth_register %}">Register</a></li>
-                            <li><a href="{% url auth_login %}">Login</a></li>
+                            <li><a href="{% url 'auth_register' %}">Register</a></li>
+                            <li><a href="{% url 'auth_login' %}">Login</a></li>
                         </ul>
                         {% else %}
                             <ul class="pull-right">
                             <div class="btn-group" id="btn-profile">
-                                <a class="btn btn-inverse" href="{% url myprofile %}"><i class="icon-user icon-white"></i> {{ user }}</a>
+                                <a class="btn btn-inverse" href="{% url 'myprofile' %}"><i class="icon-user icon-white"></i> {{ user }}</a>
                                 <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{% url update_profile %}"><i class="icon-pencil"></i> Edit profile</a></li>
+                                    <li><a href="{% url 'update_profile' %}"><i class="icon-pencil"></i> Edit profile</a></li>
                                     {% if user.is_staff %}
                                         <li class="divider"></li>
-                                        <li><a href="{% url arrival_home %}"><i class="icon-list-alt"></i> Register arrivals</a></li>
+                                        <li><a href="{% url 'arrival_home' %}"><i class="icon-list-alt"></i> Register arrivals</a></li>
                                         <li><a href="/admin"><i class="icon-road"></i> Admin</a></li>
-                                        <li><a href={% url drawing %}><i class="icon-road"></i> Lottery</a></li>
+                                        <li><a href={% url 'drawing' %}><i class="icon-road"></i> Lottery</a></li>
                                     {% endif%}
                                     <li class="divider"></li>
-                                    <li><a href="{% url auth_logout %}"><i class="icon-off"></i> Log out</a></li>
+                                    <li><a href="{% url 'auth_logout' %}"><i class="icon-off"></i> Log out</a></li>
                                 </ul>
                             </div>
                         </ul>

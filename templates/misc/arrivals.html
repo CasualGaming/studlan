@@ -9,9 +9,9 @@ studLAN - Register Arrivals
 
 {% block navigation %}
     <ul class="nav">
-        <li><a href="{% url root %}">News</a></li>
-        <li><a href="{% url competitions %}">Competitions</a></li>
-        <li><a href="{% url teams %}">Teams</a></li>
+        <li><a href="{% url 'root' %}">News</a></li>
+        <li><a href="{% url 'competitions' %}">Competitions</a></li>
+        <li><a href="{% url 'teams' %}">Teams</a></li>
     </ul>
 {% endblock navigation %}
 
@@ -46,9 +46,9 @@ studLAN - Register Arrivals
 							{% endif %}
 							<td>
 							{% if user.get_profile.has_payed %}
-								<span class="label label-success"><i class="icon-ok-sign icon-white"></i> </span>&nbsp;&nbsp;<a class="btn btn-mini btn-success" href="{% url toggle_arrival user.id %}">Toggle</a>
+								<span class="label label-success"><i class="icon-ok-sign icon-white"></i> </span>&nbsp;&nbsp;<a class="btn btn-mini btn-success" href="{% url 'toggle_arrival' user.id %}">Toggle</a>
 							{% else %}
-								<span class="label label-important"><i class="icon-remove-sign icon-white"></i></span>&nbsp;&nbsp;<a class="btn btn-mini btn-danger" href="{% url toggle_arrival user.id %}">Toggle</a>
+								<span class="label label-important"><i class="icon-remove-sign icon-white"></i></span>&nbsp;&nbsp;<a class="btn btn-mini btn-danger" href="{% url 'toggle_arrival' user.id %}">Toggle</a>
 							{% endif %}
 							</td>
 						</tr>
