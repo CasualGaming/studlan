@@ -1,5 +1,5 @@
 Django==1.7.1
-Markdown==2.2.0
+django-markdown-deux==1.0.4
 wsgiref==0.1.2
 django-translatable==0.1.1
 
@@ -7,6 +7,5 @@ django-translatable==0.1.1
 psycopg2==2.4.5
 
 # Shell tools. iPython needs readline for cli magic.
-ipython==0.13
-readline==6.2.2
-
+ipython==2.3.0
+readline==6.2.4.1
