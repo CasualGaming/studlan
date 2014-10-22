@@ -40,7 +40,7 @@ class LotteryTranslation(get_translation_model(Lottery, 'lottery')):
 class LotteryParticipant(models.Model):
     lottery = models.ForeignKey(Lottery)
     user = models.ForeignKey(User)
-    has_won = models.BooleanField('has won')
+    has_won = models.BooleanField('has won', default=False)
     
     def __unicode__(self):
         return unicode(self.user)

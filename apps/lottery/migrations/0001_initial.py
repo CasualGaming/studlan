@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
             name='LotteryParticipant',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('has_won', models.BooleanField(verbose_name=b'has won')),
+                ('has_won', models.BooleanField(default=False, verbose_name=b'has won')),
                 ('lottery', models.ForeignKey(to='lottery.Lottery')),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],

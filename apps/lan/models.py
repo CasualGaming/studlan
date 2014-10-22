@@ -66,8 +66,8 @@ class LAN(models.Model):
 class Attendee(models.Model):
     user = models.ForeignKey(User)
     lan = models.ForeignKey(LAN)
-    has_paid = models.BooleanField("has paid")
-    arrived = models.BooleanField("has arrived")
+    has_paid = models.BooleanField("has paid", default=False)
+    arrived = models.BooleanField("has arrived", default=False)
 
     def __unicode__(self):
         return self.user.get_full_name() + " - " + self.lan.title
