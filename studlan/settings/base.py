@@ -119,6 +119,7 @@ STATICFILES_DIRS = [
 
 INSTALLED_APPS = (
     # third party apps
+    'markdown_deux',
 
     # django apps
     'django.contrib.admin',
@@ -128,7 +129,6 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.markup',
 
     # studlan apps
     'apps.api',
