@@ -135,12 +135,12 @@ INSTALLED_APPS = (
     'apps.authentication',
     'apps.competition',
     'apps.lan',
+    'apps.lottery',
     'apps.misc',
     'apps.news',
     'apps.sponsor',
     'apps.team',
     'apps.userprofile',
-    'apps.lottery',
 )
 
 # A sample logging configuration. The only tangible logging
