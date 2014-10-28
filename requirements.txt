@@ -4,4 +4,4 @@ wsgiref==0.1.2
 django-translatable==0.1.1
 
 # PostgreSQL plugin for python
-psycopg2==2.4.5
+psycopg2
