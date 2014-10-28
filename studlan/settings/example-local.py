@@ -13,3 +13,6 @@ DATABASES = {
 }
 
 STUDLAN_FROM_MAIL = 'studlan@online.ntnu.no'
+
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # real
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # prints
