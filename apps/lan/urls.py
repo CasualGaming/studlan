@@ -2,7 +2,7 @@
 
 from django.conf.urls import *
 
-urlpatterns = patterns('studlan.lan.views',
+urlpatterns = patterns('apps.lan.views',
     url(r'^$', 'home', name='lan_home'),
     url(r'^list/$', 'listing', name='lan_listing'),
     url(r'^(?P<lan_id>\d+)/$', 'details', name='lan_details'),

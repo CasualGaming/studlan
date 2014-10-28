@@ -3,7 +3,7 @@
 
 from django.conf.urls import patterns, url
 
-urlpatterns = patterns('studlan.lottery.views',
+urlpatterns = patterns('apps.lottery.views',
     # Main comp oversight
     url(r'^$', 'index', name='lottery'),
     url(r'^signup/(?P<lottery_id>\d+)/$', 'sign_up', name='sign_up'),

@@ -2,7 +2,7 @@
 
 from django.conf.urls import *
 
-urlpatterns = patterns('studlan.team.views',
+urlpatterns = patterns('apps.team.views',
     url(r'^$', 'teams', name='teams'),
     url(r'^mine/$', 'my_teams', name='my_teams'),
     url(r'^create/$', 'create_team', name='create_team'),

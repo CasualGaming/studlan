@@ -2,7 +2,7 @@
 
 from django.conf.urls import patterns, url
 
-urlpatterns = patterns('studlan.authentication.views',
+urlpatterns = patterns('apps.authentication.views',
         url(r'^login/$', 'login', name='auth_login'),
         url(r'^logout/$', 'logout', name='auth_logout'),
         url(r'^register/$', 'register', name='auth_register'),

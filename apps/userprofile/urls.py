@@ -1,6 +1,6 @@
 from django.conf.urls import *
 
-urlpatterns = patterns('studlan.userprofile.views',
+urlpatterns = patterns('apps.userprofile.views',
     url(r'^$', 'my_profile', name='myprofile'),
     url(r'^update/$', 'update_profile', name='update_profile'),
     url(r'^history/$', 'history', name='user_history'),

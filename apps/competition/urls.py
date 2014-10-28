@@ -3,7 +3,7 @@
 
 from django.conf.urls import patterns, url
 
-urlpatterns = patterns('studlan.competition.views',
+urlpatterns = patterns('apps.competition.views',
     # Main comp oversight
     url(r'^$', 'main', name='competitions'),
     url(r'^(?P<lan_id>\d+)/$', 'main_filtered', name='competitions_show_lan'),
