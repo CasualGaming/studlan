@@ -18,6 +18,8 @@ ADMINS = (
     ('dotKom', 'dotkom@online.ntnu.no'),
 )
 
+MANAGERS = ADMINS
+
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
@@ -28,7 +30,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages'
 )
 
-MANAGERS = ADMINS
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 AUTH_PROFILE_MODULE = 'userprofile.UserProfile'
 LOGIN_URL = '/auth/login/'
