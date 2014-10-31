@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from django.conf.urls import patterns, include, url
+from django.contrib import admin
 
 urlpatterns = patterns('',
+    
+    url(r'^admin/', include(admin.site.urls)),
+
     url(r'^$', 'apps.news.views.main', name='root', kwargs={'page': 1}),
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^login.html', 'apps.competition.views.log_in'),
