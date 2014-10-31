@@ -107,6 +107,10 @@ MIDDLEWARE_CLASSES = (
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
+CSRF_COOKIE_PATH = '/'
+CSRF_COOKIE_DOMAIN = 'studlan.no'
+CSRF_COOKIE_HTTPONLY = True
+
 ROOT_URLCONF = 'studlan.urls'
 
 WSGI_APPLICATION = 'studlan.wsgi.application'
@@ -122,6 +126,7 @@ STATICFILES_DIRS = [
 INSTALLED_APPS = (
     # third party apps
     'markdown_deux',
+    'gunicorn',
 
     # django apps
     'django.contrib.admin',
