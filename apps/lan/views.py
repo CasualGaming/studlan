@@ -41,7 +41,7 @@ def attend(request, lan_id):
         messages.error(request, "This LAN has finished and can no longer be attended")
         return redirect(lan)
     
-    if not request.user.get_profile().has_address():
+    if not request.user.profile.has_address():
         messages.error(request, "You need to fill in your address and zip code in order to sign up for a LAN.")
     else:
         if request.user in lan.attendees:
@@ -94,7 +94,7 @@ def list_paid(request, lan_id):
     sheet = doc.add_sheet("Betalte deltakere")
 
     for i, person in enumerate(lan.paid_attendees):
-        profile = person.get_profile()
+        profile = person.profile
         sheet.write(i, 0, "{0} {1}".format(person.first_name.encode("UTF-8"), person.last_name.encode("UTF-8")))
         sheet.write(i, 1, "{0}.{1}.{2}".format(profile.date_of_birth.day, 
                                                profile.date_of_birth.month, 

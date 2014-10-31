@@ -13,7 +13,7 @@ from apps.userprofile.models import UserProfile
 
 @login_required
 def my_profile(request):
-    profile = request.user.get_profile()
+    profile = request.user.profile
 
     breadcrumbs = (
         ('studLAN', '/'),
@@ -26,9 +26,9 @@ def my_profile(request):
 @login_required
 def update_profile(request):
     if request.method == 'GET':
-        form = UserProfileForm(instance=request.user.get_profile(), auto_id=True)
+        form = UserProfileForm(instance=request.user.profile, auto_id=True)
     else:
-        form = UserProfileForm(request.POST, instance=request.user.get_profile(), auto_id=True)
+        form = UserProfileForm(request.POST, instance=request.user.profile, auto_id=True)
         if form.is_valid():
             form.save()
             return redirect('myprofile')
@@ -50,7 +50,7 @@ def user_profile(request, username):
     if request.user.is_authenticated() and request.user == quser:
         return my_profile(request)
 
-    profile = quser.get_profile()
+    profile = quser.profile
     
     breadcrumbs = (
         ('studLAN', '/'),

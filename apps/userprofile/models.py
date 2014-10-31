@@ -10,7 +10,7 @@ GENDERS = ((1, 'Male'), (2, 'Female'))
 
 class UserProfile(models.Model):
 
-    user = models.ForeignKey(User, unique=True)
+    user = models.ForeignKey(User, related_name='profile', unique=True)
 
     nick = models.CharField('nick', max_length=20, 
         help_text='Specify a nick name (display name).')
