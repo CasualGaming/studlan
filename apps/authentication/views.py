@@ -8,8 +8,9 @@ from django.contrib import messages
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
-from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.debug import sensitive_post_parameters
 
 from apps.authentication.forms import (LoginForm, RegisterForm, 
                             RecoveryForm, ChangePasswordForm)
@@ -17,6 +18,7 @@ from apps.authentication.models import RegisterToken
 from apps.misc.forms import InlineSpanErrorList
 from apps.userprofile.models import UserProfile
 
+@sensitive_post_parameters()
 def login(request):
     redirect_url = request.REQUEST.get('next', '')
     if request.method == 'POST':
@@ -38,6 +40,7 @@ def logout(request):
     messages.success(request, 'You have successfully logged out.')
     return HttpResponseRedirect('/')
 
+@sensitive_post_parameters()
 def register(request):
     if request.user.is_authenticated():
         messages.error(request, 'You cannot be logged in when registering.')
@@ -121,7 +124,7 @@ def verify(request, token):
             messages.error(request, "The token has expired. Please use the password recovery to get a new token.")
             return HttpResponseRedirect('/')        
             
-
+@sensitive_post_parameters()
 def recover(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('/')
@@ -172,6 +175,7 @@ recovery option again to get your account verified.
 
         return render(request, 'auth/recover.html', {'form': form})
 
+@sensitive_post_parameters()
 def set_password(request, token=None): 
     if request.user.is_authenticated():
         return HttpResponseRedirect('/')
