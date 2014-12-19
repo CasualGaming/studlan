@@ -1,0 +1,17 @@
+{% extends "seating/seating_base.html" %}
+{% load competition_tags %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8"><h1>Seating</h1></div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-8">
+            {% for l in lans %}
+                <a href="{{ request.path }}{{ seating }}details/{{ l.id }}">{{ l }}</a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
+

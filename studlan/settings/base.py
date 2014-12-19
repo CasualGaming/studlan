@@ -148,6 +148,7 @@ INSTALLED_APPS = (
     'apps.sponsor',
     'apps.team',
     'apps.userprofile',
+    'apps.seating',
 )
 
 # A sample logging configuration. The only tangible logging
