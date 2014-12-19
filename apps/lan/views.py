@@ -27,7 +27,10 @@ def details(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
 
     if request.user in lan.attendees:
-        status = 'attending'
+        if request.user in lan.paid_attendees:
+            status = 'paid'
+        else:
+            status = 'attending'
     else:
         status = 'open'
 
