@@ -1,39 +1,26 @@
 {% extends "base.html" %}
 {% load profile_tags %}
-
 {% block title %}
 studLAN - Update profile
-{% endblock title %}
-
+{% endblock title %} 
 {% block content %}
-    <div class="row">
-        <div class="span9">
-            <h1>Profile</h1>
-        </div>
+<div class="row">
+    <div class="col-md-9">
+         <h1>Profile</h1>
     </div>
-
-    {% profile_tabs 'update' %}
-
-    <div class="row">
-        {% if form %}
-        <div class="span9">
-            <form class="form-horizontal" action="{% url 'update_profile' %}" method="POST">{% csrf_token %}
-                <fieldset>
-                    <legend>Update information</legend>
-                    {% for field in form %}
-                    <div class="control-group">
-                        <label class="control-label">{{ field.label_tag }}</label>
-                        <div class="controls">
-                            {{ field }}
-                        </div>
-                    </div>
-                    {% endfor %}
-                    <div class="actions">
-                        <input type="submit" class="btn btn-primary" value="Update" />
-                    </div>
-                </fieldset>
-            </form>
-        </div>
-        {% endif %}
-    </div>
-{% endblock content %}
+</div>{% profile_tabs 'update' %}
+<div class="row">{% if form %}
+    <div class="col-md-9">
+        <form class="form-horizontal" action="{% url 'update_profile' %}" method="POST">{% csrf_token %}
+            <fieldset>
+                <legend>Update information</legend>{% for field in form %}
+                <div class="control-group">
+                    <label>{{ field.label_tag }}</label>
+                    <div class="controls">{{ field }}</div>
+                </div>{% endfor %}
+                <div class="actions">
+                    <input type="submit" class="btn btn-primary" value="Update" />
+                </div>
+            </fieldset>
+        </form>
+    </div>{% endif %}</div>{% endblock content %}

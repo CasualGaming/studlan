@@ -1,14 +1,15 @@
 <div class="row table-tabs">
-	<div class="span9">
-		<ul class="nav nav-tabs">
-		    <li{% if active == 'all' %} class="active"{% endif %}><a href="{% url 'competitions' %}">All</a></li>
-		    {% for activity in activities %}
-		        {% if active == activity.id %}
-		            <li class="active"><a href="{{ activity.get_absolute_url }}">{{ activity }}</a></li>
-		        {% else %}
-		            <li><a href="{{ activity.get_absolute_url }}">{{ activity.title }}</a></li>
-		        {% endif %}
-		    {% endfor %}
-		</ul>
-	</div>
+    <div class="col-md-8">
+        <ul class="nav nav-tabs">
+            <li{% if active == 'all' %} class="active" {% endif %}><a href="{% url 'competitions' %}">All</a></li>
+            {% for activity in activities %} 
+            	{% if active == activity.id %}
+                <li class="active"><a href="{{ activity.get_absolute_url }}">{{ activity }}</a>
+                </li>
+                {% else %}
+                <li><a href="{{ activity.get_absolute_url }}">{{ activity.title }}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
 </div>

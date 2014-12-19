@@ -1,31 +1,25 @@
-{% extends "base.html" %}
-
-{% block title %}
-studLAN - Account recovery
-{% endblock title %}
-
+{% extends "base.html" %} 
+{% block title %} 
+    studLAN - Account recovery
+{% endblock title %} 
 {% block content %}
-    <div class="row">
-        <div class="span9">
-            {{ form.non_field_errors }}
-            <form class="form-horizontal" method="post" action="{% url 'auth_recover' %}">{% csrf_token %}
-                <fieldset>
-                    <legend>Account recovery</legend>
-                    {% for field in form %} 
-                        <div class="control-group">
-                            <label class="control-label">{{ field.label_tag }}</label>
-                            <div class="controls">
-                                {{ field }}
-                                {{ field.errors }}
-                            </div>
-                        </div>
-                    {% endfor %}
-                    <div class="form-actions">
-                        <input type="submit" class="btn btn-primary" value="Recover" />
+<div class="row">
+    <div class="col-md-9"> {{ form.non_field_errors }}
+        <form class="form-horizontal" method="post" action="{% url 'auth_recover' %}">
+        {% csrf_token %}
+            <fieldset>
+                <legend>Account recovery</legend>
+                {% for field in form %}
+                    <div class="control-group">
+                        <label label-default="label-default" class="control-label">{{ field.label_tag }}</label>
+                        <div class="controls">{{ field }} {{ field.errors }}</div>
                     </div>
-                </fieldset>
-            </form>
-        </div>
+                {% endfor %}
+                <div class="form-actions">
+                    <input type="submit" class="btn btn-primary" value="Recover" />
+                </div>
+            </fieldset>
+        </form>
     </div>
-
+</div>
 {% endblock content %}

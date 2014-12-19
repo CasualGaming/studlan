@@ -1,33 +1,25 @@
-{% extends "base.html" %}
-
-{% block title %}
-studLAN - Login
-{% endblock title %}
-
+{% extends "base.html" %} 
+{% block title %} studLAN - Login 
+{% endblock title %} 
 {% block content %}
-    <div class="row">
-        <div class="span9">
-            {{ form.non_field_errors }}
-            <form class="form-horizontal" method="post" action="{% url 'auth_login' %}">{% csrf_token %}
-                <fieldset>
-                    <legend>Login</legend>
-                    {% for field in form %} 
-                        <div class="control-group">
-                            <label class="control-label">{{ field.label_tag }}</label>
-                            <div class="controls">
-                                {{ field }}
-                                {{ field.errors }}
-                            </div>
-                        </div>
-                    {% endfor %}
-                    <div class="form-actions">
-                        <input type="submit" class="btn btn-primary" value="Login" />
-                        <a href="{% url 'auth_recover' %}" class="btn btn-info">Recover password</a>
+<div class="row">
+    <div class="col-md-9">{{ form.non_field_errors }}
+        <form class="form-horizontal" method="post" action="{% url 'auth_login' %}">{% csrf_token %}
+            <fieldset>
+                <legend>Login</legend>
+                {% for field in form %}
+                    <div class="control-group">
+                        <label label-default="label-default" class="control-label">{{ field.label_tag }}</label>
+                        <div class="controls">{{ field }} {{ field.errors }}</div>
                     </div>
-                </fieldset>
-                <input type="hidden" name="next" value="{% if next %}{{ next }}{% endif %}"/>
-            </form>
-        </div>
+                {% endfor %}
+                <div class="form-actions">
+                    <input type="submit" class="btn btn-primary" value="Login" /> 
+                    <a href="{% url 'auth_recover' %}" class="btn btn-info">Recover password</a>
+                </div>
+            </fieldset>
+            <input type="hidden" name="next" value="{% if next %}{{ next }}{% endif %}"/>
+        </form>
     </div>
-
+</div>
 {% endblock content %}

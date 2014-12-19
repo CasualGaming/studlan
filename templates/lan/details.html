@@ -7,13 +7,13 @@ studLAN - {{ lan }}
 
 {% block content %}
     <div class="row">
-        <div class="span9">
+        <div class="col-md-9">
             <h1>{{ lan }}</h1>
         </div>
     </div>
 
     <div class="row">
-        <div class="span9">
+        <div class="col-md-8">
             <table class="table table-bordered">
                 <tbody>
                     <tr><td>Start date:</td><td>{{ lan.start_date|date:"d. F Y" }} - {{ lan.start_date|time:"H:i" }}</td></tr> 
