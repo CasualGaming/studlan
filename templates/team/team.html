@@ -18,7 +18,7 @@ studLAN - Team - {{ team }}
 {% block content %}
 
     <div class="row">
-        <div class="span9">
+        <div class="col-md-8">
             <h2>
                 {{ team }}
                 {% if team.is_mine %}
@@ -31,7 +31,7 @@ studLAN - Team - {{ team }}
     </div>
 	
     <div class="row">
-        <div class="span9">
+        <div class="col-md-8">
             <h3>Leader</h3>
             <h4>
                 <a href="{% url 'profile' team.leader %}">{{ team.leader }} ({{ team.leader.first_name }} {{ team.leader.last_name }})</a>
@@ -40,12 +40,12 @@ studLAN - Team - {{ team }}
     </div>
 	
     <div class="row">
-        <div class="span9">
+        <div class="col-md-8">
             <h3>Members</h3>
         </div>
     </div>
 	<div class="row">
-        <div class="span9">
+        <div class="col-md-8">
             <table class="table table-bordered table-striped">
                 <thead><th>User name</th><th>Full name</th><th>Options</th></thead>
                 <tbody>
@@ -71,7 +71,7 @@ studLAN - Team - {{ team }}
 	
 	{% if team.is_mine and users|length > 0 %}
         <div class="row">
-            <div class="span9">
+            <div class="col-md-8">
                 <form class="form-horizontal" action="{% url 'add_member' team.id %}" method="POST">{% csrf_token %}
                     <fieldset>
                         <legend>Add member</legend>

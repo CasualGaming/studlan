@@ -7,6 +7,7 @@
             {% block title %}
             {% endblock title %}
         </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="{{ STATIC_URL }}css/bootstrap.css" rel="stylesheet" />
         <link href="{{ STATIC_URL }}css/custom.css" rel="stylesheet" />
         <link rel="shortcut icon" href="{{ STATIC_URL }}favicon.ico" />
@@ -21,15 +22,21 @@
     </head>
     
     <body>
-        <div class="navbar navbar-fixed-top navbar-default">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="{% url 'root' %}">
-                <img src="{{ STATIC_URL }}mushroom_small.png" class="img-responsive" />studLAN</a>
-            </div>
+        <div class="navbar navbar-fixed-top navbar-default" role="navigation">
             <div class="container">
-                <div class="collapse navbar-collapse" id="navigationlist">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{% url 'root' %}">
+                    <img src="{{ STATIC_URL }}mushroom_small.png" class="img-responsive" />studLAN</a>
+                </div>
+                <div class="navbar-collapse collapse" id="navigationlist">
                 {% include "navigation.html" %}
-                    <ul class="nav pull-right navbar-nav">
+                    <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown"> 
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Language
                                 <b class="caret">
@@ -47,12 +54,12 @@
                             </ul>
                         </li>
                         {% if not user.is_authenticated %}
-                            <ul class="nav pull-right navbar-nav">
+                            <ul class="nav navbar-nav navbar-right">
                                 <li><a href="{% url 'auth_register' %}">Register</a></li>
                                 <li><a href="{% url 'auth_login' %}">Login</a></li>
                             </ul>
                         {% else %}
-                            <ul class="pull-right">
+                            <ul class="nav navbar-nav navbar-right">
                                 <div class="btn-group" id="btn-profile"> 
                                     <a class="btn btn-inverse navbar-btn" href="{% url 'myprofile' %}">
                                     <i class="glyphicon glyphicon-user icon-white">
@@ -116,7 +123,7 @@
                 {% if messages %}
                     {% for message in messages %}
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-md-8">
                                 <div class="alert alert-block fade in alert-{{ message.tags }}"> 
                                     <a class="close" data-dismiss="alert" href="#">×</a>
                                     <p>{{ message }}</p>

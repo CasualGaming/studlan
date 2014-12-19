@@ -119,3 +119,8 @@ div#btn-profile {
     margin-right: 20px;
     font-weight: bold;
 }
+
+.navbar-brand img {
+    margin-top: -4px;
+    vertical-align: middle;
+}

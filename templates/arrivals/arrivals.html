@@ -8,24 +8,24 @@ studLAN - Register Arrivals
 
 {% block content %}
     <div class="row">
-        <div class="span9">
+        <div class="col-md-8">
 	        <h1>Register Arrivals</h1>
         </div>
     </div>
     
     <div class="row">
     {% if attendees %}
-        <div class="span4">
+        <div class="col-md-4">
             <span>Filter: </span><input type="text" id="FilterTextBox" name="FilterTextBox" />
         </div>
-        <div class="span4 attendee-counts">
+        <div class="col-md-4 attendee-counts">
             <span>Attending: {{attendees.count}}</span>
             <span>Paid: {{paid_count}}</span>
             <span>Arrived: {{arrived_count}}</span>
         </div>
     </div>
     <div class="row">
-        <div class="span9">
+        <div class="col-md-8">
             <table class="table table-bordered table-striped filterable">
                 <thead>
                     <th>Username</th><th>Full name</th><th>Email Address</th><th>Paid</th><th>Arrived</th>

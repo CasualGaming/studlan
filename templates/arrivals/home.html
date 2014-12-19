@@ -7,12 +7,12 @@ studLAN - {% if upcoming %}Upcoming{% else %}Previous{% endif %} LANs
 
 {% block content %}
     <div class="row">
-        <div class="span9">
+        <div class="col-md-8">
             <h1>Arrivals - choose a LAN</h1>
         </div>
     </div>
     <div class="row">
-        <div class="span9">
+        <div class="col-md-8">
             <ul>
             {% for lan in lans %}
                 <li><a href="{% url 'arrivals' lan.id %}">{{ lan }}</a></li>

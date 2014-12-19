@@ -14,10 +14,10 @@
 {% else %}
          <h1>Profile</h1>
 {% endif %}</div>
-    <div class="col-md-5">
+    <div class="col-md-4">
          <h1>Additional information</h1>
     </div>{% else %}
-    <div class="col-md-9">{% if user == quser %}
+    <div class="col-md-8">{% if user == quser %}
          <h1>My Profile</h1>
 {% else %}
          <h1>Profile</h1>
@@ -27,7 +27,7 @@
     {% endif %}
 <div class="row">{% if user == quser or user.is_staff %}
     <div class="col-md-4">{% else %}
-        <div class="col-md-9">{% endif %}
+        <div class="col-md-8">{% endif %}
             <table class="well table table-condensed">
                 <thead>
                     <tr>
@@ -54,7 +54,7 @@
                     </tr>{% endif %}</tbody>
             </table>
         </div>{% if user == quser or user.is_staff %}
-        <div class="col-md-5">
+        <div class="col-md-4">
             <table class="well table table-condensed">
                 <thead>
                     <tr>

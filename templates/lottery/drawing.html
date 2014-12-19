@@ -2,20 +2,20 @@
 
 {% block content %}
     <div class="row">
-        <div class="span9">
+        <div class="col-md-8">
             <h1>temp</h1>
         </div>
     </div>
 
     <div class="row">
-        <div class="span9">
+        <div class="col-md-8">
             <a class="btn btn-success" href="{% url 'draw' lottery.id %}">Draw</a>
         </div>
     </div>
     
     {% if winner %}
     <div class="row">
-        <div class="span9">
+        <div class="col-md-8">
             <h3>Winner:</h3>
             <p>{{ winner.user.username }} ({{ winner.user.first_name }} {{ winner.user.last_name }})</p>
         </div>
@@ -23,7 +23,7 @@
     {% endif %}
 
     <div class="row">
-        <div class="span9">
+        <div class="col-md-8">
             <h2>Winners</h2>
             <table class="table table-bordered">
                 <th>Username</th>
