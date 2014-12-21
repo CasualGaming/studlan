@@ -14,7 +14,17 @@ studLAN - Seating
     <div class="row">
         <div class="col-md-8">
             {% for s in seats %}
+                {% if s.id == 1 or s.id == 5 or s.id == 9 or s.id == 13 or s.id == 17 or s.id == 21 or s.id == 25 or s.id == 29 or s.id == 33 %}
+                    <div class="col-md-3">
+                {% elif s.id == 2 or s.id == 6 or s.id == 10 or s.id == 14 or s.id == 18 or s.id == 22 or s.id == 26 or s.id == 30 or s.id == 34 or s.id == 38 or s.id == 42 %}
+                    <div class="col-md-1">
+                {% elif s.id == 3 or s.id == 7 or s.id == 11 or s.id == 15 or s.id == 19 or s.id == 23 or s.id == 27 or s.id == 31 or s.id == 35%}
+                    <div class="col-md-3">
+                {% elif s.id == 4 or s.id == 8 or s.id == 12 or s.id == 16 or s.id == 20 or s.id == 24 or s.id == 28 or s.id == 32%}
+                    <div class="col-md-5">
+                {% else %}
                     <div class="col-md-2">
+                {% endif %}
                 {% if s.user %}
                     {% if s.user == user %}
                         <form class="form-inline" action="{% url 'leave_seat' seating.id s.id %}" method="POST">
