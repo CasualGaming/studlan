@@ -32,7 +32,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="{% url 'root' %}">
-                    <img src="{{ STATIC_URL }}mushroom_small.png" class="img-responsive" />studLAN</a>
+                    <img src="{{ STATIC_URL }}mushroom_small.png" class="img-responsive" /></a>
                 </div>
                 <div class="navbar-collapse collapse" id="navigationlist">
                 {% include "navigation.html" %}
@@ -79,8 +79,7 @@
                                             </li>
                                             <li><a href="/admin"><i class="glyphicon glyphicon-road"></i> Admin</a>
                                             </li>
-                                            <li><a href="{%" url="url" drawing="drawing"><i class="glyphicon glyphicon-road"></i> Lottery</a>
-                                            </li>
+                                            <li><a href={% url 'drawing' %}><i class="glyphicon glyphicon-road"></i> Lottery</a></li>
                                         {% endif%}
                                         <li class="divider"></li>
                                         <li>
@@ -137,7 +136,7 @@
                 {% endblock content %}
                 <footer>
                     <div class="row">
-                        <div class="col-md-12 navbar-fixed-bottom">
+                        <div class="col-md-12">
                             <hr />
                             <p><a href="https://github.com/dotKom/studlan">https://github.com/dotKom/studlan</a></p>
                     </div>

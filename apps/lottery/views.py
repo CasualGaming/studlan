@@ -50,7 +50,7 @@ def drawing(request, lottery_id=False):
     winners = LotteryWinner.objects.filter(lottery=lottery)
     if winners:
         winner = winners[len(winners) -1]
-    return render(request, 'lottery/drawing.html',{'lottery':lottery, 'winner': winner}) 
+    return render(request, 'lottery/drawing.html', {'lottery':lottery, 'winner': winner})
    
 @login_required
 def draw(request, lottery_id):

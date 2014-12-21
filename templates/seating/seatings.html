@@ -8,8 +8,15 @@
     
     <div class="row">
         <div class="col-md-8">
-            {% for l in lans %}
-                <a href="{{ request.path }}{{ seating }}details/{{ l.id }}">{{ l }}</a>
+            {% for l in lans %} 
+                {% if l.status == 'upcoming' %}
+                    <h2>{{l}} seating: </h2>
+                    {% for seating in seatings %}
+                        {% if seating.lan == l %}
+                            <h3><a href="{{ request.path }}details/{{ seating.id }}">{{ seating }}</a> - Reservation closes at {{seating.closing_date}}</h3>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
             {% endfor %}
         </div>
     </div>

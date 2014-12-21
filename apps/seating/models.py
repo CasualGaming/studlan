@@ -10,6 +10,7 @@ class Seating(models.Model):
     title = models.CharField('title', max_length=50)
     desc = models.CharField('desc', max_length=250)
     number_of_seats = models.IntegerField('number of seats')
+    closing_date = models.DateTimeField("closing date")
 
     def save(self, *args, **kwargs):
         if not self.pk:

@@ -16,7 +16,8 @@ from apps.lan.models import LAN, Attendee
 def main(request):
         context = {}
         lans = LAN.objects.all()
-        seatings = Seating.objects.all()
+        seatings = Seating.objects.exclude(closing_date__lt=datetime.now)
+
         context['seatings'] = seatings
         context['lans'] = lans
         context['active'] = 'all'
@@ -75,7 +76,11 @@ def seating_details(request, seating_id):
 @login_required()
 def join(request, seating_id, seat_id):
     seating = get_object_or_404(Seating, pk=seating_id)
+    current_lan = seating.lan
+    siblings = list(Seating.objects.filter(lan=current_lan))
     occupied = seating.get_user_registered()
+    for sibling in siblings:
+        occupied = occupied + sibling.get_user_registered()
     seat = get_object_or_404(Seat, pk=seat_id)
     try:
         attendee = Attendee.objects.get(user=request.user)
@@ -85,7 +90,7 @@ def join(request, seating_id, seat_id):
     if attendee and attendee.has_paid:
 
         if request.user in occupied:
-            old_seat = get_object_or_404(Seat, user=request.user, seating=seating)
+            old_seat = get_object_or_404(Seat, user=request.user)
             old_seat.user = None
             old_seat.save()
 

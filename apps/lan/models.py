@@ -7,6 +7,7 @@ from django.db import models
 
 from apps.userprofile.models import UserProfile
 
+
 class LAN(models.Model):
     title = models.CharField("title", max_length=100)
     start_date = models.DateTimeField("start date")
@@ -45,17 +46,17 @@ class LAN(models.Model):
 
     def status(self):
         now = datetime.now()
-        if now < start_date:
+        if now < self.start_date:
             return 'upcoming'
         else:
-            if now < end_date:
+            if now < self.end_date:
                 return 'in progress'
             else:
                 return 'ended'
 
     @models.permalink
     def get_absolute_url(self):
-        return ('lan_details', (), {'lan_id': self.id})
+        return 'lan_details', (), {'lan_id': self.id}
 
     def __unicode__(self):
         return self.title
@@ -73,4 +74,4 @@ class Attendee(models.Model):
         return self.user.get_full_name() + " - " + self.lan.title
 
     class Meta:
-        ordering = ['-user', 'lan',]
+        ordering = ['-user', 'lan', ]
