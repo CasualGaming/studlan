@@ -8,19 +8,27 @@ studLAN - Update profile
     <div class="col-md-8">
          <h1>Profile</h1>
     </div>
-</div>{% profile_tabs 'update' %}
-<div class="row">{% if form %}
+</div>
+{% profile_tabs 'update' %}
+
+<div class="row">
+    {% if form %}
     <div class="col-md-8">
         <form class="form-horizontal" action="{% url 'update_profile' %}" method="POST">{% csrf_token %}
             <fieldset>
-                <legend>Update information</legend>{% for field in form %}
-                <div class="control-group">
-                    <label>{{ field.label_tag }}</label>
-                    <div class="controls">{{ field }}</div>
-                </div>{% endfor %}
+                <legend>Update information</legend>
+                {% for field in form %}
+                    <div class="control-group">
+                        <label label-default="label-default" class="control-label">{{ field.label_tag }}</label>
+                        <div class="controls">{{ field }}</div>
+                    </div>
+                {% endfor %}
                 <div class="actions">
                     <input type="submit" class="btn btn-primary" value="Update" />
                 </div>
             </fieldset>
         </form>
-    </div>{% endif %}</div>{% endblock content %}
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}
