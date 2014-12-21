@@ -12,6 +12,8 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from apps.seating.models import Seating, Seat
 from apps.lan.models import LAN, Attendee
+from django.http import HttpResponse
+from reportlab.pdfgen import canvas
 
 def main(request):
         context = {}
@@ -173,3 +175,30 @@ def register_user(request):
                                  'log in.')
 
     return redirect('root')
+
+def seating_map(request, seating_id):
+    seating = get_object_or_404(Seating, pk=seating_id)
+    lan = get_object_or_404(LAN, id=seating.lan.id)
+    seats = list(Seat.objects.filter(seating=seating))
+    # Create the HttpResponse object with the appropriate PDF headers.
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename=' + seating.title
+
+    # Create the PDF object, using the response object as its "file."
+    p = canvas.Canvas(response)
+
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+    p.drawString(280, 820, lan.title)
+    p.drawString(280, 800, seating.title)
+    cursor = 750
+    for s in seats:
+        if s.user:
+            p.drawString(280, cursor, str(s.user))
+        else:
+            p.drawString(280, cursor, '[Ledig]')
+        cursor = cursor - 15
+    # Close the PDF object cleanly, and we're done.
+    p.showPage()
+    p.save()
+    return response

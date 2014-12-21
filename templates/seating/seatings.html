@@ -13,7 +13,14 @@
                     <h2>{{l}} seating: </h2>
                     {% for seating in seatings %}
                         {% if seating.lan == l %}
-                            <h3><a href="{{ request.path }}details/{{ seating.id }}">{{ seating }}</a> - Reservation closes at {{seating.closing_date}}</h3>
+                            <div class="well"
+                            <h3><a href="{{ request.path }}details/{{ seating.id }}">{{ seating }}</a> - Reservation closes at {{seating.closing_date}}</h3><br>
+                            {% if user.is_authenticated %}
+                            {% if user.is_staff %}
+                            <a href="{% url 'map' seating.id %}"><i class="glyphicon glyphicon-th"></i>Seatmap</a>
+                            {% endif %}
+                            {% endif %}
+                            </div>
                         {% endif %}
                     {% endfor %}
                 {% endif %}

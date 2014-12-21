@@ -32,7 +32,9 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="{% url 'root' %}">
-                    <img src="{{ STATIC_URL }}mushroom_small.png" class="img-responsive" /></a>
+                    <!--<img src="{{ STATIC_URL }}mushroom_small.png" class="img-responsive" />-->
+                        studLAN
+                    </a>
                 </div>
                 <div class="navbar-collapse collapse" id="navigationlist">
                 {% include "navigation.html" %}
@@ -79,7 +81,7 @@
                                             </li>
                                             <li><a href="/admin"><i class="glyphicon glyphicon-road"></i> Admin</a>
                                             </li>
-                                            <li><a href={% url 'drawing' %}><i class="glyphicon glyphicon-road"></i> Lottery</a></li>
+                                            <li><a href="{% url 'drawing' %}"><i class="glyphicon glyphicon-road"></i> Lottery</a></li>
                                         {% endif%}
                                         <li class="divider"></li>
                                         <li>

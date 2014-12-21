@@ -3,6 +3,7 @@ django-markdown-deux==1.0.4
 wsgiref==0.1.2
 django-translatable==0.1.1
 gunicorn==18.0
+reportlab
 
 # PostgreSQL plugin for python
 psycopg2

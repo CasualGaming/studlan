@@ -10,6 +10,7 @@ urlpatterns = patterns('apps.seating.views',
 
     # Seating related
     url(r'^details/(?P<seating_id>\d+)/$', 'seating_details', name='seating_details'),
+    url(r'^map/(?P<seating_id>\d+)/$', 'seating_map', name='map'),
     url(r'^details/(?P<seating_id>\d+)/join/(?P<seat_id>\d+)', 'join', name='take_seat'),
     url(r'^details/(?P<seating_id>\d+)/leave/(?P<seat_id>\d+)', 'leave', name='leave_seat'),
 
