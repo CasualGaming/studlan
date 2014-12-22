@@ -21,7 +21,7 @@ function toggle(username, type, previousValue, label)
         url: 'toggle/',
         data: {'username': username, 'type': type, 'prev': previousValue},
         success: function() {
-            $(label).toggleClass("label-success label-important");
+            $(label).toggleClass("label-success label-danger");
             if(prev == "True")
             {
                 $(label).attr('value', "False");
