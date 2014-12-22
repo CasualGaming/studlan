@@ -36,12 +36,13 @@ studLAN - {{ lan }}
                     {% if user.profile.has_address %}
                         <a class="btn btn-primary" href="{% url 'lan_attend' lan.id %}">Sign up</a>
                     {% else %}
+                    <div class="alert alert-danger">
                         Your address and zip code is required in order to sign up for a LAN.
-                        Go to your <a href="{% url 'myprofile' %}">profile</a> and fill in.
+                        Go to your <a href="{% url 'myprofile' %}">profile</a> to add the information.</div>
                     {% endif %}
                 {% endif %}
             {% else %}
-                You need to login to see your status.
+                <div class="alert alert-danger">You need to login to see your status.</div>
             {% endif %}
             </p>
         

@@ -47,9 +47,9 @@
                             <ul class="dropdown-menu">
                             {% for lang in LANGUAGES %}
                                 <li>
-                                    <form name="setLang{{ lang.1}}" action="/i18n/setlang/" method="POST">{% csrf_token %}
+                                    <form name="setLang{{lang.1}}" action="/i18n/setlang/" method="POST">{% csrf_token %}
                                         <input name="next" type="hidden" value="" />
-                                        <input type="hidden" name="language" value="{{ lang.0 }}" /> <a href="#" onclick="document.setLang{{ lang.1 }}.submit();return false;">{{ lang.1 }}</a>
+                                        <input type="hidden" name="language" value="{{ lang.0 }}"/> <a href="#" onclick="document.setLang{{ lang.1 }}.submit();return false;">{{ lang.1 }}</a>
                                     </form>
                                 </li>
                             {% endfor %}
