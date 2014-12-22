@@ -76,16 +76,7 @@ div.table-tabs {
     margin-bottom: 0px;
 }
 
-.sidebar {
-    position: fixed;
-    left: 50%;
-    top: 60px;
-    width: 220px;                   /* Same width as .span3 */
-    /*margin-left: -700px;*/
-    margin-left: 250px;
-} .sidebar .well {
-    padding: 0em 0px ;
-} .sidebar .nav {
+.sidebar .nav {
     text-align: center;
     margin: 0px -1px;
     padding: 0px;

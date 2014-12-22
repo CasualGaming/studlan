@@ -1,7 +1,7 @@
 {% load news_tags %}
 {% load competition_tags %}
 {% load sponsor_tags %}
-
+<div class="well sidebar">
 <ul class="nav">
 	{% if user.is_authenticated %}
 		<li class="active">
@@ -18,3 +18,4 @@
 	<li class="active"><a href="#">Sponsors</a></li>
 	{% show_sponsor_list %}
 </ul>
+</div>

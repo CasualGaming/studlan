@@ -97,53 +97,45 @@
                 </div>
             </div>
         </div>
-        <div class="sidebar">
-            <div class="well">
-                {% include "sidebar.html" %}
-            </div>
-        </div>
         <div class="container">
-            {% if breadcrumbs %}
-                <div class="row breadcrumbs">
-                    <div class="col-md-8">
-                        <ul class="breadcrumb">
-                        {% for text, link in breadcrumbs %} 
-                            {% if not forloop.last %}
-                            <li>
-                            <a href="{{ link }}">{{ text }}</a>
-                            <span class="divider">/</span>
-                            </li>
-                            {% else %}
-                                <li>{{ text }}</li>
-                            {% endif %}
-                        {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-                {% endif %}
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="alert alert-block fade in alert-{{ message.tags }}"> 
-                                    <a class="close" data-dismiss="alert" href="#">×</a>
-                                    <p>{{ message }}</p>
-                                </div>
-                            </div>
+            <div class="row">
+                <div class="col-md-9">
+                    {% if breadcrumbs %}
+                        <div class="breadcrumbs">
+                            <ul class="breadcrumb">
+                                {% for text, link in breadcrumbs %} 
+                                    {% if not forloop.last %}
+                                        <li>
+                                            <a href="{{ link }}">{{ text }}</a>
+                                            <span class="divider">/</span>
+                                        </li>
+                                    {% else %}
+                                        <li>{{ text }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
                         </div>
-                    {% endfor %}
-                {% endif %}
-                {% block content %}
-                    <!-- Content goes here -->
-                {% endblock content %}
-                <footer>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <hr />
-                            <p><a href="https://github.com/dotKom/studlan">https://github.com/dotKom/studlan</a></p>
-                    </div>
+                    {% endif %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-block fade in alert-{{ message.tags }}"> 
+                                <a class="close" data-dismiss="alert" href="#">×</a>
+                                <p>{{ message }}</p>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% block content %}
+                        <!-- Content goes here -->
+                    {% endblock content %}
+                    <footer>
+                        <hr />
+                        <p><a href="https://github.com/dotKom/studlan">https://github.com/dotKom/studlan</a></p>
+                    </footer>
                 </div>
-            </footer>
+                <div class="col-md-3">
+                    {% include "sidebar.html" %}
+                </div>
+            </div>
         </div>
     </body>
 </html>
