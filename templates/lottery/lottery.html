@@ -18,16 +18,16 @@
                         <a class="btn btn-success" href="{% url 'sign_up' lottery.id %}">Sign up</a>
                     {% endif %}
                 {% else %}
-                    <span class="label btn-danger">Registration closed</span>
+                    <div class="alert alert-danger">Registration closed</div>
                 {% endif %}
             {% else %}
-                <span class="label btn-danger">You need to login in to register</span>
+                <div class="alert alert-danger">You need to login in to register</div>
             {% endif %}
             </p>
         </div>
     </div>
     {% endfor %}
 {% else %}
-    <span class="label btn-danger">There are currently no active lans</span>
+    <div class="alert alert-danger">There are currently no active lans</div>
 {% endif %}
 {% endblock content %}
