@@ -1,10 +1,11 @@
 {% extends "competition/competition_base.html" %}
+{% load i18n %}
 {% load markdown_deux_tags %}
 {% load competition_tags %}
 
 {% block content %}
     <div class="row">
-        <div class="col-md-8"><h1>Competitions</h1></div>
+        <div class="col-md-8"><h1>{% trans "Competitions" %}</h1></div>
     </div>
     
     {% competition_tabs activities active %}

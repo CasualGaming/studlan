@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-23 15:26+0100\n"
+"POT-Creation-Date: 2014-12-23 18:37+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,11 +43,11 @@ msgstr ""
 msgid "Django site admin"
 msgstr "Django site admin"
 
-#: templates/auth/login.html:10 templates/base.html:60
+#: templates/auth/login.html:11 templates/base.html:59
 msgid "Login"
 msgstr ""
 
-#: templates/auth/login.html:19
+#: templates/auth/login.html:20
 msgid "Recover password"
 msgstr ""
 
@@ -59,19 +59,23 @@ msgstr ""
 msgid "Register new user"
 msgstr ""
 
-#: templates/base.html:44
+#: templates/auth/set_password.html:13 templates/auth/set_password.html:26
+msgid "Change password"
+msgstr ""
+
+#: templates/base.html:43
 msgid "Language"
 msgstr ""
 
-#: templates/base.html:59
+#: templates/base.html:58
 msgid "Register"
 msgstr ""
 
-#: templates/base.html:75 templates/user/profile_tabs.html:7
+#: templates/base.html:74 templates/user/profile_tabs.html:7
 msgid "Edit profile"
 msgstr ""
 
-#: templates/base.html:89
+#: templates/base.html:88
 msgid "Log out"
 msgstr ""
 
@@ -107,6 +111,10 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
+#: templates/competition/competitions.html:8 templates/navigation.html:6
+msgid "Competitions"
+msgstr ""
+
 #: templates/lan/details.html:20
 msgid "Start date"
 msgstr ""
@@ -127,7 +135,7 @@ msgstr ""
 msgid "Remove attendance"
 msgstr ""
 
-#: templates/lan/details.html:38 templates/lottery/lottery.html:20
+#: templates/lan/details.html:38 templates/lottery/lottery.html:24
 #: templates/navigation.html:5
 msgid "Sign up"
 msgstr "Registrer bruker"
@@ -168,33 +176,29 @@ msgstr ""
 msgid "Previous LANs"
 msgstr ""
 
-#: templates/lottery/lottery.html:18
+#: templates/lottery/lottery.html:22
 msgid "Unsign"
 msgstr ""
 
-#: templates/lottery/lottery.html:23
+#: templates/lottery/lottery.html:27
 msgid "Registration closed"
 msgstr ""
 
-#: templates/lottery/lottery.html:26
+#: templates/lottery/lottery.html:30
 msgid "You need to login in to participate"
 msgstr ""
 
-#: templates/lottery/lottery.html:33
+#: templates/lottery/lottery.html:37
 msgid "No active raffles right now."
 msgstr ""
 
-#: templates/lottery/lottery.html:36
+#: templates/lottery/lottery.html:40
 msgid "There are currently no active lans"
 msgstr ""
 
-#: templates/navigation.html:4 templates/news/news.html:9
+#: templates/navigation.html:4 templates/news/news.html:12
 msgid "News"
 msgstr "Nyheter"
-
-#: templates/navigation.html:6
-msgid "Competitions"
-msgstr ""
 
 #: templates/navigation.html:7 templates/team/team_base.html:7
 msgid "Teams"
@@ -220,7 +224,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: templates/sidebar.html:13 templates/user/profile.html:60
+#: templates/sidebar.html:13 templates/user/profile.html:62
 msgid "Email"
 msgstr ""
 
@@ -300,55 +304,55 @@ msgstr ""
 msgid "Arrived"
 msgstr ""
 
-#: templates/user/profile.html:18 templates/user/profile.html.py:26
+#: templates/user/profile.html:20 templates/user/profile.html.py:28
 msgid "My Profile"
 msgstr ""
 
-#: templates/user/profile.html:20 templates/user/profile.html.py:28
-#: templates/user/profile_tabs.html:5 templates/user/update.html:10
+#: templates/user/profile.html:22 templates/user/profile.html.py:30
+#: templates/user/profile_tabs.html:5 templates/user/update.html:12
 msgid "Profile"
 msgstr ""
 
-#: templates/user/profile.html:48
+#: templates/user/profile.html:50
 msgid "Username"
 msgstr ""
 
-#: templates/user/profile.html:52
+#: templates/user/profile.html:54
 msgid "First name"
 msgstr ""
 
-#: templates/user/profile.html:56
+#: templates/user/profile.html:58
 msgid "Last name"
 msgstr ""
 
-#: templates/user/profile.html:75
+#: templates/user/profile.html:77
 msgid "Nick"
 msgstr ""
 
-#: templates/user/profile.html:79
+#: templates/user/profile.html:81
 msgid "Gender"
 msgstr ""
 
-#: templates/user/profile.html:83
+#: templates/user/profile.html:85
 msgid "Date of birth"
 msgstr ""
 
-#: templates/user/profile.html:87
+#: templates/user/profile.html:89
 msgid "Street address"
 msgstr ""
 
-#: templates/user/profile.html:91
+#: templates/user/profile.html:93
 msgid "Zip/Postal code"
 msgstr ""
 
-#: templates/user/profile.html:95
+#: templates/user/profile.html:97
 msgid "Phone"
 msgstr ""
 
-#: templates/user/update.html:20
+#: templates/user/update.html:22
 msgid "Update information"
 msgstr ""
 
-#: templates/user/update.html:28
+#: templates/user/update.html:30
 msgid "Update"
 msgstr ""

@@ -3,13 +3,15 @@
 {% load markdown_deux_tags %} 
 {% load misc %}
 {% load profile_tags %} 
+
 {% block title %} 
 {% if user == quser %} 
-    studLAN - My Profile 
+    My Profile 
 {% else %} 
-    studLAN - Profile 
+    Profile 
 {% endif %} 
 {% endblock title %} 
+
 {% block content %}
     <div class="row">
         {% if user == quser or user.is_staff %}
