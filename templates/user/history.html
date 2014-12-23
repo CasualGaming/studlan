@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load profile_tags %}
 
 {% block title %}
@@ -7,18 +8,18 @@ studLAN - Update profile
 
 {% block content %}
     <div class="row">
-        <div class="col-md-8">
-		    <h1>History</h1>
+        <div class="col-md-9">
+		    <h3>{% trans "History" %}</h3>
         </div>
     </div>
         
     {% profile_tabs 'history' %}
 		
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-9">
             <table class="well table">
                 <thead>
-                    <th>LAN</th><th>Time span</th><th>Paid</th><th>Arrived</th>
+                    <th>LAN</th><th>{% trans "Time span" %}</th><th>{% trans "Paid" %}</th><th>{% trans "Arrived" %}</th>
                 </thead>
                 <tbody>
                     {% for attend in attended %}
@@ -27,16 +28,16 @@ studLAN - Update profile
                         <td>{{ attend.lan.start_date }} - {{ attend.lan.end_date }}</td>
                         <td>
                         {% if attend.has_paid %}
-                            <span class="label label-success">Yes</span>
+                            <span class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
                         {% else %}
-                            <span class="label label-important">No</span>
+                            <span class="label label-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>
                         {% endif %}
                         </td>
                         <td>
                         {% if attend.arrived %}
-                            <span class="label label-success">Yes</span>
+                            <span class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
                         {% else %}
-                            <span class="label label-important">No</span>
+                            <span class="label label-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>
                         {% endif %}
                         </td>
                     </tr>

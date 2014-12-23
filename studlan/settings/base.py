@@ -123,6 +123,10 @@ STATICFILES_DIRS = [
     os.path.join(PROJECT_ROOT_DIRECTORY, 'files'),
 ]
 
+LOCALE_PATHS = (
+    os.path.join(PROJECT_ROOT_DIRECTORY, 'locale'),
+)
+
 INSTALLED_APPS = (
     # third party apps
     'markdown_deux',

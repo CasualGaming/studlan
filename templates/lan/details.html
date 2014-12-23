@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load markdown_deux_tags %}
 
 {% block title %}
@@ -16,9 +17,9 @@ studLAN - {{ lan }}
         <div class="col-md-8">
             <table class="table table-bordered">
                 <tbody>
-                    <tr><td>Start date:</td><td>{{ lan.start_date|date:"d. F Y" }} - {{ lan.start_date|time:"H:i" }}</td></tr> 
-                    <tr><td>End date:</td><td>{{ lan.end_date|date:"d. F Y" }} - {{ lan.end_date|time:"H:i" }}</td></tr>
-                    <tr><td>Location:</td><td>{{ lan.location }}</td></tr> 
+                    <tr><td>{% trans "Start date" %}:</td><td>{{ lan.start_date|date:"d. F Y" }} - {{ lan.start_date|time:"H:i" }}</td></tr> 
+                    <tr><td>{% trans "End date" %}:</td><td>{{ lan.end_date|date:"d. F Y" }} - {{ lan.end_date|time:"H:i" }}</td></tr>
+                    <tr><td>{% trans "Location" %}:</td><td>{{ lan.location }}</td></tr> 
                 </tbody>
             </table>
 
@@ -27,22 +28,23 @@ studLAN - {{ lan }}
             <p>
             {% if user.is_authenticated %}
                 {% if status == 'paid' %}
-                    <a class="btn btn-success" href="#">You have paid for this event</a>
+                    <a class="btn btn-success" href="#">{% trans "You have paid for this event" %}</a>
                 {% endif %}
                 {% if status == 'attending' %}
-                    <a class="btn btn-danger" href="{% url 'lan_unattend' lan.id %}">Remove attendance</a>
+                    <a class="btn btn-danger" href="{% url 'lan_unattend' lan.id %}">{% trans "Remove attendance" %}</a>
                 {% endif %}
                 {% if status == 'open' %}
                     {% if user.profile.has_address %}
-                        <a class="btn btn-primary" href="{% url 'lan_attend' lan.id %}">Sign up</a>
+                        <a class="btn btn-primary" href="{% url 'lan_attend' lan.id %}">{% trans "Sign up" %}</a>
                     {% else %}
-                    <div class="alert alert-danger">
-                        Your address and zip code is required in order to sign up for a LAN.
-                        Go to your <a href="{% url 'myprofile' %}">profile</a> to add the information.</div>
+                        <div class="alert alert-danger">
+                            {% trans "Your address and zip code is required in order to sign up for a LAN." %}
+                            {% trans "Go to your" %} <a href="{% url 'myprofile' %}">{% trans "profile" %}</a> {% trans "to add the information." %} 
+                        </div>
                     {% endif %}
                 {% endif %}
             {% else %}
-                <div class="alert alert-danger">You need to login to see your status.</div>
+                <div class="alert alert-danger">{% trans "You need to login to see your status." %}</div>
             {% endif %}
             </p>
         

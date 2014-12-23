@@ -1,4 +1,5 @@
 {% extends "base.html" %} 
+{% load i18n %}
 {% block title %} 
     studLAN - Account recovery
 {% endblock title %} 
@@ -8,7 +9,7 @@
         <form class="form-horizontal" method="post" action="{% url 'auth_recover' %}">
         {% csrf_token %}
             <fieldset>
-                <legend>Account recovery</legend>
+                <legend>{% trans "Account recovery" %}</legend>
                 {% for field in form %}
                     <div class="control-group">
                         <label label-default="label-default" class="control-label">{{ field.label_tag }}</label>

@@ -1,4 +1,5 @@
 {% extends "team/team_base.html" %}
+{% load i18n %}
 {% load markdown_deux_tags %}
 {% load misc %}
 {% load team_tags %}
@@ -13,11 +14,11 @@
 
 {% block teampage %}
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-9">
             <form class="form-horizontal" action="{% url 'create_team' %}" method="POST">
                 {% csrf_token %}
                 <fieldset>
-                    <legend>Create new team</legend>
+                    <legend>{% trans "Create new team" %}</legend>
                     <div class="control-group">
                         <label class="control-label" for="title">{{ form.title.label }}</label>
                         <div class="controls">
@@ -31,13 +32,13 @@
                             <div class="input-prepend">
                                 <span class="add-on">[{{ form.tag.label|lower }}]</span>
                                 <input class="input-xlarge" id="tag" name="tag" size="30" type="text" value="{% if form.tag.value %}{{ form.tag.value }}{% endif %}" />
-                                <span class="help-block">Must be unique!</span>
+                                <span class="help-block">{% trans "Must be unique!" %}</span>
                             </div>
                             {{ form.tag.errors }}
                         </div>
                     </div>
                     <div class="form-actions">
-                        <input type="submit" class="btn btn-primary" value="Create team" />
+                        <input type="submit" class="btn btn-primary" value="{% trans "Create team" %}"/>
                     </div>
                 </fieldset>
             </form>

@@ -1,33 +1,38 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load markdown_deux_tags %}
 
 {% block content %}
 {% if lan %}
-    {% for lottery, lottery_translated, signed_up in lotteries %}
-    <div class="row">
-        <div class="col-md-8">
-            <h2>{{ lottery_translated.title }}</h2>
-            {{ lottery_translated.description|markdown }} 
-            <hr />
-            <p>
-            {% if user.is_authenticated %}
-                {% if lottery.registration_open %}
-                    {% if signed_up %}
-                        <a class="btn btn-danger" href="{% url 'sign_off' lottery.id %}">Unsign</a>
+    {% if lottery %}
+        {% for lottery, lottery_translated, signed_up in lotteries %}
+        <div class="row">
+            <div class="col-md-8">
+                <h2>{{ lottery_translated.title }}</h2>
+                {{ lottery_translated.description|markdown }} 
+                <hr />
+                <p>
+                {% if user.is_authenticated %}
+                    {% if lottery.registration_open %}
+                        {% if signed_up %}
+                            <a class="btn btn-danger" href="{% url 'sign_off' lottery.id %}">{% trans "Unsign" %}</a>
+                        {% else %}
+                            <a class="btn btn-success" href="{% url 'sign_up' lottery.id %}">{% trans "Sign up" %}</a>
+                        {% endif %}
                     {% else %}
-                        <a class="btn btn-success" href="{% url 'sign_up' lottery.id %}">Sign up</a>
-                    {% endif %}
-                {% else %}
-                    <div class="alert alert-danger">Registration closed</div>
+                    <div class="alert alert-danger">{% trans "Registration closed" %}</div>
                 {% endif %}
-            {% else %}
-                <div class="alert alert-danger">You need to login in to register</div>
-            {% endif %}
-            </p>
+                {% else %}
+                    <div class="alert alert-danger">{% trans "You need to login in to participate" %}</div>
+                {% endif %}
+                </p>
+            </div>
         </div>
-    </div>
-    {% endfor %}
+        {% endfor %}
+    {% else %}
+        <p>{% trans "No active raffles right now." %}</p>
+    {% endif %}
 {% else %}
-    <div class="alert alert-danger">There are currently no active lans</div>
+    <div class="alert alert-danger">{% trans "There are currently no active lans" %}</div>
 {% endif %}
 {% endblock content %}

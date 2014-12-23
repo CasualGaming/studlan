@@ -1,4 +1,5 @@
 {% extends "base.html" %} 
+{% load i18n %}
 {% block title %} studLAN - Login 
 {% endblock title %} 
 {% block content %}
@@ -6,7 +7,7 @@
     <div class="col-md-9">{{ form.non_field_errors }}
         <form class="form-horizontal" method="post" action="{% url 'auth_login' %}">{% csrf_token %}
             <fieldset>
-                <legend>Login</legend>
+                <legend>{% trans "Login" %}</legend>
                 {% for field in form %}
                     <div class="control-group">
                         <label label-default="label-default" class="control-label">{{ field.label_tag }}</label>
@@ -15,7 +16,7 @@
                 {% endfor %}
                 <div class="form-actions">
                     <input type="submit" class="btn btn-primary" value="Login" /> 
-                    <a href="{% url 'auth_recover' %}" class="btn btn-info">Recover password</a>
+                    <a href="{% url 'auth_recover' %}" class="btn btn-info">{% trans "Recover password" %}</a>
                 </div>
             </fieldset>
             <input type="hidden" name="next" value="{% if next %}{{ next }}{% endif %}"/>

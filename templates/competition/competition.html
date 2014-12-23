@@ -1,4 +1,5 @@
 {% extends "competition/competition_base.html" %}
+{% load i18n %}
 {% load markdown_deux_tags %}
 
 {% block title %}
@@ -28,7 +29,7 @@ studLAN - Competition - {{ competition.get_translation.title }}
     {% endcomment %}
     {% if teams|length > 0 %}
         <div class="row">
-            <div class="col-md-8"><h3>Participating teams: {{ teams|length }}</h3></div>
+            <div class="col-md-8"><h3>{% trans "Participating teams:" %} {{ teams|length }}</h3></div>
         </div>
         <div class="row">
             <div class="col-md-8">
@@ -50,7 +51,7 @@ studLAN - Competition - {{ competition.get_translation.title }}
     {% if users %}
         <div class="row">
             <div class="col-md-8">
-                <h3>Participants{% if teams %} without a team{% endif %}: {{ users|length }}</h3>
+                <h3>{% trans "Participants" %}{% if teams %} {% trans "without a team" %}{% endif %}: {{ users|length }}</h3>
             </div>
         </div>
         
@@ -83,19 +84,19 @@ studLAN - Competition - {{ competition.get_translation.title }}
                                         <option value="{{ team.id }}">{{ team }}</option>
                                     {% endfor %}
                                 </select>
-                                <input class="btn btn-success" type="submit" value="Join competition (team)"/>
+                                <input class="btn btn-success" type="submit" value={% trans "Join competition (team)" %}/>
                             </form>
                         {% endif %} 
                         <form class="well form-inline" action="{% url 'join_comp' competition.id %}" method="POST">{% csrf_token %}
-                            <p>Signing up for a team compo as a solo player does not mean you are a participant. 
-                                Try to find other players that sign up solo, make a team and sign up as a team.</p>
-                            <p><b>When you sign up as a team, your solo participation will be overriden.</b></p>
-                            <input type="submit" class="btn btn-success" value="Join competition (solo)" />
+                            <p>{% trans "Signing up for a team compo as a solo player does not mean you are a participant. 
+                                Try to find other players that sign up solo, make a team and sign up as a team." %}</p>
+                            <p><b>{% trans "When you sign up as a team, your solo participation will be overriden." %}</b></p>
+                            <input type="submit" class="btn btn-success" value={% trans "Join competition (solo)" %}/>
                         </form>
                     {% else %}
                         <form class="well form-inline" action="{% url 'leave_comp' competition.id %}" method="POST">
                             {% csrf_token %}
-                            <input type="submit" class="btn btn-danger" value="Leave competition" />
+                            <input type="submit" class="btn btn-danger" value={% trans "Leave competition" %}/>
                         </form>
                     {% endif %}
                 </div>
@@ -108,7 +109,7 @@ studLAN - Competition - {{ competition.get_translation.title }}
         {% endif %}
     {% endif %}
 
-    <div class="row"><div class="col-md-8"><h3>Description</h3></div></div>
+    <div class="row"><div class="col-md-8"><h3>{% trans "Description" %}</h3></div></div>
     <div class="row"><div class="col-md-8"><p>{{ competition.get_translation.translated_description|markdown }}</p></div></div>
         
 {% endblock content %}

@@ -1,10 +1,11 @@
+{% load i18n %}
 {% block navigation %}
     <ul id="navbar" class="nav navbar-nav">
-        <li class="navbar-item"><a href="{% url 'root' %}">News</a></li>
-        <li class="navbar-item"><a href="{% url 'lan_home' %}">Sign up</a></li>
-        <li class="navbar-item"><a href="{% url 'competitions' %}">Competitions</a></li>
-        <li class="navbar-item"><a href="{% url 'teams' %}">Teams</a></li>
-        <li class="navbar-item"><a href="{% url 'lottery' %}">Lottery</a></li>
-        <li class="navbar-item"><a href="{% url 'seatings' %}">Seating</a></li>    
-        </ul>
+        <li class="navbar-item"><a href="{% url 'root' %}">{% trans "News" %}</a></li>
+        <li class="navbar-item"><a href="{% url 'lan_home' %}">{% trans "Sign up" %}</a></li>
+        <li class="navbar-item"><a href="{% url 'competitions' %}">{% trans "Competitions" %}</a></li>
+        <li class="navbar-item"><a href="{% url 'teams' %}">{% trans "Teams" %}</a></li>
+        <li class="navbar-item"><a href="{% url 'lottery' %}">{% trans "Raffle" %}</a></li>
+        <li class="navbar-item"><a href="{% url 'seatings' %}">{% trans "Seating" %}</a></li>    
+    </ul>
 {% endblock navigation %}

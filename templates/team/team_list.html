@@ -1,8 +1,9 @@
-{% if teams|length > 0 %}
+{% load i18n %}
+{% if teams %}
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-9">
             <table class="table table-bordered table-striped">
-                <thead><th>Tag</th><th>Title</th><th>Leader</th></thead>
+                <thead><th>Tag</th><th>Title</th><th>{% trans "Leader" %}</th></thead>
                 <tbody>
                     {% for team in teams %}
                     <tr>
@@ -17,9 +18,8 @@
     </div>
 {% else %}
     <div class="row">
-        <div class="col-md-8">
-        <div class="alert alert-danger"><p>No teams to list.</p></div>
-            
+        <div class="col-md-9">
+            <div class="alert alert-danger"><p>{% trans "No teams yet" %}</p></div>
         </div>
     </div>
 {% endif %}

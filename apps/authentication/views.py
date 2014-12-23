@@ -11,6 +11,7 @@ from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.debug import sensitive_post_parameters
+from django.utils.translation import ugettext as _
 
 from apps.authentication.forms import (LoginForm, RegisterForm, 
                             RecoveryForm, ChangePasswordForm)
@@ -24,7 +25,7 @@ def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.login(request):
-            messages.success(request, 'You have successfully logged in.')
+            messages.success(request, _(u'You have successfully logged in.'))
             if redirect_url:
                 return HttpResponseRedirect(redirect_url)
             return HttpResponseRedirect('/')
@@ -37,13 +38,13 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
-    messages.success(request, 'You have successfully logged out.')
+    messages.success(request, _(u'You have successfully logged out.'))
     return HttpResponseRedirect('/')
 
 @sensitive_post_parameters()
 def register(request):
     if request.user.is_authenticated():
-        messages.error(request, 'You cannot be logged in when registering.')
+        messages.error(request, _(u'You cannot be logged in when registering.'))
         return HttpResponseRedirect('/')
     else:
         if request.method == 'POST':
@@ -92,9 +93,9 @@ link within 24 hours, it will be invalid, and you will need to use the password
 recovery option to get your account verified.
 """ % (request.META['HTTP_HOST'], token)
 
-                send_mail('Verify your account', email_message, settings.STUDLAN_FROM_MAIL, [user.email,])
+                send_mail(_(u'Verify your account'), email_message, settings.STUDLAN_FROM_MAIL, [user.email,])
 
-                messages.success(request, 'Registration successful. Check your email for verification instructions.')
+                messages.success(request, _(u'Registration successful. Check your email for verification instructions.'))
 
                 return HttpResponseRedirect('/')        
             else:

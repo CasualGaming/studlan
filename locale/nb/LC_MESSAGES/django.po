@@ -1,0 +1,354 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-12-23 15:26+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: nb\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: apps/authentication/views.py:28
+msgid "You have successfully logged in."
+msgstr "Logget inn"
+
+#: apps/authentication/views.py:41
+msgid "You have successfully logged out."
+msgstr "Logget ut"
+
+#: apps/authentication/views.py:47
+msgid "You cannot be logged in when registering."
+msgstr "Du kan ikke være innlogget under registrering"
+
+#: apps/authentication/views.py:96
+msgid "Verify your account"
+msgstr "Verifiser kontoen"
+
+#: apps/authentication/views.py:98
+msgid ""
+"Registration successful. Check your email for verification instructions."
+msgstr ""
+"Registrering OK. Du skal ha fått en email for å fullføre registreringen"
+
+#: templates/admin/base_site.html:4
+msgid "Django site admin"
+msgstr "Django site admin"
+
+#: templates/auth/login.html:10 templates/base.html:60
+msgid "Login"
+msgstr ""
+
+#: templates/auth/login.html:19
+msgid "Recover password"
+msgstr ""
+
+#: templates/auth/recover.html:12
+msgid "Account recovery"
+msgstr ""
+
+#: templates/auth/register.html:11
+msgid "Register new user"
+msgstr ""
+
+#: templates/base.html:44
+msgid "Language"
+msgstr ""
+
+#: templates/base.html:59
+msgid "Register"
+msgstr ""
+
+#: templates/base.html:75 templates/user/profile_tabs.html:7
+msgid "Edit profile"
+msgstr ""
+
+#: templates/base.html:89
+msgid "Log out"
+msgstr ""
+
+#: templates/competition/competition.html:33
+msgid "Participating teams:"
+msgstr ""
+
+#: templates/competition/competition.html:55
+msgid "Participants"
+msgstr ""
+
+#: templates/competition/competition.html:55
+msgid "without a team"
+msgstr ""
+
+#: templates/competition/competition.html:89
+msgid "Join competition (team)"
+msgstr ""
+
+#: templates/competition/competition.html:95
+msgid "When you sign up as a team, your solo participation will be overriden."
+msgstr ""
+
+#: templates/competition/competition.html:96
+msgid "Join competition (solo)"
+msgstr ""
+
+#: templates/competition/competition.html:101
+msgid "Leave competition"
+msgstr ""
+
+#: templates/competition/competition.html:114
+msgid "Description"
+msgstr ""
+
+#: templates/lan/details.html:20
+msgid "Start date"
+msgstr ""
+
+#: templates/lan/details.html:21
+msgid "End date"
+msgstr ""
+
+#: templates/lan/details.html:22
+msgid "Location"
+msgstr ""
+
+#: templates/lan/details.html:31
+msgid "You have paid for this event"
+msgstr ""
+
+#: templates/lan/details.html:34
+msgid "Remove attendance"
+msgstr ""
+
+#: templates/lan/details.html:38 templates/lottery/lottery.html:20
+#: templates/navigation.html:5
+msgid "Sign up"
+msgstr "Registrer bruker"
+
+#: templates/lan/details.html:41
+msgid "Your address and zip code is required in order to sign up for a LAN."
+msgstr ""
+
+#: templates/lan/details.html:42
+msgid "Go to your"
+msgstr ""
+
+#: templates/lan/details.html:42
+msgid "profile"
+msgstr ""
+
+#: templates/lan/details.html:42
+msgid "to add the information."
+msgstr ""
+
+#: templates/lan/details.html:47
+msgid "You need to login to see your status."
+msgstr ""
+
+#: templates/lan/list.html:12
+msgid "Upcoming LANs"
+msgstr ""
+
+#: templates/lan/list.html:19 templates/lan/list.html.py:44
+msgid "Start"
+msgstr ""
+
+#: templates/lan/list.html:19 templates/lan/list.html.py:44
+msgid "End"
+msgstr ""
+
+#: templates/lan/list.html:37
+msgid "Previous LANs"
+msgstr ""
+
+#: templates/lottery/lottery.html:18
+msgid "Unsign"
+msgstr ""
+
+#: templates/lottery/lottery.html:23
+msgid "Registration closed"
+msgstr ""
+
+#: templates/lottery/lottery.html:26
+msgid "You need to login in to participate"
+msgstr ""
+
+#: templates/lottery/lottery.html:33
+msgid "No active raffles right now."
+msgstr ""
+
+#: templates/lottery/lottery.html:36
+msgid "There are currently no active lans"
+msgstr ""
+
+#: templates/navigation.html:4 templates/news/news.html:9
+msgid "News"
+msgstr "Nyheter"
+
+#: templates/navigation.html:6
+msgid "Competitions"
+msgstr ""
+
+#: templates/navigation.html:7 templates/team/team_base.html:7
+msgid "Teams"
+msgstr ""
+
+#: templates/navigation.html:8
+msgid "Raffle"
+msgstr ""
+
+#: templates/navigation.html:9
+msgid "Seating"
+msgstr ""
+
+#: templates/sidebar.html:9
+msgid "User Info"
+msgstr ""
+
+#: templates/sidebar.html:11 templates/team/team.html:42
+msgid "User name"
+msgstr ""
+
+#: templates/sidebar.html:12
+msgid "Name"
+msgstr ""
+
+#: templates/sidebar.html:13 templates/user/profile.html:60
+msgid "Email"
+msgstr ""
+
+#: templates/sidebar.html:16
+msgid "Competition Info"
+msgstr ""
+
+#: templates/sidebar.html:19
+msgid "Sponsors"
+msgstr ""
+
+#: templates/team/create_team.html:21
+msgid "Create new team"
+msgstr ""
+
+#: templates/team/create_team.html:35
+msgid "Must be unique!"
+msgstr ""
+
+#: templates/team/create_team.html:41 templates/team/team_tabs.html:7
+msgid "Create team"
+msgstr ""
+
+#: templates/team/team.html:27 templates/team/team_list.html:6
+msgid "Leader"
+msgstr ""
+
+#: templates/team/team.html:36
+msgid "Members"
+msgstr ""
+
+#: templates/team/team.html:42
+msgid "Full name"
+msgstr ""
+
+#: templates/team/team.html:42
+msgid "Options"
+msgstr ""
+
+#: templates/team/team.html:50
+msgid "Remove"
+msgstr ""
+
+#: templates/team/team.html:52
+msgid "Leave team"
+msgstr ""
+
+#: templates/team/team.html:68 templates/team/team.html.py:80
+msgid "Add member"
+msgstr ""
+
+#: templates/team/team_list.html:22
+msgid "No teams yet"
+msgstr ""
+
+#: templates/team/team_tabs.html:5
+msgid "All teams"
+msgstr ""
+
+#: templates/team/team_tabs.html:6
+msgid "My teams"
+msgstr ""
+
+#: templates/user/history.html:12 templates/user/profile_tabs.html:6
+msgid "History"
+msgstr ""
+
+#: templates/user/history.html:22
+msgid "Time span"
+msgstr ""
+
+#: templates/user/history.html:22
+msgid "Paid"
+msgstr ""
+
+#: templates/user/history.html:22
+msgid "Arrived"
+msgstr ""
+
+#: templates/user/profile.html:18 templates/user/profile.html.py:26
+msgid "My Profile"
+msgstr ""
+
+#: templates/user/profile.html:20 templates/user/profile.html.py:28
+#: templates/user/profile_tabs.html:5 templates/user/update.html:10
+msgid "Profile"
+msgstr ""
+
+#: templates/user/profile.html:48
+msgid "Username"
+msgstr ""
+
+#: templates/user/profile.html:52
+msgid "First name"
+msgstr ""
+
+#: templates/user/profile.html:56
+msgid "Last name"
+msgstr ""
+
+#: templates/user/profile.html:75
+msgid "Nick"
+msgstr ""
+
+#: templates/user/profile.html:79
+msgid "Gender"
+msgstr ""
+
+#: templates/user/profile.html:83
+msgid "Date of birth"
+msgstr ""
+
+#: templates/user/profile.html:87
+msgid "Street address"
+msgstr ""
+
+#: templates/user/profile.html:91
+msgid "Zip/Postal code"
+msgstr ""
+
+#: templates/user/profile.html:95
+msgid "Phone"
+msgstr ""
+
+#: templates/user/update.html:20
+msgid "Update information"
+msgstr ""
+
+#: templates/user/update.html:28
+msgid "Update"
+msgstr ""

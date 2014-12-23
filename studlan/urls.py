@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^logout.html', 'apps.competition.views.log_out'),
     url(r'^register.html', 'apps.competition.views.register_user'),
     url(r'^misc/remove_alert.html', 'apps.misc.views.remove_alert'),
+    url(r'^misc/change_language', 'apps.misc.views.change_language'),
 
     # app urls
     url(r'^api/',           include('apps.api.urls')),

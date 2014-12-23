@@ -1,27 +1,35 @@
 {% extends "base.html" %} 
+{% load i18n %}
 {% load markdown_deux_tags %} 
 {% load misc %}
 {% load profile_tags %} 
 {% block title %} 
-{% if user == quser %} studLAN - My Profile 
-{% else %} studLAN - Profile 
+{% if user == quser %} 
+    studLAN - My Profile 
+{% else %} 
+    studLAN - Profile 
 {% endif %} 
 {% endblock title %} 
 {% block content %}
-<div class="row">{% if user == quser or user.is_staff %}
-    <div class="col-md-4">{% if user == quser %}
-         <h1>My Profile</h1>
-{% else %}
-         <h1>Profile</h1>
-{% endif %}</div>
-    <div class="col-md-4">
-         <h1>Additional information</h1>
-    </div>{% else %}
-    <div class="col-md-8">{% if user == quser %}
-         <h1>My Profile</h1>
-{% else %}
-         <h1>Profile</h1>
-{% endif %}</div>{% endif %}</div>
+    <div class="row">
+        {% if user == quser or user.is_staff %}
+            <div class="col-md-4">
+                {% if user == quser %}
+                    <h3>{% trans "My Profile" %}</h3>
+                {% else %}
+                    <h3>{% trans "Profile" %}</h3>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="col-md-8">
+                {% if user == quser %}
+                    <h3>{% trans "My Profile" %}</h3>
+                {% else %}
+                    <h3>{% trans "Profile" %}</h3>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
     {% if user == quser %}
         {% profile_tabs 'profile' %}
     {% endif %}
@@ -37,19 +45,19 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Username</td>
+                        <td>{% trans "Username" %}</td>
                         <td>{{ quser.username }}</td>
                     </tr>
                     <tr>
-                        <td>First name</td>
+                        <td>{% trans "First name" %}</td>
                         <td>{{ quser.first_name }}</td>
                     </tr>
                     <tr>
-                        <td>Last name</td>
+                        <td>{% trans "Last name" %}</td>
                         <td>{{ quser.last_name }}</td>
                     </tr>{% if user == quser or user.is_staff %}
                     <tr>
-                        <td>Email</td>
+                        <td>{% trans "Email" %}</td>
                         <td>{{ quser.email }}</td>
                     </tr>{% endif %}</tbody>
             </table>
@@ -64,34 +72,32 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Nick</td>
+                        <td>{% trans "Nick" %} </td>
                         <td>{{ profile.nick }}</td>
                     </tr>
                     <tr>
-                        <td>NTNU username</td>
-                        <td>{{ profile.ntnu_username }}</td>
-                    </tr>
-
-                    <tr>
-                        <td>Gender</td>
+                        <td>{% trans "Gender" %}</td>
                         <td>{{ profile.get_gender_display|lower|capfirst }}</td>
                     </tr>
                     <tr>
-                        <td>Date of birth</td>
+                        <td>{% trans "Date of birth" %}</td>
                         <td>{{ profile.date_of_birth }}</td>
                     </tr>
                     <tr>
-                        <td>Street address</td>
+                        <td>{% trans "Street address" %}</td>
                         <td>{{ profile.address }}</td>
                     </tr>
                     <tr>
-                        <td>Zip/Postal code</td>
+                        <td>{% trans "Zip/Postal code" %}</td>
                         <td>{{ profile.zip_code }}</td>
                     </tr>
                     <tr>
-                        <td>Phone</td>
+                        <td>{% trans "Phone" %}</td>
                         <td>{{ profile.phone }}</td>
                     </tr>
                 </tbody>
             </table>
-        </div>{% endif %}</div>{% endblock content %}</div>
+        </div>
+        {% endif %}
+    </div>
+{% endblock content %}</div>

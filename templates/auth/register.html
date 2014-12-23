@@ -1,4 +1,5 @@
 {% extends "base.html" %} 
+{% load i18n %}
 {% block title %} 
 studLAN - Register 
 {% endblock title %} 
@@ -7,7 +8,7 @@ studLAN - Register
     <div class="col-md-9">{{ form.non_field_errors }}
         <form id="register-form" class="form-horizontal" method="post" action="{% url 'auth_register' %}">{% csrf_token %}
             <fieldset>
-                <legend>Register new user</legend>
+                <legend>{% trans "Register new user" %}</legend>
                     {% for field in form %} 
                         <div class="control-group">
                         
@@ -52,4 +53,5 @@ studLAN - Register
         }
 
     }); //document.ready
-</script>{% endblock content %}
+</script>
+{% endblock content %}
