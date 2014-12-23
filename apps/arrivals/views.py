@@ -25,7 +25,7 @@ def home(request):
         upcoming = False 
 
     breadcrumbs = (
-        ('studLAN', '/'),
+        ('Home', '/'),
         ('Arrivals', '')
     )
 
@@ -40,7 +40,7 @@ def arrivals(request, lan_id):
     attendees = Attendee.objects.filter(lan=lan)
 
     breadcrumbs = (
-        ('studLAN', '/'),
+        ('Home', '/'),
         ('Arrivals', reverse('arrival_home')),
         (lan, ''),
     )

@@ -45,95 +45,95 @@ msgstr "Django site admin"
 
 #: templates/auth/login.html:11 templates/base.html:59
 msgid "Login"
-msgstr ""
+msgstr "Log inn"
 
 #: templates/auth/login.html:20
 msgid "Recover password"
-msgstr ""
+msgstr "Glemt passord?"
 
 #: templates/auth/recover.html:12
 msgid "Account recovery"
-msgstr ""
+msgstr "Gjenopprett konto"
 
 #: templates/auth/register.html:11
 msgid "Register new user"
-msgstr ""
+msgstr "Registrer ny bruker"
 
 #: templates/auth/set_password.html:13 templates/auth/set_password.html:26
 msgid "Change password"
-msgstr ""
+msgstr "Bytt passord"
 
 #: templates/base.html:43
 msgid "Language"
-msgstr ""
+msgstr "Språk"
 
 #: templates/base.html:58
 msgid "Register"
-msgstr ""
+msgstr "Registrer"
 
 #: templates/base.html:74 templates/user/profile_tabs.html:7
 msgid "Edit profile"
-msgstr ""
+msgstr "Endre profil"
 
 #: templates/base.html:88
 msgid "Log out"
-msgstr ""
+msgstr "Log ut"
 
 #: templates/competition/competition.html:33
 msgid "Participating teams:"
-msgstr ""
+msgstr "Deltakende lag"
 
 #: templates/competition/competition.html:55
 msgid "Participants"
-msgstr ""
+msgstr "Deltakere"
 
 #: templates/competition/competition.html:55
 msgid "without a team"
-msgstr ""
+msgstr "uten lag"
 
 #: templates/competition/competition.html:89
 msgid "Join competition (team)"
-msgstr ""
+msgstr "Meld på (Lag)"
 
 #: templates/competition/competition.html:95
 msgid "When you sign up as a team, your solo participation will be overriden."
-msgstr ""
+msgstr "Når du melder på et lag vil enkelt påmeldingen bli overskrevet"
 
 #: templates/competition/competition.html:96
 msgid "Join competition (solo)"
-msgstr ""
+msgstr "Meld på (Solo)"
 
 #: templates/competition/competition.html:101
 msgid "Leave competition"
-msgstr ""
+msgstr "Meld av"
 
 #: templates/competition/competition.html:114
 msgid "Description"
-msgstr ""
+msgstr "Beksrivelse"
 
 #: templates/competition/competitions.html:8 templates/navigation.html:6
 msgid "Competitions"
-msgstr ""
+msgstr "Konkuranse"
 
 #: templates/lan/details.html:20
 msgid "Start date"
-msgstr ""
+msgstr "Start"
 
 #: templates/lan/details.html:21
 msgid "End date"
-msgstr ""
+msgstr "Slutt"
 
 #: templates/lan/details.html:22
 msgid "Location"
-msgstr ""
+msgstr "Sted"
 
 #: templates/lan/details.html:31
 msgid "You have paid for this event"
-msgstr ""
+msgstr "Du har betalt"
 
 #: templates/lan/details.html:34
 msgid "Remove attendance"
-msgstr ""
+msgstr "Meld av"
 
 #: templates/lan/details.html:38 templates/lottery/lottery.html:24
 #: templates/navigation.html:5
@@ -142,59 +142,59 @@ msgstr "Registrer bruker"
 
 #: templates/lan/details.html:41
 msgid "Your address and zip code is required in order to sign up for a LAN."
-msgstr ""
+msgstr "Din adresse og post kode kreves for og kunne melde seg på et LAN"
 
 #: templates/lan/details.html:42
 msgid "Go to your"
-msgstr ""
+msgstr "Gå til din"
 
 #: templates/lan/details.html:42
 msgid "profile"
-msgstr ""
+msgstr "profil"
 
 #: templates/lan/details.html:42
 msgid "to add the information."
-msgstr ""
+msgstr "for og legge til informasjon."
 
 #: templates/lan/details.html:47
 msgid "You need to login to see your status."
-msgstr ""
+msgstr "Du må logge på for og se din status."
 
 #: templates/lan/list.html:12
 msgid "Upcoming LANs"
-msgstr ""
+msgstr "Oppkommende LAN"
 
 #: templates/lan/list.html:19 templates/lan/list.html.py:44
 msgid "Start"
-msgstr ""
+msgstr "Start"
 
 #: templates/lan/list.html:19 templates/lan/list.html.py:44
 msgid "End"
-msgstr ""
+msgstr "Slutt"
 
 #: templates/lan/list.html:37
 msgid "Previous LANs"
-msgstr ""
+msgstr "Tidligere LAN"
 
 #: templates/lottery/lottery.html:22
 msgid "Unsign"
-msgstr ""
+msgstr "Meld av"
 
 #: templates/lottery/lottery.html:27
 msgid "Registration closed"
-msgstr ""
+msgstr "Registreringen er lukket"
 
 #: templates/lottery/lottery.html:30
 msgid "You need to login in to participate"
-msgstr ""
+msgstr "Du må logge inn for og kunne melde deg på"
 
 #: templates/lottery/lottery.html:37
 msgid "No active raffles right now."
-msgstr ""
+msgstr "Ingen aktive trekkninger"
 
 #: templates/lottery/lottery.html:40
 msgid "There are currently no active lans"
-msgstr ""
+msgstr "Det er ingen aktive LAN"
 
 #: templates/navigation.html:4 templates/news/news.html:12
 msgid "News"
@@ -202,11 +202,11 @@ msgstr "Nyheter"
 
 #: templates/navigation.html:7 templates/team/team_base.html:7
 msgid "Teams"
-msgstr ""
+msgstr "Lag"
 
 #: templates/navigation.html:8
 msgid "Raffle"
-msgstr ""
+msgstr "Trekkning"
 
 #: templates/navigation.html:9
 msgid "Seating"
@@ -214,145 +214,145 @@ msgstr ""
 
 #: templates/sidebar.html:9
 msgid "User Info"
-msgstr ""
+msgstr "Bruker informasjon"
 
 #: templates/sidebar.html:11 templates/team/team.html:42
 msgid "User name"
-msgstr ""
+msgstr "Brukernavn"
 
 #: templates/sidebar.html:12
 msgid "Name"
-msgstr ""
+msgstr "Navn"
 
 #: templates/sidebar.html:13 templates/user/profile.html:62
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: templates/sidebar.html:16
 msgid "Competition Info"
-msgstr ""
+msgstr "Konkurranse informasjon"
 
 #: templates/sidebar.html:19
 msgid "Sponsors"
-msgstr ""
+msgstr "Sponsorer"
 
 #: templates/team/create_team.html:21
 msgid "Create new team"
-msgstr ""
+msgstr "Lag nytt lag"
 
 #: templates/team/create_team.html:35
 msgid "Must be unique!"
-msgstr ""
+msgstr "Må være unikt!"
 
 #: templates/team/create_team.html:41 templates/team/team_tabs.html:7
 msgid "Create team"
-msgstr ""
+msgstr "Nytt lag"
 
 #: templates/team/team.html:27 templates/team/team_list.html:6
 msgid "Leader"
-msgstr ""
+msgstr "Leder"
 
 #: templates/team/team.html:36
 msgid "Members"
-msgstr ""
+msgstr "Medlemmer"
 
 #: templates/team/team.html:42
 msgid "Full name"
-msgstr ""
+msgstr "Fullt navn"
 
 #: templates/team/team.html:42
 msgid "Options"
-msgstr ""
+msgstr "Valg"
 
 #: templates/team/team.html:50
 msgid "Remove"
-msgstr ""
+msgstr "Fjern"
 
 #: templates/team/team.html:52
 msgid "Leave team"
-msgstr ""
+msgstr "Forlat lag"
 
 #: templates/team/team.html:68 templates/team/team.html.py:80
 msgid "Add member"
-msgstr ""
+msgstr "Legg til medlem"
 
 #: templates/team/team_list.html:22
 msgid "No teams yet"
-msgstr ""
+msgstr "Ingen lag enda"
 
 #: templates/team/team_tabs.html:5
 msgid "All teams"
-msgstr ""
+msgstr "Alle lag"
 
 #: templates/team/team_tabs.html:6
 msgid "My teams"
-msgstr ""
+msgstr "Mine lag"
 
 #: templates/user/history.html:12 templates/user/profile_tabs.html:6
 msgid "History"
-msgstr ""
+msgstr "Historikk"
 
 #: templates/user/history.html:22
 msgid "Time span"
-msgstr ""
+msgstr "Tidsrom"
 
 #: templates/user/history.html:22
 msgid "Paid"
-msgstr ""
+msgstr "Betalt"
 
 #: templates/user/history.html:22
 msgid "Arrived"
-msgstr ""
+msgstr "Ankommet"
 
 #: templates/user/profile.html:20 templates/user/profile.html.py:28
 msgid "My Profile"
-msgstr ""
+msgstr "Min profil"
 
 #: templates/user/profile.html:22 templates/user/profile.html.py:30
 #: templates/user/profile_tabs.html:5 templates/user/update.html:12
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: templates/user/profile.html:50
 msgid "Username"
-msgstr ""
+msgstr "Brukernavn"
 
 #: templates/user/profile.html:54
 msgid "First name"
-msgstr ""
+msgstr "Fornavn"
 
 #: templates/user/profile.html:58
 msgid "Last name"
-msgstr ""
+msgstr "Etternavn"
 
 #: templates/user/profile.html:77
 msgid "Nick"
-msgstr ""
+msgstr "Kallenavn"
 
 #: templates/user/profile.html:81
 msgid "Gender"
-msgstr ""
+msgstr "Kjønn"
 
 #: templates/user/profile.html:85
 msgid "Date of birth"
-msgstr ""
+msgstr "Fødelsdag"
 
 #: templates/user/profile.html:89
 msgid "Street address"
-msgstr ""
+msgstr "Adresse"
 
 #: templates/user/profile.html:93
 msgid "Zip/Postal code"
-msgstr ""
+msgstr "Postnummer"
 
 #: templates/user/profile.html:97
 msgid "Phone"
-msgstr ""
+msgstr "Telefon"
 
 #: templates/user/update.html:22
 msgid "Update information"
-msgstr ""
+msgstr "Oppdater informasjon"
 
 #: templates/user/update.html:30
 msgid "Update"
-msgstr ""
+msgstr "Oppdater"

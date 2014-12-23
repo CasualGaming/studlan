@@ -6,6 +6,7 @@ import re
 from django import forms
 from django.contrib import auth
 from django.contrib.auth.models import User
+from django.utils.translation import ugettext as _
 
 from apps.misc.forms import InlineSpanErrorList
 from apps.userprofile.models import GENDERS
@@ -25,9 +26,9 @@ class LoginForm(forms.Form):
             if user.is_active:
                 self.user = user
             else:
-                self._errors['username'] = self.error_class(["Your account is inactive, try to recover it."])
+                self._errors['username'] = self.error_class([_(u"Your account is inactive, try to recover it.")])
         else:
-            self._errors['username'] = self.error_class(["The account does not exist, or username/password combination is incorrect."])
+            self._errors['username'] = self.error_class([_(u"The account does not exist, or username/password combination is incorrect.")])
         return self.cleaned_data
 
     def login(self, request):
