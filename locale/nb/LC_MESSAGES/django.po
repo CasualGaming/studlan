@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-23 18:37+0100\n"
+"POT-Creation-Date: 2014-12-24 23:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,110 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: apps/authentication/forms.py:29
+msgid "Your account is inactive, try to recover it."
+msgstr "Din konto er innaktiv og må aktiveres"
+
+#: apps/authentication/forms.py:31
+msgid ""
+"The account does not exist, or username/password combination is incorrect."
+msgstr "Kontoen finnes ikke, eller brukernavn/passord kombinasjonen er feil"
+
+#: apps/authentication/forms.py:46
+msgid "Desired username"
+msgstr "Brukernavn"
+
+#: apps/authentication/forms.py:47
+#, fuzzy
+#| msgid "Username"
+msgid "NTNU username"
+msgstr "NTNU Brukernavn"
+
+#: apps/authentication/forms.py:48 templates/user/profile.html:54
+msgid "First name"
+msgstr "Fornavn"
+
+#: apps/authentication/forms.py:49 templates/user/profile.html:58
+msgid "Last name"
+msgstr "Etternavn"
+
+#: apps/authentication/forms.py:50 templates/user/profile.html:85
+msgid "Date of birth"
+msgstr "Fødelsdag"
+
+#: apps/authentication/forms.py:53 templates/user/profile.html:81
+msgid "Gender"
+msgstr "Kjønn"
+
+#: apps/authentication/forms.py:54 templates/sidebar.html:13
+#: templates/user/profile.html:62
+msgid "Email"
+msgstr "Email"
+
+#: apps/authentication/forms.py:55
+#, fuzzy
+#| msgid "Change password"
+msgid "Password"
+msgstr "Bytt passord"
+
+#: apps/authentication/forms.py:56
+#, fuzzy
+#| msgid "Recover password"
+msgid "Repeat password"
+msgstr "Glemt passord?"
+
+#: apps/authentication/forms.py:57
+msgid "Address"
+msgstr "Adresse"
+
+#: apps/authentication/forms.py:58
+#, fuzzy
+#| msgid "Zip/Postal code"
+msgid "ZIP code"
+msgstr "Postnummer"
+
+#: apps/authentication/forms.py:59
+msgid "Phone number"
+msgstr "Telefon-nummer"
+
+#: apps/authentication/forms.py:70
+msgid ""
+"You seem to be from the future, please enter a more believable date of birth."
+msgstr ""
+"Det ser ut som du kommer fra fremtiden. Du må legge til riktig fødselsdato"
+
+#: apps/authentication/forms.py:74 apps/authentication/forms.py:109
+msgid "Passwords did not match."
+msgstr "Passordene var ikke like"
+
+#: apps/authentication/forms.py:79
+msgid "There is already a user with that username."
+msgstr "Brukernavnet er tatt"
+
+#: apps/authentication/forms.py:81
+msgid "Your desired username contains illegal characters. Valid: a-Z 0-9 - _"
+msgstr ""
+"Brukernavnet ditt kan ikke inneholde ulovlige karakterer. Lovlige "
+"karakterer: a-Z 0-9 - _"
+
+#: apps/authentication/forms.py:86
+msgid "There is already a user with that email."
+msgstr "Email adressen er allerede registrert"
+
+#: apps/authentication/forms.py:91
+msgid "The ZIP code must be 4 digit number."
+msgstr "Post nummeret må inneholde 4 tall"
+
+#: apps/authentication/forms.py:99
+#, fuzzy
+#| msgid "Recover password"
+msgid "New password"
+msgstr "Glemt passord?"
+
+#: apps/authentication/forms.py:100
+msgid "Repeat new password"
+msgstr "Gjenta passord"
 
 #: apps/authentication/views.py:28
 msgid "You have successfully logged in."
@@ -29,15 +133,108 @@ msgstr "Logget ut"
 msgid "You cannot be logged in when registering."
 msgstr "Du kan ikke være innlogget under registrering"
 
-#: apps/authentication/views.py:96
+#: apps/authentication/views.py:87
 msgid "Verify your account"
 msgstr "Verifiser kontoen"
 
-#: apps/authentication/views.py:98
+#: apps/authentication/views.py:89
 msgid ""
 "Registration successful. Check your email for verification instructions."
 msgstr ""
 "Registrering OK. Du skal ha fått en email for å fullføre registreringen"
+
+#: apps/authentication/views.py:112 apps/authentication/views.py:175
+#, fuzzy
+#| msgid "User Info"
+msgid "User "
+msgstr "Bruker informasjon"
+
+#: apps/authentication/views.py:112
+msgid " successfully activated. You can now log in."
+msgstr " aktivert, du kan nå logge inn"
+
+#: apps/authentication/views.py:116 apps/authentication/views.py:187
+msgid ""
+"The token has expired. Please use the password recovery to get a new token."
+msgstr "Linken har gått ut. Bruk passord gjennoppretting for og få en ny link"
+
+#: apps/authentication/views.py:131
+msgid "That email is not registered."
+msgstr "Email adressen er ikke registrert"
+
+#: apps/authentication/views.py:144 templates/auth/recover.html:12
+msgid "Account recovery"
+msgstr "Gjenopprett konto"
+
+#: apps/authentication/views.py:146
+msgid "A recovery link has been sent to "
+msgstr "En gjennopprettings link har blitt sent til "
+
+#: apps/authentication/views.py:175
+#, fuzzy
+#| msgid " successfully activated. You can now log in."
+msgid " successfully had it's password changed. You can now log in."
+msgstr " aktivert, du kan nå logge inn"
+
+#: apps/authentication/views.py:182
+msgid "Token accepted. Please insert your new password."
+msgstr "Link akseptert. Skriv inn nytt passord"
+
+#: apps/authentication/views.py:191
+msgid "You have registered an account at "
+msgstr "Du har registrert en konto på"
+
+#: apps/authentication/views.py:192
+msgid ""
+"\n"
+"To use the account you need to verify it. You can do this by visiting the "
+"link below.\n"
+"\n"
+msgstr ""
+"\n"
+"Kontoen må aktiveres før den kan brukes. For og aktivere kontoen må du "
+"trykke på linken under\n"
+"\n"
+
+#: apps/authentication/views.py:196 apps/authentication/views.py:215
+msgid ""
+"\n"
+"\n"
+"Note that tokens have a valid lifetime of 24 hours. If you do not use this\n"
+"link within 24 hours, it will be invalid, and you will need to use the "
+"password\n"
+"recovery option again to get your account verified."
+msgstr ""
+"\n"
+"\n"
+"NB: Denne linken er kun gyldig i 24 timer.\n"
+"Hvis linken ikke blir brukt innen 24 timer må du bruke passord "
+"gjennopprettings funksjonaliteten for og få en ny link"
+
+#: apps/authentication/views.py:206
+msgid "You have requested a password recovery for the account bound to "
+msgstr "Passord gjennoppretting har blitt etterspurt for kontoen knyttet til "
+
+#: apps/authentication/views.py:208 templates/user/profile.html:50
+msgid "Username"
+msgstr "Brukernavn"
+
+#: apps/authentication/views.py:210
+msgid ""
+"If you did not ask for this password recovery, please ignore this email."
+msgstr ""
+"Hvis du ikke ba om denne passord gjennopprettingen kan du ignore denne "
+"emailen"
+
+#: apps/authentication/views.py:212
+msgid ""
+"\n"
+"\n"
+"Otherwise, click the link below to reset your password:\n"
+msgstr ""
+"\n"
+"\n"
+"Ellers kan du trykke på linken under for og endre passordet ditt:\n"
 
 #: templates/admin/base_site.html:4
 msgid "Django site admin"
@@ -51,15 +248,11 @@ msgstr "Log inn"
 msgid "Recover password"
 msgstr "Glemt passord?"
 
-#: templates/auth/recover.html:12
-msgid "Account recovery"
-msgstr "Gjenopprett konto"
-
 #: templates/auth/register.html:11
 msgid "Register new user"
 msgstr "Registrer ny bruker"
 
-#: templates/auth/set_password.html:13 templates/auth/set_password.html:26
+#: templates/auth/set_password.html:14 templates/auth/set_password.html:27
 msgid "Change password"
 msgstr "Bytt passord"
 
@@ -79,35 +272,47 @@ msgstr "Endre profil"
 msgid "Log out"
 msgstr "Log ut"
 
-#: templates/competition/competition.html:33
+#: templates/competition/competition.html:34
 msgid "Participating teams:"
 msgstr "Deltakende lag"
 
-#: templates/competition/competition.html:55
+#: templates/competition/competition.html:57
 msgid "Participants"
 msgstr "Deltakere"
 
-#: templates/competition/competition.html:55
+#: templates/competition/competition.html:57
 msgid "without a team"
 msgstr "uten lag"
 
-#: templates/competition/competition.html:89
+#: templates/competition/competition.html:91
 msgid "Join competition (team)"
 msgstr "Meld på (Lag)"
 
-#: templates/competition/competition.html:95
+#: templates/competition/competition.html:96
+msgid ""
+"Signing up for a team compo as a solo player does not mean you are a "
+"participant."
+msgstr ""
+
+#: templates/competition/competition.html:97
+msgid ""
+"Try to find other players that sign up solo, make a team and sign up as a "
+"team."
+msgstr ""
+
+#: templates/competition/competition.html:99
 msgid "When you sign up as a team, your solo participation will be overriden."
 msgstr "Når du melder på et lag vil enkelt påmeldingen bli overskrevet"
 
-#: templates/competition/competition.html:96
+#: templates/competition/competition.html:100
 msgid "Join competition (solo)"
 msgstr "Meld på (Solo)"
 
-#: templates/competition/competition.html:101
+#: templates/competition/competition.html:105
 msgid "Leave competition"
 msgstr "Meld av"
 
-#: templates/competition/competition.html:114
+#: templates/competition/competition.html:118
 msgid "Description"
 msgstr "Beksrivelse"
 
@@ -138,11 +343,11 @@ msgstr "Meld av"
 #: templates/lan/details.html:38 templates/lottery/lottery.html:24
 #: templates/navigation.html:5
 msgid "Sign up"
-msgstr "Registrer bruker"
+msgstr "Påmelding"
 
 #: templates/lan/details.html:41
 msgid "Your address and zip code is required in order to sign up for a LAN."
-msgstr "Din adresse og post kode kreves for og kunne melde seg på et LAN"
+msgstr "Din adresse og post kode kreves for og kunne melde seg på et LAN."
 
 #: templates/lan/details.html:42
 msgid "Go to your"
@@ -223,10 +428,6 @@ msgstr "Brukernavn"
 #: templates/sidebar.html:12
 msgid "Name"
 msgstr "Navn"
-
-#: templates/sidebar.html:13 templates/user/profile.html:62
-msgid "Email"
-msgstr "Email"
 
 #: templates/sidebar.html:16
 msgid "Competition Info"
@@ -313,29 +514,9 @@ msgstr "Min profil"
 msgid "Profile"
 msgstr "Profil"
 
-#: templates/user/profile.html:50
-msgid "Username"
-msgstr "Brukernavn"
-
-#: templates/user/profile.html:54
-msgid "First name"
-msgstr "Fornavn"
-
-#: templates/user/profile.html:58
-msgid "Last name"
-msgstr "Etternavn"
-
 #: templates/user/profile.html:77
 msgid "Nick"
 msgstr "Kallenavn"
-
-#: templates/user/profile.html:81
-msgid "Gender"
-msgstr "Kjønn"
-
-#: templates/user/profile.html:85
-msgid "Date of birth"
-msgstr "Fødelsdag"
 
 #: templates/user/profile.html:89
 msgid "Street address"
@@ -356,3 +537,8 @@ msgstr "Oppdater informasjon"
 #: templates/user/update.html:30
 msgid "Update"
 msgstr "Oppdater"
+
+#, fuzzy
+#~| msgid "Change password"
+#~ msgid "Old password"
+#~ msgstr "Bytt passord"
