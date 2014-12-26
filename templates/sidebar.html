@@ -3,7 +3,7 @@
 {% load competition_tags %}
 {% load sponsor_tags %}
 <div class="well sidebar">
-    <ul class="nav nav-list">
+    <ul class="nav nav-pills nav-stacked">
         {% if user.is_authenticated %}
             <li class="active">
                 <a href="{% url 'myprofile' %}">{% trans "User Info" %}</a>

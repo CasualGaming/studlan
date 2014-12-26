@@ -76,17 +76,6 @@ div.table-tabs {
     margin-bottom: 0px;
 }
 
-.sidebar .nav {
-    text-align: center;
-    margin: 0px -1px;
-    padding: 0px;
-} .sidebar .nav li {
-    overflow-x: hidden;
-} .sidebar .nav li:not(.active) {
-    padding: 4px 0px;
-    margin-left: 1px;
-    margin-right: 1px;
-}
 
 div#btn-profile {
     min-width: 220px;                       /* equal to .span2 */
@@ -145,4 +134,38 @@ div#btn-profile {
     box-shadow: rgba(0, 0, 0, 0.0742188) 0px 1px 1px 0px;
     color: #0069D6;
     padding: 4px;
+}
+
+
+
+
+
+.sidebar-wrapper {
+    margin-top: 80px;
+    right: 250px;
+    position: fixed;
+    width: 220px;  
+}
+
+.sidebar{
+    padding: 0;
+}
+
+.sidebar .nav {
+    text-align: center;
+    margin: 0px -1px;
+    padding: 0px;
+} .sidebar .nav li {
+    overflow-x: hidden;
+} .sidebar .nav li:not(.active) {
+    padding: 4px 0px;
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
+@media (max-width:767px) {
+    
+    .sidebar-wrapper{
+        display: none;
+    }
 }
