@@ -1,30 +1,43 @@
 {% extends "seating/seating_base.html" %}
 {% load competition_tags %}
-
+{% load i18n %}
 {% block content %}
     <div class="row">
-        <div class="col-md-8"><h1>Seating</h1></div>
-    </div>
-    
-    <div class="row">
         <div class="col-md-8">
-            {% for l in lans %} 
-                {% if l.status == 'upcoming' %}
-                    <h2>{{l}} seating: </h2>
+            {% if lan %}
+                <h2>Seating for {{lan}}</h2>
+                {% if user.is_staff %}
                     {% for seating in seatings %}
-                        {% if seating.lan == l %}
-                            <div class="well"
-                            <h3><a href="{{ request.path }}details/{{ seating.id }}">{{ seating }}</a> - Reservation closes at {{seating.closing_date}}</h3><br>
-                            {% if user.is_authenticated %}
-                            {% if user.is_staff %}
-                            <a href="{% url 'map' seating.id %}"><i class="glyphicon glyphicon-th"></i>Seatmap</a>
+                        <div class="well">
+                            <a href="{{ request.path }}details/{{ seating.id }}">{{ seating }}</a> - {{seating.get_free_seats}} of {{seating.get_number_of_seats}} seats are available.<br>
+                            {% if seating.is_open %}
+                                <span class="label label-primary">Seating closes at {{seating.closing_date}}</span>
+                            {% else %}
+                                <span class="label label-danger">This seating is closed</span>
                             {% endif %}
-                            {% endif %}
-                            </div>
-                        {% endif %}
+
+                            <br>
+                            <a href="{% url 'map' seating.id %}"><i class="glyphicon glyphicon-th"></i>Seatlist</a>
+                        </div>
                     {% endfor %}
+                {% else %}
+                    {% if lan.status != 'ended' %}
+                        {% for seating in seatings %}
+                            <div class="well">
+                                <a href="{{ request.path }}details/{{ seating.id }}">{{ seating }}</a> - {{seating.get_free_seats}} of {{seating.get_number_of_seats}} seats are available. <br>
+                                {% if seating.is_open %}
+                                    <span class="label label-primary">Seating closes at {{seating.closing_date}}</span>
+                                {% else %}
+                                    <span class="label label-danger">This seating is closed</span>
+                                {% endif %}
+                                <br>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="alert alert-danger">{% trans "There are no current LANs." %}</div>
+                    {% endif %}
                 {% endif %}
-            {% endfor %}
+            {% endif %}
         </div>
     </div>
 {% endblock content %}

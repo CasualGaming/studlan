@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from apps.lan.models import LAN
 from django.db.models import Q
-
+import datetime
 
 class Seating(models.Model):
     lan = models.ForeignKey(LAN)
@@ -25,6 +25,20 @@ class Seating(models.Model):
     def get_total_seats(self):
         return Seat.objects.filter(Q(seating=self))
 
+    def get_number_of_seats(self):
+        return Seat.objects.filter(Q(seating=self)).count()
+
+    def is_open(self):
+        return datetime.datetime.now() < self.closing_date
+
+    def get_free_seats(self):
+        total_seats = self.get_total_seats()
+        counter = 0
+        for seat in total_seats:
+            if seat.is_empty():
+                counter += 1
+        return counter
+
     def __unicode__(self):
         return self.title
 
@@ -33,7 +47,7 @@ class Seating(models.Model):
        return ('seating_details', (), {'seating_id': self.id})
 
     def populate_seats(self):
-       for k in range(0,self.number_of_seats):
+        for k in range(0,self.number_of_seats):
             seat = Seat(seating=self, placement=k+1)
             seat.save()
 
@@ -51,4 +65,3 @@ class Seat(models.Model):
             return True
         else:
             return False
-

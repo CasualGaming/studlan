@@ -2,9 +2,13 @@
 {% block title %}
 studLAN - Seating
 {% endblock title %}
+{% load i18n %}
 {% block content %}
     <div class="row">
         <div class="col-md-8">
+            {% if not seating.is_open %}
+                <div class="alert alert-danger">{% trans "Seating is closed." %}</div>
+            {% endif %}
             <p>Legend: </p>
             <input class="btn btn-warning" type="submit" value="Ditt sete" disabled/>
             <input class="btn btn-danger" type="submit" value="Opptatt sete" disabled/>
@@ -17,26 +21,36 @@ studLAN - Seating
                     <div class="col-md-2">
                 {% if s.user %}
                     {% if s.user == user %}
-                        <form class="form-inline" action="{% url 'leave_seat' seating.id s.id %}" method="POST">
+                        <form class="form-inline" 
+                        {% if seating.is_open %}
+                            action="{% url 'leave_seat' seating.id s.id %}" 
+                        {% endif %}
+                        method="POST">
                         {% csrf_token %}
-                        <input class="btn btn-warning" type="submit" value="{{ s.placement }}"/>
+                        <input class="btn btn-warning" type="submit" value="{{ s.placement }}" />
                         </form>
                     {% else %}
-                        <input class="btn btn-danger" type="submit" value="{{ s.placement }}" disabled/>
+                        <input class="btn btn-danger" type="submit" value="{{ s.placement }}" title="{{s.user}}" />
                 {% endif %}
                 {% else %}
-                    <form class="form-inline" action="{% url 'take_seat' seating.id s.id %}" method="POST">
+                    <form class="form-inline" 
+                    {% if seating.is_open %}
+                        action="{% url 'take_seat' seating.id s.id %}" 
+                    {% endif %}
+                    method="POST">
                     {% csrf_token %}
-                    <input class="btn btn-success" type="submit" value="{{ s.placement }}"/>
+                        <input class="btn btn-success" type="submit" value="{{ s.placement }}"/>
                     </form>
                 {% endif %}
                 </div>
             {% endfor %}
         </div>
     </div>
+    
     <style>
-    .span .btn {
-    width: 3.5em; height: 2em;
+    .col-md-2 .btn {
+        width: 3.5em; height: 2em;
+        }
     }
-    }</style>
+    </style>
 {% endblock content %}

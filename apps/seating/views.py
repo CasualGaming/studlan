@@ -2,7 +2,6 @@
 
 from datetime import datetime
 import logging
-
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -17,11 +16,12 @@ from reportlab.pdfgen import canvas
 
 def main(request):
         context = {}
-        lans = LAN.objects.all()
-        seatings = Seating.objects.exclude(closing_date__lt=datetime.now)
+        now = datetime.now()
+        lans = LAN.objects.all().order_by('-start_date')
+        seatings = Seating.objects.filter(lan=lans[0])
 
         context['seatings'] = seatings
-        context['lans'] = lans
+        context['lan'] = lans[0]
         context['active'] = 'all'
 
         breadcrumbs = (
@@ -90,15 +90,17 @@ def join(request, seating_id, seat_id):
         attendee = None
 
     if attendee and attendee.has_paid:
+        if seat.is_empty():
+            if request.user in occupied:
+                old_seat = get_object_or_404(Seat, user=request.user)
+                old_seat.user = None
+                old_seat.save()
 
-        if request.user in occupied:
-            old_seat = get_object_or_404(Seat, user=request.user)
-            old_seat.user = None
-            old_seat.save()
-
-        seat.user = request.user
-        seat.save()
-        messages.success(request, "You have successfully reserved your seat! ")
+            seat.user = request.user
+            seat.save()
+            messages.success(request, "You have successfully reserved your seat! ")
+        else:
+            messages.error(request, "That seat is taken!")
     else:
         messages.error(request, "You need to attend and pay before reserving your seat")
     return redirect(seating)
@@ -189,15 +191,17 @@ def seating_map(request, seating_id):
 
     # Draw things on the PDF. Here's where the PDF generation happens.
     # See the ReportLab documentation for the full list of functionality.
-    p.drawString(280, 820, lan.title)
-    p.drawString(280, 800, seating.title)
+    p.drawString(230, 820, lan.title)
+    p.drawString(230, 800, "Rom: " + seating.title)
     cursor = 750
     for s in seats:
         if s.user:
             p.drawString(280, cursor, str(s.user))
+            p.drawString(280, cursor, str(s.user))
         else:
+            p.drawString(230, cursor, "Plass " + str(s.id) + ": ")
             p.drawString(280, cursor, '[Ledig]')
-        cursor = cursor - 15
+        cursor = cursor - 19
     # Close the PDF object cleanly, and we're done.
     p.showPage()
     p.save()
