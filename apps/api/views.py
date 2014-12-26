@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, get_object_or_404
+from django.http import HttpResponse
+import json
 
 from apps.api.models import Key
 from apps.lan.models import LAN, Attendee
@@ -58,3 +60,26 @@ def change_paid(request, api_key, lan_id, username, status):
         return redirect('/')
 
 
+def check_status(request, api_key, lan_id, username):
+    keys = Key.objects.filter(content=api_key)
+    response_data = {}
+    if len(keys) != 1:
+        messages.error(request, "Invalid API key.")
+        return redirect('/')
+    else:
+        lan = get_object_or_404(LAN, pk=lan_id)
+        userprofile = get_object_or_404(UserProfile, ntnu_username=username)
+        user = getattr(userprofile, 'user')
+        attendee = get_object_or_404(Attendee, lan=lan, user=user)
+
+        if attendee.has_paid:
+            response_data['paid'] = ['1']
+        else:
+            response_data['paid'] = ['0']
+
+        if attendee.has_arrived:
+            response_data['arrived'] = ['1']
+        else:
+            response_data['paid'] = ['0']
+
+    return HttpResponse(json.dumps(response_data), content_type="application/json")

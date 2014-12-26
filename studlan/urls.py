@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^register.html', 'apps.competition.views.register_user'),
     url(r'^misc/remove_alert.html', 'apps.misc.views.remove_alert'),
     url(r'^misc/change_language', 'apps.misc.views.change_language'),
+    url(r'^sponsors/', 'apps.sponsor.views.index', name='sponsors'),
 
     # app urls
     url(r'^api/',           include('apps.api.urls')),

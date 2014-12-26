@@ -28,7 +28,7 @@
             <p>
             {% if user.is_authenticated %}
                 {% if status == 'paid' %}
-                    <a class="btn btn-success" href="#">{% trans "You have paid for this event" %}</a>
+                    <a class="btn btn-success disabled" href="#">{% trans "You have paid for this event" %}</a>
                 {% endif %}
                 {% if status == 'attending' %}
                     <a class="btn btn-danger" href="{% url 'lan_unattend' lan.id %}">{% trans "Remove attendance" %}</a>

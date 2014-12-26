@@ -1,0 +1,29 @@
+{% extends "base.html" %} 
+{% load i18n %}
+{% load markdown_deux_tags %} 
+
+{% block title %} 
+    Sponsors
+{% endblock title %} 
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <h1>{% trans "Sponsors" %}</h1>
+    </div>
+</div>
+
+{% for sponsor in sponsors %}
+    <div class="row">
+        <div class="col-md-9">
+        <div class="well">
+        <img src="{{ sponsor.banner }}" alt="Mountain View" style="width:300px;height:50px">
+            
+                <p>{{ sponsor.description }}</p>
+                </div>
+        </div>
+    </div>
+{% endfor %}
+
+
+{% endblock content%}

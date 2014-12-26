@@ -192,11 +192,11 @@ def seating_map(request, seating_id):
     # Draw things on the PDF. Here's where the PDF generation happens.
     # See the ReportLab documentation for the full list of functionality.
     p.drawString(230, 820, lan.title)
-    p.drawString(230, 800, "Rom: " + seating.title)
+    p.drawString(230, 800, seating.title)
     cursor = 750
     for s in seats:
         if s.user:
-            p.drawString(280, cursor, str(s.user))
+            p.drawString(230, cursor, "Plass " + str(s.id) + ": ")
             p.drawString(280, cursor, str(s.user))
         else:
             p.drawString(230, cursor, "Plass " + str(s.id) + ": ")
