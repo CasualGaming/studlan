@@ -161,11 +161,22 @@ div#btn-profile {
     padding: 4px 0px;
     margin-left: 1px;
     margin-right: 1px;
+}.sidebar-header {
+    background-color: rgb(65, 131, 196);
+    padding: 0;
+}.sidebar-header a{
+    color: white;
+    padding: 0 !important;
+}.sidebar-header a:hover{
+    background: none !important;
 }
+
+
 
 @media (max-width:767px) {
     
     .sidebar-wrapper{
         display: none;
     }
+
 }

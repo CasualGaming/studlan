@@ -3,20 +3,20 @@
 {% load competition_tags %}
 {% load sponsor_tags %}
 <div class="well sidebar">
-    <ul class="nav nav-pills nav-stacked">
+    <ul class="nav nav-stacked">
         {% if user.is_authenticated %}
-            <li class="active">
+            <li class="sidebar-header">
                 <a href="{% url 'myprofile' %}">{% trans "User Info" %}</a>
             </li>
             <li><strong>{% trans "User name" %}:</strong><br/>{{ user.username }}</li>
             <li><strong>{% trans "Name" %}:</strong><br/>{{ user.first_name }} {{ user.last_name }}</li>
             <li><strong>{% trans "Email" %}:</strong><br/>{{ user.email }}</li>
         {% endif %}
-        <li class="active">
+        <li class="sidebar-header">
             <a href="{% url 'competitions' %}">{% trans "Competition Info" %}</a>
         </li>
         <li>{% num_of_competitions %} competitions active.</li>
-        <li class="active"><a href="#">{% trans "Sponsors" %}</a></li>
+        <li class="sidebar-header"><a href="#">{% trans "Sponsors" %}</a></li>
         {% show_sponsor_list %}
     </ul>
 </div>
