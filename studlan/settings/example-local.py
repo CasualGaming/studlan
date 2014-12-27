@@ -18,3 +18,7 @@ STUDLAN_FROM_MAIL = 'studlan@online.ntnu.no'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # prints
 
 SITE_NAME = "studLAN"
+
+STRIPE_PUBLIC_KEY = "pk_test_6pRNASCoBOKtIshFeQd4XMUh"
+
+STRIPE_PRIVATE_KEY = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"

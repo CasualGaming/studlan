@@ -75,3 +75,4 @@ class Attendee(models.Model):
 
     class Meta:
         ordering = ['-user', 'lan', ]
+

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load markdown_deux_tags %}
+{% load settings %}
 
 {% block title %}
 {{ lan }}
@@ -32,6 +33,21 @@
                 {% endif %}
                 {% if status == 'attending' %}
                     <a class="btn btn-danger" href="{% url 'lan_unattend' lan.id %}">{% trans "Remove attendance" %}</a>
+                    <form action="/payment/" method="POST" class="inline">{% csrf_token %}
+                        <script
+                            src="https://checkout.stripe.com/checkout.js"
+                            class="stripe-button"
+                            data-key={% stripe_public_key %}
+                            data-image="/square-image.png"
+                            data-name={% site_name %}
+                            data-email={{ user.email }}
+                            data-description="[Ticket type]"
+                            data-label="{% trans "Pay with Card" %}"
+                            data-allow-remember-me="false"
+                            data-currency="NOK"
+                            data-amount="5000">
+                      </script>
+                    </form>
                 {% endif %}
                 {% if status == 'open' %}
                     {% if user.profile.has_address %}
