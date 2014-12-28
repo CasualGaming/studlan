@@ -34,7 +34,9 @@ def details(request, lan_id):
     else:
         status = 'open'
 
-    return render(request, 'lan/details.html', {'lan': lan, 'status': status})
+    ticket_types = lan.tickettype_set.all()
+
+    return render(request, 'lan/details.html', {'lan': lan, 'status': status, 'ticket_types': ticket_types})
 
 @login_required
 def attend(request, lan_id):

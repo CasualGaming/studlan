@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.admin.views.decorators import staff_member_required
 
 from apps.lan.models import LAN, Attendee
 
@@ -30,8 +31,8 @@ def home(request):
     )
 
     return render(request, 'arrivals/home.html', {'lans': lans, 'upcoming': upcoming, 'breadcrumbs': breadcrumbs})
-    
-@login_required
+
+@staff_member_required
 def arrivals(request, lan_id):
     if not request.user.is_staff:
         raise Http404

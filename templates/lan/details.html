@@ -33,6 +33,34 @@
                 {% endif %}
                 {% if status == 'attending' %}
                     <a class="btn btn-danger" href="{% url 'lan_unattend' lan.id %}">{% trans "Remove attendance" %}</a>
+                    {% if ticket_types %}
+                        <br>
+                        <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+                        {% for ticket_type in ticket_types %}
+                            <li {% if forloop.counter == 1 %} class="active" {% endif %}>
+                                <a href="#ticket-{{ forloop.counter }}" data-toggle="tab">{{ ticket_type.title }}</a>
+                            </li>
+                        {% endfor %}
+                        </ul> 
+                        <div class="tab-content">
+                            {% for ticket_type in ticket_types %}
+                                {% if forloop.counter == 1 %}
+                                    <div role="tabpanel" class="tab-pane active" id="ticket-{{ forloop.counter }}">
+                                {% else %}
+                                    <div role="tabpanel" class="tab-pane" id="ticket-{{ forloop.counter }}">
+                                {% endif %}
+                                <p>Content {{ forloop.counter }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p>No tickets avalible at this time</p>
+                    {% endif %}
+
+            
+
+
+
                     <form action="/payment/" method="POST" class="inline">{% csrf_token %}
                         <script
                             src="https://checkout.stripe.com/checkout.js"
@@ -70,4 +98,10 @@
 
         </div>
     </div>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+                    $('#tabs').tab();
+                    console.log("test");
+                        });
+        </script> 
 {% endblock content %}

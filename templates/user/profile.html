@@ -39,12 +39,6 @@
     <div class="col-md-4">{% else %}
         <div class="col-md-8">{% endif %}
             <table class="well table table-condensed">
-                <thead>
-                    <tr>
-                        <th>Field</th>
-                        <th>Value</th>
-                    </tr>
-                </thead>
                 <tbody>
                     <tr>
                         <td>{% trans "Username" %}</td>
@@ -66,12 +60,6 @@
         </div>{% if user == quser or user.is_staff %}
         <div class="col-md-4">
             <table class="well table table-condensed">
-                <thead>
-                    <tr>
-                        <th>Field</th>
-                        <th>Value</th>
-                    </tr>
-                </thead>
                 <tbody>
                     <tr>
                         <td>{% trans "Nick" %} </td>
