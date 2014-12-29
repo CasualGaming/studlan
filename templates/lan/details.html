@@ -35,10 +35,11 @@
                     <a class="btn btn-danger" href="{% url 'lan_unattend' lan.id %}">{% trans "Remove attendance" %}</a>
                     {% if ticket_types %}
                         <br>
-                        <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+                        <div role="tabpanel">
+                        <ul id="tabs" class="nav nav-tabs" role="tablist">
                         {% for ticket_type in ticket_types %}
-                            <li {% if forloop.counter == 1 %} class="active" {% endif %}>
-                                <a href="#ticket-{{ forloop.counter }}" data-toggle="tab">{{ ticket_type.title }}</a>
+                            <li {% if forloop.counter == 1 %} class="active" {% endif %} role="presentation">
+                                <a href="#ticket-{{ forloop.counter }}" aria-controls="ticket-{{ forloop.counter }}" data-toggle="tab" role="tab">{{ ticket_type.title }}</a>
                             </li>
                         {% endfor %}
                         </ul> 
@@ -53,6 +54,7 @@
                                 </div>
                             {% endfor %}
                         </div>
+                    </div>
                     {% else %}
                         <p>No tickets avalible at this time</p>
                     {% endif %}
@@ -98,10 +100,4 @@
 
         </div>
     </div>
-    <script type="text/javascript">
-        jQuery(document).ready(function ($) {
-                    $('#tabs').tab();
-                    console.log("test");
-                        });
-        </script> 
 {% endblock content %}
