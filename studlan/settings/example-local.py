@@ -19,6 +19,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # prints
 
 SITE_NAME = "studLAN"
 
+#Enable and set to your domain when deployed
+#CSRF_COOKIE_DOMAIN = 'studlan.no'
+CSRF_COOKIE_HTTPONLY = True
+
 STRIPE_PUBLIC_KEY = "pk_test_6pRNASCoBOKtIshFeQd4XMUh"
 
 STRIPE_PRIVATE_KEY = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"

@@ -6,7 +6,8 @@ Login
 {% block content %}
 <div class="row">
     <div class="col-md-9">{{ form.non_field_errors }}
-        <form class="form-horizontal" method="post" action="{% url 'auth_login' %}">{% csrf_token %}
+        <form class="form-horizontal" method="post" action="{% url 'auth_login' %}">
+            {% csrf_token %}
             <fieldset>
                 <legend>{% trans "Login" %}</legend>
                 {% for field in form %}

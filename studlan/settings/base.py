@@ -108,8 +108,6 @@ MIDDLEWARE_CLASSES = (
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 CSRF_COOKIE_PATH = '/'
-CSRF_COOKIE_DOMAIN = 'studlan.no'
-CSRF_COOKIE_HTTPONLY = True
 
 ROOT_URLCONF = 'studlan.urls'
 
