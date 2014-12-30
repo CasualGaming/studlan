@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     url(r'^misc/remove_alert.html', 'apps.misc.views.remove_alert'),
     url(r'^misc/change_language', 'apps.misc.views.change_language'),
     url(r'^sponsors/', 'apps.sponsor.views.index', name='sponsors'),
-    url(r'^payment/', 'apps.payment.views.payment', name='payment'),
+    url(r'^payment/(?P<ticket_id>\d+)/$', 'apps.payment.views.payment', name='payment'),
 
     # app urls
     url(r'^api/',           include('apps.api.urls')),

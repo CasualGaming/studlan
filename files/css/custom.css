@@ -136,6 +136,11 @@ div#btn-profile {
     padding: 4px;
 }
 
+.tab-pane pre {
+    border: none;
+    padding: 0;
+}
+
 .sidebar-wrapper {
     margin-top: 80px;
     right: 250px;
