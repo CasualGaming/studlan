@@ -42,9 +42,9 @@ def payment(request, ticket_id):
 
 
 def send_ticket_mail(ticket, host):
-    message = "This is a confirmation on your purchase of a " + ticket.ticket_type.title
+    message = "This is a confirmation on your purchase of a " + ticket.ticket_type.get_translation().title
     message += " ticket for " + ticket.ticket_type.lan.title
-    message += "\n\nThe ticket is linked to " + ticket.user.first_name + " " + ticket.user.last_name
+    message += "\n\nThe ticket is linked to " + ticket.user.get_full_name()
     message += "\n\nMore information about the lan can be found at " + host + "/lan"
     #TODO add seating information
 
