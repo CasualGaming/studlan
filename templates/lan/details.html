@@ -26,22 +26,35 @@
 
             <hr />
 
-            <p>
+            {{ lan.get_translation.description|markdown }} 
+
+            <hr />  
+
             {% if user.is_authenticated %}
                 {% if status == 'paid' %}
-                    <a class="btn btn-success disabled" href="#">{% trans "You have paid for this event" %}</a>
+                    <a class="btn btn-success disabled" href="#">
+                        {% trans "You have paid for a " %} 
+                        {% if ticket %} {{ ticket.0.ticket_type.title }} {% endif %}
+                        {% trans "ticket for this event" %} 
+                    </a>
                 {% endif %}
                 {% if status == 'attending' %}
-                    <a class="btn btn-danger" href="{% url 'lan_unattend' lan.id %}">{% trans "Remove attendance" %}</a>
+                    <a class="btn btn-danger" href="{% url 'lan_unattend' lan.id %}">
+                        {% trans "Remove attendance" %}
+                    </a>
+                    <br>
                     {% if ticket_types %}
                         <br>
+                        <h3>{% trans "Tickets" %}</h2>
                         <div role="tabpanel">
                         <ul id="tabs" class="nav nav-tabs" role="tablist">
-                        {% for ticket_type in ticket_types %}
-                            <li {% if forloop.counter == 1 %} class="active" {% endif %} role="presentation">
-                                <a href="#ticket-{{ forloop.counter }}" aria-controls="#ticket-{{ forloop.counter }}" data-toggle="tab" role="tab">{{ ticket_type.title }}</a>
-                            </li>
-                        {% endfor %}
+                            {% for ticket_type in ticket_types %}
+                                <li {% if forloop.counter == 1 %} class="active" {% endif %} role="presentation">
+                                    <a href="#ticket-{{ forloop.counter }}" aria-controls="#ticket-{{ forloop.counter }}" data-toggle="tab" role="tab">
+                                        {{ ticket_type.get_translation.title }}
+                                    </a>
+                                </li>
+                            {% endfor %}
                         </ul> 
                         <div class="tab-content">
                             {% for ticket_type in ticket_types %}
@@ -50,7 +63,7 @@
                                 {% else %}
                                     <div role="tabpanel" class="tab-pane well" id="ticket-{{ forloop.counter }}">
                                 {% endif %}
-                                <pre>{{ ticket_type.description }}</pre>
+                                <pre>{{ ticket_type.get_translation.description }}</pre>
                                 <p><strong>Price: </strong>{{ ticket_type.price }}</p>
                                 <p><strong>Free seats: </strong>{{ ticket_type.number_of_free_seats }}</p>
                                 <form action="/payment/{{ ticket_type.id }}/" method="POST" class="inline">
@@ -62,7 +75,7 @@
                                         data-image="/square-image.png"
                                         data-name={% site_name %}
                                         data-email={{ user.email }}
-                                        data-description="{{ ticket_type.title }}"
+                                        data-description="{{ ticket_type.get_translation.title }}"
                                         data-label="{% trans "Pay with Card" %}"
                                         data-allow-remember-me="false"
                                         data-currency="NOK"
@@ -74,6 +87,7 @@
                         </div>
                     </div>
                     {% else %}
+                        <br>
                         <p>No tickets avalible at this time</p>
                     {% endif %}
                 {% endif %}
@@ -90,12 +104,6 @@
             {% else %}
                 <div class="alert alert-danger">{% trans "You need to login to see your status." %}</div>
             {% endif %}
-            </p>
-        
-            <hr />
-
-            {{ lan.description|markdown }} 
-
         </div>
     </div>
 {% endblock content %}
