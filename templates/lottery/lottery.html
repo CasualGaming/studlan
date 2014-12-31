@@ -34,7 +34,7 @@
         </div>
         {% endfor %}
     {% else %}
-        <p>{% trans "No active raffles right now." %}</p>
+        <div class="alert alert-danger"><p>{% trans "No active raffles right now." %}</p></div>
     {% endif %}
 {% else %}
     <div class="alert alert-danger">{% trans "There are currently no active lans" %}</div>

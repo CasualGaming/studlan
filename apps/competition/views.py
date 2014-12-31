@@ -229,65 +229,6 @@ def forfeit(request, competition_id):
     competition = get_object_or_404(Competition, pk=competition_id)
     messages.error(request, 'Forfeit not yet implemented!')
     return redirect(competition)
-
-# TODO
-# Mode these view out of competition and into auth, 
-# and make some kind of fallback on the plain forms
-def log_in(request):
-    username = password = ''
-    if request.POST:
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                messages.success(request, 'You have successfully logged in.')
-            else:
-                messages.add_message(request, messages.WARNING,
-                        'Your account is not active, please try again '
-                        'or contact the site admin if the problem '
-                        'persists.')
-        else:
-
-            messages.add_message(request, messages.ERROR,
-                                 'Wrong username/password.')
-    return redirect('myprofile')
-
-
-def log_out(request):
-    logout(request)
-
-    messages.success(request, 'You have successfully logged out.')
-    return redirect('root')
-
-
-def register_user(request):
-
-    username = password = fname = lname = email = ''
-    if request.POST:
-        uname = request.POST.get('username')
-        pword = request.POST.get('password')
-        fname = request.POST.get('fname')
-        lname = request.POST.get('lname')
-        email = request.POST.get('email')
-        if uname is not None and pword is not None and fname \
-            is not None and lname is not None and email is not None:
-            user = User.objects.create_user(username=uname,
-                    password=pword, email=email)
-            user.set_password(pword)
-            user.first_name = fname
-            user.last_name = lname
-            user.is_active = True
-            user.save()
-
-            # TODO review this
-
-            messages.add_message(request, messages.SUCCESS,
-                                 'Registration successful. You may now '
-                                 'log in.')
-
-    return redirect('root')
     
 def translate_competitions(competitions):
     translated_competitions = []

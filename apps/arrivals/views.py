@@ -78,20 +78,17 @@ def toggle(request, lan_id):
         toggle_type = request.POST.get('type')
         previous_value = request.POST.get('prev')
 
-        
         lan = get_object_or_404(LAN, pk=lan_id)
         user = get_object_or_404(User, username=username)
         try:
             attendee = Attendee.objects.get(lan=lan, user=user)
 
-
-            print not 0
             if int(toggle_type) == 0:
                 attendee.has_paid = reverse(previous_value)
             elif int(toggle_type) == 1:
                 attendee.arrived = reverse(previous_value)
             else:
-                return HttpResponse(status=404)            
+                raise Http404          
 
             attendee.save()
 
