@@ -65,8 +65,8 @@
                                     <div role="tabpanel" class="tab-pane well" id="ticket-{{ forloop.counter }}">
                                 {% endif %}
                                 <pre>{{ ticket_type.get_translation.description }}</pre>
-                                <p><strong>Price: </strong>{{ ticket_type.price }}</p>
-                                <p><strong>Free seats: </strong>
+                                <p><strong>{% trans "Price" %}: </strong>{{ ticket_type.price }}</p>
+                                <p><strong>{% trans "Free seats" %}: </strong>
                                     {% if ticket_type.number_of_free_seats <= 0 %}
                                         <span class="label label-danger">{% trans "Sold out" %}</span>
                                     {% else %}
@@ -97,7 +97,9 @@
                     </div>
                     {% else %}
                         <br>
-                        <p>No tickets avalible at this time</p>
+                        <div class="alert alert-danger">
+                            <p>{% trans "No tickets avalible at this time." %}</p>
+                        </div>
                     {% endif %}
                 {% endif %}
                 {% if status == 'open' %}
