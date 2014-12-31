@@ -143,7 +143,7 @@ div#btn-profile {
 
 .sidebar-wrapper {
     margin-top: 80px;
-    right: 250px;
+    right: 100px;
     position: fixed;
     width: 220px;  
 }
@@ -174,7 +174,7 @@ div#btn-profile {
 
 
 
-@media (max-width:767px) {
+@media (max-width:1114px) {
     
     .sidebar-wrapper{
         display: none;

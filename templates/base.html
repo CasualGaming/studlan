@@ -74,9 +74,9 @@
                                             <li class="divider"></li>
                                             <li><a href="{% url 'arrival_home' %}"><i class="glyphicon glyphicon-list-alt"></i> Register arrivals</a>
                                             </li>
-                                            <li><a href="/admin"><i class="glyphicon glyphicon-road"></i> Admin</a>
+                                            <li><a href="/admin"><i class="glyphicon glyphicon-cog"></i> Admin</a>
                                             </li>
-                                            <li><a href="{% url 'drawing' %}"><i class="glyphicon glyphicon-road"></i> Lottery</a></li>
+                                            <li><a href="{% url 'drawing' %}"><i class="glyphicon glyphicon-gift"></i> Lottery</a></li>
                                         {% endif%}
                                         <li class="divider"></li>
                                         <li>
@@ -96,40 +96,47 @@
             {% include "sidebar.html" %}
         </div>
         <div class="container">
-            <div class="row">
-                <div class="col-md-7">
-                    {% if breadcrumbs %}
-                        <div class="breadcrumbs">
-                            <ul class="breadcrumb">
-                                {% for text, link in breadcrumbs %} 
-                                    {% if not forloop.last %}
-                                        <li>
-                                            <a href="{{ link }}">{{ text }}</a>
-                                            <span class="divider">/</span>
-                                        </li>
-                                    {% else %}
-                                        <li>{{ text }}</li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    {% endif %}
-                    {% if messages %}
-                        {% for message in messages %}
+            {% if breadcrumbs %}
+                <div class="row breadcrumbs">
+                    <div class="col-md-9">
+                        <ul class="breadcrumb">
+                            {% for text, link in breadcrumbs %} 
+                                {% if not forloop.last %}
+                                    <li>
+                                        <a href="{{ link }}">{{ text }}</a>
+                                        <span class="divider">/</span>
+                                    </li>
+                                {% else %}
+                                    <li>{{ text }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="row">
+                        <div class="col-md-9">
                             <div class="flash fade in alert alert-dismissible alert-{{ message.tags }}"> 
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <p>{{ message }}</p>
                             </div>
-                        {% endfor %}
-                    {% endif %}
-                {% block content %}
-                    <!-- Content goes here -->
-                {% endblock content %}
-                <footer>
-                    <hr />
-                    <p><a href="https://github.com/dotKom/studlan">https://github.com/dotKom/studlan</a></p>
-                </footer>
-            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% block content %}
+                <!-- Content goes here -->
+            {% endblock content %}
+            <footer>
+                <div class="row">
+                    <div class="col-md-12">
+                        <hr />
+                        <p><a href="https://github.com/dotKom/studlan">https://github.com/dotKom/studlan</a></p>
+                    </div>
+                </div>
+            </footer>
         </div>
     </body>
 </html>
