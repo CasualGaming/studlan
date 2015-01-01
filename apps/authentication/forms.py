@@ -43,20 +43,30 @@ class LoginForm(forms.Form):
         return False
 
 class RegisterForm(forms.Form):
-    desired_username = forms.CharField(label=_(u"Desired username"), max_length=20)
-    ntnu_username = forms.CharField(label=_(u"NTNU username"), max_length=20)
-    first_name = forms.CharField(label=_(u"First name"), max_length=50)
-    last_name = forms.CharField(label=_(u"Last name"), max_length=50)
-    date_of_birth = forms.DateField(label=_(u"Date of birth"), initial=datetime.date.today)
-    # Implement in django 1.4. Template contains printing workaround for radiobuttons
-    #gender = forms.ChoiceField(label="Gender", widget=RadioSelect, choices=GENDERS)
-    gender = forms.ChoiceField(label=_(u"Gender"), choices=GENDERS)
-    email = forms.EmailField(label=_(u"Email"), max_length=50)
-    password = forms.CharField(widget=forms.PasswordInput(render_value=False), label=_(u"Password"))
-    repeat_password = forms.CharField(widget=forms.PasswordInput(render_value=False), label=_(u"Repeat password"))
-    address = forms.CharField(label=_(u"Address"), max_length=50)
-    zip_code = forms.CharField(label=_(u"ZIP code"), max_length=4)
-    phone = forms.CharField(label=_(u"Phone number"), max_length=20)
+    desired_username = forms.CharField(label=_(u"Desired username"), max_length=20, 
+        widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': _(u'Username'), 'type': 'text'}))
+    ntnu_username = forms.CharField(label=_(u"NTNU username"), max_length=20, 
+        widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': _(u'NTNU user'), 'type': 'text'    }))
+    first_name = forms.CharField(label=_(u"First name"), max_length=50, 
+        widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': _(u'First name'), 'type': 'text'})) 
+    last_name = forms.CharField(label=_(u"Last name"), max_length=50, 
+        widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': _(u'Last name'), 'type': 'text'}))
+    date_of_birth = forms.DateField(label=_(u"Date of birth"), initial=datetime.date.today, 
+        widget=forms.DateInput(attrs={'class':'form-control', 'type': 'date'}))
+    gender = forms.ChoiceField(label=_(u"Gender"), choices=GENDERS, 
+        widget=forms.Select(attrs={'class':'form-control'}))
+    email = forms.EmailField(label=_(u"Email"), max_length=50, 
+        widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': _(u'Email'), 'type': 'text'}))
+    password = forms.CharField(widget=forms.PasswordInput(render_value=False, 
+        attrs={'class':'form-control', 'placeholder': _(u'Password'), 'type': 'password'}), label=_(u"Password"))
+    repeat_password = forms.CharField(widget=forms.PasswordInput(render_value=False,    
+        attrs={'class':'form-control', 'placeholder': _(u'Repeat password'), 'type': 'password'}), label=_(u"Repeat password"))
+    address = forms.CharField(label=_(u"Address"), max_length=50, 
+        widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': _(u'Address'), 'type': 'text'}))
+    zip_code = forms.CharField(label=_(u"ZIP code"), max_length=4, 
+        widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': _(u'Zip code'), 'type': 'number'}))
+    phone = forms.CharField(label=_(u"Phone number"), max_length=20, 
+        widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': _(u'Phone number'), 'type': 'number'}))
     
     def clean(self):
         super(RegisterForm, self).clean()

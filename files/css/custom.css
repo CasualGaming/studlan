@@ -84,6 +84,14 @@ div#btn-profile {
     min-width: 173px;                       /* equal to .span2 - the dropdown widget (26px) - derp adjustments*/
 }
 
+.register-button{
+    text-align: center;
+}
+
+.form-error {
+    color: red;
+}
+
 .paid
 {
     cursor:pointer;
@@ -139,6 +147,10 @@ div#btn-profile {
 .tab-pane pre {
     border: none;
     padding: 0;
+}
+
+.form-actions {
+    margin-top: 10px;
 }
 
 .sidebar-wrapper {

@@ -42,7 +42,7 @@ Register Arrivals
                         <td>{{ attendee.user.email }}</td>
                         <td>
                             {% if attendee.user in ticket_users %}
-                                <span class="label label-success">{{ ticket_users|get_user:attendee.user }} </span>
+                                <span class="label label-info">{{ ticket_users|get_user:attendee.user }} </span>
                             {% elif attendee.has_paid %}
                                 <span class="paid label label-success" value="True">Toggle</span>
                             {% else %}
