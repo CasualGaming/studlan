@@ -56,7 +56,7 @@ class RegisterForm(forms.Form):
     gender = forms.ChoiceField(label=_(u"Gender"), choices=GENDERS, 
         widget=forms.Select(attrs={'class':'form-control'}))
     email = forms.EmailField(label=_(u"Email"), max_length=50, 
-        widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': _(u'Email'), 'type': 'text'}))
+        widget=forms.EmailInput(attrs={'class':'form-control', 'placeholder': _(u'Email'), 'type': 'text'}))
     password = forms.CharField(widget=forms.PasswordInput(render_value=False, 
         attrs={'class':'form-control', 'placeholder': _(u'Password'), 'type': 'password'}), label=_(u"Password"))
     repeat_password = forms.CharField(widget=forms.PasswordInput(render_value=False,    
