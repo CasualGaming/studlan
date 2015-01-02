@@ -88,8 +88,20 @@ div#btn-profile {
     text-align: center;
 }
 
+.login-buttons {
+    margin-left: 5%;
+}
+
 .form-error {
     color: red;
+}
+
+.language-list {
+    text-align: center;
+}
+
+.language-list a{
+    color: black;
 }
 
 .paid

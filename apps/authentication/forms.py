@@ -12,8 +12,8 @@ from apps.misc.forms import InlineSpanErrorList
 from apps.userprofile.models import GENDERS
 
 class LoginForm(forms.Form):
-    username = forms.CharField(widget=forms.TextInput(), label="Username", max_length=50)
-    password = forms.CharField(widget=forms.PasswordInput(render_value=False), label="Password")
+    username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': _(u'Username'), 'type': 'text'}), label="Username", max_length=50)
+    password = forms.CharField(widget=forms.PasswordInput(render_value=False, attrs={'class':'form-control', 'placeholder': _(u'Password'), 'type': 'password'}), label="Password")
     user = None
 
     def clean(self):

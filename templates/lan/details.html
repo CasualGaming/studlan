@@ -64,7 +64,7 @@
                                 {% else %}
                                     <div role="tabpanel" class="tab-pane well" id="ticket-{{ forloop.counter }}">
                                 {% endif %}
-                                <pre>{{ ticket_type.get_translation.description }}</pre>
+                                <p>{{ ticket_type.get_translation.description }}</p>
                                 <p><strong>{% trans "Price" %}: </strong>{{ ticket_type.price }}</p>
                                 <p><strong>{% trans "Free seats" %}: </strong>
                                     {% if ticket_type.number_of_free_seats <= 0 %}
@@ -80,7 +80,7 @@
                                             src="https://checkout.stripe.com/checkout.js"
                                             class="stripe-button"
                                             data-key={% stripe_public_key %}
-                                            data-image="{{STATIC_URL}}  x32-highlight.png"
+                                            data-image="{{STATIC_URL}}32x32-highlight.png"
                                             data-name={% site_name %}
                                             data-email={{ user.email }}
                                             data-description="{{ ticket_type.get_translation.title }}"

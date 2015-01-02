@@ -20,6 +20,7 @@ def payment(request, ticket_id):
 
         try:
             charge = stripe.Charge.create(
+                #Ticket price is in cents meaning we have to add two zeroes
                 amount=ticket_type.price * 100,
                 currency="nok",
                 card=token,
