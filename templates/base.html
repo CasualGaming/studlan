@@ -76,7 +76,7 @@
                                             </li>
                                             <li><a href="/admin"><i class="glyphicon glyphicon-cog"></i> Admin</a>
                                             </li>
-                                            <li><a href="{% url 'drawing' %}"><i class="glyphicon glyphicon-gift"></i> Lottery</a></li>
+                                            <li><a href="{% url 'drawing' %}"><i class="glyphicon glyphicon-gift"></i> Drawing</a></li>
                                         {% endif%}
                                         <li class="divider"></li>
                                         <li>
@@ -104,7 +104,7 @@
                                 {% if not forloop.last %}
                                     <li>
                                         <a href="{{ link }}">{{ text }}</a>
-                                        <span class="divider">/</span>
+                                        <span class="divider"></span>
                                     </li>
                                 {% else %}
                                     <li>{{ text }}</li>

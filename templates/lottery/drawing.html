@@ -2,37 +2,36 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-8">
-            <h1>temp</h1>
+        <div class="col-md-9">
+            <h2>{{ lottery }}</h2>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-9">
             <a class="btn btn-success" href="{% url 'draw' lottery.id %}">Draw</a>
         </div>
     </div>
     
     {% if winner %}
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-9">
             <h3>Winner:</h3>
-            <p>{{ winner.user.username }} ({{ winner.user.first_name }} {{ winner.user.last_name }})</p>
+            <p>{{ winner.user.username }} ({{ winner.user.get_full_name }})</p>
         </div>
     </div>
     {% endif %}
 
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-9">
             <h2>Winners</h2>
-            <table class="table table-bordered">
-                <th>Username</th>
-                <th>Name</th>
+            <table class="table table-bordered table-striped">
+                <thead><th>Username</th><th>Name</th>
                 <tbody>
                     {% for winner in lottery.lotterywinner_set.all reversed %}
                         <tr>
                             <td>{{ winner.user.username }}</td>
-                            <td>{{ winner.user.first_name }} {{ winner.user.last_name }}</td>
+                            <td>{{ winner.user.get_full_name }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

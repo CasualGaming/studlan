@@ -17,6 +17,7 @@ from django.utils.translation import ugettext as _
 from apps.competition.models import Activity, Competition, Participant
 from apps.lan.models import LAN
 from apps.team.models import Team
+from apps.lottery.models import Lottery
 
 def main(request):
     lans = LAN.objects.filter(end_date__gte=datetime.now())
@@ -34,7 +35,7 @@ def main(request):
 
         breadcrumbs = (
             (settings.SITE_NAME, '/'),
-            (_(u'Competitions'), ''),
+            (_(u'Events'), ''),
         )
         context['breadcrumbs'] = breadcrumbs
 
@@ -51,10 +52,11 @@ def main_filtered(request, lan_id):
     context['competitions'] = competitions
     context['active'] = 'all'
     context['lan'] = lan
+    context['lotteries'] = Lottery.objects.filter(lan=lan)
     
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
-        ('Competitions', reverse('competitions')),
+        ('Events', reverse('competitions')),
         (lan, '')
     )
     context['breadcrumbs'] = breadcrumbs

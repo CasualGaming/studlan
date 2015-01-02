@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load markdown_deux_tags %}
+
+{% block title %}
+    Raffle
+{% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-9">
+        <h2>{{ lottery }}</h2>
+        {{ lottery.get_translation.description|markdown }} 
+        <p><strong>{% trans "Participants" %}:</strong> {{ participants|length }}
+        <hr />
+        {% if user.is_authenticated %}
+            {% if lottery.registration_open %}
+                {% if request.user in participants %}
+                    <a class="btn btn-danger" href="{% url 'sign_off' lottery.id %}">{% trans "Unsign" %}</a>
+                {% else %}
+                    <a class="btn btn-success" href="{% url 'sign_up' lottery.id %}">{% trans "Sign up" %}</a>
+                {% endif %}
+            {% else %}
+            <div class="alert alert-danger">{% trans "Signup closed" %}</div>
+            {% endif %}
+        {% else %}
+            <div class="alert alert-danger">{% trans "You need to be logged inn to participate" %}</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
