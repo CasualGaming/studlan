@@ -168,6 +168,18 @@ div#btn-profile {
     padding: 0;
 }
 
+.collapsed-button{
+    height: 50px;
+    width: 40px;
+    margin-top: 0;
+    margin-bottom: 0; 
+    border: none;
+}
+
+.language-dropdown{
+    margin-right: 10px;
+}
+
 .sidebar .nav {
     text-align: center;
     margin: 0px -1px;
@@ -196,4 +208,21 @@ div#btn-profile {
         display: none;
     }
 
+    .language-dropdown {
+        display: none;
+    }
+
+}
+
+@media (max-width:767px) {
+    .navbar-nav.navbar-collapse {
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+        .language-dropdown {
+            display: block;
+        }
 }
