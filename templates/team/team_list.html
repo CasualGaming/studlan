@@ -2,12 +2,12 @@
 {% if teams %}
     <div class="row">
         <div class="col-md-9">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped table-hover team-table">
                 <thead><th>Tag</th><th>Title</th><th>{% trans "Leader" %}</th></thead>
                 <tbody>
                     {% for team in teams %}
-                    <tr>
-                        <td><a href="{{ team.get_absolute_url }}">{{ team.tag }}</a></td>
+                    <tr onclick="document.location='{{ team.get_absolute_url }}';">
+                        <td>{{ team.tag }}</td>
                         <td>{{ team.title }}</td>
                         <td>{{ team.leader }}</td>
                     </tr>

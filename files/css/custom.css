@@ -157,6 +157,11 @@ div#btn-profile {
     margin-top: 10px;
 }
 
+.team-table tbody tr:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .sidebar-wrapper {
     margin-top: 80px;
     right: 100px;

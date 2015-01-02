@@ -17,7 +17,7 @@ def teams(request):
     teams = Team.objects.all()
 
     breadcrumbs = (
-        ('studLAN', '/'),
+        (settings.SITE_NAME, '/'),
         ('Teams', ''),
     )
 
@@ -25,10 +25,12 @@ def teams(request):
 
 @login_required
 def my_teams(request):
-    teams = Team.objects.filter(Q(leader=request.user) | Q(members=request.user))
+    teams = Team.objects.filter(Q(leader=request.user) | Q(members=request.user)).distinct()
+
+    print teams
 
     breadcrumbs = (
-        ('studLAN', '/'),
+        (settings.SITE_NAME, '/'),
         ('Teams', reverse('teams')),
         ('My teams', ''),
     )
