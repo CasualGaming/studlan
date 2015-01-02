@@ -96,14 +96,6 @@ div#btn-profile {
     color: red;
 }
 
-.language-list {
-    text-align: center;
-}
-
-.language-list a{
-    color: black;
-}
-
 .paid
 {
     cursor:pointer;
