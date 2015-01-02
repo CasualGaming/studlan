@@ -6,31 +6,35 @@ from random import randint
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import translation
-from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
+from django.conf import settings
+from django.core.urlresolvers import reverse
 
 from apps.lottery.models import Lottery, LotteryParticipant, LotteryWinner
 from apps.lan.models import LAN, Attendee
 
-def index(request):
-    lans = LAN.objects.filter(end_date__gte=datetime.now())
-    if not lans.count() == 1:
-        return render(request, 'lottery/lottery.html', {'lan': False})
-    next_lan = lans[0]
-    lotteries = Lottery.objects.filter(lan=next_lan)
-    lotteries_translated = []
-    signed = []
-    for lottery in lotteries:
-        lotteries_translated.append(lottery.get_translation(language = translation.get_language()))
-        signed.append(lottery.is_participating(request.user))
-    return render(request, 'lottery/lottery.html', {'lan': next_lan, 'lotteries': zip(lotteries, lotteries_translated, signed)})
+
+def lottery_details(request, lottery_id):
+    lottery = Lottery.objects.get(pk=lottery_id)
+
+    participants = [participant.user for participant in lottery.lotteryparticipant_set.all()]
+
+    breadcrumbs = (
+        (settings.SITE_NAME, '/'),
+        ('Events', reverse('competitions')),
+        (lottery, ''),
+    )
+
+    return render(request, 'lottery/lottery_details.html', {'lottery': lottery, 
+        'participants': participants, 'breadcrumbs': breadcrumbs})
 
 def sign_up(request, lottery_id):
     lottery = get_object_or_404(Lottery, pk=lottery_id)
     if lottery.registration_open and not lottery.is_participating(request.user):
         LotteryParticipant.objects.create(user=request.user, lottery=lottery)
 
-    return redirect(index)
+    return redirect(lottery)
 
 def sign_off(request, lottery_id):
     lottery = get_object_or_404(Lottery, pk=lottery_id)
@@ -38,9 +42,9 @@ def sign_off(request, lottery_id):
         participant = get_object_or_404(LotteryParticipant, user=request.user, lottery=lottery)
         participant.delete()
 
-    return redirect(index)
+    return redirect(lottery)
 
-@login_required
+@staff_member_required
 def drawing(request, lottery_id=False):
     winner = False
     if lottery_id:
@@ -52,7 +56,7 @@ def drawing(request, lottery_id=False):
         winner = winners[len(winners) -1]
     return render(request, 'lottery/drawing.html', {'lottery':lottery, 'winner': winner})
    
-@login_required
+@staff_member_required
 def draw(request, lottery_id):
     lottery = get_object_or_404(Lottery, pk=lottery_id)
     if lottery.multiple_winnings:

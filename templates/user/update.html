@@ -17,16 +17,22 @@ Update profile
 <div class="row">
     {% if form %}
     <div class="col-md-9">
+        <br>
         <form class="form-horizontal" action="{% url 'update_profile' %}" method="POST">{% csrf_token %}
             <fieldset>
                 <legend>{% trans "Update information" %}</legend>
-                {% for field in form %}
-                    <div class="control-group">
-                        <label label-default="label-default" class="control-label">{{ field.label_tag }}</label>
-                        <div class="controls">{{ field }}</div>
-                    </div>
-                {% endfor %}
-                <div class="actions">
+                {% for field in form %} 
+                        <div class="form-group {% if field.errors %} has-error {% endif %} ">
+                            <label class="col-md-2 control-label">{{ field.label_tag }}</label>
+                            <div class="col-md-10">
+                              {{ field}}
+                                <div class="form-error">
+                                    {{ field.errors }}
+                                </div>
+                            </div>
+                          </div>
+                    {% endfor %}
+                <div class="form-actions register-button">
                     <input type="submit" class="btn btn-primary" value="{% trans "Update" %}"/>
                 </div>
             </fieldset>

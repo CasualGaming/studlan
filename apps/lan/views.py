@@ -6,8 +6,9 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.utils.translation import ugettext as _
 
-from apps.lan.models import LAN, Attendee
+from apps.lan.models import LAN, Attendee, Ticket
 
 def home(request):
     lans = LAN.objects.filter(end_date__gte=datetime.now())
@@ -20,42 +21,45 @@ def home(request):
 def listing(request):
     upcoming_lans = LAN.objects.filter(end_date__gte=datetime.now())
     previous_lans = LAN.objects.filter(end_date__lt=datetime.now())
-
+    
     return render(request, 'lan/list.html', {'upcoming': upcoming_lans, 'previous': previous_lans})
 
 def details(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
 
+    ticket_types = lan.tickettype_set.all() 
+
+    user_tickets = Ticket.objects.filter(user=request.user, ticket_type__in=ticket_types)
+
     if request.user in lan.attendees:
-        if request.user in lan.paid_attendees:
+        if request.user in lan.paid_attendees or user_tickets:
             status = 'paid'
         else:
             status = 'attending'
     else:
         status = 'open'
 
-    ticket_types = lan.tickettype_set.all()
-
-    return render(request, 'lan/details.html', {'lan': lan, 'status': status, 'ticket_types': ticket_types})
+    return render(request, 'lan/details.html', {'lan': lan, 'status': status, 
+        'ticket_types': ticket_types, 'ticket': user_tickets})
 
 @login_required
 def attend(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
     
     if lan.end_date < datetime.now():
-        messages.error(request, "This LAN has finished and can no longer be attended")
+        messages.error(request, _(u"This LAN has finished and can no longer be attended"))
         return redirect(lan)
     
     if not request.user.profile.has_address():
-        messages.error(request, "You need to fill in your address and zip code in order to sign up for a LAN.")
+        messages.error(request, _(u"You need to fill in your address and zip code in order to sign up for a LAN."))
     else:
         if request.user in lan.attendees:
-            messages.error(request, "You are already in the attendee list for %s" % lan)
+            messages.error(request, _(u"You are already in the attendee list for ") + lan)
         else:
             attendee = Attendee(lan=lan, user=request.user)
             attendee.save()
 
-            messages.success(request, "Successfully added you to attendee list for %s" % lan)
+            messages.success(request, _(u"Successfully added you to attendee list for ") + lan)
         
     return redirect(lan)
 
@@ -64,16 +68,16 @@ def unattend(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
 
     if lan.start_date < datetime.now():
-        messages.error(request, "This LAN has already started, you can not retract your signup")
+        messages.error(request, _(u"This LAN has already started, you can not retract your signup"))
         return redirect(lan)
     
     if request.user not in lan.attendees:
-        messages.error(request, "You are not in the attendee list for %s" % lan)
+        messages.error(request, _(u"You are not in the attendee list for ") + lan)
     else:
         attendee = Attendee.objects.get(lan=lan, user=request.user)
         attendee.delete()
 
-        messages.success(request, "Successfully removed you from attendee list for %s" % lan)
+        messages.success(request, _(u"Successfully removed you from attendee list for ") + lan)
         
     return redirect(lan)
 

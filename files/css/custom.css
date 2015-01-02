@@ -84,6 +84,18 @@ div#btn-profile {
     min-width: 173px;                       /* equal to .span2 - the dropdown widget (26px) - derp adjustments*/
 }
 
+.register-button{
+    text-align: center;
+}
+
+.login-buttons {
+    margin-left: 5%;
+}
+
+.form-error {
+    color: red;
+}
+
 .paid
 {
     cursor:pointer;
@@ -141,9 +153,13 @@ div#btn-profile {
     padding: 0;
 }
 
+.form-actions {
+    margin-top: 10px;
+}
+
 .sidebar-wrapper {
     margin-top: 80px;
-    right: 250px;
+    right: 100px;
     position: fixed;
     width: 220px;  
 }
@@ -174,7 +190,7 @@ div#btn-profile {
 
 
 
-@media (max-width:767px) {
+@media (max-width:1114px) {
     
     .sidebar-wrapper{
         display: none;

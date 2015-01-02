@@ -19,10 +19,14 @@ def get_range( value ):
       <li>2. Do something</li>
     </ul>
 
-    Instead of 3 one may use the variable set in the views
+    Instead of 3 one may use the variable set in the sviews
   """
   return range(  value )
 
 @register.filter
 def get_range1( value ):
   return range( 1, value+1 )
+
+@register.filter
+def get_user(tickets, user):
+    return tickets[user].ticket_type

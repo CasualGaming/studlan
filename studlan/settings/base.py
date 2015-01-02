@@ -3,6 +3,8 @@
 import os
 import sys
 
+from django.contrib.messages import constants as message_constants
+
 # Directory that contains this file.
 PROJECT_SETTINGS_DIRECTORY = os.path.dirname(globals()['__file__'])
 # Root directory. Contains manage.py
@@ -175,6 +177,9 @@ LOGGING = {
         },
     }
 }
+
+#Overiding messagetags to match bootstrap 3
+MESSAGE_TAGS = {message_constants.ERROR: 'danger'}
 
 # Remember to keep 'local' last, so it can override any setting.
 for settings_module in ['local']:  # local last

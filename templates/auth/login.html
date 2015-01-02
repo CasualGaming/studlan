@@ -11,12 +11,17 @@ Login
             <fieldset>
                 <legend>{% trans "Login" %}</legend>
                 {% for field in form %}
-                    <div class="control-group">
-                        <label label-default="label-default" class="control-label">{{ field.label_tag }}</label>
-                        <div class="controls">{{ field }} {{ field.errors }}</div>
-                    </div>
+                    <div class="form-group {% if field.errors %} has-error {% endif %} ">
+                            <label class="col-md-2 control-label">{{ field.label_tag }}</label>
+                            <div class="col-md-6">
+                              {{ field}}
+                                <div class="form-error">
+                                    {{ field.errors }}
+                                </div>
+                            </div>
+                        </div>
                 {% endfor %}
-                <div class="form-actions">
+                <div class="form-actions login-buttons">
                     <input type="submit" class="btn btn-primary" value="Login" /> 
                     <a href="{% url 'auth_recover' %}" class="btn btn-info">{% trans "Recover password" %}</a>
                 </div>

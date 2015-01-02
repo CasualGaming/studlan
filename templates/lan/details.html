@@ -26,22 +26,36 @@
 
             <hr />
 
-            <p>
+            {{ lan.get_translation.description|markdown }} 
+
+            <hr />  
+
             {% if user.is_authenticated %}
                 {% if status == 'paid' %}
-                    <a class="btn btn-success disabled" href="#">{% trans "You have paid for this event" %}</a>
+                    <a class="btn btn-success disabled" href="#">
+                        {% trans "You have paid for a " %} 
+                        {% if ticket %} {{ ticket.0.ticket_type.get_translation.title }} {% endif %}
+                        {% trans "ticket for this event" %} 
+                    </a>
                 {% endif %}
                 {% if status == 'attending' %}
-                    <a class="btn btn-danger" href="{% url 'lan_unattend' lan.id %}">{% trans "Remove attendance" %}</a>
+                    <a class="btn btn-danger" href="{% url 'lan_unattend' lan.id %}">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        {% trans "Remove attendance" %}
+                    </a>
+                    <br>
                     {% if ticket_types %}
                         <br>
+                        <h3>{% trans "Tickets" %}</h2>
                         <div role="tabpanel">
                         <ul id="tabs" class="nav nav-tabs" role="tablist">
-                        {% for ticket_type in ticket_types %}
-                            <li {% if forloop.counter == 1 %} class="active" {% endif %} role="presentation">
-                                <a href="#ticket-{{ forloop.counter }}" aria-controls="#ticket-{{ forloop.counter }}" data-toggle="tab" role="tab">{{ ticket_type.title }}</a>
-                            </li>
-                        {% endfor %}
+                            {% for ticket_type in ticket_types %}
+                                <li {% if forloop.counter == 1 %} class="active" {% endif %} role="presentation">
+                                    <a href="#ticket-{{ forloop.counter }}" aria-controls="#ticket-{{ forloop.counter }}" data-toggle="tab" role="tab">
+                                        {{ ticket_type.get_translation.title }}
+                                    </a>
+                                </li>
+                            {% endfor %}
                         </ul> 
                         <div class="tab-content">
                             {% for ticket_type in ticket_types %}
@@ -50,36 +64,50 @@
                                 {% else %}
                                     <div role="tabpanel" class="tab-pane well" id="ticket-{{ forloop.counter }}">
                                 {% endif %}
-                                <pre>{{ ticket_type.description }}</pre>
-                                <p><strong>Price: </strong>{{ ticket_type.price }}</p>
-                                <p><strong>Free seats: </strong>{{ ticket_type.number_of_free_seats }}</p>
-                                <form action="/payment/{{ ticket_type.id }}/" method="POST" class="inline">
-                                    {% csrf_token %}
-                                    <script
-                                        src="https://checkout.stripe.com/checkout.js"
-                                        class="stripe-button"
-                                        data-key={% stripe_public_key %}
-                                        data-image="/square-image.png"
-                                        data-name={% site_name %}
-                                        data-email={{ user.email }}
-                                        data-description="{{ ticket_type.title }}"
-                                        data-label="{% trans "Pay with Card" %}"
-                                        data-allow-remember-me="false"
-                                        data-currency="NOK"
-                                        data-amount="{{ ticket_type.price }}00">
-                                    </script>
-                                </form>
+                                <p>{{ ticket_type.get_translation.description }}</p>
+                                <p><strong>{% trans "Price" %}: </strong>{{ ticket_type.price }}</p>
+                                <p><strong>{% trans "Free seats" %}: </strong>
+                                    {% if ticket_type.number_of_free_seats <= 0 %}
+                                        <span class="label label-danger">{% trans "Sold out" %}</span>
+                                    {% else %}
+                                        {{ ticket_type.number_of_free_seats }}
+                                    {% endif %}
+                                </p>
+                                {% if not ticket_type.number_of_free_seats <= 0 %}
+                                    <form action="/payment/{{ ticket_type.id }}/" method="POST" class="inline">
+                                        {% csrf_token %}
+                                        <script
+                                            src="https://checkout.stripe.com/checkout.js"
+                                            class="stripe-button"
+                                            data-key={% stripe_public_key %}
+                                            data-image="{{STATIC_URL}}32x32-highlight.png"
+                                            data-name={% site_name %}
+                                            data-email={{ user.email }}
+                                            data-description="{{ ticket_type.get_translation.title }}"
+                                            data-label="{% trans "Pay with Card" %}"
+                                            data-allow-remember-me="false"
+                                            data-currency="NOK"
+                                            data-amount="{{ ticket_type.price }}00">
+                                        </script>
+                                    </form>
+                                {% endif %}
                                 </div>
                             {% endfor %}
                         </div>
                     </div>
                     {% else %}
-                        <p>No tickets avalible at this time</p>
+                        <br>
+                        <div class="alert alert-danger">
+                            <p>{% trans "No tickets avalible at this time." %}</p>
+                        </div>
                     {% endif %}
                 {% endif %}
                 {% if status == 'open' %}
                     {% if user.profile.has_address %}
-                        <a class="btn btn-primary" href="{% url 'lan_attend' lan.id %}">{% trans "Sign up" %}</a>
+                        <a class="btn btn-primary" href="{% url 'lan_attend' lan.id %}">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            {% trans "Sign up" %}
+                        </a>
                     {% else %}
                         <div class="alert alert-danger">
                             {% trans "Your address and zip code is required in order to sign up for a LAN." %}
@@ -90,12 +118,6 @@
             {% else %}
                 <div class="alert alert-danger">{% trans "You need to login to see your status." %}</div>
             {% endif %}
-            </p>
-        
-            <hr />
-
-            {{ lan.description|markdown }} 
-
         </div>
     </div>
 {% endblock content %}

@@ -2,6 +2,7 @@
 
 from datetime import datetime
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -11,10 +12,12 @@ from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.context import RequestContext
 from django.utils import translation
+from django.utils.translation import ugettext as _
 
 from apps.competition.models import Activity, Competition, Participant
 from apps.lan.models import LAN
 from apps.team.models import Team
+from apps.lottery.models import Lottery
 
 def main(request):
     lans = LAN.objects.filter(end_date__gte=datetime.now())
@@ -31,8 +34,8 @@ def main(request):
         context['active'] = 'all'
 
         breadcrumbs = (
-            ('studLAN', '/'),
-            ('Competitions', ''),
+            (settings.SITE_NAME, '/'),
+            (_(u'Events'), ''),
         )
         context['breadcrumbs'] = breadcrumbs
 
@@ -49,10 +52,11 @@ def main_filtered(request, lan_id):
     context['competitions'] = competitions
     context['active'] = 'all'
     context['lan'] = lan
+    context['lotteries'] = Lottery.objects.filter(lan=lan)
     
     breadcrumbs = (
-        ('studLAN', '/'),
-        ('Competitions', reverse('competitions')),
+        (settings.SITE_NAME, '/'),
+        ('Events', reverse('competitions')),
         (lan, '')
     )
     context['breadcrumbs'] = breadcrumbs
@@ -76,7 +80,7 @@ def activity_details(request, activity_id):
         context['competitions'] = competitions
 
         breadcrumbs = (
-            ('studLAN', '/'),
+            (settings.SITE_NAME, '/'),
             ('Competitions', reverse('competitions')),
             (activity, ''),
         )
@@ -98,8 +102,8 @@ def activity_details_filtered(request, lan_id, activity_id):
     context['lan'] = lan
 
     breadcrumbs = (
-        ('studLAN', '/'),
-        ('Competitions', reverse('competitions')),
+        (settings.SITE_NAME, '/'),
+        (_(u'Competitions'), reverse('competitions')),
         (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
         (activity, ''),
     )
@@ -119,8 +123,8 @@ def competition_details(request, competition_id):
     competition = get_object_or_404(Competition, pk=competition_id)
 
     breadcrumbs = (
-        ('studLAN', '/'),
-        ('Competitions', reverse('competitions')),
+        (settings.SITE_NAME, '/'),
+        (_(u'Competitions'), reverse('competitions')),
         (competition.activity, reverse('activity_details', kwargs={'activity_id': competition.activity.id})),
         (competition, ''),
     )
@@ -147,7 +151,7 @@ def competition_details(request, competition_id):
 
         context['owned_teams'] = owned_teams
     else:
-        messages.warning(request, "Please log in to register for the competition.")
+        messages.warning(request, _(u"Please log in to register for the competition."))
     context['competition'] = competition
     return render(request, 'competition/competition.html', context)
 
@@ -160,7 +164,7 @@ def join(request, competition_id):
     # overridden by team signup, but not other way around
     for team in teams:
         if request.user == team.leader or request.user in team.members.all():
-            messages.error(request, "You are already in this competition with %s." % team)
+            messages.error(request, _(u"You are already in this competition with ") + str(team))
             return redirect(competition)
     
     # Checks that a form was posted, and if it contains a team id
@@ -187,13 +191,13 @@ def join(request, competition_id):
         else:
             # If solo signup and already signed
             if request.user in users:
-                messages.error(request, "You are already in this competition as a solo player.")
+                messages.error(request, _(u"You are already in this competition as a solo player."))
                 return redirect(competition)
             else:
                 participant = Participant(user=request.user, competition=competition)
                 participant.save()
     
-        messages.success(request, "You have entered %s for this competition." % participant)
+        messages.success(request, _(u"You have been signed up for ") + str(competition))
     return redirect(competition)
 
 @login_required
@@ -202,13 +206,13 @@ def leave(request, competition_id):
 
     # If not participating, do nothing
     if not competition.has_participant(request.user):
-        messages.error(request, "You are not participating in this competition.")
+        messages.error(request, _(u"You are not participating in this competition."))
     else:
         if request.method == 'POST':
             if request.user in competition.get_users():
                 participant = Participant.objects.get(user=request.user, competition=competition) 
                 participant.delete()
-                messages.success(request, "You are no longer participating in %s." % competition)
+                messages.success(request, _(u"You are no longer participating in ") + str(competition))
             else:
                 was_leader = False
                 for team in competition.get_teams():
@@ -216,7 +220,7 @@ def leave(request, competition_id):
                         was_leader = True
                         participant = Participant.objects.get(team=team, competition=competition)
                         participant.delete()
-                        messages.success(request, "You are have removed %s from %s." % (team, competition))
+                        messages.success(request, _(u"You have removed ") + str(team) + _(u" from ") + str(competition))
                 if not was_leader:
                     messages.error(request, "You cannot remove %s from %s, you are not the team leader." % (team, competition))
 
@@ -227,65 +231,6 @@ def forfeit(request, competition_id):
     competition = get_object_or_404(Competition, pk=competition_id)
     messages.error(request, 'Forfeit not yet implemented!')
     return redirect(competition)
-
-# TODO
-# Mode these view out of competition and into auth, 
-# and make some kind of fallback on the plain forms
-def log_in(request):
-    username = password = ''
-    if request.POST:
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                messages.success(request, 'You have successfully logged in.')
-            else:
-                messages.add_message(request, messages.WARNING,
-                        'Your account is not active, please try again '
-                        'or contact the site admin if the problem '
-                        'persists.')
-        else:
-
-            messages.add_message(request, messages.ERROR,
-                                 'Wrong username/password.')
-    return redirect('myprofile')
-
-
-def log_out(request):
-    logout(request)
-
-    messages.success(request, 'You have successfully logged out.')
-    return redirect('root')
-
-
-def register_user(request):
-
-    username = password = fname = lname = email = ''
-    if request.POST:
-        uname = request.POST.get('username')
-        pword = request.POST.get('password')
-        fname = request.POST.get('fname')
-        lname = request.POST.get('lname')
-        email = request.POST.get('email')
-        if uname is not None and pword is not None and fname \
-            is not None and lname is not None and email is not None:
-            user = User.objects.create_user(username=uname,
-                    password=pword, email=email)
-            user.set_password(pword)
-            user.first_name = fname
-            user.last_name = lname
-            user.is_active = True
-            user.save()
-
-            # TODO review this
-
-            messages.add_message(request, messages.SUCCESS,
-                                 'Registration successful. You may now '
-                                 'log in.')
-
-    return redirect('root')
     
 def translate_competitions(competitions):
     translated_competitions = []

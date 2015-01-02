@@ -5,7 +5,7 @@ from django.conf.urls import patterns, url
 
 urlpatterns = patterns('apps.lottery.views',
     # Main comp oversight
-    url(r'^$', 'index', name='lottery'),
+    url(r'^details/(?P<lottery_id>\d+)/$', 'lottery_details', name='lottery_details'),
     url(r'^signup/(?P<lottery_id>\d+)/$', 'sign_up', name='sign_up'),
     url(r'^signoff/(?P<lottery_id>\d+)/$', 'sign_off', name='sign_off'),
     url(r'^drawing/$', 'drawing', name='drawing'),

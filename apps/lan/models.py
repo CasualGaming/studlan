@@ -4,16 +4,16 @@ from datetime import datetime
 
 from django.contrib.auth.models import User
 from django.db import models
+from translatable.models import TranslatableModel, get_translation_model
 
 from apps.userprofile.models import UserProfile
 
 
-class LAN(models.Model):
+class LAN(TranslatableModel):
     title = models.CharField("title", max_length=100)
     start_date = models.DateTimeField("start date")
     end_date = models.DateTimeField("end date")
     location = models.CharField("location", max_length=100)
-    description = models.TextField("description")
 
     @property
     def attendees(self):
@@ -65,6 +65,9 @@ class LAN(models.Model):
         ordering = ['start_date']
 
 
+class LANTranslation(get_translation_model(LAN, "LAN")):
+    description = models.TextField("description")
+
 class Attendee(models.Model):
     user = models.ForeignKey(User)
     lan = models.ForeignKey(LAN)
@@ -78,22 +81,24 @@ class Attendee(models.Model):
         ordering = ['-user', 'lan', ]
 
 
-class TicketType(models.Model):
+class TicketType(TranslatableModel):
     lan = models.ForeignKey(LAN)
 
-    title = models.CharField("Title", max_length=50)
     price = models.IntegerField("Price", default=50)
     number_of_seats = models.IntegerField("Seats")
-    description = models.TextField("Description", null=True, blank=True)
-
-    def __unicode__(self):
-        return self.title
 
     def number_of_seats_used(self):
         return self.ticket_set.count()
 
     def number_of_free_seats(self):
         return self.number_of_seats - self.number_of_seats_used()
+
+class TicketTypeTranslation(get_translation_model(TicketType, "TicketType")):
+    title = models.CharField("Title", max_length=50)
+    description = models.TextField("Description", null=True, blank=True)
+
+    def __unicode__(self):
+        return self.title
 
 class Ticket(models.Model):
     user = models.ForeignKey(User)
