@@ -179,5 +179,16 @@ div#btn-profile {
     .sidebar-wrapper{
         display: none;
     }
+}
 
+.seating-node-free {
+    fill:#5CB85C;
+}
+
+.seating-node-occupied {
+    fill:#C9302C;
+}
+
+.seating-node-self {
+    fill:#EC971F;
 }

@@ -13,6 +13,8 @@ from apps.seating.models import Seating, Seat
 from apps.lan.models import LAN, Attendee
 from django.http import HttpResponse
 from reportlab.pdfgen import canvas
+from bs4 import BeautifulSoup
+
 
 def main(request):
         context = {}
@@ -55,8 +57,27 @@ def main_filtered(request, lan_id):
 
 def seating_details(request, seating_id):
     context = {}
-
     seating = get_object_or_404(Seating, pk=seating_id)
+    users = seating.get_user_registered()
+    seats = seating.get_total_seats()
+
+    if seating.template:
+        dom = BeautifulSoup(seating.template, "html.parser")
+        counter = 1
+        for tag in dom.find_all('a'):
+            children = tag.find_all('rect')
+            if seats[counter-1].is_empty:
+                children[0]['class'] = ' seating-node-free'
+                tag['xlink:href'] = 'join/' + str(counter)
+            else:
+                if seats.counter.user == request.user:
+                    children[0]['class'] = ' seating-node-self'
+                    tag['xlink:href'] = 'leave/' + str(counter)
+                else:
+                    children[0]['class'] = ' seating-node-occupied'
+                    tag['xlink:href'] = '#'
+            counter += 1
+        dom.encode("utf-8")
 
     breadcrumbs = (
         ('studLAN', '/'),
@@ -65,12 +86,10 @@ def seating_details(request, seating_id):
     )
     context['seating'] = seating
     context['breadcrumbs'] = breadcrumbs
-
-    users = seating.get_user_registered()
-    seats = seating.get_total_seats()
-
     context['users'] = users
     context['seats'] = seats
+    if seating.template:
+        context['template'] = dom.__str__
 
     # Insert placeholder image if the image_url is empty
     return render(request, 'seating/seating.html', context)
