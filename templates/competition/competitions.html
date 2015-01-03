@@ -5,7 +5,7 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-9"><h2>{% trans "Competitions" %}</h2></div>
+        <div class="col-md-9"><h3>{% trans "Competitions" %}</h3></div>
     </div>
     <div class="row">
         <div class="col-md-9">
@@ -36,7 +36,7 @@
     {% if lotteries %}
         <div class="row">
             <div class="col-md-9">
-                <h2>{% trans "Raffles" %}</h2>
+                <h3>{% trans "Raffles" %}</h3>
             </div>
         </div>
         <div class="row">
@@ -59,6 +59,12 @@
                         {% endfor %}
                     </tbody>
                 </table>
+            </div>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-md-9">
+                <div class="alert alert-warning">{% trans "No active raffles right now" %}</div>
             </div>
         </div>
     {% endif %}
