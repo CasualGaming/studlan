@@ -15,7 +15,7 @@
         <li class="sidebar-header">
             <a href="{% url 'competitions' %}">{% trans "Competition Info" %}</a>
         </li>
-        <li>{% num_of_competitions %} competitions active.</li>
+        <li>{% num_of_competitions %} {% trans "competitions active." %}</li>
         <li class="sidebar-header"><a href="#">{% trans "Sponsors" %}</a></li>
         {% show_sponsor_list %}
     </ul>

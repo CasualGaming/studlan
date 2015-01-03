@@ -157,9 +157,17 @@ div#btn-profile {
     margin-top: 10px;
 }
 
-.team-table tbody tr:hover {
-    text-decoration: underline;
+.click-table tbody tr:hover {
     cursor: pointer;
+}
+
+.click-table tbody tr:hover .underline {
+    text-decoration: underline;
+}
+
+.participants-heading{
+    color: rgb(65, 131, 196) !important;
+    font-weight: bold !important;
 }
 
 .sidebar-wrapper {
@@ -171,6 +179,10 @@ div#btn-profile {
 
 .sidebar{
     padding: 0;
+}
+
+.participant-you{
+    font-weight: bold;
 }
 
 .collapsed-button{

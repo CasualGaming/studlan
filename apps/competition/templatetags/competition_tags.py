@@ -16,6 +16,16 @@ register = template.Library()
 def competition_tabs(activities, active):
     return {'activities': activities, 'active': active}
 
+@register.filter
+def show_solo_note(compo, user):
+    if not compo.has_participant(user):
+    	return True
+    else:	
+    	participant = compo.participant_set.filter(user=user)
+    	if participant:
+    		return not participant[0].is_team()
+
+    return False
 
 #--- For sidebar ---
 
