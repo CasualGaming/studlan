@@ -63,19 +63,20 @@ def seating_details(request, seating_id):
 
     if seating.template:
         dom = BeautifulSoup(seating.template, "html.parser")
-        counter = 1
+        counter = 0
         for tag in dom.find_all('a'):
             children = tag.find_all('rect')
-            if seats[counter-1].is_empty:
+            if seats[counter].is_empty:
                 children[0]['class'] = ' seating-node-free'
-                tag['xlink:href'] = 'join/' + str(counter)
+                tag['xlink:href'] = 'join/' + str(seats[counter].id)
             else:
-                if seats.counter.user == request.user:
+                if seats[counter].user == request.user:
                     children[0]['class'] = ' seating-node-self'
-                    tag['xlink:href'] = 'leave/' + str(counter)
+                    tag['xlink:href'] = 'leave/' + str(seats[counter].id)
                 else:
                     children[0]['class'] = ' seating-node-occupied'
                     tag['xlink:href'] = '#'
+                    tag['title'] = seats[counter].user
             counter += 1
         dom.encode("utf-8")
 
@@ -119,7 +120,7 @@ def join(request, seating_id, seat_id):
             seat.save()
             messages.success(request, "You have successfully reserved your seat! ")
         else:
-            messages.error(request, "That seat is taken!")
+            messages.error(request, "That seat is reserved by " + str(seat.user))
     else:
         messages.error(request, "You need to attend and pay before reserving your seat")
     return redirect(seating)
