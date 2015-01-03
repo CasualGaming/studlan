@@ -23,7 +23,10 @@
         <div class="navbar navbar-fixed-top navbar-default" role="navigation">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <button type="button" class="navbar-toggle collapsed collapsed-button" data-toggle="collapse" data-target="#userlist">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </button>
+                    <button type="button" class="navbar-toggle collapsed collapsed-button" data-toggle="collapse" data-target="#navigationlist">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -32,9 +35,13 @@
                     <img class="navbar-brand" style="margin-right:-12px;" src="{{STATIC_URL}}32x32-highlight.png"/>
                     <a class="navbar-brand" href="{% url 'root' %}">{% site_name %}</a>
                 </div>
+                <ul class="collapse navbar-collapse nav navbar-nav navbar-right" id="userlist">
+                    {% include "userdropdown.html" %}
+                </ul>
                 <div class="navbar-collapse collapse" id="navigationlist">
-                {% include "navigation.html" %}
-                    <ul class="nav navbar-nav navbar-right">
+                    {% include "navigation.html" %}
+                    <!-- Language selection -->
+                    <ul class="nav navbar-nav navbar-right language-dropdown">
                         <li role="presentation" class="dropdown"> 
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {% trans "Language" %} <b class="caret"></b>
@@ -50,44 +57,6 @@
                             {% endfor %}
                             </ul>
                         </li>
-                        {% if not user.is_authenticated %}
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a href="{% url 'auth_register' %}">{% trans "Register" %}</a></li>
-                                <li><a href="{% url 'auth_login' %}">{% trans "Login" %}</a></li>
-                            </ul>
-                        {% else %}
-                            <ul class="nav navbar-nav navbar-right">
-                                <div class="btn-group" id="btn-profile"> 
-                                    <a class="btn btn-inverse navbar-btn" href="{% url 'myprofile' %}">
-                                    <i class="glyphicon glyphicon-user icon-white">
-                                    </i> {{ user }} </a>
-                                    <a class="btn btn-inverse dropdown-toggle navbar-btn" data-toggle="dropdown" href="#">
-                                        <span class="caret"></span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <a href="{% url 'update_profile' %}">
-                                            <i class="glyphicon glyphicon-pencil">
-                                            </i> {% trans "Edit profile" %}</a>
-                                        </li>
-                                        {% if user.is_staff %}
-                                            <li class="divider"></li>
-                                            <li><a href="{% url 'arrival_home' %}"><i class="glyphicon glyphicon-list-alt"></i> Register arrivals</a>
-                                            </li>
-                                            <li><a href="/admin"><i class="glyphicon glyphicon-cog"></i> Admin</a>
-                                            </li>
-                                            <li><a href="{% url 'drawing' %}"><i class="glyphicon glyphicon-gift"></i> Drawing</a></li>
-                                        {% endif%}
-                                        <li class="divider"></li>
-                                        <li>
-                                            <a href="{% url 'auth_logout' %}">
-                                            <i class="glyphicon glyphicon-off">
-                                            </i> {% trans "Log out" %}</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </ul>
-                        {% endif %}
                     </ul>
                 </div>
             </div>

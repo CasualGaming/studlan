@@ -125,7 +125,6 @@ def competition_details(request, competition_id):
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
         (_(u'Competitions'), reverse('competitions')),
-        (competition.activity, reverse('activity_details', kwargs={'activity_id': competition.activity.id})),
         (competition, ''),
     )
     

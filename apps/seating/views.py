@@ -215,10 +215,10 @@ def seating_map(request, seating_id):
     cursor = 750
     for s in seats:
         if s.user:
-            p.drawString(230, cursor, "Plass " + str(s.id) + ": ")
+            p.drawString(230, cursor, "Plass " + str(s.placement) + ": ")
             p.drawString(280, cursor, str(s.user))
         else:
-            p.drawString(230, cursor, "Plass " + str(s.id) + ": ")
+            p.drawString(230, cursor, "Plass " + str(s.placement) + ": ")
             p.drawString(280, cursor, '[Ledig]')
         cursor = cursor - 19
     # Close the PDF object cleanly, and we're done.

@@ -30,36 +30,38 @@ Register Arrivals
             <div style="display:none">
                 <input id="token" type="hidden" value="{{ csrf_token }}">
             </div>
-            <table class="table table-bordered table-striped filterable">
-                <thead>
-                    <th>Username</th><th>Full name</th><th>Email Address</th><th>Paid</th><th>Arrived</th>
-                </thead>
-                <tbody>
-                    {% for attendee in attendees %}
-                    <tr>
-                        <td class="username">{{ attendee.user.username }}</td>
-                        <td>{{ attendee.user.get_full_name }}</td>
-                        <td>{{ attendee.user.email }}</td>
-                        <td>
-                            {% if attendee.user in ticket_users %}
-                                <span class="label label-info">{{ ticket_users|get_user:attendee.user }} </span>
-                            {% elif attendee.has_paid %}
-                                <span class="paid label label-success" value="True">Toggle</span>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped filterable">
+                    <thead>
+                        <th>Username</th><th>Full name</th><th>Email Address</th><th>Paid</th><th>Arrived</th>
+                    </thead>
+                    <tbody>
+                        {% for attendee in attendees %}
+                        <tr>
+                            <td class="username">{{ attendee.user.username }}</td>
+                            <td>{{ attendee.user.get_full_name }}</td>
+                            <td>{{ attendee.user.email }}</td>
+                            <td>
+                                {% if attendee.user in ticket_users %}
+                                    <span class="label label-info">{{ ticket_users|get_user:attendee.user }} </span>
+                                {% elif attendee.has_paid %}
+                                    <span class="paid label label-success" value="True">Toggle</span>
+                                {% else %}
+                                    <span class="paid label label-danger" value="False">Toggle</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                            {% if attendee.arrived %}
+                                <span class="arrived label label-success" value="True">Toggle</span>
                             {% else %}
-                                <span class="paid label label-danger" value="False">Toggle</span>
+                                <span class="arrived label label-danger" value="False">Toggle</span>
                             {% endif %}
-                        </td>
-                        <td>
-                        {% if attendee.arrived %}
-                            <span class="arrived label label-success" value="True">Toggle</span>
-                        {% else %}
-                            <span class="arrived label label-danger" value="False">Toggle</span>
-                        {% endif %}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     {% else %}
         <div class="col-md-9">

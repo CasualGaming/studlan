@@ -157,6 +157,19 @@ div#btn-profile {
     margin-top: 10px;
 }
 
+.click-table tbody tr:hover {
+    cursor: pointer;
+}
+
+.click-table tbody tr:hover .underline {
+    text-decoration: underline;
+}
+
+.participants-heading{
+    color: rgb(65, 131, 196) !important;
+    font-weight: bold !important;
+}
+
 .sidebar-wrapper {
     margin-top: 80px;
     right: 100px;
@@ -166,6 +179,22 @@ div#btn-profile {
 
 .sidebar{
     padding: 0;
+}
+
+.participant-you{
+    font-weight: bold;
+}
+
+.collapsed-button{
+    height: 50px;
+    width: 40px;
+    margin-top: 0;
+    margin-bottom: 0; 
+    border: none;
+}
+
+.language-dropdown{
+    margin-right: 10px;
 }
 
 .sidebar .nav {
@@ -195,6 +224,23 @@ div#btn-profile {
     .sidebar-wrapper{
         display: none;
     }
+
+    .language-dropdown {
+        display: none;
+    }
+}
+
+@media (max-width:767px) {
+    .navbar-nav.navbar-collapse {
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+        .language-dropdown {
+            display: block;
+        }
 }
 
 .seating-node-free {
@@ -207,4 +253,7 @@ div#btn-profile {
 
 .seating-node-self {
     fill:#EC971F;
+
 }
+
+
