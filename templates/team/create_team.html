@@ -5,7 +5,7 @@
 {% load team_tags %}
 
 {% block title %}
-    Create team
+    {% trans "Create team" %}
 {% endblock title %}
 
 {% block tabs %}
@@ -13,30 +13,41 @@
 {% endblock tabs %}
 
 {% block teampage %}
+<br>
     <div class="row">
         <div class="col-md-9">
             <form class="form-horizontal" action="{% url 'create_team' %}" method="POST">
                 {% csrf_token %}
                 <fieldset>
                     <legend>{% trans "Create new team" %}</legend>
-                    <div class="control-group">
-                        <label class="control-label" for="title">{{ form.title.label }}</label>
-                        <div class="controls">
-                            <input class="input-xlarge" id="title" name="title" size="30" type="text" value="{% if form.title.value %}{{ form.title.value }}{% endif %}" />
-                            {{ form.title.errors }}
+                    <div class="form-group {% if form.title.errors %} has-error {% endif %}">
+                        <label class="col-md-1 control-label" for="title">{{ form.title.label }}</label>
+                        <div class="col-md-4">
+                            <input class="form-control" id="title" name="title" type="text" value="{% if form.title.value %}{{ form.title.value }}{% endif %}" />
+                        </div>
+                        <div class="col-md-7">
+                            {% if form.title.errors %}
+                                <span class="alert alert-danger">{{ form.title.errors }}</span>
+                            {% endif %}
                         </div>
                     </div>
-                    <div class="control-group">
-                        <label class="control-label" for="tag">{{ form.tag.label }}</label>
-                        <div class="controls">
-                            <div class="input-prepend">
-                                <span class="add-on">[{{ form.tag.label|lower }}]</span>
-                                <input class="input-xlarge" id="tag" name="tag" size="30" type="text" value="{% if form.tag.value %}{{ form.tag.value }}{% endif %}" />
-                                <span class="help-block">{% trans "Must be unique!" %}</span>
+                        <div class="form-group {% if form.tag.errors %} has-error {% endif %}">
+                            <label class="col-md-1 control-label" for="tag">{{ form.tag.label }}</label>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <div class="input-group-addon">[{{ form.tag.label|lower }}]</div>
+                                    <input class="form-control" id="tag" name="tag" type="text" value="{% if form.tag.value %}{{ form.tag.value }}{% endif %}" />
+                                </div>
                             </div>
-                            {{ form.tag.errors }}
+                            <div class="col-md-7">
+                                {% if form.tag.errors %}
+                                    <span class="alert alert-danger">{{ form.tag.errors }}</span>
+                                {% endif %}
+                            </div>
+                            {% if not form.tag.errors %}
+                                <span class="help-block">{% trans "Must be unique!" %}</span>
+                            {% endif %}
                         </div>
-                    </div>
                     <div class="form-actions">
                         <input type="submit" class="btn btn-primary" value="{% trans "Create team" %}"/>
                     </div>

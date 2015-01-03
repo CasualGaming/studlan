@@ -1,6 +1,6 @@
 {% load i18n %}
 <div class="row table-tabs">
-    <div class="col-md-8">
+    <div class="col-md-9">
         <ul class="nav nav-tabs">
             <li{% if active == 'all' %} class="active"{% endif %}><a href="{% url 'teams' %}">{% trans "All teams" %}</a></li>
             <li{% if active == 'mine' %} class="active"{% endif %}><a href="{% url 'my_teams' %}">{% trans "My teams" %}</a></li>

@@ -4,7 +4,7 @@
 {% load misc %}
 
 {% block title %}
-Team - {{ team }}
+{{ team }}
 {% endblock title %}
 
 {% block content %}
@@ -26,64 +26,67 @@ Team - {{ team }}
         <div class="col-md-9">
             <h3>{% trans "Leader" %}</h3>
             <h4>
-                <a href="{% url 'profile' team.leader %}">{{ team.leader }} ({{ team.leader.first_name }} {{ team.leader.last_name }})</a>
+                <a href="{% url 'profile' team.leader %}">{{ team.leader }} ({{ team.leader.get_full_name }})</a>
             </h4>
         </div>
     </div>
 	
-    <div class="row">
-        <div class="col-md-9">
-            <h3>{% trans "Members" %}</h3>
-        </div>
-    </div>
 	<div class="row">
         <div class="col-md-9">
-            <table class="table table-bordered table-striped">
-                <thead><th>{% trans "User name" %}</th><th>{% trans "Full name" %}</th><th>{% trans "Options" %}</th></thead>
-                <tbody>
-                    {% for member in team.members.all %}
-                        <tr>
-                            <td><a href="{% url 'profile' member %}">{{ member }}</a></td>
-                            <td>{{ member.first_name }} {{ member.last_name }}</td>
-                            <td>
-                            {% if user == team.leader %}
-                                <a href="{% url 'remove_member' team.id member.id %}">{% trans "Remove" %}</a>
-                            {% else %}{% if user == member %}
-                                <a href="{% url 'remove_member' team.id user.id %}">{% trans "Leave team" %}</a>
-                            {% endif %}{% endif %}
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            {% if team.members.all %}
+                <h3>{% trans "Members" %}</h3>
+                <table class="table table-bordered table-striped table-hover click-table    ">
+                    <thead>
+                        <th class="col-md-4">{% trans "User name" %}</th>
+                        <th class="col-md-6">{% trans "Full name" %}</th>
+                        <th class="col-md-2">{% trans "Options" %}</th>
+                    </thead>
+                    <tbody>
+                        {% for member in team.members.all %}
+                            <tr onclick="document.location='{% url 'profile' member %}';">
+                                <td class="underline">{{ member }}</a></td>
+                                <td class="underline">{{ member.get_full_name }}</td>
+                                <td>
+                                {% if user == team.leader %}
+                                    <a class="btn btn-danger btn-xs" href="{% url 'remove_member' team.id member.id %}">{% trans "Remove" %}</a>
+                                {% elif user == member %}
+                                    <a class="btn btn-danger btn-xs" href="{% url 'remove_member' team.id user.id %}">{% trans "Leave team" %}</a>
+                                {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="alert alert-danger">This team has no members yet</div>
+            {% endif %}
         </div>
     </div>
-    
-	
-	{% if team.is_mine and users|length > 0 %}
+
+    {% if team.is_mine and users %}
         <div class="row">
             <div class="col-md-9">
-                <form class="form-horizontal" action="{% url 'add_member' team.id %}" method="POST">{% csrf_token %}
+                <form class="form-horizontal" action="{% url 'add_member' team.id %}" method="POST">
+                    {% csrf_token %}
                     <fieldset>
                         <legend>{% trans "Add member" %}</legend>
-                        <div class="control-group">
-                            <label class="control-label" for="select">Select</label>
-                            <div class="controls">
-                                <select id="selectMember" name="selectMember">
+                        <div class="form-group">
+                            <label class="col-md-1 control-label" for="selectMember">Select</label>
+                            <div class="col-md-4">
+                                <select class="form-control" id="selectMember" name="member">
                                     {% for user in users %}
                                         <option value="{{ user.id }}">{{ user }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
-                        </div>
-                        <div class="form-actions">
-                            <input type="submit" class="btn btn-primary" value="{% trans "Add member" %}" />
+                            <div class="col-md-3">
+                                <input type="submit" class="btn btn-primary" value="{% trans "Add member" %}" />
+                            </div>
                         </div>
                     </fieldset>
                 </form>
             </div>
-        </div>
-		
-	{% endif %}
+        </div>  
+    {% endif %}
 
 {% endblock content %}
