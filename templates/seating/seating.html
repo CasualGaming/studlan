@@ -1,7 +1,10 @@
 {% extends "seating/seating_base.html" %}
 {% block title %}
-studLAN - Seating
+Seating
 {% endblock title %}
+{% block sidebar%}
+ads
+{% endblock sidebar %}
 {% load i18n %}
 {% block content %}
     <div class="row">
@@ -17,6 +20,11 @@ studLAN - Seating
     </div>
     <div class="row">
         <div class="col-md-8">
+            {% if template %}
+            <svg width="700" height="600">
+               {{template|safe}}
+            </svg>
+            {% else %}
             {% for s in seats %}
                     <div class="col-md-2">
                 {% if s.user %}
@@ -44,6 +52,7 @@ studLAN - Seating
                 {% endif %}
                 </div>
             {% endfor %}
+            {% endif %}
         </div>
     </div>
     

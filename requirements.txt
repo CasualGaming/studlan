@@ -5,6 +5,7 @@ django-translatable==0.1.1
 gunicorn==18.0
 reportlab
 stripe==1.19.1
+beautifulsoup
 
 # PostgreSQL plugin for python
 psycopg2

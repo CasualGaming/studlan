@@ -11,6 +11,7 @@ class Seating(models.Model):
     desc = models.CharField('desc', max_length=250)
     number_of_seats = models.IntegerField('number of seats')
     closing_date = models.DateTimeField("closing date")
+    template = models.TextField('SVG layout for seating', null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.pk:

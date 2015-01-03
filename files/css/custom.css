@@ -228,7 +228,6 @@ div#btn-profile {
     .language-dropdown {
         display: none;
     }
-
 }
 
 @media (max-width:767px) {
@@ -243,3 +242,18 @@ div#btn-profile {
             display: block;
         }
 }
+
+.seating-node-free {
+    fill:#5CB85C;
+}
+
+.seating-node-occupied {
+    fill:#C9302C;
+}
+
+.seating-node-self {
+    fill:#EC971F;
+
+}
+
+
