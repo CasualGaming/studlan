@@ -215,6 +215,9 @@ div#btn-profile {
     padding: 0 !important;
 }.sidebar-header a:hover{
     background: none !important;
+}.sidebar li:not(.sidebar-header) a{
+    margin: 0;
+    padding: 1px;
 }
 
 
