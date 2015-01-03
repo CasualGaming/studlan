@@ -35,10 +35,10 @@ ads
                         {% endif %}
                         method="POST">
                         {% csrf_token %}
-                        <input class="btn btn-warning" type="submit" value="{{ s.placement }}" />
+                        <input class="btn btn-warning" type="submit" value="{{ s.id }}" />
                         </form>
                     {% else %}
-                        <input class="btn btn-danger" type="submit" value="{{ s.placement }}" title="{{s.user}}" />
+                        <input class="btn btn-danger" type="submit" value="{{ s.id }}" title="{{s.user}}" />
                 {% endif %}
                 {% else %}
                     <form class="form-inline" 
@@ -47,7 +47,7 @@ ads
                     {% endif %}
                     method="POST">
                     {% csrf_token %}
-                        <input class="btn btn-success" type="submit" value="{{ s.placement }}"/>
+                        <input class="btn btn-success" type="submit" value="{{ s.id }}"/>
                     </form>
                 {% endif %}
                 </div>
