@@ -25,7 +25,7 @@ Update profile
                     {% for attend in attended %}
                     <tr>
                         <td><a href="{{ attend.lan.get_absolute_url }}">{{ attend.lan }}</a></td>
-                        <td>{{ attend.lan.start_date }} - {{ attend.lan.end_date }}</td>
+                        <td>{{ attend.lan.start_date|date }} - {{ attend.lan.end_date|date }}</td>
                         <td>
                         {% if attend.has_paid %}
                             <span class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>

@@ -2,10 +2,12 @@
 
 from datetime import datetime
 
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.utils.translation import ugettext as _
 
 from apps.lan.models import Attendee, LAN
 from apps.userprofile.forms import UserProfileForm
@@ -16,12 +18,13 @@ def my_profile(request):
     profile = request.user.profile
 
     breadcrumbs = (
-        ('studLAN', '/'),
-        ('Profile', reverse('myprofile')),
+        (settings.SITE_NAME, '/'),
+        (_(u'Profile'), reverse('myprofile')),
         (request.user.get_full_name(), ''),
     )
 
-    return render(request, 'user/profile.html', {'quser': request.user, 'profile': profile, 'breadcrumbs': breadcrumbs})
+    return render(request, 'user/profile.html', {'quser': request.user, 
+        'profile': profile, 'breadcrumbs': breadcrumbs})
 
 @login_required
 def update_profile(request):
@@ -34,9 +37,9 @@ def update_profile(request):
             return redirect('myprofile')
     
     breadcrumbs = (
-        ('studLAN', '/'),
-        ('Profile', reverse('myprofile')),
-        ('Edit', ''),
+        (settings.SITE_NAME, '/'),
+        (_(u'Profile'), reverse('myprofile')),
+        (_(u'Edit'), ''),
     )
 
     return render(request, 'user/update.html', {'form': form, 'breadcrumbs': breadcrumbs})
@@ -53,20 +56,21 @@ def user_profile(request, username):
     profile = quser.profile
     
     breadcrumbs = (
-        ('studLAN', '/'),
-        ('Profile', reverse('myprofile')),
+        (settings.SITE_NAME, '/'),
+        (_(u'Profile'), reverse('myprofile')),
         (quser.get_full_name(), ''),
     )
     
-    return render(request, 'user/profile.html', {'quser': quser, 'profile': profile, 'breadcrumbs': breadcrumbs})
+    return render(request, 'user/profile.html', {'quser': quser, 
+        'profile': profile, 'breadcrumbs': breadcrumbs})
 
 def history(request):
     attended = Attendee.objects.filter(user=request.user)
 
     breadcrumbs = (
-        ('studLAN', '/'),
-        ('Profile', reverse('myprofile')),
-        ('LAN History', ''),
+        (settings.SITE_NAME, '/'),
+        (_(u'Profile'), reverse('myprofile')),
+        (_(u'History'), ''),
     )
 
     return render(request, 'user/history.html', {'attended': attended, 'breadcrumbs': breadcrumbs})

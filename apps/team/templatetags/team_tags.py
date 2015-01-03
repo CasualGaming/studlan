@@ -2,8 +2,6 @@
 
 from django import template
 
-#from apps.team.models import Team
-
 register = template.Library()
 
 @register.inclusion_tag('team/team_list.html')

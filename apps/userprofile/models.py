@@ -5,22 +5,23 @@ from datetime import date
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
+from django.utils.translation import ugettext as _
     
-GENDERS = ((1, 'Male'), (2, 'Female'))
+GENDERS = ((1, _(u'Male')), (2, _(u'Female')))
 
 class UserProfile(models.Model):
 
     user = models.ForeignKey(User, related_name='profile', unique=True)
 
-    nick = models.CharField('nick', max_length=20, 
+    nick = models.CharField(_(u'nick'), max_length=20, 
         help_text='Specify a nick name (display name).')
     wants_to_sit_with = models.TextField('Wants to sit with', help_text='Names/nicks of people this user wants to sit with.', blank=True)
-    gender = models.SmallIntegerField('Gender', choices=GENDERS, default=1)
-    date_of_birth = models.DateField('Date of birth', default=date.today)
-    address = models.CharField('Street address', max_length=100)
-    zip_code = models.CharField('Zip code', max_length=4)
-    phone = models.CharField('Phone number', max_length=20)
-    ntnu_username = models.CharField('NTNU username', max_length=20, blank=True, null=True)
+    gender = models.SmallIntegerField(_(u'Gender'), choices=GENDERS, default=1)
+    date_of_birth = models.DateField(_(u'Date of birth'), default=date.today)
+    address = models.CharField(_(u'Street address'), max_length=100)
+    zip_code = models.CharField(_(u'Zip code'), max_length=4)
+    phone = models.CharField(_(u'Phone number'), max_length=20)
+    ntnu_username = models.CharField(_(u'NTNU username'), max_length=20, blank=True, null=True)
 
     def __unicode__(self):
         return self.user.username
