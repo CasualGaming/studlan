@@ -71,9 +71,9 @@
                     <fieldset>
                         <legend>{% trans "Add member" %}</legend>
                         <div class="form-group">
-                            <label class="col-md-1 control-label" for="selectMember">Select</label>
+                            <label class="col-md-1 control-label" for="selectMember">{% trans "Select" %}</label>
                             <div class="col-md-4">
-                                <select class="form-control" id="selectMember" name="member">
+                                <select class="form-control" id="selectMember" name="selectMember">
                                     {% for user in users %}
                                         <option value="{{ user.id }}">{{ user }}</option>
                                     {% endfor %}

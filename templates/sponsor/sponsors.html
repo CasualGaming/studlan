@@ -7,24 +7,26 @@
 {% endblock title %} 
 
 {% block content %}
-<div class="row">
-    <div class="col-md-9">
-        <h2>{% trans "Active sponsors" %}</h2>
-    </div>
-</div>
-
-{% for sponsor in active_sponsors %}
+    {% if active_sponsors %}
     <div class="row">
         <div class="col-md-9">
-            <div class="well">
-                <!-- Add default banner -->
-                <a href="{{ sponsor.website }}" target="_blank"><img src="{{ sponsor.banner }}" alt="Mountain View" style="width:300px;height:50px"></a>
-                <br><br>
-                <p>{{ sponsor.get_translation.description }}</p>
-            </div>
+            <h2>{% trans "Active sponsors" %}</h2>
         </div>
     </div>
-{% endfor %}
+
+    {% for sponsor in active_sponsors %}
+        <div class="row">
+            <div class="col-md-9">
+                <div class="well">
+                    <!-- Add default banner -->
+                    <a href="{{ sponsor.website }}" target="_blank"><img src="{{ sponsor.banner }}" alt="Mountain View" style="width:300px;height:50px"></a>
+                    <br><br>
+                    <p>{{ sponsor.get_translation.description }}</p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
 
 {% if inactive_sponsors %}
 <div class="row">

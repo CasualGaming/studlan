@@ -16,7 +16,7 @@ def show_sponsor_list():
     if lans:
         sponsor_relations = SponsorRelation.objects.filter(lan__in=lans)
     else:
-        sponsors_relations = []
+        sponsor_relations = []
 
     sponsors = [sponsor_relation.sponsor for sponsor_relation in sponsor_relations]
 

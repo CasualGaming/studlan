@@ -27,6 +27,11 @@ def listing(request):
 def details(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
 
+    if lan.end_date > datetime.now():
+        active = True
+    else:
+        active = False
+
     ticket_types = lan.tickettype_set.all() 
 
     user_tickets = Ticket.objects.filter(user=request.user.id, ticket_type__in=ticket_types)
@@ -39,7 +44,7 @@ def details(request, lan_id):
     else:
         status = 'open'
 
-    return render(request, 'lan/details.html', {'lan': lan, 'status': status, 
+    return render(request, 'lan/details.html', {'lan': lan, 'status': status, 'active': active, 
         'ticket_types': ticket_types, 'ticket': user_tickets})
 
 @login_required

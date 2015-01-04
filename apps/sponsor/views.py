@@ -15,7 +15,7 @@ def index(request):
     if lans:
         sponsor_relations = SponsorRelation.objects.filter(lan__in=lans)
     else:
-        sponsors_relations = []
+        sponsor_relations = []
 
     active_sponsors = [sponsor_relation.sponsor for sponsor_relation in sponsor_relations]
 

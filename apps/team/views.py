@@ -113,7 +113,7 @@ def add_member(request, team_id):
         if request.user != team.leader:
             messages.error(request, _(u"You are not the team leader, you cannot remove team members."))
         else:
-            user_id = request.POST.get('selectMember')
+            user_id = request.POST.get("selectMember")
             user = get_object_or_404(User, pk=user_id)
             if len(Member.objects.filter(user=user, team=team)) > 0:
                 messages.error(request, str(user) + _(u" is already on your team."))

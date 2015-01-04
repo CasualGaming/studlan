@@ -56,7 +56,7 @@ def main_filtered(request, lan_id):
     
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
-        ('Competitions', reverse('competitions')),
+        (_(u'Competitions'), reverse('competitions')),
         (lan, '')
     )
     context['breadcrumbs'] = breadcrumbs
