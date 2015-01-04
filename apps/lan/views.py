@@ -29,7 +29,7 @@ def details(request, lan_id):
 
     ticket_types = lan.tickettype_set.all() 
 
-    user_tickets = Ticket.objects.filter(user=request.user, ticket_type__in=ticket_types)
+    user_tickets = Ticket.objects.filter(user=request.user.id, ticket_type__in=ticket_types)
 
     if request.user in lan.attendees:
         if request.user in lan.paid_attendees or user_tickets:

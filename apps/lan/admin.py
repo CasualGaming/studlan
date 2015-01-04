@@ -33,7 +33,8 @@ class TicketTypeAdmin(admin.ModelAdmin):
 
 
 class TicketAdmin(admin.ModelAdmin):
-	model = Ticket
+    model = Ticket
+    list_display = ['__unicode__', 'ticket_type', 'bought_date',]
 
 admin.site.register(LAN, LANAdmin)
 admin.site.register(TicketType, TicketTypeAdmin)

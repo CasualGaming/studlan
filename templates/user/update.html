@@ -23,7 +23,7 @@ Update profile
                 <legend>{% trans "Update information" %}</legend>
                 {% for field in form %} 
                         <div class="form-group {% if field.errors %} has-error {% endif %} ">
-                            <label class="col-md-2 control-label">{{ field.label_tag }}</label>
+                            <label class="col-md-2 control-label">{{ field.label }}</label>
                             <div class="col-md-10">
                               {{ field}}
                                 <div class="form-error">

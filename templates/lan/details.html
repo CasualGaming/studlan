@@ -68,6 +68,7 @@
                                 {% endif %}
                                 <p>{{ ticket_type.get_translation.description }}</p>
                                 <p><strong>{% trans "Price" %}: </strong>{{ ticket_type.price }}</p>
+                                <!-- <p><strong>{% trans "Seats" %}: </strong>{{ ticket_type.number_of_seats }}</p> -->
                                 <p><strong>{% trans "Free seats" %}: </strong>
                                     {% if ticket_type.number_of_free_seats <= 0 %}
                                         <span class="label label-danger">{% trans "Sold out" %}</span>

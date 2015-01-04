@@ -110,3 +110,6 @@ class Ticket(models.Model):
     invalid_date = models.DateField(null=True, blank=True)
     invalid_description = models.TextField(null=True, blank=True)
 
+    def __unicode__(self):
+        return self.user.username + "(" + self.user.get_full_name() + ")"
+
