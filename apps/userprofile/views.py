@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+    # -*- coding: utf-8 -*-
 
 from datetime import datetime
 
@@ -64,6 +64,7 @@ def user_profile(request, username):
     return render(request, 'user/profile.html', {'quser': quser, 
         'profile': profile, 'breadcrumbs': breadcrumbs})
 
+@login_required
 def history(request):
     attended = Attendee.objects.filter(user=request.user)
 

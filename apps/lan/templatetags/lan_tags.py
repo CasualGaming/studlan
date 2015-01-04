@@ -7,16 +7,16 @@ from django import template
 from apps.lan.models import Attendee, LAN
 
 
-register = template.Library()	
+register = template.Library()   
 
 @register.filter
 def is_attending(user):
-    lans = LAN.objects.filter(end_date__gte=datetime.now())
-    if lans:
-        atendees = Attendee.objects.filter(lan__in=lans, user=user)
-    else:
-        atendees = []
 
-    return atendees
+    lans = LAN.objects.filter(end_date__gte=datetime.now())
+
+    if lans:
+        return Attendee.objects.filter(lan__in=lans, user=user.id)
+    else:
+        return False
 
 
