@@ -27,9 +27,14 @@ def listing(request):
 def details(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
 
+    if lan.end_date > datetime.now():
+        active = True
+    else:
+        active = False
+
     ticket_types = lan.tickettype_set.all() 
 
-    user_tickets = Ticket.objects.filter(user=request.user, ticket_type__in=ticket_types)
+    user_tickets = Ticket.objects.filter(user=request.user.id, ticket_type__in=ticket_types)
 
     if request.user in lan.attendees:
         if request.user in lan.paid_attendees or user_tickets:
@@ -39,7 +44,7 @@ def details(request, lan_id):
     else:
         status = 'open'
 
-    return render(request, 'lan/details.html', {'lan': lan, 'status': status, 
+    return render(request, 'lan/details.html', {'lan': lan, 'status': status, 'active': active, 
         'ticket_types': ticket_types, 'ticket': user_tickets})
 
 @login_required
@@ -96,21 +101,34 @@ def list_paid(request, lan_id):
     import xlwt
     lan = get_object_or_404(LAN, pk=lan_id)
 
-    response = HttpResponse(mimetype="application/ms-excel")
+    response = HttpResponse(content_type="application/ms-excel")
     response["Content-Disposition"] = "attachment; filename=paid_attendees_lan-{0}.xls".format(lan_id)
 
     doc = xlwt.Workbook(encoding='UTF-8')
     sheet = doc.add_sheet("Betalte deltakere")
 
-    for i, person in enumerate(lan.paid_attendees):
-        profile = person.profile
-        sheet.write(i, 0, "{0} {1}".format(person.first_name.encode("UTF-8"), person.last_name.encode("UTF-8")))
-        sheet.write(i, 1, "{0}.{1}.{2}".format(profile.date_of_birth.day, 
-                                               profile.date_of_birth.month, 
-                                               profile.date_of_birth.year))
-        sheet.write(i, 2, profile.address)
-        sheet.write(i, 3, profile.zip_code)
-        sheet.write(i, 4, person.email)
+    row = 0
+
+    for user in lan.paid_attendees:
+        write(sheet, user, row, 'cash')
+        row += 1
+
+    tickets = lan.tickets()
+
+    for ticket in tickets:
+        write(sheet, ticket.user, row, 'ticket')
+        row += 1
 
     doc.save(response)
     return response
+
+def write(sheet, person, row, payment_type):
+    profile = person.profile
+    sheet.write(row, 0, "{0} {1}".format(person.first_name.encode("UTF-8"), person.last_name.encode("UTF-8")))
+    sheet.write(row, 1, "{0}.{1}.{2}".format(profile.date_of_birth.day, 
+                                           profile.date_of_birth.month, 
+                                           profile.date_of_birth.year))
+    sheet.write(row, 2, profile.address)
+    sheet.write(row, 3, profile.zip_code)
+    sheet.write(row, 4, person.email)
+    sheet.write(row, 5, payment_type)

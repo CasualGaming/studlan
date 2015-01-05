@@ -170,17 +170,6 @@ div#btn-profile {
     font-weight: bold !important;
 }
 
-.sidebar-wrapper {
-    margin-top: 80px;
-    right: 100px;
-    position: fixed;
-    width: 220px;  
-}
-
-.sidebar{
-    padding: 0;
-}
-
 .participant-you{
     font-weight: bold;
 }
@@ -195,6 +184,17 @@ div#btn-profile {
 
 .language-dropdown{
     margin-right: 10px;
+}
+
+.sidebar-wrapper {
+    margin-top: 80px;
+    right: 100px;
+    position: fixed;
+    width: 220px;  
+}
+
+.sidebar{
+    padding: 0;
 }
 
 .sidebar .nav {
@@ -241,9 +241,25 @@ div#btn-profile {
         padding-right: 0;
     }
 
-        .language-dropdown {
-            display: block;
-        }
+    .language-dropdown {
+        display: block;
+    }
+
+    .center-on-collapse{
+        text-align: center;
+        margin-bottom: 5px; 
+    }
+
+    .form-actions-collapsed {
+        margin-top: 10px;
+    }
+}
+
+@media (max-width:350px) {
+    .nav-team{
+        float: left !important;
+        width: 50% !important;
+    }
 }
 
 .seating-node-free {
@@ -256,7 +272,6 @@ div#btn-profile {
 
 .seating-node-self {
     fill:#EC971F;
-
 }
 
 

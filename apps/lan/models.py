@@ -54,6 +54,11 @@ class LAN(TranslatableModel):
             else:
                 return 'ended'
 
+    def tickets(self):
+        ticket_types = TicketType.objects.filter(lan=self)
+
+        return Ticket.objects.filter(ticket_type__in=ticket_types)
+
     @models.permalink
     def get_absolute_url(self):
         return 'lan_details', (), {'lan_id': self.id}
@@ -109,4 +114,7 @@ class Ticket(models.Model):
     valid = models.BooleanField(default=True)
     invalid_date = models.DateField(null=True, blank=True)
     invalid_description = models.TextField(null=True, blank=True)
+
+    def __unicode__(self):
+        return self.user.username + "(" + self.user.get_full_name() + ")"
 

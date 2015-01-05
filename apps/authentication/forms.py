@@ -51,8 +51,8 @@ class RegisterForm(forms.Form):
         widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': _(u'First name'), 'type': 'text'})) 
     last_name = forms.CharField(label=_(u"Last name"), max_length=50, 
         widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': _(u'Last name'), 'type': 'text'}))
-    date_of_birth = forms.DateField(label=_(u"Date of birth"), initial=datetime.date.today, 
-        widget=forms.DateInput(attrs={'class':'form-control', 'type': 'date'}))
+    date_of_birth = forms.DateField(label=_(u"Date of birth"),
+        widget=forms.TextInput(attrs={'class':'form-control', 'type': 'date'}))
     gender = forms.ChoiceField(label=_(u"Gender"), choices=GENDERS, 
         widget=forms.Select(attrs={'class':'form-control'}))
     email = forms.EmailField(label=_(u"Email"), max_length=50, 

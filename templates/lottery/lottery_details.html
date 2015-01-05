@@ -15,11 +15,13 @@
         <hr />
         {% if user.is_authenticated %}
             {% if lottery.registration_open %}
+                <div class="center-on-collapse">
                 {% if request.user in participants %}
                     <a class="btn btn-danger" href="{% url 'sign_off' lottery.id %}">{% trans "Unsign" %}</a>
                 {% else %}
                     <a class="btn btn-success" href="{% url 'sign_up' lottery.id %}">{% trans "Sign up" %}</a>
                 {% endif %}
+                </div>
             {% else %}
             <div class="alert alert-danger">{% trans "Signup closed" %}</div>
             {% endif %}

@@ -1,7 +1,12 @@
 {% load i18n %}
+{% load lan_tags %}
 {% block navigation %}
     <ul id="navbar" class="nav navbar-nav">
-        <li class="navbar-item"><a href="{% url 'lan_home' %}">{% trans "Sign up" %}</a></li>
+    	{% if user|is_attending %}
+        	<li class="navbar-item"><a href="{% url 'lan_home' %}">{% trans "Info" %}</a></li>
+        {% else %}
+        	<li class="navbar-item"><a href="{% url 'lan_home' %}">{% trans "Sign up" %}</a></li>
+        {% endif %}
         <li class="navbar-item"><a href="{% url 'competitions' %}">{% trans "Competitions" %}</a></li>
         <li class="navbar-item"><a href="{% url 'teams' %}">{% trans "Teams" %}</a></li>
         <li class="navbar-item"><a href="{% url 'seatings' %}">{% trans "Seating" %}</a></li>
