@@ -5,6 +5,7 @@ from apps.lan.models import LAN
 from django.db.models import Q
 import datetime
 
+
 class Seating(models.Model):
     lan = models.ForeignKey(LAN)
     title = models.CharField('title', max_length=50)
@@ -33,19 +34,14 @@ class Seating(models.Model):
         return datetime.datetime.now() < self.closing_date
 
     def get_free_seats(self):
-        total_seats = self.get_total_seats()
-        counter = 0
-        for seat in total_seats:
-            if seat.is_empty():
-                counter += 1
-        return counter
+        return Seat.objects.filter(Q(user=None), Q(seating=self)).count()
 
     def __unicode__(self):
         return self.title
 
     @models.permalink
     def get_absolute_url(self):
-       return ('seating_details', (), {'seating_id': self.id})
+        return ('seating_details', (), {'seating_id': self.id})
 
     def populate_seats(self):
         for k in range(0,self.number_of_seats):

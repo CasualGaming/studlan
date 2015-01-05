@@ -20,7 +20,7 @@
                 <tbody>
                     <tr><td>{% trans "Start date" %}:</td><td>{{ lan.start_date|date:"d. F Y" }} - {{ lan.start_date|time:"H:i" }}</td></tr> 
                     <tr><td>{% trans "End date" %}:</td><td>{{ lan.end_date|date:"d. F Y" }} - {{ lan.end_date|time:"H:i" }}</td></tr>
-                    <tr><td>{% trans "Location" %}:</td><td>{{ lan.location }}</td></tr> 
+                    <tr><td>{% trans "Location" %}:</td><td>{{ lan.location|safe }}</td></tr> 
                 </tbody>
             </table>
 
