@@ -36,7 +36,10 @@ ads
                         <input class="btn btn-warning" type="submit" value="{{ s.id }}" />
                         </form>
                     {% else %}
-                        <input class="btn btn-danger" type="submit" value="{{ s.id }}" title="{{s.user}}" />
+                        <form class="form-inline" action="/profile/{{s.user}}/" method="POST">
+                            {% csrf_token %}
+                            <input class="btn btn-danger" type="submit" value="{{ s.id }}" title="{{s.user}}" />
+                        </form>
                 {% endif %}
                 {% else %}
                     <form class="form-inline" 
