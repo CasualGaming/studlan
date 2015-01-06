@@ -12,6 +12,7 @@ from django.utils.translation import ugettext as _
 from apps.lan.models import Attendee, LAN
 from apps.userprofile.forms import UserProfileForm
 from apps.userprofile.models import UserProfile
+from apps.seating.models import Seat, Seating
 
 @login_required
 def my_profile(request):
@@ -47,7 +48,7 @@ def update_profile(request):
 def user_profile(request, username):
     # Using quser for "queried user", as "user" is a reserved variable name in templates
     quser = get_object_or_404(User, username=username)
-
+    user_seats = Seat.objects.filter(user=quser)
     # If the user is authenticated and are doing a lookup on themselves, also create
     # the form for updating and showing update information.
     if request.user.is_authenticated() and request.user == quser:
@@ -62,7 +63,7 @@ def user_profile(request, username):
     )
     
     return render(request, 'user/profile.html', {'quser': quser, 
-        'profile': profile, 'breadcrumbs': breadcrumbs})
+        'profile': profile, 'breadcrumbs': breadcrumbs, 'user_seats': user_seats})
 
 @login_required
 def history(request):

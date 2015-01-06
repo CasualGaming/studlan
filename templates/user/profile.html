@@ -39,28 +39,30 @@
         {% if user == quser or user.is_staff %}
             <div class="col-md-4">
         {% else %}
-            <div class="col-md-8">{% endif %}
-                <table class="well table table-condensed">
-                    <tbody>
-                        <tr>
-                            <td>{% trans "Username" %}</td>
-                            <td>{{ quser.username }}</td>
-                        </tr>
-                        <tr>
-                            <td>{% trans "First name" %}</td>
-                            <td>{{ quser.first_name }}</td>
-                        </tr>
-                        <tr>
-                            <td>{% trans "Last name" %}</td>
-                            <td>{{ quser.last_name }}</td>
-                        </tr>{% if user == quser or user.is_staff %}
-                        <tr>
-                            <td>{% trans "Email" %}</td>
-                            <td>{{ quser.email }}</td>
-                        </tr>{% endif %}
-                    </tbody>
-                </table>
-            </div>
+            <div class="col-md-8">
+        {% endif %}
+		        <table class="well table table-condensed">
+		            <tbody>
+		                <tr>
+		                    <td>{% trans "Username" %}</td>
+		                    <td>{{ quser.username }}</td>
+		                </tr>
+		                <tr>
+		                    <td>{% trans "First name" %}</td>
+		                    <td>{{ quser.first_name }}</td>
+		                </tr>
+		                <tr>
+		                    <td>{% trans "Last name" %}</td>
+		                    <td>{{ quser.last_name }}</td>
+		                </tr>{% if user == quser or user.is_staff %}
+		                <tr>
+		                    <td>{% trans "Email" %}</td>
+		                    <td>{{ quser.email }}</td>
+		                </tr>{% endif %}
+		            </tbody>
+		        </table>
+        	</div>
+
             {% if user == quser or user.is_staff %}
             <div class="col-md-4">
                 <table class="well table table-condensed">
@@ -94,5 +96,24 @@
             </div>
         {% endif %}
     </div>
+    {% if user_seats %}
+    <div class="row">
+    	<div class="col-md-8">
+	        <h2>Seating info</h2>
+	        {% for seat in user_seats %}
+	        <div class="col-md-6">
+	            <div class="panel panel-default">
+	            	<a href="{{seat.seating.lan.get_absolute_url}}">
+		            <div class="panel-body">
+		            	Event: {{seat.seating.lan}}
+		            </div></a>
+		            <a href="{{seat.seating.get_absolute_url}}">
+		        	<div class="panel-footer">
+			        	Seating: {{seat.seating}} <br> Seat: {{seat.placement}}
+			        </div></a>
+		        </div>
+		    </div>
+	        {% endfor %}
+	{% endif %}
+    </div>
 {% endblock content %}
-</div>
