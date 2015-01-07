@@ -3,6 +3,7 @@ from datetime import datetime
 import logging
 
 from django import template
+from django.utils.translation import ugettext as _
 
 from apps.competition.models import Competition
 from apps.lan.models import LAN
@@ -42,7 +43,7 @@ class user_in_Renderer(template.Node):
 	def render(self, context):
 		user = context['request'].user
 
-		string = "<li class=\"sidebar-header\"><a href=\"#\">My competitions</a></li>"
+		string = "<li class=\"sidebar-header\"><a href=\"#\">" + _(u"My competitions") + "</a></li>"
 		count = 0
 
 		for competition in Competition.objects.all():

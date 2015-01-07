@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-03 18:53+0100\n"
+"POT-Creation-Date: 2015-01-07 23:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: apps/authentication/forms.py:15 apps/authentication/forms.py:47
-#: apps/authentication/views.py:208 templates/user/profile.html:46
+#: apps/authentication/views.py:208 templates/user/profile.html:47
 msgid "Username"
 msgstr "Brukernavn"
 
@@ -54,43 +54,39 @@ msgid "NTNU user"
 msgstr "NTNU-Brukernavn"
 
 #: apps/authentication/forms.py:50 apps/authentication/forms.py:51
-#: templates/user/profile.html:50
+#: templates/user/profile.html:51
 msgid "First name"
 msgstr "Fornavn"
 
 #: apps/authentication/forms.py:52 apps/authentication/forms.py:53
-#: templates/user/profile.html:54
+#: templates/user/profile.html:55
 msgid "Last name"
 msgstr "Etternavn"
 
 #: apps/authentication/forms.py:54 apps/userprofile/models.py:20
-#: templates/user/profile.html:77
+#: templates/user/profile.html:79
 msgid "Date of birth"
 msgstr "Fødselsdato"
 
 #: apps/authentication/forms.py:56 apps/userprofile/models.py:19
-#: templates/user/profile.html:73
+#: templates/user/profile.html:75
 msgid "Gender"
 msgstr "Kjønn"
 
 #: apps/authentication/forms.py:58 apps/authentication/forms.py:59
-#: templates/sidebar.html:12 templates/user/profile.html:58
+#: templates/sidebar.html:12 templates/user/profile.html:59
 msgid "Email"
 msgstr "Epost"
 
 #: apps/authentication/forms.py:63
-#, fuzzy
-#| msgid "Recover password"
 msgid "Repeat password"
-msgstr "Glemt passord?"
+msgstr "Gjenta passord"
 
 #: apps/authentication/forms.py:64 apps/authentication/forms.py:65
 msgid "Address"
 msgstr "Adresse"
 
 #: apps/authentication/forms.py:66
-#, fuzzy
-#| msgid "Zip/Postal code"
 msgid "ZIP code"
 msgstr "Postnummer"
 
@@ -122,8 +118,7 @@ msgstr "Brukernavnet er allerede i bruk"
 #: apps/authentication/forms.py:91
 msgid "Your desired username contains illegal characters. Valid: a-Z 0-9 - _"
 msgstr ""
-"Brukernavnet ditt kan ikke inneholde ulovlige tegn. Lovlige "
-"tegn: a-Z 0-9 - _"
+"Brukernavnet ditt kan ikke inneholde ulovlige tegn. Lovlige tegn: a-Z 0-9 - _"
 
 #: apps/authentication/forms.py:96
 msgid "There is already a user with that email."
@@ -169,7 +164,7 @@ msgstr ""
 #, fuzzy
 #| msgid "User Info"
 msgid "User "
-msgstr "Bruker-informasjon"
+msgstr "Bruker "
 
 #: apps/authentication/views.py:112
 msgid " successfully activated. You can now log in."
@@ -270,11 +265,15 @@ msgstr "Pågår"
 msgid "Finished"
 msgstr "Ferdig"
 
-#: apps/competition/views.py:38 apps/competition/views.py:106
-#: apps/competition/views.py:127 templates/competition/competitions.html:8
-#: templates/navigation.html:5
+#: apps/competition/templatetags/competition_tags.py:46
+msgid "My competitions"
+msgstr "Påmeldte konkurranser"
+
+#: apps/competition/views.py:38 apps/competition/views.py:59
+#: apps/competition/views.py:106 apps/competition/views.py:127
+#: templates/competition/competitions.html:8 templates/navigation.html:10
 msgid "Competitions"
-msgstr "Konkurranse"
+msgstr "Konkurranser"
 
 #: apps/competition/views.py:153
 msgid "Please log in to register for the competition."
@@ -310,34 +309,34 @@ msgstr "Du har fjernet "
 msgid " from "
 msgstr " fra "
 
-#: apps/lan/views.py:50
+#: apps/lan/views.py:55
 msgid "This LAN has finished and can no longer be attended"
 msgstr "Dette LANet er over og påmeldingen er derfor stengt"
 
-#: apps/lan/views.py:54
+#: apps/lan/views.py:59
 #, fuzzy
 #| msgid "Your address and zip code is required in order to sign up for a LAN."
 msgid ""
 "You need to fill in your address and zip code in order to sign up for a LAN."
 msgstr "Din adresse og postnummer kreves for å kunne melde seg på et LAN."
 
-#: apps/lan/views.py:57
+#: apps/lan/views.py:62
 msgid "You are already in the attendee list for "
 msgstr "Du er allerede påmeldt "
 
-#: apps/lan/views.py:62
+#: apps/lan/views.py:67
 msgid "Successfully added you to attendee list for "
 msgstr "Du er nå påmeldt "
 
-#: apps/lan/views.py:71
+#: apps/lan/views.py:76
 msgid "This LAN has already started, you can not retract your signup"
 msgstr "Dette LANet har allerede startet, det er for sent å melde seg av"
 
-#: apps/lan/views.py:75
+#: apps/lan/views.py:80
 msgid "You are not in the attendee list for "
 msgstr "Du er ikke påmeldt "
 
-#: apps/lan/views.py:80
+#: apps/lan/views.py:85
 msgid "Successfully removed you from attendee list for "
 msgstr "Du ble fjernet fra listen over deltakere til "
 
@@ -379,8 +378,7 @@ msgstr "Tag"
 #| "Your desired username contains illegal characters. Valid: a-Z 0-9 - _"
 msgid "Your desired tag contains illegal characters. Valid: a-Z 0-9 - _"
 msgstr ""
-"Brukernavnet ditt kan ikke inneholde ulovlige tegn. Lovlige "
-"tegn: a-Z 0-9 - _"
+"Brukernavnet ditt kan ikke inneholde ulovlige tegn. Lovlige tegn: a-Z 0-9 - _"
 
 #: apps/team/forms.py:27
 msgid "This team tag is taken. The team belongs to "
@@ -388,7 +386,7 @@ msgstr "Denne taggen er tatt. Laget tilhører "
 
 #: apps/team/views.py:22 apps/team/views.py:33 apps/team/views.py:67
 #: apps/team/views.py:103 templates/competition/competition.html:34
-#: templates/navigation.html:6 templates/team/team_base.html:7
+#: templates/navigation.html:11 templates/team/team_base.html:7
 #: templates/team/teams.html:8
 msgid "Teams"
 msgstr "Lag"
@@ -461,8 +459,7 @@ msgstr " ble fjernet fra laget."
 #| "Your desired username contains illegal characters. Valid: a-Z 0-9 - _"
 msgid "Your desired nickname contains illegal characters. Valid: a-Z 0-9 - _"
 msgstr ""
-"Brukernavnet ditt kan ikke inneholde ulovlige tegn. Lovlige "
-"tegn: a-Z 0-9 - _"
+"Brukernavnet ditt kan ikke inneholde ulovlige tegn. Lovlige tegn: a-Z 0-9 - _"
 
 #: apps/userprofile/models.py:10
 msgid "Male"
@@ -476,22 +473,22 @@ msgstr "Kvinne"
 msgid "nick"
 msgstr "kallenavn"
 
-#: apps/userprofile/models.py:21 templates/user/profile.html:81
+#: apps/userprofile/models.py:21 templates/user/profile.html:83
 msgid "Street address"
 msgstr "Adresse"
 
-#: apps/userprofile/views.py:22 apps/userprofile/views.py:41
-#: apps/userprofile/views.py:60 apps/userprofile/views.py:72
+#: apps/userprofile/views.py:23 apps/userprofile/views.py:42
+#: apps/userprofile/views.py:61 apps/userprofile/views.py:74
 #: templates/user/profile.html:22 templates/user/profile.html.py:30
 #: templates/user/profile_tabs.html:5 templates/user/update.html:12
 msgid "Profile"
 msgstr "Profil"
 
-#: apps/userprofile/views.py:42
+#: apps/userprofile/views.py:43
 msgid "Edit"
 msgstr "Rediger"
 
-#: apps/userprofile/views.py:73 templates/user/history.html:12
+#: apps/userprofile/views.py:75 templates/user/history.html:12
 #: templates/user/profile_tabs.html:6
 msgid "History"
 msgstr "Historikk"
@@ -531,7 +528,7 @@ msgstr "Deltakere"
 
 #: templates/competition/competition.html:95
 msgid "Join competition (team)"
-msgstr "Meld på (Lag)"
+msgstr "Meld på (lag)"
 
 #: templates/competition/competition.html:99
 msgid "To join the competition as a team you have to"
@@ -546,10 +543,8 @@ msgid "or join a team"
 msgstr "eller bli med på et lag"
 
 #: templates/competition/competition.html:107
-#, fuzzy
-#| msgid "Join competition (team)"
 msgid "Join competition"
-msgstr "Meld på (Lag)"
+msgstr "Meld på"
 
 #: templates/competition/competition.html:107
 msgid "(solo)"
@@ -567,15 +562,16 @@ msgstr "Merk: "
 msgid ""
 "Signing up for a team compo as a solo player does not mean you are a "
 "participant."
-msgstr "Å være påmeldt en lagkonkurranse uten lag betyr ikke automatisk "
-"at du er en deltaker"
+msgstr ""
+"Å være påmeldt en lagkonkurranse uten lag betyr ikke automatisk at du er en "
+"deltaker"
 
 #: templates/competition/competition.html:137
 msgid ""
 "Try to find other players that sign up solo, make a team and sign up as a "
 "team."
-msgstr "Prøv å samle et lag av de andre deltakerne som har meldt seg på uten"
-"lag."
+msgstr ""
+"Prøv å samle et lag av de andre deltakerne som har meldt seg på utenlag."
 
 #: templates/competition/competition.html:139
 msgid "When you sign up as a team, your solo participation will be overriden."
@@ -619,70 +615,76 @@ msgstr "Slutt"
 msgid "Location"
 msgstr "Sted"
 
-#: templates/lan/details.html:36
+#: templates/lan/details.html:41
 #, fuzzy
 #| msgid "You have paid for this event"
 msgid "You have paid for a "
 msgstr "Du har betalt for "
 
-#: templates/lan/details.html:38
+#: templates/lan/details.html:43
 #, fuzzy
 #| msgid "You have paid for this event"
 msgid "ticket for this event"
 msgstr "Du har betalt"
 
-#: templates/lan/details.html:45
+#: templates/lan/details.html:50
 msgid "Remove attendance"
-msgstr "Meld av"
+msgstr "Meld meg av"
 
-#: templates/lan/details.html:51
+#: templates/lan/details.html:56
 msgid "Tickets"
 msgstr "Billetter"
 
-#: templates/lan/details.html:70
+#: templates/lan/details.html:75
 msgid "Price"
 msgstr "Pris"
 
-#: templates/lan/details.html:71
+#: templates/lan/details.html:76
+#, fuzzy
+#| msgid "Seating"
+msgid "Seats"
+msgstr "Setekart"
+
+#: templates/lan/details.html:77
 msgid "Free seats"
 msgstr "Ledige seter"
 
-#: templates/lan/details.html:73
+#: templates/lan/details.html:79
 #, fuzzy
 #| msgid "Log out"
 msgid "Sold out"
 msgstr "Log ut"
 
-#: templates/lan/details.html:89
+#: templates/lan/details.html:95
 msgid "Pay with Card"
 msgstr "Betal med Kort"
 
-#: templates/lan/details.html:103
+#: templates/lan/details.html:109
 msgid "No tickets avalible at this time."
 msgstr "Det er ingen billetter tilgjengelig akkurat nå."
 
-#: templates/lan/details.html:112 templates/lottery/lottery_details.html:21
-#: templates/navigation.html:4
+#: templates/lan/details.html:118 templates/lottery/lottery_details.html:22
+#: templates/navigation.html:8
 msgid "Sign up"
 msgstr "Påmelding"
 
-#: templates/lan/details.html:117
+#: templates/lan/details.html:123
 msgid "Your address and zip code is required in order to sign up for a LAN."
 msgstr "Din adresse og postnummer kreves for å kunne melde seg på et LAN."
 
-#: templates/lan/details.html:118
+#: templates/lan/details.html:124
 msgid "Go to your"
 msgstr "Gå til din"
 
-#: templates/lan/details.html:118
+#: templates/lan/details.html:124
 msgid "profile"
 msgstr "profil"
 
-#: templates/lan/details.html:118
+#: templates/lan/details.html:124
 msgid "to add the information."
 msgstr "for og legge til informasjonen."
 
-#: templates/lan/details.html:123
+#: templates/lan/details.html:129
 msgid "You need to login to see your status."
 msgstr "Du må logge på for og se din status."
 
@@ -702,27 +704,33 @@ msgstr "Slutt"
 msgid "Previous LANs"
 msgstr "Tidligere LAN"
 
-#: templates/lottery/lottery_details.html:19
+#: templates/lottery/lottery_details.html:20
 msgid "Unsign"
 msgstr "Meld av"
 
-#: templates/lottery/lottery_details.html:24
+#: templates/lottery/lottery_details.html:26
 #, fuzzy
 #| msgid "Sign up"
 msgid "Signup closed"
 msgstr "Påmelding"
 
-#: templates/lottery/lottery_details.html:27
+#: templates/lottery/lottery_details.html:29
 #, fuzzy
 #| msgid "You need to login in to participate"
 msgid "You need to be logged inn to participate"
 msgstr "Du må logge inn for å kunne melde deg på"
 
-#: templates/navigation.html:7
+#: templates/navigation.html:6
+#, fuzzy
+#| msgid "User Info"
+msgid "Info"
+msgstr "Bruker-info"
+
+#: templates/navigation.html:12
 msgid "Seating"
 msgstr "Setekart"
 
-#: templates/navigation.html:8 templates/sidebar.html:19
+#: templates/navigation.html:13 templates/sidebar.html:19
 #: templates/sponsor/sponsors.html:6
 msgid "Sponsors"
 msgstr "Sponsorer"
@@ -741,7 +749,7 @@ msgstr "Det er ingen aktive LAN"
 
 #: templates/sidebar.html:8
 msgid "User Info"
-msgstr "Bruker-informasjon"
+msgstr "Bruker-info"
 
 #: templates/sidebar.html:10 templates/team/team.html:40
 msgid "User name"
@@ -753,21 +761,19 @@ msgstr "Navn"
 
 #: templates/sidebar.html:15
 msgid "Competition Info"
-msgstr "Konkurranse-informasjon"
+msgstr "Konkurranse-info"
 
 #: templates/sidebar.html:17
-#, fuzzy
-#| msgid "Competitions"
 msgid "competitions active."
-msgstr "Konkuranser"
+msgstr "aktive konkurranser"
 
-#: templates/sponsor/sponsors.html:12
+#: templates/sponsor/sponsors.html:13
 #, fuzzy
 #| msgid "Sponsors"
 msgid "Active sponsors"
 msgstr "Sponsorer"
 
-#: templates/sponsor/sponsors.html:32
+#: templates/sponsor/sponsors.html:34
 #, fuzzy
 #| msgid "Previous LANs"
 msgid "Previous sponsors"
@@ -809,6 +815,10 @@ msgstr "Forlat lag"
 msgid "Add member"
 msgstr "Legg til medlem"
 
+#: templates/team/team.html:74
+msgid "Select"
+msgstr ""
+
 #: templates/team/team_list.html:26
 msgid "No teams yet"
 msgstr "Det finnes ingen lag enda"
@@ -833,15 +843,15 @@ msgstr "Ankommet"
 msgid "My Profile"
 msgstr "Min profil"
 
-#: templates/user/profile.html:69
+#: templates/user/profile.html:71
 msgid "Nick"
 msgstr "Kallenavn"
 
-#: templates/user/profile.html:85
+#: templates/user/profile.html:87
 msgid "Zip/Postal code"
 msgstr "Postnummer"
 
-#: templates/user/profile.html:89
+#: templates/user/profile.html:91
 msgid "Phone"
 msgstr "Telefon"
 
@@ -867,9 +877,6 @@ msgstr "Logg ut"
 
 #~ msgid "without a team"
 #~ msgstr "uten lag"
-
-#~ msgid "Join competition (solo)"
-#~ msgstr "Meld på (Solo)"
 
 #~ msgid "News"
 #~ msgstr "Nyheter"
