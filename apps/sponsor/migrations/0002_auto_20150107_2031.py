@@ -7,8 +7,8 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('lan', '0005_auto_20141230_1757'),
-        ('sponsor', '0003_auto_20141227_2032'),
+        ('lan', '0002_auto_20150107_2031'),
+        ('sponsor', '0001_initial'),
     ]
 
     operations = [
@@ -16,10 +16,12 @@ class Migration(migrations.Migration):
             name='SponsorRelation',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('priority', models.IntegerField(help_text=b'higher priority means closer to the top of the sponsor list.', verbose_name=b'priority')),
                 ('lan', models.ForeignKey(to='lan.LAN')),
                 ('sponsor', models.ForeignKey(to='sponsor.Sponsor')),
             ],
             options={
+                'ordering': ['-priority'],
             },
             bases=(models.Model,),
         ),
@@ -36,6 +38,10 @@ class Migration(migrations.Migration):
             },
             bases=(models.Model,),
         ),
+        migrations.AlterModelOptions(
+            name='sponsor',
+            options={},
+        ),
         migrations.RenameField(
             model_name='sponsor',
             old_name='name',
@@ -43,6 +49,18 @@ class Migration(migrations.Migration):
         ),
         migrations.RemoveField(
             model_name='sponsor',
-            name='description',
+            name='priority',
+        ),
+        migrations.AddField(
+            model_name='sponsor',
+            name='banner',
+            field=models.CharField(default='', help_text=b'Use a mirrored image of at least a height of 150px.', max_length=100, verbose_name=b'Banner url', blank=True),
+            preserve_default=False,
+        ),
+        migrations.AddField(
+            model_name='sponsor',
+            name='logo',
+            field=models.CharField(default='', help_text=b'Use a mirrored image of at least a height of 150px.', max_length=100, verbose_name=b'Logo url', blank=True),
+            preserve_default=False,
         ),
     ]

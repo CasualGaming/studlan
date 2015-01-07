@@ -8,14 +8,14 @@ import datetime
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('authentication', '0008_auto_20150103_1644'),
+        ('authentication', '0002_auto_20141031_1311'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='registertoken',
             name='created',
-            field=models.DateTimeField(default=datetime.datetime(2015, 1, 3, 17, 43, 41, 284984), verbose_name=b'created', auto_now_add=True),
+            field=models.DateTimeField(default=datetime.datetime(2015, 1, 7, 20, 30, 56, 93009), verbose_name=b'created', auto_now_add=True),
             preserve_default=True,
         ),
     ]
