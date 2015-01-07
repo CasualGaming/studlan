@@ -60,14 +60,14 @@ def seating_details(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
     users = seating.get_user_registered()
     seats = seating.get_total_seats()
+    seatcount  = seating.get_total_seats().count
 
     if seating.template:
         dom = BeautifulSoup(seating.template, "html.parser")
         counter = 0
-        current_seat = get_object_or_404(Seat, pk=seats[counter].id)
         for tag in dom.find_all('a'):
             children = tag.find_all('rect')
-            if current_seat.is_empty:
+            if not seats[counter].user:
                 children[0]['class'] = ' seating-node-free'
                 tag['xlink:href'] = 'join/' + str(seats[counter].id)
                 tag['title'] = 'Free seat'
@@ -75,9 +75,10 @@ def seating_details(request, seating_id):
                 if seats[counter].user == request.user:
                     children[0]['class'] = ' seating-node-self'
                     tag['xlink:href'] = 'leave/' + str(seats[counter].id)
+                    tag['title'] = 'Your seat'
                 else:
                     children[0]['class'] = ' seating-node-occupied'
-                    tag['xlink:href'] = '#'
+                    tag['xlink:href'] = '/profile/' + str(seats[counter].user)
                     tag['title'] = seats[counter].user
             counter += 1
         dom.encode("utf-8")
