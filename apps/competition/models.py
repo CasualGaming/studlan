@@ -48,6 +48,7 @@ class Competition(TranslatableModel):
     status = models.SmallIntegerField('status', choices=STATUS_OPTIONS)
     activity = models.ForeignKey(Activity)
     lan = models.ForeignKey(LAN)
+    challonge_url = models.URLField('Challonge url', blank=True, null=True)
     use_teams = models.BooleanField('use teams', default=False,
         help_text='If checked, participants will be ignored, and will '
         'instead use teams. If left unchecked teams will be ignored, '

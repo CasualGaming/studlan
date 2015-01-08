@@ -275,3 +275,10 @@ div#btn-profile {
 }
 
 
+.hide {
+    display: none;
+}
+
+#brackets-button {
+    margin-bottom: 10px;
+}

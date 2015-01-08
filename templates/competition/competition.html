@@ -10,6 +10,7 @@
 
 {% block content %}
 {% with competition.use_teams as teamcomp %} 
+    <script type="text/javascript" src="{{ STATIC_URL }}js/competition.js"></script>
     <div class="row">
         <div class="col-md-9"><h2>{{ competition }}</h2></div>
     </div>
@@ -26,6 +27,19 @@
     </div>
     
     <br />
+
+    {% if competition.challonge_url %}
+    {% if competition.status == 3 or competition.status == 4 %}
+        <div class="row">
+            <div class="col-md-9">
+                <button id="brackets-button" class="btn btn-default">Show brackets</button>
+                <div id="brackets-container" class="hide">
+                    <iframe id="brackets-frame" onload="AdjustIFrame('RefFrame');" src="{{ competition.challonge_url }}/module?theme=3&show_final_results=1" width="100%" scrolling="no" frameborder="0" allowtransparency="false"></iframe>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% endif %}
 
     <div class="row">
         {% if teamcomp %}
@@ -148,6 +162,5 @@
             <p>{{ competition.get_translation.translated_description|markdown }}</p>
         </div>
     </div>
- 
  {% endwith %}       
 {% endblock content %}
