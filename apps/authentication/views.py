@@ -82,7 +82,7 @@ def register(request):
                 email_message = create_verify_message(request.META['HTTP_HOST'], token) 
                 
 
-                send_mail(_(u'Verify your account'), email_message, settings.STUDLAN_FROM_MAIL, [user.email,])
+                send_mail(_(u'Verify your account'), email_message, settings.STUDLAN_FROM_MAIL, [user.email,], fail_silently=False)
 
                 messages.success(request, _(u'Registration successful. Check your email for verification instructions.'))
 
