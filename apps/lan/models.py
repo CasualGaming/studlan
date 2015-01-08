@@ -59,6 +59,15 @@ class LAN(TranslatableModel):
 
         return Ticket.objects.filter(ticket_type__in=ticket_types)
 
+    def has_ticket(self, user):
+        ticket_types = TicketType.objects.filter(lan=self)
+
+        tickets = Ticket.objects.filter(ticket_type__in=ticket_types, user=user)
+        if tickets:
+            return tickets[0]
+        else:
+            return None
+
     @models.permalink
     def get_absolute_url(self):
         return 'lan_details', (), {'lan_id': self.id}
