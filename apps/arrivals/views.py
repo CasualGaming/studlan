@@ -73,7 +73,6 @@ def arrivals(request, lan_id):
 @staff_member_required
 def toggle(request, lan_id):
     if request.method == 'POST':
-        print "Is post"
         username = request.POST.get('username')
         toggle_type = request.POST.get('type')
         previous_value = request.POST.get('prev')

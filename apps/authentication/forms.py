@@ -12,8 +12,10 @@ from apps.misc.forms import InlineSpanErrorList
 from apps.userprofile.models import GENDERS
 
 class LoginForm(forms.Form):
-    username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': _(u'Username'), 'type': 'text'}), label="Username", max_length=50)
-    password = forms.CharField(widget=forms.PasswordInput(render_value=False, attrs={'class':'form-control', 'placeholder': _(u'Password'), 'type': 'password'}), label="Password")
+    username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 
+        'placeholder': _(u'Username'), 'type': 'text'}), label=_(u"Username"), max_length=50)
+    password = forms.CharField(widget=forms.PasswordInput(render_value=False, attrs={'class':'form-control', 
+        'placeholder': _(u'Password'), 'type': 'password'}), label=_(u"Password"))
     user = None
 
     def clean(self):
@@ -45,16 +47,12 @@ class LoginForm(forms.Form):
 class RegisterForm(forms.Form):
     desired_username = forms.CharField(label=_(u"Desired username"), max_length=20, 
         widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': _(u'Username'), 'type': 'text'}))
-    ntnu_username = forms.CharField(label=_(u"NTNU username"), max_length=20, 
-        widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': _(u'NTNU user'), 'type': 'text'    }))
     first_name = forms.CharField(label=_(u"First name"), max_length=50, 
         widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': _(u'First name'), 'type': 'text'})) 
     last_name = forms.CharField(label=_(u"Last name"), max_length=50, 
         widget=forms.TextInput(attrs={'class':'form-control', 'placeholder': _(u'Last name'), 'type': 'text'}))
     date_of_birth = forms.DateField(label=_(u"Date of birth"),
         widget=forms.TextInput(attrs={'class':'form-control', 'type': 'date'}))
-    gender = forms.ChoiceField(label=_(u"Gender"), choices=GENDERS, 
-        widget=forms.Select(attrs={'class':'form-control'}))
     email = forms.EmailField(label=_(u"Email"), max_length=50, 
         widget=forms.EmailInput(attrs={'class':'form-control', 'placeholder': _(u'Email'), 'type': 'text'}))
     password = forms.CharField(widget=forms.PasswordInput(render_value=False, 
@@ -103,7 +101,8 @@ class RegisterForm(forms.Form):
             return cleaned_data 
 
 class RecoveryForm(forms.Form):
-    email = forms.EmailField(label="Email", max_length=50)
+    email = forms.EmailField(label=_(u"Email"), max_length=50, 
+        widget=forms.EmailInput(attrs={'class':'form-control', 'placeholder': _(u'Email'), 'type': 'text'}))
 
 class ChangePasswordForm(forms.Form):
     new_password = forms.CharField(widget=forms.PasswordInput(render_value=False), label=_(u"New password"))

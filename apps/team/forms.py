@@ -8,7 +8,7 @@ from django.utils.translation import ugettext as _
 from apps.team.models import Team
 
 class TeamCreationForm(forms.Form):
-    title = forms.CharField(label=_(u"Title"), max_length=50)
+    title = forms.CharField(label=_(u"Title"), max_length=30)
     tag = forms.CharField(label=_(u"Tag"), max_length=10)
 
     def clean(self):

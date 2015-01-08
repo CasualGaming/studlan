@@ -15,7 +15,6 @@ class UserProfileForm(forms.ModelForm):
 		fields = ('nick', 'gender', 'date_of_birth', 'address', 'zip_code', 'phone',)
 		widgets = {
             'nick': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nickname', 'type': 'text'}),
-            'gender': forms.Select(attrs={'class': 'form-control'}),
             'date_of_birth': forms.TextInput(attrs={'class': 'form-control', 'type': 'date'}),
             'address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Address', 'type': 'text'}),
             'zip_code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'zip code', 'type': 'number'}),

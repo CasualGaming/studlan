@@ -16,7 +16,7 @@ class UserProfile(models.Model):
     nick = models.CharField(_(u'nick'), max_length=20, 
         help_text='Specify a nick name (display name).')
     wants_to_sit_with = models.TextField('Wants to sit with', help_text='Names/nicks of people this user wants to sit with.', blank=True)
-    gender = models.SmallIntegerField(_(u'Gender'), choices=GENDERS, default=1)
+    gender = models.SmallIntegerField(_(u'Gender'), choices=GENDERS, default=1, blank=True)
     date_of_birth = models.DateField(_(u'Date of birth'), default=date.today)
     address = models.CharField(_(u'Street address'), max_length=100)
     zip_code = models.CharField(_(u'Zip code'), max_length=4)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-07 23:52+0100\n"
+"POT-Creation-Date: 2015-01-08 00:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,41 +17,29 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: apps/authentication/forms.py:15 apps/authentication/forms.py:47
-#: apps/authentication/views.py:208 templates/user/profile.html:47
+#: apps/authentication/forms.py:16 apps/authentication/forms.py:49
+#: apps/authentication/views.py:206 templates/user/profile.html:47
 msgid "Username"
 msgstr "Brukernavn"
 
-#: apps/authentication/forms.py:16 apps/authentication/forms.py:61
+#: apps/authentication/forms.py:18 apps/authentication/forms.py:59
 #, fuzzy
 #| msgid "Change password"
 msgid "Password"
 msgstr "Bytt passord"
 
-#: apps/authentication/forms.py:29
+#: apps/authentication/forms.py:31
 msgid "Your account is inactive, try to recover it."
 msgstr "Din konto er innaktiv og må aktiveres"
 
-#: apps/authentication/forms.py:31
+#: apps/authentication/forms.py:33
 msgid ""
 "The account does not exist, or username/password combination is incorrect."
 msgstr "Kontoen finnes ikke, eller brukernavn/passord kombinasjonen er feil"
 
-#: apps/authentication/forms.py:46
+#: apps/authentication/forms.py:48
 msgid "Desired username"
 msgstr "Brukernavn"
-
-#: apps/authentication/forms.py:48 apps/userprofile/models.py:24
-#, fuzzy
-#| msgid "Username"
-msgid "NTNU username"
-msgstr "NTNU-Brukernavn"
-
-#: apps/authentication/forms.py:49
-#, fuzzy
-#| msgid "Username"
-msgid "NTNU user"
-msgstr "NTNU-Brukernavn"
 
 #: apps/authentication/forms.py:50 apps/authentication/forms.py:51
 #: templates/user/profile.html:51
@@ -68,73 +56,67 @@ msgstr "Etternavn"
 msgid "Date of birth"
 msgstr "Fødselsdato"
 
-#: apps/authentication/forms.py:56 apps/userprofile/models.py:19
-#: templates/user/profile.html:75
-msgid "Gender"
-msgstr "Kjønn"
-
-#: apps/authentication/forms.py:58 apps/authentication/forms.py:59
+#: apps/authentication/forms.py:56 apps/authentication/forms.py:57
+#: apps/authentication/forms.py:104 apps/authentication/forms.py:105
 #: templates/sidebar.html:12 templates/user/profile.html:59
 msgid "Email"
 msgstr "Epost"
 
-#: apps/authentication/forms.py:63
+#: apps/authentication/forms.py:61
 msgid "Repeat password"
 msgstr "Gjenta passord"
 
-#: apps/authentication/forms.py:64 apps/authentication/forms.py:65
+#: apps/authentication/forms.py:62 apps/authentication/forms.py:63
 msgid "Address"
 msgstr "Adresse"
 
-#: apps/authentication/forms.py:66
+#: apps/authentication/forms.py:64
 msgid "ZIP code"
 msgstr "Postnummer"
 
-#: apps/authentication/forms.py:67 apps/userprofile/models.py:22
-#, fuzzy
-#| msgid "Zip/Postal code"
+#: apps/authentication/forms.py:65 apps/userprofile/models.py:22
 msgid "Zip code"
 msgstr "Postnummer"
 
-#: apps/authentication/forms.py:68 apps/authentication/forms.py:69
+#: apps/authentication/forms.py:66 apps/authentication/forms.py:67
 #: apps/userprofile/models.py:23
 msgid "Phone number"
 msgstr "Telefon-nummer"
 
-#: apps/authentication/forms.py:80 apps/userprofile/forms.py:38
+#: apps/authentication/forms.py:78 apps/userprofile/forms.py:37
 msgid ""
 "You seem to be from the future, please enter a more believable date of birth."
 msgstr ""
 "Det ser ut som du kommer fra fremtiden. Du må legge til riktig fødselsdato"
 
-#: apps/authentication/forms.py:84 apps/authentication/forms.py:119
+#: apps/authentication/forms.py:82 apps/authentication/forms.py:118
 msgid "Passwords did not match."
 msgstr "Passordene var ikke like"
 
-#: apps/authentication/forms.py:89
+#: apps/authentication/forms.py:87
 msgid "There is already a user with that username."
 msgstr "Brukernavnet er allerede i bruk"
 
-#: apps/authentication/forms.py:91
+#: apps/authentication/forms.py:89
 msgid "Your desired username contains illegal characters. Valid: a-Z 0-9 - _"
 msgstr ""
 "Brukernavnet ditt kan ikke inneholde ulovlige tegn. Lovlige tegn: a-Z 0-9 - _"
 
-#: apps/authentication/forms.py:96
+#: apps/authentication/forms.py:94
 msgid "There is already a user with that email."
 msgstr "Epost-adressen er allerede registrert"
 
-#: apps/authentication/forms.py:101 apps/userprofile/forms.py:43
+#: apps/authentication/forms.py:99 apps/userprofile/forms.py:42
 msgid "The ZIP code must be 4 digit number."
 msgstr "Post-nummeret må inneholde 4 tall"
 
-#: apps/authentication/forms.py:109
+#: apps/authentication/forms.py:108
 #, fuzzy
 #| msgid "Recover password"
 msgid "New password"
 msgstr "Glemt passord?"
 
-#: apps/authentication/forms.py:110
+#: apps/authentication/forms.py:109
 msgid "Repeat new password"
 msgstr "Gjenta passord"
 
@@ -150,58 +132,58 @@ msgstr "Logget ut"
 msgid "You cannot be logged in when registering."
 msgstr "Du kan ikke være innlogget under registrering"
 
-#: apps/authentication/views.py:87
+#: apps/authentication/views.py:85
 msgid "Verify your account"
 msgstr "Verifiser kontoen"
 
-#: apps/authentication/views.py:89
+#: apps/authentication/views.py:87
 msgid ""
 "Registration successful. Check your email for verification instructions."
 msgstr ""
 "Registrering OK. Du skal ha fått en epost for å fullføre registreringen"
 
-#: apps/authentication/views.py:112 apps/authentication/views.py:175
+#: apps/authentication/views.py:110 apps/authentication/views.py:173
 #, fuzzy
 #| msgid "User Info"
 msgid "User "
 msgstr "Bruker "
 
-#: apps/authentication/views.py:112
+#: apps/authentication/views.py:110
 msgid " successfully activated. You can now log in."
 msgstr " aktivert, du kan nå logge inn"
 
-#: apps/authentication/views.py:116 apps/authentication/views.py:187
+#: apps/authentication/views.py:114 apps/authentication/views.py:185
 msgid ""
 "The token has expired. Please use the password recovery to get a new token."
 msgstr "Linken har gått ut. Bruk passord gjennoppretting for å få en ny link"
 
-#: apps/authentication/views.py:131
+#: apps/authentication/views.py:129
 msgid "That email is not registered."
 msgstr "Epost-adressen er ikke registrert"
 
-#: apps/authentication/views.py:144 templates/auth/recover.html:12
+#: apps/authentication/views.py:142 templates/auth/recover.html:12
 msgid "Account recovery"
 msgstr "Gjenopprett konto"
 
-#: apps/authentication/views.py:146
+#: apps/authentication/views.py:144
 msgid "A recovery link has been sent to "
 msgstr "En gjennopprettings-link har blitt sent til "
 
-#: apps/authentication/views.py:175
+#: apps/authentication/views.py:173
 #, fuzzy
 #| msgid " successfully activated. You can now log in."
 msgid " successfully had it's password changed. You can now log in."
 msgstr " aktivert, du kan nå logge inn"
 
-#: apps/authentication/views.py:182
+#: apps/authentication/views.py:180
 msgid "Token accepted. Please insert your new password."
 msgstr "Link akseptert. Skriv inn nytt passord"
 
-#: apps/authentication/views.py:191
+#: apps/authentication/views.py:189
 msgid "You have registered an account at "
-msgstr "Du har registrert en konto på"
+msgstr "Du har registrert en konto på "
 
-#: apps/authentication/views.py:192
+#: apps/authentication/views.py:190
 msgid ""
 "\n"
 "To use the account you need to verify it. You can do this by visiting the "
@@ -213,7 +195,7 @@ msgstr ""
 "trykke på linken under\n"
 "\n"
 
-#: apps/authentication/views.py:196 apps/authentication/views.py:215
+#: apps/authentication/views.py:194 apps/authentication/views.py:213
 msgid ""
 "\n"
 "\n"
@@ -228,18 +210,18 @@ msgstr ""
 "Hvis linken ikke blir brukt innen 24 timer må du bruke passord "
 "gjennopprettings funksjonaliteten for og få en ny link"
 
-#: apps/authentication/views.py:206
+#: apps/authentication/views.py:204
 msgid "You have requested a password recovery for the account bound to "
 msgstr "Passord-gjennoppretting har blitt etterspurt for kontoen knyttet til "
 
-#: apps/authentication/views.py:210
+#: apps/authentication/views.py:208
 msgid ""
 "If you did not ask for this password recovery, please ignore this email."
 msgstr ""
 "Hvis du ikke ba om denne passord-gjennopprettingen kan du ignore denne "
 "emailen"
 
-#: apps/authentication/views.py:212
+#: apps/authentication/views.py:210
 msgid ""
 "\n"
 "\n"
@@ -453,7 +435,7 @@ msgstr "Du har forlatt "
 msgid " removed from your team."
 msgstr " ble fjernet fra laget."
 
-#: apps/userprofile/forms.py:32
+#: apps/userprofile/forms.py:31
 #, fuzzy
 #| msgid ""
 #| "Your desired username contains illegal characters. Valid: a-Z 0-9 - _"
@@ -473,9 +455,19 @@ msgstr "Kvinne"
 msgid "nick"
 msgstr "kallenavn"
 
+#: apps/userprofile/models.py:19 templates/user/profile.html:75
+msgid "Gender"
+msgstr "Kjønn"
+
 #: apps/userprofile/models.py:21 templates/user/profile.html:83
 msgid "Street address"
 msgstr "Adresse"
+
+#: apps/userprofile/models.py:24
+#, fuzzy
+#| msgid "Username"
+msgid "NTNU username"
+msgstr "NTNU-Brukernavn"
 
 #: apps/userprofile/views.py:23 apps/userprofile/views.py:42
 #: apps/userprofile/views.py:61 apps/userprofile/views.py:74
@@ -497,13 +489,18 @@ msgstr "Historikk"
 msgid "Django site admin"
 msgstr "Django site admin"
 
-#: templates/auth/login.html:12 templates/userdropdown.html:5
+#: templates/auth/login.html:12 templates/auth/login.html.py:25
+#: templates/userdropdown.html:5
 msgid "Login"
 msgstr "Logg inn"
 
 #: templates/auth/login.html:26
 msgid "Recover password"
 msgstr "Glemt passord?"
+
+#: templates/auth/recover.html:24
+msgid "Recover"
+msgstr "Gjennopprett"
 
 #: templates/auth/register.html:12
 msgid "Register new user"
@@ -525,6 +522,10 @@ msgstr "Språk"
 #: templates/lottery/lottery_details.html:14
 msgid "Participants"
 msgstr "Deltakere"
+
+#: templates/competition/competition.html:88
+msgid "Select team"
+msgstr "Velg lag"
 
 #: templates/competition/competition.html:95
 msgid "Join competition (team)"
@@ -576,10 +577,6 @@ msgstr ""
 #: templates/competition/competition.html:139
 msgid "When you sign up as a team, your solo participation will be overriden."
 msgstr "Når du melder på et lag vil solo-påmeldingen bli overskrevet."
-
-#: templates/competition/competition.html:146
-msgid "Description"
-msgstr "Beksrivelse"
 
 #: templates/competition/competitions.html:26
 #, fuzzy
@@ -768,16 +765,12 @@ msgid "competitions active."
 msgstr "aktive konkurranser"
 
 #: templates/sponsor/sponsors.html:13
-#, fuzzy
-#| msgid "Sponsors"
 msgid "Active sponsors"
-msgstr "Sponsorer"
+msgstr "Aktive sponsorer"
 
 #: templates/sponsor/sponsors.html:34
-#, fuzzy
-#| msgid "Previous LANs"
 msgid "Previous sponsors"
-msgstr "Tidligere LAN"
+msgstr "Tidligere sponsorer"
 
 #: templates/team/create_team.html:22
 msgid "Create new team"
@@ -817,7 +810,7 @@ msgstr "Legg til medlem"
 
 #: templates/team/team.html:74
 msgid "Select"
-msgstr ""
+msgstr "Velg"
 
 #: templates/team/team_list.html:26
 msgid "No teams yet"
@@ -871,6 +864,14 @@ msgstr "Oppdater"
 #: templates/userdropdown.html:29 templates/userdropdown.html.py:50
 msgid "Log out"
 msgstr "Logg ut"
+
+#, fuzzy
+#~| msgid "Username"
+#~ msgid "NTNU user"
+#~ msgstr "NTNU-Brukernavn"
+
+#~ msgid "Description"
+#~ msgstr "Beksrivelse"
 
 #~ msgid "Participating teams:"
 #~ msgstr "Deltakende lag"

@@ -85,7 +85,7 @@
                             {% if owned_teams %}
                                 <form class="form-inline" action="{% url 'join_comp' competition.id %}" method="POST">
                                     {% csrf_token %}
-                                    <label for="team" class="control-label">Select team: </label>
+                                    <label for="team" class="control-label">{% trans "Select team" %}: </label>
                                     <select class="form-control" name="team" id="team">
                                         {% for team in owned_teams %}
                                             <option value="{{ team.id }}">{{ team }}</option>

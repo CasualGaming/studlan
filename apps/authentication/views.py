@@ -67,9 +67,7 @@ def register(request):
                 up = UserProfile(
                     user=user, 
                     nick=cleaned['desired_username'],
-                    ntnu_username=cleaned['ntnu_username'],
                     date_of_birth=cleaned['date_of_birth'],
-                    gender=cleaned['gender'],
                     zip_code=cleaned['zip_code'],
                     address=cleaned['address'],
                     phone=cleaned['phone'],

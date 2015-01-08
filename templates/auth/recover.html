@@ -11,13 +11,20 @@
             <fieldset>
                 <legend>{% trans "Account recovery" %}</legend>
                 {% for field in form %}
-                    <div class="control-group">
-                        <label label-default="label-default" class="control-label">{{ field.label_tag }}</label>
-                        <div class="controls">{{ field }} {{ field.errors }}</div>
+                    <div class="form-group {% if field.errors %} has-error {% endif %}">
+                        <label label-default="label-default" class="col-md-1 control-label">
+                            {{ field.label }}
+                        </label>
+                        <div class="col-md-6">
+                            {{ field }}
+                            <div class="form-error">
+                                {{ field.errors }}
+                            </div>
+                        </div>
                     </div>
                 {% endfor %}
-                <div class="form-actions">
-                    <input type="submit" class="btn btn-primary" value="Recover" />
+                <div class="form-actions center-on-collapse">
+                    <input type="submit" class="btn btn-primary" value="{% trans "Recover" %}" />
                 </div>
             </fieldset>
         </form>
