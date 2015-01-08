@@ -12,7 +12,7 @@ class UserProfileForm(forms.ModelForm):
 
 	class Meta:
 		model = UserProfile
-		fields = ('nick', 'gender', 'date_of_birth', 'address', 'zip_code', 'phone',)
+		fields = ('nick', 'date_of_birth', 'address', 'zip_code', 'phone',)
 		widgets = {
             'nick': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nickname', 'type': 'text'}),
             'date_of_birth': forms.TextInput(attrs={'class': 'form-control', 'type': 'date'}),
