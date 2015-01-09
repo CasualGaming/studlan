@@ -3,7 +3,7 @@
 from django.contrib import admin
 from django.conf import settings
 
-from apps.seating.models import Seat, Seating
+from apps.seating.models import Seat, Seating, Layout
 
 class SeatAdmin (admin.ModelAdmin):
     list_display = ('user', 'placement', 'is_empty')
@@ -16,3 +16,4 @@ class SeatingAdmin (admin.ModelAdmin):
 
 admin.site.register(Seating, SeatingAdmin)
 admin.site.register(Seat, SeatAdmin)
+admin.site.register(Layout)

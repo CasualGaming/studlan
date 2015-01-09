@@ -20,11 +20,11 @@ def main(request):
         context = {}
         now = datetime.now()
         lans = LAN.objects.all().order_by('-start_date')
-        seatings = Seating.objects.filter(lan=lans[0])
-
-        context['seatings'] = seatings
-        context['lan'] = lans[0]
-        context['active'] = 'all'
+        if lans:
+            seatings = Seating.objects.filter(lan=lans[0])
+            context['seatings'] = seatings
+            context['lan'] = lans[0]
+            context['active'] = 'all'
 
         breadcrumbs = (
             ('studLAN', '/'),
@@ -60,10 +60,10 @@ def seating_details(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
     users = seating.get_user_registered()
     seats = seating.get_total_seats()
-    seatcount  = seating.get_total_seats().count
+    seatcount = seating.get_total_seats().count
 
-    if seating.template:
-        dom = BeautifulSoup(seating.template, "html.parser")
+    if seating.layout:
+        dom = BeautifulSoup(seating.layout.template, "html.parser")
         counter = 0
         for tag in dom.find_all('a'):
             children = tag.find_all('rect')
@@ -92,7 +92,7 @@ def seating_details(request, seating_id):
     context['breadcrumbs'] = breadcrumbs
     context['users'] = users
     context['seats'] = seats
-    if seating.template:
+    if seating.layout:
         context['template'] = dom.__str__
 
     # Insert placeholder image if the image_url is empty
