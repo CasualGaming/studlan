@@ -101,24 +101,22 @@ def seating_details(request, seating_id):
 @login_required()
 def join(request, seating_id, seat_id):
     seating = get_object_or_404(Seating, pk=seating_id)
-    current_lan = seating.lan
-    siblings = list(Seating.objects.filter(lan=current_lan))
+    seat = get_object_or_404(Seat, pk=seat_id)
+    siblings = list(Seating.objects.filter(lan=seating.lan))
     occupied = seating.get_user_registered()
     for sibling in siblings:
         occupied = occupied + sibling.get_user_registered()
-    seat = get_object_or_404(Seat, pk=seat_id)
     try:
         attendee = Attendee.objects.get(user=request.user)
     except ObjectDoesNotExist:
         attendee = None
 
-    if attendee and attendee.has_paid:
+    if (attendee and attendee.has_paid) or seating.lan.has_ticket(request.user):
         if seat.is_empty():
             if request.user in occupied:
                 old_seat = get_object_or_404(Seat, user=request.user)
                 old_seat.user = None
                 old_seat.save()
-
             seat.user = request.user
             seat.save()
             messages.success(request, "You have successfully reserved your seat! ")
