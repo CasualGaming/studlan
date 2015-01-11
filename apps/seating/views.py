@@ -14,7 +14,10 @@ from apps.lan.models import LAN, Attendee
 from django.http import HttpResponse
 from reportlab.pdfgen import canvas
 from bs4 import BeautifulSoup
-
+from reportlab.graphics import renderPDF, renderSVG
+from reportlab.graphics.shapes import *
+from svglib.svglib import svg2rlg, SvgRenderer
+import xml.dom.minidom
 
 def main(request):
         context = {}
@@ -70,16 +73,16 @@ def seating_details(request, seating_id):
             if not seats[counter].user:
                 children[0]['class'] = ' seating-node-free'
                 tag['xlink:href'] = 'join/' + str(seats[counter].id)
-                tag['title'] = 'Free seat'
+                tag['title'] = 'Seat ' + str(seats[counter].placement) + ': Free'
             else:
                 if seats[counter].user == request.user:
                     children[0]['class'] = ' seating-node-self'
                     tag['xlink:href'] = 'leave/' + str(seats[counter].id)
-                    tag['title'] = 'Your seat'
+                    tag['title'] = 'Seat ' + str(seats[counter].placement) + ': Your seat'
                 else:
                     children[0]['class'] = ' seating-node-occupied'
                     tag['xlink:href'] = '/profile/' + str(seats[counter].user)
-                    tag['title'] = seats[counter].user
+                    tag['title'] = 'Seat ' + str(seats[counter].placement) + ': ' + seats[counter].user
             counter += 1
         dom.encode("utf-8")
 
@@ -199,7 +202,7 @@ def register_user(request):
 
     return redirect('root')
 
-def seating_map(request, seating_id):
+def seating_list(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
     lan = get_object_or_404(LAN, id=seating.lan.id)
     seats = list(Seat.objects.filter(seating=seating))
@@ -222,8 +225,27 @@ def seating_map(request, seating_id):
         else:
             p.drawString(230, cursor, "Plass " + str(s.placement) + ": ")
             p.drawString(280, cursor, '[Ledig]')
-        cursor = cursor - 19
+        cursor -= 19
     # Close the PDF object cleanly, and we're done.
     p.showPage()
     p.save()
+    return response
+
+def seating_map(request, seating_id):
+    seating = get_object_or_404(Seating, pk=seating_id)
+    template = seating.layout.template
+    #drawing = Drawing()
+    #drawing = Drawing(svg2rlg(template))
+
+    # Create the HttpResponse object with the appropriate PDF headers.
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename=' + seating.title
+    pdfcanvas = canvas.Canvas(response)
+
+    #renderSVG.draw(drawing, pdfcanvas, x=0, y=0, showBoundary=0)
+    pdfcanvas.drawString(230, 820, "Not yet implemented")
+
+    pdfcanvas.showPage()
+    pdfcanvas.save()
+
     return response

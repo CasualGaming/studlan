@@ -17,7 +17,11 @@
                             {% endif %}
 
                             <br>
-                            <a href="{% url 'map' seating.id %}"><i class="glyphicon glyphicon-th"></i>Seatlist</a>
+                            <a href="{% url 'list' seating.id %}"><i class="glyphicon glyphicon-th"></i>Seatlist</a>
+                            {% if seating.layout %}
+                            <br>
+                            <a href="{% url 'map' seating.id %}"><i class="glyphicon glyphicon-th"></i>SeatMap</a>
+                            {% endif %}
                         </div>
                     {% endfor %}
                 {% else %}
