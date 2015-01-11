@@ -226,6 +226,12 @@ def seating_list(request, seating_id):
             p.drawString(230, cursor, "Plass " + str(s.placement) + ": ")
             p.drawString(280, cursor, '[Ledig]')
         cursor -= 19
+        if cursor < 50:
+            p.showPage()
+            p.drawString(230, 820, lan.title)
+            p.drawString(230, 800, seating.title)
+            cursor = 750
+
     # Close the PDF object cleanly, and we're done.
     p.showPage()
     p.save()
