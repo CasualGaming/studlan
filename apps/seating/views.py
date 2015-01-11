@@ -233,19 +233,41 @@ def seating_list(request, seating_id):
 
 def seating_map(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
-    template = seating.layout.template
-    #drawing = Drawing()
-    #drawing = Drawing(svg2rlg(template))
-
+    lan = get_object_or_404(LAN, id=seating.lan.id)
+    seats = list(Seat.objects.filter(seating=seating))
     # Create the HttpResponse object with the appropriate PDF headers.
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename=' + seating.title
-    pdfcanvas = canvas.Canvas(response)
 
-    #renderSVG.draw(drawing, pdfcanvas, x=0, y=0, showBoundary=0)
-    pdfcanvas.drawString(230, 820, "Not yet implemented")
+    # Create the PDF object, using the response object as its "file."
+    p = canvas.Canvas(response)
 
-    pdfcanvas.showPage()
-    pdfcanvas.save()
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+    pagecounter = 0
+    y_value = 780
+    for s in seats:
+        if pagecounter == 1:
+            y_value = 780
+            p.showPage()
+            pagecounter = 0
+        else:
+            pagecounter += 1
+            y_value = 450
+
+        p.setFont("Helvetica", 30)
+        p.drawString(180, y_value, lan.title)
+        p.drawString(180, y_value-80, seating.title)
+        cursor = 750
+        if s.user:
+            p.drawString(180, y_value-130, "Plass " + str(s.placement) + ": ")
+            p.drawString(180, y_value-180, str(s.user))
+        else:
+            p.drawString(180, y_value-130, "Plass " + str(s.placement) + ": ")
+            p.drawString(180, y_value-180, '[Ledig]')
+
+    # Close the PDF object cleanly, and we're done.
+
+    p.save()
 
     return response
