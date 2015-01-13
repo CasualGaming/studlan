@@ -17,11 +17,9 @@ from bs4 import BeautifulSoup
 from reportlab.graphics import renderPDF, renderSVG
 from reportlab.graphics.shapes import *
 from svglib.svglib import svg2rlg, SvgRenderer
-import xml.dom.minidom
 
 def main(request):
         context = {}
-        now = datetime.now()
         lans = LAN.objects.all().order_by('-start_date')
         if lans:
             seatings = Seating.objects.filter(lan=lans[0])
@@ -72,7 +70,7 @@ def seating_details(request, seating_id):
             children = tag.find_all('rect')
             if not seats[counter].user:
                 children[0]['class'] = ' seating-node-free'
-                tag['xlink:href'] = 'join/' + str(seats[counter].id)
+                tag['xlink:href'] = 'info/' + str(seats[counter].id)
                 tag['title'] = 'Seat ' + str(seats[counter].placement) + ': Free'
             else:
                 if seats[counter].user == request.user:
@@ -98,7 +96,55 @@ def seating_details(request, seating_id):
     if seating.layout:
         context['template'] = dom.__str__
 
-    # Insert placeholder image if the image_url is empty
+    return render(request, 'seating/seating.html', context)
+
+
+@login_required()
+def seat_details(request, seating_id, seat_id):
+    context = {}
+    seating = get_object_or_404(Seating, pk=seating_id)
+    users = seating.get_user_registered()
+    seats = seating.get_total_seats()
+    seatcount = seating.get_total_seats().count
+    seat = get_object_or_404(Seat, pk=seat_id)
+
+
+    if seating.layout:
+        dom = BeautifulSoup(seating.layout.template, "html.parser")
+        counter = 0
+        for tag in dom.find_all('a'):
+            children = tag.find_all('rect')
+            if not seats[counter].user:
+                children[0]['class'] = ' seating-node-free'
+                tag['xlink:href'] = 'join/' + str(seats[counter].id)
+                tag['title'] = 'Seat ' + str(seats[counter].placement) + ': Free'
+            else:
+                if seats[counter].user == request.user:
+                    children[0]['class'] = ' seating-node-self'
+                    tag['xlink:href'] = 'leave/' + str(seats[counter].id)
+                    tag['title'] = 'Seat ' + str(seats[counter].placement) + ': Your seat'
+                else:
+                    children[0]['class'] = ' seating-node-occupied'
+                    tag['xlink:href'] = '/profile/' + str(seats[counter].user)
+                    tag['title'] = 'Seat ' + str(seats[counter].placement) + ': ' + seats[counter].user
+            if seats[counter] == seat:
+                children[0]['class'] = ' seating-node-info'
+            counter += 1
+        dom.encode("utf-8")
+
+    breadcrumbs = (
+        ('studLAN', '/'),
+        ('Seatings', reverse('seatings')),
+        (seating, ''),
+    )
+    context['seating'] = seating
+    context['breadcrumbs'] = breadcrumbs
+    context['users'] = users
+    context['seats'] = seats
+    context['info_seat'] = seat
+    if seating.layout:
+        context['template'] = dom.__str__
+
     return render(request, 'seating/seating.html', context)
 
 @login_required()
@@ -206,15 +252,12 @@ def seating_list(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
     lan = get_object_or_404(LAN, id=seating.lan.id)
     seats = list(Seat.objects.filter(seating=seating))
-    # Create the HttpResponse object with the appropriate PDF headers.
+
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename=' + seating.title
 
-    # Create the PDF object, using the response object as its "file."
     p = canvas.Canvas(response)
 
-    # Draw things on the PDF. Here's where the PDF generation happens.
-    # See the ReportLab documentation for the full list of functionality.
     p.drawString(230, 820, lan.title)
     p.drawString(230, 800, seating.title)
     cursor = 750
@@ -237,19 +280,17 @@ def seating_list(request, seating_id):
     p.save()
     return response
 
+
 def seating_map(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
     lan = get_object_or_404(LAN, id=seating.lan.id)
     seats = list(Seat.objects.filter(seating=seating))
-    # Create the HttpResponse object with the appropriate PDF headers.
+
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename=' + seating.title
 
-    # Create the PDF object, using the response object as its "file."
     p = canvas.Canvas(response)
 
-    # Draw things on the PDF. Here's where the PDF generation happens.
-    # See the ReportLab documentation for the full list of functionality.
     pagecounter = 0
     y_value = 780
     for s in seats:
@@ -271,8 +312,6 @@ def seating_map(request, seating_id):
         else:
             p.drawString(180, y_value-130, "Plass " + str(s.placement) + ": ")
             p.drawString(180, y_value-180, '[Ledig]')
-
-    # Close the PDF object cleanly, and we're done.
 
     p.save()
 

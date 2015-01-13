@@ -274,6 +274,9 @@ div#btn-profile {
     fill:#EC971F;
 }
 
+.seating-node-info {
+    fill:#5BC0DE;
+}
 
 .hide {
     display: none;
