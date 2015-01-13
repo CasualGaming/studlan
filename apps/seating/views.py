@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
 import logging
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -14,9 +12,7 @@ from apps.lan.models import LAN, Attendee
 from django.http import HttpResponse
 from reportlab.pdfgen import canvas
 from bs4 import BeautifulSoup
-from reportlab.graphics import renderPDF, renderSVG
-from reportlab.graphics.shapes import *
-from svglib.svglib import svg2rlg, SvgRenderer
+
 
 def main(request):
         context = {}
@@ -70,16 +66,16 @@ def seating_details(request, seating_id):
             children = tag.find_all('rect')
             if not seats[counter].user:
                 children[0]['class'] = ' seating-node-free'
-                tag['xlink:href'] = 'info/' + str(seats[counter].id)
+                tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + str(seats[counter].id)
                 tag['title'] = 'Seat ' + str(seats[counter].placement) + ': Free'
             else:
                 if seats[counter].user == request.user:
                     children[0]['class'] = ' seating-node-self'
-                    tag['xlink:href'] = 'leave/' + str(seats[counter].id)
+                    tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + str(seats[counter].id)
                     tag['title'] = 'Seat ' + str(seats[counter].placement) + ': Your seat'
                 else:
                     children[0]['class'] = ' seating-node-occupied'
-                    tag['xlink:href'] = '/profile/' + str(seats[counter].user)
+                    tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + str(seats[counter].id)
                     tag['title'] = 'Seat ' + str(seats[counter].placement) + ': ' + str(seats[counter].user)
             counter += 1
         dom.encode("utf-8")
@@ -108,7 +104,6 @@ def seat_details(request, seating_id, seat_id):
     seatcount = seating.get_total_seats().count
     seat = get_object_or_404(Seat, pk=seat_id)
 
-
     if seating.layout:
         dom = BeautifulSoup(seating.layout.template, "html.parser")
         counter = 0
@@ -116,16 +111,16 @@ def seat_details(request, seating_id, seat_id):
             children = tag.find_all('rect')
             if not seats[counter].user:
                 children[0]['class'] = ' seating-node-free'
-                tag['xlink:href'] = 'join/' + str(seats[counter].id)
+                tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + str(seats[counter].id)
                 tag['title'] = 'Seat ' + str(seats[counter].placement) + ': Free'
             else:
                 if seats[counter].user == request.user:
                     children[0]['class'] = ' seating-node-self'
-                    tag['xlink:href'] = 'leave/' + str(seats[counter].id)
+                    tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + str(seats[counter].id)
                     tag['title'] = 'Seat ' + str(seats[counter].placement) + ': Your seat'
                 else:
                     children[0]['class'] = ' seating-node-occupied'
-                    tag['xlink:href'] = '/profile/' + str(seats[counter].user)
+                    tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + str(seats[counter].id)
                     tag['title'] = 'Seat ' + str(seats[counter].placement) + ': ' + str(seats[counter].user)
             if seats[counter] == seat:
                 children[0]['class'] = ' seating-node-info'
@@ -230,9 +225,9 @@ def seating_list(request, seating_id):
             p.drawString(230, 800, seating.title)
             cursor = 750
 
-    # Close the PDF object cleanly, and we're done.
     p.showPage()
     p.save()
+
     return response
 
 
@@ -260,7 +255,6 @@ def seating_map(request, seating_id):
         p.setFont("Helvetica", 30)
         p.drawString(180, y_value, lan.title)
         p.drawString(180, y_value-80, seating.title)
-        cursor = 750
         if s.user:
             p.drawString(180, y_value-130, "Plass " + str(s.placement) + ": ")
             p.drawString(180, y_value-180, str(s.user))

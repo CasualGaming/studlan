@@ -15,6 +15,7 @@ class Layout(models.Model):
     def __unicode__(self):
         return self.title
 
+
 class Seating(models.Model):
     lan = models.ForeignKey(LAN)
     title = models.CharField('title', max_length=50)
@@ -71,5 +72,3 @@ class Seat(models.Model):
             return True
         else:
             return False
-
-

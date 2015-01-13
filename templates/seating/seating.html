@@ -8,7 +8,7 @@ ads
 {% load i18n %}
 {% block content %}
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-9">
             {% if not seating.is_open %}
                 <div class="alert alert-danger">{% trans "Seating is closed." %}</div>
             {% endif %}
@@ -17,7 +17,6 @@ ads
             <input class="btn btn-danger" type="submit" value="Opptatt sete" disabled/>
             <input class="btn btn-success" type="submit" value="Ledig sete" disabled/>
             <input class="btn btn-info" type="submit" value="Valgt sete" disabled>
-            <input class="btn btn-success" type="submit" value="Take seat" />
         </div>
     </div>
     <div class="row">
@@ -64,14 +63,32 @@ ads
             		<li><strong>Seat: </strong> {{info_seat.placement}}</li>
                     <li><strong>Occupied by: </strong></li>
                     <li>{{info_seat.user}}</li>
+                    {% if info_seat.user %}
+                    {% if info_seat.user == user %}
+                        <form class="form-inline" 
+                        {% if seating.is_open %}
+                            action="{% url 'leave_seat' info_seat.seating.id info_seat.id %}" 
+                        {% endif %}
+                        method="POST">
+                        {% csrf_token %}
+                        <input class="btn btn-warning" type="submit" value="Leave seat" />
+                        </form>
+                    {% else %}
+                        <form class="form-inline" action="/profile/{{info_seat.user}}/" method="POST">
+                            {% csrf_token %}
+                            <input class="btn btn-primary" type="submit" value="View profile" title="View profile" />
+                        </form>
+                {% endif %}
+                {% else %}
                         <form class="form-inline" 
                         {% if seating.is_open %}
                             action="{% url 'take_seat' info_seat.seating.id info_seat.id %}" 
                         {% endif %}
                         method="POST">
                         {% csrf_token %}
-                        <input class="btn btn-success" type="submit" value="Take seat" />
+                        <input class="btn btn-primary" type="submit" value="Take seat" />
                         </form>
+                {% endif %}
                 </ul>
         	</div>
         </div>
