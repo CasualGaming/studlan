@@ -30,14 +30,14 @@ ads
                     {% if s.user == user %}
                         <form class="form-inline" 
                         {% if seating.is_open %}
-                            action="{% url 'leave_seat' seating.id s.id %}" 
+                            action="{% url 'seat_details' seating.id s.id %}" 
                         {% endif %}
                         method="POST">
                         {% csrf_token %}
                         <input class="btn btn-warning" type="submit" value="{{ s.id }}" />
                         </form>
                     {% else %}
-                        <form class="form-inline" action="/profile/{{s.user}}/" method="POST">
+                        <form class="form-inline" action="{% url 'seat_details' seating.id s.id %}" method="POST">
                             {% csrf_token %}
                             <input class="btn btn-danger" type="submit" value="{{ s.id }}" title="{{s.user}}" />
                         </form>
@@ -61,9 +61,10 @@ ads
         	<div class="well">
                 <ul class="nav nav-stacked">
             		<li><strong>Seat: </strong> {{info_seat.placement}}</li>
+                    {% if info_seat.user %}
                     <li><strong>Occupied by: </strong></li>
                     <li>{{info_seat.user}}</li>
-                    {% if info_seat.user %}
+                    
                     {% if info_seat.user == user %}
                         <form class="form-inline" 
                         {% if seating.is_open %}
