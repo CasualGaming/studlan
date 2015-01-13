@@ -80,7 +80,7 @@ def seating_details(request, seating_id):
                 else:
                     children[0]['class'] = ' seating-node-occupied'
                     tag['xlink:href'] = '/profile/' + str(seats[counter].user)
-                    tag['title'] = 'Seat ' + str(seats[counter].placement) + ': ' + seats[counter].user
+                    tag['title'] = 'Seat ' + str(seats[counter].placement) + ': ' + str(seats[counter].user)
             counter += 1
         dom.encode("utf-8")
 
@@ -126,7 +126,7 @@ def seat_details(request, seating_id, seat_id):
                 else:
                     children[0]['class'] = ' seating-node-occupied'
                     tag['xlink:href'] = '/profile/' + str(seats[counter].user)
-                    tag['title'] = 'Seat ' + str(seats[counter].placement) + ': ' + seats[counter].user
+                    tag['title'] = 'Seat ' + str(seats[counter].placement) + ': ' + str(seats[counter].user)
             if seats[counter] == seat:
                 children[0]['class'] = ' seating-node-info'
             counter += 1
@@ -188,30 +188,8 @@ def leave(request, seating_id, seat_id):
     return redirect(seating)
 
 
-
-# TODO
-# Mode these view out of seating and into auth, 
-# and make some kind of fallback on the plain forms
 def log_in(request):
-    username = password = ''
-    if request.POST:
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                messages.success(request, 'You have successfully logged in.')
-            else:
-                messages.add_message(request, messages.WARNING,
-                        'Your account is not active, please try again '
-                        'or contact the site admin if the problem '
-                        'persists.')
-        else:
-
-            messages.add_message(request, messages.ERROR,
-                                 'Wrong username/password.')
-    return redirect('myprofile')
+    return redirect('auth_login')
 
 
 def log_out(request):
@@ -222,31 +200,8 @@ def log_out(request):
 
 
 def register_user(request):
+    return redirect('auth_register')
 
-    username = password = fname = lname = email = ''
-    if request.POST:
-        uname = request.POST.get('username')
-        pword = request.POST.get('password')
-        fname = request.POST.get('fname')
-        lname = request.POST.get('lname')
-        email = request.POST.get('email')
-        if uname is not None and pword is not None and fname \
-            is not None and lname is not None and email is not None:
-            user = User.objects.create_user(username=uname,
-                    password=pword, email=email)
-            user.set_password(pword)
-            user.first_name = fname
-            user.last_name = lname
-            user.is_active = True
-            user.save()
-
-            # TODO review this
-
-            messages.add_message(request, messages.SUCCESS,
-                                 'Registration successful. You may now '
-                                 'log in.')
-
-    return redirect('root')
 
 def seating_list(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
