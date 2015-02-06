@@ -1,21 +1,22 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}
-studLAN - LAN list
+LAN list
 {% endblock title %}
 
 {% block content %}
     {% if upcoming %}
     <div class="row">
-        <div class="span9">
-            <h1>Upcoming LANs</h1>
+        <div class="col-md-8">
+            <h1>{% trans "Upcoming LANs" %}</h1>
         </div>
     </div>
 
     <div class="row">
-        <div class="span9">
+        <div class="col-md-8">
             <table class="table table-bordered table-striped">
-                <thead><th>LAN</th><th>Start</th><th>End</th></thead>
+                <thead><th>LAN</th><th>{% trans "Start" %}</th><th>{% trans "End" %}</th></thead>
                 <tbody>
                     {% for lan in upcoming %}
                     <tr>
@@ -32,15 +33,15 @@ studLAN - LAN list
 
     {% if previous %}
     <div class="row">
-        <div class="span9">
-            <h1>Previous LANs</h1>
+        <div class="col-md-8">
+            <h1>{% trans "Previous LANs" %}</h1>
         </div>
     </div>
 
     <div class="row">
-        <div class="span9">
+        <div class="col-md-8">
             <table class="table table-bordered table-striped">
-                <thead><th>LAN</th><th>Start</th><th>End</th></thead>
+                <thead><th>LAN</th><th>{% trans "Start" %}</th><th>{% trans "End" %}</th></thead>
                 <tbody>
                     {% for lan in previous %}
                     <tr>

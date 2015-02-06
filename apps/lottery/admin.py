@@ -12,6 +12,7 @@ class LotteryTranslationInlineAdmin(admin.StackedInline):
 
 class LotteryAdmin(admin.ModelAdmin):
     inlines = [LotteryTranslationInlineAdmin,]
+    list_display = ['__unicode__', 'lan',]
 
 class LotteryParticipantAdmin(admin.ModelAdmin):
     model = LotteryParticipant

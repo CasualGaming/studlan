@@ -25,6 +25,10 @@ class Lottery(TranslatableModel):
 
         return False
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('lottery_details', (), {'lottery_id': self.id})
+
     class Meta:
         verbose_name_plural = "Lotteries"
 

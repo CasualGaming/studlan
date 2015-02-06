@@ -1,105 +1,137 @@
 {% extends "competition/competition_base.html" %}
+{% load i18n %}
 {% load markdown_deux_tags %}
+{% load team_tags %}
+{% load competition_tags %}
 
 {% block title %}
-studLAN - Competition - {{ competition.get_translation.title }}
+{{ competition }}
 {% endblock title %}
 
 {% block content %}
+{% with competition.use_teams as teamcomp %} 
+    <script type="text/javascript" src="{{ STATIC_URL }}js/competition.js"></script>
     <div class="row">
-        <div class="span9"><h2>{{ competition }}</h2></div>
+        <div class="col-md-9"><h2>{{ competition }}</h2></div>
     </div>
     <div class="row">
-        <div class="span9">
+        <div class="col-md-9">
             <span class="label label-{{ competition.status_label }}">{{ competition.status_text_verbose }}</span>
             <a href="#" class="label label-info" rel="popover" data-placement="below" data-html="true" data-content="{{ competition.activity.desc|markdown }}" data-original-title="{{ competition.activity.title }}">{{ competition.activity.title }}</a>
         </div>
     </div>
     <div class="row">
-        <div class="span9">
+        <div class="col-md-9">
             <div class="activity_image" style="background: url('{{ competition.activity.image_url }}');"></div>
         </div>
     </div>
     
-        <br />
+    <br />
 
-    {% comment %}
-        Show participating teams
-    {% endcomment %}
-    {% if teams|length > 0 %}
+    {% if competition.challonge_url %}
+    {% if competition.status == 3 or competition.status == 4 %}
         <div class="row">
-            <div class="span9"><h3>Participating teams: {{ teams|length }}</h3></div>
-        </div>
-        <div class="row">
-            <div class="span9">
-                <table class="table table-bordered table-striped table-condensed">
-                    <thead><th>Team</th><th>Leader</th></thead>
-                    <tbody>
-                        {% for team in teams %}
-                            <tr>
-                                <td><a href="{{ team.get_absolute_url }}">{{ team }}</a></td>
-                                <td><a href="{% url 'profile' team.leader %}">{{ team.leader }}</a></td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    {% endif %}
-
-    {% if users %}
-        <div class="row">
-            <div class="span9">
-                <h3>Participants{% if teams %} without a team{% endif %}: {{ users|length }}</h3>
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="span9">
-                <ul>
-                    {% for user in users %}
-                        <li><a href="{% url 'profile' user %}">{{ user }}</a></li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-        
-    {% endif %}
-
-    {% comment %}
-         Participation form
-    {% endcomment %}
-
-    {% if user.is_authenticated %}
-        {% if competition.status == 1 %}
-            <div class="row">
-                <div class="span9">
-                    {% if not participating %}
-                        {% if competition.use_teams and owned_teams|length > 0 %}
-                            <form class="well form-inline" action="{% url 'join_comp' competition.id %}" method="POST">
-                                {% csrf_token %}
-                                <select class="input-small" name="team" id="team">
-                                    {% for team in owned_teams %}
-                                        <option value="{{ team.id }}">{{ team }}</option>
-                                    {% endfor %}
-                                </select>
-                                <input class="btn btn-success" type="submit" value="Join competition (team)"/>
-                            </form>
-                        {% endif %} 
-                        <form class="well form-inline" action="{% url 'join_comp' competition.id %}" method="POST">{% csrf_token %}
-                            <p>Signing up for a team compo as a solo player does not mean you are a participant. 
-                                Try to find other players that sign up solo, make a team and sign up as a team.</p>
-                            <p><b>When you sign up as a team, your solo participation will be overriden.</b></p>
-                            <input type="submit" class="btn btn-success" value="Join competition (solo)" />
-                        </form>
-                    {% else %}
-                        <form class="well form-inline" action="{% url 'leave_comp' competition.id %}" method="POST">
-                            {% csrf_token %}
-                            <input type="submit" class="btn btn-danger" value="Leave competition" />
-                        </form>
-                    {% endif %}
+            <div class="col-md-9">
+                <button id="brackets-button" class="btn btn-default">Show brackets</button>
+                <div id="brackets-container" class="hide">
+                    <iframe id="brackets-frame" onload="AdjustIFrame('RefFrame');" src="{{ competition.challonge_url }}/module?theme=3&show_final_results=1" width="100%" scrolling="no" frameborder="0" allowtransparency="false"></iframe>
                 </div>
             </div>
+        </div>
+    {% endif %}
+    {% endif %}
+
+    <div class="row">
+        {% if teamcomp %}
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading participants-heading">{% trans "Teams" %} <span class="pull-right"> {{ teams|length }}</div>
+                {% if teams %}
+                    <table class="table table-striped table-condensed table-bordered table-hover click-table">
+                        <tbody>
+                            {% for team in teams %}
+                                <tr onclick="document.location='{{ team.get_absolute_url }}';">
+                                    {% if team|is_member:user %}
+                                        <td class="participant-you underline">{{ team }}</td>
+                                    {% else %}
+                                        <td class="underline">{{ team }}</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+            {% endif %}
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+        {% endif %}
+
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading participants-heading">{% trans "Participants" %} <span class="pull-right"> {{ users|length }}</div>
+                {% if users %}
+                    <table class="table table-striped table-condensed table-bordered table-hover click-table">
+                        <tbody>
+                            {% for user in users %}
+                                <tr onclick="document.location='{% url 'profile' user %}';">
+                                    {% if request.user == user %}
+                                        <td class="participant-you underline" title="{{ user.get_full_name }}">{{ user }}</td>
+                                    {% else %}
+                                        <td class="underline" title="{{ user.get_full_name }}">{{ user }}</td>
+                                    {% endif %}
+                                </tr>   
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+    <!-- Participation form -->
+    {% if user.is_authenticated %}
+        {% if competition.status == 1 %}
+                {% if not participating %}
+                    {% if teamcomp %}
+                        <div class="col-md-4">
+                            {% if owned_teams %}
+                                <form class="form-inline" action="{% url 'join_comp' competition.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <label for="team" class="control-label">{% trans "Select team" %}: </label>
+                                    <select class="form-control" name="team" id="team">
+                                        {% for team in owned_teams %}
+                                            <option value="{{ team.id }}">{{ team }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <div class="form-actions center-on-collapse">
+                                        <input class="btn btn-success" type="submit" value="{% trans "Join competition (team)" %}"/>
+                                    </div>
+                                </form>
+                            {% else %}
+                                <div class="alert alert-danger" role="alert">{% trans "To join the competition as a team you have to" %} <a href="{% url 'create_team' %}">{% trans "create" %}</a> {% trans "or join a team" %}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-1"></div>
+                    {% endif %} 
+                    <div class="col-md-4">
+                        <form class="form-inline" action="{% url 'join_comp' competition.id %}" method="POST">{% csrf_token %}
+                            <div class="center-on-collapse">
+                                <input type="submit" class="btn btn-success" value="{% trans "Join competition" %}{% if teamcomp %} {% trans "(solo)" %} {% endif %}"/>
+                            </div>
+                        </form>
+                    </div>
+                {% else %}
+                    <div class="col-md-9">
+                        <form class="form-inline" action="{% url 'leave_comp' competition.id %}" method="POST">
+                            {% csrf_token %}
+                            <div class="center-on-collapse">
+                                <input type="submit" class="btn btn-danger" value="{% trans "Leave competition" %}"/>
+                            </div>
+                        </form>
+                    </div>
+                {% endif %}
         {% endif %}
         {% if competition.status == 3 %}
             <!-- not implemented...
@@ -107,8 +139,28 @@ studLAN - Competition - {{ competition.get_translation.title }}
             -->
         {% endif %}
     {% endif %}
+</div>
 
-    <div class="row"><div class="span9"><h3>Description</h3></div></div>
-    <div class="row"><div class="span9"><p>{{ competition.get_translation.translated_description|markdown }}</p></div></div>
-        
+{% if teamcomp %}
+    {% if competition|show_solo_note:request.user %}
+    <div class="row">
+        <div class="col-md-9">
+            <div class="alert alert-info">
+                <strong>{% trans "Note: " %}</strong>
+                {% trans "Signing up for a team compo as a solo player does not mean you are a participant." %} 
+                {% trans "Try to find other players that sign up solo, make a team and sign up as a team." %}
+                <br>
+                <b>{% trans "When you sign up as a team, your solo participation will be overriden." %}</b>
+            </div>  
+        </div>
+    </div>
+    {% endif %}
+{% endif %}
+
+    <div class="row">
+        <div class="col-md-9">
+            <p>{{ competition.get_translation.translated_description|markdown }}</p>
+        </div>
+    </div>
+ {% endwith %}       
 {% endblock content %}

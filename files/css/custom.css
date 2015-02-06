@@ -76,32 +76,24 @@ div.table-tabs {
     margin-bottom: 0px;
 }
 
-.sidebar {
-    position: fixed;
-    left: 50%;
-    top: 60px;
-    width: 220px;                   /* Same width as .span3 */
-    /*margin-left: -700px;*/
-    margin-left: 250px;
-} .sidebar .well {
-    padding: 0em 0px ;
-} .sidebar .nav {
-    text-align: center;
-    margin: 0px -1px;
-    padding: 0px;
-} .sidebar .nav li {
-    overflow-x: hidden;
-} .sidebar .nav li:not(.active) {
-    padding: 4px 0px;
-    margin-left: 1px;
-    margin-right: 1px;
-}
 
 div#btn-profile {
     min-width: 220px;                       /* equal to .span2 */
 } div#btn-profile a:not(.dropdown-toggle) { /* child element, but not the dropdown-widget */
     text-align: left;
     min-width: 173px;                       /* equal to .span2 - the dropdown widget (26px) - derp adjustments*/
+}
+
+.register-button{
+    text-align: center;
+}
+
+.login-buttons {
+    margin-left: 5%;
+}
+
+.form-error {
+    color: red;
 }
 
 .paid
@@ -118,4 +110,179 @@ div#btn-profile {
 {
     margin-right: 20px;
     font-weight: bold;
+}
+
+.navbar-brand img {
+    margin-top: -4px;
+    vertical-align: middle;
+}
+
+.navbar .nav > li > a {
+    color:  #000000;
+}
+
+.sponsor_banner {
+    height: 100px;
+    overflow: hidden;
+
+    -webkit-box-shadow: rgba(0, 0, 0, 0.0742188) 0px 1px 1px 0px;
+    background-color: transparent;
+    border-bottom-color: #DDD;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-left-color: #DDD;
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-right-color: #DDD;
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-top-color: #DDD;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-top-style: solid;
+    border-top-width: 1px;
+    box-shadow: rgba(0, 0, 0, 0.0742188) 0px 1px 1px 0px;
+    color: #0069D6;
+    padding: 4px;
+}
+
+.tab-pane pre {
+    border: none;
+    padding: 0;
+}
+
+.form-actions {
+    margin-top: 10px;
+}
+
+.click-table tbody tr:hover {
+    cursor: pointer;
+}
+
+.click-table tbody tr:hover .underline {
+    text-decoration: underline;
+}
+
+.participants-heading{
+    color: rgb(65, 131, 196) !important;
+    font-weight: bold !important;
+}
+
+.participant-you{
+    font-weight: bold;
+}
+
+.collapsed-button{
+    height: 50px;
+    width: 40px;
+    margin-top: 0;
+    margin-bottom: 0; 
+    border: none;
+}
+
+.language-dropdown{
+    margin-right: 10px;
+}
+
+.sidebar-wrapper {
+    margin-top: 80px;
+    right: 100px;
+    position: fixed;
+    width: 220px;  
+}
+
+.sidebar{
+    padding: 0;
+}
+
+.sidebar .nav {
+    text-align: center;
+    margin: 0px -1px;
+    padding: 0px;
+} .sidebar .nav li {
+    overflow-x: hidden;
+} .sidebar .nav li:not(.active) {
+    padding: 4px 0px;
+    margin-left: 1px;
+    margin-right: 1px;
+}.sidebar-header {
+    background-color: rgb(65, 131, 196);
+    padding: 0;
+}.sidebar-header a{
+    color: white;
+    padding: 0 !important;
+}.sidebar-header a:hover{
+    background: none !important;
+}.sidebar li:not(.sidebar-header) a{
+    margin: 0;
+    padding: 1px;
+}
+
+
+
+@media (max-width:1114px) {
+    
+    .sidebar-wrapper{
+        display: none;
+    }
+
+    .language-dropdown {
+        display: none;
+    }
+}
+
+@media (max-width:767px) {
+    .navbar-nav.navbar-collapse {
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .language-dropdown {
+        display: block;
+    }
+
+    .center-on-collapse{
+        text-align: center;
+        margin-bottom: 5px; 
+    }
+
+    .form-actions-collapsed {
+        margin-top: 10px;
+    }
+}
+
+@media (max-width:350px) {
+    .nav-team{
+        float: left !important;
+        width: 50% !important;
+    }
+}
+
+.seating-node-free {
+    fill:#5CB85C;
+}
+
+.seating-node-occupied {
+    fill:#C9302C;
+}
+
+.seating-node-self {
+    fill:#EC971F;
+}
+
+.seating-node-info {
+    stroke:black;
+    stroke-width:2;
+}
+
+.hide {
+    display: none;
+}
+
+#brackets-button {
+    margin-bottom: 10px;
 }

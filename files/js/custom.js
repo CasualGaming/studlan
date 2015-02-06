@@ -1,12 +1,13 @@
-$('.alert-message').alert();
-
 $.ajaxSetup ({  
     cache: false  
 }); 
 
-$("a.close").live("click", function() {
-    $(this).load('{% url 'root' %}/misc/remove_alert.html');
-});
+window.setTimeout(function() {
+  $(".flash").fadeTo(500, 0).slideUp(500, function(){
+      $(this).remove();
+  });
+}, 5000);
+
 $(function () {
     $("a[rel=popover]")
         .popover({
@@ -17,6 +18,7 @@ $(function () {
             e.preventDefault()
         })
 });
+
 $(document).ready(function(){
     // Target your .container, .wrapper, .post, etc.
     $(".content").fitVids();

@@ -3,6 +3,8 @@
 import os
 import sys
 
+from django.contrib.messages import constants as message_constants
+
 # Directory that contains this file.
 PROJECT_SETTINGS_DIRECTORY = os.path.dirname(globals()['__file__'])
 # Root directory. Contains manage.py
@@ -108,8 +110,6 @@ MIDDLEWARE_CLASSES = (
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 CSRF_COOKIE_PATH = '/'
-CSRF_COOKIE_DOMAIN = 'studlan.no'
-CSRF_COOKIE_HTTPONLY = True
 
 ROOT_URLCONF = 'studlan.urls'
 
@@ -122,6 +122,10 @@ TEMPLATE_DIRS = [
 STATICFILES_DIRS = [
     os.path.join(PROJECT_ROOT_DIRECTORY, 'files'),
 ]
+
+LOCALE_PATHS = (
+    os.path.join(PROJECT_ROOT_DIRECTORY, 'locale'),
+)
 
 INSTALLED_APPS = (
     # third party apps
@@ -148,6 +152,7 @@ INSTALLED_APPS = (
     'apps.sponsor',
     'apps.team',
     'apps.userprofile',
+    'apps.seating',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -172,6 +177,9 @@ LOGGING = {
         },
     }
 }
+
+#Overiding messagetags to match bootstrap 3
+MESSAGE_TAGS = {message_constants.ERROR: 'danger'}
 
 # Remember to keep 'local' last, so it can override any setting.
 for settings_module in ['local']:  # local last

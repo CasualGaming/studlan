@@ -1,12 +1,17 @@
-{% if teams|length > 0 %}
+{% load i18n %}
+{% if teams %}
     <div class="row">
-        <div class="span9">
-            <table class="table table-bordered table-striped">
-                <thead><th>Tag</th><th>Title</th><th>Leader</th></thead>
+        <div class="col-md-9">
+            <table class="table table-bordered table-striped table-hover click-table">
+                <thead>
+                    <th class="col-md-2">Tag</th>
+                    <th class="col-md-6">Title</th>
+                    <th class="col-md-4">{% trans "Leader" %}</th>
+                </thead>
                 <tbody>
                     {% for team in teams %}
-                    <tr>
-                        <td><a href="{{ team.get_absolute_url }}">{{ team.tag }}</a></td>
+                    <tr onclick="document.location='{{ team.get_absolute_url }}';">
+                        <td>{{ team.tag }}</td>
                         <td>{{ team.title }}</td>
                         <td>{{ team.leader }}</td>
                     </tr>
@@ -17,8 +22,8 @@
     </div>
 {% else %}
     <div class="row">
-        <div class="span9">
-            <p>No teams to list.</p>
+        <div class="col-md-9">
+            <div class="alert alert-danger"><p>{% trans "No teams yet" %}</p></div>
         </div>
     </div>
 {% endif %}

@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template.context import RequestContext
+from django.utils.translation import ugettext as _
 
 from apps.misc.forms import InlineSpanErrorList
 from apps.team.models import Team, Member
@@ -17,20 +18,20 @@ def teams(request):
     teams = Team.objects.all()
 
     breadcrumbs = (
-        ('studLAN', '/'),
-        ('Teams', ''),
+        (settings.SITE_NAME, '/'),
+        (_(u'Teams'), ''),
     )
 
     return render(request, 'team/teams.html', {'teams': teams, 'breadcrumbs': breadcrumbs})
 
 @login_required
 def my_teams(request):
-    teams = Team.objects.filter(Q(leader=request.user) | Q(members=request.user))
+    teams = Team.objects.filter(Q(leader=request.user) | Q(members=request.user)).distinct()
 
     breadcrumbs = (
-        ('studLAN', '/'),
-        ('Teams', reverse('teams')),
-        ('My teams', ''),
+        (settings.SITE_NAME, '/'),
+        (_(u'Teams'), reverse('teams')),
+        (_(u'My teams'), ''),
     )
 
     return render(request, 'team/my_teams.html', {'teams': teams, 'breadcrumbs': breadcrumbs})
@@ -40,7 +41,7 @@ def create_team(request):
     if request.method == 'POST':
         # Stop if a person tries to create more than the allowed ammount of teams.        
         if Team.objects.filter(leader=request.user).count() >= settings.MAX_TEAMS:
-            messages.error(request, "You cannot be leader of more than %i teams." % settings.MAX_TEAMS)
+            messages.error(request, _(u"You cannot be leader of more than ") + settings.MAX_TEAMS + _(u" teams."))  
             return redirect('teams')
 
         form = TeamCreationForm(request.POST)
@@ -54,7 +55,7 @@ def create_team(request):
             )
             team.save()
 
-            messages.success(request, 'Team %s has been created.' % team)
+            messages.success(request, str(team) + _(u" has been created."))
             return redirect(team)
         else:
             form = TeamCreationForm(request.POST, auto_id=True, error_class=InlineSpanErrorList) 
@@ -62,9 +63,9 @@ def create_team(request):
         form = TeamCreationForm()
 
     breadcrumbs = (
-        ('studLAN', '/'),
-        ('Teams', reverse('teams')),
-        ('Create team', ''),
+        (settings.SITE_NAME, '/'),
+        (_(u'Teams'), reverse('teams')),
+        (_(u'Create team'), ''),
     )
 
     return render(request, 'team/create_team.html', {'breadcrumbs': breadcrumbs, 'form': form})
@@ -73,12 +74,12 @@ def create_team(request):
 def disband_team(request, team_id):
     team = get_object_or_404(Team, pk=team_id)
     if request.user != team.leader:
-        messages.error(request, "You can only disband teams that you are leader of.")
+        messages.error(request, _(u"You can only disband teams that you are leader of."))
         return redirect(team)
     else:
         team.delete()
 
-        messages.success(request, "Team %s was successfully deleted." % team)
+        messages.success(request, str(team) + _(u" was successfully deleted."))
         return redirect('teams')
 
 def show_team(request, team_id):
@@ -98,8 +99,8 @@ def show_team(request, team_id):
     users2.sort(key=lambda x: x.username.lower(), reverse=False)
     
     breadcrumbs = (
-        ('studLAN', '/'),
-        ('Teams', reverse('teams')),
+        (settings.SITE_NAME, '/'),
+        (_(u'Teams'), reverse('teams')),
         (team, ''),
     )
 
@@ -110,19 +111,19 @@ def add_member(request, team_id):
     if request.method == 'POST':
         team = get_object_or_404(Team, pk=team_id)
         if request.user != team.leader:
-            messages.error(request, "You are not the team leader, you cannot remove team members.")
+            messages.error(request, _(u"You are not the team leader, you cannot remove team members."))
         else:
-            user_id = request.POST.get('selectMember')
+            user_id = request.POST.get("selectMember")
             user = get_object_or_404(User, pk=user_id)
             if len(Member.objects.filter(user=user, team=team)) > 0:
-                messages.error(request, "%s is already on your team." % user)
+                messages.error(request, str(user) + _(u" is already on your team."))
             else:
                 member = Member()
                 member.team = team
                 member.user = user
                 member.save()
 
-                messages.success(request, 'User %s added.' % user.username)
+                messages.success(request, str(user) + _(u' was added to your team'))
 
     return redirect(team)
 
@@ -131,13 +132,13 @@ def remove_member(request, team_id, user_id):
     team = get_object_or_404(Team, pk=team_id)
     user = get_object_or_404(User, pk=user_id)
     if request.user != team.leader and request.user != user:
-        messages.error(request, "You are not the team leader, you cannot remove other team members.")
+        messages.error(request, _(u"You are not the team leader, you cannot remove other team members."))
     else:
         member = get_object_or_404(Member, user=user, team=team)
         member.delete()
         if request.user == user:
-            messages.success(request, 'You have left team %s.' % team)
+            messages.success(request, _(u'You have left team ') + str(team))
         else:
-            messages.success(request, 'User %s removed.' % user.username)
+            messages.success(request, str(user.username) + _(u" removed from your team."))
 
     return redirect(team)

@@ -1,9 +1,15 @@
+{% load i18n %}
+{% load lan_tags %}
 {% block navigation %}
-    <ul class="nav">
-        <li><a href="{% url 'root' %}">News</a></li>
-        <li><a href="{% url 'lan_home' %}">LAN</a></li>
-        <li><a href="{% url 'competitions' %}">Competitions</a></li>
-        <li><a href="{% url 'teams' %}">Teams</a></li>
-        <li><a href="{% url 'lottery' %}">Lottery</a></li>
+    <ul id="navbar" class="nav navbar-nav">
+    	{% if user|is_attending %}
+        	<li class="navbar-item"><a href="{% url 'lan_home' %}">{% trans "Info" %}</a></li>
+        {% else %}
+        	<li class="navbar-item"><a href="{% url 'lan_home' %}">{% trans "Sign up" %}</a></li>
+        {% endif %}
+        <li class="navbar-item"><a href="{% url 'competitions' %}">{% trans "Competitions" %}</a></li>
+        <li class="navbar-item"><a href="{% url 'teams' %}">{% trans "Teams" %}</a></li>
+        <li class="navbar-item"><a href="{% url 'seatings' %}">{% trans "Seating" %}</a></li>
+        <li class="navbar-item"><a href="{% url 'sponsors' %}">{% trans "Sponsors" %}</a></li>
     </ul>
 {% endblock navigation %}

@@ -1,71 +1,31 @@
-{% extends "base.html" %}
-
-{% block title %}
-studLAN - Register
-{% endblock title %}
-
+{% extends "base.html" %} 
+{% load i18n %}
+{% block title %} 
+Register 
+{% endblock title %} 
 {% block content %}
-    <div class="row">
-        <div class="span9">
-            {{ form.non_field_errors }}
-            <form id="register-form"class="form-horizontal" method="post" action="{% url 'auth_register' %}">{% csrf_token %}
-                <fieldset>
-                    <legend>Register new user</legend>
-                    {% for field in form %}
-                        {% comment %}
-                        Code optimization for RadioSelect widget and bootstrap.
-                        This way of printing radiobuttons will be implemented in django 1.4
-                        {% ifequal field.label 'Gender' %}
-                            <div class="control-group">
-                                {{ field.label_tag }}
-                                <ul class="inputs-list">
-                                {% for radio in form.gender %}
-                                    <li>{{ radio }}</li>
-                                {% endfor %}
-                                </ul>
-                            </div>
-                        {% endcomment %}
-                        <div class="control-group">
-                            <div class="control-label">{{ field.label_tag }}</div>
-                            <div class="controls">
-                                {{ field }}
-                                {{ field.errors }}
+<div class="row">
+    <div class="col-md-9">{{ form.non_field_errors }}
+        <form id="register-form" class="form-horizontal" method="post" action="{% url 'auth_register' %}">
+            {% csrf_token %}
+            <fieldset>
+                <legend>{% trans "Register new user" %}</legend>
+                    {% for field in form %} 
+                        <div class="form-group {% if field.errors %} has-error {% endif %} ">
+                            <label class="col-md-3 control-label">{{ field.label }}</label>
+                            <div class="col-md-9">
+                              {{ field}}
+                                <div class="form-error">
+                                    {{ field.errors }}
+                                </div>
                             </div>
                         </div>
                     {% endfor %}
-                    <div class="form-actions">
-                        <input type="submit" class="btn btn-primary" value="Register" />
-                    </div>
-                </fieldset>
-            </form>
-        </div>
+                <div class="form-actions register-button">
+                    <input type="submit" class="btn btn-primary" value="{% trans "Register" %}" />
+                </div>
+            </fieldset>
+        </form>
     </div>
-
-    <script language="javascript">
-        $(document).ready(function(){
-            var el = $("input[name='desired_username']");
-            el.keyup(function(){
-                validateUsername(event, el);
-            });
-
-            function validateUsername(event, el) {
-                var errString = "Only a-Z, 0-9, -, _ allowed.";
-
-                // If username contains other chars than alphanumerical + -+ _
-                if (! /^[a-zA-Z0-9-_]+$/.test(el.val()) || el.val() == undefined) {
-                    // If span element already exists - i.e. we've already gotten errors from the server
-                    if(el.parent().has($("span.help-inline")).length) {
-                        el.parent().find($("span.help-inline")).text(errString);
-                    } else {
-                        el.after("<span class='help-inline alert alert-error'>"+errString+"</span>");
-                    }
-                } else {
-                    if(el.parent().has($("span.help-inline")).length) {
-                        el.parent().find($("span.help-inline")).remove();
-                    }
-                }
-            }
-
-        });//document.ready
-    </script>
+</div>
 {% endblock content %}

@@ -1,39 +1,43 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load profile_tags %}
 
 {% block title %}
-studLAN - Update profile
-{% endblock title %}
+Update profile
+{% endblock title %} 
 
 {% block content %}
-    <div class="row">
-        <div class="span9">
-            <h1>Profile</h1>
-        </div>
+<div class="row">
+    <div class="col-md-9">
+         <h3>{% trans "Profile" %}</h3>
     </div>
+</div>
+{% profile_tabs 'update' %}
 
-    {% profile_tabs 'update' %}
-
-    <div class="row">
-        {% if form %}
-        <div class="span9">
-            <form class="form-horizontal" action="{% url 'update_profile' %}" method="POST">{% csrf_token %}
-                <fieldset>
-                    <legend>Update information</legend>
-                    {% for field in form %}
-                    <div class="control-group">
-                        <label class="control-label">{{ field.label_tag }}</label>
-                        <div class="controls">
-                            {{ field }}
-                        </div>
-                    </div>
+<div class="row">
+    {% if form %}
+    <div class="col-md-9">
+        <br>
+        <form class="form-horizontal" action="{% url 'update_profile' %}" method="POST">{% csrf_token %}
+            <fieldset>
+                <legend>{% trans "Update information" %}</legend>
+                {% for field in form %} 
+                        <div class="form-group {% if field.errors %} has-error {% endif %} ">
+                            <label class="col-md-2 control-label">{{ field.label }}</label>
+                            <div class="col-md-10">
+                              {{ field}}
+                                <div class="form-error">
+                                    {{ field.errors }}
+                                </div>
+                            </div>
+                          </div>
                     {% endfor %}
-                    <div class="actions">
-                        <input type="submit" class="btn btn-primary" value="Update" />
-                    </div>
-                </fieldset>
-            </form>
-        </div>
-        {% endif %}
+                <div class="form-actions register-button">
+                    <input type="submit" class="btn btn-primary" value="{% trans "Update" %}"/>
+                </div>
+            </fieldset>
+        </form>
     </div>
+    {% endif %}
+</div>
 {% endblock content %}

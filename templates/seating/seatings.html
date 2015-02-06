@@ -1,0 +1,48 @@
+{% extends "seating/seating_base.html" %}
+{% load competition_tags %}
+{% load i18n %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+            {% if lan %}
+                <h2>Seating for {{lan}}</h2>
+                {% if user.is_staff %}
+                    {% for seating in seatings %}
+                        <div class="well">
+                            <a href="{{ request.path }}details/{{ seating.id }}">{{ seating }}</a> - {{seating.get_free_seats}} of {{seating.get_number_of_seats}} seats are available.<br>
+                            {% if seating.is_open %}
+                                <span class="label label-primary">Seating closes at {{seating.closing_date}}</span>
+                            {% else %}
+                                <span class="label label-danger">This seating is closed</span>
+                            {% endif %}
+
+                            <br>
+                            <a href="{% url 'list' seating.id %}"><i class="glyphicon glyphicon-th"></i>Seatlist</a>
+                            {% if seating.layout %}
+                            <br>
+                            <a href="{% url 'map' seating.id %}"><i class="glyphicon glyphicon-th"></i>SeatMap</a>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    {% if lan.status != 'ended' %}
+                        {% for seating in seatings %}
+                            <div class="well">
+                                <a href="{{ request.path }}details/{{ seating.id }}">{{ seating }}</a> - {{seating.get_free_seats}} of {{seating.get_number_of_seats}} seats are available. <br>
+                                {% if seating.is_open %}
+                                    <span class="label label-primary">Seating closes at {{seating.closing_date}}</span>
+                                {% else %}
+                                    <span class="label label-danger">This seating is closed</span>
+                                {% endif %}
+                                <br>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="alert alert-danger">{% trans "There are no current LANs." %}</div>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
+

@@ -1,7 +1,12 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
-    <div class="row"><div class="span9"><h1>Teams</h1></div></div>
+    <div class="row">
+        <div class="col-md-9">
+            <h2>{% trans "Teams" %}</h2>
+        </div>
+    </div>
         
     {% block tabs %}
     {% endblock tabs %}

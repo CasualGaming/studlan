@@ -1,90 +1,119 @@
-{% extends "base.html" %}
-{% load markdown_deux_tags %}
+{% extends "base.html" %} 
+{% load i18n %}
+{% load markdown_deux_tags %} 
 {% load misc %}
-{% load profile_tags %}
+{% load profile_tags %} 
 
-{% block title %}
-    {% if user == quser %}
-studLAN - My Profile
-    {% else %}
-studLAN - Profile
-    {% endif %}
-{% endblock title %}
+{% block title %} 
+{% if user == quser %} 
+    My Profile 
+{% else %} 
+    Profile 
+{% endif %} 
+{% endblock title %} 
 
 {% block content %}
-    
-	
     <div class="row">
         {% if user == quser or user.is_staff %}
-        <div class="span4">
-            {% if user == quser %}
-            <h1>My Profile</h1>
-            {% else %}
-            <h1>Profile</h1>
-            {% endif %}
-        </div>
-        
-        <div class="span5">
-            <h1>Additional information</h1>
-        </div>
+            <div class="col-md-4">
+                {% if user == quser %}
+                    <h3>{% trans "My Profile" %}</h3>
+                {% else %}
+                    <h3>{% trans "Profile" %}</h3>
+                {% endif %}
+            </div>
         {% else %}
-        <div class="span9">
-            {% if user == quser %}
-            <h1>My Profile</h1>
-            {% else %}
-            <h1>Profile</h1>
-            {% endif %}
-        </div>
+            <div class="col-md-8">
+                {% if user == quser %}
+                    <h3>{% trans "My Profile" %}</h3>
+                {% else %}
+                    <h3>{% trans "Profile" %}</h3>
+                {% endif %}
+            </div>
         {% endif %}
     </div>
-
     {% if user == quser %}
         {% profile_tabs 'profile' %}
     {% endif %}
-
     <div class="row">
         {% if user == quser or user.is_staff %}
-        <div class="span4">
+            <div class="col-md-4">
         {% else %}
-        <div class="span9">
+            <div class="col-md-8">
         {% endif %}
-            <table class="well table table-condensed">
-                <thead>
-                    <tr>
-                        <th>Field</th><th>Value</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>Username</td><td>{{ quser.username }}</td/></tr>
-                    <tr><td>First name</td><td>{{ quser.first_name }}</td/></tr>
-                    <tr><td>Last name</td><td>{{ quser.last_name }}</td/></tr>
-                    {% if user == quser or user.is_staff %}
-                    <tr><td>Email</td><td>{{ quser.email }}</td/></tr>
-                    {% endif %}
-                </tbody>
-            </table>
-        </div>
-        {% if user == quser or user.is_staff %}
-        <div class="span5">
-            <table class="well table table-condensed">
-                <thead>
-                    <tr>
-                        <th>Field</th><th>Value</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>Nick</td><td>{{ profile.nick }}</td></tr>
-                    <tr><td>NTNU username</td><td>{{ profile.ntnu_username }}</td></tr>
-                    <tr><td>Wants to sit with</td><td>{{ profile.wants_to_sit_with }}</td></tr>
-                    <tr><td>Gender</td><td>{{ profile.get_gender_display|lower|capfirst }}</td></tr>
-                    <tr><td>Date of birth</td><td>{{ profile.date_of_birth }}</td></tr>
-                    <tr><td>Street address</td><td>{{ profile.address }}</td></tr>
-                    <tr><td>Zip/Postal code</td><td>{{ profile.zip_code }}</td></tr>
-                    <tr><td>Phone</td><td>{{ profile.phone }}</td></tr>
-                </tbody>
-            </table>
-        </div>
-        {% endif %}
-	</div>
+		        <table class="well table table-condensed">
+		            <tbody>
+		                <tr>
+		                    <td>{% trans "Username" %}</td>
+		                    <td>{{ quser.username }}</td>
+		                </tr>
+		                <tr>
+		                    <td>{% trans "First name" %}</td>
+		                    <td>{{ quser.first_name }}</td>
+		                </tr>
+		                <tr>
+		                    <td>{% trans "Last name" %}</td>
+		                    <td>{{ quser.last_name }}</td>
+		                </tr>{% if user == quser or user.is_staff %}
+		                <tr>
+		                    <td>{% trans "Email" %}</td>
+		                    <td>{{ quser.email }}</td>
+		                </tr>{% endif %}
+		            </tbody>
+		        </table>
+        	</div>
 
+            {% if user == quser or user.is_staff %}
+            <div class="col-md-4">
+                <table class="well table table-condensed">
+                    <tbody>
+                        <tr>
+                            <td>{% trans "Nick" %} </td>
+                            <td>{{ profile.nick }}</td>
+                        </tr>
+                        <tr>
+                            <td>{% trans "Gender" %}</td>
+                            <td>{{ profile.get_gender_display|lower|capfirst }}</td>
+                        </tr>
+                        <tr>
+                            <td>{% trans "Date of birth" %}</td>
+                            <td>{{ profile.date_of_birth }}</td>
+                        </tr>
+                        <tr>
+                            <td>{% trans "Street address" %}</td>
+                            <td>{{ profile.address }}</td>
+                        </tr>
+                        <tr>
+                            <td>{% trans "Zip/Postal code" %}</td>
+                            <td>{{ profile.zip_code }}</td>
+                        </tr>
+                        <tr>
+                            <td>{% trans "Phone" %}</td>
+                            <td>{{ profile.phone }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+    {% if user_seats %}
+    <div class="row">
+    	<div class="col-md-8">
+	        <h2>Seating info</h2>
+	        {% for seat in user_seats %}
+	        <div class="col-md-6">
+	            <div class="panel panel-default">
+	            	<a href="{{seat.seating.lan.get_absolute_url}}">
+		            <div class="panel-body">
+		            	Event: {{seat.seating.lan}}
+		            </div></a>
+		            <a href="{{seat.seating.get_absolute_url}}">
+		        	<div class="panel-footer">
+			        	Seating: {{seat.seating}} <br> Seat: {{seat.placement}}
+			        </div></a>
+		        </div>
+		    </div>
+	        {% endfor %}
+	{% endif %}
+    </div>
 {% endblock content %}

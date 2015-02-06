@@ -3,81 +3,68 @@
 {% load misc %}
 
 {% block title %}
-studLAN - Register Arrivals
+Register Arrivals
 {% endblock title %}
 
 {% block content %}
     <div class="row">
-        <div class="span9">
+        <div class="col-md-9">
 	        <h1>Register Arrivals</h1>
         </div>
     </div>
     
     <div class="row">
     {% if attendees %}
-        <div class="span4">
+        <div class="col-md-4">
             <span>Filter: </span><input type="text" id="FilterTextBox" name="FilterTextBox" />
         </div>
-        <div class="span4 attendee-counts">
+        <div class="col-md-5 attendee-counts">
             <span>Attending: {{attendees.count}}</span>
             <span>Paid: {{paid_count}}</span>
             <span>Arrived: {{arrived_count}}</span>
         </div>
     </div>
     <div class="row">
-        <div class="span9">
-            <table class="table table-bordered table-striped filterable">
-                <thead>
-                    <th>Username</th><th>Full name</th><th>Email Address</th><th>Paid</th><th>Arrived</th>
-                </thead>
-                <tbody>
-                    {% for attendee in attendees %}
-                    <tr>
-                        <td class="username">{{ attendee.user.username }}</td>
-                        <td>{{ attendee.user.get_full_name }}</td>
-                        <td>{{ attendee.user.email }}</td>
-                        <td>
-                        {% if attendee.has_paid %}
-                            <span class="paid label label-success" value="True">Toggle</span>
-                        {% else %}
-                            <span class="paid label label-important" value="False">Toggle</span>
-                        {% endif %}
-                        </td>
-                        <td>
-                        {% if attendee.arrived %}
-                            <span class="arrived label label-success" value="True">Toggle</span>
-                        {% else %}
-                            <span class="arrived label label-important" value="False">Toggle</span>
-                        {% endif %}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-
-        <script language="javascript">
-            $(document).ready(function(){
-             //add index column with all content.
-             $(".filterable tr:has(td)").each(function(){
-               var t = $(this).text().toLowerCase(); //all row text
-               $("<td class='indexColumn'></td>")
-                .hide().text(t).appendTo(this);
-             });//each tr
-             $("#FilterTextBox").keyup(function(){
-               var s = $(this).val().toLowerCase().split(" ");
-               //show all rows.
-               $(".filterable tr:hidden").show();
-               $.each(s, function(){
-                   $(".filterable tr:visible .indexColumn:not(:contains('"
-                      + this + "'))").parent().hide();
-               });//each
-             });//key up.
-             $("input:text:visible:first").focus();
-            });//document.ready
-        </script>
+        <div class="col-md-9">
+            <!-- Adding token here because using clientside js using the csrfcookie is a security liability -->
+            <div style="display:none">
+                <input id="token" type="hidden" value="{{ csrf_token }}">
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped filterable">
+                    <thead>
+                        <th>Username</th><th>Full name</th><th>Email Address</th><th>Paid</th><th>Arrived</th>
+                    </thead>
+                    <tbody>
+                        {% for attendee in attendees %}
+                        <tr>
+                            <td class="username">{{ attendee.user.username }}</td>
+                            <td>{{ attendee.user.get_full_name }}</td>
+                            <td>{{ attendee.user.email }}</td>
+                            <td>
+                                {% if attendee.user in ticket_users %}
+                                    <span class="label label-info">{{ ticket_users|get_user:attendee.user }} </span>
+                                {% elif attendee.has_paid %}
+                                    <span class="paid label label-success" value="True">Toggle</span>
+                                {% else %}
+                                    <span class="paid label label-danger" value="False">Toggle</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                            {% if attendee.arrived %}
+                                <span class="arrived label label-success" value="True">Toggle</span>
+                            {% else %}
+                                <span class="arrived label label-danger" value="False">Toggle</span>
+                            {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     {% else %}
-        <div class="span9">
+        <div class="col-md-9">
             <p>There are no attendees for this LAN.</p>
         </div>
     {% endif %}

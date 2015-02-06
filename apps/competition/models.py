@@ -9,6 +9,7 @@ from django.db import models
 from django.db.models import Q
 from django.db.models.signals import post_save
 from django.utils import translation
+from django.utils.translation import ugettext as _
 
 from apps.lan.models import LAN
 
@@ -35,8 +36,8 @@ class Activity(models.Model):
 
 class Competition(TranslatableModel):
 
-    STATUS_OPTIONS = ((1, 'Open'), (2, 'Closed'), (3, 'In progress'),
-                      (4, 'Finished'))
+    STATUS_OPTIONS = ((1, _(u'Open')), (2, _(u'Closed')), (3, _(u'In progress')),
+                      (4, _(u'Finished')))
     statuses = {
         1: ['Registration open', 'success'],
         2: ['Registration closed', 'danger'],
@@ -47,6 +48,7 @@ class Competition(TranslatableModel):
     status = models.SmallIntegerField('status', choices=STATUS_OPTIONS)
     activity = models.ForeignKey(Activity)
     lan = models.ForeignKey(LAN)
+    challonge_url = models.URLField('Challonge url', blank=True, null=True)
     use_teams = models.BooleanField('use teams', default=False,
         help_text='If checked, participants will be ignored, and will '
         'instead use teams. If left unchecked teams will be ignored, '

@@ -4,12 +4,14 @@ from datetime import datetime
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.admin.views.decorators import staff_member_required
 
-from apps.lan.models import LAN, Attendee
+from apps.lan.models import LAN, Attendee, Ticket, TicketType
 
 @login_required
 def home(request):
@@ -25,13 +27,14 @@ def home(request):
         upcoming = False 
 
     breadcrumbs = (
-        ('studLAN', '/'),
+        ('Home', '/'),
         ('Arrivals', '')
     )
 
     return render(request, 'arrivals/home.html', {'lans': lans, 'upcoming': upcoming, 'breadcrumbs': breadcrumbs})
-    
-@login_required
+
+@ensure_csrf_cookie
+@staff_member_required
 def arrivals(request, lan_id):
     if not request.user.is_staff:
         raise Http404
@@ -40,10 +43,18 @@ def arrivals(request, lan_id):
     attendees = Attendee.objects.filter(lan=lan)
 
     breadcrumbs = (
-        ('studLAN', '/'),
+        ('Home', '/'),
         ('Arrivals', reverse('arrival_home')),
         (lan, ''),
     )
+
+    ticket_types = TicketType.objects.filter(lan=lan)
+    tickets = Ticket.objects.filter(ticket_type__in=ticket_types)
+
+    ticket_users = dict()
+
+    for ticket in tickets:
+        ticket_users[ticket.user] = ticket
     
     paid_count = 0
     arrived_count = 0
@@ -53,30 +64,30 @@ def arrivals(request, lan_id):
         if attendee.arrived:
             arrived_count += 1
 
-    return render(request, 'arrivals/arrivals.html', {'attendees': attendees, 'lan': lan, 'paid_count' : paid_count, 
-        'arrived_count' : arrived_count, 'breadcrumbs': breadcrumbs})
+    paid_count += len(tickets)
 
-@login_required
+    return render(request, 'arrivals/arrivals.html', {'attendees': attendees, 'lan': lan, 
+        'paid_count' : paid_count, 'arrived_count' : arrived_count, 'breadcrumbs': breadcrumbs,
+        'tickets': tickets, 'ticket_users': ticket_users})
+
+@staff_member_required
 def toggle(request, lan_id):
-    if request.method == 'GET':
-        username = request.GET.get('username')
-        toggle_type = request.GET.get('type')
-        previous_value = request.GET.get('prev')
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        toggle_type = request.POST.get('type')
+        previous_value = request.POST.get('prev')
 
-        
         lan = get_object_or_404(LAN, pk=lan_id)
         user = get_object_or_404(User, username=username)
         try:
             attendee = Attendee.objects.get(lan=lan, user=user)
 
-
-            print not 0
             if int(toggle_type) == 0:
                 attendee.has_paid = reverse(previous_value)
             elif int(toggle_type) == 1:
                 attendee.arrived = reverse(previous_value)
             else:
-                return HttpResponse(status=404)            
+                raise Http404          
 
             attendee.save()
 
