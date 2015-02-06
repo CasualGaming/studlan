@@ -16,7 +16,6 @@ ads
             <input class="btn btn-warning" type="submit" value="Ditt sete" disabled/>
             <input class="btn btn-danger" type="submit" value="Opptatt sete" disabled/>
             <input class="btn btn-success" type="submit" value="Ledig sete" disabled/>
-            <input class="btn btn-info" type="submit" value="Valgt sete" disabled>
         </div>
     </div>
     <div class="row">
@@ -63,7 +62,7 @@ ads
             		<li><strong>Seat: </strong> {{info_seat.placement}}</li>
                     {% if info_seat.user %}
                     <li><strong>Occupied by: </strong></li>
-                    <li>{{info_seat.user}}</li>
+                    <li>{{info_seat.user.first_name}} {{info_seat.user.last_name}}</li>
                     
                     {% if info_seat.user == user %}
                         <form class="form-inline" 

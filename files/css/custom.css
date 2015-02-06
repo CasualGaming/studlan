@@ -275,7 +275,8 @@ div#btn-profile {
 }
 
 .seating-node-info {
-    fill:#5BC0DE;
+    stroke:black;
+    stroke-width:2;
 }
 
 .hide {

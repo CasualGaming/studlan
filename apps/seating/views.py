@@ -123,7 +123,7 @@ def seat_details(request, seating_id, seat_id):
                     tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + str(seats[counter].id)
                     tag['title'] = 'Seat ' + str(seats[counter].placement) + ': ' + str(seats[counter].user)
             if seats[counter] == seat:
-                children[0]['class'] = ' seating-node-info'
+                children[0]['class'] += ' seating-node-info'
             counter += 1
         dom.encode("utf-8")
 
