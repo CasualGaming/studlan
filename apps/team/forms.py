@@ -24,6 +24,6 @@ class TeamCreationForm(forms.Form):
             
             team = Team.objects.filter(tag=tag)
             if team.count() > 0:
-                self._errors['tag'] = self.error_class([_(u"This team tag is taken. The team belongs to ") + str(team[0].leader)])
+                self._errors['tag'] = self.error_class([_(u"This team tag is taken. The team belongs to ") + unicode(team[0].leader)])
 
             return cleaned_data

@@ -55,7 +55,7 @@ def create_team(request):
             )
             team.save()
 
-            messages.success(request, str(team) + _(u" has been created."))
+            messages.success(request, unicode(team) + _(u" has been created."))
             return redirect(team)
         else:
             form = TeamCreationForm(request.POST, auto_id=True, error_class=InlineSpanErrorList) 
@@ -79,7 +79,7 @@ def disband_team(request, team_id):
     else:
         team.delete()
 
-        messages.success(request, str(team) + _(u" was successfully deleted."))
+        messages.success(request, unicode(team) + _(u" was successfully deleted."))
         return redirect('teams')
 
 def show_team(request, team_id):
@@ -116,14 +116,14 @@ def add_member(request, team_id):
             user_id = request.POST.get("selectMember")
             user = get_object_or_404(User, pk=user_id)
             if len(Member.objects.filter(user=user, team=team)) > 0:
-                messages.error(request, str(user) + _(u" is already on your team."))
+                messages.error(request, unicode(user) + _(u" is already on your team."))
             else:
                 member = Member()
                 member.team = team
                 member.user = user
                 member.save()
 
-                messages.success(request, str(user) + _(u' was added to your team'))
+                messages.success(request, unicode(user) + _(u' was added to your team'))
 
     return redirect(team)
 
@@ -137,8 +137,8 @@ def remove_member(request, team_id, user_id):
         member = get_object_or_404(Member, user=user, team=team)
         member.delete()
         if request.user == user:
-            messages.success(request, _(u'You have left team ') + str(team))
+            messages.success(request, _(u'You have left team ') + unicode(team))
         else:
-            messages.success(request, str(user.username) + _(u" removed from your team."))
+            messages.success(request, unicode(user.username) + _(u" removed from your team."))
 
     return redirect(team)

@@ -51,7 +51,7 @@ class user_in_Renderer(template.Node):
 
         for competition in Competition.objects.filter(~Q(status=4)):
             if competition.has_participant(user):
-                string += "<li><a href=\"" + competition.get_absolute_url() + "\">" + str(competition) + "</a></li>"
+                string += "<li><a href=\"" + competition.get_absolute_url() + "\">" + unicode(competition) + "</a></li>"
                 count += 1
 
         if not count:

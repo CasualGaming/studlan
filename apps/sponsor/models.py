@@ -29,7 +29,7 @@ class SponsorRelation(models.Model):
         help_text="higher priority means closer to the top of the sponsor list.")
 
     def __unicode__(self):
-        return str(self.lan) + " - " + str(self.sponsor)
+        return unicode(self.lan) + " - " + unicode(self.sponsor)
 
     class Meta:
         ordering = ['-priority']
