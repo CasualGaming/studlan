@@ -59,12 +59,12 @@ def attend(request, lan_id):
         messages.error(request, _(u"You need to fill in your address and zip code in order to sign up for a LAN."))
     else:
         if request.user in lan.attendees:
-            messages.error(request, _(u"You are already in the attendee list for ") + str(lan))
+            messages.error(request, _(u"You are already in the attendee list for ") + unicode(lan))
         else:
             attendee = Attendee(lan=lan, user=request.user)
             attendee.save()
 
-            messages.success(request, _(u"Successfully added you to attendee list for ") + str(lan))
+            messages.success(request, _(u"Successfully added you to attendee list for ") + unicode(lan))
         
     return redirect(lan)
 
@@ -77,12 +77,12 @@ def unattend(request, lan_id):
         return redirect(lan)
     
     if request.user not in lan.attendees:
-        messages.error(request, _(u"You are not in the attendee list for ") + str(lan))
+        messages.error(request, _(u"You are not in the attendee list for ") + unicode(lan))
     else:
         attendee = Attendee.objects.get(lan=lan, user=request.user)
         attendee.delete()
 
-        messages.success(request, _(u"Successfully removed you from attendee list for ") + str(lan))
+        messages.success(request, _(u"Successfully removed you from attendee list for ") + unicode(lan))
         
     return redirect(lan)
 
