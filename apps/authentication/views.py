@@ -170,7 +170,7 @@ def set_password(request, token=None):
                     
                     rt.delete()
 
-                    messages.success(request, _(u"User ") + str(user) + _(u" successfully had it's password changed. You can now log in."))
+                    messages.success(request, _(u"User ") + unicode(user) + _(u" successfully had it's password changed. You can now log in."))
                     
                     return HttpResponseRedirect('/')        
             else:

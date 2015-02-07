@@ -163,7 +163,7 @@ def join(request, competition_id):
     # overridden by team signup, but not other way around
     for team in teams:
         if request.user == team.leader or request.user in team.members.all():
-            messages.error(request, _(u"You are already in this competition with ") + str(team))
+            messages.error(request, _(u"You are already in this competition with ") + unicode(team))
             return redirect(competition)
     
     # Checks that a form was posted, and if it contains a team id
@@ -196,7 +196,7 @@ def join(request, competition_id):
                 participant = Participant(user=request.user, competition=competition)
                 participant.save()
     
-        messages.success(request, _(u"You have been signed up for ") + str(competition))
+        messages.success(request, _(u"You have been signed up for ") + unicode(competition))
     return redirect(competition)
 
 @login_required
@@ -211,7 +211,7 @@ def leave(request, competition_id):
             if request.user in competition.get_users():
                 participant = Participant.objects.get(user=request.user, competition=competition) 
                 participant.delete()
-                messages.success(request, _(u"You are no longer participating in ") + str(competition))
+                messages.success(request, _(u"You are no longer participating in ") + unicode(competition))
             else:
                 was_leader = False
                 for team in competition.get_teams():
@@ -219,7 +219,7 @@ def leave(request, competition_id):
                         was_leader = True
                         participant = Participant.objects.get(team=team, competition=competition)
                         participant.delete()
-                        messages.success(request, _(u"You have removed ") + str(team) + _(u" from ") + str(competition))
+                        messages.success(request, _(u"You have removed ") + unicode(team) + _(u" from ") + unicode(competition))
                 if not was_leader:
                     messages.error(request, "You cannot remove %s from %s, you are not the team leader." % (team, competition))
 

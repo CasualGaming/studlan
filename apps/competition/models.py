@@ -119,7 +119,7 @@ class Participant(models.Model):
         if self.user:
             return self.user.get_full_name()
         else:
-            return str(self.team)
+            return unicode(self.team)
 
     def is_team(self):
         if self.user:
