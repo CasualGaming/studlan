@@ -151,7 +151,7 @@ def join(request, seating_id, seat_id):
     for sibling in siblings:
         occupied = occupied + sibling.get_user_registered()
     try:
-        attendee = Attendee.objects.get(user=request.user)
+        attendee = Attendee.objects.get(user=request.user, lan=seating.lan)
     except ObjectDoesNotExist:
         attendee = None
 
