@@ -12,7 +12,7 @@ from apps.lan.models import LAN, Attendee
 from django.http import HttpResponse
 from reportlab.pdfgen import canvas
 from bs4 import BeautifulSoup
-
+from django.db.models import Q
 
 def main(request):
         context = {}
@@ -158,9 +158,12 @@ def join(request, seating_id, seat_id):
     if (attendee and attendee.has_paid) or seating.lan.has_ticket(request.user):
         if seat.is_empty():
             if request.user in occupied:
-                old_seat = get_object_or_404(Seat, user=request.user)
-                old_seat.user = None
-                old_seat.save()
+                old_seats = Seat.objects.filter(user=request.user)
+                for os in old_seats:
+                    os_seating = os.seating
+                    if os.seating.lan == seating.lan:
+                        os.user = None
+                        os.save()
             seat.user = request.user
             seat.save()
             messages.success(request, "You have successfully reserved your seat! ")
