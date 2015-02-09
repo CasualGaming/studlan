@@ -35,7 +35,7 @@ class Seating(models.Model):
         return map(lambda x: getattr(x, 'user'), Seat.objects.filter(~Q(user=None), Q(seating=self)))
 
     def get_total_seats(self):
-        return Seat.objects.filter(Q(seating=self))
+        return Seat.objects.filter(Q(seating=self)).order_by('placement')
 
     def get_number_of_seats(self):
         return Seat.objects.filter(Q(seating=self)).count()
