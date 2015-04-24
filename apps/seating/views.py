@@ -204,7 +204,7 @@ def register_user(request):
 def seating_list(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
     lan = get_object_or_404(LAN, id=seating.lan.id)
-    seats = list(Seat.objects.filter(seating=seating))
+    seats = list(Seat.objects.filter(seating=seating).order_by('placement'))
 
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename=' + seating.title
@@ -237,7 +237,7 @@ def seating_list(request, seating_id):
 def seating_map(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
     lan = get_object_or_404(LAN, id=seating.lan.id)
-    seats = list(Seat.objects.filter(seating=seating))
+    seats = list(Seat.objects.filter(seating=seating).order_by('placement'))
 
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename=' + seating.title
