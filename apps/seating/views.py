@@ -76,7 +76,8 @@ def seating_details(request, seating_id):
                 else:
                     children[0]['class'] = ' seating-node-occupied'
                     tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + str(seats[counter].id)
-                    tag['title'] = 'Seat ' + str(seats[counter].placement) + ': ' + str(seats[counter].user)
+                    tag['title'] = 'Seat ' + str(seats[counter].placement) + ': ' + str(seats[counter].user.first_name)\
+                                   + ' ' + str(seats[counter].user.last_name)
             counter += 1
         dom.encode("utf-8")
 
@@ -121,7 +122,8 @@ def seat_details(request, seating_id, seat_id):
                 else:
                     children[0]['class'] = ' seating-node-occupied'
                     tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + str(seats[counter].id)
-                    tag['title'] = 'Seat ' + str(seats[counter].placement) + ': ' + str(seats[counter].user)
+                    tag['title'] = 'Seat ' + str(seats[counter].placement) + ': ' + str(seats[counter].user.first_name)\
+                                   + ' ' + str(seats[counter].user.last_name)
             if seats[counter] == seat:
                 children[0]['class'] += ' seating-node-info'
             counter += 1

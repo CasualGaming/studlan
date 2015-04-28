@@ -7,7 +7,10 @@ ads
 {% endblock sidebar %}
 {% load i18n %}
 {% block content %}
-    <div class="row">
+    <script type="text/javascript" src="{{ STATIC_URL }}js/seating.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.qtip.min.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <div class="row">
         <div class="col-md-9">
             {% if not seating.is_open %}
                 <div class="alert alert-danger">{% trans "Seating is closed." %}</div>
@@ -55,8 +58,10 @@ ads
             {% endfor %}
             {% endif %}
         </div>
-        {% if info_seat %}
         <div class="col-md-3">
+        
+        {% if info_seat %}
+        
         	<div class="well">
                 <ul class="nav nav-stacked">
             		<li><strong>Seat: </strong> {{info_seat.placement}}</li>
@@ -91,8 +96,13 @@ ads
                 {% endif %}
                 </ul>
         	</div>
-        </div>
+        
         {% endif %}
+        <div class="well" id="seat-info-well">
+            <div id="seat-info"></div>
+                
+            </div>
+        </div>
     </div>
     
     <style>
