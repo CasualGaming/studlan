@@ -207,7 +207,7 @@ def seating_list(request, seating_id):
     seats = list(Seat.objects.filter(seating=seating).order_by('placement'))
 
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename=' + seating.title
+    response['Content-Disposition'] = 'attachment; filename=' + seating.title + '.pdf'
 
     p = canvas.Canvas(response)
 
@@ -217,10 +217,10 @@ def seating_list(request, seating_id):
     for s in seats:
         if s.user:
             p.drawString(230, cursor, "Plass " + str(s.placement) + ": ")
-            p.drawString(280, cursor, str(s.user))
+            p.drawString(290, cursor, str(s.user))
         else:
             p.drawString(230, cursor, "Plass " + str(s.placement) + ": ")
-            p.drawString(280, cursor, '[Ledig]')
+            p.drawString(290, cursor, '[Ledig]')
         cursor -= 19
         if cursor < 50:
             p.showPage()
