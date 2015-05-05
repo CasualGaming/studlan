@@ -69,6 +69,10 @@ def user_profile(request, username):
 def history(request):
     attended = Attendee.objects.filter(user=request.user)
 
+    for attendee in attended:
+        if attendee.lan.has_ticket(request.user):
+            attendee.has_paid = True;
+
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
         (_(u'Profile'), reverse('myprofile')),
