@@ -81,6 +81,9 @@ def seating_details(request, seating_id):
             counter += 1
         dom.encode("utf-8")
 
+    if seating.ticket_type and seating.ticket_type != seating.lan.has_ticket(request.user):
+        messages.error(request, "Your ticket does not allow reservation in this seating")
+
     breadcrumbs = (
         ('studLAN', '/'),
         ('Seatings', reverse('seatings')),
@@ -129,6 +132,8 @@ def seat_details(request, seating_id, seat_id):
             counter += 1
         dom.encode("utf-8")
 
+
+
     breadcrumbs = (
         ('studLAN', '/'),
         ('Seatings', reverse('seatings')),
@@ -158,19 +163,21 @@ def join(request, seating_id, seat_id):
         attendee = None
 
     if (attendee and attendee.has_paid) or seating.lan.has_ticket(request.user):
-        if seat.is_empty():
-            if request.user in occupied:
-                old_seats = Seat.objects.filter(user=request.user)
-                for os in old_seats:
-                    os_seating = os.seating
-                    if os.seating.lan == seating.lan:
-                        os.user = None
-                        os.save()
-            seat.user = request.user
-            seat.save()
-            messages.success(request, "You have successfully reserved your seat! ")
+        if seating.ticket_type and seating.lan.has_ticket(request.user).ticket_type == seating.ticket_type:
+            if seat.is_empty():
+                if request.user in occupied:
+                    old_seats = Seat.objects.filter(user=request.user)
+                    for os in old_seats:
+                        if os.seating.lan == seating.lan:
+                            os.user = None
+                            os.save()
+                seat.user = request.user
+                seat.save()
+                messages.success(request, "You have successfully reserved your seat! ")
+            else:
+                messages.error(request, "That seat is reserved by " + str(seat.user))
         else:
-            messages.error(request, "That seat is reserved by " + str(seat.user))
+            messages.error(request, "Your ticket does not allow reservation in this seating")
     else:
         messages.error(request, "You need to attend and pay before reserving your seat")
     return redirect(seating)

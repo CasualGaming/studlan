@@ -1,7 +1,7 @@
 
 from django.contrib.auth.models import User
 from django.db import models
-from apps.lan.models import LAN
+from apps.lan.models import LAN, TicketType
 from django.db.models import Q
 import datetime
 
@@ -23,6 +23,8 @@ class Seating(models.Model):
     number_of_seats = models.IntegerField('number of seats')
     closing_date = models.DateTimeField("closing date")
     layout = models.ForeignKey(Layout, null=True, blank=True)
+    ticket_type = models.ForeignKey(TicketType, null=True, blank=True, help_text='Leaving this field blank will ' +
+            'leave the seating open to any tickets for the given LAN')
 
     def save(self, *args, **kwargs):
         if not self.pk:

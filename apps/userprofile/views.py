@@ -71,7 +71,7 @@ def history(request):
 
     for attendee in attended:
         if attendee.lan.has_ticket(request.user):
-            attendee.has_paid = True;
+            attendee.has_paid = True
 
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
