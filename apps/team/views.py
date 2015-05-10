@@ -11,8 +11,12 @@ from django.template.context import RequestContext
 from django.utils.translation import ugettext as _
 
 from apps.misc.forms import InlineSpanErrorList
-from apps.team.models import Team, Member
-from apps.team.forms import TeamCreationForm 
+from apps.team.models import Team, Member, Invitation
+from apps.team.forms import TeamCreationForm
+
+from postman.api import pm_write
+import uuid
+
 
 def teams(request):
     teams = Team.objects.all()
@@ -23,6 +27,7 @@ def teams(request):
     )
 
     return render(request, 'team/teams.html', {'teams': teams, 'breadcrumbs': breadcrumbs})
+
 
 @login_required
 def my_teams(request):
@@ -70,6 +75,7 @@ def create_team(request):
 
     return render(request, 'team/create_team.html', {'breadcrumbs': breadcrumbs, 'form': form})
 
+
 @login_required
 def disband_team(request, team_id):
     team = get_object_or_404(Team, pk=team_id)
@@ -81,6 +87,7 @@ def disband_team(request, team_id):
 
         messages.success(request, unicode(team) + _(u" was successfully deleted."))
         return redirect('teams')
+
 
 def show_team(request, team_id):
     team = get_object_or_404(Team, pk=team_id)
@@ -106,12 +113,13 @@ def show_team(request, team_id):
 
     return render(request, 'team/team.html', {'team': team, 'users': users2, 'breadcrumbs': breadcrumbs})
 
+
 @login_required
 def add_member(request, team_id):
     if request.method == 'POST':
         team = get_object_or_404(Team, pk=team_id)
         if request.user != team.leader:
-            messages.error(request, _(u"You are not the team leader, you cannot remove team members."))
+            messages.error(request, _(u"You are not the team leader, you cannot add team members."))
         else:
             user_id = request.POST.get("selectMember")
             user = get_object_or_404(User, pk=user_id)
@@ -126,6 +134,58 @@ def add_member(request, team_id):
                 messages.success(request, unicode(user) + _(u' was added to your team'))
 
     return redirect(team)
+
+
+@login_required
+def invite_member(request, team_id):
+    if request.method == 'POST':
+        team = get_object_or_404(Team, pk=team_id)
+        if request.user != team.leader:
+            messages.error(request, _(u"You are not the team leader, you cannot add team members."))
+        else:
+            user_id = request.POST.get("selectMember")
+            user = get_object_or_404(User, pk=user_id)
+            if len(Member.objects.filter(user=user, team=team)) > 0:
+                messages.error(request, unicode(user) + _(u" is already on your team."))
+            else:
+                invitation = Invitation()
+                invitation.team = team
+                invitation.invitee = user
+                invitation.team_leader = request.user
+                invitation.token = uuid.uuid1().hex
+                invitation.save()
+                pm_write(request.user, user, 'Team invitation', body='You have been invited to ' + team.title + ' by '
+                         + str(request.user) + '. To accept the invitation, click this link: http://' + request.META['HTTP_HOST']
+                         + team.get_absolute_url())
+
+                messages.success(request, unicode(user) + _(u' was invited to your team'))
+
+    return redirect(team)
+
+
+@login_required
+def join_team(request, team_id):
+    if request.method == 'POST':
+        team = get_object_or_404(Team, pk=team_id)
+        if request.user != team.leader:
+            messages.error(request, _(u"You are not the team leader, you cannot add team members."))
+        else:
+            user_id = request.POST.get("selectMember")
+            user = get_object_or_404(User, pk=user_id)
+            if len(Member.objects.filter(user=user, team=team)) > 0:
+                messages.error(request, unicode(user) + _(u" is already on your team."))
+            else:
+                member = Member()
+                member.team = team
+                member.user = user
+                member.save()
+
+                messages.success(request, unicode(user) + _(u' was added to your team'))
+
+    return redirect(team)
+
+
+
 
 @login_required
 def remove_member(request, team_id, user_id):

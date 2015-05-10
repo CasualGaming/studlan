@@ -3,8 +3,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+
 class Team(models.Model):
-    
     title = models.CharField('title', max_length=50)
     tag = models.CharField('tag', max_length=10, unique=True)
     leader = models.ForeignKey(User, blank=False, related_name="newteamleader")
@@ -20,6 +20,7 @@ class Team(models.Model):
     class Meta:
         ordering = ['tag', 'title']
 
+
 class Member(models.Model):
     team = models.ForeignKey(Team)
     user = models.ForeignKey(User)
@@ -31,3 +32,10 @@ class Member(models.Model):
     class Meta:
         unique_together = ('team', 'user',)
         ordering = ['user']
+
+
+class Invitation(models.Model):
+    team = models.ForeignKey(Team)
+    invitee = models.ForeignKey(User, related_name='Invitee')
+    team_leader = models.ForeignKey(User, related_name='Team Leader')
+    token = models.CharField('token', max_length=32, editable=False)
