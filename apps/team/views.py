@@ -150,10 +150,7 @@ def invite_member(request, team_id):
             if len(Member.objects.filter(user=user, team=team)) > 0:
                 messages.error(request, unicode(user) + _(u" is already on your team."))
             else:
-                #existing_invitation = Invitation.objects.filter(invitee=user, team=team)
-                #Debugging
-                dummy_invite = Invitation()
-                existing_invitation = Invitation.objects.filter(pk=dummy_invite.pk)
+                existing_invitation = Invitation.objects.filter(invitee=user, team=team)
                 if not existing_invitation:
                     invitation = Invitation()
                     invitation.team = team

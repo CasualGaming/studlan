@@ -19,6 +19,7 @@ from apps.lan.models import LAN
 from apps.team.models import Team
 from apps.lottery.models import Lottery
 
+
 def main(request):
     lans = LAN.objects.filter(end_date__gte=datetime.now())
     if lans:

@@ -50,9 +50,16 @@ class Competition(TranslatableModel):
     lan = models.ForeignKey(LAN)
     challonge_url = models.URLField('Challonge url', blank=True, null=True)
     use_teams = models.BooleanField('use teams', default=False,
-        help_text='If checked, participants will be ignored, and will '
-        'instead use teams. If left unchecked teams will be ignored, '
-        'and participants will be used.')
+                                    help_text='If checked, participants will be ignored, and will '
+                                    'instead use teams. If left unchecked teams will be ignored, '
+                                    'and participants will be used.')
+    team_size = models.IntegerField(default=5, blank=True)
+    enforce_team_size = models.BooleanField('enforce teams', default=False,
+                                            help_text='If checked, teams will require 5 members before being able '
+                                            'to sign up.')
+    enforce_payment = models.BooleanField('enforce payment', default=False,
+                                          help_text='If checked, teams will require 5 members with valid tickets before'
+                                          ' being able to sign up.')
     
     def get_teams(self):
         if self.use_teams:
