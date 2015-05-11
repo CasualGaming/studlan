@@ -1,4 +1,6 @@
 {% load i18n %}
+{% load postman_tags %}
+{% postman_unread as unread_count %}
 
 {% if not user.is_authenticated %}
     <li><a href="{% url 'auth_register' %}">{% trans "Register" %}</a></li>
@@ -16,9 +18,11 @@
             </li>
             <li>
                 <a href="{% url 'postman_write' 'larserik'%}?subject=details request&body=give me details about ...">
-                <i class="glyphicon glyphicon-envelope">
-                </i>
-                Inbox<span class="badge">4</span>
+	                <i class="glyphicon glyphicon-envelope"></i>
+	                {% trans "Inbox" %}
+	                {% if unread_count %}
+	                	<span class="badge">{{unread_count}}</span>
+	                {% endif %}
                 </a>
             </li>
             {% if user.is_staff %}

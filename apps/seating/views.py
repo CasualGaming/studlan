@@ -31,6 +31,7 @@ def main(request):
 
         return render(request, 'seating/seatings.html', context)
 
+
 def main_filtered(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
 

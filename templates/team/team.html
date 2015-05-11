@@ -60,6 +60,10 @@
             {% else %}
                 <div class="alert alert-danger">This team has no members yet</div>
             {% endif %}
+
+            {% if invitation %}
+                <a class="btn btn-success btn" href="{% url 'join_team' team.id %}">Join team</a>
+            {% endif %}
         </div>
     </div>
 
