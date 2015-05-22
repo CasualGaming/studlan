@@ -3,7 +3,7 @@
 from django.conf import settings
 from django.contrib import admin
 
-from apps.lan.models import LAN, TicketType, TicketTypeTranslation, LANTranslation, Ticket
+from apps.lan.models import LAN, TicketType, TicketTypeTranslation, LANTranslation, Ticket, Directions
 
 class LANTranslationInlineAdmin(admin.StackedInline):
     verbose_name = "Translation"
@@ -39,3 +39,4 @@ class TicketAdmin(admin.ModelAdmin):
 admin.site.register(LAN, LANAdmin)
 admin.site.register(TicketType, TicketTypeAdmin)
 admin.site.register(Ticket, TicketAdmin)
+admin.site.register(Directions)

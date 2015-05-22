@@ -8,7 +8,8 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import ugettext as _
 
-from apps.lan.models import LAN, Attendee, Ticket
+from apps.lan.models import LAN, Attendee, Ticket, Directions
+
 
 def home(request):
     lans = LAN.objects.filter(end_date__gte=datetime.now())
@@ -18,11 +19,13 @@ def home(request):
     else:
         return listing(request)
 
+
 def listing(request):
     upcoming_lans = LAN.objects.filter(end_date__gte=datetime.now())
     previous_lans = LAN.objects.filter(end_date__lt=datetime.now())
     
     return render(request, 'lan/list.html', {'upcoming': upcoming_lans, 'previous': previous_lans})
+
 
 def details(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
@@ -36,6 +39,8 @@ def details(request, lan_id):
 
     user_tickets = Ticket.objects.filter(user=request.user.id, ticket_type__in=ticket_types)
 
+    directions = Directions.objects.filter(lan=lan)
+
     if request.user in lan.attendees:
         if request.user in lan.paid_attendees or user_tickets:
             status = 'paid'
@@ -45,7 +50,8 @@ def details(request, lan_id):
         status = 'open'
 
     return render(request, 'lan/details.html', {'lan': lan, 'status': status, 'active': active, 
-        'ticket_types': ticket_types, 'ticket': user_tickets})
+        'ticket_types': ticket_types, 'ticket': user_tickets, 'directions': directions})
+
 
 @login_required
 def attend(request, lan_id):
@@ -68,6 +74,7 @@ def attend(request, lan_id):
         
     return redirect(lan)
 
+
 @login_required
 def unattend(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
@@ -86,6 +93,7 @@ def unattend(request, lan_id):
         
     return redirect(lan)
 
+
 @login_required
 def attendee_ntnu_usernames(request, lan_id):
     if not request.user.is_staff:
@@ -95,6 +103,7 @@ def attendee_ntnu_usernames(request, lan_id):
         lan = get_object_or_404(LAN, pk=lan_id)
     
         return render(request, 'lan/attendee_ntnu_usernames.html', {'attendees': lan.attendee_ntnu_usernames})
+
 
 @user_passes_test(lambda u: u.is_staff)
 def list_paid(request, lan_id):
@@ -121,6 +130,7 @@ def list_paid(request, lan_id):
 
     doc.save(response)
     return response
+
 
 def write(sheet, person, row, payment_type):
     profile = person.profile

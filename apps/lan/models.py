@@ -14,6 +14,7 @@ class LAN(TranslatableModel):
     start_date = models.DateTimeField("start date")
     end_date = models.DateTimeField("end date")
     location = models.CharField("location", max_length=100)
+    map_link = models.CharField("map link", max_length=300, help_text="url for google maps embedded map", null=True)
 
     @property
     def attendees(self):
@@ -107,12 +108,14 @@ class TicketType(TranslatableModel):
     def number_of_free_seats(self):
         return self.number_of_seats - self.number_of_seats_used()
 
+
 class TicketTypeTranslation(get_translation_model(TicketType, "TicketType")):
     title = models.CharField("Title", max_length=50)
     description = models.TextField("Description", null=True, blank=True)
 
     def __unicode__(self):
         return self.title
+
 
 class Ticket(models.Model):
     user = models.ForeignKey(User)
@@ -127,3 +130,11 @@ class Ticket(models.Model):
     def __unicode__(self):
         return self.user.username + "(" + self.user.get_full_name() + ")"
 
+
+class Directions(models.Model):
+    lan = models.ForeignKey(LAN)
+    title = models.TextField("title", null=True)
+    description = models.TextField("directions", null=True)
+
+    def __unicode__(self):
+        return str(self.lan) + " direction " + str(self.pk)

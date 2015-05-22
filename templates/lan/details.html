@@ -15,7 +15,10 @@
     </div>
 
     <div class="row">
-        <div class="col-md-8">
+        
+            {% if lan.map_link %}
+                <div class="col-md-4">
+            {% endif %}
             <table class="table table-bordered">
                 <tbody>
                     <tr><td>{% trans "Start date" %}:</td><td>{{ lan.start_date|date:"d. F Y" }} - {{ lan.start_date|time:"H:i" }}</td></tr> 
@@ -23,9 +26,20 @@
                     <tr><td>{% trans "Location" %}:</td><td>{{ lan.location|safe }}</td></tr> 
                 </tbody>
             </table>
-
+            
+            {% if lan.map_link %}
+                {% for direction in directions %}
+                    <i class="glyphicon glyphicon-road"></i>  {{direction.title}}<br>
+                    {{direction.description}}<br><br>
+                {% endfor %}
+            </div>
+            <div class="col-md-4">
+                <iframe src="{{ lan.map_link|safe }}" width="400" height="300" frameborder="0" style="border:0"></iframe>
+            </div>
+            </div>
+            <div class="col-md-8">
+            {% endif %}
             <hr />
-
             {{ lan.get_translation.description|markdown }} 
 
             <hr />  
