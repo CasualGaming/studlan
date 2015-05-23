@@ -74,7 +74,7 @@ class LAN(TranslatableModel):
         return 'lan_details', (), {'lan_id': self.id}
 
     def __unicode__(self):
-        return self.title
+        return u'self.title'
 
     class Meta:
         ordering = ['start_date']
@@ -82,6 +82,7 @@ class LAN(TranslatableModel):
 
 class LANTranslation(get_translation_model(LAN, "LAN")):
     description = models.TextField("description")
+
 
 class Attendee(models.Model):
     user = models.ForeignKey(User)
@@ -107,6 +108,10 @@ class TicketType(TranslatableModel):
 
     def number_of_free_seats(self):
         return self.number_of_seats - self.number_of_seats_used()
+
+    def __unicode__(self):
+        return str(self.lan) + str(self.number_of_seats)
+
 
 
 class TicketTypeTranslation(get_translation_model(TicketType, "TicketType")):
