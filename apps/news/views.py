@@ -14,9 +14,7 @@ def main(request, page):
     articles = Article.objects.all()
     paginator = Paginator(articles, 10) #Articles per page
     streams = Stream.objects.filter(active=True).order_by('-pk')[:1]
-    stream = Stream()
-    if streams[0]:
-        stream = streams[0]
+
     try:
         articles = paginator.page(page)
     except PageNotAnInteger:
@@ -34,8 +32,10 @@ def main(request, page):
         # If no page is given, show the first
 
         articles = paginator.page(1)
-
-    return render(request, 'news/news.html', {'articles': articles, 'page': page, 'stream': stream})
+    if len(streams) > 0:
+        return render(request, 'news/news.html', {'articles': articles, 'page': page, 'stream': streams[0]})
+    else:
+        return render(request, 'news/news.html', {'articles': articles, 'page': page})
 
 
 def single(request, article_id):
