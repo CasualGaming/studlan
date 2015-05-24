@@ -4,10 +4,11 @@ from datetime import datetime
 
 from django import template
 
-from apps.lan.models import Attendee, LAN
+from apps.lan.models import Attendee, LAN, Stream
 
 
 register = template.Library()   
+
 
 @register.filter
 def is_attending(user):
@@ -20,3 +21,10 @@ def is_attending(user):
         return False
 
 
+@register.filter
+def active_stream():
+    streams = Stream.objects.filter(active=True)[:1]
+    if streams:
+        return streams
+    else:
+        return False

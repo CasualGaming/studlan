@@ -113,7 +113,6 @@ class TicketType(TranslatableModel):
         return str(self.lan) + str(self.number_of_seats)
 
 
-
 class TicketTypeTranslation(get_translation_model(TicketType, "TicketType")):
     title = models.CharField("Title", max_length=50)
     description = models.TextField("Description", null=True, blank=True)
@@ -142,4 +141,17 @@ class Directions(models.Model):
     description = models.TextField("directions", null=True)
 
     def __unicode__(self):
-        return str(self.lan) + " direction " + str(self.pk)
+        return " direction " + str(self.pk)
+
+
+class Stream(models.Model):
+    title = models.CharField("title", max_length=100)
+    description = models.TextField("description", help_text="Short description that will show on front page.")
+    link = models.TextField("link", help_text="Embedding link for twitch etc. Include the complete IFrame.")
+    active = models.BooleanField(default=False, help_text="No more than one stream can be active at any given time.")
+
+    def is_active(self):
+        return self.active
+
+    def __unicode__(self):
+        return self.title
