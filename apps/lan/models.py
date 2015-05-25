@@ -74,7 +74,7 @@ class LAN(TranslatableModel):
         return 'lan_details', (), {'lan_id': self.id}
 
     def __unicode__(self):
-        return u'self.title'
+        return self.title
 
     class Meta:
         ordering = ['start_date']

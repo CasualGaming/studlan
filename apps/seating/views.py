@@ -14,6 +14,7 @@ from reportlab.pdfgen import canvas
 from bs4 import BeautifulSoup
 from django.db.models import Q
 
+
 def main(request):
         context = {}
         lans = LAN.objects.all().order_by('-start_date')
@@ -30,6 +31,7 @@ def main(request):
         context['breadcrumbs'] = breadcrumbs
 
         return render(request, 'seating/seatings.html', context)
+
 
 def main_filtered(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
