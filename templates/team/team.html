@@ -73,7 +73,7 @@
                 <form class="form-horizontal" action="{% url 'invite_member' team.id %}" method="POST">
                     {% csrf_token %}
                     <fieldset>
-                        <legend>{% trans "Add member" %}</legend>
+                        <legend>{% trans "Invite member" %}</legend>
                         <div class="form-group">
                             <label class="col-md-1 control-label" for="selectMember">{% trans "Select" %}</label>
                             <div class="col-md-4">
@@ -84,7 +84,7 @@
                                 </select>
                             </div>
                             <div class="col-md-3 center-on-collapse form-actions-collapsed">
-                                <input type="submit" class="btn btn-primary" value="{% trans "Add member" %}" />
+                                <input type="submit" class="btn btn-primary" value="{% trans "Invite member" %}" />
                             </div>
                         </div>
                     </fieldset>

@@ -8,7 +8,9 @@
 {% else %}
     <li class="dropdown hidden-xs">
         <a href="#" class="dropdown-toggle glyphicon glyphicon-user" data-toggle="dropdown" role="button" aria-expanded="false">
-            <span class="" aria-hidden="true">{{ request.user.username }}</span> 
+            <span class="" aria-hidden="true">{{ request.user.username }}</span> {% if unread_count %}
+                        <span class="badge">{{unread_count}}</span>
+                    {% endif %}
         </a>
           <ul class="dropdown-menu" role="menu">
             <li>
@@ -17,7 +19,7 @@
                 </i> {% trans "Edit profile" %}</a>
             </li>
             <li>
-                <a href="{% url 'postman_write' 'larserik'%}?subject=details request&body=give me details about ...">
+                <a href="{% url 'inbox' %}">
 	                <i class="glyphicon glyphicon-envelope"></i>
 	                {% trans "Inbox" %}
 	                {% if unread_count %}
