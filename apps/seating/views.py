@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
+
 import logging
 from django.contrib import messages
 from django.contrib.auth import logout
@@ -17,7 +19,7 @@ from django.db.models import Q
 
 def main(request):
         context = {}
-        lans = LAN.objects.all().order_by('-start_date')
+        lans = LAN.objects.filter(end_date__gt=datetime.now()).order_by('-start_date')
         if lans:
             seatings = Seating.objects.filter(lan=lans[0])
             context['seatings'] = seatings
