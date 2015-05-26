@@ -2,7 +2,6 @@
 
 from datetime import datetime
 
-import logging
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -14,7 +13,6 @@ from apps.lan.models import LAN, Attendee
 from django.http import HttpResponse
 from reportlab.pdfgen import canvas
 from bs4 import BeautifulSoup
-from django.db.models import Q
 
 
 def main(request):
@@ -61,7 +59,6 @@ def seating_details(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
     users = seating.get_user_registered()
     seats = seating.get_total_seats()
-    seatcount = seating.get_total_seats().count
 
     if seating.layout:
         dom = BeautifulSoup(seating.layout.template, "html.parser")
@@ -109,7 +106,6 @@ def seat_details(request, seating_id, seat_id):
     seating = get_object_or_404(Seating, pk=seating_id)
     users = seating.get_user_registered()
     seats = seating.get_total_seats()
-    seatcount = seating.get_total_seats().count
     seat = get_object_or_404(Seat, pk=seat_id)
 
     if seating.layout:

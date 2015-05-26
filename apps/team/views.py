@@ -7,12 +7,12 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
-from django.template.context import RequestContext
 from django.utils.translation import ugettext as _
 
 from apps.misc.forms import InlineSpanErrorList
 from apps.team.models import Team, Member
 from apps.team.forms import TeamCreationForm 
+
 
 def teams(request):
     teams = Team.objects.all()
@@ -23,6 +23,7 @@ def teams(request):
     )
 
     return render(request, 'team/teams.html', {'teams': teams, 'breadcrumbs': breadcrumbs})
+
 
 @login_required
 def my_teams(request):
@@ -35,6 +36,7 @@ def my_teams(request):
     )
 
     return render(request, 'team/my_teams.html', {'teams': teams, 'breadcrumbs': breadcrumbs})
+
 
 @login_required
 def create_team(request):
@@ -49,9 +51,9 @@ def create_team(request):
             cleaned = form.cleaned_data
 
             team = Team(
-                leader = request.user,
-                title = cleaned['title'],
-                tag = cleaned['tag'],
+                leader=request.user,
+                title=cleaned['title'],
+                tag=cleaned['tag'],
             )
             team.save()
 
@@ -70,6 +72,7 @@ def create_team(request):
 
     return render(request, 'team/create_team.html', {'breadcrumbs': breadcrumbs, 'form': form})
 
+
 @login_required
 def disband_team(request, team_id):
     team = get_object_or_404(Team, pk=team_id)
@@ -81,6 +84,7 @@ def disband_team(request, team_id):
 
         messages.success(request, unicode(team) + _(u" was successfully deleted."))
         return redirect('teams')
+
 
 def show_team(request, team_id):
     team = get_object_or_404(Team, pk=team_id)
@@ -106,6 +110,7 @@ def show_team(request, team_id):
 
     return render(request, 'team/team.html', {'team': team, 'users': users2, 'breadcrumbs': breadcrumbs})
 
+
 @login_required
 def add_member(request, team_id):
     if request.method == 'POST':
@@ -126,6 +131,7 @@ def add_member(request, team_id):
                 messages.success(request, unicode(user) + _(u' was added to your team'))
 
     return redirect(team)
+
 
 @login_required
 def remove_member(request, team_id, user_id):

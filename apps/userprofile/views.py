@@ -11,8 +11,8 @@ from django.utils.translation import ugettext as _
 
 from apps.lan.models import Attendee, LAN
 from apps.userprofile.forms import UserProfileForm
-from apps.userprofile.models import UserProfile
 from apps.seating.models import Seat, Seating
+
 
 @login_required
 def my_profile(request):
@@ -26,6 +26,7 @@ def my_profile(request):
 
     return render(request, 'user/profile.html', {'quser': request.user, 
         'profile': profile, 'breadcrumbs': breadcrumbs})
+
 
 @login_required
 def update_profile(request):
@@ -44,6 +45,7 @@ def update_profile(request):
     )
 
     return render(request, 'user/update.html', {'form': form, 'breadcrumbs': breadcrumbs})
+
 
 def user_profile(request, username):
     # Using quser for "queried user", as "user" is a reserved variable name in templates
@@ -64,6 +66,7 @@ def user_profile(request, username):
     
     return render(request, 'user/profile.html', {'quser': quser, 
         'profile': profile, 'breadcrumbs': breadcrumbs, 'user_seats': user_seats})
+
 
 @login_required
 def history(request):

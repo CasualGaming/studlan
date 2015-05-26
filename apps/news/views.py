@@ -1,10 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render, get_object_or_404, redirect
-from django.template.context import RequestContext
+from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.utils import translation
 
 from apps.news.models import Article
 from apps.lan.models import Stream

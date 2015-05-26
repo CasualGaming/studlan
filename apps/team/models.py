@@ -3,6 +3,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+
 class Team(models.Model):
     
     title = models.CharField('title', max_length=50)
@@ -19,6 +20,7 @@ class Team(models.Model):
 
     class Meta:
         ordering = ['tag', 'title']
+
 
 class Member(models.Model):
     team = models.ForeignKey(Team)

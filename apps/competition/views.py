@@ -4,13 +4,9 @@ from datetime import datetime
 
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from django.template.context import RequestContext
 from django.utils import translation
 from django.utils.translation import ugettext as _
 
@@ -18,6 +14,7 @@ from apps.competition.models import Activity, Competition, Participant
 from apps.lan.models import LAN
 from apps.team.models import Team
 from apps.lottery.models import Lottery
+
 
 def main(request):
     lans = LAN.objects.filter(end_date__gte=datetime.now())
@@ -41,6 +38,7 @@ def main(request):
 
         return render(request, 'competition/competitions.html', context)
 
+
 def main_filtered(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
 
@@ -62,6 +60,7 @@ def main_filtered(request, lan_id):
     context['breadcrumbs'] = breadcrumbs
 
     return render(request, 'competition/competitions.html', context)
+
 
 def activity_details(request, activity_id):
     lans = LAN.objects.filter(end_date__gte=datetime.now())
@@ -88,6 +87,7 @@ def activity_details(request, activity_id):
 
         return render(request, 'competition/competitions.html', context)
 
+
 def activity_details_filtered(request, lan_id, activity_id):
     lan = get_object_or_404(LAN, pk=lan_id)
     activity = get_object_or_404(Activity, pk=activity_id)
@@ -111,11 +111,13 @@ def activity_details_filtered(request, lan_id, activity_id):
 
     return render(request, 'competition/competitions.html', context)
 
+
 def shorten_descriptions(competitions, length):
     for c in competitions:
         if len(c.get_translation().translated_description) > length:
             c.get_translation().translated_description = c.get_translation().translated_description[:length-3] + '...'
     return competitions
+
 
 def competition_details(request, competition_id):
     context = {}
@@ -153,6 +155,7 @@ def competition_details(request, competition_id):
         messages.warning(request, _(u"Please log in to register for the competition."))
     context['competition'] = competition
     return render(request, 'competition/competition.html', context)
+
 
 @login_required
 def join(request, competition_id):
@@ -199,6 +202,7 @@ def join(request, competition_id):
         messages.success(request, _(u"You have been signed up for ") + unicode(competition))
     return redirect(competition)
 
+
 @login_required
 def leave(request, competition_id):
     competition = get_object_or_404(Competition, pk=competition_id)
@@ -225,12 +229,14 @@ def leave(request, competition_id):
 
     return redirect(competition)
 
+
 @login_required
 def forfeit(request, competition_id):
     competition = get_object_or_404(Competition, pk=competition_id)
     messages.error(request, 'Forfeit not yet implemented!')
     return redirect(competition)
-    
+
+
 def translate_competitions(competitions):
     translated_competitions = []
     for competition in competitions:

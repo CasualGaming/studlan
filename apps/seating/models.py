@@ -1,9 +1,12 @@
+# -*- coding: utf-8 -*-
+
+import datetime
 
 from django.contrib.auth.models import User
 from django.db import models
-from apps.lan.models import LAN, TicketType
 from django.db.models import Q
-import datetime
+
+from apps.lan.models import LAN, TicketType
 
 
 class Layout(models.Model):
@@ -56,7 +59,7 @@ class Seating(models.Model):
         return ('seating_details', (), {'seating_id': self.id})
 
     def populate_seats(self):
-        for k in range(0,self.number_of_seats):
+        for k in range(0, self.number_of_seats):
             seat = Seat(seating=self, placement=k+1)
             seat.save()
 
