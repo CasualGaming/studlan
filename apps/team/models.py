@@ -14,6 +14,9 @@ class Team(models.Model):
     def get_absolute_url(self):
         return ('show_team', (), {'team_id': self.id})
 
+    def number_of_team_members(self):
+        return Member.objects.filter(team=self).count()
+
     def __unicode__(self):
         return '[%s] %s' % (self.tag, self.title)
 
