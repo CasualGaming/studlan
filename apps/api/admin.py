@@ -6,6 +6,7 @@ from django.contrib import admin
 
 from apps.api.models import Key
 
+
 class KeyAdmin(admin.ModelAdmin):
     list_display = ['owner', 'content',]
 

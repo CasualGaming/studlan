@@ -1,4 +1,6 @@
 {% load i18n %}
+{% load postman_tags %}
+{% postman_unread as unread_count %}
 
 {% if not user.is_authenticated %}
     <li><a href="{% url 'auth_register' %}">{% trans "Register" %}</a></li>
@@ -6,13 +8,24 @@
 {% else %}
     <li class="dropdown hidden-xs">
         <a href="#" class="dropdown-toggle glyphicon glyphicon-user" data-toggle="dropdown" role="button" aria-expanded="false">
-            <span class="" aria-hidden="true">{{ request.user.username }}</span> 
+            <span class="" aria-hidden="true">{{ request.user.username }}</span> {% if unread_count %}
+                        <span class="badge">{{unread_count}}</span>
+                    {% endif %}
         </a>
           <ul class="dropdown-menu" role="menu">
             <li>
                 <a href="{% url 'update_profile' %}">
                 <i class="glyphicon glyphicon-pencil">
                 </i> {% trans "Edit profile" %}</a>
+            </li>
+            <li>
+                <a href="{% url 'inbox' %}">
+	                <i class="glyphicon glyphicon-envelope"></i>
+	                {% trans "Inbox" %}
+	                {% if unread_count %}
+	                	<span class="badge">{{unread_count}}</span>
+	                {% endif %}
+                </a>
             </li>
             {% if user.is_staff %}
                 <li class="divider"></li>

@@ -25,6 +25,7 @@ urlpatterns = patterns('',
     url(r'^profile/',       include('apps.userprofile.urls')),
     url(r'^team/',          include('apps.team.urls')),
     url(r'^seating/',       include('apps.seating.urls')),
+    url(r'^messages/',      include('postman.urls')),
 )
 
 handler404 = 'apps.misc.views.handler404'

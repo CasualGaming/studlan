@@ -12,6 +12,8 @@ from django.utils.translation import ugettext as _
 from apps.lan.models import Attendee, LAN
 from apps.userprofile.forms import UserProfileForm
 from apps.seating.models import Seat, Seating
+from postman.models import Message
+
 
 
 @login_required
@@ -83,3 +85,15 @@ def history(request):
     )
 
     return render(request, 'user/history.html', {'attended': attended, 'breadcrumbs': breadcrumbs})
+
+
+@login_required
+def user_inbox(request):
+    postman_messages = Message.objects.filter(recipient=request.user).order_by('-sent_at')[:10]
+    undread_messages = Message.objects.filter(recipient=request.user, read_at=None)
+
+    for unread in undread_messages:
+        unread.read_at = datetime.now()
+        unread.save()
+
+    return render(request, 'user/inbox.html', {'postman_messages': postman_messages})

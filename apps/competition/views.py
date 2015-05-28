@@ -11,7 +11,7 @@ from django.utils import translation
 from django.utils.translation import ugettext as _
 
 from apps.competition.models import Activity, Competition, Participant
-from apps.lan.models import LAN
+from apps.lan.models import LAN, Attendee
 from apps.team.models import Team
 from apps.lottery.models import Lottery
 
@@ -174,7 +174,28 @@ def join(request, competition_id):
         team_id = request.POST.get('team')
         if team_id:
             team = get_object_or_404(Team, pk=team_id)
-           
+
+            # Check if team restrictions are in place
+            if competition.enforce_team_size:
+                if team.number_of_team_members() + 1 < competition.team_size:
+                    messages.error(request, _(unicode(team) + u" does not have enough members (") +
+                    str(team.number_of_team_members() + 1) + u"/" + str(competition.team_size) + u")")
+                    return redirect(competition)
+
+            if competition.enforce_payment:
+                paid = 0
+                leader_attendee = Attendee.objects.get(lan=competition.lan, user=team.leader)
+                if leader_attendee.has_paid or competition.lan.has_ticket(team.leader):
+                    paid += 1
+                for member in team.members.all():
+                    attendee = Attendee.objects.get(lan=competition.lan, user=member)
+                    if attendee.has_paid or competition.lan.has_ticket(member):
+                        paid += 1
+                if paid < competition.team_size:
+                    messages.error(request, _(unicode(team) + u" does not have enough members that have paid (") +
+                    str(paid) + u"/" + str(competition.team_size) + u")")
+                    return redirect(competition)
+
             # Go through all members of the team and delete their individual participation entries 
             if request.user in users:
                 participant = Participant.objects.get(user=request.user, competition=competition)

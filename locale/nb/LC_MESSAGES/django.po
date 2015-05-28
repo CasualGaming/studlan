@@ -853,6 +853,10 @@ msgstr "Telefon"
 msgid "Edit profile"
 msgstr "Endre profil"
 
+#: templates/userdropdown.html:22
+msgid "Inbox"
+msgstr "Inboks"
+
 #: templates/user/update.html:23
 msgid "Update information"
 msgstr "Oppdater informasjon"

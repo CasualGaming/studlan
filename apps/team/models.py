@@ -5,7 +5,6 @@ from django.db import models
 
 
 class Team(models.Model):
-    
     title = models.CharField('title', max_length=50)
     tag = models.CharField('tag', max_length=10, unique=True)
     leader = models.ForeignKey(User, blank=False, related_name="newteamleader")
@@ -14,6 +13,9 @@ class Team(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return ('show_team', (), {'team_id': self.id})
+
+    def number_of_team_members(self):
+        return Member.objects.filter(team=self).count()
 
     def __unicode__(self):
         return '[%s] %s' % (self.tag, self.title)
@@ -33,3 +35,10 @@ class Member(models.Model):
     class Meta:
         unique_together = ('team', 'user',)
         ordering = ['user']
+
+
+class Invitation(models.Model):
+    team = models.ForeignKey(Team)
+    invitee = models.ForeignKey(User, related_name='Invitee')
+    team_leader = models.ForeignKey(User, related_name='Team Leader')
+    token = models.CharField('token', max_length=32, editable=False)

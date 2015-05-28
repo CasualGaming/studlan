@@ -13,13 +13,13 @@ from django.utils.translation import ugettext as _
 
 from apps.lan.models import LAN
 
+
 class Activity(models.Model):
 
     title = models.CharField('title', max_length=50)
     image_url = models.CharField('Image url', max_length=100, blank=True,
-        help_text='Use a mirrored image of at least a height of 150px.')
+                                 help_text='Use a mirrored image of at least a height of 150px.')
     desc = models.TextField('description')
-    
 
     def __unicode__(self):
         return self.title
@@ -50,9 +50,16 @@ class Competition(TranslatableModel):
     lan = models.ForeignKey(LAN)
     challonge_url = models.URLField('Challonge url', blank=True, null=True)
     use_teams = models.BooleanField('use teams', default=False,
-        help_text='If checked, participants will be ignored, and will '
-        'instead use teams. If left unchecked teams will be ignored, '
-        'and participants will be used.')
+                                    help_text='If checked, participants will be ignored, and will '
+                                    'instead use teams. If left unchecked teams will be ignored, '
+                                    'and participants will be used.')
+    team_size = models.IntegerField(default=5, blank=True)
+    enforce_team_size = models.BooleanField('enforce teams', default=False,
+                                            help_text='If checked, teams will require 5 members before being able '
+                                            'to sign up.')
+    enforce_payment = models.BooleanField('enforce payment', default=False,
+                                          help_text='If checked, teams will require 5 members with valid tickets before'
+                                          ' being able to sign up.')
     
     def get_teams(self):
         if self.use_teams:
@@ -93,7 +100,7 @@ class Competition(TranslatableModel):
     
     @models.permalink
     def get_absolute_url(self):
-       return ('competition_details', (), {'competition_id': self.id})
+        return ('competition_details', (), {'competition_id': self.id})
 
     class Meta:
         ordering = ['status',]
@@ -109,7 +116,8 @@ class CompetitionTranslation(get_translation_model(Competition, "competition")):
     
     def __unicode__(self):
         return self.translated_title
-    
+
+
 class Participant(models.Model):
     user = models.ForeignKey(User, null=True)
     team = models.ForeignKey('team.Team', null=True)
