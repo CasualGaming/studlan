@@ -67,18 +67,18 @@ def seating_details(request, seating_id):
             children = tag.find_all('rect')
             if not seats[counter].user:
                 children[0]['class'] = ' seating-node-free'
-                tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + str(seats[counter].id)
-                tag['title'] = 'Seat ' + str(seats[counter].placement) + ': Free'
+                tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + unicode(seats[counter].id)
+                tag['title'] = 'Seat ' + unicode(seats[counter].placement) + ': Free'
             else:
                 if seats[counter].user == request.user:
                     children[0]['class'] = ' seating-node-self'
-                    tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + str(seats[counter].id)
-                    tag['title'] = 'Seat ' + str(seats[counter].placement) + ': Your seat'
+                    tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + unicode(seats[counter].id)
+                    tag['title'] = 'Seat ' + unicode(seats[counter].placement) + ': Your seat'
                 else:
                     children[0]['class'] = ' seating-node-occupied'
-                    tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + str(seats[counter].id)
-                    tag['title'] = 'Seat ' + str(seats[counter].placement) + ': ' + str(seats[counter].user.first_name)\
-                                   + ' ' + str(seats[counter].user.last_name)
+                    tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + unicode(seats[counter].id)
+                    tag['title'] = 'Seat ' + unicode(seats[counter].placement) + ': ' + unicode(seats[counter].user.first_name)\
+                                   + ' ' + unicode(seats[counter].user.last_name)
             counter += 1
         dom.encode("utf-8")
 
@@ -115,18 +115,18 @@ def seat_details(request, seating_id, seat_id):
             children = tag.find_all('rect')
             if not seats[counter].user:
                 children[0]['class'] = ' seating-node-free'
-                tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + str(seats[counter].id)
-                tag['title'] = 'Seat ' + str(seats[counter].placement) + ': Free'
+                tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + unicode(seats[counter].id)
+                tag['title'] = 'Seat ' + unicode(seats[counter].placement) + ': Free'
             else:
                 if seats[counter].user == request.user:
                     children[0]['class'] = ' seating-node-self'
-                    tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + str(seats[counter].id)
-                    tag['title'] = 'Seat ' + str(seats[counter].placement) + ': Your seat'
+                    tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + unicode(seats[counter].id)
+                    tag['title'] = 'Seat ' + unicode(seats[counter].placement) + ': Your seat'
                 else:
                     children[0]['class'] = ' seating-node-occupied'
-                    tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + str(seats[counter].id)
-                    tag['title'] = 'Seat ' + str(seats[counter].placement) + ': ' + str(seats[counter].user.first_name)\
-                                   + ' ' + str(seats[counter].user.last_name)
+                    tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + unicode(seats[counter].id)
+                    tag['title'] = 'Seat ' + unicode(seats[counter].placement) + ': ' + unicode(seats[counter].user.first_name)\
+                                   + ' ' + unicode(seats[counter].user.last_name)
             if seats[counter] == seat:
                 children[0]['class'] += ' seating-node-info'
             counter += 1
@@ -175,7 +175,7 @@ def join(request, seating_id, seat_id):
                 seat.save()
                 messages.success(request, "You have successfully reserved your seat! ")
             else:
-                messages.error(request, "That seat is reserved by " + str(seat.user))
+                messages.error(request, "That seat is reserved by " + unicode(seat.user))
         else:
             messages.error(request, "Your ticket does not allow reservation in this seating")
     else:
@@ -225,10 +225,10 @@ def seating_list(request, seating_id):
     cursor = 750
     for s in seats:
         if s.user:
-            p.drawString(230, cursor, "Plass " + str(s.placement) + ": ")
-            p.drawString(290, cursor, str(s.user))
+            p.drawString(230, cursor, "Plass " + unicode(s.placement) + ": ")
+            p.drawString(290, cursor, unicode(s.user))
         else:
-            p.drawString(230, cursor, "Plass " + str(s.placement) + ": ")
+            p.drawString(230, cursor, "Plass " + unicode(s.placement) + ": ")
             p.drawString(290, cursor, '[Ledig]')
         cursor -= 19
         if cursor < 50:
@@ -268,10 +268,10 @@ def seating_map(request, seating_id):
         p.drawString(180, y_value, lan.title)
         p.drawString(180, y_value-80, seating.title)
         if s.user:
-            p.drawString(180, y_value-130, "Plass " + str(s.placement) + ": ")
-            p.drawString(180, y_value-180, str(s.user))
+            p.drawString(180, y_value-130, "Plass " + unicode(s.placement) + ": ")
+            p.drawString(180, y_value-180, unicode(s.user))
         else:
-            p.drawString(180, y_value-130, "Plass " + str(s.placement) + ": ")
+            p.drawString(180, y_value-130, "Plass " + unicode(s.placement) + ": ")
             p.drawString(180, y_value-180, '[Ledig]')
 
     p.save()
