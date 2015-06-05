@@ -109,9 +109,6 @@ class TicketType(TranslatableModel):
     def number_of_free_seats(self):
         return self.number_of_seats - self.number_of_seats_used()
 
-    def __unicode__(self):
-        return str(self.lan) + str(self.number_of_seats)
-
 
 class TicketTypeTranslation(get_translation_model(TicketType, "TicketType")):
     title = models.CharField("Title", max_length=50)
