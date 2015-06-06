@@ -40,5 +40,4 @@ class Member(models.Model):
 class Invitation(models.Model):
     team = models.ForeignKey(Team)
     invitee = models.ForeignKey(User, related_name='Invitee')
-    team_leader = models.ForeignKey(User, related_name='Team Leader')
     token = models.CharField('token', max_length=32, editable=False)
