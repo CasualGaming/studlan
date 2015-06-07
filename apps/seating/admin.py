@@ -7,7 +7,7 @@ from apps.seating.models import Seat, Seating, Layout
 
 
 class SeatAdmin (admin.ModelAdmin):
-    list_display = ('user', 'placement', 'is_empty')
+    list_display = ('user', 'placement')
     list_filter = ('seating',)
     search_fields = ['user__username']
 

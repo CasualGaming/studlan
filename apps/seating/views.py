@@ -77,8 +77,10 @@ def seating_details(request, seating_id):
                 else:
                     children[0]['class'] = ' seating-node-occupied'
                     tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + unicode(seats[counter].id)
-                    tag['title'] = 'Seat ' + unicode(seats[counter].placement) + ': ' + unicode(seats[counter].user.first_name)\
-                                   + ' ' + unicode(seats[counter].user.last_name)
+
+                    title = dom.new_tag("title")
+                    title.string = unicode(seats[counter].user.get_full_name())
+                    tag.append(title)
             counter += 1
         dom.encode("utf-8")
 
@@ -125,8 +127,11 @@ def seat_details(request, seating_id, seat_id):
                 else:
                     children[0]['class'] = ' seating-node-occupied'
                     tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + unicode(seats[counter].id)
-                    tag['title'] = 'Seat ' + unicode(seats[counter].placement) + ': ' + unicode(seats[counter].user.first_name)\
-                                   + ' ' + unicode(seats[counter].user.last_name)
+
+                    title = dom.new_tag("title")
+                    title.string = unicode(seats[counter].user.get_full_name())
+                    tag.append(title)
+
             if seats[counter] == seat:
                 children[0]['class'] += ' seating-node-info'
             counter += 1
@@ -157,14 +162,15 @@ def join(request, seating_id, seat_id):
     occupied = seating.get_user_registered()
     for sibling in siblings:
         occupied = occupied + sibling.get_user_registered()
+
     try:
         attendee = Attendee.objects.get(user=request.user, lan=seating.lan)
     except ObjectDoesNotExist:
         attendee = None
 
     if (attendee and attendee.has_paid) or seating.lan.has_ticket(request.user):
-        if seating.ticket_type and seating.lan.has_ticket(request.user).ticket_type == seating.ticket_type:
-            if seat.is_empty():
+        if not seating.ticket_type or seating.lan.has_ticket(request.user).ticket_type == seating.ticket_type:
+            if not seat.user:
                 if request.user in occupied:
                     old_seats = Seat.objects.filter(user=request.user)
                     for os in old_seats:
@@ -189,26 +195,10 @@ def leave(request, seating_id, seat_id):
     if seat.user == request.user:
         seat.user = None
         seat.save()
-        messages.warning(request, "You have unregistered your seat")
+        messages.success(request, "You have unregistered your seat")
     else:
         messages.error(request, "This seat is taken")
     return redirect(seating)
-
-
-def log_in(request):
-    return redirect('auth_login')
-
-
-def log_out(request):
-    logout(request)
-
-    messages.success(request, 'You have successfully logged out.')
-    return redirect('root')
-
-
-def register_user(request):
-    return redirect('auth_register')
-
 
 def seating_list(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)

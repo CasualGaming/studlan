@@ -11,7 +11,7 @@ from apps.lan.models import LAN, TicketType
 
 class Layout(models.Model):
     title = models.CharField('title', max_length=50)
-    description = models.CharField('desc', max_length=250)
+    description = models.CharField('description', max_length=250)
     number_of_seats = models.IntegerField('number of seats')
     template = models.TextField('SVG layout for seating', null=True, blank=True)
 
@@ -22,7 +22,7 @@ class Layout(models.Model):
 class Seating(models.Model):
     lan = models.ForeignKey(LAN)
     title = models.CharField('title', max_length=50)
-    desc = models.CharField('desc', max_length=250)
+    desc = models.CharField('description', max_length=250)
     number_of_seats = models.IntegerField('number of seats')
     closing_date = models.DateTimeField("closing date")
     layout = models.ForeignKey(Layout, null=True, blank=True)
@@ -71,9 +71,3 @@ class Seat(models.Model):
 
     def __unicode__(self):
         return str(self.id)
-
-    def is_empty(self):
-        if self.user is None:
-            return True
-        else:
-            return False
