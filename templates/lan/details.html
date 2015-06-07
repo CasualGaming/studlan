@@ -134,7 +134,7 @@
                         {% else %}
                             <div class="alert alert-danger">
                                 {% trans "Your address and zip code is required in order to sign up for a LAN." %}
-                                {% trans "Go to your" %} <a href="{% url 'myprofile' %}">{% trans "profile" %}</a> {% trans "to add the information." %} 
+                                {% trans "Go to your" %} <a href="{% url 'update_profile' %}">{% trans "profile" %}</a> {% trans "to add the information." %} 
                             </div>
                         {% endif %}
                     {% endif %}
