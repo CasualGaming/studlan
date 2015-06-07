@@ -1,16 +1,13 @@
-{% extends "seating/seating_base.html" %}
+{% extends "base.html" %}
 {% block title %}
 Seating
 {% endblock title %}
-{% block sidebar%}
-ads
-{% endblock sidebar %}
 {% load i18n %}
+
 {% block content %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/seating.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.qtip.min.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-        <div class="row">
+    <div class="row">
         <div class="col-md-9">
             {% if not seating.is_open %}
                 <div class="alert alert-danger">{% trans "Seating is closed." %}</div>
@@ -22,93 +19,61 @@ ads
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-9">
             {% if template %}
                {{template|safe}}
             {% else %}
-            {% for s in seats %}
-                    <div class="col-md-2">
-                {% if s.user %}
-                    {% if s.user == user %}
+                {% for s in seats %}
+                        <div class="col-md-2">
+                    {% if s.user %}
+                        {% if s.user == user %}
+                            <form class="form-inline" 
+                            {% if seating.is_open %}
+                                action="{% url 'seat_details' seating.id s.id %}" 
+                            {% endif %}
+                            method="POST">
+                            {% csrf_token %}
+                            <input class="btn btn-warning" type="submit" value="{{ s.id }}" />
+                            </form>
+                        {% else %}
+                            <form class="form-inline" action="{% url 'seat_details' seating.id s.id %}" method="POST">
+                                {% csrf_token %}
+                                <input class="btn btn-danger" type="submit" value="{{ s.id }}" title="{{s.user}}" />
+                            </form>
+                    {% endif %}
+                    {% else %}
                         <form class="form-inline" 
                         {% if seating.is_open %}
                             action="{% url 'seat_details' seating.id s.id %}" 
                         {% endif %}
                         method="POST">
                         {% csrf_token %}
-                        <input class="btn btn-warning" type="submit" value="{{ s.id }}" />
+                            <input class="btn btn-success" type="submit" value="{{ s.id }}"/>
                         </form>
-                    {% else %}
-                        <form class="form-inline" action="{% url 'seat_details' seating.id s.id %}" method="POST">
-                            {% csrf_token %}
-                            <input class="btn btn-danger" type="submit" value="{{ s.id }}" title="{{s.user}}" />
-                        </form>
-                {% endif %}
-                {% else %}
-                    <form class="form-inline" 
-                    {% if seating.is_open %}
-                        action="{% url 'seat_details' seating.id s.id %}" 
                     {% endif %}
-                    method="POST">
-                    {% csrf_token %}
-                        <input class="btn btn-success" type="submit" value="{{ s.id }}"/>
-                    </form>
-                {% endif %}
-                </div>
-            {% endfor %}
+                    </div>
+                {% endfor %}
             {% endif %}
         </div>
         <div class="col-md-3">
-        
-        {% if info_seat %}
-        
-        	<div class="well">
-                <ul class="nav nav-stacked">
-            		<li><strong>Seat: </strong> {{info_seat.placement}}</li>
-                    {% if info_seat.user %}
-                    <li><strong>Occupied by: </strong></li>
-                    <li>{{info_seat.user.first_name}} {{info_seat.user.last_name}}</li>
-                    
-                    {% if info_seat.user == user %}
-                        <form class="form-inline" 
+            <div class="sidebar-wrapper seat-wrapper">
+            	<div class="well sidebar">
+                    <ul class="nav nav-stacked">
+                        <li class="sidebar-header">
+                            <a href="">{% trans "Seat Info" %}</a>
+                        </li>
+                        <li><strong>{% trans "Seat number" %}:</strong><br/><p id="seat-number"></p></li>
+
+                        <div id="occupied-by" class="hide">
+                            <li><strong>{% trans "Occupied by" %}:</strong><br><p id="seat-user"></p></li>
+                        </div>
                         {% if seating.is_open %}
-                            action="{% url 'leave_seat' info_seat.seating.id info_seat.id %}" 
+                            <a id="take-button" class="btn btn-primary hide" href="">Take Seat</a>
+                            <a id="leave-button" class="btn btn-warning hide" href="">Leave Seat</a>
                         {% endif %}
-                        method="POST">
-                        {% csrf_token %}
-                        <input class="btn btn-warning" type="submit" value="Leave seat" />
-                        </form>
-                    {% else %}
-                        <form class="form-inline" action="/profile/{{info_seat.user}}/" method="POST">
-                            {% csrf_token %}
-                            <input class="btn btn-primary" type="submit" value="View profile" title="View profile" />
-                        </form>
-                {% endif %}
-                {% else %}
-                        <form class="form-inline" 
-                        {% if seating.is_open %}
-                            action="{% url 'take_seat' info_seat.seating.id info_seat.id %}" 
-                        {% endif %}
-                        method="POST">
-                        {% csrf_token %}
-                        <input class="btn btn-primary" type="submit" value="Take seat" />
-                        </form>
-                {% endif %}
-                </ul>
-        	</div>
-        
-        {% endif %}
-        <div class="well" id="seat-info-well">
-            <div id="seat-info"></div>
-                
+                    </ul>
+                </div>
             </div>
-        </div>
+        </div>  
     </div>
-    
-    <style>
-    .col-md-2 .btn {
-        width: 3.5em; height: 2em;
-        }
-    }
-    </style>
 {% endblock content %}

@@ -1,9 +1,13 @@
-{% extends "seating/seating_base.html" %}
+{% extends "base.html" %}
 {% load competition_tags %}
 {% load i18n %}
+{% block title %}
+Seating
+{% endblock title %}
+
 {% block content %}
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-9">
             {% if lan %}
                 <h2>Seating for {{lan}}</h2>
                 {% if user.is_staff %}
