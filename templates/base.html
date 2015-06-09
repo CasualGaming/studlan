@@ -61,9 +61,11 @@
                 </div>
             </div>
         </div>
-        <div class="sidebar-wrapper">
-            {% include "sidebar.html" %}
-        </div>
+        {% if not hide_sidebar %}
+            <div class="sidebar-wrapper">
+                {% include "sidebar.html" %}
+            </div>
+        {% endif %}
         <div class="container">
             {% if breadcrumbs %}
                 <div class="row breadcrumbs">
