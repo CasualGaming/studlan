@@ -10,27 +10,19 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from apps.seating.models import Seating, Seat
 from apps.lan.models import LAN, Attendee
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from reportlab.pdfgen import canvas
 from bs4 import BeautifulSoup
 
 
 def main(request):
-        context = {}
-        lans = LAN.objects.filter(end_date__gt=datetime.now()).order_by('-start_date')
-        if lans:
-            seatings = Seating.objects.filter(lan=lans[0])
-            context['seatings'] = seatings
-            context['lan'] = lans[0]
-            context['active'] = 'all'
+    lans = LAN.objects.filter(end_date__gt=datetime.now()).order_by('-start_date')
+    
+    if lans:
+        return seating_details(request, lans[0].id)
 
-        breadcrumbs = (
-            ('studLAN', '/'),
-            ('Seatings', ''),
-        )
-        context['breadcrumbs'] = breadcrumbs
 
-        return render(request, 'seating/seatings.html', context)
+    raise Http404
 
 
 def main_filtered(request, lan_id):
@@ -54,112 +46,68 @@ def main_filtered(request, lan_id):
     return render(request, 'seating/seatings.html', context)
 
 
-def seating_details(request, seating_id):
-    context = {}
-    seating = get_object_or_404(Seating, pk=seating_id)
+def seating_details(request, lan_id, seating_id=None):
+    lan = get_object_or_404(LAN, pk=lan_id)
+    seatings = Seating.objects.filter(lan=lan)
+
+    if not seatings:
+        return render(request, 'seating/seating.html')
+
+    if seating_id:
+        seating = get_object_or_404(Seating, pk=seating_id, lan=lan)
+    else:
+        seating = seatings[0]
+
+
     users = seating.get_user_registered()
     seats = seating.get_total_seats()
 
-    if seating.layout:
+    if seating.layout: #TODO remove
         dom = BeautifulSoup(seating.layout.template, "html.parser")
         counter = 0
         for tag in dom.find_all('a'):
             children = tag.find_all('rect')
+            children[0]['seat-number'] = seats[counter].id
             if not seats[counter].user:
                 children[0]['class'] = ' seating-node-free'
-                tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + unicode(seats[counter].id)
-                tag['title'] = 'Seat ' + unicode(seats[counter].placement) + ': Free'
+                children[0]['status'] = "free"
             else:
                 if seats[counter].user == request.user:
                     children[0]['class'] = ' seating-node-self'
-                    tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + unicode(seats[counter].id)
-                    tag['title'] = 'Seat ' + unicode(seats[counter].placement) + ': Your seat'
+                    children[0]['status'] = "mine"
                 else:
                     children[0]['class'] = ' seating-node-occupied'
-                    tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + unicode(seats[counter].id)
+                    children[0]['status'] = "occupied"
+                    children[0]['seat-user'] = unicode(seats[counter].user.get_full_name())
 
+                    #Separate title element for chrome support
                     title = dom.new_tag("title")
                     title.string = unicode(seats[counter].user.get_full_name())
                     tag.append(title)
+
             counter += 1
         dom.encode("utf-8")
 
-    if seating.ticket_type and seating.ticket_type != seating.lan.has_ticket(request.user):
-        messages.error(request, "Your ticket does not allow reservation in this seating")
-
-    breadcrumbs = (
-        ('studLAN', '/'),
-        ('Seatings', reverse('seatings')),
-        (seating, ''),
-    )
-    context['seating'] = seating
-    context['breadcrumbs'] = breadcrumbs
-    context['users'] = users
-    context['seats'] = seats
-    if seating.layout:
-        context['template'] = dom.__str__
-
-    return render(request, 'seating/seating.html', context)
-
-
-@login_required()
-def seat_details(request, seating_id, seat_id):
     context = {}
-    seating = get_object_or_404(Seating, pk=seating_id)
-    users = seating.get_user_registered()
-    seats = seating.get_total_seats()
-    seat = get_object_or_404(Seat, pk=seat_id)
-
-    if seating.layout:
-        dom = BeautifulSoup(seating.layout.template, "html.parser")
-        counter = 0
-        for tag in dom.find_all('a'):
-            children = tag.find_all('rect')
-            if not seats[counter].user:
-                children[0]['class'] = ' seating-node-free'
-                tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + unicode(seats[counter].id)
-                tag['title'] = 'Seat ' + unicode(seats[counter].placement) + ': Free'
-            else:
-                if seats[counter].user == request.user:
-                    children[0]['class'] = ' seating-node-self'
-                    tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + unicode(seats[counter].id)
-                    tag['title'] = 'Seat ' + unicode(seats[counter].placement) + ': Your seat'
-                else:
-                    children[0]['class'] = ' seating-node-occupied'
-                    tag['xlink:href'] = '/seating/details/' + seating_id + '/info/' + unicode(seats[counter].id)
-
-                    title = dom.new_tag("title")
-                    title.string = unicode(seats[counter].user.get_full_name())
-                    tag.append(title)
-
-            if seats[counter] == seat:
-                children[0]['class'] += ' seating-node-info'
-            counter += 1
-        dom.encode("utf-8")
-
-
-
-    breadcrumbs = (
-        ('studLAN', '/'),
-        ('Seatings', reverse('seatings')),
-        (seating, ''),
-    )
+    context['seatings'] = seatings
     context['seating'] = seating
-    context['breadcrumbs'] = breadcrumbs
-    context['users'] = users
-    context['seats'] = seats
-    context['info_seat'] = seat
-    if seating.layout:
-        context['template'] = dom.__str__
+    context['hide_sidebar'] = True
+    context['template'] = dom.__str__
 
     return render(request, 'seating/seating.html', context)
 
 @login_required()
-def join(request, seating_id, seat_id):
+def take(request, seating_id, seat_id):
     seating = get_object_or_404(Seating, pk=seating_id)
     seat = get_object_or_404(Seat, pk=seat_id)
     siblings = list(Seating.objects.filter(lan=seating.lan))
     occupied = seating.get_user_registered()
+
+
+    if not seating.is_open():
+        messages.error(request, "This seatmap is closed.")
+        return redirect(seating)
+
     for sibling in siblings:
         occupied = occupied + sibling.get_user_registered()
 
@@ -189,9 +137,18 @@ def join(request, seating_id, seat_id):
     return redirect(seating)
 
 @login_required()
+def take2(request, lan_id, seating_id, seat_id):
+    return take(request, seating_id, seat_id)
+
+@login_required()
 def leave(request, seating_id, seat_id):
     seating = get_object_or_404(Seating, pk=seating_id)
     seat = get_object_or_404(Seat, pk=seat_id)
+
+    if not seating.is_open():
+        messages.error(request, "This seatmap is closed.")
+        return redirect(seating)
+
     if seat.user == request.user:
         seat.user = None
         seat.save()
@@ -232,6 +189,9 @@ def seating_list(request, seating_id):
 
     return response
 
+@login_required()
+def leave2(request, lan_id, seating_id, seat_id):
+    return leave(request, seating_id, seat_id)
 
 def seating_map(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)

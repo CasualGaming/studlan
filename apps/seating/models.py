@@ -25,7 +25,7 @@ class Seating(models.Model):
     desc = models.CharField('description', max_length=250)
     number_of_seats = models.IntegerField('number of seats')
     closing_date = models.DateTimeField("closing date")
-    layout = models.ForeignKey(Layout, null=True, blank=True)
+    layout = models.ForeignKey(Layout)
     ticket_type = models.ForeignKey(TicketType, null=True, blank=True, help_text='Leaving this field blank will ' +
             'leave the seating open to any tickets for the given LAN')
 
@@ -56,7 +56,7 @@ class Seating(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('seating_details', (), {'seating_id': self.id})
+        return ('seating_details', (), {'lan_id': self.lan.id, 'seating_id': self.id})
 
     def populate_seats(self):
         for k in range(0, self.number_of_seats):
