@@ -156,12 +156,11 @@ def invite_member(request, team_id):
                     invitation = Invitation()
                     invitation.team = team
                     invitation.invitee = user
-                    invitation.team_leader = request.user
                     invitation.token = uuid.uuid1().hex
                     invitation.save()
                     pm_write(request.user, user, 'Team invitation', body='You have been invited to ' + team.title +
-                             ' by ' + str(request.user) + '. To accept the invitation, find the team in the team list '
-                             + 'and join it.')
+                             ' by ' + unicode(request.user) + '. To accept the invitation, find the ' +
+                             ' <a href="' + team.get_absolute_url() + '"> team </a>' + 'and join it.')
 
                     messages.success(request, unicode(user) + _(u' was invited to your team'))
                 else:
