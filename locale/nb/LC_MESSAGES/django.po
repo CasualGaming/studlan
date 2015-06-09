@@ -572,7 +572,7 @@ msgid ""
 "Try to find other players that sign up solo, make a team and sign up as a "
 "team."
 msgstr ""
-"Prøv å samle et lag av de andre deltakerne som har meldt seg på utenlag."
+"Prøv å samle et lag av de andre deltakerne som har meldt seg på uten lag."
 
 #: templates/competition/competition.html:139
 msgid "When you sign up as a team, your solo participation will be overriden."
@@ -852,6 +852,10 @@ msgstr "Telefon"
 #: templates/userdropdown.html.py:36
 msgid "Edit profile"
 msgstr "Endre profil"
+
+#: templates/userdropdown.html:22
+msgid "Inbox"
+msgstr "Inboks"
 
 #: templates/user/update.html:23
 msgid "Update information"

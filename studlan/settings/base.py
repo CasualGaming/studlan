@@ -1,4 +1,5 @@
 # Django settings for studlan project.
+# -*- coding: utf-8 -*-
 
 import os
 import sys
@@ -131,6 +132,7 @@ INSTALLED_APPS = (
     # third party apps
     'markdown_deux',
     'gunicorn',
+    'postman',
 
     # django apps
     'django.contrib.admin',
@@ -154,6 +156,18 @@ INSTALLED_APPS = (
     'apps.userprofile',
     'apps.seating',
 )
+
+#POSTMAN SETTINGS
+POSTMAN_DISALLOW_ANONYMOUS = True
+POSTMAN_DISALLOW_MULTIRECIPIENTS = True
+POSTMAN_DISALLOW_COPIES_ON_REPLY = True
+POSTMAN_DISABLE_USER_EMAILING = True
+POSTMAN_AUTO_MODERATE_AS = True
+POSTMAN_SHOW_USER_AS = None
+POSTMAN_QUICKREPLY_QUOTE_BODY = False
+POSTMAN_NOTIFIER_APP = None
+POSTMAN_MAILER_APP = 'mailer'
+
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

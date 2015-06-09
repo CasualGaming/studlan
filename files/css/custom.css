@@ -201,6 +201,7 @@ div#btn-profile {
     text-align: center;
     margin: 0px -1px;
     padding: 0px;
+    padding-bottom: 15px;
 } .sidebar .nav li {
     overflow-x: hidden;
 } .sidebar .nav li:not(.active) {
@@ -285,4 +286,8 @@ div#btn-profile {
 
 #brackets-button {
     margin-bottom: 10px;
+}
+
+.seat-wrapper {
+    margin-top: 0;
 }

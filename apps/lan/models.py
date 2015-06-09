@@ -14,6 +14,7 @@ class LAN(TranslatableModel):
     start_date = models.DateTimeField("start date")
     end_date = models.DateTimeField("end date")
     location = models.CharField("location", max_length=100)
+    map_link = models.CharField("map link", max_length=300, help_text="url for google maps embedded map", null=True)
 
     @property
     def attendees(self):
@@ -82,6 +83,7 @@ class LAN(TranslatableModel):
 class LANTranslation(get_translation_model(LAN, "LAN")):
     description = models.TextField("description")
 
+
 class Attendee(models.Model):
     user = models.ForeignKey(User)
     lan = models.ForeignKey(LAN)
@@ -107,12 +109,14 @@ class TicketType(TranslatableModel):
     def number_of_free_seats(self):
         return self.number_of_seats - self.number_of_seats_used()
 
+
 class TicketTypeTranslation(get_translation_model(TicketType, "TicketType")):
     title = models.CharField("Title", max_length=50)
     description = models.TextField("Description", null=True, blank=True)
 
     def __unicode__(self):
         return self.title
+
 
 class Ticket(models.Model):
     user = models.ForeignKey(User)
@@ -127,3 +131,24 @@ class Ticket(models.Model):
     def __unicode__(self):
         return self.user.username + "(" + self.user.get_full_name() + ")"
 
+
+class Directions(models.Model):
+    lan = models.ForeignKey(LAN)
+    title = models.TextField("title", null=True)
+    description = models.TextField("directions", null=True)
+
+    def __unicode__(self):
+        return " direction " + str(self.pk)
+
+
+class Stream(models.Model):
+    title = models.CharField("title", max_length=100)
+    description = models.TextField("description", help_text="Short description that will show on front page.")
+    link = models.TextField("link", help_text="Embedding link for twitch etc. Include the complete IFrame.")
+    active = models.BooleanField(default=False, help_text="No more than one stream can be active at any given time.")
+
+    def is_active(self):
+        return self.active
+
+    def __unicode__(self):
+        return self.title

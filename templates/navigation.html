@@ -7,8 +7,13 @@
         {% else %}
         	<li class="navbar-item"><a href="{% url 'lan_home' %}">{% trans "Sign up" %}</a></li>
         {% endif %}
-        <li class="navbar-item"><a href="{% url 'competitions' %}">{% trans "Competitions" %}</a></li>
-        <li class="navbar-item"><a href="{% url 'teams' %}">{% trans "Teams" %}</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{% trans "Competitions" %}<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="{% url 'competitions' %}">{% trans "Competitions" %}</a></li>
+            <li><a href="{% url 'teams' %}">{% trans "Teams" %}</a></li>
+          </ul>
+        </li>
         <li class="navbar-item"><a href="{% url 'seatings' %}">{% trans "Seating" %}</a></li>
         <li class="navbar-item"><a href="{% url 'sponsors' %}">{% trans "Sponsors" %}</a></li>
     </ul>
