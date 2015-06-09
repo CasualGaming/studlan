@@ -32,7 +32,7 @@ $(document).ready(function(){
             var takeButton = $('#take-button')
 
             if(takeButton){
-                takeButton.attr("href", "join/" + selectedSeat.attr("seat-number"))
+                takeButton.attr("href", selectedSeat.attr("seat-number") + "/take")
                 takeButton.removeClass("hide")
             }
         }
@@ -49,7 +49,7 @@ $(document).ready(function(){
             var leaveButton = $('#leave-button')
 
             if(leaveButton){
-                leaveButton.attr("href", "leave/" + selectedSeat.attr("seat-number"))
+                leaveButton.attr("href", selectedSeat.attr("seat-number") + "/leave")
                 leaveButton.removeClass("hide")
             }
         }

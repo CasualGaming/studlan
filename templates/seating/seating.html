@@ -9,71 +9,62 @@ Seating
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <div class="row">
         <div class="col-md-9">
-            {% if not seating.is_open %}
-                <div class="alert alert-danger">{% trans "Seating is closed." %}</div>
-            {% endif %}
-            <p>Legend: </p>
             <input class="btn btn-warning" type="submit" value="Ditt sete" disabled/>
             <input class="btn btn-danger" type="submit" value="Opptatt sete" disabled/>
             <input class="btn btn-success" type="submit" value="Ledig sete" disabled/>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-9">
-            {% if template %}
-               {{template|safe}}
-            {% else %}
-                {% for s in seats %}
-                        <div class="col-md-2">
-                    {% if s.user %}
-                        {% if s.user == user %}
-                            <form class="form-inline" 
-                            {% if seating.is_open %}
-                                action="{% url 'seat_details' seating.id s.id %}" 
-                            {% endif %}
-                            method="POST">
-                            {% csrf_token %}
-                            <input class="btn btn-warning" type="submit" value="{{ s.id }}" />
-                            </form>
-                        {% else %}
-                            <form class="form-inline" action="{% url 'seat_details' seating.id s.id %}" method="POST">
-                                {% csrf_token %}
-                                <input class="btn btn-danger" type="submit" value="{{ s.id }}" title="{{s.user}}" />
-                            </form>
-                    {% endif %}
-                    {% else %}
-                        <form class="form-inline" 
-                        {% if seating.is_open %}
-                            action="{% url 'seat_details' seating.id s.id %}" 
-                        {% endif %}
-                        method="POST">
-                        {% csrf_token %}
-                            <input class="btn btn-success" type="submit" value="{{ s.id }}"/>
-                        </form>
-                    {% endif %}
-                    </div>
-                {% endfor %}
-            {% endif %}
-        </div>
-        <div class="col-md-3">
-            <div class="sidebar-wrapper seat-wrapper">
-            	<div class="well sidebar">
-                    <ul class="nav nav-stacked">
-                        <li class="sidebar-header">
-                            <a href="">{% trans "Seat Info" %}</a>
-                        </li>
-                        <li><strong>{% trans "Seat number" %}:</strong><br/><p id="seat-number"></p></li>
-
-                        <div id="occupied-by" class="hide">
-                            <li><strong>{% trans "Occupied by" %}:</strong><br><p id="seat-user"></p></li>
-                        </div>
-                        {% if seating.is_open %}
-                            <a id="take-button" class="btn btn-primary hide" href="">Take Seat</a>
-                            <a id="leave-button" class="btn btn-warning hide" href="">Leave Seat</a>
-                        {% endif %}
+    {% if seatings %}
+        {% if seatings|length >= 2 %}
+            <div class="row table-tabs">
+                <div class="col-md-9">
+                    <ul class="nav nav-tabs">
+                        {% for tab_seating in seatings %}
+                            <li{% if tab_seating = seating %} class="active"{% endif %}><a href="{{ tab_seating.get_absolute_url }}">{{ tab_seating }}</a></li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
-        </div>  
-    </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-9">
+                {{ template|safe }}
+            </div>
+            <div class="col-md-3">
+                <div class="sidebar-wrapper seat-wrapper">
+                	<div class="well sidebar">
+                        <ul class="nav nav-stacked">
+                            <li class="sidebar-header"><a href="">{% trans "Room Info" %}</a></li>
+                            {% if seating.is_open %}
+                                <li>{% trans "Status" %}: <label class="label label-success">{% trans "Open" %}</label></li>
+                                <li>{% trans "Closes" %}: <label class="label label-info">{{ seating.closing_date }}</label></li>
+                            {% else %}
+                                <li><strong>{% trans "Status" %}: <label class="label label-danger">{% trans "Closed" %}</label></li>
+                            {% endif %}
+                            <li>{% trans "Capasity" %}: <label class="label label-info">{{ seating.get_free_seats }}/{{ seating.get_number_of_seats }}</label></li>
+
+                            {% if user.is_staff %}
+                                <a href="{% url 'list' seating.id %}"><i class="glyphicon glyphicon-th"></i>Seatlist</a>
+                                <br>
+                                <a href="{% url 'map' seating.id %}"><i class="glyphicon glyphicon-th"></i>SeatMap</a>
+                            {% endif %}
+
+
+                            <li class="sidebar-header"><a href="">{% trans "Seat Info" %}</a></li>
+                            <li><strong>{% trans "Seat number" %}:</strong><br/><p id="seat-number"></p></li>
+
+                            <div id="occupied-by" class="hide">
+                                <li><strong>{% trans "Occupied by" %}:</strong><br><p id="seat-user"></p></li>
+                            </div>
+                            {% if seating.is_open %}
+                                <a id="take-button" class="btn btn-primary hide" href="">Take Seat</a>
+                                <a id="leave-button" class="btn btn-warning hide" href="">Leave Seat</a>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    {% endif %} 
 {% endblock content %}

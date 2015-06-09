@@ -10,27 +10,19 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from apps.seating.models import Seating, Seat
 from apps.lan.models import LAN, Attendee
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from reportlab.pdfgen import canvas
 from bs4 import BeautifulSoup
 
 
 def main(request):
-        context = {}
-        lans = LAN.objects.filter(end_date__gt=datetime.now()).order_by('-start_date')
-        if lans:
-            seatings = Seating.objects.filter(lan=lans[0])
-            context['seatings'] = seatings
-            context['lan'] = lans[0]
-            context['active'] = 'all'
+    lans = LAN.objects.filter(end_date__gt=datetime.now()).order_by('-start_date')
+    
+    if lans:
+        return seating_details(request, lans[0].id)
 
-        breadcrumbs = (
-            ('studLAN', '/'),
-            ('Seatings', ''),
-        )
-        context['breadcrumbs'] = breadcrumbs
 
-        return render(request, 'seating/seatings.html', context)
+    raise Http404
 
 
 def main_filtered(request, lan_id):
@@ -54,13 +46,23 @@ def main_filtered(request, lan_id):
     return render(request, 'seating/seatings.html', context)
 
 
-def seating_details(request, seating_id):
-    context = {}
-    seating = get_object_or_404(Seating, pk=seating_id)
+def seating_details(request, lan_id, seating_id=None):
+    lan = get_object_or_404(LAN, pk=lan_id)
+    seatings = Seating.objects.filter(lan=lan)
+
+    if not seatings:
+        return render(request, 'seating/seating.html')
+
+    if seating_id:
+        seating = get_object_or_404(Seating, pk=seating_id, lan=lan)
+    else:
+        seating = seatings[0]
+
+
     users = seating.get_user_registered()
     seats = seating.get_total_seats()
 
-    if seating.layout:
+    if seating.layout: #TODO remove
         dom = BeautifulSoup(seating.layout.template, "html.parser")
         counter = 0
         for tag in dom.find_all('a'):
@@ -86,22 +88,16 @@ def seating_details(request, seating_id):
             counter += 1
         dom.encode("utf-8")
 
-    breadcrumbs = (
-        ('studLAN', '/'),
-        ('Seatings', reverse('seatings')),
-        (seating, ''),
-    )
+    context = {}
+    context['seatings'] = seatings
     context['seating'] = seating
-    context['breadcrumbs'] = breadcrumbs
-    context['seats'] = seats
     context['hide_sidebar'] = True
-    if seating.layout:
-        context['template'] = dom.__str__
+    context['template'] = dom.__str__
 
     return render(request, 'seating/seating.html', context)
 
 @login_required()
-def join(request, seating_id, seat_id):
+def take(request, seating_id, seat_id):
     seating = get_object_or_404(Seating, pk=seating_id)
     seat = get_object_or_404(Seat, pk=seat_id)
     siblings = list(Seating.objects.filter(lan=seating.lan))
@@ -139,6 +135,10 @@ def join(request, seating_id, seat_id):
     else:
         messages.error(request, "You need to attend and pay before reserving your seat")
     return redirect(seating)
+
+@login_required()
+def take2(request, lan_id, seating_id, seat_id):
+    return take(request, seating_id, seat_id)
 
 @login_required()
 def leave(request, seating_id, seat_id):
@@ -189,6 +189,9 @@ def seating_list(request, seating_id):
 
     return response
 
+@login_required()
+def leave2(request, lan_id, seating_id, seat_id):
+    return leave(request, seating_id, seat_id)
 
 def seating_map(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
