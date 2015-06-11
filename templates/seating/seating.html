@@ -9,9 +9,9 @@ Seating
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <div class="row">
         <div class="col-md-9">
-            <input class="btn btn-warning" type="submit" value="Ditt sete" disabled/>
-            <input class="btn btn-danger" type="submit" value="Opptatt sete" disabled/>
-            <input class="btn btn-success" type="submit" value="Ledig sete" disabled/>
+            <input class="btn btn-warning" type="submit" value="{% trans "Your seat" %}" disabled/>
+            <input class="btn btn-danger" type="submit" value="{% trans "Taken seat" %}" disabled/>
+            <input class="btn btn-success" type="submit" value="{% trans "Free seat" %}" disabled/>
         </div>
     </div>
     {% if seatings %}
@@ -42,7 +42,7 @@ Seating
                             {% else %}
                                 <li><strong>{% trans "Status" %}: <label class="label label-danger">{% trans "Closed" %}</label></li>
                             {% endif %}
-                            <li>{% trans "Capasity" %}: <label class="label label-info">{{ seating.get_free_seats }}/{{ seating.get_number_of_seats }}</label></li>
+                            <li>{% trans "Capacity" %}: <label class="label label-info">{{ seating.get_free_seats }}/{{ seating.get_number_of_seats }}</label></li>
 
                             {% if user.is_staff %}
                                 <a href="{% url 'list' seating.id %}"><i class="glyphicon glyphicon-th"></i>Seatlist</a>
@@ -58,8 +58,8 @@ Seating
                                 <li><strong>{% trans "Occupied by" %}:</strong><br><p id="seat-user"></p></li>
                             </div>
                             {% if seating.is_open %}
-                                <a id="take-button" class="btn btn-primary hide" href="">Take Seat</a>
-                                <a id="leave-button" class="btn btn-warning hide" href="">Leave Seat</a>
+                                <a id="take-button" class="btn btn-primary hide" href="">{% trans "Take seat" %}</a>
+                                <a id="leave-button" class="btn btn-warning hide" href="">{% trans "Leave seat" %}</a>
                             {% endif %}
                         </ul>
                     </div>

@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+from reportlab.pdfgen import canvas
+from bs4 import BeautifulSoup
 
 from django.contrib import messages
-from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from apps.seating.models import Seating, Seat
-from apps.lan.models import LAN, Attendee
+from django.utils.translation import ugettext as _
 from django.http import HttpResponse, Http404
-from reportlab.pdfgen import canvas
-from bs4 import BeautifulSoup
+
+from apps.lan.models import LAN, Attendee
 
 
 def main(request):
@@ -20,7 +21,6 @@ def main(request):
     
     if lans:
         return seating_details(request, lans[0].id)
-
 
     raise Http404
 
@@ -67,7 +67,7 @@ def seating_details(request, lan_id, seating_id=None):
         counter = 0
         for tag in dom.find_all('a'):
             children = tag.find_all('rect')
-            children[0]['seat-number'] = seats[counter].id
+            children[0]['seat-number'] = seats[counter].placement
             if not seats[counter].user:
                 children[0]['class'] = ' seating-node-free'
                 children[0]['status'] = "free"
@@ -103,9 +103,8 @@ def take(request, seating_id, seat_id):
     siblings = list(Seating.objects.filter(lan=seating.lan))
     occupied = seating.get_user_registered()
 
-
     if not seating.is_open():
-        messages.error(request, "This seatmap is closed.")
+        messages.error(request, _(u"This seatmap is closed."))
         return redirect(seating)
 
     for sibling in siblings:
@@ -127,13 +126,13 @@ def take(request, seating_id, seat_id):
                             os.save()
                 seat.user = request.user
                 seat.save()
-                messages.success(request, "You have successfully reserved your seat! ")
+                messages.success(request, _(u"You have successfully reserved your seat."))
             else:
-                messages.error(request, "That seat is reserved by " + unicode(seat.user))
+                messages.error(request, _(u"That seat is reserved by " + unicode(seat.user)))
         else:
-            messages.error(request, "Your ticket does not allow reservation in this seating")
+            messages.error(request, _(u"Your ticket does not allow reservation in this seating."))
     else:
-        messages.error(request, "You need to attend and pay before reserving your seat")
+        messages.error(request, _(u"You need to attend and pay before reserving your seat."))
     return redirect(seating)
 
 @login_required()
@@ -146,15 +145,15 @@ def leave(request, seating_id, seat_id):
     seat = get_object_or_404(Seat, pk=seat_id)
 
     if not seating.is_open():
-        messages.error(request, "This seatmap is closed.")
+        messages.error(request, _(u"This seatmap is closed."))
         return redirect(seating)
 
     if seat.user == request.user:
         seat.user = None
         seat.save()
-        messages.success(request, "You have unregistered your seat")
+        messages.success(request, _(u"You have unregistered your seat."))
     else:
-        messages.error(request, "This seat is taken")
+        messages.error(request, _(u"This seat is taken."))
     return redirect(seating)
 
 def seating_list(request, seating_id):
