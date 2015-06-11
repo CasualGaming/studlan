@@ -198,12 +198,11 @@ def seating_map(request, seating_id):
     seats = list(Seat.objects.filter(seating=seating).order_by('placement'))
 
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename=' + seating.title
+    response['Content-Disposition'] = 'attachment; filename=' + seating.title + '.pdf'
 
     p = canvas.Canvas(response)
 
     pagecounter = 0
-    y_value = 780
     for s in seats:
         if pagecounter == 1:
             y_value = 780
