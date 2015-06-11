@@ -68,6 +68,7 @@
     </div>
 
     {% if team.is_mine and users %}
+
         <div class="row">
             <div class="col-md-9">
                 <form class="form-horizontal" action="{% url 'invite_member' team.id %}" method="POST">
@@ -91,6 +92,34 @@
                 </form>
             </div>
         </div>  
+
+        <div class="row">
+            <div class="col-md-9">
+                {% if invitations %}
+                    <h3>{% trans "Invitations" %}</h3>
+                    <table class="table table-bordered table-striped table-hover click-table    ">
+                        <thead>
+                            <th class="col-md-4">{% trans "User name" %}</th>
+                            <th class="col-md-6">{% trans "Full name" %}</th>
+                            <th class="col-md-2">{% trans "Options" %}</th>
+                        </thead>
+                        <tbody>
+                            {% for invite in invitations %}
+                                <tr onclick="document.location='{% url 'profile' invite.invitee %}';">
+                                    <td class="underline">{{ invite.invitee }}</a></td>
+                                    <td class="underline">{{ invite.invitee.get_full_name }}</td>
+                                    <td>
+                                    {% if user == team.leader %}
+                                        <a class="btn btn-danger btn-xs" href="{% url 'remove_invitation' team.id invite.token %}">{% trans "Remove" %}</a>
+                                    {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
     {% endif %}
 
 {% endblock content %}

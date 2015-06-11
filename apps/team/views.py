@@ -2,7 +2,7 @@
 
 import uuid
 from postman.api import pm_write
-
+from postman.models import Message
 
 from django.conf import settings
 from django.contrib import messages
@@ -106,7 +106,8 @@ def show_team(request, team_id):
 
     users2.sort(key=lambda x: x.username.lower(), reverse=False)
     invitation = Invitation.objects.filter(invitee=request.user, team=team)
-    
+    invitations = Invitation.objects.filter(team=team)
+
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
         (_(u'Teams'), reverse('teams')),
@@ -114,7 +115,7 @@ def show_team(request, team_id):
     )
 
     return render(request, 'team/team.html', {'team': team, 'users': users2, 'invitation': invitation,
-                                              'breadcrumbs': breadcrumbs})
+                                              'invitations': invitations, 'breadcrumbs': breadcrumbs})
 
 
 @login_required
@@ -158,13 +159,26 @@ def invite_member(request, team_id):
                     invitation.invitee = user
                     invitation.token = uuid.uuid1().hex
                     invitation.save()
-                    pm_write(request.user, user, 'Team invitation', body='You have been invited to ' + team.title +
+                    pm_write(request.user, user, invitation.token, body='You have been invited to ' + team.title +
                              ' by ' + unicode(request.user) + '. To accept the invitation, find the ' +
                              ' <a href="' + team.get_absolute_url() + '"> team </a>' + 'and join it.')
 
                     messages.success(request, unicode(user) + _(u' was invited to your team'))
                 else:
                     messages.error(request, unicode(user) + _(u' has already been invited to your team'))
+
+    return redirect(team)
+
+
+@login_required
+def remove_invitation(request, team_id, invitation_token):
+    team = get_object_or_404(Team, pk=team_id)
+    invitation = get_object_or_404(Invitation, token=invitation_token)
+    invitation.delete()
+    message = get_object_or_404(Message, subject=invitation_token)
+    message.delete()
+
+    messages.success(request, _(u"The invitation was deleted."))
 
     return redirect(team)
 
@@ -184,9 +198,11 @@ def join_team(request, team_id):
             member.team = team
             member.user = user
             member.save()
+            message = get_object_or_404(Message, subject=invitation[0].token)
+            message.delete()
             invitation.delete()
 
-            messages.success(request, 'You successfully joined the team.')
+            messages.success(request, _(u"You successfully joined the team."))
 
     return redirect(team)
 

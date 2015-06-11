@@ -435,6 +435,14 @@ msgstr "Du har forlatt "
 msgid " removed from your team."
 msgstr " ble fjernet fra laget."
 
+#: apps/team/views.py:181
+msgid "The invitation was deleted."
+msgstr "Invitasjonen ble slettet"
+
+#: apps/team/views.py:205
+msgid "You successfully joined the team."
+msgstr "Du har godtatt invitasjonen."
+
 #: apps/userprofile/forms.py:31
 #, fuzzy
 #| msgid ""
@@ -811,6 +819,10 @@ msgstr "Legg til medlem"
 #: templates/team/team.html:74
 msgid "Select"
 msgstr "Velg"
+
+#: templates/team/team.html:99
+msgid "Invitations"
+msgstr "Invitasjoner"
 
 #: templates/team/team_list.html:26
 msgid "No teams yet"
