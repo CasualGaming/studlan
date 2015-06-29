@@ -15,7 +15,7 @@ $(document).ready(function(){
         selectedSeatClass = selectedSeat.attr('class')
         selectedSeat.attr("class", selectedSeatClass + " seating-node-info")
 
-        $("#seat-number").html(selectedSeat.attr("seat-number"))
+        $("#seat-number").html(selectedSeat.attr("seat-display"))
 
         if(selectedSeat.attr("status") === "occupied"){
 
