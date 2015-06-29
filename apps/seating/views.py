@@ -67,7 +67,8 @@ def seating_details(request, lan_id, seating_id=None):
         counter = 0
         for tag in dom.find_all('a'):
             children = tag.find_all('rect')
-            children[0]['seat-number'] = seats[counter].placement
+            children[0]['seat-number'] = seats[counter].pk
+            children[0]['seat-display'] = seats[counter].placement
             if not seats[counter].user:
                 children[0]['class'] = ' seating-node-free'
                 children[0]['status'] = "free"
