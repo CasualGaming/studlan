@@ -117,17 +117,18 @@ def take(request, seating_id, seat_id):
         attendee = None
 
     if (attendee and attendee.has_paid) or seating.lan.has_ticket(request.user):
-        if not seating.ticket_type or seating.lan.has_ticket(request.user).ticket_type == seating.ticket_type:
-            if not seat.user:
-                if request.user in occupied:
-                    old_seats = Seat.objects.filter(user=request.user)
-                    for os in old_seats:
-                        if os.seating.lan == seating.lan:
-                            os.user = None
-                            os.save()
-                seat.user = request.user
-                seat.save()
-                messages.success(request, _(u"You have successfully reserved your seat."))
+        if not seating.ticket_type:
+            if seating.lan.has_ticket(request.user) and seating.lan.has_ticket(request.user).ticket_type == seating.ticket_type:
+                if not seat.user:
+                    if request.user in occupied:
+                        old_seats = Seat.objects.filter(user=request.user)
+                        for os in old_seats:
+                            if os.seating.lan == seating.lan:
+                                os.user = None
+                                os.save()
+                    seat.user = request.user
+                    seat.save()
+                    messages.success(request, _(u"You have successfully reserved your seat."))
             else:
                 messages.error(request, _(u"That seat is reserved by " + unicode(seat.user)))
         else:
