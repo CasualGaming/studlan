@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 
+import json
+
 from django.contrib import messages
-from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, get_object_or_404
 from django.http import HttpResponse
-import json
+
 
 from apps.api.models import Key
 from apps.lan.models import LAN, Attendee
 from apps.userprofile.models import UserProfile
+
 
 def change_arrived(request, api_key, lan_id, username, status):
     keys = Key.objects.filter(content=api_key)
@@ -34,6 +35,7 @@ def change_arrived(request, api_key, lan_id, username, status):
             messages.warning(request, "Status '%s' unrecognized." % status)
 
         return redirect('/')
+
 
 def change_paid(request, api_key, lan_id, username, status):
     keys = Key.objects.filter(content=api_key)

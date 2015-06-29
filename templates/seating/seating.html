@@ -1,104 +1,70 @@
-{% extends "seating/seating_base.html" %}
+{% extends "base.html" %}
 {% block title %}
 Seating
 {% endblock title %}
-{% block sidebar%}
-ads
-{% endblock sidebar %}
 {% load i18n %}
+
 {% block content %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/seating.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     <div class="row">
         <div class="col-md-9">
-            {% if not seating.is_open %}
-                <div class="alert alert-danger">{% trans "Seating is closed." %}</div>
-            {% endif %}
-            <p>Legend: </p>
-            <input class="btn btn-warning" type="submit" value="Ditt sete" disabled/>
-            <input class="btn btn-danger" type="submit" value="Opptatt sete" disabled/>
-            <input class="btn btn-success" type="submit" value="Ledig sete" disabled/>
+            <input class="btn btn-warning" type="submit" value="{% trans "Your seat" %}" disabled/>
+            <input class="btn btn-danger" type="submit" value="{% trans "Taken seat" %}" disabled/>
+            <input class="btn btn-success" type="submit" value="{% trans "Free seat" %}" disabled/>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            {% if template %}
-               {{template|safe}}
-            {% else %}
-            {% for s in seats %}
-                    <div class="col-md-2">
-                {% if s.user %}
-                    {% if s.user == user %}
-                        <form class="form-inline" 
-                        {% if seating.is_open %}
-                            action="{% url 'seat_details' seating.id s.id %}" 
-                        {% endif %}
-                        method="POST">
-                        {% csrf_token %}
-                        <input class="btn btn-warning" type="submit" value="{{ s.id }}" />
-                        </form>
-                    {% else %}
-                        <form class="form-inline" action="{% url 'seat_details' seating.id s.id %}" method="POST">
-                            {% csrf_token %}
-                            <input class="btn btn-danger" type="submit" value="{{ s.id }}" title="{{s.user}}" />
-                        </form>
-                {% endif %}
-                {% else %}
-                    <form class="form-inline" 
-                    {% if seating.is_open %}
-                        action="{% url 'seat_details' seating.id s.id %}" 
-                    {% endif %}
-                    method="POST">
-                    {% csrf_token %}
-                        <input class="btn btn-success" type="submit" value="{{ s.id }}"/>
-                    </form>
-                {% endif %}
+    {% if seatings %}
+        {% if seatings|length >= 2 %}
+            <div class="row table-tabs">
+                <div class="col-md-9">
+                    <ul class="nav nav-tabs">
+                        {% for tab_seating in seatings %}
+                            <li{% if tab_seating = seating %} class="active"{% endif %}><a href="{{ tab_seating.get_absolute_url }}">{{ tab_seating }}</a></li>
+                        {% endfor %}
+                    </ul>
                 </div>
-            {% endfor %}
-            {% endif %}
-        </div>
-        {% if info_seat %}
-        <div class="col-md-3">
-        	<div class="well">
-                <ul class="nav nav-stacked">
-            		<li><strong>Seat: </strong> {{info_seat.placement}}</li>
-                    {% if info_seat.user %}
-                    <li><strong>Occupied by: </strong></li>
-                    <li>{{info_seat.user.first_name}} {{info_seat.user.last_name}}</li>
-                    
-                    {% if info_seat.user == user %}
-                        <form class="form-inline" 
-                        {% if seating.is_open %}
-                            action="{% url 'leave_seat' info_seat.seating.id info_seat.id %}" 
-                        {% endif %}
-                        method="POST">
-                        {% csrf_token %}
-                        <input class="btn btn-warning" type="submit" value="Leave seat" />
-                        </form>
-                    {% else %}
-                        <form class="form-inline" action="/profile/{{info_seat.user}}/" method="POST">
-                            {% csrf_token %}
-                            <input class="btn btn-primary" type="submit" value="View profile" title="View profile" />
-                        </form>
-                {% endif %}
-                {% else %}
-                        <form class="form-inline" 
-                        {% if seating.is_open %}
-                            action="{% url 'take_seat' info_seat.seating.id info_seat.id %}" 
-                        {% endif %}
-                        method="POST">
-                        {% csrf_token %}
-                        <input class="btn btn-primary" type="submit" value="Take seat" />
-                        </form>
-                {% endif %}
-                </ul>
-        	</div>
-        </div>
+            </div>
         {% endif %}
-    </div>
-    
-    <style>
-    .col-md-2 .btn {
-        width: 3.5em; height: 2em;
-        }
-    }
-    </style>
+
+        <div class="row">
+            <div class="col-md-9">
+                {{ template|safe }}
+            </div>
+            <div class="col-md-3">
+                <div class="sidebar-wrapper seat-wrapper">
+                	<div class="well sidebar">
+                        <ul class="nav nav-stacked">
+                            <li class="sidebar-header"><a href="">{% trans "Room Info" %}</a></li>
+                            {% if seating.is_open %}
+                                <li>{% trans "Status" %}: <label class="label label-success">{% trans "Open" %}</label></li>
+                                <li>{% trans "Closes" %}: <label class="label label-info">{{ seating.closing_date }}</label></li>
+                            {% else %}
+                                <li><strong>{% trans "Status" %}: <label class="label label-danger">{% trans "Closed" %}</label></li>
+                            {% endif %}
+                            <li>{% trans "Capacity" %}: <label class="label label-info">{{ seating.get_free_seats }}/{{ seating.get_number_of_seats }}</label></li>
+
+                            {% if user.is_staff %}
+                                <a href="{% url 'list' seating.id %}"><i class="glyphicon glyphicon-th"></i>Seatlist</a>
+                                <br>
+                                <a href="{% url 'map' seating.id %}"><i class="glyphicon glyphicon-th"></i>SeatMap</a>
+                            {% endif %}
+
+
+                            <li class="sidebar-header"><a href="">{% trans "Seat Info" %}</a></li>
+                            <li><strong>{% trans "Seat number" %}:</strong><br/><p id="seat-number"></p></li>
+
+                            <div id="occupied-by" class="hide">
+                                <li><strong>{% trans "Occupied by" %}:</strong><br><p id="seat-user"></p></li>
+                            </div>
+                            {% if seating.is_open %}
+                                <a id="take-button" class="btn btn-primary hide" href="">{% trans "Take seat" %}</a>
+                                <a id="leave-button" class="btn btn-warning hide" href="">{% trans "Leave seat" %}</a>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    {% endif %} 
 {% endblock content %}

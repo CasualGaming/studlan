@@ -31,4 +31,4 @@ _tmp
 *.vagrant
 uploaded_media/*
 build/*
-
+svg_templates/*
