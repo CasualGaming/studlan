@@ -57,7 +57,7 @@ def seating_details(request, lan_id, seating_id=None):
         seating = get_object_or_404(Seating, pk=seating_id, lan=lan)
     else:
         seating = seatings[0]
-
+        return redirect(seating)
 
     users = seating.get_user_registered()
     seats = seating.get_total_seats()
@@ -99,7 +99,7 @@ def seating_details(request, lan_id, seating_id=None):
 @login_required()
 def take(request, seating_id, seat_id):
     seating = get_object_or_404(Seating, pk=seating_id)
-    seat = get_object_or_404(Seat, pk=seat_id)
+    seat = get_object_or_404(Seat, placement=seat_id, seating=seating)
     siblings = list(Seating.objects.filter(lan=seating.lan))
     occupied = seating.get_user_registered()
 
@@ -142,7 +142,7 @@ def take2(request, lan_id, seating_id, seat_id):
 @login_required()
 def leave(request, seating_id, seat_id):
     seating = get_object_or_404(Seating, pk=seating_id)
-    seat = get_object_or_404(Seat, pk=seat_id)
+    seat = get_object_or_404(Seat, placement=seat_id, seating=seating)
 
     if not seating.is_open():
         messages.error(request, _(u"This seatmap is closed."))
