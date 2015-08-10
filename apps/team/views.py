@@ -105,7 +105,7 @@ def show_team(request, team_id):
                 users2.append(user)
 
     users2.sort(key=lambda x: x.username.lower(), reverse=False)
-    invitation = Invitation.objects.filter(invitee=request.user, team=team)
+    invitation = Invitation.objects.filter(invitee=request.user.id, team=team)
     invitations = Invitation.objects.filter(team=team)
 
     breadcrumbs = (
