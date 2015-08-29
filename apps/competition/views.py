@@ -188,8 +188,13 @@ def join(request, competition_id):
                 if leader_attendee.has_paid or competition.lan.has_ticket(team.leader):
                     paid += 1
                 for member in team.members.all():
-                    attendee = Attendee.objects.get(lan=competition.lan, user=member)
-                    if attendee.has_paid or competition.lan.has_ticket(member):
+                    if member not in competition.lan.attendees:
+                        messages.error(request, _(unicode(team) + u" has at least one member that is not signed up for "+
+                        unicode(competition.lan)))
+                        return redirect(competition)
+
+                    attendee = Attendee.objects.filter(lan=competition.lan, user=member.user)
+                    if attendee.has_paid or competition.lan.has_ticket(member.user):
                         paid += 1
                 if paid < competition.team_size:
                     messages.error(request, _(unicode(team) + u" does not have enough members that have paid (") +
