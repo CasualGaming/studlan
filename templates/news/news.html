@@ -1,12 +1,24 @@
 {% extends "base.html" %} 
 {% load i18n %}
+{% load lan_tags %}
 {% load markdown_deux_tags %} 
 
 {% block title %} 
     News 
 {% endblock title %} 
-
 {% block content %}
+
+    {% if stream %}
+    <div class="row">
+        <div class="col-md-9">
+            <div class="well">
+                <h2>{{stream.description|safe}}</h2>
+                {{stream.link|safe}}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
 {% for article in articles.object_list %} 
     {% if forloop.counter < 3 and page == 1 %}
         <div class="row">

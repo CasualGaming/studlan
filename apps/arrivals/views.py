@@ -13,6 +13,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 from apps.lan.models import LAN, Attendee, Ticket, TicketType
 
+
 @login_required
 def home(request):
     if not request.user.is_staff:
@@ -32,6 +33,7 @@ def home(request):
     )
 
     return render(request, 'arrivals/home.html', {'lans': lans, 'upcoming': upcoming, 'breadcrumbs': breadcrumbs})
+
 
 @ensure_csrf_cookie
 @staff_member_required
@@ -70,6 +72,7 @@ def arrivals(request, lan_id):
         'paid_count' : paid_count, 'arrived_count' : arrived_count, 'breadcrumbs': breadcrumbs,
         'tickets': tickets, 'ticket_users': ticket_users})
 
+
 @staff_member_required
 def toggle(request, lan_id):
     if request.method == 'POST':
@@ -94,9 +97,10 @@ def toggle(request, lan_id):
         except Attendee.DoesNotExist:
             messages.error(request, "%s was not found in attendees for %s" % (user, lan))
         
-        return HttpResponse(status = 200)
+        return HttpResponse(status=200)
     return HttpResponse(status=404)
-    
+
+
 def reverse(val):
     if val == "True":
         return False

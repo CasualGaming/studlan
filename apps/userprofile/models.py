@@ -4,10 +4,10 @@ from datetime import date
 
 from django.contrib.auth.models import User
 from django.db import models
-from django.db.models.signals import post_save
 from django.utils.translation import ugettext as _
     
 GENDERS = ((1, _(u'Male')), (2, _(u'Female')))
+
 
 class UserProfile(models.Model):
 

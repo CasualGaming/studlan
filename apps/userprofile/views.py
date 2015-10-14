@@ -11,8 +11,10 @@ from django.utils.translation import ugettext as _
 
 from apps.lan.models import Attendee, LAN
 from apps.userprofile.forms import UserProfileForm
-from apps.userprofile.models import UserProfile
 from apps.seating.models import Seat, Seating
+from postman.models import Message
+
+
 
 @login_required
 def my_profile(request):
@@ -26,6 +28,7 @@ def my_profile(request):
 
     return render(request, 'user/profile.html', {'quser': request.user, 
         'profile': profile, 'breadcrumbs': breadcrumbs})
+
 
 @login_required
 def update_profile(request):
@@ -44,6 +47,7 @@ def update_profile(request):
     )
 
     return render(request, 'user/update.html', {'form': form, 'breadcrumbs': breadcrumbs})
+
 
 def user_profile(request, username):
     # Using quser for "queried user", as "user" is a reserved variable name in templates
@@ -65,9 +69,14 @@ def user_profile(request, username):
     return render(request, 'user/profile.html', {'quser': quser, 
         'profile': profile, 'breadcrumbs': breadcrumbs, 'user_seats': user_seats})
 
+
 @login_required
 def history(request):
     attended = Attendee.objects.filter(user=request.user)
+
+    for attendee in attended:
+        if attendee.lan.has_ticket(request.user):
+            attendee.has_paid = True
 
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
@@ -76,3 +85,15 @@ def history(request):
     )
 
     return render(request, 'user/history.html', {'attended': attended, 'breadcrumbs': breadcrumbs})
+
+
+@login_required
+def user_inbox(request):
+    postman_messages = Message.objects.filter(recipient=request.user).order_by('-sent_at')[:10]
+    undread_messages = Message.objects.filter(recipient=request.user, read_at=None)
+
+    for unread in undread_messages:
+        unread.read_at = datetime.now()
+        unread.save()
+
+    return render(request, 'user/inbox.html', {'postman_messages': postman_messages})

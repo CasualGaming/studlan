@@ -435,6 +435,14 @@ msgstr "Du har forlatt "
 msgid " removed from your team."
 msgstr " ble fjernet fra laget."
 
+#: apps/team/views.py:181
+msgid "The invitation was deleted."
+msgstr "Invitasjonen ble slettet"
+
+#: apps/team/views.py:205
+msgid "You successfully joined the team."
+msgstr "Du har godtatt invitasjonen."
+
 #: apps/userprofile/forms.py:31
 #, fuzzy
 #| msgid ""
@@ -572,7 +580,7 @@ msgid ""
 "Try to find other players that sign up solo, make a team and sign up as a "
 "team."
 msgstr ""
-"Prøv å samle et lag av de andre deltakerne som har meldt seg på utenlag."
+"Prøv å samle et lag av de andre deltakerne som har meldt seg på uten lag."
 
 #: templates/competition/competition.html:139
 msgid "When you sign up as a team, your solo participation will be overriden."
@@ -744,6 +752,86 @@ msgstr "Registreringen er lukket"
 msgid "There are no current LANs."
 msgstr "Det er ingen aktive LAN"
 
+#: templates/seating/seatings.html:12
+msgid "Your seat"
+msgstr "Ditt sete"
+
+#: templates/seating/seatings.html:13
+msgid "Taken seat"
+msgstr "Opptatt sete"
+
+#: templates/seating/seatings.html:14
+msgid "Free seat"
+msgstr "Ledig sete"
+
+#: templates/seating/seatings.html:38
+msgid "Room Info"
+msgstr "Rom-info"
+
+#: templates/seating/seatings.html:40
+msgid "Status"
+msgstr "Status"
+
+#: templates/seating/seatings.html:41
+msgid "Closes"
+msgstr "Stenger"
+
+#: templates/seating/seatings.html:43
+msgid "Closed"
+msgstr "Stengt"
+
+#: templates/seating/seatings.html:45
+msgid "Capacity"
+msgstr "Kapasitet"
+
+#: templates/seating/seatings.html:54
+msgid "Seat Info"
+msgstr "Sete-info"
+
+#: templates/seating/seatings.html:55
+msgid "Seat number"
+msgstr "Setenummer"
+
+#: templates/seating/seatings.html:58
+msgid "Occupied by"
+msgstr "Tatt av"
+
+#: templates/seating/seatings.html:61
+msgid "Take seat"
+msgstr "Ta sete"
+
+#: templates/seating/seatings.html:62
+msgid "Leave seat"
+msgstr "Forlat sete"
+ 
+#: apps/seating/views.py:107 apps/seating/views.py:148
+msgid "This seatmap is closed."
+msgstr "Dette setekartet er stengt."
+
+#: apps/seating/views.py:129
+msgid "You have successfully reserved your seat."
+msgstr "Setet ble reservert."
+
+#: apps/seating/views.py:131
+msgid "That seat is reserved by "
+msgstr "Det setet er reservert av "
+
+#: apps/seating/views.py:133
+msgid "Your ticket does not allow reservation in this seating."
+msgstr "Billetten din tillater ikke reservering i dette setekartet."
+
+#: apps/seating/views.py:135
+msgid "You need to attend and pay before reserving your seat."
+msgstr "Du må melde deg på og betale før du kan reservere sete."
+
+#: apps/seating/views.py:154
+msgid "You have unregistered your seat."
+msgstr "Du har forlatt setet ditt."
+
+#: apps/seating/views.py:156
+msgid "This seat is taken."
+msgstr "Dette setet er opptatt"
+
 #: templates/sidebar.html:8
 msgid "User Info"
 msgstr "Bruker-info"
@@ -812,6 +900,10 @@ msgstr "Legg til medlem"
 msgid "Select"
 msgstr "Velg"
 
+#: templates/team/team.html:99
+msgid "Invitations"
+msgstr "Invitasjoner"
+
 #: templates/team/team_list.html:26
 msgid "No teams yet"
 msgstr "Det finnes ingen lag enda"
@@ -852,6 +944,10 @@ msgstr "Telefon"
 #: templates/userdropdown.html.py:36
 msgid "Edit profile"
 msgstr "Endre profil"
+
+#: templates/userdropdown.html:22
+msgid "Inbox"
+msgstr "Inboks"
 
 #: templates/user/update.html:23
 msgid "Update information"

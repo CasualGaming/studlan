@@ -9,6 +9,7 @@ from apps.lan.models import Attendee, LAN
 
 register = template.Library()   
 
+
 @register.filter
 def is_attending(user):
 
@@ -18,5 +19,3 @@ def is_attending(user):
         return Attendee.objects.filter(lan__in=lans, user=user.id)
     else:
         return False
-
-
