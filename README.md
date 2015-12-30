@@ -3,31 +3,35 @@
 ## Features ##
 * News
 * Activites
-		Used for having several competitions under the same activity (usually a game).
+	* Used for having several competitions under the same activity (usually a game).
 * Competitions
-	* User or Team participation
-			A competition can for either users or teams.
+	* Single User or Team participation
+	* Lotteries with automated drawing
 * Teams
 	* Team Leader
-		* Can add members
-		* Can sign the team up for competitions, leave or forfeit them.
+		* Can invite members
+		* Can sign the team up for competitions or leave them.
 	* Members
+		* Can decline or accept invitations and leave teams
+* Tickets and seating
+	* Online payment supported through Stripe
+	* Participants with pre purchased tickets can reserve seats
+		* Seating arrangements are fully customizable through SVG layouts.
+	* Export details of participants per event
+	
 
 ## Planned features ##
 * Teams
-	* History
+	* Match history
 	* Seeding (for any activity)
-
 * Competitions
-	* Automatic bracket creation/Tournament system.
-			Takes seeding into account.
-* Bootstrap 2.0 upgrade
+	* Challonge integration with Automatic bracket creation/Tournament system that takes seeding into account.
 * Non-fluid responsive layout
+
 
 ## Requirements ##
 sudo apt-get install libpq-dev python-dev
 pip install -r requirements.txt
-
 
 
 ## Initialization ##
