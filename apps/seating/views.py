@@ -22,7 +22,8 @@ def main(request):
     if lans:
         return seating_details(request, lans[0].id)
 
-    raise Http404
+    messages.error(request, _(u"Seat reservation is not active."))
+    return redirect('/')
 
 
 def main_filtered(request, lan_id):
