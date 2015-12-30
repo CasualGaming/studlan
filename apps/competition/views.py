@@ -175,18 +175,20 @@ def join(request, competition_id):
         if team_id:
             team = get_object_or_404(Team, pk=team_id)
 
-            # Check if team restrictions are in place
+            # Check if team size restrictions are in place
             if competition.enforce_team_size:
                 if team.number_of_team_members() + 1 < competition.team_size:
                     messages.error(request, _(unicode(team) + u" does not have enough members (") +
                     str(team.number_of_team_members() + 1) + u"/" + str(competition.team_size) + u")")
                     return redirect(competition)
 
+            # Check if payment restrictions are in place
             if competition.enforce_payment:
                 paid = 0
-                leader_attendee = Attendee.objects.get(lan=competition.lan, user=team.leader)
-                if leader_attendee.has_paid or competition.lan.has_ticket(team.leader):
-                    paid += 1
+                if team.leader in competition.lan.attendees:
+                    leader_attendee = Attendee.objects.get(lan=competition.lan, user=team.leader)
+                    if leader_attendee.has_paid or competition.lan.has_ticket(team.leader):
+                        paid += 1
                 for member in team.members.all():
                     if member not in competition.lan.attendees:
                         messages.error(request, _(unicode(team) + u" has at least one member that is not signed up for "+
