@@ -143,17 +143,19 @@
 
 {% if teamcomp %}
     {% if competition|show_solo_note:request.user %}
-    <div class="row">
-        <div class="col-md-9">
-            <div class="alert alert-info">
-                <strong>{% trans "Note: " %}</strong>
-                {% trans "Signing up for a team compo as a solo player does not mean you are a participant." %} 
-                {% trans "Try to find other players that sign up solo, make a team and sign up as a team." %}
-                <br>
-                <b>{% trans "When you sign up as a team, your solo participation will be overriden." %}</b>
-            </div>  
+        {% if competition.status == 1 %}
+        <div class="row">
+            <div class="col-md-9">
+                <div class="alert alert-info">
+                    <strong>{% trans "Note: " %}</strong>
+                    {% trans "Signing up for a team compo as a solo player does not mean you are a participant." %} 
+                    {% trans "Try to find other players that sign up solo, make a team and sign up as a team." %}
+                    <br>
+                    <b>{% trans "When you sign up as a team, your solo participation will be overriden." %}</b>
+                </div>  
+            </div>
         </div>
-    </div>
+        {% endif %}
     {% endif %}
 {% endif %}
 
