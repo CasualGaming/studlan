@@ -108,7 +108,7 @@ def direct_register(request):
             lan = LAN.objects.filter(end_date__gte=datetime.now())[0]
 
             if not lan:
-                messages.error(request, u'Registration successful. No verification instructions.')
+                messages.error(request, u'No upcoming LAN was found.')
                 return HttpResponseRedirect('/auth/direct_register')
 
             # Create user
