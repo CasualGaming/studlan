@@ -1,23 +1,25 @@
 # -*- coding: utf-8 -*-
 
 import uuid
+from datetime import datetime
 
 from django.conf import settings
-from django.contrib import auth
 from django.contrib import messages
 from django.contrib import auth
 from django.contrib.auth.models import User
+from django.contrib.admin.views.decorators import staff_member_required
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.debug import sensitive_post_parameters
 from django.utils.translation import ugettext as _
 
-from apps.authentication.forms import (LoginForm, RegisterForm, 
-                            RecoveryForm, ChangePasswordForm)
+from apps.authentication.forms import (LoginForm, RegisterForm, RecoveryForm, ChangePasswordForm)
 from apps.authentication.models import RegisterToken
 from apps.misc.forms import InlineSpanErrorList
 from apps.userprofile.models import UserProfile
+from apps.LAN.models import LAN, Attendee
+
 
 @sensitive_post_parameters()
 def login(request):
@@ -36,10 +38,12 @@ def login(request):
     response_dict = { 'form' : form, 'next' : redirect_url}
     return render(request, 'auth/login.html', response_dict)
 
+
 def logout(request):
     auth.logout(request)
     messages.success(request, _(u'You have successfully logged out.'))
     return HttpResponseRedirect('/')
+
 
 @sensitive_post_parameters()
 def register(request):
@@ -79,8 +83,7 @@ def register(request):
                 rt = RegisterToken(user=user, token=token)
                 rt.save()
 
-                email_message = create_verify_message(request.META['HTTP_HOST'], token) 
-                
+                email_message = create_verify_message(request.META['HTTP_HOST'], token)
 
                 send_mail(_(u'Verify your account'), email_message, settings.STUDLAN_FROM_MAIL, [user.email,], fail_silently=False)
 
@@ -93,6 +96,57 @@ def register(request):
             form = RegisterForm()
 
         return render(request, 'auth/register.html', {'form': form, })
+
+
+@sensitive_post_parameters()
+@staff_member_required
+def direct_register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            cleaned = form.cleaned_data
+            lan = LAN.objects.filter(end_date__gte=datetime.now())[0]
+
+            if not lan:
+                messages.error(request, u'Registration successful. No verification instructions.')
+                return HttpResponseRedirect('/auth/direct_register')
+
+            # Create user
+            user = User(
+               username=cleaned['desired_username'],
+               first_name=cleaned['first_name'],
+               last_name=cleaned['last_name'],
+               email=cleaned['email'],
+            )
+            user.set_password(cleaned['password'])
+            user.is_active = True
+            user.save()
+
+            # Create userprofile
+            up = UserProfile(
+                user=user,
+                nick=cleaned['desired_username'],
+                date_of_birth=cleaned['date_of_birth'],
+                zip_code=cleaned['zip_code'],
+                address=cleaned['address'],
+                phone=cleaned['phone'],
+            )
+            up.save()
+
+            attendee = Attendee(lan=lan, user=user)
+            attendee.save()
+
+            messages.success(request, _(u'Registration successful.'))
+
+            return HttpResponseRedirect('/auth/direct_register')
+        else:
+            form = RegisterForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
+    else:
+        form = RegisterForm()
+        lan = LAN.objects.filter(end_date__gte=datetime.now())[0]
+
+    return render(request, 'auth/direct_register.html', {'form': form, 'lan': lan})
+
 
 def verify(request, token):
     if request.user.is_authenticated():
@@ -113,7 +167,8 @@ def verify(request, token):
         else:
             messages.error(request, _(u"The token has expired. Please use the password recovery to get a new token."))
             return HttpResponseRedirect('/')        
-            
+
+
 @sensitive_post_parameters()
 def recover(request):
     if request.user.is_authenticated():
@@ -151,6 +206,7 @@ def recover(request):
 
         return render(request, 'auth/recover.html', {'form': form})
 
+
 @sensitive_post_parameters()
 def set_password(request, token=None): 
     if request.user.is_authenticated():
@@ -184,6 +240,7 @@ def set_password(request, token=None):
         else:
             messages.error(request, _(u"The token has expired. Please use the password recovery to get a new token."))
             return HttpResponseRedirect('/')        
+
 
 def create_verify_message(host, token):
     message = _(u"You have registered an account at ") + host
