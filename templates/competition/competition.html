@@ -12,7 +12,11 @@
 {% with competition.use_teams as teamcomp %} 
     <script type="text/javascript" src="{{ STATIC_URL }}js/competition.js"></script>
     <div class="row">
-        <div class="col-md-9"><h2>{{ competition }}</h2></div>
+        <div class="col-md-9">
+            <h2>{{ competition }}</h2>
+            <p class="competition-start-time">{{ competition.start_time }}</p>
+        </div>
+
     </div>
     <div class="row">
         <div class="col-md-9">

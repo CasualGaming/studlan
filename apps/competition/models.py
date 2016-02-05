@@ -60,7 +60,9 @@ class Competition(TranslatableModel):
     enforce_payment = models.BooleanField('enforce payment', default=False,
                                             help_text='If checked, teams will require x members (specified in team_size) with valid tickets before'
                                           ' being able to sign up.')
-    
+
+    start_time = models.DateTimeField(blank=True, null=True)
+
     def get_teams(self):
         if self.use_teams:
             return map(lambda x: getattr(x, 'team'), Participant.objects.filter(~Q(team=None), Q(competition=self)))
