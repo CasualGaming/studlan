@@ -280,6 +280,11 @@ div#btn-profile {
     stroke-width:2;
 }
 
+.seating-node-search {
+    fill:pink;
+    stroke-width:2;
+}
+
 .hide {
     display: none;
 }
