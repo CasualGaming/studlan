@@ -5,6 +5,7 @@ from django.conf import settings
 
 from apps.competition.models import Activity, Competition, Participant, CompetitionTranslation
 
+
 class CompetitionTranslationInlineAdmin(admin.StackedInline):
     verbose_name = "Competition"
     verbose_name_plural = "Competitions"
@@ -12,8 +13,11 @@ class CompetitionTranslationInlineAdmin(admin.StackedInline):
     max_num = len(settings.LANGUAGES)
     extra = 2
 
+
 class CompetitionAdmin(admin.ModelAdmin):
     inlines = [CompetitionTranslationInlineAdmin,]
+    list_display = ['__unicode__', 'lan',]
+
 
 admin.site.register(Activity)
 admin.site.register(Competition, CompetitionAdmin)
