@@ -20,8 +20,8 @@ Installation
 $ git config --global core.autocrlf false
 $ git config --global user.name "<your github username>"
 $ git config --global user.email <your.github@email.com>
-$ git clone --recursive git@github.com:dotKom/onlineweb4.git
-$ cd onlineweb4
+$ git clone --recursive git@github.com:casualgaming/studlan.git
+$ cd studlan
 ```
 
 Alternatively on Windows, use the GitHub for Windows app to setup everything
@@ -48,7 +48,7 @@ $ vagrant provision # re-run the provisioning (vagrantbootstrap.sh) task
 After the machine is up and provisioned you can SSH to the instance to run a server
 ```bash
 $ vagrant ssh # if prompted for a password just type 'vagrant'
-$ workon onlineweb # this is the virtualenv
+$ workon studlan # this is the virtualenv
 $ cd /vagrant # this is the mounted shared folder of the project root
 $ python manage.py runserver 0.0.0.0:8000 # this will bind to all interfaces on port 8000 (forwarded as 8001)
 ```
@@ -57,8 +57,8 @@ Site should be available at http://localhost:8001
 
 To suspend/resume the VM
 ```bash
-$ vagrant suspend onlineweb
-$ vagrant resume onlineweb
+$ vagrant suspend studlan
+$ vagrant resume studlan
 ```
 
 ## Features ##
