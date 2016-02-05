@@ -55,10 +55,10 @@ class Competition(TranslatableModel):
                                     'and participants will be used.')
     team_size = models.IntegerField(default=5, blank=True)
     enforce_team_size = models.BooleanField('enforce teams', default=False,
-                                            help_text='If checked, teams will require 5 members before being able '
+                                            help_text='If checked, teams will require x members (specified in team_size) before being able '
                                             'to sign up.')
     enforce_payment = models.BooleanField('enforce payment', default=False,
-                                          help_text='If checked, teams will require 5 members with valid tickets before'
+                                            help_text='If checked, teams will require x members (specified in team_size) with valid tickets before'
                                           ' being able to sign up.')
     
     def get_teams(self):

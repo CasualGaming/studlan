@@ -21,6 +21,10 @@ def index(request):
 
     sponsors = list(Sponsor.objects.all())
 
+    for sponsor in sponsors:
+        if not sponsor.banner:
+            sponsor.banner = 'http://placehold.it/300x150'
+
     inactive_sponsors = [sponsor for sponsor in sponsors if sponsor not in active_sponsors]
 
     return render(request, 'sponsor/sponsors.html', 

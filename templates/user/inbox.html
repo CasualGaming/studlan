@@ -9,7 +9,7 @@ Inbox
 {% endblock title %} 
 
 {% block content %}
-
+{% if postman_messages %}
 {% for pm in postman_messages %}
 <div class="col-md-8">
 <div class="panel panel-default">
@@ -21,5 +21,10 @@ Inbox
 </div>
 	
 {% endfor %}
+{% else%}
+            <div class="col-md-9">
+                <div class="alert alert-warning">{% trans "Inbox is empty" %}</div>
+            </div>
+{% endif %}
 
 {% endblock content %}
