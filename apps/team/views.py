@@ -159,9 +159,13 @@ def invite_member(request, team_id):
                     invitation.invitee = user
                     invitation.token = uuid.uuid1().hex
                     invitation.save()
-                    pm_write(request.user, user, invitation.token, body='You have been invited to ' + team.title +
-                             ' by ' + unicode(request.user) + '. To accept the invitation, find the ' +
-                             ' <a href="' + team.get_absolute_url() + '"> team </a>' + 'and join it.')
+                    invitation_message = "You have been invited to <a href='" + team.get_absolute_url() + "'>" + team.title \
+                                         + "</a> by " + unicode(request.user)
+                    invitation_message += ". You can either "
+                    invitation_message += "<a href='" + team.get_absolute_url() + "join " + "'> Accept</a> or"
+                    invitation_message += "<a href='" + team.get_absolute_url() + "remove_invitation/" + \
+                                          invitation.token + "'> Decline</a> the invitation."
+                    pm_write(request.user, user, invitation.token, body=invitation_message)
 
                     messages.success(request, unicode(user) + _(u' was invited to your team'))
                 else:
