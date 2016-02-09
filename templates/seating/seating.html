@@ -66,5 +66,13 @@ Seating
                 </div>
             </div> 
         </div>
-    {% endif %} 
+
+        {% if seat %}
+            <script>
+                $("rect[seat-display='{{ seat }}']").attr("class", " seating-node-search");
+            </script>
+        {% endif %}
+    {% endif %}
+
+
 {% endblock content %}

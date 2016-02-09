@@ -7,6 +7,7 @@ urlpatterns = patterns('apps.seating.views',
     # Main comp oversight
     url(r'^$', 'main', name='seatings'),
     url(r'^(?P<lan_id>\d+)/(?P<seating_id>\d+)/$', 'seating_details', name='seating_details'),
+    url(r'^(?P<lan_id>\d+)/(?P<seating_id>\d+)/(?P<seat_id>\d+)/$', 'seating_details', name='seating_details'),
     url(r'^(?P<lan_id>\d+)/$', 'seating_details', name='seating_details'),
 
     # Seating related

@@ -30,3 +30,7 @@ def get_range1( value ):
 @register.filter
 def get_user(tickets, user):
     return tickets[user].ticket_type
+
+@register.filter
+def get_user_seat(dictionary, key):
+    return dictionary.get(key)

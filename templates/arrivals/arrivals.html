@@ -36,9 +36,9 @@ Register Arrivals
                         <th>Username</th><th>Full name</th><th>Email Address</th><th>Paid</th><th>Arrived</th>
                     </thead>
                     <tbody>
-                        {% for attendee in attendees %}
+                        {% for attendee,seat in user_seats.items %}
                         <tr>
-                            <td class="username">{{ attendee.user.username }}</td>
+                            <td class="username"><a href="{{ seat.seating.get_absolute_url }}{{ seat.placement }}">{{ attendee.user.username }}</a></td>
                             <td>{{ attendee.user.get_full_name }}</td>
                             <td>{{ attendee.user.email }}</td>
                             <td>
