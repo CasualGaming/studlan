@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
-from apps.userprofile.models import UserProfile
+from apps.userprofile.models import UserProfile, AliasType, Alias
 
 admin.site.unregister(User)
 
@@ -29,3 +29,5 @@ class UserProfileAdmin(UserAdmin):
     filter_horizontal = ('groups',)
 
 admin.site.register(User, UserProfileAdmin)
+admin.site.register(AliasType)
+admin.site.register(Alias)
