@@ -5,12 +5,14 @@ from datetime import datetime
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import ugettext as _
 
 from apps.lan.models import Attendee, LAN
 from apps.userprofile.forms import UserProfileForm
+from apps.userprofile.models import Alias, AliasType
 from apps.seating.models import Seat, Seating
 from postman.models import Message
 
@@ -97,3 +99,46 @@ def user_inbox(request):
         unread.save()
 
     return render(request, 'user/inbox.html', {'postman_messages': postman_messages})
+
+
+@login_required
+def alias(request):
+
+    aliases = Alias.objects.filter(user=request.user)
+    alias_types = AliasType.objects.all().exclude(alias__in=aliases)
+    breadcrumbs = (
+        (settings.SITE_NAME, '/'),
+        (_(u'Profile'), reverse('myprofile')),
+        (_(u'History'), ''),
+    )
+
+    return render(request, 'user/alias.html', {'aliases': aliases, 'alias_types': alias_types, 'breadcrumbs': breadcrumbs})
+
+
+@login_required
+def add_alias(request):
+    if request.method == 'POST':
+        selected_type_id = request.POST.get("selectType")
+        selected_type = get_object_or_404(AliasType, pk=selected_type_id)
+
+        alias = Alias()
+        alias.user = request.user
+        alias.alias_type = selected_type
+        alias.nick = request.POST.get("nick")
+        alias.save()
+        messages.success(request, "Alias was removed")
+
+    return redirect('/profile/alias')
+
+
+@login_required
+def remove_alias(request, alias_id):
+    alias = get_object_or_404(Alias, pk=alias_id)
+    if alias.user != request.user:
+        messages.error(request, "You can only remove your own alias")
+        return redirect('/profile/alias')
+    else:
+        alias.delete()
+        messages.success(request, "Alias was removed")
+
+    return redirect('/profile/alias')

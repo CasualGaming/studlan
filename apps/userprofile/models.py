@@ -6,8 +6,6 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext as _
 
-#from apps.competition.models import Activity
-    
 GENDERS = ((1, _(u'Male')), (2, _(u'Female')))
 
 
