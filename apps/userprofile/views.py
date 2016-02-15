@@ -17,7 +17,6 @@ from apps.seating.models import Seat, Seating
 from postman.models import Message
 
 
-
 @login_required
 def my_profile(request):
     profile = request.user.profile

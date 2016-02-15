@@ -24,7 +24,12 @@ Update profile
                 {% for alias in aliases %}
                 <tr>
                     <td>{{alias.alias_type}}</td>
-                    <td><a href='{{alias.alias_type.profile_url}}{{alias.nick}}'>{{alias.nick}}</a></td>
+                    <td>
+                        {% if alias.alias_type.profile_url%}
+                            <a href='{{alias.alias_type.profile_url}}{{alias.nick}}'>{{alias.nick}}</a></td>
+                        {% else %}
+                            {{alias.nick}}
+                        {% endif%}
                     <td>
                         <a href="{% url 'remove_alias' alias.id %}"><i class="glyphicon glyphicon-remove"></i>
                     </td>

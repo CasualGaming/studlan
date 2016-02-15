@@ -204,8 +204,26 @@ def join(request, competition_id):
                     return redirect(competition)
 
             # Check if alias restrictions are in place
-            #if competition.require_alias:
-
+            if competition.require_alias:
+                registered_aliases = 0
+                if team.leader in competition.lan.attendees:
+                    if competition.has_alias(team.leader):
+                        registered_aliases += 1
+                for member in team.members.all():
+                    if competition.has_alias(member):
+                        registered_aliases += 1
+                if registered_aliases < team.number_of_team_members() + 1:
+                    if team.number_of_team_members() + 1 - registered_aliases < 4:
+                        messages.error(request, "Several members of " + unicode(team) + " are missing aliases for " +
+                                   unicode(competition))
+                        for member in team.members.all():
+                            if not competition.has_alias(member):
+                                messages.error(request, (unicode(member) + u" is missing an alias for ") +
+                                   unicode(competition))
+                    else:
+                        messages.error(request, _("Someone in " + unicode(team) + u" is missing an alias for ") +
+                                   unicode(competition))
+                    return redirect(competition)
 
             # Go through all members of the team and delete their individual participation entries 
             if request.user in users:
