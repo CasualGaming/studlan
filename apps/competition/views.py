@@ -203,6 +203,10 @@ def join(request, competition_id):
                     str(paid) + u"/" + str(competition.team_size) + u")")
                     return redirect(competition)
 
+            # Check if alias restrictions are in place
+            #if competition.require_alias:
+
+
             # Go through all members of the team and delete their individual participation entries 
             if request.user in users:
                 participant = Participant.objects.get(user=request.user, competition=competition)
@@ -224,8 +228,15 @@ def join(request, competition_id):
                 messages.error(request, _(u"You are already in this competition as a solo player."))
                 return redirect(competition)
             else:
-                participant = Participant(user=request.user, competition=competition)
-                participant.save()
+                if competition.require_alias:
+                    if not competition.has_alias(request.user):
+                        messages.error(request, _(u"You do not have the required alias."))
+                        return redirect(competition)
+                    participant = Participant(user=request.user, competition=competition)
+                    participant.save()
+                else:
+                    participant = Participant(user=request.user, competition=competition)
+                    participant.save()
     
         messages.success(request, _(u"You have been signed up for ") + unicode(competition))
     return redirect(competition)

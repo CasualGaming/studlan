@@ -12,6 +12,7 @@ from django.utils import translation
 from django.utils.translation import ugettext as _
 
 from apps.lan.models import LAN
+from apps.userprofile.models import Alias, AliasType
 
 
 class Activity(models.Model):
@@ -60,6 +61,8 @@ class Competition(TranslatableModel):
     enforce_payment = models.BooleanField('enforce payment', default=False,
                                             help_text='If checked, teams will require x members (specified in team_size) with valid tickets before'
                                           ' being able to sign up.')
+    require_alias = models.BooleanField('require alias', default=False, help_text="If checked, players will need to register"
+                                        "an alias for the Activity that the competition belongs to.")
     
     def get_teams(self):
         if self.use_teams:
@@ -88,6 +91,16 @@ class Competition(TranslatableModel):
         for team in self.get_teams():
             if user == team.leader or user in team.members.all():
                 return True
+
+    def has_alias(self, user):
+        if AliasType.objects.filter(activity=self.activity).exists():
+            alias_type = AliasType.objects.get(activity=self.activity)
+            if Alias.objects.filter(user=user, alias_type=alias_type).exists():
+                return True
+            else:
+                return False
+        else:
+            return False
 
     def status_text(self):
         return self.STATUS_OPTIONS[self.status - 1][1]
