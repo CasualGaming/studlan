@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-08 08:39+0000\n"
+"POT-Creation-Date: 2016-03-08 10:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -536,6 +536,18 @@ msgstr "Du har forlatt "
 msgid " removed from your team."
 msgstr " ble fjernet fra laget."
 
+#: apps/team/views.py:201 apps/team/views.py:208
+msgid "Several members of "
+msgstr "Flere medlemmer av "
+
+#: apps/team/views.py:201 apps/team/views.py:208
+msgid " are missing aliases for "
+msgstr " mangler alias for  "
+
+#: apps/team/views.py:205 apps/team/views.py:208
+msgid " is missing an alias for "
+msgstr " mangler et alias for  "
+
 #: apps/userprofile/forms.py:30
 #, fuzzy
 #| msgid ""
@@ -973,7 +985,7 @@ msgstr "Det finnes ingen lag enda"
 msgid "All teams"
 msgstr "Alle lag"
 
-#: templates/user/alias.html:21
+#: templates/user/alias.thml:21
 msgid "Account"
 msgstr "Kontotype"
 

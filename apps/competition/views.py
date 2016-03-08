@@ -198,14 +198,14 @@ def join(request, competition_id):
             if competition.require_alias:
                 if team.number_of_aliases(competition) < team.number_of_team_members() + 1:
                     if team.number_of_team_members() + 1 - team.number_of_aliases(competition) < 4:
-                        messages.error(request, "Several members of " + unicode(team) + " are missing aliases for " +
-                                   unicode(competition))
+                        messages.error(request, _(u"Several members of " + unicode(team) + u" are missing aliases for " +
+                                   unicode(competition)))
                         for member in team.members.all():
                             if not competition.has_alias(member):
-                                messages.error(request, (unicode(member) + u" is missing an alias for ") +
+                                messages.error(request, _(unicode(member) + u" is missing an alias for ") +
                                    unicode(competition))
                     else:
-                        messages.error(request, _("Someone in " + unicode(team) + u" is missing an alias for ") +
+                        messages.error(request, _(u"Several members of " + unicode(team) + u" are missing aliases for ") +
                                    unicode(competition))
                     return redirect(competition)
 
