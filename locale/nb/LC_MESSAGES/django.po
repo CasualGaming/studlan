@@ -493,6 +493,30 @@ msgstr "Rediger"
 msgid "History"
 msgstr "Historikk"
 
+#: apps/userprofile/views.py:111 templates/user/alias.html:12
+msgid "Alias"
+msgstr "Alias"
+
+#: templates/user/alias.html:47
+msgid "Add alias"
+msgstr "Alias"
+
+#: apps/userprofile/views.py:128
+msgid "Alias was removed"
+msgstr "Aliaset ble fjernet"
+
+#: templates/user/alias.html:21
+msgid "Account"
+msgstr "Kontotype"
+
+#: templates/user/alias.html:21
+msgid "Nick"
+msgstr "Kallenavn"
+
+#: templates/user/alias.html:21
+msgid "Actions"
+msgstr "Handlinger"
+
 #: templates/admin/base_site.html:4
 msgid "Django site admin"
 msgstr "Django site admin"

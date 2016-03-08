@@ -9,7 +9,7 @@ Update profile
 {% block content %}
 <div class="row">
     <div class="col-md-9">
-         <h3>{% trans "Profile" %}</h3>
+         <h3>{% trans "Alias" %}</h3>
     </div>
 </div>
 {% profile_tabs 'alias' %}
@@ -18,7 +18,7 @@ Update profile
     <div class="col-md-9">
         <table class="well table">
             <thead>
-                <th>Account</th><th>Nick</th><th>Actions</th>
+                <th>{% trans "Account" %}</th><th>{% trans "Nick" %}</th><th>{% trans "Actions" %}</th>
             </thead>
             <tbody>
                 {% for alias in aliases %}

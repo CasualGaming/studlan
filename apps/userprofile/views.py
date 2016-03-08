@@ -108,7 +108,7 @@ def alias(request):
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
         (_(u'Profile'), reverse('myprofile')),
-        (_(u'History'), ''),
+        (_(u'Alias'), ''),
     )
 
     return render(request, 'user/alias.html', {'aliases': aliases, 'alias_types': alias_types, 'breadcrumbs': breadcrumbs})
@@ -125,7 +125,7 @@ def add_alias(request):
         alias.alias_type = selected_type
         alias.nick = request.POST.get("nick")
         alias.save()
-        messages.success(request, "Alias was removed")
+        messages.success(request, _(u'Alias was removed'))
 
     return redirect('/profile/alias')
 
