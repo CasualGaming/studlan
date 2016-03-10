@@ -296,3 +296,8 @@ div#btn-profile {
 .seat-wrapper {
     margin-top: 0;
 }
+
+.competition-start-time {
+    margin-bottom: 0;
+    color: grey;
+}
