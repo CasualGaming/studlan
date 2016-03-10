@@ -97,7 +97,8 @@ def show_team(request, team_id):
     else:
         team.is_mine = False
 
-    users = User.objects.all()
+    invitations = Invitation.objects.filter(team=team)
+    users = User.objects.all().exclude(Invitee__in=invitations)
     users2 = []
     for user in users:
         if user != team.leader:
@@ -106,7 +107,6 @@ def show_team(request, team_id):
 
     users2.sort(key=lambda x: x.username.lower(), reverse=False)
     invitation = Invitation.objects.filter(invitee=request.user.id, team=team)
-    invitations = Invitation.objects.filter(team=team)
 
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
