@@ -184,23 +184,29 @@ def join(request, competition_id):
 
             # Check if payment restrictions are in place
             if competition.enforce_payment:
-                paid = 0
-                if team.leader in competition.lan.attendees:
-                    leader_attendee = Attendee.objects.get(lan=competition.lan, user=team.leader)
-                    if leader_attendee.has_paid or competition.lan.has_ticket(team.leader):
-                        paid += 1
-                for member in team.members.all():
-                    if member not in competition.lan.attendees:
-                        messages.error(request, _(unicode(team) + u" has at least one member that is not signed up for "+
+                if team.number_of_attending_members(competition.lan) < team.number_of_team_members() + 1:
+                    messages.error(request, _(unicode(team) + u" has at least one member that is not signed up for "+
                         unicode(competition.lan)))
+                    return redirect(competition)
+                else:
+                    if team.number_of_paid_members(competition.lan) < competition.team_size:
+                        messages.error(request, _(unicode(team) + u" does not have enough members that have paid (") +
+                        unicode(team.number_of_paid_members(competition.lan)) + u"/" + str(competition.team_size) + u")")
                         return redirect(competition)
 
-                    attendee = Attendee.objects.get(lan=competition.lan, user=member)
-                    if attendee.has_paid or competition.lan.has_ticket(member):
-                        paid += 1
-                if paid < competition.team_size:
-                    messages.error(request, _(unicode(team) + u" does not have enough members that have paid (") +
-                    str(paid) + u"/" + str(competition.team_size) + u")")
+            # Check if alias restrictions are in place
+            if competition.require_alias:
+                if team.number_of_aliases(competition) < team.number_of_team_members() + 1:
+                    if team.number_of_team_members() + 1 - team.number_of_aliases(competition) < 4:
+                        messages.error(request, _(u"Several members of " + unicode(team) + u" are missing aliases for " +
+                                   unicode(competition)))
+                        for member in team.members.all():
+                            if not competition.has_alias(member):
+                                messages.error(request, _(unicode(member) + u" is missing an alias for ") +
+                                   unicode(competition))
+                    else:
+                        messages.error(request, _(u"Several members of " + unicode(team) + u" are missing aliases for ") +
+                                   unicode(competition))
                     return redirect(competition)
 
             # Go through all members of the team and delete their individual participation entries 
@@ -224,8 +230,15 @@ def join(request, competition_id):
                 messages.error(request, _(u"You are already in this competition as a solo player."))
                 return redirect(competition)
             else:
-                participant = Participant(user=request.user, competition=competition)
-                participant.save()
+                if competition.require_alias:
+                    if not competition.has_alias(request.user):
+                        messages.error(request, _(u"You do not have the required alias."))
+                        return redirect(competition)
+                    participant = Participant(user=request.user, competition=competition)
+                    participant.save()
+                else:
+                    participant = Participant(user=request.user, competition=competition)
+                    participant.save()
     
         messages.success(request, _(u"You have been signed up for ") + unicode(competition))
     return redirect(competition)

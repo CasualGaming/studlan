@@ -3,6 +3,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from apps.lan.models import Attendee
+
 
 class Team(models.Model):
     title = models.CharField('title', max_length=50)
@@ -16,6 +18,37 @@ class Team(models.Model):
 
     def number_of_team_members(self):
         return Member.objects.filter(team=self).count()
+
+    def number_of_aliases(self, competition):
+        aliases = 0
+        if competition.has_alias(self.leader):
+            aliases += 1
+        for member in self.members.all():
+            if competition.has_alias(member):
+                aliases += 1
+        return aliases
+
+    def number_of_attending_members(self, lan):
+        attending = 0
+        if self.leader in lan.attendees:
+            attending += 1
+        for member in self.members.all():
+            if member in lan.attendees:
+                attending += 1
+        return attending
+
+    def number_of_paid_members(self, lan):
+        paid = 0
+        if self.leader in lan.attendees:
+            leader_attendee = Attendee.objects.get(lan=lan, user=self.leader)
+            if leader_attendee.has_paid or lan.has_ticket(self.leader):
+                paid += 1
+        for member in self.members.all():
+            if member in lan.attendees:
+                attendee = Attendee.objects.get(lan=lan, user=member)
+                if attendee.has_paid or lan.has_ticket(member):
+                    paid += 1
+        return paid
 
     def __unicode__(self):
         return '[%s] %s' % (self.tag, self.title)

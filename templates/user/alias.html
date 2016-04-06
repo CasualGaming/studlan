@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load profile_tags %}
+
+{% block title %}
+Update profile
+{% endblock title %} 
+
+{% block content %}
+<div class="row">
+    <div class="col-md-9">
+         <h3>{% trans "Alias" %}</h3>
+    </div>
+</div>
+{% profile_tabs 'alias' %}
+
+<div class="row">
+    <div class="col-md-9">
+        <table class="well table">
+            <thead>
+                <th>{% trans "Account" %}</th><th>{% trans "Nick" %}</th><th>{% trans "Actions" %}</th>
+            </thead>
+            <tbody>
+                {% for alias in aliases %}
+                <tr>
+                    <td>{{alias.alias_type}}</td>
+                    <td>
+                        {% if alias.alias_type.profile_url%}
+                            <a href='{{alias.alias_type.profile_url}}{{alias.nick}}'>{{alias.nick}}</a></td>
+                        {% else %}
+                            {{alias.nick}}
+                        {% endif%}
+                    <td>
+                        <a href="{% url 'remove_alias' alias.id %}"><i class="glyphicon glyphicon-remove"></i>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% if alias_types%}
+<div class="col-md-9">
+    <form class="form-horizontal" action="{% url 'add_alias' %}" method="POST">
+        {% csrf_token %}
+            <fieldset>
+            <legend>{% trans "Add alias" %}</legend>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-4">
+                        <select class="form-control" id="selectType" name="selectType">
+                            {% for alias_type in alias_types %}
+                                <option value="{{ alias_type.id }}">{{ alias_type }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" id="nick" name="nick">
+                    </div>
+                    <div class="col-md-3 center-on-collapse form-actions-collapsed">
+                        <input type="submit" class="btn btn-primary" value="{% trans "Add alias" %}" />
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+{% else %}
+{% endif %}
+{% endblock content %}

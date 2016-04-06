@@ -5,7 +5,7 @@ from datetime import date
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext as _
-    
+
 GENDERS = ((1, _(u'Male')), (2, _(u'Female')))
 
 
@@ -40,3 +40,25 @@ class UserProfile(models.Model):
         return False
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
+
+
+class AliasType(models.Model):
+    description = models.CharField('Description', max_length=100, help_text='Short description')
+    profile_url = models.URLField('Profile url', blank=True, null=True, help_text='Url where profile info can be '
+                                  'retrieved. E.g. https://steamcommunity.com/id/')
+    activity = models.ForeignKey('competition.Activity', related_name='alias_type', unique=True)
+
+    def __unicode__(self):
+        return self.description
+
+
+class Alias(models.Model):
+    alias_type = models.ForeignKey(AliasType)
+    nick = models.CharField('nick', max_length=20)
+    user = models.ForeignKey(User, related_name='alias')
+
+    def __unicode__(self):
+        return self.nick
+
+    class Meta:
+        unique_together = ("user", "alias_type")
