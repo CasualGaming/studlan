@@ -63,7 +63,8 @@ class Competition(TranslatableModel):
                                           ' being able to sign up.')
     require_alias = models.BooleanField('require alias', default=False, help_text="If checked, players will need to register"
                                         "an alias for the Activity that the competition belongs to.")
-    
+    start_time = models.DateTimeField(blank=True, null=True)
+
     def get_teams(self):
         if self.use_teams:
             return map(lambda x: getattr(x, 'team'), Participant.objects.filter(~Q(team=None), Q(competition=self)))

@@ -17,4 +17,10 @@ class Migration(migrations.Migration):
             field=models.BooleanField(default=False, help_text=b'If checked, players will need to registeran alias for the Activity that the competition belongs to.', verbose_name=b'require alias'),
             preserve_default=True,
         ),
+        migrations.AddField(
+            model_name='competition',
+            name='start_time',
+            field=models.DateTimeField(null=True, blank=True),
+            preserve_default=True,
+        ),
     ]

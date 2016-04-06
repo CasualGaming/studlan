@@ -46,7 +46,7 @@ class AliasType(models.Model):
     description = models.CharField('Description', max_length=100, help_text='Short description')
     profile_url = models.URLField('Profile url', blank=True, null=True, help_text='Url where profile info can be '
                                   'retrieved. E.g. https://steamcommunity.com/id/')
-    activity = models.ForeignKey('competition.Activity', related_name='alias_type')
+    activity = models.ForeignKey('competition.Activity', related_name='alias_type', unique=True)
 
     def __unicode__(self):
         return self.description

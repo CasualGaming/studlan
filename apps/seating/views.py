@@ -47,7 +47,7 @@ def main_filtered(request, lan_id):
     return render(request, 'seating/seatings.html', context)
 
 
-def seating_details(request, lan_id, seating_id=None):
+def seating_details(request, lan_id, seating_id=None, seat_id=None):
     lan = get_object_or_404(LAN, pk=lan_id)
     seatings = Seating.objects.filter(lan=lan)
 
@@ -90,9 +90,11 @@ def seating_details(request, lan_id, seating_id=None):
             counter += 1
         dom.encode("utf-8")
 
+
     context = {}
     context['seatings'] = seatings
     context['seating'] = seating
+    context['seat'] = seat_id
     context['hide_sidebar'] = True
     context['template'] = dom.__str__
 
@@ -227,3 +229,4 @@ def seating_map(request, seating_id):
     p.save()
 
     return response
+

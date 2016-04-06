@@ -280,6 +280,11 @@ div#btn-profile {
     stroke-width:2;
 }
 
+.seating-node-search {
+    fill:pink;
+    stroke-width:2;
+}
+
 .hide {
     display: none;
 }
@@ -290,4 +295,9 @@ div#btn-profile {
 
 .seat-wrapper {
     margin-top: 0;
+}
+
+.competition-start-time {
+    margin-bottom: 0;
+    color: grey;
 }
