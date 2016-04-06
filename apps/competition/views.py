@@ -204,6 +204,9 @@ def join(request, competition_id):
                             if not competition.has_alias(member):
                                 messages.error(request, _(unicode(member) + u" is missing an alias for ") +
                                    unicode(competition))
+                        if not competition.has_alias(team.leader):
+                            messages.error(request, _(unicode(team.leader) + u" is missing an alias for ") +
+                                   unicode(competition))
                     else:
                         messages.error(request, _(u"Several members of " + unicode(team) + u" are missing aliases for ") +
                                    unicode(competition))
