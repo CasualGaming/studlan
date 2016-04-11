@@ -14,6 +14,8 @@ notify:
       - kradalby@kradalby.no
 
 deploy:
+
+# Deploy prod
   ssh:
     host: onyx.fap.no
     user: www
@@ -21,7 +23,17 @@ deploy:
     when:
         event: tag
     commands:
-        - echo $PATH
+      - cd /usr/local/www/trondelan.no
+      - git fetch --tags
+      - git checkout $(git describe --tags `git rev-list --tags --max-count=1`)
+      - git pull
+      - make env
+      - make prod
+      - make migrate
+      - make collect_static
+      - supervisorctl restart uwsgi_trondelan.no
+
+# Deploy dev
   ssh:
     host: onyx.fap.no
     user: www
