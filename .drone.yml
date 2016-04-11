@@ -1,0 +1,24 @@
+build:
+    image: kradalby/ci-tox:latest
+    pull: true
+    commands:
+      - cp studlan/settings/example-local.py studlan/settings/local.py
+      - tox
+
+notify:
+  email:
+    from: drone@fap.no
+    host: smtp.stud.ntnu.no
+    port: 25
+    recipients:
+      - kradalby@kradalby.no
+
+deploy:
+  ssh:
+    host: onyx.fap.no
+    user: www
+    port: 22
+    when:
+        event: tag
+    commands:
+        - echo $PATH
