@@ -18,7 +18,7 @@ from apps.authentication.forms import (LoginForm, RegisterForm, RecoveryForm, Ch
 from apps.authentication.models import RegisterToken
 from apps.misc.forms import InlineSpanErrorList
 from apps.userprofile.models import UserProfile
-from apps.LAN.models import LAN, Attendee
+from apps.lan.models import LAN, Attendee
 
 
 @sensitive_post_parameters()
@@ -55,11 +55,11 @@ def register(request):
             form = RegisterForm(request.POST)
             if form.is_valid():
                 cleaned = form.cleaned_data
-                
+
                 # Create user
                 user = User(
-                    username=cleaned['desired_username'], 
-                    first_name=cleaned['first_name'], 
+                    username=cleaned['desired_username'],
+                    first_name=cleaned['first_name'],
                     last_name=cleaned['last_name'],
                     email=cleaned['email'],
                 )
@@ -69,14 +69,14 @@ def register(request):
 
                 # Create userprofile
                 up = UserProfile(
-                    user=user, 
+                    user=user,
                     nick=cleaned['desired_username'],
                     date_of_birth=cleaned['date_of_birth'],
                     zip_code=cleaned['zip_code'],
                     address=cleaned['address'],
                     phone=cleaned['phone'],
                 )
-                up.save() 
+                up.save()
 
                 # Create the registration token
                 token = uuid.uuid4().hex
@@ -89,7 +89,7 @@ def register(request):
 
                 messages.success(request, _(u'Registration successful. Check your email for verification instructions.'))
 
-                return HttpResponseRedirect('/')        
+                return HttpResponseRedirect('/')
             else:
                 form = RegisterForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
         else:
@@ -153,7 +153,7 @@ def verify(request, token):
         return HttpResponseRedirect('/')
     else:
         rt = get_object_or_404(RegisterToken, token=token)
-        
+
         if rt.is_valid:
             user = getattr(rt, 'user')
 
@@ -166,7 +166,7 @@ def verify(request, token):
             return redirect('auth_login')
         else:
             messages.error(request, _(u"The token has expired. Please use the password recovery to get a new token."))
-            return HttpResponseRedirect('/')        
+            return HttpResponseRedirect('/')
 
 
 @sensitive_post_parameters()
@@ -182,11 +182,11 @@ def recover(request):
 
                 if len(users) == 0:
                     messages.error(request, _(u"That email is not registered."))
-                    return HttpResponseRedirect('/')        
+                    return HttpResponseRedirect('/')
 
                 user = users[0]
                 user.save()
-    
+
                 # Create the registration token
                 token = uuid.uuid4().hex
                 rt = RegisterToken(user=user, token=token)
@@ -196,9 +196,9 @@ def recover(request):
 
                 send_mail(_(u'Account recovery'), email_message, settings.STUDLAN_FROM_MAIL, [email,])
 
-                messages.success(request, _('A recovery link has been sent to ') + email) 
+                messages.success(request, _('A recovery link has been sent to ') + email)
 
-                return HttpResponseRedirect('/')        
+                return HttpResponseRedirect('/')
             else:
                 form = RecoveryForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
         else:
@@ -208,12 +208,12 @@ def recover(request):
 
 
 @sensitive_post_parameters()
-def set_password(request, token=None): 
+def set_password(request, token=None):
     if request.user.is_authenticated():
         return HttpResponseRedirect('/')
     else:
         rt = get_object_or_404(RegisterToken, token=token)
-       
+
         if rt.is_valid:
             if request.method == 'POST':
                 form = ChangePasswordForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
@@ -223,14 +223,14 @@ def set_password(request, token=None):
                     user.is_active = True
                     user.set_password(form.cleaned_data['new_password'])
                     user.save()
-                    
+
                     rt.delete()
 
                     messages.success(request, _(u"User ") + unicode(user) + _(u" successfully had it's password changed. You can now log in."))
-                    
-                    return HttpResponseRedirect('/')        
+
+                    return HttpResponseRedirect('/')
             else:
-                
+
                 form = ChangePasswordForm()
 
                 messages.success(request, _(u"Token accepted. Please insert your new password."))
@@ -239,7 +239,7 @@ def set_password(request, token=None):
 
         else:
             messages.error(request, _(u"The token has expired. Please use the password recovery to get a new token."))
-            return HttpResponseRedirect('/')        
+            return HttpResponseRedirect('/')
 
 
 def create_verify_message(host, token):
@@ -252,14 +252,14 @@ def create_verify_message(host, token):
 \nNote that tokens have a valid lifetime of 24 hours. If you do not use this
 link within 24 hours, it will be invalid, and you will need to use the password
 recovery option again to get your account verified.""")
-    
+
     return message
 
 
 def create_password_recovery_message(email, username, host, token):
 
-    message = _(u"You have requested a password recovery for the account bound to ") + email 
-    
+    message = _(u"You have requested a password recovery for the account bound to ") + email
+
     message += "\n\n" + _(u"Username") + ": " + username + "\n\n"
 
     message += _(u"If you did not ask for this password recovery, please ignore this email.")
