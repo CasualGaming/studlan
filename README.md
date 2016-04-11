@@ -1,5 +1,6 @@
 Studlan
 ==========
+[![Build Status](https://drone.fap.no/api/badges/CasualGaming/studlan/status.svg)](https://drone.fap.no/CasualGaming/studlan)
 
 Requirements
 ------------
@@ -79,7 +80,7 @@ $ vagrant resume studlan
 	* Participants with pre purchased tickets can reserve seats
 		* Seating arrangements are fully customizable through SVG layouts.
 	* Export details of participants per event
-	
+
 
 ## Planned features ##
 * Teams
@@ -91,9 +92,16 @@ $ vagrant resume studlan
 
 
 ## Requirements ##
-sudo apt-get install libpq-dev python-dev
-pip install -r requirements.txt
+To install requirements for development:
 
+    make env
+    make dev
+
+To install requirements for production:
+
+    apt-get install libpq-dev python-dev
+    make env
+    make prod
 
 ## Initialization ##
 1. python manage.py syncdb

@@ -131,7 +131,6 @@ LOCALE_PATHS = (
 INSTALLED_APPS = (
     # third party apps
     'markdown_deux',
-    'gunicorn',
     'postman',
 
     # django apps
