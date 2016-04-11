@@ -5,7 +5,7 @@ PIP=$(ENV)/pip
 MANAGE=$(PYTHON) manage.py
 
 collect_static:
-	$(MANAGE) collectstatic
+	$(MANAGE) collectstatic --noinput
 
 flake8:
 	flake8
