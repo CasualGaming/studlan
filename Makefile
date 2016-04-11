@@ -15,10 +15,13 @@ migrate:
 
 
 prod:
-	$(PIP) install -r requirements.txt --upgrade
+	$(PIP) install -r requirements/production.txt --upgrade
+
+dev:
+	$(PIP) install -r requirements/development.txt --upgrade
 
 env:
-	virtualenv -p `which python` env
+	virtualenv -p `which python3` env
 
 clean:
 	pyclean .
@@ -30,7 +33,3 @@ test:
 
 run:
 	$(MANAGE) runserver 0.0.0.0:8000
-
-freeze:
-	mkdir -p requirements
-	$(PIP) freeze > requirements/base.txt
