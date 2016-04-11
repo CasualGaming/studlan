@@ -36,4 +36,5 @@ deploy:
       - make env
       - make prod
       - make migrate
+      - make collect_static
       - supervisorctl restart uwsgi_dev.trondelan.no
