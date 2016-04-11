@@ -22,3 +22,11 @@ deploy:
         event: tag
     commands:
         - echo $PATH
+  ssh:
+    host: onyx.fap.no
+    user: www
+    port: 22
+    when:
+        branch: master
+    commands:
+        - echo $PATH
