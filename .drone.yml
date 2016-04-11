@@ -29,4 +29,11 @@ deploy:
     when:
         branch: master
     commands:
-        - echo $PATH
+      - cd /usr/local/www/dev.trondelan.no
+      - git checkout master
+      - git pull
+      - cp -r studlan/settings/example-local.py studlan/settings/local.py
+      - make env
+      - make prod
+      - make migrate
+      - supervisorctl restart uwsgi_dev.trondelan.no
