@@ -21,7 +21,7 @@ dev:
 	$(PIP) install -r requirements/development.txt --upgrade
 
 env:
-	virtualenv -p `which python3` env
+	virtualenv -p `which python2` env
 
 clean:
 	pyclean .
