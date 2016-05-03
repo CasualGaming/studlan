@@ -2,9 +2,10 @@ from django.template import Library
 
 register = Library()
 
+
 @register.filter
-def get_range( value ):
-  """
+def get_range(value):
+    """
     Filter - returns a list containing range made from given value
     Usage (in template):
 
@@ -20,17 +21,32 @@ def get_range( value ):
     </ul>
 
     Instead of 3 one may use the variable set in the sviews
-  """
-  return range(  value )
+    """
+    return range(value)
+
 
 @register.filter
-def get_range1( value ):
-  return range( 1, value+1 )
+def get_range1(value):
+    return range(1, value+1)
+
 
 @register.filter
 def get_user(tickets, user):
     return tickets[user].ticket_type
 
+
 @register.filter
 def get_user_seat(dictionary, key):
     return dictionary.get(key)
+
+
+@register.filter
+def get_seating_url(dictionary, key):
+    return dictionary.get(key).seating.get_absolute_url()
+
+
+@register.filter
+def get_seat_placement(dictionary, key):
+    return dictionary.get(key).placement
+
+
