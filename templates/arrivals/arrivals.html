@@ -36,9 +36,13 @@ Register Arrivals
                         <th>Username</th><th>Full name</th><th>Email Address</th><th>Paid</th><th>Arrived</th>
                     </thead>
                     <tbody>
-                        {% for attendee,seat in user_seats.items %}
+                        {% for attendee in attendees %}
                         <tr>
-                            <td class="username"><a href="{{ seat.seating.get_absolute_url }}{{ seat.placement }}">{{ attendee.user.username }}</a></td>
+                            {% if attendee in user_seats%}
+                            <td class="username"><a href="{{ user_seats|get_seating_url:attendee }}{{ user_seats|get_seat_placement:attendee }}">{{ attendee.user.username }}</a></td>
+                            {% else %}
+                            <td class="username">{{ attendee.user.username }}</a></td>
+                            {% endif %}
                             <td>{{ attendee.user.get_full_name }}</td>
                             <td>{{ attendee.user.email }}</td>
                             <td>

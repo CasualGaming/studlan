@@ -52,7 +52,7 @@ def arrivals(request, lan_id):
 
     ticket_types = TicketType.objects.filter(lan=lan)
     tickets = Ticket.objects.filter(ticket_type__in=ticket_types)
-    user_seats =dict()
+    user_seats = dict()
     ticket_users = dict()
 
     for ticket in tickets:
@@ -61,7 +61,8 @@ def arrivals(request, lan_id):
     paid_count = 0
     arrived_count = 0
     for attendee in attendees:
-        user_seats[attendee] = Seat.objects.get(user=attendee.user, seating__lan=lan)
+        if Seat.objects.filter(user=attendee.user, seating__lan=lan):
+            user_seats[attendee] = Seat.objects.get(user=attendee.user, seating__lan=lan)
         if attendee.has_paid:
             paid_count += 1
         if attendee.arrived:
@@ -70,8 +71,8 @@ def arrivals(request, lan_id):
     paid_count += len(tickets)
 
     return render(request, 'arrivals/arrivals.html', {'attendees': attendees, 'lan': lan, 
-        'paid_count' : paid_count, 'arrived_count' : arrived_count, 'breadcrumbs': breadcrumbs,
-        'tickets': tickets, 'ticket_users': ticket_users, 'user_seats': user_seats,})
+        'paid_count': paid_count, 'arrived_count': arrived_count, 'breadcrumbs': breadcrumbs,
+        'tickets': tickets, 'ticket_users': ticket_users, 'user_seats': user_seats})
 
 
 @staff_member_required
