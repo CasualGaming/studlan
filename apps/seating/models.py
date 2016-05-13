@@ -26,7 +26,7 @@ class Seating(models.Model):
     number_of_seats = models.IntegerField('number of seats')
     closing_date = models.DateTimeField("closing date")
     layout = models.ForeignKey(Layout)
-    ticket_types = models.ManyToManyField(TicketType, related_name='ticket_types')
+    ticket_types = models.ManyToManyField(TicketType, null=True, blank=True, related_name='ticket_types')
 
     def save(self, *args, **kwargs):
         if not self.pk:
