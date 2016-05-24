@@ -10,3 +10,7 @@ def site_name():
 @register.simple_tag
 def stripe_public_key():
     return getattr(settings, "STRIPE_PUBLIC_KEY", "")
+
+@register.simple_tag
+def support_mail():
+    return getattr(settings, "SUPPORT_MAIL", "")
