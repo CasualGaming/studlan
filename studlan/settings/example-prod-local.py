@@ -16,6 +16,7 @@ DATABASES = {
 }
 
 STUDLAN_FROM_MAIL = 'noreply@domain.no'
+SUPPORT_MAIL = 'change@me.com'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # real
 EMAIL_HOST = "smtp.domain.no"
