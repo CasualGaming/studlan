@@ -191,6 +191,8 @@ LOGGING = {
     }
 }
 
+SUPPORT_MAIL = ''
+
 #Overiding messagetags to match bootstrap 3
 MESSAGE_TAGS = {message_constants.ERROR: 'danger'}
 

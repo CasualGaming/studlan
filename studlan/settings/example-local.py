@@ -13,18 +13,19 @@ DATABASES = {
 }
 
 STUDLAN_FROM_MAIL = 'studlan@online.ntnu.no'
+SUPPORT_MAIL = 'change@me.com'
 
 #EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # real
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # prints
 
-SITE_NAME = "studLAN"
+SITE_NAME = 'studLAN'
 
 #Enable and set to your domain when deployed
 #CSRF_COOKIE_DOMAIN = 'studlan.no'
 CSRF_COOKIE_HTTPONLY = True
 
-STRIPE_PUBLIC_KEY = "pk_test_6pRNASCoBOKtIshFeQd4XMUh"
+STRIPE_PUBLIC_KEY = 'pk_test_6pRNASCoBOKtIshFeQd4XMUh'
 
-STRIPE_PRIVATE_KEY = "sk_test_BQokikJOvBiI2HlWgH4olfQ2"
+STRIPE_PRIVATE_KEY = 'sk_test_BQokikJOvBiI2HlWgH4olfQ2'
 
-GOOGLE_API_KEY = "APIKEYHERE"
+GOOGLE_API_KEY = 'APIKEYHERE'
