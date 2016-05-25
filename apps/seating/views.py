@@ -63,32 +63,31 @@ def seating_details(request, lan_id, seating_id=None, seat_id=None):
     users = seating.get_user_registered()
     seats = seating.get_total_seats()
 
-    if seating.layout: #TODO remove
-        dom = BeautifulSoup(seating.layout.template, "html.parser")
-        counter = 0
-        for tag in dom.find_all('a'):
-            children = tag.find_all('rect')
-            children[0]['seat-number'] = seats[counter].pk
-            children[0]['seat-display'] = seats[counter].placement
-            if not seats[counter].user:
-                children[0]['class'] = ' seating-node-free'
-                children[0]['status'] = "free"
+    dom = BeautifulSoup(seating.layout.template, "html.parser")
+    counter = 0
+    for tag in dom.find_all('a'):
+        children = tag.find_all('rect')
+        children[0]['seat-number'] = seats[counter].pk
+        children[0]['seat-display'] = seats[counter].placement
+        if not seats[counter].user:
+            children[0]['class'] = ' seating-node-free'
+            children[0]['status'] = "free"
+        else:
+            if seats[counter].user == request.user:
+                children[0]['class'] = ' seating-node-self'
+                children[0]['status'] = "mine"
             else:
-                if seats[counter].user == request.user:
-                    children[0]['class'] = ' seating-node-self'
-                    children[0]['status'] = "mine"
-                else:
-                    children[0]['class'] = ' seating-node-occupied'
-                    children[0]['status'] = "occupied"
-                    children[0]['seat-user'] = unicode(seats[counter].user.get_full_name())
+                children[0]['class'] = ' seating-node-occupied'
+                children[0]['status'] = "occupied"
+                children[0]['seat-user'] = unicode(seats[counter].user.get_full_name())
 
-                    #Separate title element for chrome support
-                    title = dom.new_tag("title")
-                    title.string = unicode(seats[counter].user.get_full_name())
-                    tag.append(title)
+                #Separate title element for chrome support
+                title = dom.new_tag("title")
+                title.string = unicode(seats[counter].user.get_full_name())
+                tag.append(title)
 
-            counter += 1
-        dom.encode("utf-8")
+        counter += 1
+    dom.encode("utf-8")
 
 
     context = {}
@@ -99,6 +98,7 @@ def seating_details(request, lan_id, seating_id=None, seat_id=None):
     context['template'] = dom.__str__
 
     return render(request, 'seating/seating.html', context)
+
 
 @login_required()
 def take(request, seating_id, seat_id):
@@ -118,9 +118,8 @@ def take(request, seating_id, seat_id):
         attendee = Attendee.objects.get(user=request.user, lan=seating.lan)
     except ObjectDoesNotExist:
         attendee = None
-
     if (attendee and attendee.has_paid) or seating.lan.has_ticket(request.user):
-        if not seating.ticket_type or (seating.lan.has_ticket(request.user) and seating.lan.has_ticket(request.user).ticket_type == seating.ticket_type):
+        if not seating.ticket_types or (seating.lan.has_ticket(request.user) and seating.lan.has_ticket(request.user).ticket_type in seating.ticket_types.all()):
             if not seat.user:
                 if request.user in occupied:
                     old_seats = Seat.objects.filter(user=request.user)
@@ -139,9 +138,11 @@ def take(request, seating_id, seat_id):
         messages.error(request, _(u"You need to attend and pay before reserving your seat."))
     return redirect(seating)
 
+
 @login_required()
 def take2(request, lan_id, seating_id, seat_id):
     return take(request, seating_id, seat_id)
+
 
 @login_required()
 def leave(request, seating_id, seat_id):
@@ -159,6 +160,7 @@ def leave(request, seating_id, seat_id):
     else:
         messages.error(request, _(u"This seat is taken."))
     return redirect(seating)
+
 
 def seating_list(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
@@ -192,9 +194,11 @@ def seating_list(request, seating_id):
 
     return response
 
+
 @login_required()
 def leave2(request, lan_id, seating_id, seat_id):
     return leave(request, seating_id, seat_id)
+
 
 def seating_map(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
