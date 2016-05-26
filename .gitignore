@@ -2,7 +2,7 @@
 #
 
 local.py
-
+dev.db
 
 
 # Created by https://www.gitignore.io/api/vim,linux,windows,osx,intellij,pycharm,python
