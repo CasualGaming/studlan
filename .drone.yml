@@ -42,6 +42,7 @@ deploy:
         branch: master
     commands:
       - cd /usr/local/www/dev.trondelan.no
+      - pwd
       - git checkout master
       - git pull
       - cp -r studlan/settings/example-local.py studlan/settings/local.py
