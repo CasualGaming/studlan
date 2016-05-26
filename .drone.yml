@@ -16,6 +16,8 @@ notify:
 deploy:
 
 # Deploy prod
+
+## trondelan.no
   ssh:
     host: onyx.fap.no
     user: www
@@ -25,13 +27,31 @@ deploy:
     commands:
       - cd /usr/local/www/trondelan.no
       - git fetch --tags
-      - git checkout $(git describe --tags `git rev-list --tags --max-count=1`)
+      - git checkout $$TAG
       - git pull
       - make env
       - make prod
       - make migrate
       - make collect_static
       - supervisorctl restart uwsgi_trondelan.no
+
+## Deploy recess
+  ssh:
+    host: onyx.fap.no
+    user: www
+    port: 22
+    when:
+        event: tag
+    commands:
+      - cd /usr/local/www/lan.recess.no
+      - git fetch --tags
+      - git checkout $$TAG
+      - git pull
+      - make env
+      - make prod
+      - make migrate
+      - make collect_static
+      - supervisorctl restart uwsgi_lan.recess.no
 
 # Deploy dev
   ssh:
