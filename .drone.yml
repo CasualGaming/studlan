@@ -32,7 +32,6 @@ publish:
     repo: studlan/studlan
     tag: master
     insecure: false
-    file: /drone/src/github.com/CasualGaming/studlan/Dockerfile
     environment:
         - DOCKER_LAUNCH_DEBUG=true
     # when:
