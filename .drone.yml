@@ -23,7 +23,6 @@ publish:
         - latest
         - $$TAG
     insecure: false
-    file: Dockerfile
     when:
         event: tag
   docker:
@@ -31,6 +30,5 @@ publish:
     repo: studlan/studlan
     tag: master
     insecure: false
-    file: Dockerfile
     # when:
     #     branch: master
