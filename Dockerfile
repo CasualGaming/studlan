@@ -30,4 +30,7 @@ RUN cp studlan/settings/example-local.py studlan/settings/local.py
 RUN python manage.py collectstatic --noinput --clear --link
 RUN rm studlan/settings/local.py
 
+RUN apk del build-base \
+        python-dev
+
 ENTRYPOINT ["$DIR/docker-entrypoint.sh"]
