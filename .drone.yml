@@ -21,8 +21,6 @@ build:
       - rm -rf studlan/settings/local.py
       - docker build studlan/studlan:master
       - docker save studlan_studlan_master
-    when:
-      branch: master
 
 notify:
   email:
