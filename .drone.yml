@@ -24,14 +24,14 @@ publish:
     tag:
         - latest
         - $$TAG
-    insecure: false
+    insecure: true
     when:
         event: tag
   docker:
     registry: gengar.l.fap.no:5000
     repo: studlan/studlan
     tag: master
-    insecure: false
+    insecure: true
     environment:
         - DOCKER_LAUNCH_DEBUG=true
     # when:
