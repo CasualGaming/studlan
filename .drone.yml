@@ -3,9 +3,7 @@ build:
     pull: true
     commands:
       - cp studlan/settings/example-local.py studlan/settings/local.py
-        #- tox
-      - ls
-      - pwd
+      - tox
       - rm -rf env
       - rm -rf studlan/settings/local.py
 
@@ -32,7 +30,5 @@ publish:
     repo: studlan/studlan
     tag: master
     insecure: true
-    environment:
-        - DOCKER_LAUNCH_DEBUG=true
     # when:
     #     branch: master
