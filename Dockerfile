@@ -33,4 +33,4 @@ RUN rm studlan/settings/local.py
 RUN apk del build-base \
         python-dev
 
-ENTRYPOINT ["$DIR/docker-entrypoint.sh"]
+ENTRYPOINT ["/srv/studlan/docker-entrypoint.sh"]
