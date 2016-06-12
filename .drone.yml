@@ -6,21 +6,6 @@ build:
       - tox
       - rm -rf env
       - rm -rf studlan/settings/local.py
-      - docker build --tag studlan/studlan:$$TAG .
-      - docker save studlan_studlan_$$TAG
-    when:
-      event: tag
-
-build:
-    image: kradalby/ci-tox:latest
-    pull: true
-    commands:
-      - cp studlan/settings/example-local.py studlan/settings/local.py
-        #- tox
-      - rm -rf env
-      - rm -rf studlan/settings/local.py
-      - docker build --tag studlan/studlan:master .
-      - docker save studlan_studlan_master
 
 notify:
   email:
@@ -30,61 +15,22 @@ notify:
     recipients:
       - kradalby@kradalby.no
 
-deploy:
-
-# Deploy prod
-
-## trondelan.no
-  ssh:
-    host: onyx.fap.no
-    user: www
-    port: 22
+publish:
+  docker:
+    registry: gengar.l.fap.no:5000
+    repo: studlan/studlan
+    tag:
+        - latest
+        - $$TAG
+    insecure: false
+    file: Dockerfile
     when:
         event: tag
-    commands:
-      - cd /usr/local/www/trondelan.no
-      - git fetch --tags
-      - git checkout $$TAG
-      - git pull
-      - make env
-      - make prod
-      - make migrate
-      - make collect_static
-      - supervisorctl restart uwsgi_trondelan.no
-
-## Deploy recess
-  ssh:
-    host: onyx.fap.no
-    user: www
-    port: 22
-    when:
-        event: tag
-    commands:
-      - cd /usr/local/www/lan.recess.no
-      - git fetch --tags
-      - git checkout $$TAG
-      - git pull
-      - make env
-      - make prod
-      - make migrate
-      - make collect_static
-      - supervisorctl restart uwsgi_lan.recess.no
-
-# Deploy dev
-#   ssh:
-#     host: onyx.fap.no
-#     user: www
-#     port: 22
-#     when:
-#         branch: master
-#     commands:
-#       - cd /usr/local/www/dev.trondelan.no
-#       - pwd
-#       - git checkout master
-#       - git pull
-#       - cp -r studlan/settings/example-local.py studlan/settings/local.py
-#       - make env
-#       - make prod
-#       - make migrate
-#       - make collect_static
-#       - supervisorctl restart uwsgi_dev.trondelan.no
+  docker:
+    registry: gengar.l.fap.no:5000
+    repo: studlan/studlan
+    tag: master
+    insecure: false
+    file: Dockerfile
+    # when:
+    #     branch: master
