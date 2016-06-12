@@ -4,6 +4,25 @@ build:
     commands:
       - cp studlan/settings/example-local.py studlan/settings/local.py
       - tox
+      - rm -rf env
+      - rm -rf studlan/settings/local.py
+      - docker build studlan/studlan:$$TAG
+      - docker save studlan_studlan_$$TAG
+    when:
+      event: tag
+
+build:
+    image: kradalby/ci-tox:latest
+    pull: true
+    commands:
+      - cp studlan/settings/example-local.py studlan/settings/local.py
+      - tox
+      - rm -rf env
+      - rm -rf studlan/settings/local.py
+      - docker build studlan/studlan:master
+      - docker save studlan_studlan_master
+    when:
+      branch: master
 
 notify:
   email:
@@ -54,20 +73,20 @@ deploy:
       - supervisorctl restart uwsgi_lan.recess.no
 
 # Deploy dev
-  ssh:
-    host: onyx.fap.no
-    user: www
-    port: 22
-    when:
-        branch: master
-    commands:
-      - cd /usr/local/www/dev.trondelan.no
-      - pwd
-      - git checkout master
-      - git pull
-      - cp -r studlan/settings/example-local.py studlan/settings/local.py
-      - make env
-      - make prod
-      - make migrate
-      - make collect_static
-      - supervisorctl restart uwsgi_dev.trondelan.no
+#   ssh:
+#     host: onyx.fap.no
+#     user: www
+#     port: 22
+#     when:
+#         branch: master
+#     commands:
+#       - cd /usr/local/www/dev.trondelan.no
+#       - pwd
+#       - git checkout master
+#       - git pull
+#       - cp -r studlan/settings/example-local.py studlan/settings/local.py
+#       - make env
+#       - make prod
+#       - make migrate
+#       - make collect_static
+#       - supervisorctl restart uwsgi_dev.trondelan.no
