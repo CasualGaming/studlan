@@ -6,7 +6,7 @@ build:
       - tox
       - rm -rf env
       - rm -rf studlan/settings/local.py
-      - docker build studlan/studlan:$$TAG
+      - docker build studlan/studlan:$$TAG .
       - docker save studlan_studlan_$$TAG
     when:
       event: tag
@@ -19,7 +19,7 @@ build:
         #- tox
       - rm -rf env
       - rm -rf studlan/settings/local.py
-      - docker build studlan/studlan:master
+      - docker build studlan/studlan:master .
       - docker save studlan_studlan_master
 
 notify:
