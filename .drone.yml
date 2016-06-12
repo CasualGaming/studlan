@@ -5,6 +5,7 @@ build:
       - cp studlan/settings/example-local.py studlan/settings/local.py
         #- tox
       - ls
+      - pwd
       - rm -rf env
       - rm -rf studlan/settings/local.py
 
@@ -31,7 +32,7 @@ publish:
     repo: studlan/studlan
     tag: master
     insecure: false
-    file: .
+    file: Dockerfile
     environment:
         - DOCKER_LAUNCH_DEBUG=true
     # when:
