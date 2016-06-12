@@ -25,6 +25,7 @@ publish:
     insecure: true
     when:
         event: tag
+
   docker:
     registry: gengar.l.fap.no:5000
     repo: studlan/studlan
