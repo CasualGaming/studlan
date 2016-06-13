@@ -27,7 +27,7 @@ RUN mkdir static
 RUN pip install -r requirements/production.txt --upgrade
 
 RUN cp studlan/settings/example-local.py studlan/settings/local.py
-RUN python manage.py collectstatic --noinput --clear --link
+RUN python manage.py collectstatic --noinput --clear
 RUN rm studlan/settings/local.py
 
 RUN apk del build-base \
