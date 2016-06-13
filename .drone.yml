@@ -40,6 +40,33 @@ publish:
       destination: docker/image.tar
       tag: master
 
+deploy:
+  ssh:
+    host:
+     - gengar.l.fap.no
+    user: root
+    port: 22
+    sleep: 2
+    commands:
+      - docker pull registry.fap.no/studlan/studlan:latest
+      - docker-compose -f /srv/docker/etc/studlan/prod-compose.yml stop
+      - docker-compose -f /srv/docker/etc/studlan/prod-compose.yml up -d
+    when:
+        event: tag
+
+  ssh:
+    host:
+     - gengar.l.fap.no
+    user: root
+    port: 22
+    sleep: 2
+    commands:
+      - docker pull registry.fap.no/studlan/studlan:master
+      - docker-compose -f /srv/docker/etc/studlan/dev-compose.yml stop
+      - docker-compose -f /srv/docker/etc/studlan/dev-compose.yml up -d
+    when:
+        branch: master
+
 cache:
   mount:
     - docker/image.tar
