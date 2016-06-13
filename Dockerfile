@@ -8,6 +8,7 @@ ENV DIR=/srv/studlan
 
 RUN apk update
 RUN apk add postgresql-dev \
+        mailcap \
         build-base \
         python-dev \
         py-pip \
