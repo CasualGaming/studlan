@@ -4,8 +4,6 @@ build:
     commands:
       - cp studlan/settings/example-local.py studlan/settings/local.py
       #- tox
-      - rm -rf env
-      - rm -rf studlan/settings/local.py
 
 notify:
   email:
@@ -31,5 +29,5 @@ publish:
     repo: studlan/studlan
     tag: master
     insecure: true
-    # when:
-    #     branch: master
+    when:
+        branch: master
