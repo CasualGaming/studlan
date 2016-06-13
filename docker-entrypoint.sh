@@ -13,4 +13,5 @@ exec uwsgi --chdir=/srv/studlan \
     --processes=5 \
     --harakiri=20 \
     --max-requests=5000 \
+    --static-map=/static=./static
     --vacuum
