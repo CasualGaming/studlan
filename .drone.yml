@@ -49,8 +49,8 @@ deploy:
     sleep: 2
     commands:
       - docker pull registry.fap.no/studlan/studlan:latest
-      - docker-compose -f /srv/docker/etc/studlan/prod-compose.yml stop
-      - docker-compose -f /srv/docker/etc/studlan/prod-compose.yml up -d
+      - docker-compose -f /srv/docker/studlan/prod-compose.yml stop
+      - docker-compose -f /srv/docker/studlan/prod-compose.yml up -d
     when:
         event: tag
 
@@ -62,8 +62,8 @@ deploy:
     sleep: 2
     commands:
       - docker pull registry.fap.no/studlan/studlan:master
-      - docker-compose -f /srv/docker/etc/studlan/dev-compose.yml stop
-      - docker-compose -f /srv/docker/etc/studlan/dev-compose.yml up -d
+      - docker-compose -f /srv/docker/studlan/dev-compose.yml stop
+      - docker-compose -f /srv/docker/studlan/dev-compose.yml up -d
     when:
         branch: master
 
