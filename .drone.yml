@@ -3,7 +3,7 @@ build:
     pull: true
     commands:
       - cp studlan/settings/example-local.py studlan/settings/local.py
-      - tox
+      #- tox
       - rm -rf env
       - rm -rf studlan/settings/local.py
 
