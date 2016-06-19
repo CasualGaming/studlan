@@ -2,12 +2,12 @@ FROM alpine:3.4
 
 MAINTAINER Kristoffer Dalby
 
-EXPOSE 8080
 
-ENV DIR=/srv/studlan
+ENV LIBRARY_PATH=/lib:/usr/lib
+ENV DIR=/srv/app
 
-RUN apk update
-RUN apk add postgresql-dev \
+RUN apk update && \
+    apk add postgresql-dev \
         mailcap \
         build-base \
         python-dev \
@@ -18,20 +18,26 @@ RUN apk add postgresql-dev \
         linux-headers \
         pcre-dev
 
-ENV LIBRARY_PATH=/lib:/usr/lib
 
 WORKDIR $DIR
 
-COPY . $DIR
-
-RUN mkdir static
+# Install requirements
+COPY ./requirements $DIR/requirements
 RUN pip install -r requirements/production.txt --upgrade
 
+# Delete unneeded files.
+RUN apk del build-base \
+        python-dev
+
+# Copy project files
+COPY . $DIR
+
+# Collect static files
+RUN mkdir static
 RUN cp studlan/settings/example-local.py studlan/settings/local.py
 RUN python manage.py collectstatic --noinput --clear
 RUN rm studlan/settings/local.py
 
-RUN apk del build-base \
-        python-dev
+EXPOSE 8080
 
-ENTRYPOINT ["/srv/studlan/docker-entrypoint.sh"]
+ENTRYPOINT ["/srv/app/docker-entrypoint.sh"]
