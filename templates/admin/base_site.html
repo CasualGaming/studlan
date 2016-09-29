@@ -1,10 +1,11 @@
 {% extends "admin/base.html" %}
 {% load i18n %}
+{% load settings %}
 
 {% block title %}{{ title }} | {% trans 'Django site admin' %}{% endblock %}
 
 {% block branding %}
-<h1 id="site-name"> <a href="/">StudLAN</a></h1>
+<h1 id="site-name"> <a href="/">{% site_name %}</a></h1>
 {% endblock %}
 
 {% block nav-global %}{% endblock %}
