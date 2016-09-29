@@ -7,7 +7,7 @@ ENV LIBRARY_PATH=/lib:/usr/lib
 ENV DIR=/srv/app
 
 RUN apk update && \
-    apk add postgresql-dev \
+    apk add --no-cache postgresql-dev \
         mailcap \
         build-base \
         python-dev \
@@ -23,7 +23,7 @@ WORKDIR $DIR
 
 # Install requirements
 COPY ./requirements $DIR/requirements
-RUN pip install -r requirements/production.txt --upgrade
+RUN pip install --no-cache-dir -r requirements/production.txt --upgrade
 
 # Delete unneeded files.
 RUN apk del build-base \
