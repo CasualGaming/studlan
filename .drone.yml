@@ -15,7 +15,7 @@ notify:
 
 publish:
   docker:
-    registry: gengar.l.fap.no:5000
+    registry: registry.fap.no
     repo: studlan/studlan
     tag:
         - latest
@@ -29,7 +29,7 @@ publish:
       tag: latest
 
   docker:
-    registry: gengar.l.fap.no:5000
+    registry: registry.fap.no
     repo: studlan/studlan
     tag: master
     insecure: true
@@ -43,7 +43,7 @@ publish:
 deploy:
   ssh:
     host:
-     - gengar.l.fap.no
+     - primeape.terra.fap.no
     user: root
     port: 22
     sleep: 2
@@ -56,7 +56,7 @@ deploy:
 
   ssh:
     host:
-     - gengar.l.fap.no
+     - primeape.terra.fap.no
     user: root
     port: 22
     sleep: 2
