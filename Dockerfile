@@ -1,33 +1,17 @@
-FROM alpine:3.4
+FROM python:2.7.12
 
 MAINTAINER Kristoffer Dalby
 
+ENV NAME=studlan
 
-ENV LIBRARY_PATH=/lib:/usr/lib
 ENV DIR=/srv/app
 
-RUN apk update && \
-    apk add postgresql-dev \
-        mailcap \
-        build-base \
-        python-dev \
-        py-pip \
-        jpeg-dev \
-        zlib-dev \
-        python \
-        linux-headers \
-        pcre-dev
-
-
+RUN mkdir $DIR
 WORKDIR $DIR
 
 # Install requirements
 COPY ./requirements $DIR/requirements
 RUN pip install -r requirements/production.txt --upgrade
-
-# Delete unneeded files.
-RUN apk del build-base \
-        python-dev
 
 # Copy project files
 COPY . $DIR
@@ -39,5 +23,6 @@ RUN python manage.py collectstatic --noinput --clear
 RUN rm studlan/settings/local.py
 
 EXPOSE 8080
+EXPOSE 8081
 
-ENTRYPOINT ["/srv/app/docker-entrypoint.sh"]
+CMD ["sh", "docker-entrypoint.sh"]
