@@ -49,8 +49,8 @@ deploy:
     sleep: 2
     commands:
       - docker pull registry.fap.no/studlan/studlan:latest
-      - docker-compose stop trondelan lan_recess
-      - docker-compose up trondelan lan_recess -d
+      - docker-compose -f /srv/docker/studlan/docker-compose.yml stop trondelan lan_recess
+      - docker-compose -f /srv/docker/studlan/docker-compose.yml up -d trondelan lan_recess
     when:
         event: tag
 
@@ -62,7 +62,7 @@ deploy:
     sleep: 2
     commands:
       - docker pull registry.fap.no/studlan/studlan:master
-      - docker-compose stop trondelan_dev
-      - docker-compose up trondelan_dev -d
+      - docker-compose -f /srv/docker/studlan/docker-compose.yml stop trondelan_dev
+      - docker-compose -f /srv/docker/studlan/docker-compose.yml up -d trondelan_dev
     when:
         branch: master
