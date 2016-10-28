@@ -603,7 +603,19 @@ msgstr "Historikk"
 msgid "Alias"
 msgstr "Alias"
 
-#: apps/userprofile/views.py:128
+#: apps/userprofile/views.py:131
+msgid "Invalid alis. Max length is 40 characters"
+msgstr "Ugyldig alias. Makslengde er 40 karakterer"
+
+#: apps/userprofile/views.py:134
+msgid "Alias was added"
+msgstr "Aliaset ble lagt til"
+
+#: apps/userprofile/views.py:143
+msgid "You can only remove your own alias"
+msgstr "Du kan kun fjerne dine egne alias"
+
+#: apps/userprofile/views.py:147
 msgid "Alias was removed"
 msgstr "Aliaset ble fjernet"
 
