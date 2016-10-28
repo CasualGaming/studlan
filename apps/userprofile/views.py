@@ -6,6 +6,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import ugettext as _
@@ -124,8 +125,13 @@ def add_alias(request):
         alias.user = request.user
         alias.alias_type = selected_type
         alias.nick = request.POST.get("nick")
+        try:
+            alias.full_clean()
+        except ValidationError :
+            messages.error(request, _(u'Invalid alis. Max length is 40 characters'))
+            return redirect('/profile/alias')
         alias.save()
-        messages.success(request, _(u'Alias was removed'))
+        messages.success(request, _(u'Alias was added'))
 
     return redirect('/profile/alias')
 
@@ -134,10 +140,10 @@ def add_alias(request):
 def remove_alias(request, alias_id):
     alias = get_object_or_404(Alias, pk=alias_id)
     if alias.user != request.user:
-        messages.error(request, "You can only remove your own alias")
+        messages.error(request, _(u'You can only remove your own alias'))
         return redirect('/profile/alias')
     else:
         alias.delete()
-        messages.success(request, "Alias was removed")
+        messages.success(request, _(u'Alias was removed'))
 
     return redirect('/profile/alias')
