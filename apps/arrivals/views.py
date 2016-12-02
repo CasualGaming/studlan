@@ -14,25 +14,22 @@ from django.contrib.admin.views.decorators import staff_member_required
 from apps.lan.models import LAN, Attendee, Ticket, TicketType
 from apps.seating.models import Seat
 
+
 @login_required
+@staff_member_required
 def home(request):
-    if not request.user.is_staff:
-        raise Http404
-    
     lans = LAN.objects.filter(end_date__gte=datetime.now())
-    upcoming = True
     if lans.count() == 1:
         return redirect('arrivals', lan_id=lans[0].id)
-    if lans.count == 0:
+    else:
         lans = LAN.objects.all()
-        upcoming = False 
 
     breadcrumbs = (
         ('Home', '/'),
         ('Arrivals', '')
     )
 
-    return render(request, 'arrivals/home.html', {'lans': lans, 'upcoming': upcoming, 'breadcrumbs': breadcrumbs})
+    return render(request, 'arrivals/home.html', {'lans': lans, 'breadcrumbs': breadcrumbs})
 
 
 @ensure_csrf_cookie
