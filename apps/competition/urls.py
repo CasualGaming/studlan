@@ -17,4 +17,7 @@ urlpatterns = patterns('apps.competition.views',
     # Activiy related
     url(r'^activity/(?P<activity_id>\d+)/$', 'activity_details', name='activity_details'),
     url(r'^(?P<lan_id>\d+)/activity/(?P<activity_id>\d+)/$', 'activity_details_filtered', name='activity_details_show_lan'),
+
+    # Schedule related
+    url(r'^schedule/', 'schedule', name='competition_schedule')
 )

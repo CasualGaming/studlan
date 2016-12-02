@@ -286,3 +286,16 @@ def translate_competitions(competitions):
     for competition in competitions:
         translated_competitions.append(competition.get_translation(language=translation.get_language()))
     return translated_competitions
+
+
+def schedule(request):
+    lans = LAN.objects.filter(end_date__gte=datetime.now())
+    context = {}
+
+    if lans:
+        context['lan'] = lans[0]
+        context['start_date'] = unicode(lans[0].start_date.year) + unicode(lans[0].start_date.month) + unicode(lans[0].start_date.day)
+        context['end_date'] = unicode(lans[0].end_date.year) + unicode(lans[0].end_date.month) + unicode(lans[0].end_date.day)
+        context['cal_src'] = settings.GOOGLE_CAL_SRC
+
+    return render(request, 'competition/schedule.html', context)

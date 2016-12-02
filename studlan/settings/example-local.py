@@ -28,4 +28,5 @@ STRIPE_PUBLIC_KEY = 'pk_test_6pRNASCoBOKtIshFeQd4XMUh'
 
 STRIPE_PRIVATE_KEY = 'sk_test_BQokikJOvBiI2HlWgH4olfQ2'
 
-GOOGLE_API_KEY = 'APIKEYHERE'
+# Cal src attribute from the google embedded iframe
+GOOGLE_CAL_SRC = ''
