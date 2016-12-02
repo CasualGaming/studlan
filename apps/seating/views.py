@@ -22,8 +22,14 @@ def main(request):
     if lans:
         return seating_details(request, lans[0].id)
 
-    messages.error(request, _(u"Seat reservation is not active."))
-    return redirect('/')
+    context = {}
+    breadcrumbs = (
+        ('studLAN', '/'),
+        ('Seatings', reverse('seatings'))
+    )
+    context['breadcrumbs'] = breadcrumbs
+
+    return render(request, 'seating/seating.html', context)
 
 
 def main_filtered(request, lan_id):
@@ -44,7 +50,7 @@ def main_filtered(request, lan_id):
     )
     context['breadcrumbs'] = breadcrumbs
 
-    return render(request, 'seating/seatings.html', context)
+    return render(request, 'seating/seating.html', context)
 
 
 def seating_details(request, lan_id, seating_id=None, seat_id=None):
