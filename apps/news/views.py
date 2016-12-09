@@ -3,6 +3,7 @@
 
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.conf import settings
 
 from apps.news.models import Article
 from apps.lan.models import Stream
@@ -31,9 +32,9 @@ def main(request, page):
 
         articles = paginator.page(1)
     if len(streams) > 0:
-        return render(request, 'news/news.html', {'articles': articles, 'page': page, 'stream': streams[0]})
+        return render(request, 'news/news.html', {'articles': articles, 'page': page, 'stream': streams[0], 'languages': settings.LANGUAGES})
     else:
-        return render(request, 'news/news.html', {'articles': articles, 'page': page})
+        return render(request, 'news/news.html', {'articles': articles, 'page': page, 'languages': settings.LANGUAGES})
 
 
 def single(request, article_id):

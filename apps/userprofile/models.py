@@ -11,7 +11,7 @@ GENDERS = ((1, _(u'Male')), (2, _(u'Female')))
 
 class UserProfile(models.Model):
 
-    user = models.ForeignKey(User, related_name='profile', unique=True)
+    user = models.OneToOneField(User, related_name='profile')
 
     nick = models.CharField(_(u'nick'), max_length=20, 
         help_text='Specify a nick name (display name).')
@@ -46,7 +46,7 @@ class AliasType(models.Model):
     description = models.CharField('Description', max_length=100, help_text='Short description')
     profile_url = models.URLField('Profile url', blank=True, null=True, help_text='Url where profile info can be '
                                   'retrieved. E.g. https://steamcommunity.com/id/')
-    activity = models.ForeignKey('competition.Activity', related_name='alias_type', unique=True)
+    activity = models.OneToOneField('competition.Activity', related_name='alias_type')
 
     def __unicode__(self):
         return self.description
