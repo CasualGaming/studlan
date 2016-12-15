@@ -39,6 +39,7 @@ class UserProfile(models.Model):
             return True
         return False
 
+
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 
 

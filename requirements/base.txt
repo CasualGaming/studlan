@@ -1,8 +1,8 @@
-Django==1.7.1
+Django==1.10.0
 django-markdown-deux==1.0.4
 django-translatable==0.1.1
 reportlab
 stripe==1.19.1
 beautifulsoup4==4.3.2
 xlwt==1.0.0
-django-postman==3.2.2
+django-postman==3.5.1

@@ -23,7 +23,7 @@ from apps.lan.models import LAN, Attendee
 
 @sensitive_post_parameters()
 def login(request):
-    redirect_url = request.REQUEST.get('next', '')
+    redirect_url = request.GET.get('next', '')
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.login(request):
