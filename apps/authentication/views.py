@@ -101,17 +101,16 @@ def register(request):
 @sensitive_post_parameters()
 @staff_member_required
 def direct_register(request):
-    lan = None
+    lan = LAN.objects.filter(end_date__gte=datetime.now()).first()
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
             cleaned = form.cleaned_data
 
-            if not LAN.objects.filter(end_date__gte=datetime.now()).exists():
+            if lan is None:
                 messages.error(request, u'No upcoming LAN was found.')
                 return HttpResponseRedirect('/auth/direct_register')
 
-            lan = LAN.objects.filter(end_date__gte=datetime.now())[0]
 
             # Create user
             user = User(
@@ -145,8 +144,6 @@ def direct_register(request):
             form = RegisterForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
     else:
         form = RegisterForm()
-        if LAN.objects.filter(end_date__gte=datetime.now()).exists():
-            lan = LAN.objects.filter(end_date__gte=datetime.now())[0]
 
     return render(request, 'auth/direct_register.html', {'form': form, 'lan': lan})
 
