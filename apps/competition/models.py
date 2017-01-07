@@ -171,3 +171,26 @@ class Match(models.Model):
     state = models.CharField('state', max_length=50)
     winner = models.ForeignKey(Participant, related_name='winner', null=True)
 
+    def get_p1(self):
+        if self.player1:
+            if self.player1.is_team:
+                return self.player1.team
+            else:
+                return self.player1.user
+        else:
+            return "TBA"
+
+    def get_p2(self):
+        if self.player2:
+            if self.player2.is_team:
+                return self.player2.team
+            else:
+                return self.player2.user
+        else:
+            return "TBA"
+
+    def get_compo(self):
+        return self.competition.activity.title
+
+    def get_lan(self):
+        return self.competition.lan.title
