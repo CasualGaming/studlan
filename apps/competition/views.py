@@ -170,8 +170,8 @@ def competition_details(request, competition_id):
                 else:
                     context['registered'] = False
         except ObjectDoesNotExist:
-            if competition.status < 4:
-                messages.warning(request, 'No matches for you just yet!')
+            if 1 < competition.status < 4:
+                messages.warning(request, 'You have no current match, please check the brackets for more information')
 
     # Insert placeholder image if the image_url is empty
     if not competition.activity.image_url:
