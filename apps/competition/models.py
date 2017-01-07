@@ -49,7 +49,7 @@ class Competition(TranslatableModel):
     status = models.SmallIntegerField('status', choices=STATUS_OPTIONS)
     activity = models.ForeignKey(Activity)
     lan = models.ForeignKey(LAN)
-    challonge_url = models.URLField('Challonge url', blank=True, null=True)
+    challonge_url = models.CharField('Challonge url', max_length=50, blank=True, null=True)
     use_teams = models.BooleanField('use teams', default=False,
                                     help_text='If checked, participants will be ignored, and will '
                                     'instead use teams. If left unchecked teams will be ignored, '
@@ -64,6 +64,7 @@ class Competition(TranslatableModel):
     require_alias = models.BooleanField('require alias', default=False, help_text="If checked, players will need to register"
                                         "an alias for the Activity that the competition belongs to.")
     start_time = models.DateTimeField(blank=True, null=True)
+
 
     def get_teams(self):
         if self.use_teams:
@@ -136,6 +137,7 @@ class Participant(models.Model):
     user = models.ForeignKey(User, null=True)
     team = models.ForeignKey('team.Team', null=True)
     competition = models.ForeignKey(Competition)
+    cid = models.CharField('cid', max_length=50, null=True)
 
     def __unicode__(self):
         if self.user:
@@ -155,3 +157,16 @@ class Participant(models.Model):
             ('team', 'competition',),
         )
         ordering = ['user', 'team']
+
+
+
+class Match(models.Model):
+    matchid = models.CharField('matchid', max_length=50)
+    player1 = models.ForeignKey(Participant, related_name='player1', null=True)
+    player2 = models.ForeignKey(Participant, related_name='player2', null=True)
+    competition = models.ForeignKey(Competition)
+    p1_reg_score = models.CharField('p1_reg_score', max_length=50, null=True)
+    p2_reg_score = models.CharField('p2_reg_score', max_length=50, null=True)
+    final_score = models.CharField('final_score', max_length=50, null=True)
+    state = models.CharField('state', max_length=50)
+    winner = models.ForeignKey(Participant, related_name='winner', null=True)

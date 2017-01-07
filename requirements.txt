@@ -1,0 +1,14 @@
+beautifulsoup4==4.3.2
+Django==1.7.1
+django-markdown-deux==1.0.4
+django-postman==3.2.2
+django-translatable==0.1.1
+iso8601==0.1.11
+markdown2==2.3.2
+olefile==0.43
+Pillow==4.0.0
+-e git+http://github.com/ZEDGR/pychal@db78a2572e258b1f174f5574a63ff2319df3e5cb#egg=pychal
+reportlab==3.3.0
+requests==2.12.4
+stripe==1.19.1
+xlwt==1.0.0

@@ -3,7 +3,7 @@
 from django.contrib import admin
 from django.conf import settings
 
-from apps.competition.models import Activity, Competition, Participant, CompetitionTranslation
+from apps.competition.models import Activity, Competition, Participant, CompetitionTranslation, Match
 
 
 class CompetitionTranslationInlineAdmin(admin.StackedInline):
@@ -22,3 +22,4 @@ class CompetitionAdmin(admin.ModelAdmin):
 admin.site.register(Activity)
 admin.site.register(Competition, CompetitionAdmin)
 admin.site.register(Participant)
+admin.site.register(Match)
