@@ -144,6 +144,7 @@ def competition_details(request, competition_id):
     context['teams'] = teams
     context['users'] = users
     if competition.has_participant(request.user):
+        p = None
         if request.user in users:
             context['participating'] = 'solo'
             p = Participant.objects.get(user=request.user, competition=competition)
@@ -152,26 +153,27 @@ def competition_details(request, competition_id):
             context['participating'] = 'team'
             owned_teams = Team.objects.filter(leader=request.user)
             k = set(owned_teams) & set(teams)
-            p = Participant.objects.get(team=k.pop(), competition=competition)
-
-        try:
-            match = Match.objects.get((Q(player1=p) | Q(player2=p)) & Q(state='open'))
-            context['player_match'] = match
-            if match.player1 == p:
-                context['player'] = 1
-                if match.p1_reg_score:
-                    context['registered'] = True
+            if k:
+                p = Participant.objects.get(team=k.pop(), competition=competition)
+        if p:
+            try:
+                match = Match.objects.get((Q(player1=p) | Q(player2=p)) & Q(state='open'))
+                context['player_match'] = match
+                if match.player1 == p:
+                    context['player'] = 1
+                    if match.p1_reg_score:
+                        context['registered'] = True
+                    else:
+                        context['registered'] = False
                 else:
-                    context['registered'] = False
-            else:
-                context['player'] = 2
-                if match.p2_reg_score:
-                    context['registered'] = True
-                else:
-                    context['registered'] = False
-        except ObjectDoesNotExist:
-            if 1 < competition.status < 4:
-                messages.warning(request, 'You have no current match, please check the brackets for more information')
+                    context['player'] = 2
+                    if match.p2_reg_score:
+                        context['registered'] = True
+                    else:
+                        context['registered'] = False
+            except ObjectDoesNotExist:
+                if 1 < competition.status < 4:
+                    messages.warning(request, 'You have no current match, please check the brackets for more information')
 
     # Insert placeholder image if the image_url is empty
     if not competition.activity.image_url:
