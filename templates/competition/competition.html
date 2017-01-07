@@ -45,14 +45,28 @@
                       <div class="container">
                           <div class="row">
                             <div class="col-md-4">
-                                <h2 class="pull-left">{{ player_match.player1.user.username }} </h2>
+                                <h2 class="pull-left">
+                                    {% if competition.use_teams %}
+                                    {{ player_match.player1}}
+                                    {% else %}
+                                    {{ player_match.player1.user.username }}
+                                    {% endif %}
+                                </h2>
                             </div>
 
                               <div class="col-md-4">
                                 <h2 class="text-center">VS</h2>
                             </div>
                             <div class="col-md-4">
-                                <h2 class="pull-right">{{ player_match.player2.user.username }}</h2>
+                                <h2 class="pull-right">
+
+                                    {% if competition.use_teams %}
+                                        {{ player_match.player2}}
+                                    {% else %}
+                                        {{ player_match.player2.user.username }}
+                                    {% endif %}
+
+                                </h2>
                             </div>
 
 
@@ -81,14 +95,20 @@
 
                                  <div class="row">
                             <div class="col-md-4">
-                                <h2 class="pull-left">1 </h2>
+
                             </div>
 
-                              <div class="col-md-4">
+                              <div class="col-md-4 ">
                                         <input class="btn btn-danger center-block disabled" type="submit" value="Wait for admin"/>
+                                  <h2> Submitted:
+                                    {% if player == 1 %}
+                                        {{ player_match.p1_reg_score }}
+                                    {% else %}
+                                        {{ player_match.p2_reg_score }}
+                                    {% endif %}
+                                </h2>
                             </div>
-                            <div class="col-md-4">
-                                <h2 class="pull-right">2</h2>
+
                             </div>
                                 {% endif %}
                           </div>
@@ -198,6 +218,17 @@
                     </div>
                 {% endif %}
         {% endif %}
+        {% if request.user.is_staff and competition.status == 1 %}
+             <div class="col-md-9">
+                <form class="form-inline" action="{% url 'start_compo' competition.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="center-on-collapse">
+                        <label for="start" class="control-label">{% trans "Click and wait to start compo" %}: </label>
+                        <input type="submit" class="btn btn-warning" value="{% trans "Start Compo" %}"/>
+                    </div>
+                </form>
+            </div>
+            {% endif %}
         {% if competition.status == 3 %}
             <!-- not implemented...
             <a class="btn large danger" href="/competition/{{ competition.id }}/forfeit.html">Forfeit competition</a>
@@ -211,30 +242,40 @@
         <div class="row">
         <h4>Submit Scores to Challonge</h4>
             {% for open_match in open_matches  %}
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="well">
                         <p>Challonge-id: {{ open_match.matchid }}</p>
                         <div class="col-md-6">
-                        {% if open_match.p1_reg_score %}
-                        <h5>{{ open_match.player1.user.username }} : {{ open_match.p1_reg_score }}</h5>
-                        {% else %}
-                        <h5>{{ open_match.player1.user.username }}: TBA</h5>
-                        {% endif %}
+                            {% if competition.use_teams %}
+                                <h5 class="pull-left">{{ open_match.player1 }} :</h5>
+                            {% else %}
+                                <h5 class="pull-left">{{ open_match.player1.user.username }} :</h5>
+                            {% endif %}
+                            {% if open_match.p1_reg_score %}
+                                <h5 class="pull-right"> {{ open_match.p1_reg_score }}</h5>
+                            {% else %}
+                                <h5 class="pull-right">  TBA</h5>
+                            {% endif %}
                         </div>
                         <div class="col-md-6">
-                        {% if open_match.p2_reg_score %}
-                        <h5>{{ open_match.player2.user.username }}: {{ open_match.p2_reg_score }}</h5>
-                        {% else %}
-                        <h5>{{ open_match.player2.user.username }}: TBA</h5>
-                        {% endif %}
+                            {% if competition.use_teams %}
+                                <h5 class="pull-left">{{ open_match.player2 }} :</h5>
+                            {% else %}
+                                <h5 class="pull-left">{{ open_match.player2.user.username }} :</h5>
+                            {% endif %}
+                            {% if open_match.p2_reg_score %}
+                                <h5 class="pull-right"> {{ open_match.p2_reg_score }}</h5>
+                            {% else %}
+                                <h5 class="pull-right">  TBA</h5>
+                            {% endif %}
                         </div>
 
                     <form class="form-inline" action="{% url 'submit_score' competition.id open_match.matchid %}" method="POST">
                         {% csrf_token %}
                         <label for="winner" class="control-label"> Select winner: </label>
                         <select class="form-control" name="winner" id="winner">
-                                <option value="{{ open_match.player1.cid }}">{{ open_match.player1.user.username }}</option>
-                                <option value="{{ open_match.player2.cid }}">{{ open_match.player2.user.username }}</option>
+                                <option value="{{ open_match.player1.cid }}">{% if competition.use_teams %}{{ open_match.player1 }}{% else %}{{ open_match.player1.user.username }}{% endif %}</option>
+                                <option value="{{ open_match.player2.cid }}">{% if competition.use_teams %}{{ open_match.player2 }}{% else %}{{ open_match.player2.user.username }}{% endif %}</option>
                         </select>
                         <div class="form-actions">
                             <label for="winner" class="control-label"> Type score (x-y)</label>

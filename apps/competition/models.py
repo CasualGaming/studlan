@@ -170,3 +170,4 @@ class Match(models.Model):
     final_score = models.CharField('final_score', max_length=50, null=True)
     state = models.CharField('state', max_length=50)
     winner = models.ForeignKey(Participant, related_name='winner', null=True)
+

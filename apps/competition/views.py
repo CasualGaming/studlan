@@ -143,32 +143,35 @@ def competition_details(request, competition_id):
 
     context['teams'] = teams
     context['users'] = users
-
     if competition.has_participant(request.user):
         if request.user in users:
             context['participating'] = 'solo'
             p = Participant.objects.get(user=request.user, competition=competition)
-            try:
-                match = Match.objects.get((Q(player1=p) | Q(player2=p)) & Q(state='open'))
-                if match:
-                    context['player_match'] = match
-                    if match.player1.user == request.user:
-                        context['player'] = 1
-                        if match.p1_reg_score:
-                            context['registered'] = True
-                        else:
-                            context['registered'] = False
-                    else:
-                        context['player'] = 2
-                        if match.p2_reg_score:
-                            context['registered'] = True
-                        else:
-                            context['registered'] = False
-            except ObjectDoesNotExist:
-                if competition.status < 4:
-                    messages.warning(request, 'No matches for you just yet!')
+
         else:
             context['participating'] = 'team'
+            owned_teams = Team.objects.filter(leader=request.user)
+            k = set(owned_teams) & set(teams)
+            p = Participant.objects.get(team=k.pop(), competition=competition)
+
+        try:
+            match = Match.objects.get((Q(player1=p) | Q(player2=p)) & Q(state='open'))
+            context['player_match'] = match
+            if match.player1 == p:
+                context['player'] = 1
+                if match.p1_reg_score:
+                    context['registered'] = True
+                else:
+                    context['registered'] = False
+            else:
+                context['player'] = 2
+                if match.p2_reg_score:
+                    context['registered'] = True
+                else:
+                    context['registered'] = False
+        except ObjectDoesNotExist:
+            if competition.status < 4:
+                messages.warning(request, 'No matches for you just yet!')
 
     # Insert placeholder image if the image_url is empty
     if not competition.activity.image_url:
@@ -326,13 +329,13 @@ def translate_competitions(competitions):
 def start_compo(request, competition_id):
     competition = get_object_or_404(Competition, pk=competition_id)
     if competition.status == 1:
-        competition.status = 2
+        competition.status = 3
         messages.success(request, 'Tournament has started!')
         challonge.set_credentials("tordsk", "nJPg1DF7ZxCjPHs3C58BYlrtGh2XG3tWxBLciigZ")
         url = str(int(time.time())) + competition.activity.title
         url.replace(" ", '"')
         competition.challonge_url = url
-        challonge.tournaments.create(competition.activity.title, url,tournament_type="single elimination")
+        challonge.tournaments.create(competition.activity.title, url, tournament_type="single elimination")
         names = []
         teams,users = competition.get_participants()
         if competition.use_teams:
@@ -348,8 +351,10 @@ def start_compo(request, competition_id):
         cparticipants = challonge.participants.index(url)
 
         for part in cparticipants:
-            u = User.objects.get(username=part['name'])
-            par = Participant.objects.get(user=u, competition=competition)
+            if not competition.use_teams:
+                par = Participant.objects.get(user__username=part['name'], competition=competition)
+            else:
+                par = Participant.objects.get(team__title=part['name'], competition=competition)
             par.cid = part['id']
             par.save()
         competition.save()
