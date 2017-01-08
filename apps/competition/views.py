@@ -211,10 +211,6 @@ def update_match_list(competition):
         if copen['player2_id']:
             open_match.player2 = Participant.objects.get(competition=competition, cid=copen['player2_id'])
         open_match.save()
-    if not c_open_matches:
-        competition.status = 4
-        competition.save()
-        challonge.tournaments.finalize(competition.challonge_url)
     return Match.objects.filter(competition=competition, state='open')
 
 @login_required
@@ -425,6 +421,10 @@ def complete_match(competition, match):
     match.state = 'complete'
     match.save()
     update_match_list(competition)
+    if not Match.objects.filter(competition=competition, state='open'):
+        competition.status = 4
+        challonge.tournaments.finalize(competition.challonge_url)
+        competition.save()
 
 
 def reporting_error(match):
