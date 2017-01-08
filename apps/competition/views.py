@@ -129,7 +129,7 @@ def shorten_descriptions(competitions, length):
 def competition_details(request, competition_id):
     context = {}
     competition = get_object_or_404(Competition, pk=competition_id)
-    challonge.set_credentials("tordsk", "nJPg1DF7ZxCjPHs3C58BYlrtGh2XG3tWxBLciigZ")
+    challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
 
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
@@ -196,7 +196,7 @@ def competition_details(request, competition_id):
 
 
 def update_match_list(competition):
-    challonge.set_credentials("tordsk", "nJPg1DF7ZxCjPHs3C58BYlrtGh2XG3tWxBLciigZ")
+    challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
     c_open_matches = challonge.matches.index(competition.challonge_url)
     competition_matches = Match.objects.filter(competition=competition)
     for copen in c_open_matches:
@@ -350,7 +350,7 @@ def start_compo(request, competition_id):
         try:
             competition.status = 3
             messages.success(request, 'Tournament has started!')
-            challonge.set_credentials("tordsk", "nJPg1DF7ZxCjPHs3C58BYlrtGh2XG3tWxBLciigZ")
+            challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
             url = str(int(time.time())) + competition.activity.title
             url = re.sub('[^0-9a-zA-Z]+', '', url)
             competition.challonge_url = url
@@ -415,7 +415,7 @@ def register_score(request, competition_id, match_id, player_id):
 
 
 def complete_match(competition, match):
-    challonge.set_credentials("tordsk", "nJPg1DF7ZxCjPHs3C58BYlrtGh2XG3tWxBLciigZ")
+    challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
     challonge.matches.update(competition.challonge_url, match.matchid, scores_csv=match.final_score,
                              winner_id=match.winner.cid)
     match.state = 'complete'
