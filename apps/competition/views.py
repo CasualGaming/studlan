@@ -18,7 +18,7 @@ from apps.competition.models import Activity, Competition, Participant, Match
 from apps.lan.models import LAN, Attendee
 from apps.team.models import Team
 from apps.lottery.models import Lottery
-import time
+import time, re
 
 
 def main(request):
@@ -190,12 +190,32 @@ def competition_details(request, competition_id):
 
 
     #admin control panel
-    context['open_matches'] = Match.objects.filter(competition=competition, state='open')
-
-
-
+    if request.user.is_staff and competition.status > 1 and competition.challonge_url:
+        context['open_matches'] = Match.objects.filter(Q(competition=competition, state='open') | Q(competition=competition, state='error'))
     return render(request, 'competition/competition.html', context)
 
+
+def update_match_list(competition):
+    challonge.set_credentials("tordsk", "nJPg1DF7ZxCjPHs3C58BYlrtGh2XG3tWxBLciigZ")
+    c_open_matches = challonge.matches.index(competition.challonge_url)
+    competition_matches = Match.objects.filter(competition=competition)
+    for copen in c_open_matches:
+        if competition_matches:
+            open_match = Match.objects.get(matchid=str(copen['id']), competition=competition)
+        else:
+            open_match = Match(matchid=str(copen['id']), competition=competition)
+        if open_match.state != 'error':
+            open_match.state = copen['state']
+        if copen['player1_id']:
+            open_match.player1 = Participant.objects.get(competition=competition, cid=copen['player1_id'])
+        if copen['player2_id']:
+            open_match.player2 = Participant.objects.get(competition=competition, cid=copen['player2_id'])
+        open_match.save()
+    if not c_open_matches:
+        competition.status = 4
+        competition.save()
+        challonge.tournaments.finalize(competition.challonge_url)
+    return Match.objects.filter(competition=competition, state='open')
 
 @login_required
 def join(request, competition_id):
@@ -331,43 +351,40 @@ def translate_competitions(competitions):
 def start_compo(request, competition_id):
     competition = get_object_or_404(Competition, pk=competition_id)
     if competition.status == 1:
-        competition.status = 3
-        messages.success(request, 'Tournament has started!')
-        challonge.set_credentials("tordsk", "nJPg1DF7ZxCjPHs3C58BYlrtGh2XG3tWxBLciigZ")
-        url = str(int(time.time())) + competition.activity.title
-        url.replace(" ", '"')
-        competition.challonge_url = url
-        challonge.tournaments.create(competition.activity.title, url, tournament_type="single elimination")
-        names = []
-        teams,users = competition.get_participants()
-        if competition.use_teams:
-            for team in teams:
-                names.append(team.title)
+        try:
+            competition.status = 3
+            messages.success(request, 'Tournament has started!')
+            challonge.set_credentials("tordsk", "nJPg1DF7ZxCjPHs3C58BYlrtGh2XG3tWxBLciigZ")
+            url = str(int(time.time())) + competition.activity.title
+            url = re.sub('[^0-9a-zA-Z]+', '', url)
+            competition.challonge_url = url
+            challonge.tournaments.create(competition.activity.title, url, tournament_type="single elimination")
+            names = []
+            teams,users = competition.get_participants()
+            if competition.use_teams:
+                for team in teams:
+                    names.append(team.title)
 
-        else:
-            for user in users:
-                names.append(user.username)
-
-        challonge.participants.bulk_add(url, names)
-        challonge.tournaments.start(url)
-        cparticipants = challonge.participants.index(url)
-
-        for part in cparticipants:
-            if not competition.use_teams:
-                par = Participant.objects.get(user__username=part['name'], competition=competition)
             else:
-                par = Participant.objects.get(team__title=part['name'], competition=competition)
-            par.cid = part['id']
-            par.save()
-        competition.save()
+                for user in users:
+                    names.append(user.username)
 
-        cmatches = challonge.matches.index(competition.challonge_url)
-        for cmatch in cmatches:
-            new_match = Match(matchid=str(cmatch['id']), competition=competition, state=str(cmatch['state']))
-            if new_match.state == 'open':
-                new_match.player1 = get_object_or_404(Participant, cid=str(cmatch['player1_id']), competition=competition)
-                new_match.player2 = get_object_or_404(Participant, cid=str(cmatch['player2_id']), competition=competition)
-            new_match.save()
+            challonge.participants.bulk_add(url, names)
+            challonge.tournaments.start(url)
+            cparticipants = challonge.participants.index(url)
+
+            for part in cparticipants:
+                if not competition.use_teams:
+                    par = Participant.objects.get(user__username=part['name'], competition=competition)
+                else:
+                    par = Participant.objects.get(team__title=part['name'], competition=competition)
+                par.cid = part['id']
+                par.save()
+            competition.save()
+
+            update_match_list(competition)
+        except:
+            pass
     return redirect(competition)
 
 @login_required
@@ -381,34 +398,51 @@ def register_score(request, competition_id, match_id, player_id):
             match.p1_reg_score = p1_score + "-" + p2_score
         elif player_id == '2':
             match.p2_reg_score = p1_score + "-" + p2_score
+
+    if match.p1_reg_score and match.p2_reg_score:
+        if match.p1_reg_score == match.p2_reg_score:
+            if match.p1_reg_score[0] > match.p1_reg_score[2]:
+                match.final_score = match.p1_reg_score
+                match.winner = match.player1
+            elif match.p1_reg_score[0] < match.p1_reg_score[2]:
+                match.final_score = match.p1_reg_score
+                match.winner = match.player2
+            else:
+                match.save()
+                reporting_error(match)
+                return redirect(competition)
+            complete_match(competition, match)
+        else:
+            reporting_error(match)
     match.save()
     return redirect(competition)
+
+
+def complete_match(competition, match):
+    challonge.set_credentials("tordsk", "nJPg1DF7ZxCjPHs3C58BYlrtGh2XG3tWxBLciigZ")
+    challonge.matches.update(competition.challonge_url, match.matchid, scores_csv=match.final_score,
+                             winner_id=match.winner.cid)
+    match.state = 'complete'
+    match.save()
+    update_match_list(competition)
+
+
+def reporting_error(match):
+    match.state = 'error'
+    match.save()
+
 
 @staff_member_required
 @login_required
 def submit_score(request, competition_id, match_id):
-    challonge.set_credentials("tordsk", "nJPg1DF7ZxCjPHs3C58BYlrtGh2XG3tWxBLciigZ")
     competition = get_object_or_404(Competition, pk=competition_id)
     match = get_object_or_404(Match, matchid=match_id, competition=competition)
     if request.method == 'POST':
         final_score = request.POST.get('final_score')
         print final_score
         winner = request.POST.get('winner')
-        challonge.matches.update(competition.challonge_url, match_id, scores_csv=final_score, winner_id=winner)
         match.winner = Participant.objects.get(competition=competition, cid=winner)
         match.final_score = final_score
-        match.state = 'completed'
+        complete_match(competition, match)
     match.save()
-    c_open_matches = challonge.matches.index(competition.challonge_url, state='open')
-    for copen in c_open_matches:
-        open_match = Match.objects.get(matchid=str(copen['id']), competition=competition)
-        if open_match.state != 'open':
-            open_match.state = 'open'
-            open_match.player1 = Participant.objects.get(competition=competition, cid=copen['player1_id'])
-            open_match.player2 = Participant.objects.get(competition=competition, cid=copen['player2_id'])
-            open_match.save()
-    if not c_open_matches:
-        competition.status = 4
-        competition.save()
-        challonge.tournaments.finalize(competition.challonge_url)
     return redirect(competition)

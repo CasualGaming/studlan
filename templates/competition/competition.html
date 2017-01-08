@@ -243,7 +243,7 @@
         <h4>Submit Scores to Challonge</h4>
             {% for open_match in open_matches  %}
                 <div class="col-md-4">
-                    <div class="well">
+                    <div class="well"  {% if open_match.state == 'error' %} style="background-color:#ff6666;"{% endif %}>
                         <p>Challonge-id: {{ open_match.matchid }}</p>
                         <div class="col-md-6">
                             {% if competition.use_teams %}
