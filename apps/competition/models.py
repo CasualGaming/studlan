@@ -159,7 +159,6 @@ class Participant(models.Model):
         ordering = ['user', 'team']
 
 
-
 class Match(models.Model):
     matchid = models.CharField('matchid', max_length=50)
     player1 = models.ForeignKey(Participant, related_name='player1', null=True)

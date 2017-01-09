@@ -18,7 +18,7 @@ from apps.competition.models import Activity, Competition, Participant, Match
 from apps.lan.models import LAN, Attendee
 from apps.team.models import Team
 from apps.lottery.models import Lottery
-import time, re
+import re
 
 
 def main(request):
@@ -40,7 +40,6 @@ def main(request):
             (_(u'Competitions'), ''),
         )
         context['breadcrumbs'] = breadcrumbs
-
 
         return render(request, 'competition/competitions.html', context)
 
@@ -64,7 +63,6 @@ def main_filtered(request, lan_id):
         (lan, '')
     )
     context['breadcrumbs'] = breadcrumbs
-
 
     return render(request, 'competition/competitions.html', context)
 
@@ -213,6 +211,7 @@ def update_match_list(competition):
         open_match.save()
     return Match.objects.filter(competition=competition, state='open')
 
+
 @login_required
 def join(request, competition_id):
     competition = get_object_or_404(Competition, pk=competition_id)
@@ -302,6 +301,7 @@ def join(request, competition_id):
         messages.success(request, _(u"You have been signed up for ") + unicode(competition))
     return redirect(competition)
 
+
 @login_required
 def leave(request, competition_id):
     competition = get_object_or_404(Competition, pk=competition_id)
@@ -342,21 +342,15 @@ def translate_competitions(competitions):
         translated_competitions.append(competition.get_translation(language=translation.get_language()))
     return translated_competitions
 
+
 @staff_member_required
 @login_required
 def start_compo(request, competition_id):
     competition = get_object_or_404(Competition, pk=competition_id)
     if competition.status == 1:
         try:
-            competition.status = 3
-            messages.success(request, 'Tournament has started!')
-            challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
-            url = str(int(time.time())) + competition.activity.title
-            url = re.sub('[^0-9a-zA-Z]+', '', url)
-            competition.challonge_url = url
-            challonge.tournaments.create(competition.activity.title, url, tournament_type="single elimination")
             names = []
-            teams,users = competition.get_participants()
+            teams, users = competition.get_participants()
             if competition.use_teams:
                 for team in teams:
                     names.append(team.title)
@@ -365,6 +359,14 @@ def start_compo(request, competition_id):
                 for user in users:
                     names.append(user.username)
 
+            if len(names) < 2:
+                messages.error(request, 'Too few participants')
+                return redirect(competition)
+
+            url = unicode(competition.lan) + unicode(competition.activity)
+            url = re.sub('[^0-9a-zA-Z]+', '', url)
+            challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
+            challonge.tournaments.create(competition.activity.title, url, tournament_type="single elimination")
             challonge.participants.bulk_add(url, names)
             challonge.tournaments.start(url)
             cparticipants = challonge.participants.index(url)
@@ -376,12 +378,17 @@ def start_compo(request, competition_id):
                     par = Participant.objects.get(team__title=part['name'], competition=competition)
                 par.cid = part['id']
                 par.save()
-            competition.save()
 
+            competition.status = 3
+            competition.challonge_url = url
+            competition.save()
             update_match_list(competition)
+            messages.success(request, 'Tournament has started!')
         except:
-            pass
+            messages.error(request, 'Something went wrong')
+
     return redirect(competition)
+
 
 @login_required
 def register_score(request, competition_id, match_id, player_id):
