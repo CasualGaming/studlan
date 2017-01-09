@@ -39,6 +39,9 @@ class Competition(TranslatableModel):
 
     STATUS_OPTIONS = ((1, _(u'Open')), (2, _(u'Closed')), (3, _(u'In progress')),
                       (4, _(u'Finished')))
+
+    TOURNAMENT_FORMATS = (('single elimination', 'Single elimination'), ('double elimination', 'Double elimination'))
+
     statuses = {
         1: ['Registration open', 'success'],
         2: ['Registration closed', 'danger'],
@@ -66,6 +69,8 @@ class Competition(TranslatableModel):
     start_time = models.DateTimeField(blank=True, null=True)
     max_match_points = models.SmallIntegerField('Maximum match points', default=1, help_text="This number represents how many points are needed"
                                                 " to win a match. E.g. 3 in a BO 5 or 16 in BO 30")
+    tournament_format = models.CharField('Tournament format', max_length=20, blank=True,
+                                         null=True, choices=TOURNAMENT_FORMATS)
 
     def get_teams(self):
         if self.use_teams:

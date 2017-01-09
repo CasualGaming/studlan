@@ -364,10 +364,14 @@ def start_compo(request, competition_id):
                 messages.error(request, 'Too few participants')
                 return redirect(competition)
 
+            if competition.tournament_format is None:
+                messages.error(request, 'Set competition tournament format before using this feature')
+                return redirect(competition)
+
             url = unicode(competition.lan) + unicode(competition.activity)
             url = re.sub('[^0-9a-zA-Z]+', '', url)
             challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
-            challonge.tournaments.create(competition.activity.title, url, tournament_type="single elimination")
+            challonge.tournaments.create(competition.activity.title, url, tournament_type=competition.tournament_format)
             challonge.participants.bulk_add(url, names)
             challonge.tournaments.start(url)
             cparticipants = challonge.participants.index(url)
