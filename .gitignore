@@ -3,7 +3,8 @@
 
 local.py
 dev.db
-
+.idea/
+.vagrant/
 
 # Created by https://www.gitignore.io/api/vim,linux,windows,osx,intellij,pycharm,python
 
@@ -60,7 +61,8 @@ $RECYCLE.BIN/
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
