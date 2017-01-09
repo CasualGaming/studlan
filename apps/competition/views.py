@@ -400,7 +400,7 @@ def register_score(request, competition_id, match_id, player_id):
         p1_score = request.POST.get('player1score')
         p2_score = request.POST.get('player2score')
 
-        if p1_score > max_score or p1_score < 0 or p2_score > max_score or p2_score < 0:
+        if int(p1_score) > max_score or int(p1_score) < 0 or int(p2_score) > max_score or int(p2_score) < 0:
             messages.error(request, 'Invalid score. Score must be > 0 and < ' + unicode(max_score))
             return redirect(competition)
 
