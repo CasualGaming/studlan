@@ -157,6 +157,7 @@ def competition_details(request, competition_id):
             try:
                 match = Match.objects.get((Q(player1=p) | Q(player2=p)) & Q(state='open'))
                 context['player_match'] = match
+                context['point_choices'] = range(0, competition.max_match_points + 1)
                 if match.player1 == p:
                     context['player'] = 1
                     if match.p1_reg_score:
@@ -395,8 +396,14 @@ def register_score(request, competition_id, match_id, player_id):
     competition = get_object_or_404(Competition, pk=competition_id)
     match = get_object_or_404(Match, id=match_id, competition=competition)
     if request.method == 'POST':
+        max_score = competition.max_match_points
         p1_score = request.POST.get('player1score')
         p2_score = request.POST.get('player2score')
+
+        if p1_score > max_score or p1_score < 0 or p2_score > max_score or p2_score < 0:
+            messages.error(request, 'Invalid score. Score must be > 0 and < ' + unicode(max_score))
+            return redirect(competition)
+
         if player_id == '1':
             match.p1_reg_score = p1_score + "-" + p2_score
         elif player_id == '2':

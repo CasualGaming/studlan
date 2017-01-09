@@ -78,15 +78,15 @@
                                     {% csrf_token %}
                                     <div class="form-actions center-on-collapse">
                                          <select class="form-control pull-left" name="player1score" id="player1score">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
+                                             {% for choice in point_choices %}
+                                                <option value="{{ choice }}">{{ choice }}</option>
+                                             {% endfor %}
                                         </select>
 
                                          <select class="form-control pull-right" name="player2score" id="player2score">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
+                                            {% for choice in point_choices %}
+                                                <option value="{{ choice }}">{{ choice }}</option>
+                                             {% endfor %}
                                         </select>
                                         <input class="btn btn-success center-block" type="submit" value="Register Score"/>
                                     </div>

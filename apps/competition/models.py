@@ -64,7 +64,8 @@ class Competition(TranslatableModel):
     require_alias = models.BooleanField('require alias', default=False, help_text="If checked, players will need to register"
                                         "an alias for the Activity that the competition belongs to.")
     start_time = models.DateTimeField(blank=True, null=True)
-
+    max_match_points = models.SmallIntegerField('Maximum match points', default=1, help_text="This number represents how many points are needed"
+                                                " to win a match. E.g. 3 in a BO 5 or 16 in BO 30")
 
     def get_teams(self):
         if self.use_teams:
