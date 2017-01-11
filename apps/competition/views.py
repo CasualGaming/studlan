@@ -179,7 +179,7 @@ def competition_details(request, competition_id):
         competition.activity.image_url = 'http://placehold.it/150x150'
 
     if request.user.is_authenticated():
-        owned_teams =  Team.objects.filter(leader=request.user)
+        owned_teams = Team.objects.filter(leader=request.user)
 
         context['owned_teams'] = owned_teams
     else:
@@ -389,7 +389,8 @@ def start_compo(request, competition_id):
             competition.save()
             update_match_list(competition)
             messages.success(request, 'Tournament has started!')
-        except:
+        except Exception as e:
+            print e
             messages.error(request, 'Something went wrong')
 
     return redirect(competition)
@@ -400,6 +401,10 @@ def register_score(request, competition_id, match_id, player_id):
     competition = get_object_or_404(Competition, pk=competition_id)
     match = get_object_or_404(Match, id=match_id, competition=competition)
     if request.method == 'POST':
+        if not match.is_valid_score_reporter(request.user, player_id):
+            messages.error(request, 'You are unauthorized to report score for this match')
+            return redirect(competition)
+
         max_score = competition.max_match_points
         p1_score = request.POST.get('player1score')
         p2_score = request.POST.get('player2score')

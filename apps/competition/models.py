@@ -199,3 +199,16 @@ class Match(models.Model):
 
     def get_lan(self):
         return self.competition.lan.title
+
+    def is_valid_score_reporter(self, user, player_id):
+        if self.player1.team is None and self.player2.team is None:
+            if (user == self.player1.user and player_id == '1') or (user == self.player2.user and player_id == '2'):
+                return True
+        else:
+            if user == (self.player1.team.leader and player_id == '1')\
+                    or user == (self.player2.team.leader and player_id == '2'):
+                return True
+            if user in (self.player1.team.members.all() and player_id == '1')\
+                    or (user in self.player2.members.all() and player_id == '2'):
+                return True
+        return False
