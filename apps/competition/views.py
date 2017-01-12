@@ -19,6 +19,7 @@ from apps.lan.models import LAN, Attendee
 from apps.team.models import Team
 from apps.lottery.models import Lottery
 import re
+import time
 
 
 def main(request):
@@ -368,7 +369,7 @@ def start_compo(request, competition_id):
                 messages.error(request, 'Set competition tournament format before using this feature')
                 return redirect(competition)
 
-            url = unicode(competition.lan) + unicode(competition.activity)
+            url = unicode(competition.lan) + unicode(competition.activity) + unicode(int(time.time()))
             url = re.sub('[^0-9a-zA-Z]+', '', url)
             challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
             challonge.tournaments.create(competition.activity.title, url, tournament_type=competition.tournament_format)
