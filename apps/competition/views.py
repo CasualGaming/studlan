@@ -389,8 +389,7 @@ def start_compo(request, competition_id):
             competition.save()
             update_match_list(competition)
             messages.success(request, 'Tournament has started!')
-        except Exception as e:
-            print e
+        except:
             messages.error(request, 'Something went wrong')
 
     return redirect(competition)
