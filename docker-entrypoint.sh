@@ -5,7 +5,7 @@ rm /tmp/project-master.pid
 
 
 echo Starting uwsgi.
-exec uwsgi --chdir=/srv/studlan \
+exec uwsgi --chdir=/srv/app \
     --module=studlan.wsgi:application \
     --env DJANGO_SETTINGS_MODULE=studlan.settings \
     --master --pidfile=/tmp/project-master.pid \
