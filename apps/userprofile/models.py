@@ -55,7 +55,7 @@ class AliasType(models.Model):
 
 class Alias(models.Model):
     alias_type = models.ForeignKey(AliasType)
-    nick = models.CharField('nick', max_length=20)
+    nick = models.CharField('nick', max_length=40)
     user = models.ForeignKey(User, related_name='alias')
 
     def __unicode__(self):

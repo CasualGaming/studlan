@@ -15,7 +15,7 @@ notify:
 
 publish:
   docker:
-    registry: gengar.l.fap.no:5000
+    registry: registry.fap.no
     repo: studlan/studlan
     tag:
         - latest
@@ -29,7 +29,7 @@ publish:
       tag: latest
 
   docker:
-    registry: gengar.l.fap.no:5000
+    registry: registry.fap.no
     repo: studlan/studlan
     tag: master
     insecure: true
@@ -43,26 +43,26 @@ publish:
 deploy:
   ssh:
     host:
-     - gengar.l.fap.no
+     - primeape.terra.fap.no
     user: root
     port: 22
     sleep: 2
     commands:
       - docker pull registry.fap.no/studlan/studlan:latest
-      - docker-compose -f /srv/docker/studlan/prod-compose.yml stop
-      - docker-compose -f /srv/docker/studlan/prod-compose.yml up -d
+      - docker-compose -f /srv/docker/studlan/docker-compose.yml stop trondelan lan_recess
+      - docker-compose -f /srv/docker/studlan/docker-compose.yml up -d trondelan lan_recess
     when:
         event: tag
 
   ssh:
     host:
-     - gengar.l.fap.no
+     - primeape.terra.fap.no
     user: root
     port: 22
     sleep: 2
     commands:
       - docker pull registry.fap.no/studlan/studlan:master
-      - docker-compose -f /srv/docker/studlan/dev-compose.yml stop
-      - docker-compose -f /srv/docker/studlan/dev-compose.yml up -d
+      - docker-compose -f /srv/docker/studlan/docker-compose.yml stop trondelan_dev
+      - docker-compose -f /srv/docker/studlan/docker-compose.yml up -d trondelan_dev
     when:
         branch: master

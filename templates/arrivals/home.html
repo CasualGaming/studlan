@@ -2,7 +2,7 @@
 {% load markdown_deux_tags %}
 
 {% block title %}
-{% if upcoming %}Upcoming{% else %}Previous{% endif %} LANs 
+    LANs
 {% endblock title %}
 
 {% block content %}
@@ -11,13 +11,20 @@
             <h1>Arrivals - choose a LAN</h1>
         </div>
     </div>
-    <div class="row">
+
+        <div class="row">
         <div class="col-md-8">
-            <ul>
-            {% for lan in lans %}
-                <li><a href="{% url 'arrivals' lan.id %}">{{ lan }}</a></li>
-            {% endfor %}
-            </ul>
+            <table class="table table-bordered table-striped">
+                <thead><th>LAN</th><th>Arrivals</th></thead>
+                <tbody>
+                    {% for lan in lans %}
+                    <tr>
+                        <td><a href="{{ lan.get_absolute_url }}">{{ lan }}</a></td>
+                        <td><a href="{% url 'arrivals' lan.id %}">Arrivals</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 {% endblock content %}
