@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load markdown_deux_tags %}
+{% load static %}
 {% load misc %}
 
 {% block title %}
@@ -73,6 +74,6 @@ Register Arrivals
         </div>
     {% endif %}
     </div>
-    <script src="{{ STATIC_URL }}js/arrival.js"></script>
+    <script src="{% static 'js/arrival.js' %}"></script>
 
 {% endblock content %}
