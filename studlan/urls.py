@@ -1,18 +1,21 @@
 # -*- coding: utf-8 -*-
 
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from django.contrib import admin
+from apps.news import views as news_view
+from apps.misc import views as misc_view
+from apps.sponsor import views as sponsor_view
+from apps.payment import views as payment_view
 
-urlpatterns = patterns('',
-    
+urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-
-    url(r'^$', 'apps.news.views.main', name='root', kwargs={'page': 1}),
     url(r'^i18n/', include('django.conf.urls.i18n')),
-    url(r'^misc/remove_alert.html', 'apps.misc.views.remove_alert'),
-    url(r'^misc/change_language', 'apps.misc.views.change_language'),
-    url(r'^sponsors/', 'apps.sponsor.views.index', name='sponsors'),
-    url(r'^payment/(?P<ticket_id>\d+)/$', 'apps.payment.views.payment', name='payment'),
+
+    url(r'^$', news_view.main, name='root', kwargs={'page': 1}),
+    url(r'^misc/remove_alert.html$', misc_view.remove_alert),
+    url(r'^misc/change_language$', misc_view.change_language),
+    url(r'^sponsors/', sponsor_view.index, name='sponsors'),
+    url(r'^payment/(?P<ticket_id>\d+)/$', payment_view.payment, name='payment'),
 
     # app urls
     url(r'^api/',           include('apps.api.urls')),
@@ -25,7 +28,7 @@ urlpatterns = patterns('',
     url(r'^profile/',       include('apps.userprofile.urls')),
     url(r'^team/',          include('apps.team.urls')),
     url(r'^seating/',       include('apps.seating.urls')),
-    url(r'^messages/',      include('postman.urls')),
-)
+    url(r'^messages/',      include('postman.urls', namespace='postman')),
+]
 
 handler404 = 'apps.misc.views.handler404'
