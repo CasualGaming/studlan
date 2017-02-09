@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from django.forms.util import ErrorList
 from django.utils.safestring import mark_safe
 
-class InlineSpanErrorList(ErrorList):
+class InlineSpanErrorList():
     def __unicode__(self):
         return self.as_spans()
     def as_spans(self):

@@ -13,27 +13,12 @@
         <div class="col-md-9">
             <h2>
                 {{ team }}
-                {% if team.is_mine %}
-                    <a class="pull-right btn btn-small btn-danger" href="{% url 'disband_team' team.id %}">
-                        <i class="icon-remove icon-white"></i> Disband Team
-                    </a>
-                {% endif %}
-            </h2>
+                            </h2>
         </div>
     </div>
-	
-    <div class="row">
-        <div class="col-md-9">
-            <h3>{% trans "Leader" %}</h3>
-            <h4>
-                <a href="{% url 'profile' team.leader %}">{{ team.leader }} ({{ team.leader.get_full_name }})</a>
-            </h4>
-        </div>
-    </div>
-	
+
 	<div class="row">
         <div class="col-md-9">
-            {% if team.members.all %}
                 <h3>{% trans "Members" %}</h3>
                 <table class="table table-bordered table-striped table-hover click-table    ">
                     <thead>
@@ -42,9 +27,20 @@
                         <th class="col-md-2">{% trans "Options" %}</th>
                     </thead>
                     <tbody>
+                        <tr>
+                                <td class="underline" onclick="document.location='{% url 'profile' team.leader %}';">{{ team.leader }}<div class="pull-right btn btn-xs btn-info btn-disabeled">Admin</div></td>
+                                <td class="underline" onclick="document.location='{% url 'profile' team.leader %}';">{{ team.leader.get_full_name }}</td>
+                                <td>{% if team.is_mine %}
+                                        <div class="btn btn-xs btn-danger" onclick="disband()">
+                                            <i class="icon-remove icon-white"></i> Disband Team
+                                        </div>
+                                    {% endif %}
+                                </td>
+                        </tr>
+                        {% if team.members.all %}
                         {% for member in team.members.all %}
                             <tr onclick="document.location='{% url 'profile' member %}';">
-                                <td class="underline">{{ member }}</a></td>
+                                <td class="underline">{{ member }}</td>
                                 <td class="underline">{{ member.get_full_name }}</td>
                                 <td>
                                 {% if user == team.leader %}
@@ -55,11 +51,10 @@
                                 </td>
                             </tr>
                         {% endfor %}
+                    {% endif %}
                     </tbody>
                 </table>
-            {% else %}
-                <div class="alert alert-danger">This team has no members yet</div>
-            {% endif %}
+
 
             {% if invitation %}
                 <a class="btn btn-success btn" href="{% url 'join_team' team.id %}">Join team</a>
@@ -106,7 +101,7 @@
                     <tbody>
                         {% for invite in invitations %}
                             <tr onclick="document.location='{% url 'profile' invite.invitee %}';">
-                                <td class="underline">{{ invite.invitee }}</a></td>
+                                <td class="underline">{{ invite.invitee }}</td>
                                 <td class="underline">{{ invite.invitee.get_full_name }}</td>
                                 <td>
                                 {% if user == team.leader %}
@@ -123,3 +118,14 @@
     
 
 {% endblock content %}
+{% block script %}
+    {% if team.is_mine %}
+    <script>
+        function disband() {
+            if(window.confirm('Would you like to disband {{ team }}?')) {
+            window.location='{% url 'disband_team' team.id %}';
+            }
+        }
+    </script>
+    {% endif %}
+{% endblock script %}

@@ -12,7 +12,6 @@ PROJECT_SETTINGS_DIRECTORY = os.path.dirname(globals()['__file__'])
 PROJECT_ROOT_DIRECTORY = os.path.join(PROJECT_SETTINGS_DIRECTORY, '..', '..')
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
 MAX_TEAMS = 10
 
@@ -23,15 +22,65 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.debug',
-    'django.core.context_processors.i18n',
-    'django.core.context_processors.media',
-    'django.core.context_processors.static',
-    'django.core.context_processors.request',
-    'django.contrib.messages.context_processors.messages'
+INSTALLED_APPS = (
+    # third party apps
+    'markdown_deux',
+    'postman',
+
+    # django apps
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+
+    # studlan apps
+    'apps.api',
+    'apps.authentication',
+    'apps.competition',
+    'apps.lan',
+    'apps.lottery',
+    'apps.misc',
+    'apps.news',
+    'apps.sponsor',
+    'apps.team',
+    'apps.userprofile',
+    'apps.seating',
 )
+
+
+MIDDLEWARE_CLASSES = (
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+)
+
+
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(PROJECT_ROOT_DIRECTORY, 'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.i18n',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+
 
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
@@ -64,7 +113,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = 'static/'
+STATIC_ROOT = '/files/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -77,6 +126,7 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT_DIRECTORY, "static")
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -90,23 +140,6 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
-)
-
-MIDDLEWARE_CLASSES = (
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
@@ -116,10 +149,6 @@ ROOT_URLCONF = 'studlan.urls'
 
 WSGI_APPLICATION = 'studlan.wsgi.application'
 
-TEMPLATE_DIRS = [
-    os.path.join(PROJECT_ROOT_DIRECTORY, 'templates'),
-]
-
 STATICFILES_DIRS = [
     os.path.join(PROJECT_ROOT_DIRECTORY, 'files'),
 ]
@@ -128,33 +157,7 @@ LOCALE_PATHS = (
     os.path.join(PROJECT_ROOT_DIRECTORY, 'locale'),
 )
 
-INSTALLED_APPS = (
-    # third party apps
-    'markdown_deux',
-    'postman',
 
-    # django apps
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-
-    # studlan apps
-    'apps.api',
-    'apps.authentication',
-    'apps.competition',
-    'apps.lan',
-    'apps.lottery',
-    'apps.misc',
-    'apps.news',
-    'apps.sponsor',
-    'apps.team',
-    'apps.userprofile',
-    'apps.seating',
-)
 
 #POSTMAN SETTINGS
 POSTMAN_DISALLOW_ANONYMOUS = True

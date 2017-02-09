@@ -37,7 +37,7 @@ class Seating(models.Model):
                                           'to match the chosen layout. Change the chosen layout to alter this field')
     closing_date = models.DateTimeField("closing date")
     layout = models.ForeignKey(Layout)
-    ticket_types = models.ManyToManyField(TicketType, null=True, blank=True, related_name='ticket_types')
+    ticket_types = models.ManyToManyField(TicketType, blank=True, related_name='ticket_types')
 
     def save(self, *args, **kwargs):
         if not self.pk:

@@ -270,3 +270,7 @@ ENV/
 # Rope project settings
 .ropeproject
 
+/static_cdn/
+.idea
+.vagrant
+
