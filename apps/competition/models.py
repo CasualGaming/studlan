@@ -39,6 +39,9 @@ class Competition(TranslatableModel):
 
     STATUS_OPTIONS = ((1, _(u'Open')), (2, _(u'Closed')), (3, _(u'In progress')),
                       (4, _(u'Finished')))
+
+    TOURNAMENT_FORMATS = (('single elimination', 'Single elimination'), ('double elimination', 'Double elimination'))
+
     statuses = {
         1: ['Registration open', 'success'],
         2: ['Registration closed', 'danger'],
@@ -49,7 +52,7 @@ class Competition(TranslatableModel):
     status = models.SmallIntegerField('status', choices=STATUS_OPTIONS)
     activity = models.ForeignKey(Activity)
     lan = models.ForeignKey(LAN)
-    challonge_url = models.URLField('Challonge url', blank=True, null=True)
+    challonge_url = models.CharField('Challonge url', max_length=50, blank=True, null=True)
     use_teams = models.BooleanField('use teams', default=False,
                                     help_text='If checked, participants will be ignored, and will '
                                     'instead use teams. If left unchecked teams will be ignored, '
@@ -64,6 +67,10 @@ class Competition(TranslatableModel):
     require_alias = models.BooleanField('require alias', default=False, help_text="If checked, players will need to register"
                                         "an alias for the Activity that the competition belongs to.")
     start_time = models.DateTimeField(blank=True, null=True)
+    max_match_points = models.SmallIntegerField('Maximum match points', default=1, help_text="This number represents how many points are needed"
+                                                " to win a match. E.g. 3 in a BO 5 or 16 in BO 30")
+    tournament_format = models.CharField('Tournament format', max_length=20, blank=True,
+                                         null=True, choices=TOURNAMENT_FORMATS)
 
     def get_teams(self):
         if self.use_teams:
@@ -136,6 +143,7 @@ class Participant(models.Model):
     user = models.ForeignKey(User, null=True)
     team = models.ForeignKey('team.Team', null=True)
     competition = models.ForeignKey(Competition)
+    cid = models.CharField('cid', max_length=50, null=True)
 
     def __unicode__(self):
         if self.user:
@@ -155,3 +163,52 @@ class Participant(models.Model):
             ('team', 'competition',),
         )
         ordering = ['user', 'team']
+
+
+class Match(models.Model):
+    matchid = models.CharField('matchid', max_length=50)
+    player1 = models.ForeignKey(Participant, related_name='player1', null=True)
+    player2 = models.ForeignKey(Participant, related_name='player2', null=True)
+    competition = models.ForeignKey(Competition)
+    p1_reg_score = models.CharField('p1_reg_score', max_length=50, null=True)
+    p2_reg_score = models.CharField('p2_reg_score', max_length=50, null=True)
+    final_score = models.CharField('final_score', max_length=50, null=True)
+    state = models.CharField('state', max_length=50)
+    winner = models.ForeignKey(Participant, related_name='winner', null=True)
+
+    def get_p1(self):
+        if self.player1:
+            if self.player1.is_team:
+                return self.player1.team
+            else:
+                return self.player1.user
+        else:
+            return "TBA"
+
+    def get_p2(self):
+        if self.player2:
+            if self.player2.is_team:
+                return self.player2.team
+            else:
+                return self.player2.user
+        else:
+            return "TBA"
+
+    def get_compo(self):
+        return self.competition.activity.title
+
+    def get_lan(self):
+        return self.competition.lan.title
+
+    def is_valid_score_reporter(self, user, player_id):
+        if self.player1.team is None and self.player2.team is None:
+            if (user == self.player1.user and player_id == '1') or (user == self.player2.user and player_id == '2'):
+                return True
+        else:
+            if user == (self.player1.team.leader and player_id == '1')\
+                    or user == (self.player2.team.leader and player_id == '2'):
+                return True
+            if user in (self.player1.team.members.all() and player_id == '1')\
+                    or (user in self.player2.members.all() and player_id == '2'):
+                return True
+        return False

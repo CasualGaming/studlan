@@ -15,13 +15,13 @@ DATABASES = {
 STUDLAN_FROM_MAIL = 'studlan@online.ntnu.no'
 SUPPORT_MAIL = 'change@me.com'
 
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # real
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # real
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # prints
 
 SITE_NAME = 'studLAN'
 
-#Enable and set to your domain when deployed
-#CSRF_COOKIE_DOMAIN = 'studlan.no'
+# Enable and set to your domain when deployed
+# CSRF_COOKIE_DOMAIN = 'studlan.no'
 CSRF_COOKIE_HTTPONLY = True
 
 STRIPE_PUBLIC_KEY = 'pk_test_6pRNASCoBOKtIshFeQd4XMUh'
@@ -30,3 +30,7 @@ STRIPE_PRIVATE_KEY = 'sk_test_BQokikJOvBiI2HlWgH4olfQ2'
 
 # Cal src attribute from the google embedded iframe
 GOOGLE_CAL_SRC = ''
+
+# challonge credentials
+CHALLONGE_API_USERNAME = ''
+CHALLONGE_API_KEY = ''

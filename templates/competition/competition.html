@@ -9,6 +9,8 @@
 {% endblock title %}
 
 {% block content %}
+
+
 {% with competition.use_teams as teamcomp %} 
     <script type="text/javascript" src="{{ STATIC_URL }}js/competition.js"></script>
     <div class="row">
@@ -38,10 +40,87 @@
     {% if competition.status == 3 or competition.status == 4 %}
         <div class="row">
             <div class="col-md-9">
-                <button id="brackets-button" class="btn btn-default">Show brackets</button>
-                <div id="brackets-container" class="hide">
-                    <iframe id="brackets-frame" onload="AdjustIFrame('RefFrame');" src="{{ competition.challonge_url }}/module?theme=3&show_final_results=1" width="100%" height="500px" scrolling="auto" frameborder="0" allowtransparency="true"></iframe>
+                 {% if player_match %}
+                     <div class="jumbotron">
+                      <div class="container">
+                          <div class="row">
+                            <div class="col-md-4">
+                                <h2 class="pull-left">
+                                    {% if competition.use_teams %}
+                                    {{ player_match.player1}}
+                                    {% else %}
+                                    {{ player_match.player1.user.username }}
+                                    {% endif %}
+                                </h2>
+                            </div>
+
+                              <div class="col-md-4">
+                                <h2 class="text-center">VS</h2>
+                            </div>
+                            <div class="col-md-4">
+                                <h2 class="pull-right">
+
+                                    {% if competition.use_teams %}
+                                        {{ player_match.player2}}
+                                    {% else %}
+                                        {{ player_match.player2.user.username }}
+                                    {% endif %}
+
+                                </h2>
+                            </div>
+
+
+
+                          </div>
+                          <div class="row">
+                            {% if player_match and player and registered == False %}
+                              <form class="form-inline" action="{% url 'register_score' competition.id player_match.id player %}" method="POST">
+                                    {% csrf_token %}
+                                    <div class="form-actions center-on-collapse">
+                                         <select class="form-control pull-left" name="player1score" id="player1score">
+                                             {% for choice in point_choices %}
+                                                <option value="{{ choice }}">{{ choice }}</option>
+                                             {% endfor %}
+                                        </select>
+
+                                         <select class="form-control pull-right" name="player2score" id="player2score">
+                                            {% for choice in point_choices %}
+                                                <option value="{{ choice }}">{{ choice }}</option>
+                                             {% endfor %}
+                                        </select>
+                                        <input class="btn btn-success center-block" type="submit" value="Register Score"/>
+                                    </div>
+                                </form>
+                                {% else %}
+
+                                 <div class="row">
+                            <div class="col-md-4">
+
+                            </div>
+
+                              <div class="col-md-4 ">
+                                        <input class="btn btn-danger center-block disabled" type="submit" value="Wait for admin"/>
+                                  <h2> Submitted:
+                                    {% if player == 1 %}
+                                        {{ player_match.p1_reg_score }}
+                                    {% else %}
+                                        {{ player_match.p2_reg_score }}
+                                    {% endif %}
+                                </h2>
+                            </div>
+
+                            </div>
+                                {% endif %}
+                          </div>
+                     </div>
+                    </div>
+                {% endif %}
                 </div>
+        </div>
+        <div>
+            <button id="brackets-button" class="btn btn-default">Show brackets</button>
+            <div id="brackets-container" class="hide">
+                <iframe id="brackets-frame" onload="AdjustIFrame('RefFrame');" src="https://challonge.com/{{ competition.challonge_url }}/module?theme=3&show_final_results=1" width="100%" height="500px" scrolling="auto" frameborder="0" allowtransparency="true"></iframe>
             </div>
         </div>
     {% endif %}
@@ -139,14 +218,84 @@
                     </div>
                 {% endif %}
         {% endif %}
+        {% if request.user.is_staff and competition.status == 1 %}
+             <div class="col-md-9">
+                <form class="form-inline" action="{% url 'start_compo' competition.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="center-on-collapse">
+                        <label for="start" class="control-label">{% trans "Click and wait to start compo" %}: </label>
+                        <input type="submit" class="btn btn-warning" value="{% trans "Start Compo" %}"/>
+                    </div>
+                </form>
+            </div>
+            {% endif %}
         {% if competition.status == 3 %}
             <!-- not implemented...
             <a class="btn large danger" href="/competition/{{ competition.id }}/forfeit.html">Forfeit competition</a>
             -->
         {% endif %}
     {% endif %}
-</div>
 
+</div>
+    {% if request.user.is_staff and competition.status == 3 %}
+    <div class="container">
+        <div class="row">
+        <h4>Submit Scores to Challonge</h4>
+            {% for open_match in open_matches  %}
+                <div class="col-md-4">
+                    <div class="well"  {% if open_match.state == 'error' %} style="background-color:#ff6666;"{% endif %}>
+                        <p>Challonge-id: {{ open_match.matchid }}</p>
+                        <div class="col-md-6">
+                            {% if competition.use_teams %}
+                                <h5 class="pull-left">{{ open_match.player1 }} :</h5>
+                            {% else %}
+                                <h5 class="pull-left">{{ open_match.player1.user.username }} :</h5>
+                            {% endif %}
+                            {% if open_match.p1_reg_score %}
+                                <h5 class="pull-right"> {{ open_match.p1_reg_score }}</h5>
+                            {% else %}
+                                <h5 class="pull-right">  TBA</h5>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            {% if competition.use_teams %}
+                                <h5 class="pull-left">{{ open_match.player2 }} :</h5>
+                            {% else %}
+                                <h5 class="pull-left">{{ open_match.player2.user.username }} :</h5>
+                            {% endif %}
+                            {% if open_match.p2_reg_score %}
+                                <h5 class="pull-right"> {{ open_match.p2_reg_score }}</h5>
+                            {% else %}
+                                <h5 class="pull-right">  TBA</h5>
+                            {% endif %}
+                        </div>
+
+                    <form class="form-inline" action="{% url 'submit_score' competition.id open_match.matchid %}" method="POST">
+                        {% csrf_token %}
+                        <label for="winner" class="control-label"> Select winner: </label>
+                        <select class="form-control" name="winner" id="winner">
+                                <option value="{{ open_match.player1.cid }}">{% if competition.use_teams %}{{ open_match.player1 }}{% else %}{{ open_match.player1.user.username }}{% endif %}</option>
+                                <option value="{{ open_match.player2.cid }}">{% if competition.use_teams %}{{ open_match.player2 }}{% else %}{{ open_match.player2.user.username }}{% endif %}</option>
+                        </select>
+                        <div class="form-actions">
+                            <label for="winner" class="control-label"> Type score (x-y)</label>
+                            <input class="text form-control input-sm" name="final_score" id="final_score" placeholder="e.g. 1-0"/>
+                        </div>
+                        <div class="form-actions">
+                            <input class="btn btn-success" type="submit" value="{% trans "Submit Score" %}"/>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+
+            {% endfor %}
+
+
+
+        </div>
+
+    </div>
+    {% endif %}
 {% if teamcomp %}
     {% if competition|show_solo_note:request.user %}
         {% if competition.status == 1 %}
@@ -170,5 +319,5 @@
             <p>{{ competition.get_translation.translated_description|markdown }}</p>
         </div>
     </div>
- {% endwith %}       
+ {% endwith %}
 {% endblock content %}
