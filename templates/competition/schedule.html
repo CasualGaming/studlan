@@ -3,26 +3,34 @@
 {% load markdown_deux_tags %}
 {% load lan_tags %}
 {% block content %}
-        <div class="col-md-9">
+    <div class="col-md-9">
         {% if lan %}
+            {% if cal_src %}
 <iframe src="https://calendar.google.com/calendar/embed?
 showTitle=0&amp;
+showNav=0&amp;
 showDate=0&amp;
 showPrint=0&amp;
 showTabs=0&amp;
 showCalendars=0&amp;
-dates={{ start_date }}/{{ end_date }}&amp;
+showTz=0&amp;
 mode=WEEK&amp;
 height=600&amp;
 wkst=2&amp;
 bgcolor=%23FFFFFF&amp;
+dates={{ start_date }}/{{ end_date }}&amp;
 src={{ cal_src }}&amp;
-color=%23125A12&ctz=Europe%2FOslo"
-style="border-width:0" width="1000" height="700" frameborder="0" scrolling="no"></iframe>
+color=%23125A12&amp;
+ctz=Europe%2FOslo" style="border-width:0" width="1000" height="700" frameborder="0" scrolling="no"></iframe>
+            {% else %}
+                <div class="col-md-9">
+                    <div class="alert alert-info">There is no configured schedule</div>
+                </div>
+            {% endif %}
         {% else %}
             <div class="col-md-9">
                 <div class="alert alert-info">No upcoming lan</div>
             </div>
         {% endif %}
-        </div>
+    </div>
 {% endblock content %}

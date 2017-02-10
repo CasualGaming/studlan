@@ -351,9 +351,12 @@ def schedule(request):
 
     if lans:
         context['lan'] = lans[0]
-        context['start_date'] = unicode(lans[0].start_date.year) + unicode(lans[0].start_date.month) + unicode(lans[0].start_date.day)
-        context['end_date'] = unicode(lans[0].end_date.year) + unicode(lans[0].end_date.month) + unicode(lans[0].end_date.day)
-        context['cal_src'] = settings.GOOGLE_CAL_SRC
+        context['start_date'] = lans[0].start_date.strftime("%Y%m%d")
+        context['end_date'] = lans[0].end_date.strftime("%Y%m%d")
+        if settings.GOOGLE_CAL_SRC != '':
+            context['cal_src'] = settings.GOOGLE_CAL_SRC
+        else:
+            context['cal_src'] = None
 
     return render(request, 'competition/schedule.html', context)
 
