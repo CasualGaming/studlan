@@ -8,8 +8,8 @@ from django.utils.translation import ugettext as _
 
 from apps.userprofile.models import UserProfile
 
-class UserProfileForm(forms.ModelForm):
 
+class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('nick', 'date_of_birth', 'address', 'zip_code', 'phone',)
@@ -23,22 +23,22 @@ class UserProfileForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super(UserProfileForm, self).clean()
         if self.is_valid():
-            
+
             # Check nick
             nick = cleaned_data['nick']
             if not re.match("^[a-zA-Z0-9_-]+$", nick):
-                self.add_error('nick', [_(u"Your desired nickname contains illegal characters. Valid: a-Z 0-9 - _")])
-            
+                self.add_error('nick', _(u"Your desired nickname contains illegal characters. Valid: a-Z 0-9 - _"))
+
             # Check date of birth
             # currently only checks that it is not after today
             date = cleaned_data['date_of_birth']
             if date >= datetime.date.today():
-                self.add_error('date_of_birth', [_(u"You seem to be from the future, please enter a more believable date of birth.")])
+                self.add_error('date_of_birth',
+                               _(u"You seem to be from the future, please enter a more believable date of birth."))
 
             # ZIP code digits only
             zip_code = cleaned_data['zip_code']
             if len(zip_code) != 4 or not zip_code.isdigit():
-                self._add_error('zip_code', [_(u"The ZIP code must be 4 digit number.")])
+                self._add_error('zip_code', _(u"The ZIP code must be 4 digit number."))
 
-            return cleaned_data 
-
+            return cleaned_data
