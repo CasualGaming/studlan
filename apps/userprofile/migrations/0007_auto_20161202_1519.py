@@ -24,4 +24,10 @@ class Migration(migrations.Migration):
             name='user',
             field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='profile', to=settings.AUTH_USER_MODEL),
         ),
+        migrations.AlterField(
+            model_name='alias',
+            name='nick',
+            field=models.CharField(max_length=40, verbose_name=b'nick'),
+            preserve_default=True,
+        ),
     ]

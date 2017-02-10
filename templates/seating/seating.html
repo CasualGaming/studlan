@@ -20,7 +20,7 @@ Seating
                 <div class="col-md-9">
                     <ul class="nav nav-tabs">
                         {% for tab_seating in seatings %}
-                            <li{% if tab_seating = seating %} class="active"{% endif %}><a href="{{ tab_seating.get_absolute_url }}">{{ tab_seating }}</a></li>
+                            <li{% if tab_seating is seating %} class="active"{% endif %}><a href="{{ tab_seating.get_absolute_url }}">{{ tab_seating }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
