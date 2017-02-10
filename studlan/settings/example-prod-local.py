@@ -37,4 +37,9 @@ STRIPE_PUBLIC_KEY = 'pk_live_xxxxxxxxxxxxxxxxxxxxxx'
 
 STRIPE_PRIVATE_KEY = 'sk_live_xxxxxxxxxxxxxxxxxxxxxxxx'
 
-GOOGLE_API_KEY = "APIKEYHERE"
+# Cal src attribute from the google embedded iframe
+GOOGLE_CAL_SRC = ''
+
+# challonge credentials
+CHALLONGE_API_USERNAME = ''
+CHALLONGE_API_KEY = ''
