@@ -35,7 +35,7 @@ def login(request):
     else:
         form = LoginForm()
 
-    response_dict = { 'form' : form, 'next' : redirect_url}
+    response_dict = { 'form': form, 'next' : redirect_url}
     return render(request, 'auth/login.html', response_dict)
 
 

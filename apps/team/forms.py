@@ -20,10 +20,10 @@ class TeamCreationForm(forms.Form):
             # Validate the tag
             tag = cleaned_data['tag']
             if not re.match("^[a-zA-Z0-9_-]+$", tag):
-                self._errors['tag'] = self.error_class([_(u"Your desired tag contains illegal characters. Valid: a-Z 0-9 - _")])
+                self.add_error('tag', [_(u"Your desired tag contains illegal characters. Valid: a-Z 0-9 - _")])
             
             team = Team.objects.filter(tag=tag)
             if team.count() > 0:
-                self._errors['tag'] = self.error_class([_(u"This team tag is taken. The team belongs to ") + unicode(team[0].leader)])
+                self.add_error('tag', [_(u"This team tag is taken. The team belongs to ") + unicode(team[0].leader)])
 
             return cleaned_data
