@@ -1,56 +1,37 @@
-build:
-    image: kradalby/ci-tox:latest
-    pull: true
-    commands:
-      - cp studlan/settings/example-local.py studlan/settings/local.py
-      #- tox
+pipeline:
+  build:
+      image: python:2.7.12
+      pull: true
+      commands:
+        - pip install tox
+        - cp studlan/settings/example-local.py studlan/settings/local.py
+        - tox
 
-notify:
-  email:
-    from: drone@fap.no
-    host: smtp.stud.ntnu.no
+  notify:
+    image: drillster/drone-email
+    host: mail.ntnu.fap.no
     port: 25
-    recipients:
-      - kradalby@kradalby.no
-
-publish:
-  docker:
-    registry: registry.fap.no
-    repo: studlan/studlan
-    tag:
-        - latest
-        - $$TAG
-    insecure: true
+    from: drone@drone.fap.no
+    recipients: [ devs@causalgaming.no ]
     when:
-        event: tag
-    load: docker/image.tar
-    save:
-      destination: docker/image.tar
-      tag: latest
+      status: [ success, changed, failure ]
 
   docker:
-    registry: registry.fap.no
-    repo: studlan/studlan
-    tag: master
+    image: plugins/docker
+    repo: registry.fap.no/studlan/studlan
     insecure: true
+    tags:
+        - master
     when:
         branch: master
-    load: docker/image.tar
-    save:
-      destination: docker/image.tar
-      tag: master
 
-deploy:
-  ssh:
-    host:
-     - primeape.terra.fap.no
-    user: root
-    port: 22
-    sleep: 2
-    commands:
-      - docker pull registry.fap.no/studlan/studlan:latest
-      - docker-compose -f /srv/docker/studlan/docker-compose.yml stop trondelan lan_recess
-      - docker-compose -f /srv/docker/studlan/docker-compose.yml up -d trondelan lan_recess
+  docker:
+    image: plugins/docker
+    repo: registry.fap.no/studlan/studlan
+    insecure: true
+    tags:
+        - latest
+        - $$TAG
     when:
         event: tag
 
@@ -59,10 +40,23 @@ deploy:
      - primeape.terra.fap.no
     user: root
     port: 22
-    sleep: 2
-    commands:
+    script:
+      - docker pull registry.fap.no/studlan/studlan:latest
+      - docker-compose -f /srv/docker/studlan/docker-compose.yml stop trondelan lan_recess studlan
+      - docker-compose -f /srv/docker/studlan/docker-compose.yml up -d trondelan lan_recess studlan
+    when:
+        status: success
+        event: tag
+
+  ssh:
+    host:
+     - primeape.terra.fap.no
+    user: root
+    port: 22
+    script:
       - docker pull registry.fap.no/studlan/studlan:master
       - docker-compose -f /srv/docker/studlan/docker-compose.yml stop trondelan_dev
       - docker-compose -f /srv/docker/studlan/docker-compose.yml up -d trondelan_dev
     when:
+        status: success
         branch: master
