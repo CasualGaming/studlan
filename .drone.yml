@@ -3,12 +3,14 @@ pipeline:
       image: python:2.7.12
       pull: true
       commands:
+        - pip install tox
         - cp studlan/settings/example-local.py studlan/settings/local.py
         - tox
 
   notify:
     image: drillster/drone-email
     host: mail.ntnu.fap.no
+    port: 25
     from: drone@drone.fap.no
     recipients: [ devs@causalgaming.no ]
     when:
