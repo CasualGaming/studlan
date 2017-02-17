@@ -7,15 +7,6 @@ pipeline:
         - cp studlan/settings/example-local.py studlan/settings/local.py
         - tox
 
-  notify:
-    image: drillster/drone-email
-    host: mail.ntnu.fap.no
-    port: 25
-    from: drone@drone.fap.no
-    recipients: [ devs@causalgaming.no ]
-    when:
-      status: [ success, changed, failure ]
-
   docker:
     image: plugins/docker
     repo: registry.fap.no/studlan/studlan
@@ -36,6 +27,7 @@ pipeline:
         event: tag
 
   ssh:
+    image: appleboy/drone-ssh
     host:
      - primeape.terra.fap.no
     user: root
@@ -49,6 +41,7 @@ pipeline:
         event: tag
 
   ssh:
+    image: appleboy/drone-ssh
     host:
      - primeape.terra.fap.no
     user: root
@@ -60,3 +53,12 @@ pipeline:
     when:
         status: success
         branch: master
+
+  notify:
+    image: drillster/drone-email
+    host: mail.ntnu.fap.no
+    port: 25
+    from: drone@drone.fap.no
+    recipients: [ devs@causalgaming.no ]
+    when:
+      status: [ success, changed, failure ]
