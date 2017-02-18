@@ -1,11 +1,11 @@
 pipeline:
-  build:
-      image: python:2.7.12
-      pull: true
-      commands:
-        - pip install tox
-        - cp studlan/settings/example-local.py studlan/settings/local.py
-        - tox
+  test:
+    image: python:2.7.12
+    pull: true
+    commands:
+      - pip install tox
+      - cp studlan/settings/example-local.py studlan/settings/local.py
+      - tox
 
   docker:
     image: plugins/docker
