@@ -345,6 +345,22 @@ def translate_competitions(competitions):
     return translated_competitions
 
 
+def schedule(request):
+    lans = LAN.objects.filter(end_date__gte=datetime.now())
+    context = {}
+
+    if lans:
+        context['lan'] = lans[0]
+        context['start_date'] = lans[0].start_date.strftime("%Y%m%d")
+        context['end_date'] = lans[0].end_date.strftime("%Y%m%d")
+        if settings.GOOGLE_CAL_SRC != '':
+            context['cal_src'] = settings.GOOGLE_CAL_SRC
+        else:
+            context['cal_src'] = None
+
+    return render(request, 'competition/schedule.html', context)
+
+
 @staff_member_required
 @login_required
 def start_compo(request, competition_id):

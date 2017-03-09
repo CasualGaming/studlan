@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-08 10:08+0100\n"
+"POT-Creation-Date: 2016-12-15 12:53+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -52,7 +52,7 @@ msgid "Last name"
 msgstr "Etternavn"
 
 #: apps/authentication/forms.py:53 apps/userprofile/models.py:20
-#: templates/user/profile.html:80
+#: templates/user/profile.html:76
 msgid "Date of birth"
 msgstr "Fødselsdato"
 
@@ -292,37 +292,41 @@ msgstr ""
 msgid " does not have enough members that have paid ("
 msgstr ""
 
-#: apps/competition/views.py:208
-msgid "Someone in "
-msgstr ""
+#: apps/competition/views.py:201 apps/competition/views.py:211
+msgid "Several members of "
+msgstr "Flere medlemmer av "
 
-#: apps/competition/views.py:230
+#: apps/competition/views.py:205 apps/competition/views.py:208
+msgid " is missing an alias for "
+msgstr " mangler et alias for  "
+
+#: apps/competition/views.py:233
 msgid "You are already in this competition as a solo player."
 msgstr "Du er allerede påmeldt denne konkurransen."
 
-#: apps/competition/views.py:235
+#: apps/competition/views.py:238
 msgid "You do not have the required alias."
 msgstr ""
 
-#: apps/competition/views.py:243
+#: apps/competition/views.py:246
 msgid "You have been signed up for "
 msgstr "Du har meldt deg på "
 
-#: apps/competition/views.py:253
+#: apps/competition/views.py:256
 msgid "You are not participating in this competition."
 msgstr "Du deltar ikke i denne konkurransen"
 
-#: apps/competition/views.py:259
+#: apps/competition/views.py:262
 #, fuzzy
 #| msgid "You need to login in to participate"
 msgid "You are no longer participating in "
 msgstr "Du må logge inn for og kunne melde deg på"
 
-#: apps/competition/views.py:267
+#: apps/competition/views.py:270
 msgid "You have removed "
 msgstr "Du har fjernet "
 
-#: apps/competition/views.py:267
+#: apps/competition/views.py:270
 msgid " from "
 msgstr " fra "
 
@@ -381,35 +385,31 @@ msgstr "Mer informasjon om LANet finnes på "
 msgid "Ticket confirmation"
 msgstr "Billett-bekreftelse"
 
-#: apps/seating/views.py:25
-msgid "Seat reservation is not active."
-msgstr ""
-
-#: apps/seating/views.py:109 apps/seating/views.py:150
+#: apps/seating/views.py:117 apps/seating/views.py:159
 msgid "This seatmap is closed."
 msgstr "Dette setekartet er stengt."
 
-#: apps/seating/views.py:131
+#: apps/seating/views.py:138
 msgid "You have successfully reserved your seat."
 msgstr "Setet ble reservert."
 
-#: apps/seating/views.py:133
+#: apps/seating/views.py:140
 msgid "That seat is reserved by "
 msgstr "Det setet er reservert av "
 
-#: apps/seating/views.py:135
+#: apps/seating/views.py:142
 msgid "Your ticket does not allow reservation in this seating."
 msgstr "Billetten din tillater ikke reservering i dette setekartet."
 
-#: apps/seating/views.py:137
+#: apps/seating/views.py:144
 msgid "You need to attend and pay before reserving your seat."
 msgstr "Du må melde deg på og betale før du kan reservere sete."
 
-#: apps/seating/views.py:156
+#: apps/seating/views.py:165
 msgid "You have unregistered your seat."
 msgstr "Du har forlatt setet ditt."
 
-#: apps/seating/views.py:158
+#: apps/seating/views.py:167
 msgid "This seat is taken."
 msgstr "Dette setet er opptatt"
 
@@ -434,7 +434,7 @@ msgid "This team tag is taken. The team belongs to "
 msgstr "Denne taggen er tatt. Laget tilhører "
 
 #: apps/team/views.py:26 apps/team/views.py:38 apps/team/views.py:73
-#: apps/team/views.py:113 templates/competition/competition.html:48
+#: apps/team/views.py:113 templates/competition/competition.html:54
 #: templates/navigation.html:14 templates/team/team_base.html:7
 #: templates/team/teams.html:8
 msgid "Teams"
@@ -536,18 +536,6 @@ msgstr "Du har forlatt "
 msgid " removed from your team."
 msgstr " ble fjernet fra laget."
 
-#: apps/team/views.py:201 apps/team/views.py:208
-msgid "Several members of "
-msgstr "Flere medlemmer av "
-
-#: apps/team/views.py:201 apps/team/views.py:208
-msgid " are missing aliases for "
-msgstr " mangler alias for  "
-
-#: apps/team/views.py:205 apps/team/views.py:208
-msgid " is missing an alias for "
-msgstr " mangler et alias for  "
-
 #: apps/userprofile/forms.py:30
 #, fuzzy
 #| msgid ""
@@ -568,11 +556,11 @@ msgstr "Kvinne"
 msgid "nick"
 msgstr "kallenavn"
 
-#: apps/userprofile/models.py:19 templates/user/profile.html:76
+#: apps/userprofile/models.py:19
 msgid "Gender"
 msgstr "Kjønn"
 
-#: apps/userprofile/models.py:21 templates/user/profile.html:84
+#: apps/userprofile/models.py:21 templates/user/profile.html:80
 msgid "Street address"
 msgstr "Adresse"
 
@@ -582,24 +570,24 @@ msgstr "Adresse"
 msgid "NTNU username"
 msgstr "NTNU-Brukernavn"
 
-#: apps/userprofile/views.py:26 apps/userprofile/views.py:46
-#: apps/userprofile/views.py:66 apps/userprofile/views.py:84
-#: apps/userprofile/views.py:110 templates/user/profile.html:22
+#: apps/userprofile/views.py:27 apps/userprofile/views.py:47
+#: apps/userprofile/views.py:67 apps/userprofile/views.py:85
+#: apps/userprofile/views.py:111 templates/user/profile.html:22
 #: templates/user/profile.html.py:30 templates/user/profile_tabs.html:5
 #: templates/user/update.html:12
 msgid "Profile"
 msgstr "Profil"
 
-#: apps/userprofile/views.py:47
+#: apps/userprofile/views.py:48
 msgid "Edit"
 msgstr "Rediger"
 
-#: apps/userprofile/views.py:85 templates/user/history.html:12
+#: apps/userprofile/views.py:86 templates/user/history.html:12
 #: templates/user/profile_tabs.html:7
 msgid "History"
 msgstr "Historikk"
 
-#: apps/userprofile/views.py:111 templates/user/alias.html:12
+#: apps/userprofile/views.py:112 templates/user/alias.html:12
 msgid "Alias"
 msgstr "Alias"
 
@@ -619,7 +607,7 @@ msgstr "Du kan kun fjerne dine egne alias"
 msgid "Alias was removed"
 msgstr "Aliaset ble fjernet"
 
-#: templates/admin/base_site.html:4
+#: templates/admin/base_site.html:5
 msgid "Django site admin"
 msgstr "Django site admin"
 
@@ -652,48 +640,48 @@ msgstr "Bytt passord"
 msgid "Language"
 msgstr "Språk"
 
-#: templates/competition/competition.html:71
+#: templates/competition/competition.html:77
 #: templates/lottery/lottery_details.html:14
 msgid "Participants"
 msgstr "Deltakere"
 
-#: templates/competition/competition.html:102
+#: templates/competition/competition.html:108
 msgid "Select team"
 msgstr "Velg lag"
 
-#: templates/competition/competition.html:109
+#: templates/competition/competition.html:115
 msgid "Join competition (team)"
 msgstr "Meld på (lag)"
 
-#: templates/competition/competition.html:113
+#: templates/competition/competition.html:119
 msgid "To join the competition as a team you have to"
 msgstr "For å delta i konkurransen som et lag må du"
 
-#: templates/competition/competition.html:113
+#: templates/competition/competition.html:119
 msgid "create"
 msgstr "opprette"
 
-#: templates/competition/competition.html:113
+#: templates/competition/competition.html:119
 msgid "or join a team"
 msgstr "eller bli med på et lag"
 
-#: templates/competition/competition.html:121
+#: templates/competition/competition.html:127
 msgid "Join competition"
 msgstr "Meld på"
 
-#: templates/competition/competition.html:121
+#: templates/competition/competition.html:127
 msgid "(solo)"
 msgstr "(solo)"
 
-#: templates/competition/competition.html:130
+#: templates/competition/competition.html:136
 msgid "Leave competition"
 msgstr "Meld av"
 
-#: templates/competition/competition.html:150
+#: templates/competition/competition.html:156
 msgid "Note: "
 msgstr "Merk: "
 
-#: templates/competition/competition.html:151
+#: templates/competition/competition.html:157
 msgid ""
 "Signing up for a team compo as a solo player does not mean you are a "
 "participant."
@@ -701,14 +689,14 @@ msgstr ""
 "Å være påmeldt en lagkonkurranse uten lag betyr ikke automatisk at du er en "
 "deltaker"
 
-#: templates/competition/competition.html:152
+#: templates/competition/competition.html:158
 msgid ""
 "Try to find other players that sign up solo, make a team and sign up as a "
 "team."
 msgstr ""
 "Prøv å samle et lag av de andre deltakerne som har meldt seg på uten lag."
 
-#: templates/competition/competition.html:154
+#: templates/competition/competition.html:160
 msgid "When you sign up as a team, your solo participation will be overriden."
 msgstr "Når du melder på et lag vil solo-påmeldingen bli overskrevet."
 
@@ -857,24 +845,28 @@ msgstr "Du må logge inn for å kunne melde deg på"
 msgid "Info"
 msgstr "Bruker-info"
 
-#: templates/navigation.html:17
+#: templates/navigation.html:15
+msgid "Schedule"
+msgstr "Timeplan"
+
+#: templates/navigation.html:18
 msgid "Seating"
 msgstr "Setekart"
 
-#: templates/navigation.html:18 templates/sidebar.html:19
+#: templates/navigation.html:19 templates/sidebar.html:19
 #: templates/sponsor/sponsors.html:6
 msgid "Sponsors"
 msgstr "Sponsorer"
 
-#: templates/seating/seating.html:12
+#: templates/seating/seating.html:13
 msgid "Your seat"
 msgstr "Ditt sete"
 
-#: templates/seating/seating.html:13
+#: templates/seating/seating.html:14
 msgid "Taken seat"
 msgstr "Opptatt sete"
 
-#: templates/seating/seating.html:14
+#: templates/seating/seating.html:15
 msgid "Free seat"
 msgstr "Ledig sete"
 
@@ -997,7 +989,7 @@ msgstr "Det finnes ingen lag enda"
 msgid "All teams"
 msgstr "Alle lag"
 
-#: templates/user/alias.thml:21
+#: templates/user/alias.html:21
 msgid "Account"
 msgstr "Kontotype"
 
@@ -1033,11 +1025,11 @@ msgstr ""
 msgid "My Profile"
 msgstr "Min profil"
 
-#: templates/user/profile.html:88
+#: templates/user/profile.html:84
 msgid "Zip/Postal code"
 msgstr "Postnummer"
 
-#: templates/user/profile.html:92
+#: templates/user/profile.html:88
 msgid "Phone"
 msgstr "Telefon"
 
@@ -1061,6 +1053,9 @@ msgstr "Inboks"
 #: templates/userdropdown.html:44 templates/userdropdown.html.py:65
 msgid "Log out"
 msgstr "Logg ut"
+
+#~ msgid " are missing aliases for "
+#~ msgstr " mangler alias for  "
 
 #, fuzzy
 #~| msgid "Registration closed"
