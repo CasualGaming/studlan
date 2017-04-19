@@ -34,7 +34,7 @@ pipeline:
     port: 22
     script:
       - docker pull registry.fap.no/studlan/studlan:latest
-      - docker-compose -f /srv/docker/studlan/docker-compose.yml stop trondelan lan_recess studlan
+      - docker-compose -f /srv/docker/studlan/docker-compose.yml down trondelan lan_recess studlan
       - docker-compose -f /srv/docker/studlan/docker-compose.yml up -d trondelan lan_recess studlan
     when:
         status: success
@@ -48,7 +48,7 @@ pipeline:
     port: 22
     script:
       - docker pull registry.fap.no/studlan/studlan:master
-      - docker-compose -f /srv/docker/studlan/docker-compose.yml stop trondelan_dev
+      - docker-compose -f /srv/docker/studlan/docker-compose.yml down trondelan_dev
       - docker-compose -f /srv/docker/studlan/docker-compose.yml up -d trondelan_dev
     when:
         status: success

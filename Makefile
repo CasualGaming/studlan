@@ -33,3 +33,9 @@ test:
 
 run:
 	$(MANAGE) runserver 0.0.0.0:8000
+
+# General
+REPO=CasualGaming/studlan
+
+sign:
+	drone sign $(REPO)
