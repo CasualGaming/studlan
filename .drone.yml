@@ -32,6 +32,7 @@ pipeline:
      - primeape.terra.fap.no
     user: root
     port: 22
+    command_timeout: 1000
     script:
       - docker pull registry.fap.no/studlan/studlan:latest
       - docker-compose -f /srv/docker/studlan/docker-compose.yml down trondelan lan_recess studlan
@@ -46,6 +47,7 @@ pipeline:
      - primeape.terra.fap.no
     user: root
     port: 22
+    command_timeout: 1000
     script:
       - docker pull registry.fap.no/studlan/studlan:master
       - docker-compose -f /srv/docker/studlan/docker-compose.yml down trondelan_dev
