@@ -102,13 +102,11 @@ class Competition(TranslatableModel):
 
     def has_alias(self, user):
         if AliasType.objects.filter(activity=self.activity).exists():
-            alias_type = AliasType.objects.get(activity=self.activity)
-            if Alias.objects.filter(user=user, alias_type=alias_type).exists():
-                return True
-            else:
-                return False
-        else:
-            return False
+            alias_types = AliasType.objects.get(activity=self.activity)
+            for alias_type in alias_types:
+                if Alias.objects.filter(user=user, alias_type=alias_type).exists():
+                    return True
+        return False
 
     def status_text(self):
         return self.STATUS_OPTIONS[self.status - 1][1]
