@@ -4,31 +4,34 @@
 1. Read the guidelines for Contributing
 2. Branch out or fork
 3. Code
-4. Pull request
-5. Wait for merge
+4. Create pull request
+5. Wait for code review from a maintainer
+6a. Merge pull request once it is approved if you are a contributor
+6b. Wait for a maintainer to merge your pull request if you are not a contributor
 
 ## Conventions
 
 ### Branch naming
-Branches should be named accuratly and follow the following convention:
+Branches should be named accurately and follow the following convention:
 
-(feature|bug)-description-owner
+(feature|bug)/description-owner
 
-Example: feature-imagegallery-kradalby
+Example: feature/imagegallery-kradalby
 
 ### Commit messages
-Commit messages should be descriptive and accuratly describe the changes done.
+Commit messages should be descriptive and accurately describe the changes done.
 
 ### Code style
 All code should be compatible with _at least_ the latest Python 3 version.
 
-The code should be linted with flake8 and the plugins listed [here](https://github.com/casualgaming/studlan/blob/master/requirements/lint.txt)
+The code should follow the PEP 8 guidelines.
 
-Before a pull request, the code should not contain any error or warnings from the linter.
+Before a pull request, newly introduced code should not contain any error or warnings from the linter.
 
 ## Merge approval
 
 Rules:
 
-1. You _cannot_ merge your own pull request
-2. Currently only [Maintainers](https://github.com/casualgaming/studlan/blob/master/MAINTAINERS) can merge pull requests.
+1. All pull requests must be reviewed by a maintainer
+2. Maintainers must merge their own pull requests
+2. Pull requests from other than the maintainers must be merged by a [maintainer](https://github.com/casualgaming/studlan/blob/master/MAINTAINERS).
