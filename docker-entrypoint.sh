@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-python manage.py migrate
+python manage.py migrate --fake-initial
 
 rm /tmp/project-master.pid
 
