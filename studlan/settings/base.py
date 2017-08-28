@@ -155,11 +155,12 @@ LOCALE_PATHS = (
     os.path.join(PROJECT_ROOT_DIRECTORY, 'locale'),
 )
 
-MARKDOWN_DEUX_STYLES = { 'default': {
-    "extras": {
-        "code-friendly": None,
-    },
-    "safe_mode": False, # << here's the change
+MARKDOWN_DEUX_STYLES = {
+    'default': {
+        "extras": {
+            "code-friendly": None,
+        },
+        "safe_mode": False,
 }}
 
 #POSTMAN SETTINGS
