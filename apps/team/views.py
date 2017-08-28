@@ -148,7 +148,11 @@ def invite_member(request, team_id):
             messages.error(request, _(u"You are not the team leader, you cannot add team members."))
         else:
             username = request.POST.get("selectMember")
-            user = get_object_or_404(User, username=username)
+            try:
+                user = get_object_or_404(User, username=username)
+            except:
+                 messages.error(request, ('User ') + unicode(username) + _(u' does not exist'))
+                 return redirect(team)
             if len(Member.objects.filter(user=user, team=team)) > 0:
                 messages.error(request, unicode(user) + _(u" is already on your team."))
             else:
