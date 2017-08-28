@@ -4,13 +4,15 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.conf import settings
+from django.utils.datetime_safe import datetime
 
 from apps.news.models import Article
-from apps.lan.models import Stream
+from apps.lan.models import Stream, LAN
 
 
 def main(request, page):
-    articles = Article.objects.all()
+    active_lans = LAN.objects.filter(end_date__gte=datetime.now())
+    articles = Article.objects.filter(relevant_to__in=active_lans).order_by('-pinned', 'pub_date')
     paginator = Paginator(articles, 10) #Articles per page
     streams = Stream.objects.filter(active=True).order_by('-pk')[:1]
 

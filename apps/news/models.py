@@ -4,10 +4,13 @@ import datetime
 
 from django.db import models
 from translatable.models import TranslatableModel, get_translation_model
+from apps.lan.models import LAN
 
 
 class Article(TranslatableModel):
     pub_date = models.DateTimeField('published', default=datetime.datetime.now)
+    relevant_to = models.ManyToManyField(LAN)
+    pinned = models.BooleanField(default=False)
 
     def count(self):
         return len(Article.objects.all())
