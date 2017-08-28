@@ -45,9 +45,9 @@ def my_teams(request):
 @login_required
 def create_team(request):
     if request.method == 'POST':
-        # Stop if a person tries to create more than the allowed ammount of teams.        
+        # Stop if a person tries to create more than the allowed ammount of teams.
         if Team.objects.filter(leader=request.user).count() >= settings.MAX_TEAMS:
-            messages.error(request, _(u"You cannot be leader of more than ") + settings.MAX_TEAMS + _(u" teams."))  
+            messages.error(request, _(u"You cannot be leader of more than ") + settings.MAX_TEAMS + _(u" teams."))
             return redirect('teams')
 
         form = TeamCreationForm(request.POST)
@@ -64,7 +64,7 @@ def create_team(request):
             messages.success(request, unicode(team) + _(u" has been created."))
             return redirect(team)
         else:
-            form = TeamCreationForm(request.POST, auto_id=True, error_class=InlineSpanErrorList) 
+            form = TeamCreationForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
     else:
         form = TeamCreationForm()
 
@@ -147,8 +147,8 @@ def invite_member(request, team_id):
         if request.user != team.leader:
             messages.error(request, _(u"You are not the team leader, you cannot add team members."))
         else:
-            user_id = request.POST.get("selectMember")
-            user = get_object_or_404(User, pk=user_id)
+            username = request.POST.get("selectMember")
+            user = get_object_or_404(User, username=username)
             if len(Member.objects.filter(user=user, team=team)) > 0:
                 messages.error(request, unicode(user) + _(u" is already on your team."))
             else:

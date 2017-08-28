@@ -73,11 +73,9 @@
                         <div class="form-group">
                             <label class="col-md-1 control-label" for="selectMember">{% trans "Select" %}</label>
                             <div class="col-md-4">
-                                <select class="form-control" id="selectMember" name="selectMember">
-                                    {% for user in users %}
-                                        <option value="{{ user.id }}">{{ user }}</option>
-                                    {% endfor %}
-                                </select>
+                                <div id="the-basics">
+                                    <input class="form-control" type="text" id="selectMember" name="selectMember" placeholder="Search for users">
+                                </div>
                             </div>
                             <div class="col-md-3 center-on-collapse form-actions-collapsed">
                                 <input type="submit" class="btn btn-primary" value="{% trans "Invite member" %}" />
@@ -86,7 +84,7 @@
                     </fieldset>
                 </form>
             </div>
-        </div>  
+        </div>
     {% endif %}
     {% if invitations %}
         <div class="row">
@@ -115,17 +113,53 @@
             </div>
         </div>
     {% endif %}
-    
+
 
 {% endblock content %}
 {% block script %}
     {% if team.is_mine %}
+    {% load staticfiles %}
+    <script src="{% static 'js/typeahead.bundle.min.js' %}" type="text/javascript"></script>
     <script>
         function disband() {
             if(window.confirm('Would you like to disband {{ team }}?')) {
             window.location='{% url 'disband_team' team.id %}';
             }
         }
+
+        //typeahead script for user search
+        var substringMatcher = function(strs) {
+        return function findMatches(q, cb) {
+          var matches, substringRegex;
+
+          matches = [];
+
+          substrRegex = new RegExp(q, 'i');
+
+          $.each(strs, function(i, str) {
+            if (substrRegex.test(str)) {
+              matches.push(str);
+            }
+          });
+
+          cb(matches);
+        };
+      };
+      var users = [];
+      {% for user in users %}
+          users.push("{{ user.username }}")
+      {% endfor %}
+
+      $('#the-basics .form-control').typeahead({
+        hint: true,
+        highlight: true,
+        minLength: 1
+      },
+      {
+        name: 'users',
+        source: substringMatcher(users)
+      });
+
     </script>
     {% endif %}
 {% endblock script %}
