@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import re
 import sys
 
 from django.contrib.messages import constants as message_constants
@@ -154,7 +155,13 @@ LOCALE_PATHS = (
     os.path.join(PROJECT_ROOT_DIRECTORY, 'locale'),
 )
 
-
+MARKDOWN_DEUX_STYLES = {
+    'default': {
+        "extras": {
+            "code-friendly": None,
+        },
+        "safe_mode": False,
+}}
 
 #POSTMAN SETTINGS
 POSTMAN_DISALLOW_ANONYMOUS = True
