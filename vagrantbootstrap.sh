@@ -44,7 +44,8 @@ function progress() {
 function add_custom_repos() {
     echo "adding custom repositories for nodejs"
     progress sudo apt-get install -y python-software-properties
-    progress sudo add-apt-repository -y ppa:chris-lea/node.js
+    progress sudo apt-get install -y python-pip
+    progress curl -sL https://deb.nodesource.com/setup_8.x
 }
 
 function update_packages() {
@@ -59,7 +60,7 @@ function install_packages() {
         tmux screen git-core curl build-essential openssl \
         libjpeg8 libjpeg8-dev zlib-bin libtiff4 libtiff4-dev libfreetype6 libfreetype6-dev libwebp2 libpq-dev libssl-dev \
         python-psycopg2 imagemagick gettext sqlite3 \
-        nodejs # from custom ppa:chris-lea/node.js
+        nodejs npm # from custom ppa:chris-lea/node.js
 }
 
 function setup_virtualenv() {
@@ -81,7 +82,8 @@ function install_studlan_requirements() {
     echo "installing studlan requirements"
     workon studlan
     cd /vagrant
-    progress pip install -U -r requirements.txt
+    progress pip install -U pip setuptools
+    progress pip install -U -r ./requirements/base.txt
 }
 
 function install_lessc() {
@@ -109,9 +111,8 @@ update_packages
 install_packages
 setup_virtualenv
 install_studlan_requirements
-install_lessc
 prepare_and_run_studlan
 
 # Support for pip install inside the VM
-curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | python
-rm setuptools-7.0.zip
+curl https://bootstrap.pypa.io/ez_setup.py | python
+rm setuptools-33.1.1.zip
