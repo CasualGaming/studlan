@@ -9,6 +9,7 @@ django-postman==3.5.1
 requests==2.12.4
 olefile==0.43
 markdown2==2.3.2
+raven
 -e git+http://github.com/ZEDGR/pychal@db78a2572e258b1f174f5574a63ff2319df3e5cb#egg=pychal
 
 
