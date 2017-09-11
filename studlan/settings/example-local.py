@@ -28,6 +28,13 @@ STRIPE_PUBLIC_KEY = 'pk_test_6pRNASCoBOKtIshFeQd4XMUh'
 
 STRIPE_PRIVATE_KEY = 'sk_test_BQokikJOvBiI2HlWgH4olfQ2'
 
+
+#Settings for Sentry
+RAVEN_CONFIG = {
+    'dsn': 'https://5d80e5c4d129432eb358b5ced05747f5:a583ced3fe4d44968d2005f6339b3342@sentry.io/213600',
+}
+SENTRY_DSN=None
+
 # Cal src attribute from the google embedded iframe
 GOOGLE_CAL_SRC = ''
 

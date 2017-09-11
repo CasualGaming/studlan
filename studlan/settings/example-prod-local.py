@@ -37,6 +37,13 @@ STRIPE_PUBLIC_KEY = 'pk_live_xxxxxxxxxxxxxxxxxxxxxx'
 
 STRIPE_PRIVATE_KEY = 'sk_live_xxxxxxxxxxxxxxxxxxxxxxxx'
 
+
+#Settings for Sentry
+#DSN adress is accessable on sentry.io
+RAVEN_CONFIG = {
+    'dsn': 'https://*****@sentry.io/******'
+}
+
 # Cal src attribute from the google embedded iframe
 GOOGLE_CAL_SRC = ''
 
