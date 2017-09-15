@@ -24,27 +24,6 @@ class LAN(TranslatableModel):
     def paid_attendees(self):
         return map(lambda x: getattr(x, 'user'), Attendee.objects.filter(lan=self, has_paid=True))
 
-    @property
-    def attendee_ntnu_usernames(self):
-        ntnu = []
-        for attendee in self.attendees:
-            up_tuple = UserProfile.objects.get_or_create(user=attendee)
-            # If True, the userprofile was just created.
-            if up_tuple[1]:
-                continue
-            else:
-                ntnu_username = up_tuple[0].ntnu_username
-                # If the ntnu_username is only whitespace.
-                if not ntnu_username or not ntnu_username.strip():
-                    continue
-                else:
-                    ntnu.append(ntnu_username)
-
-        return ntnu
-
-        # This does the same, but ugly =/
-        # return map(lambda x: getattr(UserProfile.objects.get_or_create(user=x)[0], 'ntnu_username'), self.attendees)
-
     def status(self):
         now = datetime.now()
         if now < self.start_date:

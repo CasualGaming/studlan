@@ -94,17 +94,6 @@ def unattend(request, lan_id):
     return redirect(lan)
 
 
-@login_required
-def attendee_ntnu_usernames(request, lan_id):
-    if not request.user.is_staff:
-        raise Http404
-
-    else: 
-        lan = get_object_or_404(LAN, pk=lan_id)
-    
-        return render(request, 'lan/attendee_ntnu_usernames.html', {'attendees': lan.attendee_ntnu_usernames})
-
-
 @user_passes_test(lambda u: u.is_staff)
 def list_paid(request, lan_id):
     import xlwt
