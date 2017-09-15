@@ -96,6 +96,7 @@ class Attendee(models.Model):
     class Meta:
         ordering = ['-user', 'lan', ]
         unique_together = ("user", "lan")
+        index_together = ["user", "lan"]
 
 
 class TicketType(TranslatableModel):
@@ -131,6 +132,9 @@ class Ticket(models.Model):
 
     def __unicode__(self):
         return self.user.username + "(" + self.user.get_full_name() + ")"
+
+    class Meta:
+        index_together = ["user", "ticket_type"]
 
 
 class Directions(models.Model):

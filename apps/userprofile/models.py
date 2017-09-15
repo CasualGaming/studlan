@@ -9,7 +9,7 @@ from django.utils.translation import ugettext as _
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='profile')
-    nick = models.CharField(_(u'nick'), max_length=20, help_text='Specify a nick name (display name).')
+    nick = models.CharField(_(u'nick'), max_length=20, help_text='Specify a nick name (display name).', db_index=True)
     date_of_birth = models.DateField(_(u'Date of birth'), default=date.today)
     address = models.CharField(_(u'Street address'), max_length=100)
     zip_code = models.CharField(_(u'Zip code'), max_length=4)
