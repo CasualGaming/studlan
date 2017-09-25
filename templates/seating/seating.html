@@ -3,9 +3,10 @@
 Seating
 {% endblock title %}
 {% load i18n %}
+{% load static %}
 
 {% block content %}
-    <script type="text/javascript" src="{{ STATIC_URL }}js/seating.js"></script>
+    <script type="text/javascript" src="{% static 'js/seating.js' %}"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     {% if seatings %}
         <div class="row">
@@ -28,10 +29,11 @@ Seating
         {% endif %}
 
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-9 svg-container">
+                <img src="data:image/svg+xml,%3Csvg viewBox='0 0 4 3' xmlns='http://www.w3.org/2000/svg'/%3E" alt="" class="stretcher-bar">
                 {{ template|safe }}
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 col-sm-12 col-xs-12">
                 <div class="sidebar-wrapper seat-wrapper">
                 	<div class="well sidebar">
                         <ul class="nav nav-stacked">
