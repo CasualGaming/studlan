@@ -1,0 +1,52 @@
+{% extends "base.html" %} 
+{% load i18n %}
+{% load lan_tags %}
+{% load markdown_deux_tags %} 
+
+{% block title %} 
+    Archive
+{% endblock title %} 
+{% block content %}
+
+{% for article in articles.object_list %} 
+    <div class="row">
+        <div class="col-md-offset-1 col-md-8">
+            <h2><a href="{{ article.get_absolute_url }}">{{ article.get_translation.translated_title }}</a></h2>
+            <span class="label label-default info">{{ article.pub_date|date:"d/m/Y" }} {{article.pub_date|time:"H:i"}}
+                - Archived</span>
+            <p>{{ article.get_translation.translated_body|striptags|markdown|truncatewords:75}}</p>
+        </div>
+    </div>
+{% endfor %}
+    <div class="row">
+        <div class="col-md-8">
+            <ul class="pagination"> 
+                {% if articles.has_previous %}
+                <li class="active">
+                    <a href="{% url 'news' articles.previous_page_number %}">&laquo;</a>
+                {% else %}
+                <li class="disabled">
+                    <a href="#">&laquo;</a>
+                {% endif %}
+                </li>
+
+                {% for page in articles.paginator.page_range %}
+                    {% if articles.number == page %}
+                        <li class="active"><a href="{% url 'news' page %}">{{ page }}</a></li>
+                    {% else %}
+                        <li><a href="{% url 'news' page %}">{{ page }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if articles.has_next %}
+                    <li class="active">
+                        <a href="{% url 'news' articles.next_page_number %}">&raquo;</a>
+                {% else %}
+                    <li class="disabled">
+                        <a href="#">&raquo;</a>
+                {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock content %}
