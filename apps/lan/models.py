@@ -82,6 +82,8 @@ class TicketType(TranslatableModel):
     lan = models.ForeignKey(LAN)
 
     price = models.IntegerField("Price", default=50)
+    priority = models.IntegerField("Prioity", default=0, help_text="In what priority the tickets will show, "
+                                                                   "higher number will show first.")
     number_of_seats = models.IntegerField("Seats")
 
     def number_of_seats_used(self):
@@ -89,6 +91,8 @@ class TicketType(TranslatableModel):
 
     def number_of_free_seats(self):
         return self.number_of_seats - self.number_of_seats_used()
+
+
 
 
 class TicketTypeTranslation(get_translation_model(TicketType, "TicketType")):
