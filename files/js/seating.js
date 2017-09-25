@@ -1,7 +1,38 @@
 $(document).ready(function(){
 
+
+    ['preserveAspectRatio', 'viewBox'].forEach(function(k) {
+      // jQuery converts the attribute name to lowercase before
+      // looking for the hook.
+      $.attrHooks[k.toLowerCase()] = {
+        set: function(el, value) {
+          if (value) {
+            el.setAttribute(k, value);
+          } else {
+            el.removeAttribute(k, value);
+          }
+          return true;
+        },
+        get: function(el) {
+          return el.getAttribute(k);
+        },
+      };
+    });
+    $(".svg-container > svg").attr("class", "content-svg");
+    var main_svg = $(".content-svg");
+    var w = main_svg.attr('width').replace('px', '');
+    var h = main_svg.attr('height').replace('px', '');
+
+    main_svg.attr({
+        viewBox: [-25, 0, w, h].join(" "),
+        preserveAspectRatio: "xMidYMid meet"
+    });
+
     var selectedSeat;
     var selectedSeatClass;
+
+
+
 
     $('rect').click( function(e) {
         e.preventDefault();
@@ -62,4 +93,10 @@ $(document).ready(function(){
         }
 
     });
+
+});
+$(window).resize(function() {
+
+
+
 });
