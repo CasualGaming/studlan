@@ -84,10 +84,15 @@ class TicketType(TranslatableModel):
     price = models.IntegerField("Price", default=50)
     priority = models.IntegerField("Prioity", default=0, help_text="In what priority the tickets will show, "
                                                                    "higher number will show first.")
+    available_from = models.DateTimeField("release date", default=datetime.now, help_text="When the tickets will be "
+                                                                                          "made available", null=False)
     number_of_seats = models.IntegerField("Seats")
 
     def number_of_seats_used(self):
         return self.ticket_set.count()
+
+    def is_available(self):
+        return datetime.now() >= self.available_from
 
     def number_of_free_seats(self):
         return self.number_of_seats - self.number_of_seats_used()
