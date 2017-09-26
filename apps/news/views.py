@@ -14,7 +14,7 @@ from django.core.exceptions import ObjectDoesNotExist
 def main(request, page):
     active_lans = LAN.objects.filter(end_date__gte=datetime.now())
     if len(active_lans) > 0:
-        articles = Article.objects.filter(relevant_to__in=active_lans).order_by('-pinned', 'pub_date')
+        articles = Article.objects.filter(relevant_to__in=active_lans).order_by('-pinned', '-pub_date')
     else:
         return redirect('archive')
 
@@ -49,7 +49,7 @@ def single(request, article_id):
 def archive(request, page):
     try:
         active_lans = LAN.objects.filter(end_date__gte=datetime.now())
-        articles = Article.objects.all().exclude(relevant_to__in=active_lans).order_by('-pinned', 'pub_date')
+        articles = Article.objects.all().exclude(relevant_to__in=active_lans).order_by('-pub_date')
     except TypeError:
         articles = Article.objects.all().order_by('pub_date')
     paginator = Paginator(articles, 10)  # Articles per page
