@@ -221,12 +221,40 @@ div#btn-profile {
     padding: 1px;
 }
 
+.svg-container {
+      position: relative;
+}
 
+.stretcher-bar {
+  width: 100%;
+  height: 75vh;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.content-svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  max-width: 100%;
+  max-height: 100%;
+}
 
 @media (max-width:1114px) {
-    
+
     .sidebar-wrapper{
-        display: none;
+        position: relative;
+        width: 100%;
+        max-height: 30%;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        max-width: 100%;
     }
 
     .language-dropdown {
