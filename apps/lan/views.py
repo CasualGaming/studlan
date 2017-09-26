@@ -35,7 +35,7 @@ def details(request, lan_id):
     else:
         active = False
 
-    ticket_types = lan.tickettype_set.all() 
+    ticket_types = lan.tickettype_set.all().order_by('-priority', '-price')
 
     user_tickets = Ticket.objects.filter(user=request.user.id, ticket_type__in=ticket_types)
 

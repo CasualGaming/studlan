@@ -94,7 +94,7 @@
                                             {{ ticket_type.number_of_free_seats }}
                                         {% endif %}
                                     </p>
-                                    {% if not ticket_type.number_of_free_seats <= 0 %}
+                                    {% if not ticket_type.number_of_free_seats <= 0 and ticket_type.is_available %}
                                         <form action="/payment/{{ ticket_type.id }}/" method="POST" class="inline">
                                             {% csrf_token %}
                                             <script
@@ -111,6 +111,11 @@
                                                 data-amount="{{ ticket_type.price }}00">
                                             </script>
                                         </form>
+                                    {% elif not ticket_type.is_available %}
+                                        <button type="button" class="btn btn-default disabled"> Tickets will be
+                                            available
+                                            {{ ticket_type.available_from|date:"D d F Y" }}
+                                            {{ ticket_type.available_from|time:"H:i" }}</button>
                                     {% endif %}
                                     </div>
                                 {% endfor %}
