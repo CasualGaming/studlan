@@ -18,15 +18,21 @@ $(document).ready(function(){
         },
       };
     });
-    $(".svg-container > svg").attr("class", "content-svg");
-    var main_svg = $(".content-svg");
-    var w = main_svg.attr('width').replace('px', '');
-    var h = main_svg.attr('height').replace('px', '');
+
+    var main_svg = $("#svg-wrapper > svg");
+    var h = "60vh";
+    if (main_svg.attr("viewBox") !== undefined || main_svg.attr("viewBox") !== false){
+        main_svg.attr({
+            viewBox: [0,0, main_svg.attr('width').replace('px', ''),main_svg.attr('height').replace('px', '')].join(' ')
+        });
+    }
 
     main_svg.attr({
-        viewBox: [-25, 0, w, h].join(" "),
+        height: h,
         preserveAspectRatio: "xMidYMid meet"
     });
+
+    main_svg.removeAttr("width");
 
     var selectedSeat;
     var selectedSeatClass;
