@@ -24,7 +24,10 @@
         <div class="row">
             <div class="col-md-9 news">
                 <h2><a href="{{ article.get_absolute_url }}">{{ article.get_translation.translated_title }}</a></h2>
-                <span class="label label-default info">{{ article.pub_date|date:"d/m/Y" }} {{article.pub_date|time:"H:i"}}</span>
+                <span class="label label-default info">{{ article.pub_date|date:"d/m/Y" }}
+                    {{article.pub_date|time:"H:i"}} {% if article.pinned %}
+                    - Pinned
+                    {% endif %}</span>
                 <p>{{ article.get_translation.translated_body|striptags|markdown }}</p>
             </div>
         </div>
@@ -49,7 +52,7 @@
 {% endfor %}
     <div class="row">
         <div class="col-md-8">
-            <ul class="pagination"> 
+            <ul class="pagination">
                 {% if articles.has_previous %}
                 <li class="active">
                     <a href="{% url 'news' articles.previous_page_number %}">&laquo;</a>
@@ -77,5 +80,12 @@
                 </li>
             </ul>
         </div>
+        <div class="col-md-4">
+            <a class="btn btn-primary" style="margin-top: 20px; margin-bottom: 20px;" href="{% url 'archive' %}">
+                <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
+                {% trans "Arkiv" %}
+            </a>
+        </div>
+
     </div>
 {% endblock content %}
