@@ -398,30 +398,26 @@ def start_compo(request, competition_id):
             if competition.tournament_format is None:
                 messages.error(request, 'Set competition tournament format before using this feature')
                 return redirect(competition)
-            if settings.CHALLONGE_INTEGRATION_ENABELED and settings.CHALLONGE_API_USERNAME is not '' and \
-                            settings.CHALLONGE_API_KEY is not '':
-                try:
-                    challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
-                except AttributeError:
-                    messages.warning(request, 'No Challonge defined in settings: skipping setup')
-                else:
-                    url = unicode(competition.lan) + unicode(competition.activity) + unicode(int(time.time()))
-                    url = re.sub('[^0-9a-zA-Z]+', '', url)
-                    challonge.tournaments.create(competition.activity.title, url,
-                                                 tournament_type=competition.tournament_format)
-                    challonge.participants.bulk_add(url, names)
-                    challonge.tournaments.start(url)
-                    cparticipants = challonge.participants.index(url)
+            if settings.CHALLONGE_INTEGRATION_ENABELED and settings.CHALLONGE_API_USERNAME != '' and \
+                            settings.CHALLONGE_API_KEY != '':
+                challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
+                url = unicode(competition.lan) + unicode(competition.activity) + unicode(int(time.time()))
+                url = re.sub('[^0-9a-zA-Z]+', '', url)
+                challonge.tournaments.create(competition.activity.title, url,
+                                             tournament_type=competition.tournament_format)
+                challonge.participants.bulk_add(url, names)
+                challonge.tournaments.start(url)
+                cparticipants = challonge.participants.index(url)
 
-                    for part in cparticipants:
-                        if not competition.use_teams:
-                            par = Participant.objects.get(user__username=part['name'], competition=competition)
-                        else:
-                            par = Participant.objects.get(team__title=part['name'], competition=competition)
-                        par.cid = part['id']
-                        par.save()
-                    competition.challonge_url = url
-                    update_match_list(request, competition)
+                for part in cparticipants:
+                    if not competition.use_teams:
+                        par = Participant.objects.get(user__username=part['name'], competition=competition)
+                    else:
+                        par = Participant.objects.get(team__title=part['name'], competition=competition)
+                    par.cid = part['id']
+                    par.save()
+                competition.challonge_url = url
+                update_match_list(request, competition)
 
             competition.status = 3
             competition.save()
