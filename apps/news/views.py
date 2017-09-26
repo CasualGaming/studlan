@@ -13,7 +13,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 def main(request, page):
     try:
-        active_lans = LAN.objects.get(end_date__gte=datetime.now())
+        active_lans = LAN.objects.filter(end_date__gte=datetime.now())
         articles = Article.objects.filter(relevant_to__in=active_lans).order_by('-pinned', 'pub_date')
     except ObjectDoesNotExist:
         return redirect('archive')
