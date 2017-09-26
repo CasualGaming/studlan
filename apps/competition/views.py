@@ -5,7 +5,6 @@ import challonge
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
-from django.contrib.auth.models import User
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -15,7 +14,7 @@ from django.utils import translation
 from django.utils.translation import ugettext as _
 
 from apps.competition.models import Activity, Competition, Participant, Match
-from apps.lan.models import LAN, Attendee
+from apps.lan.models import LAN
 from apps.team.models import Team
 from apps.lottery.models import Lottery
 import re
@@ -57,7 +56,7 @@ def main_filtered(request, lan_id):
     context['active'] = 'all'
     context['lan'] = lan
     context['lotteries'] = Lottery.objects.filter(lan=lan)
-    
+
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
         (_(u'Competitions'), reverse('competitions')),
@@ -75,7 +74,7 @@ def activity_details(request, activity_id):
         return redirect('activity_details_show_lan', lan_id=next_lan.id, activity_id=activity_id)
     else:
         activity = get_object_or_404(Activity, pk=activity_id)
-        
+
         context = {}
         competitions = Competition.objects.filter(activity=activity)
         competitions = shorten_descriptions(competitions, 200)
@@ -121,28 +120,36 @@ def activity_details_filtered(request, lan_id, activity_id):
 def shorten_descriptions(competitions, length):
     for c in competitions:
         if len(c.get_translation().translated_description) > length:
-            c.get_translation().translated_description = c.get_translation().translated_description[:length-3] + '...'
+            c.get_translation().translated_description = c.get_translation().translated_description[:length - 3] + '...'
     return competitions
 
 
 def competition_details(request, competition_id):
     context = {}
+    challonge_is_used = settings.CHALLONGE_INTERGRATION_ENABLED
     competition = get_object_or_404(Competition, pk=competition_id)
-    challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
+    if challonge_is_used and settings.CHALLONGE_API_USERNAME != '' and settings.CHALLONGE_API_KEY != '':
+        try:
+            # Just in case settings are wrongly implemented
+                challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
+                challonge_is_used = True
+        except AttributeError:
+            challonge_is_used = False
+
 
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
         (_(u'Competitions'), reverse('competitions')),
         (competition, ''),
     )
-    
+
     context['breadcrumbs'] = breadcrumbs
 
     teams, users = competition.get_participants()
 
     context['teams'] = teams
     context['users'] = users
-    if competition.has_participant(request.user):
+    if challonge_is_used and competition.has_participant(request.user):
         p = None
         if request.user in users:
             context['participating'] = 'solo'
@@ -173,7 +180,8 @@ def competition_details(request, competition_id):
                         context['registered'] = False
             except ObjectDoesNotExist:
                 if 1 < competition.status < 4:
-                    messages.warning(request, 'You have no current match, please check the brackets for more information')
+                    messages.warning(request,
+                                     'You have no current match, please check the brackets for more information')
 
     # Insert placeholder image if the image_url is empty
     if not competition.activity.image_url:
@@ -187,45 +195,46 @@ def competition_details(request, competition_id):
         messages.warning(request, _(u"Please log in to register for the competition."))
     context['competition'] = competition
 
-
-
-    #admin control panel
-    if request.user.is_staff and competition.status > 1 and competition.challonge_url:
-        context['open_matches'] = Match.objects.filter(Q(competition=competition, state='open') | Q(competition=competition, state='error'))
+    # admin control panel
+    if request.user.is_staff and competition.status > 1 and competition.challonge_url and challonge_is_used:
+        context['open_matches'] = Match.objects.filter(
+            Q(competition=competition, state='open') | Q(competition=competition, state='error'))
     return render(request, 'competition/competition.html', context)
 
 
-def update_match_list(competition):
-    challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
-    c_open_matches = challonge.matches.index(competition.challonge_url)
-    competition_matches = Match.objects.filter(competition=competition)
-    for copen in c_open_matches:
-        if competition_matches:
-            open_match = Match.objects.get(matchid=str(copen['id']), competition=competition)
-        else:
-            open_match = Match(matchid=str(copen['id']), competition=competition)
-        if open_match.state != 'error':
-            open_match.state = copen['state']
-        if copen['player1_id']:
-            open_match.player1 = Participant.objects.get(competition=competition, cid=copen['player1_id'])
-        if copen['player2_id']:
-            open_match.player2 = Participant.objects.get(competition=competition, cid=copen['player2_id'])
-        open_match.save()
-    return Match.objects.filter(competition=competition, state='open')
+def update_match_list(request, competition):
+    if settings.CHALLONGE_INTEGRATION_ENABELED and settings.CHALLONGE_API_USERNAME != '' and \
+            settings.CHALLONGE_API_KEY != '':
+        challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
+        c_open_matches = challonge.matches.index(competition.challonge_url)
+        competition_matches = Match.objects.filter(competition=competition)
+        for copen in c_open_matches:
+            if competition_matches:
+                open_match = Match.objects.get(matchid=str(copen['id']), competition=competition)
+            else:
+                open_match = Match(matchid=str(copen['id']), competition=competition)
+            if open_match.state != 'error':
+                open_match.state = copen['state']
+            if copen['player1_id']:
+                open_match.player1 = Participant.objects.get(competition=competition, cid=copen['player1_id'])
+            if copen['player2_id']:
+                open_match.player2 = Participant.objects.get(competition=competition, cid=copen['player2_id'])
+            open_match.save()
+        return Match.objects.filter(competition=competition, state='open')
 
 
 @login_required
 def join(request, competition_id):
     competition = get_object_or_404(Competition, pk=competition_id)
     teams, users = competition.get_participants()
-    
+
     # Checks if the user is already in the competition with a team, solo queue should be
     # overridden by team signup, but not other way around
     for team in teams:
         if request.user == team.leader or request.user in team.members.all():
             messages.error(request, _(u"You are already in this competition with ") + unicode(team))
             return redirect(competition)
-    
+
     # Checks that a form was posted, and if it contains a team id
     if request.method == 'POST':
         team_id = request.POST.get('team')
@@ -236,47 +245,50 @@ def join(request, competition_id):
             if competition.enforce_team_size:
                 if team.number_of_team_members() + 1 < competition.team_size:
                     messages.error(request, _(unicode(team) + u" does not have enough members (") +
-                    str(team.number_of_team_members() + 1) + u"/" + str(competition.team_size) + u")")
+                                   str(team.number_of_team_members() + 1) + u"/" + str(competition.team_size) + u")")
                     return redirect(competition)
 
             # Check if payment restrictions are in place
             if competition.enforce_payment:
                 if team.number_of_attending_members(competition.lan) < team.number_of_team_members() + 1:
-                    messages.error(request, _(unicode(team) + u" has at least one member that is not signed up for "+
-                        unicode(competition.lan)))
+                    messages.error(request, _(unicode(team) + u" has at least one member that is not signed up for " +
+                                              unicode(competition.lan)))
                     return redirect(competition)
                 else:
                     if team.number_of_paid_members(competition.lan) < competition.team_size:
                         messages.error(request, _(unicode(team) + u" does not have enough members that have paid (") +
-                        unicode(team.number_of_paid_members(competition.lan)) + u"/" + str(competition.team_size) + u")")
+                                       unicode(team.number_of_paid_members(competition.lan)) + u"/" + str(
+                            competition.team_size) + u")")
                         return redirect(competition)
 
             # Check if alias restrictions are in place
             if competition.require_alias:
                 if team.number_of_aliases(competition) < team.number_of_team_members() + 1:
                     if team.number_of_team_members() + 1 - team.number_of_aliases(competition) < 4:
-                        messages.error(request, _(u"Several members of " + unicode(team) + u" are missing aliases for " +
-                                   unicode(competition)))
+                        messages.error(request,
+                                       _(u"Several members of " + unicode(team) + u" are missing aliases for " +
+                                         unicode(competition)))
                         for member in team.members.all():
                             if not competition.has_alias(member):
                                 messages.error(request, _(unicode(member) + u" is missing an alias for ") +
-                                   unicode(competition))
+                                               unicode(competition))
                         if not competition.has_alias(team.leader):
                             messages.error(request, _(unicode(team.leader) + u" is missing an alias for ") +
-                                   unicode(competition))
+                                           unicode(competition))
                     else:
-                        messages.error(request, _(u"Several members of " + unicode(team) + u" are missing aliases for ") +
-                                   unicode(competition))
+                        messages.error(request,
+                                       _(u"Several members of " + unicode(team) + u" are missing aliases for ") +
+                                       unicode(competition))
                     return redirect(competition)
 
             # Go through all members of the team and delete their individual participation entries 
             if request.user in users:
                 participant = Participant.objects.get(user=request.user, competition=competition)
                 participant.delete()
-            
+
             members = team.members.all()
             participants = Participant.objects.filter(user__in=members)
-            
+
             for participant in participants:
                 participant.delete()
 
@@ -299,7 +311,7 @@ def join(request, competition_id):
                 else:
                     participant = Participant(user=request.user, competition=competition)
                     participant.save()
-    
+
         messages.success(request, _(u"You have been signed up for ") + unicode(competition))
     return redirect(competition)
 
@@ -314,7 +326,7 @@ def leave(request, competition_id):
     else:
         if request.method == 'POST':
             if request.user in competition.get_users():
-                participant = Participant.objects.get(user=request.user, competition=competition) 
+                participant = Participant.objects.get(user=request.user, competition=competition)
                 participant.delete()
                 messages.success(request, _(u"You are no longer participating in ") + unicode(competition))
             else:
@@ -324,9 +336,11 @@ def leave(request, competition_id):
                         was_leader = True
                         participant = Participant.objects.get(team=team, competition=competition)
                         participant.delete()
-                        messages.success(request, _(u"You have removed ") + unicode(team) + _(u" from ") + unicode(competition))
+                        messages.success(request,
+                                         _(u"You have removed ") + unicode(team) + _(u" from ") + unicode(competition))
                 if not was_leader:
-                    messages.error(request, "You cannot remove %s from %s, you are not the team leader." % (team, competition))
+                    messages.error(request,
+                                   "You cannot remove %s from %s, you are not the team leader." % (team, competition))
 
     return redirect(competition)
 
@@ -384,27 +398,29 @@ def start_compo(request, competition_id):
             if competition.tournament_format is None:
                 messages.error(request, 'Set competition tournament format before using this feature')
                 return redirect(competition)
+            if settings.CHALLONGE_INTEGRATION_ENABELED and settings.CHALLONGE_API_USERNAME != '' and \
+                            settings.CHALLONGE_API_KEY != '':
+                challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
+                url = unicode(competition.lan) + unicode(competition.activity) + unicode(int(time.time()))
+                url = re.sub('[^0-9a-zA-Z]+', '', url)
+                challonge.tournaments.create(competition.activity.title, url,
+                                             tournament_type=competition.tournament_format)
+                challonge.participants.bulk_add(url, names)
+                challonge.tournaments.start(url)
+                cparticipants = challonge.participants.index(url)
 
-            url = unicode(competition.lan) + unicode(competition.activity) + unicode(int(time.time()))
-            url = re.sub('[^0-9a-zA-Z]+', '', url)
-            challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
-            challonge.tournaments.create(competition.activity.title, url, tournament_type=competition.tournament_format)
-            challonge.participants.bulk_add(url, names)
-            challonge.tournaments.start(url)
-            cparticipants = challonge.participants.index(url)
-
-            for part in cparticipants:
-                if not competition.use_teams:
-                    par = Participant.objects.get(user__username=part['name'], competition=competition)
-                else:
-                    par = Participant.objects.get(team__title=part['name'], competition=competition)
-                par.cid = part['id']
-                par.save()
+                for part in cparticipants:
+                    if not competition.use_teams:
+                        par = Participant.objects.get(user__username=part['name'], competition=competition)
+                    else:
+                        par = Participant.objects.get(team__title=part['name'], competition=competition)
+                    par.cid = part['id']
+                    par.save()
+                competition.challonge_url = url
+                update_match_list(request, competition)
 
             competition.status = 3
-            competition.challonge_url = url
             competition.save()
-            update_match_list(competition)
             messages.success(request, 'Tournament has started!')
         except:
             messages.error(request, 'Something went wrong')
@@ -415,55 +431,61 @@ def start_compo(request, competition_id):
 @login_required
 def register_score(request, competition_id, match_id, player_id):
     competition = get_object_or_404(Competition, pk=competition_id)
-    match = get_object_or_404(Match, id=match_id, competition=competition)
-    if request.method == 'POST':
-        if not match.is_valid_score_reporter(request.user, player_id):
-            messages.error(request, 'You are unauthorized to report score for this match')
-            return redirect(competition)
-
-        max_score = competition.max_match_points
-        p1_score = request.POST.get('player1score')
-        p2_score = request.POST.get('player2score')
-
-        if int(p1_score) > max_score or int(p1_score) < 0 or int(p2_score) > max_score or int(p2_score) < 0:
-            messages.error(request, 'Invalid score. Score must be > 0 and < ' + unicode(max_score))
-            return redirect(competition)
-
-        if player_id == '1':
-            match.p1_reg_score = p1_score + "-" + p2_score
-        elif player_id == '2':
-            match.p2_reg_score = p1_score + "-" + p2_score
-
-    if match.p1_reg_score and match.p2_reg_score:
-        if match.p1_reg_score == match.p2_reg_score:
-            if match.p1_reg_score[0] > match.p1_reg_score[2]:
-                match.final_score = match.p1_reg_score
-                match.winner = match.player1
-            elif match.p1_reg_score[0] < match.p1_reg_score[2]:
-                match.final_score = match.p1_reg_score
-                match.winner = match.player2
-            else:
-                match.save()
-                reporting_error(match)
+    try:
+        match = get_object_or_404(Match, id=match_id, competition=competition)
+    except ObjectDoesNotExist:
+        messages.error(request, 'Match does not exsist')
+    else:
+        if request.method == 'POST':
+            if not match.is_valid_score_reporter(request.user, player_id):
+                messages.error(request, 'You are unauthorized to report score for this match')
                 return redirect(competition)
-            complete_match(competition, match)
-        else:
-            reporting_error(match)
-    match.save()
-    return redirect(competition)
+
+            max_score = competition.max_match_points
+            p1_score = request.POST.get('player1score')
+            p2_score = request.POST.get('player2score')
+
+            if int(p1_score) > max_score or int(p1_score) < 0 or int(p2_score) > max_score or int(p2_score) < 0:
+                messages.error(request, 'Invalid score. Score must be > 0 and < ' + unicode(max_score))
+                return redirect(competition)
+
+            if player_id == '1':
+                match.p1_reg_score = p1_score + "-" + p2_score
+            elif player_id == '2':
+                match.p2_reg_score = p1_score + "-" + p2_score
+
+        if match.p1_reg_score and match.p2_reg_score:
+            if match.p1_reg_score == match.p2_reg_score:
+                if match.p1_reg_score[0] > match.p1_reg_score[2]:
+                    match.final_score = match.p1_reg_score
+                    match.winner = match.player1
+                elif match.p1_reg_score[0] < match.p1_reg_score[2]:
+                    match.final_score = match.p1_reg_score
+                    match.winner = match.player2
+                else:
+                    match.save()
+                    reporting_error(match)
+                    return redirect(competition)
+                complete_match(request,competition, match)
+            else:
+                reporting_error(match)
+        match.save()
+        return redirect(competition)
 
 
-def complete_match(competition, match):
-    challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
-    challonge.matches.update(competition.challonge_url, match.matchid, scores_csv=match.final_score,
-                             winner_id=match.winner.cid)
-    match.state = 'complete'
-    match.save()
-    update_match_list(competition)
-    if not Match.objects.filter(competition=competition, state='open'):
-        competition.status = 4
-        challonge.tournaments.finalize(competition.challonge_url)
-        competition.save()
+def complete_match(request, competition, match):
+    if settings.CHALLONGE_INTEGRATION_ENABELED and settings.CHALLONGE_API_USERNAME is not '' and \
+                    settings.CHALLONGE_API_KEY is not '':
+        challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
+        challonge.matches.update(competition.challonge_url, match.matchid, scores_csv=match.final_score,
+                                 winner_id=match.winner.cid)
+        match.state = 'complete'
+        match.save()
+        update_match_list(request, competition)
+        if not Match.objects.filter(competition=competition, state='open'):
+            competition.status = 4
+            challonge.tournaments.finalize(competition.challonge_url)
+            competition.save()
 
 
 def reporting_error(match):
@@ -475,13 +497,17 @@ def reporting_error(match):
 @login_required
 def submit_score(request, competition_id, match_id):
     competition = get_object_or_404(Competition, pk=competition_id)
-    match = get_object_or_404(Match, matchid=match_id, competition=competition)
-    if request.method == 'POST':
-        final_score = request.POST.get('final_score')
-        print final_score
-        winner = request.POST.get('winner')
-        match.winner = Participant.objects.get(competition=competition, cid=winner)
-        match.final_score = final_score
-        complete_match(competition, match)
-    match.save()
+    try:
+        match = get_object_or_404(Match, matchid=match_id, competition=competition)
+    except (ObjectDoesNotExist):
+        messages.error(request, 'No match to submit score to')
+    else:
+        if request.method == 'POST':
+            final_score = request.POST.get('final_score')
+            print final_score
+            winner = request.POST.get('winner')
+            match.winner = Participant.objects.get(competition=competition, cid=winner)
+            match.final_score = final_score
+            complete_match(request,competition, match)
+        match.save()
     return redirect(competition)
