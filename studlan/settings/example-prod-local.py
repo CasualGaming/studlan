@@ -41,6 +41,6 @@ STRIPE_PRIVATE_KEY = 'sk_live_xxxxxxxxxxxxxxxxxxxxxxxx'
 GOOGLE_CAL_SRC = ''
 
 # challonge credentials
-CHALLONGE_INTERGRATION_ENABELED = False
+CHALLONGE_INTERGRATION_ENABLED = False
 CHALLONGE_API_USERNAME = ''
 CHALLONGE_API_KEY = ''

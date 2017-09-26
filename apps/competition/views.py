@@ -126,9 +126,9 @@ def shorten_descriptions(competitions, length):
 
 def competition_details(request, competition_id):
     context = {}
-    challonge_is_used = settings.CHALLONGE_INTERGRATION_ENABELED
+    challonge_is_used = settings.CHALLONGE_INTERGRATION_ENABLED
     competition = get_object_or_404(Competition, pk=competition_id)
-    if challonge_is_used and settings.CHALLONGE_API_USERNAME is not '' and settings.CHALLONGE_API_KEY is not '':
+    if challonge_is_used and settings.CHALLONGE_API_USERNAME != '' and settings.CHALLONGE_API_KEY != '':
         try:
             # Just in case settings are wrongly implemented
                 challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
@@ -203,30 +203,24 @@ def competition_details(request, competition_id):
 
 
 def update_match_list(request, competition):
-    if settings.CHALLONGE_INTEGRATION_ENABELED and settings.CHALLONGE_API_USERNAME is not '' and \
-            settings.CHALLONGE_API_KEY is not '':
-        try:
-            challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
-        # Do nothing if settings.CHALLONGE data exist.
-        except AttributeError:
-            messages.error(request, "No challonge defined in settings")
-        # Continue if the settings exsist
-        else:
-            c_open_matches = challonge.matches.index(competition.challonge_url)
-            competition_matches = Match.objects.filter(competition=competition)
-            for copen in c_open_matches:
-                if competition_matches:
-                    open_match = Match.objects.get(matchid=str(copen['id']), competition=competition)
-                else:
-                    open_match = Match(matchid=str(copen['id']), competition=competition)
-                if open_match.state != 'error':
-                    open_match.state = copen['state']
-                if copen['player1_id']:
-                    open_match.player1 = Participant.objects.get(competition=competition, cid=copen['player1_id'])
-                if copen['player2_id']:
-                    open_match.player2 = Participant.objects.get(competition=competition, cid=copen['player2_id'])
-                open_match.save()
-            return Match.objects.filter(competition=competition, state='open')
+    if settings.CHALLONGE_INTEGRATION_ENABELED and settings.CHALLONGE_API_USERNAME != '' and \
+            settings.CHALLONGE_API_KEY != '':
+        challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
+        c_open_matches = challonge.matches.index(competition.challonge_url)
+        competition_matches = Match.objects.filter(competition=competition)
+        for copen in c_open_matches:
+            if competition_matches:
+                open_match = Match.objects.get(matchid=str(copen['id']), competition=competition)
+            else:
+                open_match = Match(matchid=str(copen['id']), competition=competition)
+            if open_match.state != 'error':
+                open_match.state = copen['state']
+            if copen['player1_id']:
+                open_match.player1 = Participant.objects.get(competition=competition, cid=copen['player1_id'])
+            if copen['player2_id']:
+                open_match.player2 = Participant.objects.get(competition=competition, cid=copen['player2_id'])
+            open_match.save()
+        return Match.objects.filter(competition=competition, state='open')
 
 
 @login_required
@@ -486,20 +480,16 @@ def register_score(request, competition_id, match_id, player_id):
 def complete_match(request, competition, match):
     if settings.CHALLONGE_INTEGRATION_ENABELED and settings.CHALLONGE_API_USERNAME is not '' and \
                     settings.CHALLONGE_API_KEY is not '':
-        try:
-            challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
-        except AttributeError:
-            messages.error(request, 'Challonge not defined in settings')
-        else:
-            challonge.matches.update(competition.challonge_url, match.matchid, scores_csv=match.final_score,
-                                     winner_id=match.winner.cid)
-            match.state = 'complete'
-            match.save()
-            update_match_list(request, competition)
-            if not Match.objects.filter(competition=competition, state='open'):
-                competition.status = 4
-                challonge.tournaments.finalize(competition.challonge_url)
-                competition.save()
+        challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
+        challonge.matches.update(competition.challonge_url, match.matchid, scores_csv=match.final_score,
+                                 winner_id=match.winner.cid)
+        match.state = 'complete'
+        match.save()
+        update_match_list(request, competition)
+        if not Match.objects.filter(competition=competition, state='open'):
+            competition.status = 4
+            challonge.tournaments.finalize(competition.challonge_url)
+            competition.save()
 
 
 def reporting_error(match):
