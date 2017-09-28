@@ -16,6 +16,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='article',
             name='relevant_to',
-            field=models.ManyToManyField(to='lan.LAN'),
+            field=models.ManyToManyField(blank=True, to='lan.LAN'),
         ),
     ]

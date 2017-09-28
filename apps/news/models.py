@@ -9,7 +9,7 @@ from apps.lan.models import LAN
 
 class Article(TranslatableModel):
     pub_date = models.DateTimeField('published', default=datetime.datetime.now)
-    relevant_to = models.ManyToManyField(LAN)
+    relevant_to = models.ManyToManyField(LAN, blank=True)
     pinned = models.BooleanField(default=False)
 
     def count(self):
