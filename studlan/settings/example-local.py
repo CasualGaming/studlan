@@ -31,7 +31,7 @@ STRIPE_PRIVATE_KEY = 'sk_test_BQokikJOvBiI2HlWgH4olfQ2'
 
 #Settings for Sentry
 RAVEN_CONFIG = {
-    'dsn': 'https://***@sentry.io/213600',
+    'dsn': 'https://5d80e5c4d129432eb358b5ced05747f5:a583ced3fe4d44968d2005f6339b3342@sentry.io/213600',
 }
 SENTRY_DSN=None
 
