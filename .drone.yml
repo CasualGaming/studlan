@@ -11,7 +11,6 @@ pipeline:
     image: plugins/docker
     repo: localhost:5000/studlan
     insecure: true
-    privileged: true
     tags:
         - master
     when:
@@ -56,3 +55,13 @@ pipeline:
     when:
         status: success
         branch: master
+  slack:
+    image: plugins/slack
+    webhook: https://hooks.slack.com/services/toodoooo
+    channel: dev
+    template: >
+      {{#success build.status}}
+        build {{build.number}} succeeded. Good job :)
+      {{else}}
+        build {{build.number}} failed. Fix me please :|
+      {{/success}}
