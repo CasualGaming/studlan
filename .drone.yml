@@ -7,6 +7,11 @@ pipeline:
       - cp studlan/settings/example-local.py studlan/settings/local.py
       - tox
 
+  tttt:
+    commands:
+      - docker version
+    when:
+      branch: drone_mario
   docker:
     image: plugins/docker
     repo: localhost:5000/studlan/studlan
