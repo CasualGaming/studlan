@@ -9,16 +9,16 @@ pipeline:
 
   docker:
     image: plugins/docker
-    repo: registry.fap.no/studlan/studlan
+    repo: localhost:5000/studlan
     insecure: true
     tags:
         - master
     when:
-        branch: master
+        branch: drone_mario
 
   docker:
     image: plugins/docker
-    repo: registry.fap.no/studlan/studlan
+    repo: localhost:5000/studlan
     insecure: true
     tags:
         - latest
@@ -29,14 +29,14 @@ pipeline:
   ssh:
     image: appleboy/drone-ssh
     host:
-     - primeape.terra.fap.no
+     - mario.causalgaming.no
     user: root
     port: 22
     command_timeout: 1000
     script:
-      - docker pull registry.fap.no/studlan/studlan:latest
-      - docker-compose -f /srv/docker/studlan/docker-compose.yml down trondelan lan_recess studlan
-      - docker-compose -f /srv/docker/studlan/docker-compose.yml up -d trondelan lan_recess studlan
+      - docker pull localhost:5000/studlan:latest
+      - docker-compose -f /srv/docker/studlan/docker-compose.yml down trondelan studlan
+      - docker-compose -f /srv/docker/studlan/docker-compose.yml up -d trondelan studlan
     when:
         status: success
         event: tag
@@ -44,7 +44,7 @@ pipeline:
   ssh:
     image: appleboy/drone-ssh
     host:
-     - primeape.terra.fap.no
+     - mario.casualgaming.no
     user: root
     port: 22
     command_timeout: 1000
@@ -55,12 +55,3 @@ pipeline:
     when:
         status: success
         branch: master
-
-  notify:
-    image: drillster/drone-email
-    host: mail.ntnu.fap.no
-    port: 25
-    from: drone@drone.fap.no
-    recipients: [ devs@causalgaming.no ]
-    when:
-      status: [ success, changed, failure ]
