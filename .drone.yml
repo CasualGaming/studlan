@@ -9,7 +9,8 @@ pipeline:
 
   docker:
     image: plugins/docker
-    repo: localhost:5000/studlan/studlan
+    repo: studlan/studlan
+    registry: localhost:5000
     insecure: true
     debug: true
     tags:
