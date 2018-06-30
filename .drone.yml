@@ -18,6 +18,7 @@ pipeline:
     when:
         branch: drone_mario
 
+
   docker:
     image: plugins/docker
     repo: localhost:5000/studlan
