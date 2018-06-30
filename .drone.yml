@@ -9,8 +9,8 @@ pipeline:
 
   docker:
     image: plugins/docker
-    repo: 0.0.0.0:5000/studlan/studlan
-    registry: 0.0.0.0:5000
+    repo: drone.casualgaming.no:5000/studlan/studlan
+    registry: drone.casualgaming.no:5000
     insecure: true
     debug: true
     tags:
@@ -20,7 +20,8 @@ pipeline:
 
   docker:
     image: plugins/docker
-    repo: localhost:5000/studlan
+    repo: drone.casualgaming.no:5000/studlan/studlan
+    registry: drone.casualgaming.no:5000
     insecure: true
     tags:
         - latest
