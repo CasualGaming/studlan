@@ -17,6 +17,7 @@ pipeline:
         - master
     when:
         branch: drone_mario
+        
 
   docker:
     image: plugins/docker
