@@ -9,8 +9,8 @@ pipeline:
 
   docker:
     image: plugins/docker
-    repo: 127.0.0.1:5000/studlan/studlan
-    registry: 127.0.0.1:5000
+    repo: bank.casualgaming.no/studlan/studlan
+    registry: bank.casualgaming.no
     insecure: true
     debug: true
     tags:
@@ -21,7 +21,7 @@ pipeline:
 
   docker:
     image: plugins/docker
-    repo: localhost:5000/studlan
+    repo: bank.casualgaming.no/studlan/studlan
     insecure: true
     tags:
         - latest
