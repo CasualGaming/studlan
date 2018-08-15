@@ -48,16 +48,19 @@ pipeline:
     image: appleboy/drone-ssh
     host:
      - mario.casualgaming.no
-    user: root
+    user: droneboi
     port: 22
     command_timeout: 1000
+    volumes:
+      - /home/.ssh/droneboi_rsa:/root/ssh/drone_rsa
+    key_path: /root/ssh/drone_rsa
     script:
       - docker pull bank.casualgaming.no/studlan/studlan:master
       - docker-compose -f /srv/docker/studlan/docker-compose.yml down trondelan_dev
       - docker-compose -f /srv/docker/studlan/docker-compose.yml up -d trondelan_dev
     when:
         status: success
-        branch: master
+        branch: drone_mario
   slack:
     image: plugins/slack
     webhook: https://hooks.slack.com/services/toodoooo
