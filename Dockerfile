@@ -1,4 +1,4 @@
-FROM python:2.7.12
+FROM python:2.7.15
 
 MAINTAINER Kristoffer Dalby
 
