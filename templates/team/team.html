@@ -73,7 +73,7 @@
                         <div class="form-group">
                             <label class="col-md-1 control-label" for="selectMember">{% trans "Select" %}</label>
                             <div class="col-md-4">
-                                <div id="the-basics">
+                                <div id="user-list">
                                     <input class="form-control" type="text" id="selectMember" name="selectMember" placeholder="Search for users">
                                 </div>
                             </div>
@@ -150,7 +150,7 @@
           users.push("{{ user.username }}")
       {% endfor %}
 
-      $('#the-basics .form-control').typeahead({
+      $('#user-list .form-control').typeahead({
         hint: true,
         highlight: true,
         minLength: 1
