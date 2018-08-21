@@ -1,6 +1,6 @@
 Studlan
 ==========
-[![Build Status](https://drone.fap.no/api/badges/CasualGaming/studlan/status.svg)](https://drone.fap.no/CasualGaming/studlan)
+[![Build Status](https://drone.casualgaming.no/api/badges/CasualGaming/studlan/status.svg)](https://drone.fap.no/CasualGaming/studlan)
 
 Requirements
 ------------
