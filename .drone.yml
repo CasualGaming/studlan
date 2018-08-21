@@ -9,16 +9,19 @@ pipeline:
 
   docker:
     image: plugins/docker
-    repo: registry.fap.no/studlan/studlan
+    repo: bank.casualgaming.no/studlan/studlan
+    registry: bank.casualgaming.no
     insecure: true
+    debug: true
     tags:
         - master
     when:
-        branch: master
+        branch: drone_mario
+        
 
   docker:
     image: plugins/docker
-    repo: registry.fap.no/studlan/studlan
+    repo: bank.casualgaming.no/studlan/studlan
     insecure: true
     tags:
         - latest
@@ -29,14 +32,14 @@ pipeline:
   ssh:
     image: appleboy/drone-ssh
     host:
-     - primeape.terra.fap.no
+     - mario.causalgaming.no
     user: root
     port: 22
     command_timeout: 1000
     script:
-      - docker pull registry.fap.no/studlan/studlan:latest
-      - docker-compose -f /srv/docker/studlan/docker-compose.yml down trondelan lan_recess studlan
-      - docker-compose -f /srv/docker/studlan/docker-compose.yml up -d trondelan lan_recess studlan
+      - docker pull bank.casualgaming.no/studlan:latest
+      - docker-compose -f /srv/docker/studlan/docker-compose.yml down trondelan studlan
+      - docker-compose -f /srv/docker/studlan/docker-compose.yml up -d trondelan studlan
     when:
         status: success
         event: tag
@@ -44,23 +47,25 @@ pipeline:
   ssh:
     image: appleboy/drone-ssh
     host:
-     - primeape.terra.fap.no
-    user: root
+     - mario.casualgaming.no
+    user: droneboi
+    secrets: [ ssh_password ]
     port: 22
     command_timeout: 1000
     script:
-      - docker pull registry.fap.no/studlan/studlan:master
+      - docker pull bank.casualgaming.no/studlan/studlan:master
       - docker-compose -f /srv/docker/studlan/docker-compose.yml down trondelan_dev
       - docker-compose -f /srv/docker/studlan/docker-compose.yml up -d trondelan_dev
     when:
         status: success
         branch: master
-
-  notify:
-    image: drillster/drone-email
-    host: mail.ntnu.fap.no
-    port: 25
-    from: drone@drone.fap.no
-    recipients: [ devs@causalgaming.no ]
-    when:
-      status: [ success, changed, failure ]
+  slack:
+    image: plugins/slack
+    webhook: https://hooks.slack.com/services/toodoooo
+    channel: dev
+    template: >
+      {{#success build.status}}
+        build {{build.number}} succeeded. Good job :)
+      {{else}}
+        build {{build.number}} failed. Fix me please :|
+      {{/success}}
