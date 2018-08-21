@@ -60,7 +60,7 @@ pipeline:
       - docker-compose -f /srv/docker/studlan/docker-compose.yml up -d trondelan_dev
     when:
         status: success
-        branch: drone_mario
+        branch: master
   slack:
     image: plugins/slack
     webhook: https://hooks.slack.com/services/toodoooo
