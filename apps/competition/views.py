@@ -126,16 +126,14 @@ def shorten_descriptions(competitions, length):
 
 def competition_details(request, competition_id):
     context = {}
-    challonge_is_used = settings.CHALLONGE_INTERGRATION_ENABLED
     competition = get_object_or_404(Competition, pk=competition_id)
-    if challonge_is_used and settings.CHALLONGE_API_USERNAME != '' and settings.CHALLONGE_API_KEY != '':
-        try:
-            # Just in case settings are wrongly implemented
-                challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
-                challonge_is_used = True
-        except AttributeError:
-            challonge_is_used = False
-
+    try:
+        use_challonge = settings.CHALLONGE_INTERGRATION_ENABLED
+        if use_challonge:
+            challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
+    except AttributeError:
+        use_challonge = False
+    context['use_challonge'] = use_challonge
 
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
@@ -149,7 +147,7 @@ def competition_details(request, competition_id):
 
     context['teams'] = teams
     context['users'] = users
-    if challonge_is_used and competition.has_participant(request.user):
+    if competition.has_participant(request.user):
         p = None
         if request.user in users:
             context['participating'] = 'solo'
@@ -161,27 +159,29 @@ def competition_details(request, competition_id):
             k = set(owned_teams) & set(teams)
             if k:
                 p = Participant.objects.get(team=k.pop(), competition=competition)
-        if p:
-            try:
-                match = Match.objects.get((Q(player1=p) | Q(player2=p)) & Q(state='open'))
-                context['player_match'] = match
-                context['point_choices'] = range(0, competition.max_match_points + 1)
-                if match.player1 == p:
-                    context['player'] = 1
-                    if match.p1_reg_score:
-                        context['registered'] = True
+
+        if use_challonge:
+            if p:
+                try:
+                    match = Match.objects.get((Q(player1=p) | Q(player2=p)) & Q(state='open'))
+                    context['player_match'] = match
+                    context['point_choices'] = range(0, competition.max_match_points + 1)
+                    if match.player1 == p:
+                        context['player'] = 1
+                        if match.p1_reg_score:
+                            context['registered'] = True
+                        else:
+                            context['registered'] = False
                     else:
-                        context['registered'] = False
-                else:
-                    context['player'] = 2
-                    if match.p2_reg_score:
-                        context['registered'] = True
-                    else:
-                        context['registered'] = False
-            except ObjectDoesNotExist:
-                if 1 < competition.status < 4:
-                    messages.warning(request,
-                                     'You have no current match, please check the brackets for more information')
+                        context['player'] = 2
+                        if match.p2_reg_score:
+                            context['registered'] = True
+                        else:
+                            context['registered'] = False
+                except ObjectDoesNotExist:
+                    if 1 < competition.status < 4:
+                        messages.warning(request,
+                                         'You have no current match, please check the brackets for more information')
 
     # Insert placeholder image if the image_url is empty
     if not competition.activity.image_url:
@@ -196,7 +196,7 @@ def competition_details(request, competition_id):
     context['competition'] = competition
 
     # admin control panel
-    if request.user.is_staff and competition.status > 1 and competition.challonge_url and challonge_is_used:
+    if request.user.is_staff and competition.status > 1 and competition.challonge_url and use_challonge:
         context['open_matches'] = Match.objects.filter(
             Q(competition=competition, state='open') | Q(competition=competition, state='error'))
     return render(request, 'competition/competition.html', context)
@@ -398,8 +398,9 @@ def start_compo(request, competition_id):
             if competition.tournament_format is None:
                 messages.error(request, 'Set competition tournament format before using this feature')
                 return redirect(competition)
+
             if settings.CHALLONGE_INTEGRATION_ENABELED and settings.CHALLONGE_API_USERNAME != '' and \
-                            settings.CHALLONGE_API_KEY != '':
+                    settings.CHALLONGE_API_KEY != '':
                 challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
                 url = unicode(competition.lan) + unicode(competition.activity) + unicode(int(time.time()))
                 url = re.sub('[^0-9a-zA-Z]+', '', url)
