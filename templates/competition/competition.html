@@ -218,7 +218,7 @@
                     </div>
                 {% endif %}
         {% endif %}
-        {% if request.user.is_staff and competition.status == 1 %}
+        {% if request.user.is_staff and competition.status == 1 and use_challonge == True %}
              <div class="col-md-9">
                 <form class="form-inline" action="{% url 'start_compo' competition.id %}" method="POST">
                     {% csrf_token %}
