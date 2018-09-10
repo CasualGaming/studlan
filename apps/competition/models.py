@@ -53,24 +53,37 @@ class Competition(TranslatableModel):
     activity = models.ForeignKey(Activity)
     lan = models.ForeignKey(LAN)
     challonge_url = models.CharField('Challonge url', max_length=50, blank=True, null=True)
-    use_teams = models.BooleanField('use teams', default=False,
-                                    help_text='If checked, participants will be ignored, and will '
+    team_size = models.IntegerField(default=5, blank=True)
+    start_time = models.DateTimeField(blank=True, null=True)
+
+    tournament_format = models.CharField(
+        'Tournament format', max_length=20, blank=True, null=True, choices=TOURNAMENT_FORMATS)
+
+    max_participants = models.SmallIntegerField(
+        'Maximum participants', default=0, help_text="The maximum number of participants allowed for a competition."
+                                                     "Restricts participants based on competition type. 0 means"
+                                                     " infinite participants are allowed.")
+
+    use_teams = models.BooleanField(
+        'use teams', default=False, help_text='If checked, participants will be ignored, and will '
                                     'instead use teams. If left unchecked teams will be ignored, '
                                     'and participants will be used.')
-    team_size = models.IntegerField(default=5, blank=True)
-    enforce_team_size = models.BooleanField('enforce teams', default=False,
-                                            help_text='If checked, teams will require x members (specified in team_size) before being able '
-                                            'to sign up.')
-    enforce_payment = models.BooleanField('enforce payment', default=False,
-                                            help_text='If checked, teams will require x members (specified in team_size) with valid tickets before'
-                                          ' being able to sign up.')
-    require_alias = models.BooleanField('require alias', default=False, help_text="If checked, players will need to register"
-                                        "an alias for the Activity that the competition belongs to.")
-    start_time = models.DateTimeField(blank=True, null=True)
-    max_match_points = models.SmallIntegerField('Maximum match points', default=1, help_text="This number represents how many points are needed"
-                                                " to win a match. E.g. 3 in a BO 5 or 16 in BO 30")
-    tournament_format = models.CharField('Tournament format', max_length=20, blank=True,
-                                         null=True, choices=TOURNAMENT_FORMATS)
+
+    enforce_team_size = models.BooleanField(
+        'enforce teams', default=False, help_text='If checked, teams will require x members (specified in team_size)'
+                                                  ' before being able to sign up.')
+
+    enforce_payment = models.BooleanField(
+        'enforce payment', default=False, help_text='If checked, teams will require x members (specified in team_size)'
+                                                    ' with valid tickets before being able to sign up.')
+
+    require_alias = models.BooleanField(
+        'require alias', default=False, help_text="If checked, players will need to register an alias for the "
+                                                  "Activity that the competition belongs to.")
+
+    max_match_points = models.SmallIntegerField(
+        'Maximum match points', default=1, help_text="This number represents how many points are needed to win "
+                                                     "a match. E.g. 3 in a BO 5 or 16 in BO 30")
 
     def get_teams(self):
         if self.use_teams:
