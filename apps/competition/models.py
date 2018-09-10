@@ -1,14 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import datetime
 from translatable.models import TranslatableModel, get_translation_model
 
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
-from django.db.models.signals import post_save
-from django.utils import translation
 from django.utils.translation import ugettext as _
 
 from apps.lan.models import LAN
@@ -120,6 +117,16 @@ class Competition(TranslatableModel):
                 if Alias.objects.filter(user=user, alias_type=alias_type).exists():
                     return True
         return False
+
+    def participant_spots_free(self):
+        teams, users = self.get_participants()
+        if self.max_participants > 0:
+            if self.use_teams:
+                return self.max_participants - len(teams)
+            else:
+                return self.max_participants - len(users)
+        else:
+            return -1
 
     def status_text(self):
         return self.STATUS_OPTIONS[self.status - 1][1]

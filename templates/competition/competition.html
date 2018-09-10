@@ -19,6 +19,9 @@
             {% if competition.start_time %}
                 <p class="competition-start-time">{{ competition.start_time }}</p>
             {% endif %}
+            {% if competition.participant_spots_free > 0 %}
+                <p class="competition-start-time">Open spots: {{ competition.participant_spots_free }}</p>
+            {% endif %}
         </div>
 
     </div>
@@ -313,6 +316,17 @@
         {% endif %}
     {% endif %}
 {% endif %}
+
+{% if competition.status == 2 and competition.participant_spots_free == 0 %}
+    <div class="row">
+        <div class="col-md-9">
+            <div class="alert alert-info">
+                <strong>{% trans "This competition is full" %}</strong>
+               This competition only had room for {{ competition.max_participants }} participants, and that limit has been reached.
+            </div>
+        </div>
+    </div>
+    {% endif %}
 
     <div class="row">
         <div class="col-md-9">
