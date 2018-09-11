@@ -127,6 +127,8 @@ def shorten_descriptions(competitions, length):
 def competition_details(request, competition_id):
     context = {}
     competition = get_object_or_404(Competition, pk=competition_id)
+
+    # Get challonge settings
     try:
         use_challonge = settings.CHALLONGE_INTERGRATION_ENABLED
         if use_challonge:
@@ -135,18 +137,30 @@ def competition_details(request, competition_id):
         use_challonge = False
     context['use_challonge'] = use_challonge
 
+    # Build breadcrumbs
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
         (_(u'Competitions'), reverse('competitions')),
         (competition, ''),
     )
-
     context['breadcrumbs'] = breadcrumbs
 
+    # Get participants for competition
     teams, users = competition.get_participants()
-
     context['teams'] = teams
     context['users'] = users
+
+    # Check if competition has reached participant limit
+    if competition.max_participants > 0:
+        if competition.use_teams:
+            if len(teams) >= competition.max_participants:
+                competition.status = 2
+                competition.save()
+        else:
+            if len(users) >= competition.max_participants:
+                competition.status = 2
+                competition.save()
+
     if competition.has_participant(request.user):
         p = None
         if request.user in users:

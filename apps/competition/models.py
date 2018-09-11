@@ -1,14 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import datetime
 from translatable.models import TranslatableModel, get_translation_model
 
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
-from django.db.models.signals import post_save
-from django.utils import translation
 from django.utils.translation import ugettext as _
 
 from apps.lan.models import LAN
@@ -53,24 +50,37 @@ class Competition(TranslatableModel):
     activity = models.ForeignKey(Activity)
     lan = models.ForeignKey(LAN)
     challonge_url = models.CharField('Challonge url', max_length=50, blank=True, null=True)
-    use_teams = models.BooleanField('use teams', default=False,
-                                    help_text='If checked, participants will be ignored, and will '
+    team_size = models.IntegerField(default=5, blank=True)
+    start_time = models.DateTimeField(blank=True, null=True)
+
+    tournament_format = models.CharField(
+        'Tournament format', max_length=20, blank=True, null=True, choices=TOURNAMENT_FORMATS)
+
+    max_participants = models.SmallIntegerField(
+        'Maximum participants', default=0, help_text="The maximum number of participants allowed for a competition."
+                                                     "Restricts participants based on competition type. 0 means"
+                                                     " infinite participants are allowed.")
+
+    use_teams = models.BooleanField(
+        'use teams', default=False, help_text='If checked, participants will be ignored, and will '
                                     'instead use teams. If left unchecked teams will be ignored, '
                                     'and participants will be used.')
-    team_size = models.IntegerField(default=5, blank=True)
-    enforce_team_size = models.BooleanField('enforce teams', default=False,
-                                            help_text='If checked, teams will require x members (specified in team_size) before being able '
-                                            'to sign up.')
-    enforce_payment = models.BooleanField('enforce payment', default=False,
-                                            help_text='If checked, teams will require x members (specified in team_size) with valid tickets before'
-                                          ' being able to sign up.')
-    require_alias = models.BooleanField('require alias', default=False, help_text="If checked, players will need to register"
-                                        "an alias for the Activity that the competition belongs to.")
-    start_time = models.DateTimeField(blank=True, null=True)
-    max_match_points = models.SmallIntegerField('Maximum match points', default=1, help_text="This number represents how many points are needed"
-                                                " to win a match. E.g. 3 in a BO 5 or 16 in BO 30")
-    tournament_format = models.CharField('Tournament format', max_length=20, blank=True,
-                                         null=True, choices=TOURNAMENT_FORMATS)
+
+    enforce_team_size = models.BooleanField(
+        'enforce teams', default=False, help_text='If checked, teams will require x members (specified in team_size)'
+                                                  ' before being able to sign up.')
+
+    enforce_payment = models.BooleanField(
+        'enforce payment', default=False, help_text='If checked, teams will require x members (specified in team_size)'
+                                                    ' with valid tickets before being able to sign up.')
+
+    require_alias = models.BooleanField(
+        'require alias', default=False, help_text="If checked, players will need to register an alias for the "
+                                                  "Activity that the competition belongs to.")
+
+    max_match_points = models.SmallIntegerField(
+        'Maximum match points', default=1, help_text="This number represents how many points are needed to win "
+                                                     "a match. E.g. 3 in a BO 5 or 16 in BO 30")
 
     def get_teams(self):
         if self.use_teams:
@@ -107,6 +117,16 @@ class Competition(TranslatableModel):
                 if Alias.objects.filter(user=user, alias_type=alias_type).exists():
                     return True
         return False
+
+    def participant_spots_free(self):
+        teams, users = self.get_participants()
+        if self.max_participants > 0:
+            if self.use_teams:
+                return self.max_participants - len(teams)
+            else:
+                return self.max_participants - len(users)
+        else:
+            return -1
 
     def status_text(self):
         return self.STATUS_OPTIONS[self.status - 1][1]
