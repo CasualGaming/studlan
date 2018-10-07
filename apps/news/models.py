@@ -33,7 +33,7 @@ class ArticleTranslation(get_translation_model(Article, "Article")):
     
 class FAQ(TranslatableModel):
     pub_date = models.DateTimeField('published', default=datetime.datetime.now)
-    relevant_to = models.ManyToManyField(LAN, blank=True)
+    active = models.BooleanField('isActive', default=False)
 
 
 class FAQTranslation(get_translation_model(FAQ, "FAQ")):
@@ -46,7 +46,7 @@ class FAQTranslation(get_translation_model(FAQ, "FAQ")):
 
 class ToParents(TranslatableModel):
     pub_date = models.DateTimeField('published', default=datetime.datetime.now)
-    relevant_to = models.ManyToManyField(LAN, blank=True)
+    active = models.BooleanField('isActive', default=False)
 
 class ToParentsTranslation(get_translation_model(ToParents, 'ToParents')):
     translated_title = models.CharField('title', max_length=50)

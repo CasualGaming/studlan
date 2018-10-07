@@ -46,17 +46,11 @@ def single(request, article_id):
     return render(request, 'news/single.html', {'article': article})
 
 def faq(request):
-    active_lans = LAN.objects.filter(end_date__gte=datetime.now())
-    faq = get_object_or_404(FAQ, relevant_to__in=active_lans)
-    if(faq.count() == 0):
-        faq = ToParents.objects.all().first()
+    faq = get_object_or_404(FAQ, active=True)
     return render(request, 'news/single.html', {'article': faq})
 
 def toParents(request):
-    active_lans = LAN.objects.filter(end_date__gte=datetime.now())
-    toParents = ToParents.objects.all().filter(relevant_to__in=active_lans)
-    if (toParents.count() == 0):
-        toParents = ToParents.objects.all().first()
+    toParents = get_object_or_404(ToParents, active=True)
     return render(request, 'news/single.html', {'article': toParents})
 
 def archive(request, page):
