@@ -1054,6 +1054,12 @@ msgstr "Inboks"
 msgid "Log out"
 msgstr "Logg ut"
 
+msgid "FAQ"
+msgstr "FAQ"
+
+msgid "To parents"
+msgstr "Til foreldre"
+
 #~ msgid " are missing aliases for "
 #~ msgstr " mangler alias for  "
 

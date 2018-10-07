@@ -6,7 +6,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.conf import settings
 from django.utils.datetime_safe import datetime
 
-from apps.news.models import Article
+from apps.news.models import Article, FAQ, ToParents
 from apps.lan.models import Stream, LAN
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -45,6 +45,19 @@ def single(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
     return render(request, 'news/single.html', {'article': article})
 
+def faq(request):
+    active_lans = LAN.objects.filter(end_date__gte=datetime.now())
+    faq = get_object_or_404(FAQ, relevant_to__in=active_lans)
+    if(faq.count() == 0):
+        faq = ToParents.objects.all().first()
+    return render(request, 'news/single.html', {'article': faq})
+
+def toParents(request):
+    active_lans = LAN.objects.filter(end_date__gte=datetime.now())
+    toParents = ToParents.objects.all().filter(relevant_to__in=active_lans)
+    if (toParents.count() == 0):
+        toParents = ToParents.objects.all().first()
+    return render(request, 'news/single.html', {'article': toParents})
 
 def archive(request, page):
     try:

@@ -22,6 +22,8 @@ class Article(TranslatableModel):
     class Meta:
         ordering = ['-pub_date']
 
+
+
 class ArticleTranslation(get_translation_model(Article, "Article")):
     translated_title = models.CharField('title', max_length=50)
     translated_body = models.TextField('body')
@@ -29,3 +31,26 @@ class ArticleTranslation(get_translation_model(Article, "Article")):
     def __unicode__(self):
         return self.translated_title
     
+class FAQ(TranslatableModel):
+    pub_date = models.DateTimeField('published', default=datetime.datetime.now)
+    relevant_to = models.ManyToManyField(LAN, blank=True)
+
+
+class FAQTranslation(get_translation_model(FAQ, "FAQ")):
+    translated_title = models.CharField('title', max_length=50)
+    translated_body = models.TextField('body')
+
+    def __unicode__(self):
+        return self.translated_title
+
+
+class ToParents(TranslatableModel):
+    pub_date = models.DateTimeField('published', default=datetime.datetime.now)
+    relevant_to = models.ManyToManyField(LAN, blank=True)
+
+class ToParentsTranslation(get_translation_model(ToParents, 'ToParents')):
+    translated_title = models.CharField('title', max_length=50)
+    translated_body = models.TextField('body')
+
+    def __unicode__(self):
+        return self.translated_title
