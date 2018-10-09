@@ -1,3 +1,4 @@
 -r base.txt
 uwsgi
 psycopg2
+django-mailgun
