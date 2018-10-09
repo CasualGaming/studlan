@@ -18,8 +18,12 @@ DATABASES = {
 STUDLAN_FROM_MAIL = 'noreply@domain.no'
 SUPPORT_MAIL = 'change@me.com'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # real
-EMAIL_HOST = "smtp.domain.no"
+EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
+MAILGUN_ACCESS_KEY = 'change-me'
+MAILGUN_SERVER_NAME = 'change-me'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # real
+# EMAIL_HOST = "smtp.domain.no"
 DEFAULT_FROM_EMAIL = STUDLAN_FROM_MAIL
 REGISTER_FROM_MAIL = DEFAULT_FROM_EMAIL
 EMAIL_PORT = 25
