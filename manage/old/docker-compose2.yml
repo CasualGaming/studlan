@@ -1,0 +1,13 @@
+version: '2.4'
+services:
+  # No longer used, here for reference
+  studlan-local-dev:
+    image: studlan:local-dev
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./manage/dev-settings.py:/srv/studlan/studlan/settings/local.py:ro
+      - ./tmp/studlan.db:/srv/studlan/studlan.db:rw
+      - ./tmp/studlan.log:/srv/studlan/studlan.log:rw
+    restart: "no"

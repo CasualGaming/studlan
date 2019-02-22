@@ -2,67 +2,88 @@ Studlan
 ==========
 [![Build Status](https://drone.casualgaming.no/api/badges/CasualGaming/studlan/status.svg)](https://drone.fap.no/CasualGaming/studlan)
 
-Requirements
-------------
+# Setup
+## Tools
+* [Git](http://git-scm.com) (the [GitHub for Windows](http://windows.github.com/) app is probably the easiest way to install and use Git on Windows)
+* SSH (On Windows, SSH is included with Git/GitHub for Windows)
+* Python 2.7 w/ pip
+* Docker and Docker Compose
 
-Download the latest versions of the following software
-
-* [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-* [Vagrant](http://downloads.vagrantup.com/)
-* [Git](http://git-scm.com)
-    * the [GitHub for Windows](http://windows.github.com/) app is probably the easiest way to install and use Git on Windows
-* SSH - On Windows SSH is included with Git/GitHub for Windows.
-
-Installation
-------------
-
-# Git and repository setup
+## Git
 ```bash
-$ git config --global core.autocrlf false
-$ git config --global user.name "<your github username>"
-$ git config --global user.email <your.github@email.com>
-$ git clone --recursive git@github.com:casualgaming/studlan.git
-$ cd studlan
+git config --global core.autocrlf false
+git config --global user.name "<username>"
+git config --global user.email <email-address>
 ```
 
 Alternatively on Windows, use the GitHub for Windows app to setup everything
 
-Vagrant
-=======
+## Clone the Repo
+No instructions should be needed here. The following sections assume you are inside the repo.
 
-This will create a virtual machine with all that is required to start developing
-
-* see the Vagrantfile for special VM configuration options and
-* see the vagrantbootstrap.sh script for provisioning options
-
-```bash
-$ vagrant up
+## Python virtualenv
+```
+manage/setup-dev-venv.sh
 ```
 
-If anything goes wrong
-```bash
-$ vagrant reload # will re-up the machine without destroying it
-$ vagrant destroy -f # delete everything to start from scratch
-$ vagrant provision # re-run the provisioning (vagrantbootstrap.sh) task
+## Django
+```
+# Setup DB and migrate to newest version
+python manage.py migrate --fake-initial
 ```
 
-After the machine is up and provisioned you can SSH to the instance to run a server
-```bash
-$ vagrant ssh # if prompted for a password just type 'vagrant'
-$ workon studlan # this is the virtualenv
-$ cd /vagrant # this is the mounted shared folder of the project root
-$ python manage.py runserver 0.0.0.0:8000 # this will bind to all interfaces on port 8000 (forwarded as 8001)
+## Making New Migrations
+**TODO**
+Enter venv first.
+
+Dry run:
+```
+python manage.py makemigrations --dry-run
 ```
 
-Site should be available at http://localhost:8001
-
-To suspend/resume the VM
-```bash
-$ vagrant suspend studlan
-$ vagrant resume studlan
+# Running
+## Run with Virtualenv
+This approach is faster than running with docker.
+```
+manage/run-dev-venv.sh
 ```
 
-## Features ##
+### Entering Virtualenv
+Manually:
+```
+source venv/bin/activate
+# Do stuff
+deactivate
+```
+Using subshell:
+```
+manage/enter-venv.sh
+```
+
+## Run with Docker
+This approach takes more time to build, but is more similar to production. Persistent files such as the SQLite DB, the Django local settings and log file are stores in the `tmp` dir.
+```
+manage/run-dev-docker.sh
+```
+
+# Testing
+## Validate Config and Database
+```
+python manage.py check --deploy
+```
+## Run Unit Tests
+**TODO**
+```
+tox test
+```
+
+# Deployment
+## Setup
+**TODO**
+* Create a (`studlan/settings/local.py`) settings file for every instance of the app
+* Create a Docker Compose file for all instances of the app, including bindings for the settings files
+
+# Features
 * News
 * Activites
 	* Used for having several competitions under the same activity (usually a game).
@@ -82,28 +103,10 @@ $ vagrant resume studlan
 	* Export details of participants per event
 
 
-## Planned features ##
+## Planned features
 * Teams
 	* Match history
 	* Seeding (for any activity)
 * Competitions
 	* Challonge integration with Automatic bracket creation/Tournament system that takes seeding into account.
 * Non-fluid responsive layout
-
-
-## Requirements ##
-To install requirements for development:
-
-    make env
-    make dev
-
-To install requirements for production:
-
-    apt-get install libpq-dev python-dev
-    make env
-    make prod
-
-## Initialization ##
-1. python manage.py syncdb
-2. python manage.py migrate
-

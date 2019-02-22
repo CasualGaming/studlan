@@ -1,0 +1,37 @@
+Notes regarding replacement of Vagrant with Docker
+
+Setup:
+- Django running in virtualenv inside Vagrant VM
+- Test is run how?
+- Docker is used how?
+- Makefile is no longer used?
+
+Forwarded ports for dev:
+- guest: 8000, host: 8001
+- guest: 80, host: 8080
+- guest: 443, host: 8443
+
+Django commands:
+- python manage.py migrate
+- python manage.py syncdb
+- python manage.py runserver 0.0.0.0:8000
+
+VM OS: Something Debian-based
+
+Custom APT repos used (installed or run):
+- python-software-properties
+- python-pip
+- https://deb.nodesource.com/setup_8.x (NodeSource Node.js 8.x LTS)
+
+APT packages used: python-dev python-setuptools python-virtualenv vim \
+        tmux screen git-core curl build-essential openssl \
+        libjpeg8 libjpeg8-dev zlib-bin libtiff4 libtiff4-dev libfreetype6 libfreetype6-dev libwebp2 libpq-dev libssl-dev \
+        python-psycopg2 imagemagick gettext sqlite3 \
+        nodejs npm # from custom ppa:chris-lea/node.js
+
+pip packages used: pip setuptools
+
+NPM packages used: less
+
+To find out:
+- Is superadmin added initially?

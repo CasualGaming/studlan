@@ -275,4 +275,4 @@ ENV/
 /static_cdn/
 .idea
 .vagrant
-
+/tmp/
