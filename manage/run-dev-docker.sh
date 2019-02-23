@@ -18,6 +18,7 @@ cp studlan/settings/local.py tmp/settings.py
 docker build -t "$IMAGE_ID" .
 
 # Run temporary container from built image
+echo "Starting web server with log file"
 docker run --rm \
     --name "$CONTAINER_ID" \
     -v "$HOST_PWD/tmp/settings.py:$VM_PWD/studlan/settings/local.py:ro" \

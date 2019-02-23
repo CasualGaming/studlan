@@ -10,4 +10,4 @@ source .venv/bin/activate
 trap deactivate EXIT
 
 # Install requirements inside venv
-pip install --upgrade -r requirements/development.txt
+pip install --upgrade -r requirements/test.txt

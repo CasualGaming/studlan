@@ -4,7 +4,11 @@
 __pycache__
 *.pyc
 node_modules/
-/venv/
+venv/
+.venv/
 /tmp/
 .git/
 /.github/
+
+# Editor
+.vscode/

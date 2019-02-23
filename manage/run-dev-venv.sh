@@ -4,7 +4,7 @@ set -e # Exit on error
 set -u # Undefined var is error
 
 # Activate venv and deactivate on exit
-source venv/bin/activate
+source .venv/bin/activate
 trap deactivate EXIT
 
 # Check if settings exist

@@ -22,4 +22,4 @@ chown -R studlan:studlan .
 set -e
 
 # Run Django server using uWSGI
-exec uwsgi --ini manage/uwsgi.ini
+exec uwsgi --ini uwsgi.ini

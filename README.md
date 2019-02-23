@@ -7,7 +7,12 @@ Studlan
 * [Git](http://git-scm.com) (the [GitHub for Windows](http://windows.github.com/) app is probably the easiest way to install and use Git on Windows)
 * SSH (On Windows, SSH is included with Git/GitHub for Windows)
 * Python 2.7 w/ pip
-* Docker and Docker Compose
+* Docker and Docker Compose (optional)
+
+## Tools From pip
+```
+sudo pip install --upgrade pip virtualenv setuptools wheel tox
+```
 
 ## Git
 ```bash
@@ -19,45 +24,23 @@ git config --global user.email <email-address>
 Alternatively on Windows, use the GitHub for Windows app to setup everything
 
 ## Clone the Repo
-No instructions should be needed here. The following sections assume you are inside the repo.
-
-## Python virtualenv
-```
-manage/setup-dev-venv.sh
-```
-
-## Django
-```
-# Setup DB and migrate to newest version
-python manage.py migrate --fake-initial
-```
+The following sections assume you are inside the cloned repo.
 
 ## Making New Migrations
 **TODO**
-Enter venv first.
-
 Dry run:
 ```
+# Inside venv:
 python manage.py makemigrations --dry-run
 ```
 
 # Running
 ## Run with Virtualenv
-This approach is faster than running with docker.
+This approach is faster than running with Docker, plus it has colors.
 ```
+# First time only:
+manage/setup-dev-venv.sh
 manage/run-dev-venv.sh
-```
-
-### Entering Virtualenv
-Manually:
-```
-source venv/bin/activate
-# Do stuff
-deactivate
-```
-Using subshell:
-```
-manage/enter-venv.sh
 ```
 
 ## Run with Docker
@@ -67,14 +50,10 @@ manage/run-dev-docker.sh
 ```
 
 # Testing
-## Validate Config and Database
 ```
-python manage.py check --deploy
-```
-## Run Unit Tests
-**TODO**
-```
-tox test
+# First time only:
+manage/setup-test-venv.sh
+manage/run-test-venv.sh
 ```
 
 # Deployment
