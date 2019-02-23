@@ -14,6 +14,8 @@ python:
 services:
   - docker
 
+cache: pip
+
 stages:
   - test
   - deploy-registry
@@ -23,7 +25,7 @@ jobs:
   include:
     # Test
     - stage: test
-      name: Validate
+      name: Validate project
       install: pip install --upgrade -r requirements/test.txt
       script: python manage.py check --deploy --fail-level=ERROR
     - stage: test
@@ -33,31 +35,32 @@ jobs:
 
     # Deploy to registry
     - stage: deploy-registry
-      name: Deploy bleeding to registry
-      if: branch = master
-      install: echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
-      script: docker build -t $DOCKER_REPO:bleeding . && docker push $DOCKER_REPO:bleeding
+      name: Deploy bleeding/untagged to registry
+      if: (branch = master) AND (tag IS absent)
+      script: manage/deploy-travis.sh bleeding
     - stage: deploy-registry
-      name: Deploy latest to registry
-      if: branch = latest
-      install: echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
-      script: docker build -t $DOCKER_REPO:latest . && docker push $DOCKER_REPO:latest
+      name: Deploy stable/tagged to registry
+      if: (branch = master) AND (tag IS present)
+      script: manage/deploy-travis.sh "$TRAVIS_TAG" stable
     - stage: deploy-registry
-      name: Deploy buildtools-replacement to registry
-      if: branch = buildtools-replacement
-      install: echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
-      script: docker build -t $DOCKER_REPO:buildtools-replacement . && docker push $DOCKER_REPO:buildtools-replacement
+      name: Deploy bleeding/untagged to registry (buildtools-replacement)
+      if: (branch = buildtools-replacement) AND (tag IS absent)
+      script: manage/deploy-travis.sh buildtools-replacement-bleeding
+    - stage: deploy-registry
+      name: Deploy stable/tagged to registry (buildtools-replacement)
+      if: (branch = buildtools-replacement) AND (tag IS present)
+      script: manage/deploy-travis.sh buildtools-replacement-"$TRAVIS_TAG" buildtools-replacement-stable
 
-    # Deploy to site
-    - stage: deploy-site
-      name: Deploy bleeding to site
-      if: branch = master
-      script: echo bleeding deploy WIP
-    - stage: deploy-site
-      name: Deploy latest to site
-      if: branch = latest
-      script: echo latest deploy WIP
-    - stage: deploy-site
-      name: Deploy buildtools-replacement to site
-      if: branch = buildtools-replacement
-      script: echo buildtools-replacement deploy WIP
+#    # Deploy to site
+#    - stage: deploy-site
+#      name: Deploy bleeding to site
+#      if: (branch = master) AND (tag IS absent)
+#      script: echo bleeding deploy WIP
+#    - stage: deploy-site
+#      name: Deploy stable to site
+#      if: (branch = master) AND (tag IS present)
+#      script: echo stable deploy WIP
+#    - stage: deploy-site
+#      name: Deploy buildtools-replacement to site
+#      if: branch = buildtools-replacement
+#      script: echo buildtools-replacement deploy WIP
