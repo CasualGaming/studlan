@@ -2,7 +2,6 @@
 #
 
 static/
-local.py
 dev.db
 .idea/
 .vagrant/
