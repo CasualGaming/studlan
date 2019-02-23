@@ -1,0 +1,37 @@
+# Travis CI config for studlan
+
+language: python
+
+# virtualenv is implicit for python
+python:
+  - "2.7"
+
+services:
+  - docker
+
+stages:
+  - test
+  - build
+  - name: deploy_dev
+    if: branch = master
+  - name: deploy_prod
+    if: branch = master AND tag = latest
+
+jobs:
+  include:
+    - stage: test
+      name: Install requirements
+      install: pip install --upgrade -r requirements/test.txt
+      name: Validate
+      script: python manage.py check --deploy --fail-level=ERROR
+      name: Run tests
+      script: python manage.py test
+    - stage: build
+      name: Build Docker image
+      script: docker build -t studlan:dev .
+    - stage: deploy_dev
+      name: Show WIP text
+      script: echo WIP
+    - stage: deploy_prod
+      name: Show WIP text
+      script: echo WIP
