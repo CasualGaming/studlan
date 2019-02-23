@@ -14,23 +14,22 @@ python:
 services:
   - docker
 
-#stages:
-#  - test
-#  - build
-#  - deploy-registry
-#  - deploy-site
+stages:
+  - test
+  - build
+  - deploy-registry
+  - deploy-site
 
 jobs:
   include:
     # Test
     - stage: test
-      name: Install requirements
-      install: pip install --upgrade -r requirements/test.txt
-    - stage: test
       name: Validate
+      install: pip install --upgrade -r requirements/test.txt
       script: python manage.py check --deploy --fail-level=ERROR
     - stage: test
       name: Run tests
+      install: pip install --upgrade -r requirements/test.txt
       script: python manage.py test
 
     # Build
@@ -40,19 +39,19 @@ jobs:
 
     # Deploy to registry
     - stage: deploy-registry
-      name: "Login to Docker Hub registry"
-      install: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    - stage: deploy-registry
       name: Deploy bleeding to registry
       if: branch = master
+      install: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       script: docker tag studlan:dev studlan:bleeding && docker push $DOCKER_REPO:bleeding
     - stage: deploy-registry
       name: Deploy latest to registry
       if: branch = latest
+      install: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       script: docker tag studlan:dev studlan:bleeding && docker push $DOCKER_REPO:latest
     - stage: deploy-registry
       name: Deploy buildtools-replacement to registry
       if: branch = buildtools-replacement
+      install: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       script: docker tag studlan:dev studlan:bleeding && docker push $DOCKER_REPO:buildtools-replacement
 
     # Deploy to site
