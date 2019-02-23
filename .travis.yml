@@ -42,23 +42,14 @@ jobs:
     - stage: deploy-registry
       name: Deploy bleeding/unversioned to registry
       if: (branch = master) AND NOT (tag =~ ^v[0-9])
-      install: echo "$DOCKER_PASSWORD" | docker login --username="$DOCKER_USERNAME" --password-stdin
-      script: docker build -t $DOCKER_REPO:bleeding .
-      deploy: docker push $DOCKER_REPO:bleeding
+      script: manage/deploy-travis.sh bleeding
     - stage: deploy-registry
       name: Deploy stable/versioned to registry
       if: (branch = master) AND (tag =~ ^v[0-9])
-      install: echo "$DOCKER_PASSWORD" | docker login --username="$DOCKER_USERNAME" --password-stdin
-      script: docker build -t $DOCKER_REPO:stable .
-      before_deploy: docker tag $DOCKER_REPO:stable $DOCKER_REPO:$TRAVIS_TAG
-      deploy:
-        - docker push $DOCKER_REPO:stable
-        - docker push $DOCKER_REPO:$TRAVIS_TAG
+      script: manage/deploy-travis.sh stable $TRAVIS_TAG
     - stage: deploy-registry # TMP buildtools-replacement untagged
       name: Deploy buildtools-replacement unversioned to registry
       if: (branch = buildtools-replacement) AND NOT (tag =~ ^v[0-9])
-      install: echo "$DOCKER_PASSWORD" | docker login --username="$DOCKER_USERNAME" --password-stdin
-      script: docker build -t $DOCKER_REPO:buildtools-replacement .
-      deploy: docker push $DOCKER_REPO:buildtools-replacement
+      script: manage/deploy-travis.sh buildtools-replacement
 
 # TODO deploy to site, jobs cloned from the above
