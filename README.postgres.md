@@ -1,5 +1,7 @@
 # Studlan #
 
+**OUTDATED**
+
 ## README.postgres ##
 
 Install notes if you want to use Postgresql when deploying Studlan. 

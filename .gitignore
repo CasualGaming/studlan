@@ -271,10 +271,12 @@ ENV/
 # Rope project settings
 .ropeproject
 
-
 # Other
 /static_cdn/
 .idea
 .vscode/
 .vagrant
 /tmp/
+# Django
+/studlan/settings/local.py
+/static/

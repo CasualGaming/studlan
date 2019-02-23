@@ -13,3 +13,10 @@ if [[ ! -d .venv ]]; then
         virtualenv -p $(which python2) .venv
     fi
 fi
+
+# Add dev app settings
+APP_SETTINGS_FILE=studlan/settings/local.py
+DEV_APP_SETTINGS_FILE=sample-configs/local-dev.py
+if [[ ! -e $APP_SETTINGS_FILE ]]; then
+    cp $DEV_APP_SETTINGS_FILE $APP_SETTINGS_FILE
+fi

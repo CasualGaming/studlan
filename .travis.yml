@@ -16,6 +16,11 @@ services:
 
 cache: pip
 
+branches:
+  only:
+  - master
+  - buildtools-replacement # TMP
+
 stages:
   - test
   - deploy-registry
@@ -35,32 +40,25 @@ jobs:
 
     # Deploy to registry
     - stage: deploy-registry
-      name: Deploy bleeding/untagged to registry
-      if: (branch = master) AND (tag IS absent)
-      script: manage/deploy-travis.sh bleeding
+      name: Deploy bleeding/unversioned to registry
+      if: (branch = master) AND NOT (tag =~ ^v[0-9])
+      install: echo "$DOCKER_PASSWORD" | docker login --username="$DOCKER_USERNAME" --password-stdin
+      script: docker build -t $DOCKER_REPO:bleeding .
+      depoly: docker push $DOCKER_REPO:bleeding
     - stage: deploy-registry
-      name: Deploy stable/tagged to registry
-      if: (branch = master) AND (tag IS present)
-      script: manage/deploy-travis.sh "$TRAVIS_TAG" stable
-    - stage: deploy-registry
-      name: Deploy bleeding/untagged to registry (buildtools-replacement)
-      if: (branch = buildtools-replacement) AND (tag IS absent)
-      script: manage/deploy-travis.sh buildtools-replacement-bleeding
-    - stage: deploy-registry
-      name: Deploy stable/tagged to registry (buildtools-replacement)
-      if: (branch = buildtools-replacement) AND (tag IS present)
-      script: manage/deploy-travis.sh buildtools-replacement-"$TRAVIS_TAG" buildtools-replacement-stable
+      name: Deploy stable/versioned to registry
+      if: (branch = master) AND (tag =~ ^v[0-9])
+      install: echo "$DOCKER_PASSWORD" | docker login --username="$DOCKER_USERNAME" --password-stdin
+      script: docker build -t $DOCKER_REPO:stable .
+      before_deploy: docker tag $DOCKER_REPO:stable $DOCKER_REPO:$TRAVIS_TAG
+      depoly:
+        - docker push $DOCKER_REPO:stable
+        - docker push $DOCKER_REPO:$TRAVIS_TAG
+    - stage: deploy-registry # TMP buildtools-replacement untagged
+      name: Deploy buildtools-replacement unversioned to registry
+      if: (branch = buildtools-replacement) AND NOT (tag =~ ^v[0-9])
+      install: echo "$DOCKER_PASSWORD" | docker login --username="$DOCKER_USERNAME" --password-stdin
+      script: docker build -t $DOCKER_REPO:buildtools-replacement .
+      depoly: docker push $DOCKER_REPO:buildtools-replacement
 
-#    # Deploy to site
-#    - stage: deploy-site
-#      name: Deploy bleeding to site
-#      if: (branch = master) AND (tag IS absent)
-#      script: echo bleeding deploy WIP
-#    - stage: deploy-site
-#      name: Deploy stable to site
-#      if: (branch = master) AND (tag IS present)
-#      script: echo stable deploy WIP
-#    - stage: deploy-site
-#      name: Deploy buildtools-replacement to site
-#      if: branch = buildtools-replacement
-#      script: echo buildtools-replacement deploy WIP
+# TODO deploy to site, jobs cloned from the above

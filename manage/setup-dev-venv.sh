@@ -11,3 +11,6 @@ trap deactivate EXIT
 
 # Install requirements inside venv
 pip install --upgrade -r requirements/development.txt
+
+# Install static files
+python manage.py collectstatic --noinput --clear

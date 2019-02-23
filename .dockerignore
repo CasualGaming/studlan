@@ -10,5 +10,9 @@ venv/
 .git/
 /.github/
 
+# Django
+/studlan/settings/local.py
+/static/
+
 # Editor
 .vscode/

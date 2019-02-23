@@ -3,10 +3,6 @@
 set -e # Exit on error
 set -u # Undefined var is error
 
-# Activate venv and deactivate on exit
-source .venv/bin/activate
-trap deactivate EXIT
-
 # Check if settings exist
 APP_SETTINGS_FILE=studlan/settings/local.py
 if [[ ! -e $APP_SETTINGS_FILE ]]; then
@@ -14,11 +10,15 @@ if [[ ! -e $APP_SETTINGS_FILE ]]; then
     exit 1
 fi
 
+[[ ! -e tmp ]] && mkdir -p tmp
+[[ ! -e tmp/studlan.db ]] && touch tmp/studlan.db
+[[ ! -e tmp/log ]] && mkdir -p tmp/log
+
+# Activate venv and deactivate on exit
+source .venv/bin/activate
+trap deactivate EXIT
+
 # Run migration, but skip initial if matching table names already exist
 python manage.py migrate --fake-initial
 
-# Validate
-python manage.py check --deploy --fail-level=ERROR
-
-# Run (WARNING: Not restricted to localhost)
-python manage.py runserver 0.0.0.0:8080
+exec uwsgi --ini uwsgi.ini

@@ -9,10 +9,10 @@ HOST_PWD=$(pwd)
 VM_PWD="/srv/studlan"
 
 # Add persistent files
-mkdir -p tmp
-touch tmp/studlan.db
-mkdir -p tmp/log
-cp studlan/settings/local.py tmp/settings.py
+[[ ! -e tmp ]] && mkdir -p tmp
+[[ ! -e tmp/studlan.db ]] && touch tmp/studlan.db
+[[ ! -e tmp/log ]] && mkdir -p tmp/log
+[[ ! -e tmp/settings.py ]] && cp sample-configs/local-dev.py tmp/settings.py
 
 # Build image
 docker build -t "$IMAGE_ID" .
