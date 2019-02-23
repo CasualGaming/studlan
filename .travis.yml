@@ -1,5 +1,10 @@
 # Travis CI config for studlan
 
+# Required env vars:
+# - DOCKER_USERNAME
+# - DOCKER_PASSWORD
+# - DOCKER_REPO
+
 language: python
 
 # virtualenv is implicit for python
@@ -9,29 +14,57 @@ python:
 services:
   - docker
 
-stages:
-  - test
-  - build
-  - name: deploy_dev
-    if: branch = master
-  - name: deploy_prod
-    if: branch = master AND tag = latest
+#stages:
+#  - test
+#  - build
+#  - deploy-registry
+#  - deploy-site
 
 jobs:
   include:
+    # Test
     - stage: test
       name: Install requirements
       install: pip install --upgrade -r requirements/test.txt
+    - stage: test
       name: Validate
       script: python manage.py check --deploy --fail-level=ERROR
+    - stage: test
       name: Run tests
       script: python manage.py test
+
+    # Build
     - stage: build
       name: Build Docker image
       script: docker build -t studlan:dev .
-    - stage: deploy_dev
-      name: Show WIP text
-      script: echo WIP
-    - stage: deploy_prod
-      name: Show WIP text
-      script: echo WIP
+
+    # Deploy to registry
+    - stage: deploy-registry
+      name: "Login to Docker Hub registry"
+      install: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - stage: deploy-registry
+      name: Deploy bleeding to registry
+      if: branch = master
+      script: docker tag studlan:dev studlan:bleeding && docker push $DOCKER_REPO:bleeding
+    - stage: deploy-registry
+      name: Deploy latest to registry
+      if: branch = latest
+      script: docker tag studlan:dev studlan:bleeding && docker push $DOCKER_REPO:latest
+    - stage: deploy-registry
+      name: Deploy buildtools-replacement to registry
+      if: branch = buildtools-replacement
+      script: docker tag studlan:dev studlan:bleeding && docker push $DOCKER_REPO:buildtools-replacement
+
+    # Deploy to site
+    - stage: deploy-site
+      name: Deploy bleeding to site
+      if: branch = master
+      script: echo bleeding deploy WIP
+    - stage: deploy-site
+      name: Deploy latest to site
+      if: branch = latest
+      script: echo latest deploy WIP
+    - stage: deploy-site
+      name: Deploy buildtools-replacement to site
+      if: branch = buildtools-replacement
+      script: echo buildtools-replacement deploy WIP
