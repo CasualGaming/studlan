@@ -3,11 +3,10 @@
 # venv
 rm -rf .venv
 
-# tmpdir
-rm -rf tmp
-
-# Django
+# studlan
 rm -rf static
+rm -rf tmp
+rm -rf log
 rm -f studlan/settings/local.py
 
 # Python

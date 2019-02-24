@@ -277,6 +277,8 @@ ENV/
 .vscode/
 .vagrant
 /tmp/
-# Django
+
+# studlan
 /studlan/settings/local.py
 /static/
+/log/

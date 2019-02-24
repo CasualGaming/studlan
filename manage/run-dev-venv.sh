@@ -12,7 +12,7 @@ fi
 
 [[ ! -e tmp ]] && mkdir -p tmp
 [[ ! -e tmp/studlan.db ]] && touch tmp/studlan.db
-[[ ! -e tmp/log ]] && mkdir -p tmp/log
+[[ ! -e log ]] && mkdir -p log
 
 # Activate venv and deactivate on exit
 source .venv/bin/activate

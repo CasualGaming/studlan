@@ -9,6 +9,7 @@ venv/
 /tmp/
 .git/
 /.github/
+/log/
 
 # Django
 /studlan/settings/local.py
