@@ -20,5 +20,6 @@ RUN python manage.py collectstatic --noinput --clear
 RUN rm studlan/settings/local.py
 
 EXPOSE 8080
+EXPOSE 8081
 
 CMD ["/bin/bash", "docker-entrypoint.sh"]
