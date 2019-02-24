@@ -32,10 +32,12 @@ jobs:
     - stage: test
       name: Validate project
       install: pip install --upgrade -r requirements/test.txt
+      before_script: cp sample-configs/local-empty.py studlan/settings/local.py
       script: python manage.py check --deploy --fail-level=ERROR
     - stage: test
       name: Run tests
       install: pip install --upgrade -r requirements/test.txt
+      before_script: cp sample-configs/local-empty.py studlan/settings/local.py
       script: python manage.py test
 
     # Deploy to registry
