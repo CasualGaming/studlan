@@ -12,11 +12,28 @@ fi
 
 # Run migration, but skip initial if matching table names already exist
 python manage.py migrate --fake-initial
+echo
 
 # Validate
 python manage.py check --deploy --fail-level=ERROR
+echo
 
-# Chown all files (this may fail for read-only volumes)
+# Add group and user
+if [[ ! -z ${STUDLAN_GID:=} ]]; then
+    groupadd -r -g "$STUDLAN_GID" studlan
+else
+    groupadd -r studlan
+fi
+if [[ ! -z ${STUDLAN_UID:=} ]]; then
+    useradd -r -g studlan -u "$STUDLAN_UID" studlan
+else
+    useradd -r -g studlan studlan
+fi
+echo "Added user: $(id studlan)"
+echo
+
+# Setup permissions and stuff
+# Note: Volumes from vboxsf cannot be chowned
 set +e
 chown -R studlan:studlan .
 set -e

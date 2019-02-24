@@ -14,6 +14,7 @@ venv/
 # Django
 /studlan/settings/local.py
 /static/
+/studlan.db
 
 # Editor
 .vscode/

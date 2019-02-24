@@ -35,7 +35,7 @@ The following sections assume you are inside the cloned repo.
 
 # Running
 ## Run with Virtualenv
-This approach is faster than running with Docker, plus it has colors. It will create dir `tmp`, dir `static` and file `studlan/settings/local.py`, which are ignored in dockerignore and gitignore.
+This approach is faster than running with Docker, plus it has colors. It will create dir `log`, dir `static`, file `studlan.db` and file `studlan/settings/local.py` inside the project directory, which are ignored in dockerignore and gitignore. Run `manage/clean.sh` to clean up after venv.
 ```
 # First time only:
 manage/setup-dev-venv.sh
@@ -43,7 +43,7 @@ manage/run-dev-venv.sh
 ```
 
 ## Run with Docker
-This approach takes more time to build, but is more similar to production. Persistent files such as the SQLite DB, the Django local settings and log file are stores in the `tmp` dir.
+This approach takes more time to build, but is more similar to production. It places a settings file, the SQLite database file and the logs under `/tmp/studlan`.
 ```
 manage/run-dev-docker.sh
 ```

@@ -4,6 +4,7 @@
 rm -rf .venv
 
 # studlan
+rm -rf /tmp/studlan
 rm -rf static
 rm -rf tmp
 rm -rf log

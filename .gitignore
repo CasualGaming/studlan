@@ -282,3 +282,4 @@ ENV/
 /studlan/settings/local.py
 /static/
 /log/
+/studlan.db

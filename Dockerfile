@@ -19,9 +19,6 @@ RUN python manage.py collectstatic --noinput --clear
 # Remove tmp app config
 RUN rm studlan/settings/local.py
 
-# Add app user
-RUN useradd -r studlan
-
 EXPOSE 8080
 
 CMD ["/bin/bash", "docker-entrypoint.sh"]

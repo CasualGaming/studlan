@@ -10,8 +10,7 @@ if [[ ! -e $APP_SETTINGS_FILE ]]; then
     exit 1
 fi
 
-[[ ! -e tmp ]] && mkdir -p tmp
-[[ ! -e tmp/studlan.db ]] && touch tmp/studlan.db
+[[ ! -e studlan.db ]] && touch studlan.db
 [[ ! -e log ]] && mkdir -p log
 
 # Activate venv and deactivate on exit
