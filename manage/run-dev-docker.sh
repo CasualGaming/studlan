@@ -6,7 +6,7 @@ set -u # Undefined var is error
 IMAGE_ID="studlan:dev"
 CONTAINER_ID="studlan-dev"
 HOST_DIR=/tmp/studlan
-VM_PWD="/srv/studlan"
+VM_DIR="/srv/studlan"
 
 # Add persistent files
 [[ ! -e $HOST_DIR ]] && mkdir -p $HOST_DIR
@@ -21,8 +21,12 @@ docker build -t "$IMAGE_ID" .
 docker run --rm \
     --name "$CONTAINER_ID" \
     -e STUDLAN_UID=950 -e STUDLAN_GID=950 \
-    -v "$HOST_DIR/settings.py:$VM_PWD/studlan/settings/local.py:ro" \
-    -v "$HOST_DIR/studlan.db:$VM_PWD/studlan.db:rw" \
-    -v "$HOST_DIR/log:$VM_PWD/log:rw" \
+    -e EXTRACT_STATIC="" \
+    -v "$HOST_DIR/settings.py:$VM_DIR/studlan/settings/local.py:ro" \
+    -v "$HOST_DIR/studlan.db:$VM_DIR/studlan.db:rw" \
+    -v "$HOST_DIR/log:$VM_DIR/log:rw" \
+    -v "$HOST_DIR/static:$VM_DIR/static-out" \
     -p "8080:8080" \
     "$IMAGE_ID"
+
+# Note on creating users: Check the log file for the verification link in the dummy e-mail.

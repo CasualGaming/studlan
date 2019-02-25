@@ -9,6 +9,7 @@ rm -rf static
 rm -rf tmp
 rm -rf log
 rm -f studlan/settings/local.py
+rm -f studlan.db
 
 # Python
 pyclean .

@@ -19,7 +19,9 @@ RUN python manage.py collectstatic --noinput --clear
 # Remove tmp app config
 RUN rm studlan/settings/local.py
 
+# HTTP
 EXPOSE 8080
+# uWSGI
 EXPOSE 8081
 
 CMD ["/bin/bash", "docker-entrypoint.sh"]
