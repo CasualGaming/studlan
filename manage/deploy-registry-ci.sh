@@ -26,7 +26,7 @@ echo "Building and deploying with tag"
 docker build -t "$IMAGE:$MAIN_TAG" .
 docker push "$IMAGE:$MAIN_TAG"
 
-for extra_tag in "$EXTRA_TAGS"; do
+for extra_tag in $EXTRA_TAGS; do
     echo "Deploying with tag $extra_tag"
     docker tag "$IMAGE:$MAIN_TAG" "$IMAGE:$extra_tag"
     docker push "$IMAGE:$extra_tag"
