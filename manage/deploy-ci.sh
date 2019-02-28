@@ -1,8 +1,9 @@
 #!/bin/bash
 # Syntax: deploy-travis.sh <main_tag> [extra_tag]*
+# Environment variables: DOCKER_REPO, DOCKER_USERNAME, DOCKER_PASSWORD
 
-if [[ $TRAVIS_BRANCH != "true" ]]; then
-    echo "Error: This isn't Travis" 2>&1
+if [[ $CI != "true" ]]; then
+    echo "Error: This isn't a CI environment" 2>&1
     exit -1
 fi
 
