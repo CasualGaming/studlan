@@ -10,14 +10,16 @@ if [[ ! -e $APP_SETTINGS_FILE ]]; then
     exit 1
 fi
 
-[[ ! -e studlan.db ]] && touch studlan.db
-[[ ! -e log ]] && mkdir -p log
-
 # Activate venv and deactivate on exit
 source .venv/bin/activate
 trap deactivate EXIT
 
+# Collect new static files
+echo "Collecting new static files ..."
+python manage.py collectstatic --noinput
+
 # Run migration, but skip initial if matching table names already exist
+echo "Running migration ..."
 python manage.py migrate --fake-initial
 
 exec uwsgi --ini uwsgi.ini

@@ -10,13 +10,17 @@ services:
       # TODO add UID+GID
       - STUDLAN_UID=
       - STUDLAN_GID=
-      # Tells app to copy static files to /srv/studlan/static-out
-      - EXTRACT_STATIC
+      # TODO add superuser info on first run
+      - SUPERUSER_USERNAME=
+      - SUPERUSER_EMAIL=
+      - SUPERUSER_PASSWORD=
+      # true or false
+      - SUPERUSER_INACTIVE=true
     volumes:
       - /srv/studlan/app-bleeding/settings.py:/srv/studlan/studlan/settings/local.py:ro
       - /srv/studlan/app-bleeding/log:/srv/studlan/log:rw
       # Where to put extracted static files so Nginx can serve them instead
-      - /srv/studlan/proxy/docs/static:/srv/studlan/static-out:rw
+      - /srv/studlan/proxy/docs/static:/srv/studlan/static:rw
     networks:
       - studlan
     restart: "always"
@@ -45,10 +49,7 @@ services:
     volumes:
       - /srv/studlan/proxy/config:/config/nginx:ro
       - /srv/studlan/proxy/log:/config/log:rw
-      # Static files extracted from app
-      - /srv/studlan/proxy/docs/static:/config/www/static:ro
-      # Extra static files
-      - /srv/studlan/proxy/docs/extra:/config/www/extra:ro
+      - /srv/studlan/proxy/docs:/config/www:ro
       # TODO replace with proper certificates once aquired
       - /etc/ssl/certs/ssl-cert-snakeoil.pem:/config/keys/cert.crt:ro
       - /etc/ssl/private/ssl-cert-snakeoil.key:/config/keys/cert.key:ro

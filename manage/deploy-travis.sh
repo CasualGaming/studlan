@@ -1,5 +1,5 @@
 #!/bin/bash
-# Syntax: deploy-travis.sh [extra_tag]*
+# Syntax: deploy-travis.sh <main_tag> [extra_tag]*
 
 if [[ $TRAVIS_BRANCH != "true" ]]; then
     echo "Error: This isn't Travis" 2>&1

@@ -2,6 +2,9 @@ Studlan
 ==========
 (Outdated) [![Build Status](https://drone.casualgaming.no/api/badges/CasualGaming/studlan/status.svg)](https://drone.fap.no/CasualGaming/studlan)
 
+(TODO: DockerHub link)
+(TODO: Travis link)
+
 # Features
 * News
 * Activites
@@ -119,13 +122,18 @@ Run this procedure for every instance of the app, with unique IDs and an actual 
 1. Update the Django settings.
 
 # Docker Image
+The Docker images are the intended way to run this application stack.
+
 ## Environment Variables
-* `STUDLAN_UID=<UID>`: UID to use for the `studlan` user. Has effect only for the first start of the container.
-* `STUDLAN_GID=<GID>`: Same as `STUDLAN_UID`, but for GID.
-* `EXTRACT_STATIC=""`: If collected static files should be copied to the internal folder `/srv/studlan/static-out`. This folder can be mounted, so that extracted files can be served by the reverse proxy web server.
+* `STUDLAN_UID=<uid>`: UID to use for the `studlan` user. Has effect only for the first start of the container.
+* `STUDLAN_GID=<gid>`: Same as `STUDLAN_UID`, but for GID.
+* `SUPERUSER_USERNAME=<username>`: If set, a superuser with the specified username is attempted created if a user with the specified username does not yet exist. `SUPERUSER_USERNAME`, `SUPERUSER_USERNAME` and `SUPERUSER_USERNAME` adds the superuser to the database, and can be removed after being set for one application start.
+* `SUPERUSER_EMAIL=<email>`: Email address for the superuser to be created. Required if `SUPERUSER_USERNAME` is set and the user does not exist yet.
+* `SUPERUSER_PASSWORD=<password>`: Password for the superuser to be created. Required if `SUPERUSER_USERNAME` is set and the user does not exist yet.
+* `SUPERUSER_INACTIVE=<true|false>` (default: false): Deactivates the superuser if it was just created. (`User.is_active` is set to false.)
 
 ## Internal Directories and Files
 * `/srv/studlan/studlan/settings/local.py`: (Required) Settings file for the Django app.
 * `/srv/studlan/log`: Log directory for the uWSGI server hosting the Django app.
-* `/srv/studlan/static-out`: If `EXTRACT_STATIC` is set, static files are copied to this folder when the container starts.
+* `/srv/studlan/static`: Where static files are collected to on application start. Can be mounted to serve static files directly from reverse proxy.
 * `/srv/studlan/studlan.db`: Example location for SQLite database, if configured to use it. The actual path depends on what is configured in the `local.py` config.

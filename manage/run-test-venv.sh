@@ -14,8 +14,18 @@ fi
 source .venv/bin/activate
 trap deactivate EXIT
 
+# Collect new static files
+echo "Collecting new static files ..."
+python manage.py collectstatic --noinput
+
+# Run migration, but skip initial if matching table names already exist
+echo "Running migration ..."
+python manage.py migrate --fake-initial
+
 # Validate
+echo "Checking validity ..."
 python manage.py check --deploy --fail-level=ERROR
 
 # Run unit tests or whatever
+echo "Running tests ..."
 python manage.py test

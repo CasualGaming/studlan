@@ -14,8 +14,6 @@ PROJECT_ROOT_DIRECTORY = os.path.join(PROJECT_SETTINGS_DIRECTORY, '..', '..')
 
 DEBUG = False
 
-MAX_TEAMS = 10
-
 ADMINS = (
     ('example', 'example@example.net'),
 )
@@ -190,6 +188,10 @@ LOGGING = {
         },
     }
 }
+
+# studlan settings
+# Max teams a user can lead
+MAX_TEAMS = 10
 
 # Overiding messagetags to match bootstrap 3
 MESSAGE_TAGS = {message_constants.ERROR: 'danger'}

@@ -21,11 +21,11 @@ docker build -t "$IMAGE_ID" .
 docker run --rm \
     --name "$CONTAINER_ID" \
     -e STUDLAN_UID=950 -e STUDLAN_GID=950 \
-    -e EXTRACT_STATIC="" \
+    -e SUPERUSER_USERNAME="superman" -e SUPERUSER_EMAIL="superman@example.net" -e SUPERUSER_PASSWORD="loislane" -e SUPERUSER_INACTIVE=true \
     -v "$HOST_DIR/settings.py:$VM_DIR/studlan/settings/local.py:ro" \
     -v "$HOST_DIR/studlan.db:$VM_DIR/studlan.db:rw" \
     -v "$HOST_DIR/log:$VM_DIR/log:rw" \
-    -v "$HOST_DIR/static:$VM_DIR/static-out" \
+    -v "$HOST_DIR/static:$VM_DIR/static" \
     -p "8080:8080" \
     "$IMAGE_ID"
 
