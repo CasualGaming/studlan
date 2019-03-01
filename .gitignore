@@ -283,3 +283,4 @@ ENV/
 /static/
 /log/
 /studlan.db
+/keys/*.key

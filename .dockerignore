@@ -16,5 +16,8 @@ venv/
 /static/
 /studlan.db
 
+# Deploy
+/keys/*.key
+
 # Editor
 .vscode/

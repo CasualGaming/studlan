@@ -1,6 +1,6 @@
 #!/bin/bash
-# Syntax: deploy-travis.sh <main_tag> [extra_tag]*
-# Environment variables: DOCKER_REPO, DOCKER_USERNAME, DOCKER_PASSWORD
+# Syntax: deploy-registry-ci.sh <main_tag> [extra_tag]*
+# Environment variables: DOCKER_REPO, DOCKER_USER, DOCKER_PASSWORD
 
 if [[ $CI != "true" ]]; then
     echo "Error: This isn't a CI environment" 2>&1
@@ -20,7 +20,7 @@ MAIN_TAG="$1"
 EXTRA_TAGS="${@:2}"
 
 echo "Logging into Docker Hub"
-echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USER" --password-stdin
 
 echo "Building and deploying with tag"
 docker build -t "$IMAGE:$MAIN_TAG" .

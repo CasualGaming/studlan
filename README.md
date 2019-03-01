@@ -92,7 +92,24 @@ manage/run-test-venv.sh
 Make sure your personal or organizational user exists. Copy the username and password to Travis, so that it can log in.
 
 ## Travis CI
-Connect your personal or organizational Travis CI user to your GitHub account. Add any required encorinment variables.
+Connect your personal or organizational Travis CI user to your GitHub account. Add any required encorinment variables. Setup periodic builds using Cron jobs in case dependencies or parent images are updated.
+
+### Encrypting Files and Values for Travis CI
+The recommended way secure sensitive data.
+
+Login and logout with `travis login --com` and `travis logout`.
+
+Encrypt environment variable values:
+The value can be an arbitrary string, but is commonly an environment variable value pair.
+1. Run `travis encrypt --com -r <user>/<repo> <envvar>=<value>`
+1. Copy the output text to the `env.global` list in `.travis.yml` with a comment for the variable name
+
+Encrypt file:
+Only one file can be encrypted. To encrypt multiple files, add them to an archive.
+1. Run `travis encrypt-file --com -r <user>/<repo> <file>`
+1. Add the output command in `.travis.yml`
+1. Copy the encrypted file to the repo
+1. Optionally delete the unencrypted file
 
 ## Remote Site
 * Create a non-admin user which can login with pubkey alone.
