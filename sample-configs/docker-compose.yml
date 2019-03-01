@@ -16,11 +16,16 @@ services:
       - SUPERUSER_PASSWORD=
       # true or false
       - SUPERUSER_INACTIVE=true
+      - FLUSH_DATABASE=false
+      - IMPORT_DATABASE=false
+      - EXPORT_DATABASE=false
+      - NO_START=false
     volumes:
       - /srv/studlan/app-bleeding/settings.py:/srv/studlan/studlan/settings/local.py:ro
       - /srv/studlan/app-bleeding/log:/srv/studlan/log:rw
       # Where to put extracted static files so Nginx can serve them instead
       - /srv/studlan/proxy/docs/static:/srv/studlan/static:rw
+      - /srv/studlan/app-bleeding/import_export:/srv/studlan/import_export:rw
     networks:
       - studlan
     restart: "always"
