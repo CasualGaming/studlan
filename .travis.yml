@@ -76,4 +76,4 @@ jobs:
       - openssl aes-256-cbc -K $encrypted_c5d4d3c2a77b_key -iv $encrypted_c5d4d3c2a77b_iv -in keys/studlan.key.enc -out keys/studlan.key -d
       - chmod 600 keys/studlan.key
       install: true # NOP
-      script: ssh -oStrictHostKeyChecking=no -i keys/studlan.key ${SSH_USER}@${SSH_HOST} echo "It works!"
+      script: ssh -oStrictHostKeyChecking=no -i keys/studlan.key ${SSH_USER}@${SSH_HOST} ./deploy-studlan-dev.sh

@@ -14,7 +14,6 @@ services:
       - SUPERUSER_USERNAME=
       - SUPERUSER_EMAIL=
       - SUPERUSER_PASSWORD=
-      # true or false
       - SUPERUSER_INACTIVE=true
       - FLUSH_DATABASE=false
       - IMPORT_DATABASE=false
@@ -29,6 +28,8 @@ services:
     networks:
       - studlan
     restart: "always"
+    depends_on:
+      - db
   db:
     container_name: studlan-db
     image: postgres
@@ -64,6 +65,8 @@ services:
       - "80:80"
       - "443:443"
     restart: always
+    depends_on:
+      - app-bleeding
 networks:
   studlan:
     # Create: docker network create --driver=bridge studlan
