@@ -71,7 +71,7 @@ jobs:
     # Deploy to site stage
     - stage: deploy-site # TMP buildtools-replacement untagged
       name: Deploy buildtools-replacement unversioned to site
-      if: (branch = buildtools-replacement) AND NOT (tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$)
+      if: NOT (type = cron) AND (branch = buildtools-replacement) AND NOT (tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$)
       before_install:
       - openssl aes-256-cbc -K $encrypted_c5d4d3c2a77b_key -iv $encrypted_c5d4d3c2a77b_iv -in keys/studlan.key.enc -out keys/studlan.key -d
       - chmod 600 keys/studlan.key
