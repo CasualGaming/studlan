@@ -9,5 +9,8 @@ set -eu # Exit on error and undefined var is error
 
 MANAGE="python manage.py"
 
+# Add temporary config
+cp sample-configs/local-empty.py studlan/settings/local.py
+
 # Run Django tests
 $MANAGE test
