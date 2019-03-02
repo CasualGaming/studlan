@@ -1,9 +1,9 @@
 Studlan
 ==========
-(Outdated) [![Build Status](https://drone.casualgaming.no/api/badges/CasualGaming/studlan/status.svg)](https://drone.fap.no/CasualGaming/studlan)
+(TODO: [![Build Status](https://travis-ci.com/HON95/studlan.svg?branch=buildtools-replacement)](https://travis-ci.com/HON95/studlan))
 
-(TODO: DockerHub link)
 (TODO: Travis link)
+(TODO: DockerHub link)
 
 # Features
 * News
@@ -40,7 +40,7 @@ Studlan
 * Docker and Docker Compose (optional)
 * Travis Tool (optional)
 
-### Installing Virtualenv
+### Installing Virtualenv and Stuff
 ```
 sudo pip install --upgrade pip virtualenv setuptools wheel
 ```
@@ -65,27 +65,25 @@ The following sections assume you are inside the cloned repo.
 
 # Running
 ## Run with Virtualenv
-This approach is faster than running with Docker, plus it has colors. It will create dir `log`, dir `static`, file `studlan.db` and file `studlan/settings/local.py` inside the project directory, which are ignored in dockerignore and gitignore. Run `manage/clean.sh` to clean up after venv.
-```
-# First time only:
-manage/setup-dev-venv.sh
-manage/run-dev-venv.sh
-```
+This approach is faster than running with Docker, plus it has colors. It will create dir `log`, dir `static`, file `studlan.db` and file `studlan/settings/local.py` inside the project directory, which are ignored in dockerignore and gitignore.
+* Setup: `manage/setup-dev.sh` (first time or after project change)
+* Run: `manage/run-dev.sh`
 
 ## Run with Docker
 This approach takes more time to build, but is more similar to production. It places a settings file, the SQLite database file and the logs under `/tmp/studlan`.
-```
-manage/run-dev-docker.sh
-```
+* Build and run: `manage/run-docker-dev.sh`
 
 If Docker starts to fill up your hard drive, run `docker system prune -a` to delete all local Docker data.
 
-# Testing
-```
-# First time only:
-manage/setup-test-venv.sh
-manage/run-test-venv.sh
-```
+# Testing and Validating
+* Setup: `manage/setup-test.sh` (first time or after project change)
+* Run basic tests: `manage/run-simple-test.sh`
+* Run all tests and validations: `manage/run-full-test.sh`
+
+# Misc
+## Cleanup
+* Cleanup after venv, Docker, etc.: `manage/clean.py`
+* Enter venv: `manage/enter-venv.py`
 
 # Deployment
 ## Docker Hub Registry

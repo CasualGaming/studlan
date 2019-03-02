@@ -1,5 +1,5 @@
 #!/bin/bash
-# Syntax: deploy-registry-ci.sh <main_tag> [extra_tag]*
+# Syntax: ci-deploy-registry.sh <main_tag> [extra_tag]*
 # Environment variables: DOCKER_REPO, DOCKER_USER, DOCKER_PASSWORD
 
 if [[ $CI != "true" ]]; then
@@ -12,8 +12,7 @@ if (( $# < 1 )); then
     exit -1
 fi
 
-set -e # Exit on error
-set -u # Undefined var is error
+set -eu # Exit on error and undefined var is error
 
 IMAGE=$DOCKER_REPO
 MAIN_TAG="$1"

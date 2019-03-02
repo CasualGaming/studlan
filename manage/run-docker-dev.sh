@@ -1,7 +1,6 @@
 #!/bin/bash
 
-set -e # Exit on error
-set -u # Undefined var is error
+set -eu # Exit on error and undefined var is error
 
 IMAGE_ID="studlan:dev"
 CONTAINER_ID="studlan-dev"

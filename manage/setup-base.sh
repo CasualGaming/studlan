@@ -1,7 +1,6 @@
 #!/bin/bash
 
-set -e # Exit on error
-set -u # Undefined var is error
+set -eu # Exit on error and undefined var is error
 
 # Setup virtual environment to install packages and stuff inside
 if [[ ! -d .venv ]]; then

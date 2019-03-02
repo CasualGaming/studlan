@@ -1,7 +1,8 @@
 #!/bin/bash
 
-set -e # Exit on error
-set -u # Undefined var is error
+set -eu # Exit on error and undefined var is error
+
+MANAGE="python manage.py"
 
 # Check if settings exist
 APP_SETTINGS_FILE=studlan/settings/local.py
@@ -14,18 +15,21 @@ fi
 source .venv/bin/activate
 trap deactivate EXIT
 
-# Collect new static files
-echo "Collecting new static files ..."
-python manage.py collectstatic --noinput
+# Collect static files
+echo "Collecting static files ..."
+$MANAGE collectstatic --noinput --clear
 
 # Run migration, but skip initial if matching table names already exist
 echo "Running migration ..."
-python manage.py migrate --fake-initial
+$MANAGE migrate --fake-initial
 
 # Validate
 echo "Checking validity ..."
-python manage.py check --deploy --fail-level=ERROR
+$MANAGE check --deploy --fail-level=ERROR
 
-# Run unit tests or whatever
-echo "Running tests ..."
-python manage.py test
+# Run Django tests
+$MANAGE test
+
+# Run flake8 static code analysis
+# Uses settings from .flake8
+flake8

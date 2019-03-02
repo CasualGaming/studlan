@@ -39,16 +39,15 @@ jobs:
     - stage: test
       name: Validate project
       install: pip install --upgrade -r requirements/test.txt
-      before_script: cp sample-configs/local-empty.py studlan/settings/local.py
-      script:
-        - python manage.py collectstatic --noinput
-        - python manage.py migrate --fake-initial
-        - python manage.py check --deploy --fail-level=ERROR
+      script: manage/ci-validate.sh
     - stage: test
       name: Run tests
       install: pip install --upgrade -r requirements/test.txt
-      before_script: cp sample-configs/local-empty.py studlan/settings/local.py
-      script: python manage.py test
+      script: manage/ci-test.sh
+    #- stage: test
+    #  name: Analyze source code
+    #  install: pip install --upgrade -r requirements/test.txt
+    #  script: manage/ci-analyze-source.sh
 
     # Deploy to registry stage
     - stage: deploy-registry
@@ -56,17 +55,17 @@ jobs:
       # Requires tag "vX.Y.Z" without suffix
       if: (branch = master) AND (tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$)
       install: true # NOP
-      script: manage/deploy-registry-ci.sh stable $TRAVIS_TAG
+      script: manage/ci-deploy-registry.sh stable $TRAVIS_TAG
     - stage: deploy-registry
       name: Build and deploy bleeding/unversioned to registry
       if: (branch = master) AND NOT (tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$)
       install: true # NOP
-      script: manage/deploy-registry-ci.sh bleeding
+      script: manage/ci-deploy-registry.sh bleeding
     - stage: deploy-registry # TMP buildtools-replacement untagged
       name: Build and deploy buildtools-replacement unversioned to registry
       if: (branch = buildtools-replacement) AND NOT (tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$)
       install: true # NOP
-      script: manage/deploy-registry-ci.sh buildtools-replacement
+      script: manage/ci-deploy-registry.sh buildtools-replacement
 
     # Deploy to site stage
     - stage: deploy-site # TMP buildtools-replacement untagged

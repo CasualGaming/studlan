@@ -1,7 +1,8 @@
 #!/bin/bash
 
-set -e # Exit on error
-set -u # Undefined var is error
+set -eu # Exit on error and undefined var is error
+
+MANAGE="python manage.py"
 
 # Check if settings exist
 APP_SETTINGS_FILE=studlan/settings/local.py
@@ -16,10 +17,10 @@ trap deactivate EXIT
 
 # Collect new static files
 echo "Collecting new static files ..."
-python manage.py collectstatic --noinput
+$MANAGE collectstatic --noinput
 
 # Run migration, but skip initial if matching table names already exist
 echo "Running migration ..."
-python manage.py migrate --fake-initial
+$MANAGE migrate --fake-initial
 
 exec uwsgi --ini uwsgi.ini
