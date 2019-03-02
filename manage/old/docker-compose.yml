@@ -1,9 +1,0 @@
-version: '2.4'
-services:
-  example-site:
-    image: example.net/example/example:latest
-    ports:
-      - "8180:8080"
-    volumes:
-      - ./example-site.py:/srv/app/studlan/settings/local.py
-    restart: always
