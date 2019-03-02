@@ -6,6 +6,7 @@
 # - DOCKER_REPO
 # - SSH_USER
 # - SSH_HOST
+# - (automatic encryption keys)
 
 language: python
 
