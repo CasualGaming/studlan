@@ -1,16 +1,15 @@
 # Travis CI config for studlan
 
 # Required env vars:
-# - DOCKER_USER
-# - DOCKER_PASSWORD
 # - DOCKER_REPO
-# - SSH_USER
-# - SSH_HOST
+# - DOCKER_USER (encrypted)
+# - DOCKER_PASSWORD (encrypted)
+# - SSH_HOST (encrypted)
+# - SSH_USER (encrypted)
 # - (automatic encryption keys)
 
-language: python
-
 # virtualenv is implicit for python
+language: python
 python:
   - "2.7"
 
@@ -19,20 +18,23 @@ services:
 
 cache: pip
 
-branches:
-  only:
-  - master
-  - buildtools-replacement # TMP
-
 env:
   global:
+    # DOCKER_USER
+    - secure: "Zod4Zc/Q/jZT5zzE1gaOTP7b/EW8Q4bWcN480h+Asg2X9rxrhO5Mks5cNW5jUcJMnmUIOo1VOuujM3gXvZ5YKVmMvs3DF2m1V2ycCzqsWniQrSB9nMaH1us/mlJeX73ENWgOjmP/QQGl2CSbfVdpW9MUJTlZC7PJD/2fjaCjCo4="
     # DOCKER_PASSWORD
-    - secure: "jlshEhPvcF5bLW4yVyOe08V+ULRzPxAUcPlhPhVRQSlCAGP7yWt3VLrZH/645WvOh41OHi4Ta3XMVxtBIHPpI/QGXYeUCoq02a/4DtvAR6isoGVbMOSzNe0iG664GJgVmck1jkQCoo0QPYt2NLiOy52/Wchx4RtJMR9Ns17tfVmABfhKjxtYR8UuktuSH4i8Cw7pY0IGDxMQzukR4OO3NIQUQS1hOh9nx2yYpe5VdHnoHZLBGVBVMyehxWdZul1hXpEusvk+x7xM7z8EmGwAZ3PKG/GcHI94A3LlnAY9a2sAwDI7Tn+JGA+jUYnhXfgDAMQTjDihzpZl7IpDitebW/OGPAk6WBrPyZK0KUVqIwqmuwdbsQFbiAnIr6UB/1vbretF41Gdx0XOK9QkMismD7hxjDtW9kYSF9hYqHxLycF4NPTSG6/q4G7wpuwlxdBMZsVIAFVgLmeXHReDc192in6YUnGFqB8yNi+5HYO7TRxN0v81kBn01gYhBeX9Q/4bgkG8t1kSdxJDjFw/VwdzTSqwAO/PmK5F2rCb5PrmfSVAoWE6vgKVwE5gQSERkuesjMPgvnc63TFm/3WTfErv71fH3CvGIDKz3T3+j9VVKgFO5nUxkunm5UFkiQff239wpZ/+AchknZ7DvT1R0TIuHtn6zC8UAbCzhcPGww3to38="
+    - secure: "fbddW95d42qdsym8iMmINpyVP+dCJhANUAswMwVE29mMExHdSDPfaTQDJ/lkn2VtIvStaCAcal0wimWf3ckwS8uxyI6++jq6TLx0h3ck71KucY7MKDDx6vjLlKKEk3CJG3ql9I+d9mcUcDj0YgGk/wWtp7KQM8vDTu80rdEesZQ="
+    # SSH_HOST
+    - secure: "U99c5mot5Wx8GjX1D49EHVGQiiLerWxibxXh3FmHhmZvNq9f3Wkp+xADrPd88tvfWUjTcy40itSy5gK+jcMsVNgzYqnHUcpjHFaOW1GcnhuClnvxN8EodBchxlNThTr7NXGZU6AAdP5wBmuGM8oo0g7u+LYDxRY8X+s9Sncol1c="
+    # SSH_USER
+    - secure: "jN3wcS8YrcKLJ/MrXiidl3HJb6hDGW33EejxVbkf8msBCiCkQhJPk2NiEsnPNoHvmNQ0AIQbKZkyje8zotKqI3YTaSPAWfe1cPVCBY6wkNCOEpQeEoBEpeCShryX73A4N/ru++IsfGFd65pipVlPe/oBKn2bFPQEz1sznxO9cdc="
 
 stages:
   - test
-  - deploy-registry
-  - deploy-site
+  - name: deploy-registry
+    if: (branch = master) AND NOT (type = pull_request)
+  - name: deploy-site
+    if: (branch = master) AND NOT (type = pull_request)
 
 jobs:
   include:
@@ -52,28 +54,31 @@ jobs:
 
     # Deploy to registry stage
     - stage: deploy-registry
-      name: Build and deploy stable/versioned to registry
+      name: Build and deploy stable (versioned) to registry
       # Requires tag "vX.Y.Z" without suffix
-      if: (branch = master) AND (tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$) AND NOT (type = pull_request)
+      if: (tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$)
       install: true # NOP
       script: manage/ci-deploy-registry.sh stable $TRAVIS_TAG
     - stage: deploy-registry
-      name: Build and deploy bleeding/unversioned to registry
-      if: (branch = master) AND NOT (tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$) AND NOT (type = pull_request)
+      name: Build and deploy bleeding (unversioned) to registry
+      if: NOT (tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$)
       install: true # NOP
       script: manage/ci-deploy-registry.sh bleeding
-    - stage: deploy-registry # TMP buildtools-replacement untagged
-      name: Build and deploy buildtools-replacement unversioned to registry
-      if: (branch = buildtools-replacement) AND NOT (tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$) AND NOT (type = pull_request)
-      install: true # NOP
-      script: manage/ci-deploy-registry.sh buildtools-replacement
 
     # Deploy to site stage
-    - stage: deploy-site # TMP buildtools-replacement untagged
-      name: Deploy buildtools-replacement unversioned to site
-      if: (branch = buildtools-replacement) AND NOT (tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$) AND NOT (type = pull_request) AND NOT (type = cron) 
+    - stage: deploy-site
+      name: Deploy stable (versioned) to site
+      if: (tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$)
       before_install:
-      - openssl aes-256-cbc -K $encrypted_c5d4d3c2a77b_key -iv $encrypted_c5d4d3c2a77b_iv -in keys/studlan.key.enc -out keys/studlan.key -d
-      - chmod 600 keys/studlan.key
+      - openssl aes-256-cbc -K $encrypted_974f21a5dc05_key -iv $encrypted_974f21a5dc05_iv -in ssh_deploy.key.enc -out ssh_deploy.key -d
+      - chmod 600 keys/ssh_deploy.key
       install: true # NOP
-      script: ssh -oStrictHostKeyChecking=no -i keys/studlan.key ${SSH_USER}@${SSH_HOST} ./deploy-studlan-dev.sh
+      script: ssh -oStrictHostKeyChecking=no -i keys/ssh_deploy.key ${SSH_USER}@${SSH_HOST} ./deploy-studlan-stable.sh
+    - stage: deploy-site
+      name: Deploy bleeding (unversioned) to site
+      if: NOT (tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$)
+      before_install:
+      - openssl aes-256-cbc -K $encrypted_974f21a5dc05_key -iv $encrypted_974f21a5dc05_iv -in ssh_deploy.key.enc -out ssh_deploy.key -d
+      - chmod 600 keys/ssh_deploy.key
+      install: true # NOP
+      script: ssh -oStrictHostKeyChecking=no -i keys/ssh_deploy.key ${SSH_USER}@${SSH_HOST} ./deploy-studlan-bleeding.sh
