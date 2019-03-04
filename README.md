@@ -1,9 +1,9 @@
 Studlan
 ==========
-(TODO: [![Build Status](https://travis-ci.com/HON95/studlan.svg?branch=buildtools-replacement)](https://travis-ci.com/HON95/studlan))
+[![Build Status](https://travis-ci.org/CasualGaming/studlan.svg?branch=master)](https://travis-ci.org/CasualGaming/studlan)
 
-(TODO: Travis link)
-(TODO: DockerHub link)
+* [Travis CI](https://travis-ci.org/CasualGaming/studlan)
+* [Docker Hub](https://hub.docker.com/r/casualgaming/studlan)
 
 # Features
 * News
