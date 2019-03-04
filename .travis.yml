@@ -70,7 +70,7 @@ jobs:
       name: Deploy stable (versioned) to site
       if: (tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$)
       before_install:
-      - openssl aes-256-cbc -K $encrypted_974f21a5dc05_key -iv $encrypted_974f21a5dc05_iv -in ssh_deploy.key.enc -out ssh_deploy.key -d
+      - openssl aes-256-cbc -K $encrypted_974f21a5dc05_key -iv $encrypted_974f21a5dc05_iv -in keys/ssh_deploy.key.enc -out keys/ssh_deploy.key -d
       - chmod 600 keys/ssh_deploy.key
       install: true # NOP
       script: ssh -oStrictHostKeyChecking=no -i keys/ssh_deploy.key ${SSH_USER}@${SSH_HOST} ./deploy-studlan-stable.sh
@@ -78,7 +78,7 @@ jobs:
       name: Deploy bleeding (unversioned) to site
       if: NOT (tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$)
       before_install:
-      - openssl aes-256-cbc -K $encrypted_974f21a5dc05_key -iv $encrypted_974f21a5dc05_iv -in ssh_deploy.key.enc -out ssh_deploy.key -d
+      - openssl aes-256-cbc -K $encrypted_974f21a5dc05_key -iv $encrypted_974f21a5dc05_iv -in keys/ssh_deploy.key.enc -out keys/ssh_deploy.key -d
       - chmod 600 keys/ssh_deploy.key
       install: true # NOP
       script: ssh -oStrictHostKeyChecking=no -i keys/ssh_deploy.key ${SSH_USER}@${SSH_HOST} ./deploy-studlan-bleeding.sh
