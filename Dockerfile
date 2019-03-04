@@ -1,28 +1,17 @@
-FROM python:2.7.15
+FROM python:2.7
 
-MAINTAINER Kristoffer Dalby
-
-ENV NAME=studlan
-
-ENV DIR=/srv/app
-
-RUN mkdir $DIR
-WORKDIR $DIR
-
-# Install requirements
-COPY ./requirements $DIR/requirements
-RUN pip install -r requirements/production.txt --upgrade
+ENV DIR=/srv/studlan
 
 # Copy project files
 COPY . $DIR
+WORKDIR $DIR
 
-# Collect static files
-RUN mkdir static
-RUN cp studlan/settings/example-local.py studlan/settings/local.py
-RUN python manage.py collectstatic --noinput --clear
-RUN rm studlan/settings/local.py
+# Install requirements
+RUN pip install -r requirements/production.txt --upgrade
 
+# HTTP
 EXPOSE 8080
+# uWSGI
 EXPOSE 8081
 
-CMD ["sh", "docker-entrypoint.sh"]
+CMD ["/bin/bash", "docker-entrypoint.sh"]

@@ -4,5 +4,20 @@
 __pycache__
 *.pyc
 node_modules/
-env
+venv/
+.venv/
+/tmp/
+.git/
+/.github/
+/log/
 
+# Django
+/studlan/settings/local.py
+/static/
+/studlan.db
+
+# Deploy
+/keys/*.key
+
+# Editor
+.vscode/
