@@ -10,9 +10,10 @@ manage/setup-base.sh
 source .venv/bin/activate
 trap deactivate EXIT
 
-# Install requirements inside venv
+# Install requirements inside venv, and check for outdated packages
 echo "Installing requirements ..."
 pip install --upgrade -r requirements/development.txt
+pip-review
 
 # Collect static files
 echo "Collecting static files ..."
