@@ -2,11 +2,25 @@ FROM python:2.7
 
 ENV DIR=/srv/studlan
 
-# Copy project files
-COPY . $DIR
+# Required files
+COPY apps $DIR/apps
+COPY files $DIR/files
+COPY locale $DIR/locale
+COPY requirements $DIR/requirements
+COPY studlan $DIR/studlan
+COPY templates $DIR/templates
+COPY docker-entrypoint.sh $DIR/
+COPY manage.py $DIR/
+COPY uwsgi.ini $DIR/
+
+# Extra files
+COPY CHANGELOG.md $DIR/
+COPY CONTRIBUTORS $DIR/
+COPY LICENSE.txt $DIR/
+COPY MAINTAINERS $DIR/
+
 WORKDIR $DIR
 
-# Install requirements
 RUN pip install -r requirements/production.txt --upgrade
 
 # HTTP
