@@ -20,14 +20,18 @@ cache: pip
 
 env:
   global:
+    - DOCKER_REPO="casualgaming/studlan"
     # DOCKER_USER
     - secure: "Zod4Zc/Q/jZT5zzE1gaOTP7b/EW8Q4bWcN480h+Asg2X9rxrhO5Mks5cNW5jUcJMnmUIOo1VOuujM3gXvZ5YKVmMvs3DF2m1V2ycCzqsWniQrSB9nMaH1us/mlJeX73ENWgOjmP/QQGl2CSbfVdpW9MUJTlZC7PJD/2fjaCjCo4="
     # DOCKER_PASSWORD
     - secure: "fbddW95d42qdsym8iMmINpyVP+dCJhANUAswMwVE29mMExHdSDPfaTQDJ/lkn2VtIvStaCAcal0wimWf3ckwS8uxyI6++jq6TLx0h3ck71KucY7MKDDx6vjLlKKEk3CJG3ql9I+d9mcUcDj0YgGk/wWtp7KQM8vDTu80rdEesZQ="
     # SSH_HOST
     - secure: "U99c5mot5Wx8GjX1D49EHVGQiiLerWxibxXh3FmHhmZvNq9f3Wkp+xADrPd88tvfWUjTcy40itSy5gK+jcMsVNgzYqnHUcpjHFaOW1GcnhuClnvxN8EodBchxlNThTr7NXGZU6AAdP5wBmuGM8oo0g7u+LYDxRY8X+s9Sncol1c="
-    # SSH_USER
-    - secure: "jN3wcS8YrcKLJ/MrXiidl3HJb6hDGW33EejxVbkf8msBCiCkQhJPk2NiEsnPNoHvmNQ0AIQbKZkyje8zotKqI3YTaSPAWfe1cPVCBY6wkNCOEpQeEoBEpeCShryX73A4N/ru++IsfGFd65pipVlPe/oBKn2bFPQEz1sznxO9cdc="
+    # SSH_HOST_IPv4 (for hiding it if it appears in the log)
+    - secure: "hjSBExklOEz6hTsLbfzn3jcgpZumUuWde8WyXLkpC8xY4s5QENV+K44TL3/cNQaNWvQ+rmkMl9egsPqSJgonfVnuW61/lCpNL0MxKa0PuRG9AU9V1RWUn5aQZmDAxv/E0bvKIxIvETq7FaX9M3YxZSotkkmMiaKheciPgx/UYT8="
+    # SSH_HOST_IPv6 (for hiding it if it appears in the log)
+    - secure: "Pym0OuHfyaMZ0ftlV3l7QXl5bWdXfVC7WnE2NDnBkxLGLE6/POUxWKk7ALYgs0q7IgQlfUMisVN9UhQb2SdDvGJlbJvjhhUb2kFLBREczW0e94jbo2/UCzWyDrQTKlyjf304ItC46FN4pH//PpsZYr3rIyw0BULft9JCHmzYKik="
+    - SSH_USER="studlan"
 
 stages:
   - test
