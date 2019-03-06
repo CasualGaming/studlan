@@ -2,7 +2,9 @@
 import datetime
 
 from django.db import models
+
 from translatable.models import TranslatableModel, get_translation_model
+
 from apps.lan.models import LAN
 
 

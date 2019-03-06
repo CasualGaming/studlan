@@ -3,7 +3,7 @@
 from django.conf import settings
 from django.contrib import admin
 
-from apps.lan.models import LAN, TicketType, TicketTypeTranslation, LANTranslation, Ticket, Directions, Stream
+from apps.lan.models import Directions, LAN, LANTranslation, Stream, Ticket, TicketType, TicketTypeTranslation
 
 
 class LANTranslationInlineAdmin(admin.StackedInline):

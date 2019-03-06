@@ -4,8 +4,8 @@ from datetime import datetime
 
 from django.shortcuts import render
 
-from apps.sponsor.models import Sponsor, SponsorRelation
 from apps.lan.models import LAN
+from apps.sponsor.models import Sponsor, SponsorRelation
 
 
 def index(request):

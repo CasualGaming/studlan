@@ -2,7 +2,7 @@
 
 from django.conf.urls import url
 
-from apps.news.views import main, single, archive
+from apps.news.views import archive, main, single
 
 urlpatterns = [
     url(r'^$', main, name='news_main', kwargs={'page': 1}),

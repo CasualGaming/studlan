@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 
-import stripe
 from datetime import datetime
 
 from django.conf import settings
-from django.shortcuts import get_object_or_404
 from django.contrib import messages
-from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
 
-from apps.lan.models import TicketType, Ticket
+import stripe
+
+from apps.lan.models import Ticket, TicketType
 
 
 def payment(request, ticket_id):

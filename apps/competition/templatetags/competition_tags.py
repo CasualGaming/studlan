@@ -3,8 +3,8 @@
 from datetime import datetime
 
 from django import template
-from django.utils.translation import ugettext as _
 from django.db.models import Q
+from django.utils.translation import ugettext as _
 
 from apps.competition.models import Competition
 from apps.lan.models import LAN

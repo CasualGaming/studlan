@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from django.contrib import admin
 from django.conf import settings
+from django.contrib import admin
 
-from apps.lottery.models import Lottery, LotteryTranslation
-from apps.lottery.models import LotteryParticipant
+from apps.lottery.models import Lottery, LotteryParticipant, LotteryTranslation
 
 
 class LotteryTranslationInlineAdmin(admin.StackedInline):

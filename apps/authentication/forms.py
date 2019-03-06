@@ -38,7 +38,7 @@ class LoginForm(forms.Form):
     def login(self, request):
         try:
             User.objects.get(username=request.POST['username'])
-        except:
+        except Exception:
             return False
         if self.is_valid():
             auth.login(request, self.user)

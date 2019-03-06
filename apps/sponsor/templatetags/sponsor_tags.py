@@ -4,8 +4,9 @@ from datetime import datetime
 
 from django import template
 
-from apps.sponsor.models import SponsorRelation
 from apps.lan.models import LAN
+from apps.sponsor.models import SponsorRelation
+
 
 register = template.Library()
 

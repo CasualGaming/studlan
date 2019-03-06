@@ -2,11 +2,11 @@
 
 from random import randint
 
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib import messages
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 from django.core.urlresolvers import reverse
+from django.shortcuts import get_object_or_404, redirect, render
 
 from apps.lottery.models import Lottery, LotteryParticipant, LotteryWinner
 

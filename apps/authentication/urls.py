@@ -2,7 +2,7 @@
 
 from django.conf.urls import url
 
-from .views import login, logout, register, direct_register, verify, recover, set_password
+from .views import direct_register, login, logout, recover, register, set_password, verify
 
 urlpatterns = [
     url(r'^login/$', login, name='auth_login'),

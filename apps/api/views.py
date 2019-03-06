@@ -3,11 +3,11 @@
 import json
 
 from django.contrib import messages
-from django.shortcuts import redirect, get_object_or_404
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect
 
 from apps.api.models import Key
-from apps.lan.models import LAN, Attendee
+from apps.lan.models import Attendee, LAN
 from apps.userprofile.models import UserProfile
 
 

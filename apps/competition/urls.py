@@ -2,7 +2,8 @@
 
 from django.conf.urls import url
 
-from .views import main, main_filtered, competition_details, join, leave, forfeit, activity_details, activity_details_filtered, start_compo, register_score, submit_score, schedule
+from .views import (activity_details, activity_details_filtered, competition_details, forfeit, join,
+                    leave, main, main_filtered, register_score, schedule, start_compo, submit_score)
 
 
 urlpatterns = [

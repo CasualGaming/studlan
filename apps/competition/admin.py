@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from django.contrib import admin
 from django.conf import settings
+from django.contrib import admin
 
-from apps.competition.models import Activity, Competition, Participant, CompetitionTranslation, Match
+from apps.competition.models import Activity, Competition, CompetitionTranslation, Match, Participant
 
 
 class CompetitionTranslationInlineAdmin(admin.StackedInline):

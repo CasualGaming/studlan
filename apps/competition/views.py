@@ -1,25 +1,26 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
-import challonge
 import re
 import time
+from datetime import datetime
 
-from django.contrib.admin.views.decorators import staff_member_required
-from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Q
+import challonge
+
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import Q
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import translation
 from django.utils.translation import ugettext as _
 
-from apps.competition.models import Activity, Competition, Participant, Match
+from apps.competition.models import Activity, Competition, Match, Participant
 from apps.lan.models import LAN
-from apps.team.models import Team
 from apps.lottery.models import Lottery
+from apps.team.models import Team
 
 
 def main(request):
@@ -438,7 +439,7 @@ def start_compo(request, competition_id):
             competition.status = 3
             competition.save()
             messages.success(request, 'Tournament has started!')
-        except:
+        except Exception:
             messages.error(request, 'Something went wrong')
 
     return redirect(competition)

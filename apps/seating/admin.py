@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 
-from apps.seating.models import Seat, Seating, Layout
+from apps.seating.models import Layout, Seat, Seating
 
 
 class SeatAdmin (admin.ModelAdmin):

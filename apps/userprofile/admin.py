@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from django.forms import models
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
+from django.forms import models
 
-from apps.userprofile.models import UserProfile, AliasType, Alias
+from apps.userprofile.models import Alias, AliasType, UserProfile
 
 admin.site.unregister(User)
 

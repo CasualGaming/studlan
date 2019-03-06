@@ -1,20 +1,21 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
-from reportlab.pdfgen import canvas
+
 from bs4 import BeautifulSoup
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
-from django.shortcuts import render, redirect, get_object_or_404
-from django.utils.translation import ugettext as _
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.translation import ugettext as _
 
-from apps.seating.models import Seating, Seat
+from reportlab.pdfgen import canvas
 
-from apps.lan.models import LAN, Attendee
+from apps.lan.models import Attendee, LAN
+from apps.seating.models import Seat, Seating
 
 
 def main(request):

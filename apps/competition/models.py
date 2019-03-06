@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from translatable.models import TranslatableModel, get_translation_model
-
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
 from django.utils.translation import ugettext as _
+
+from translatable.models import TranslatableModel, get_translation_model
 
 from apps.lan.models import LAN
 from apps.userprofile.models import Alias, AliasType

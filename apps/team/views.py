@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import uuid
-from postman.api import pm_write
-from postman.models import Message
 
 from django.conf import settings
 from django.contrib import messages
@@ -10,12 +8,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db.models import Q
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext as _
 
+from postman.api import pm_write
+from postman.models import Message
+
 from apps.misc.forms import InlineSpanErrorList
-from apps.team.models import Team, Member, Invitation
 from apps.team.forms import TeamCreationForm
+from apps.team.models import Invitation, Member, Team
 
 
 def teams(request):

@@ -3,15 +3,15 @@
 from datetime import datetime
 
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.csrf import ensure_csrf_cookie
 
-from apps.lan.models import LAN, Attendee, Ticket, TicketType
+from apps.lan.models import Attendee, LAN, Ticket, TicketType
 from apps.seating.models import Seat
 
 

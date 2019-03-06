@@ -5,10 +5,10 @@ from datetime import datetime
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext as _
 
-from apps.lan.models import LAN, Attendee, Ticket, Directions
+from apps.lan.models import Attendee, Directions, LAN, Ticket
 
 
 def home(request):

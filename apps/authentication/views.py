@@ -4,21 +4,20 @@ import uuid
 from datetime import datetime
 
 from django.conf import settings
-from django.contrib import messages
-from django.contrib import auth
-from django.contrib.auth.models import User
+from django.contrib import auth, messages
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect, get_object_or_404
-from django.views.decorators.debug import sensitive_post_parameters
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext as _
+from django.views.decorators.debug import sensitive_post_parameters
 
-from apps.authentication.forms import (LoginForm, RegisterForm, RecoveryForm, ChangePasswordForm)
+from apps.authentication.forms import ChangePasswordForm, LoginForm, RecoveryForm, RegisterForm
 from apps.authentication.models import RegisterToken
+from apps.lan.models import Attendee, LAN
 from apps.misc.forms import InlineSpanErrorList
 from apps.userprofile.models import UserProfile
-from apps.lan.models import LAN, Attendee
 
 
 @sensitive_post_parameters()

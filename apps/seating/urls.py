@@ -2,7 +2,7 @@
 
 from django.conf.urls import url
 
-from .views import main, seating_details, seating_map, seating_list, take, take2, leave, leave2
+from .views import leave, leave2, main, seating_details, seating_list, seating_map, take, take2
 
 
 urlpatterns = [
