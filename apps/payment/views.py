@@ -20,16 +20,17 @@ def payment(request, ticket_id):
     ticket_type = get_object_or_404(TicketType, pk=ticket_id)
 
     if request.method == 'POST':
-        # token = request.POST['stripeToken']
+        token = request.POST['stripeToken']
 
         try:
-            # charge = stripe.Charge.create(
-            #    #Ticket price is in cents meaning we have to add two zeroes
-            #    amount=ticket_type.price * 100,
-            #    currency='nok',
-            #    card=token,
-            #    description=request.user.email
-            # )
+            # Calls Stripe and raises error if it fails
+            stripe.Charge.create(
+                # Ticket price is in cents meaning we have to add two zeroes
+                amount=ticket_type.price * 100,
+                currency='nok',
+                card=token,
+                description=request.user.email
+            )
             ticket = Ticket()
             ticket.user = request.user
             ticket.ticket_type = ticket_type
