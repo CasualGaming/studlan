@@ -19,10 +19,8 @@ source .venv/bin/activate
 trap deactivate EXIT
 
 echo "Installing all dependencies ..."
-pip install --upgrade -r requirements/development.txt
-pip install --upgrade -r requirements/production.txt
-pip install --upgrade -r requirements/test.txt
+pip install --upgrade -r requirements/base.txt -r requirements/development.txt -r requirements/production.txt -r requirements/test.txt
 
 echo
-echo "Checking for outdated dependencies ..."
+echo "Checking for outdated dependencies (among all installed packages) ..."
 pip-review
