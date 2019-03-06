@@ -51,6 +51,10 @@ jobs:
       name: Validate Docker image
       install: true # NOP
       script: manage/ci-validate-docker.sh
+    - stage: test
+      name: Show outdated dependencies
+      install: true # NOP
+      script: manage/ci-show-outdated-deps.sh
     #- stage: test
     #  name: Analyze source code
     #  install: pip install --upgrade -r requirements/test.txt
