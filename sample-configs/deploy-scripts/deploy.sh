@@ -17,6 +17,9 @@ if mkdir $LOCK_DIR 2>/dev/null; then
     docker-compose pull --quiet
     echo "Recreating containers ..."
     docker-compose up -d --force-recreate --quiet-pull --no-color
+
+    echo "Fixing permissions ..."
+    ./fix-permissions.sh
 else
     echo "Warning: Another app deployment for this instance is already running, returning instead" 1>&2
 fi

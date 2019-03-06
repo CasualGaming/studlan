@@ -42,9 +42,9 @@ services:
     environment:
       - POSTGRES_USER=postgres
       # TODO add random root-ish password
-      - POSTGRES_PASSWORD=AnJaxbuiD5ty5tr9
+      - POSTGRES_PASSWORD=
     volumes:
-      - /srv/studlan-EXAMPLE/db:/var/lib/postgresql/data:rw
+      - /srv/studlan-EXAMPLE/db/data:/var/lib/postgresql/data:rw
     networks:
       studlan-EXAMPLE:
         # TODO add static IP address

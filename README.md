@@ -114,6 +114,7 @@ Only one file can be encrypted. To encrypt multiple files, add them to an archiv
 * Create a Django local settings file. Remember to add a randomly generated secret and disable debug mode.
 * Create a Docker Compose file with appropriate volume bindings and network settings.
 * Setup a database or use the built-in SQLite database or suggested PostgreSQL database.
+* For PostgreSQL, use the sample `recreate-db.sh` script to setup or recreate the DB.
 * Setup an Nginx reverse proxy to serve the site over TLS.
 * Setup TLS certs with automatic renewal (Let's Encrypt).
 * Setup a mail relay (Mailgun).
@@ -121,20 +122,6 @@ Only one file can be encrypted. To encrypt multiple files, add them to an archiv
 * Fix permissions to make sure unrelated users cannot read secret configs, and to prevent privilege escalation by replacing sudoable/setuided scripts.
 * Run [Qualys' SSL Server Test](https://www.ssllabs.com/ssltest/) against the web server and fix any problems.
 * Test both IPv4 and IPv6 reachability for the web server.
-
-### PostgreSQL Initial Setup
-Run this procedure for every instance of the app, with unique IDs and an actual password.
-1. Enter the postgres container from the host: `docker exec -it studlan-db bash`
-1. Log into the postgres user and automatically enter the DBMS tool: `su - postgres -c psql postgres`
-1. `CREATE DATABASE studlan_example;`
-1. `CREATE USER studlan_example WITH PASSWORD 'example_password';` (quotes required)
-1. `ALTER ROLE studlan_example SET client_encoding TO 'utf8';`
-1. `ALTER ROLE studlan_example SET default_transaction_isolation TO 'read committed';`
-1. `ALTER ROLE studlan_example SET timezone TO 'Europe/Oslo';`
-1. `GRANT ALL PRIVILEGES ON DATABASE studlan_example TO studlan_example;`
-1. Exit the DBMS tool: `\q`
-1. Disconnect from the container.
-1. Update the Django settings.
 
 # Releasing
 * Check for outdated dependencies (e.g. use the `manage/check-deps.sh` script).
