@@ -99,42 +99,36 @@ Login and logout with `travis login --com` and `travis logout`.
 
 Encrypt environment variable values:
 The value can be an arbitrary string, but is commonly an environment variable value pair.
-1. Run `travis encrypt --com -r <user>/<repo> <envvar>=<value>`
-1. Copy the output text to the `env.global` list in `.travis.yml` with a comment for the variable name
+1. Run `travis encrypt --com -r <user>/<repo> <envvar>=<value>`.
+1. Copy the output text to the `env.global` list in `.travis.yml` with a comment for the variable name.
 
 Encrypt file:
 Only one file can be encrypted. To encrypt multiple files, add them to an archive.
-1. Run `travis encrypt-file --com -r <user>/<repo> <file>`
-1. Add the output command in `.travis.yml`
-1. Copy the encrypted file to the repo
-1. Optionally delete the unencrypted file
+1. Run `travis encrypt-file --com -r <user>/<repo> <file>`.
+1. Add the output command in `.travis.yml`.
+1. Copy the encrypted file to the repo.
+1. Optionally delete the unencrypted file.
 
 ## Remote Site
-* Create a non-admin user which can login with pubkey alone.
-* Create a Django local settings file. Remember to add a randomly generated secret.
+* Create a non-admin user which can login with pubkey alone (if deploying with CI/CD).
+* Create a Django local settings file. Remember to add a randomly generated secret and disable debug mode.
 * Create a Docker Compose file with appropriate volume bindings and network settings.
-* Setup a database or use the built-in SQLite database.
+* Setup a database or use the built-in SQLite database or suggested PostgreSQL database.
+* For PostgreSQL, use the sample `recreate-db.sh` script to setup or recreate the DB.
 * Setup an Nginx reverse proxy to serve the site over TLS.
-* Setup TLS cert with automatic renewal.
-* Setup a mail relay such as Mailgun.
+* Setup TLS certs with automatic renewal (Let's Encrypt).
+* Setup a mail relay (Mailgun).
 * Setup backup.
 * Fix permissions to make sure unrelated users cannot read secret configs, and to prevent privilege escalation by replacing sudoable/setuided scripts.
 * Run [Qualys' SSL Server Test](https://www.ssllabs.com/ssltest/) against the web server and fix any problems.
 * Test both IPv4 and IPv6 reachability for the web server.
 
-### PostgreSQL Initial Setup
-Run this procedure for every instance of the app, with unique IDs and an actual password.
-1. Enter the postgres container from the host: `docker exec -it studlan-db bash`
-1. Log into the postgres user and automatically enter the DBMS tool: `su - postgres`
-1. `CREATE DATABASE studlan_example;`
-1. `CREATE USER studlan_example WITH PASSWORD 'example_password';` (quotes required)
-1. `ALTER ROLE studlan_example SET client_encoding TO 'utf8';`
-1. `ALTER ROLE studlan_example SET default_transaction_isolation TO 'read committed';`
-1. `ALTER ROLE studlan_example SET timezone TO 'Europe/Oslo';`
-1. `GRANT ALL PRIVILEGES ON DATABASE studlan_example TO studlan_example;`
-1. Exit the DBMS tool: `\q`
-1. Disconnect from the container.
-1. Update the Django settings.
+# Releasing
+* Check for outdated dependencies (e.g. use the `manage/check-deps.sh` script).
+* Double check that it actually works.
+* Check that the changelog is updated, and add version and date to it.
+* Create a [new release](https://github.com/CasualGaming/studlan/releases/new) based on the latest commit.
+* (Check that CI/CD was triggered and that the production sites got updated and still work.)
 
 # Docker Image
 The Docker images are the intended way to run this application stack.

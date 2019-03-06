@@ -30,6 +30,10 @@ if [[ ! -e $APP_SETTINGS_FILE ]]; then
     exit -1
 fi
 
+# Collect static files
+echo "Collecting static files ..."
+$MANAGE collectstatic --noinput --clear
+
 # Optionally flush database
 if [[ $FLUSH_DATABASE == "true" ]]; then
     echo "Flushing the database ..."
@@ -50,10 +54,6 @@ if [[ $IMPORT_DATABASE == "true" ]]; then
         echo "Error: Import file not found: $IMPORT_FILE" 1>&2
     fi
 fi
-
-# Collect static files
-echo "Collecting static files ..."
-$MANAGE collectstatic --noinput --clear
 
 # Optionally add superuser
 # Warning: These should be trusted to avoid code injection
