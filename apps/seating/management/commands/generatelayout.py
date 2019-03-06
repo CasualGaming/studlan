@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.core.management.base import BaseCommand
 
 
@@ -16,22 +18,22 @@ class Command(BaseCommand):
         svg_width = 1000
         svg_margin_left = 20
         svg_margin_top = 120
-        svg_margin_row = 20
-        svg_margin_column = 5
+        # svg_margin_row = 20
+        # svg_margin_column = 5
         svg_margin_adjacent = 2
         svg_column_separator_margin = 50
         svg_row_separator_margin = 30
 
         # Settings for seats
         seat_width = 30
-        seat_width_px = "30px"
+        seat_width_px = '30px'
         seat_height = 20
-        seat_height_px = "20px"
-        seat_rx = "2px"
-        seat_ry = "2px"
+        seat_height_px = '20px'
+        seat_rx = '2px'
+        seat_ry = '2px'
 
         # Initiate svg element
-        soup = BeautifulSoup("<svg>", "html.parser")
+        soup = BeautifulSoup('<svg>', 'html.parser')
         soup.svg['height'] = svg_height
         soup.svg['width'] = svg_width
 
@@ -40,7 +42,7 @@ class Command(BaseCommand):
         for column in range(0, columns):
             for row in range(0, rows):
                 for sc in range(0, seats_per_column):
-                    current_x = svg_margin_left + (((seat_width*seats_per_row + svg_margin_adjacent) * (seats_per_row-1)) + svg_column_separator_margin) * column
+                    current_x = svg_margin_left + (((seat_width * seats_per_row + svg_margin_adjacent) * (seats_per_row - 1)) + svg_column_separator_margin) * column
                     for sr in range(0, seats_per_row):
                         element_a = soup.new_tag('a')
                         element_rect = soup.new_tag('rect')
@@ -59,10 +61,9 @@ class Command(BaseCommand):
             current_x = svg_margin_left
 
         # Print debug
-        #print(soup.prettify())
+        # print(soup.prettify())
 
         # Print output to html file
-        html = soup.prettify("utf-8")
-        with open("output.html", "wb") as file:
-            file.write(html)
-
+        html = soup.prettify('utf-8')
+        with open('output.html', 'wb') as out_file:
+            out_file.write(html)

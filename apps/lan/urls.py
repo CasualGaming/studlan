@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.conf.urls import url
+
 from .views import home, listing, details, attend, unattend, list_paid
 
 urlpatterns = [

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.conf.urls import *
+from django.conf.urls import url
 
 from apps.news.views import main, single, archive
 

@@ -1,4 +1,7 @@
+# -*- coding: utf-8 -*-
+
 from django.template import Library
+
 
 register = Library()
 
@@ -27,7 +30,7 @@ def get_range(value):
 
 @register.filter
 def get_range1(value):
-    return range(1, value+1)
+    return range(1, value + 1)
 
 
 @register.filter
@@ -48,5 +51,3 @@ def get_seating_url(dictionary, key):
 @register.filter
 def get_seat_placement(dictionary, key):
     return dictionary.get(key).placement
-
-

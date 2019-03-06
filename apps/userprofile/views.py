@@ -1,21 +1,22 @@
-    # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from datetime import datetime
 
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext as _
 
-from apps.lan.models import Attendee, LAN
+from postman.models import Message
+
+from apps.lan.models import Attendee
+from apps.seating.models import Seat
 from apps.userprofile.forms import UserProfileForm
 from apps.userprofile.models import Alias, AliasType
-from apps.seating.models import Seat, Seating
-from postman.models import Message
 
 
 @login_required
@@ -28,8 +29,7 @@ def my_profile(request):
         (request.user.get_full_name(), ''),
     )
 
-    return render(request, 'user/profile.html', {'quser': request.user, 
-        'profile': profile, 'breadcrumbs': breadcrumbs})
+    return render(request, 'user/profile.html', {'quser': request.user, 'profile': profile, 'breadcrumbs': breadcrumbs})
 
 
 @login_required
@@ -41,7 +41,7 @@ def update_profile(request):
         if form.is_valid():
             form.save()
             return redirect('myprofile')
-    
+
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
         (_(u'Profile'), reverse('myprofile')),
@@ -52,7 +52,7 @@ def update_profile(request):
 
 
 def user_profile(request, username):
-    # Using quser for "queried user", as "user" is a reserved variable name in templates
+    # Using quser for 'queried user', as 'user' is a reserved variable name in templates
     quser = get_object_or_404(User, username=username)
     user_seats = Seat.objects.filter(user=quser)
     # If the user is authenticated and are doing a lookup on themselves, also create
@@ -61,15 +61,14 @@ def user_profile(request, username):
         return my_profile(request)
 
     profile = quser.profile
-    
+
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
         (_(u'Profile'), reverse('myprofile')),
         (quser.get_full_name(), ''),
     )
-    
-    return render(request, 'user/profile.html', {'quser': quser, 
-        'profile': profile, 'breadcrumbs': breadcrumbs, 'user_seats': user_seats})
+
+    return render(request, 'user/profile.html', {'quser': quser, 'profile': profile, 'breadcrumbs': breadcrumbs, 'user_seats': user_seats})
 
 
 @login_required
@@ -118,16 +117,16 @@ def alias(request):
 @login_required
 def add_alias(request):
     if request.method == 'POST':
-        selected_type_id = request.POST.get("selectType")
+        selected_type_id = request.POST.get('selectType')
         selected_type = get_object_or_404(AliasType, pk=selected_type_id)
 
         alias = Alias()
         alias.user = request.user
         alias.alias_type = selected_type
-        alias.nick = request.POST.get("nick")
+        alias.nick = request.POST.get('nick')
         try:
             alias.full_clean()
-        except ValidationError :
+        except ValidationError:
             messages.error(request, _(u'Invalid alis. Max length is 40 characters'))
             return redirect('/profile/alias')
         alias.save()

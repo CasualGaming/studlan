@@ -1,9 +1,9 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 from django.conf.urls import url
 
 from .views import main, main_filtered, competition_details, join, leave, forfeit, activity_details, activity_details_filtered, start_compo, register_score, submit_score, schedule
+
 
 urlpatterns = [
     # Main comp oversight
@@ -26,5 +26,5 @@ urlpatterns = [
     url(r'^(?P<lan_id>\d+)/activity/(?P<activity_id>\d+)/$', activity_details_filtered, name='activity_details_show_lan'),
 
     # Schedule related
-    url(r'^schedule/', schedule, name='competition_schedule')
+    url(r'^schedule/', schedule, name='competition_schedule'),
 ]

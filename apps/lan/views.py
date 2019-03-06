@@ -1,10 +1,10 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from datetime import datetime
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.http import Http404, HttpResponse
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.translation import ugettext as _
 
@@ -23,7 +23,7 @@ def home(request):
 def listing(request):
     upcoming_lans = LAN.objects.filter(end_date__gte=datetime.now())
     previous_lans = LAN.objects.filter(end_date__lt=datetime.now())
-    
+
     return render(request, 'lan/list.html', {'upcoming': upcoming_lans, 'previous': previous_lans})
 
 
@@ -49,29 +49,28 @@ def details(request, lan_id):
     else:
         status = 'open'
 
-    return render(request, 'lan/details.html', {'lan': lan, 'status': status, 'active': active, 
-        'ticket_types': ticket_types, 'ticket': user_tickets, 'directions': directions})
+    return render(request, 'lan/details.html', {'lan': lan, 'status': status, 'active': active, 'ticket_types': ticket_types, 'ticket': user_tickets, 'directions': directions})
 
 
 @login_required
 def attend(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
-    
+
     if lan.end_date < datetime.now():
-        messages.error(request, _(u"This LAN has finished and can no longer be attended"))
+        messages.error(request, _(u'This LAN has finished and can no longer be attended'))
         return redirect(lan)
-    
+
     if not request.user.profile.has_address():
-        messages.error(request, _(u"You need to fill in your address and zip code in order to sign up for a LAN."))
+        messages.error(request, _(u'You need to fill in your address and zip code in order to sign up for a LAN.'))
     else:
         if request.user in lan.attendees:
-            messages.error(request, _(u"You are already in the attendee list for ") + unicode(lan))
+            messages.error(request, _(u'You are already in the attendee list for ') + unicode(lan))
         else:
             attendee = Attendee(lan=lan, user=request.user)
             attendee.save()
 
-            messages.success(request, _(u"Successfully added you to attendee list for ") + unicode(lan))
-        
+            messages.success(request, _(u'Successfully added you to attendee list for ') + unicode(lan))
+
     return redirect(lan)
 
 
@@ -80,17 +79,17 @@ def unattend(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
 
     if lan.start_date < datetime.now():
-        messages.error(request, _(u"This LAN has already started, you can not retract your signup"))
+        messages.error(request, _(u'This LAN has already started, you can not retract your signup'))
         return redirect(lan)
-    
+
     if request.user not in lan.attendees:
-        messages.error(request, _(u"You are not in the attendee list for ") + unicode(lan))
+        messages.error(request, _(u'You are not in the attendee list for ') + unicode(lan))
     else:
         attendee = Attendee.objects.get(lan=lan, user=request.user)
         attendee.delete()
 
-        messages.success(request, _(u"Successfully removed you from attendee list for ") + unicode(lan))
-        
+        messages.success(request, _(u'Successfully removed you from attendee list for ') + unicode(lan))
+
     return redirect(lan)
 
 
@@ -99,11 +98,11 @@ def list_paid(request, lan_id):
     import xlwt
     lan = get_object_or_404(LAN, pk=lan_id)
 
-    response = HttpResponse(content_type="application/ms-excel")
-    response["Content-Disposition"] = "attachment; filename=paid_attendees_lan-{0}.xls".format(lan_id)
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=paid_attendees_lan-{0}.xls'.format(lan_id)
 
     doc = xlwt.Workbook(encoding='UTF-8')
-    sheet = doc.add_sheet("Betalte deltakere")
+    sheet = doc.add_sheet('Betalte deltakere')
 
     row = 0
 
@@ -123,10 +122,8 @@ def list_paid(request, lan_id):
 
 def write(sheet, person, row, payment_type):
     profile = person.profile
-    sheet.write(row, 0, "{0} {1}".format(person.first_name.encode("UTF-8"), person.last_name.encode("UTF-8")))
-    sheet.write(row, 1, "{0}.{1}.{2}".format(profile.date_of_birth.day, 
-                                           profile.date_of_birth.month, 
-                                           profile.date_of_birth.year))
+    sheet.write(row, 0, '{0} {1}'.format(person.first_name.encode('UTF-8'), person.last_name.encode('UTF-8')))
+    sheet.write(row, 1, '{0}.{1}.{2}'.format(profile.date_of_birth.day, profile.date_of_birth.month, profile.date_of_birth.year))
     sheet.write(row, 2, profile.address)
     sheet.write(row, 3, profile.zip_code)
     sheet.write(row, 4, person.email)

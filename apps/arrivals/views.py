@@ -26,7 +26,7 @@ def home(request):
 
     breadcrumbs = (
         ('Home', '/'),
-        ('Arrivals', '')
+        ('Arrivals', ''),
     )
 
     return render(request, 'arrivals/home.html', {'lans': lans, 'breadcrumbs': breadcrumbs})
@@ -37,7 +37,7 @@ def home(request):
 def arrivals(request, lan_id):
     if not request.user.is_staff:
         raise Http404
-    
+
     lan = get_object_or_404(LAN, pk=lan_id)
     attendees = Attendee.objects.filter(lan=lan)
 
@@ -49,12 +49,12 @@ def arrivals(request, lan_id):
 
     ticket_types = TicketType.objects.filter(lan=lan)
     tickets = Ticket.objects.filter(ticket_type__in=ticket_types)
-    user_seats = dict()
-    ticket_users = dict()
+    user_seats = {}
+    ticket_users = {}
 
     for ticket in tickets:
         ticket_users[ticket.user] = ticket
-    
+
     paid_count = 0
     arrived_count = 0
     for attendee in attendees:
@@ -67,9 +67,10 @@ def arrivals(request, lan_id):
 
     paid_count += len(tickets)
 
-    return render(request, 'arrivals/arrivals.html', {'attendees': attendees, 'lan': lan, 
-        'paid_count': paid_count, 'arrived_count': arrived_count, 'breadcrumbs': breadcrumbs,
-        'tickets': tickets, 'ticket_users': ticket_users, 'user_seats': user_seats})
+    return render(request, 'arrivals/arrivals.html',
+                  {'attendees': attendees, 'lan': lan,
+                   'paid_count': paid_count, 'arrived_count': arrived_count, 'breadcrumbs': breadcrumbs,
+                   'tickets': tickets, 'ticket_users': ticket_users, 'user_seats': user_seats})
 
 
 @staff_member_required
@@ -89,19 +90,19 @@ def toggle(request, lan_id):
             elif int(toggle_type) == 1:
                 attendee.arrived = reverse(previous_value)
             else:
-                raise Http404          
+                raise Http404
 
             attendee.save()
 
         except Attendee.DoesNotExist:
-            messages.error(request, "%s was not found in attendees for %s" % (user, lan))
-        
+            messages.error(request, '{0} was not found in attendees for {1}'.format(user, lan))
+
         return HttpResponse(status=200)
     return HttpResponse(status=404)
 
 
 def reverse(val):
-    if val == "True":
+    if val == 'True':
         return False
-    elif val == "False":
+    elif val == 'False':
         return True

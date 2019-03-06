@@ -2,6 +2,9 @@
 
 from datetime import datetime
 import challonge
+import re
+import time
+
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
@@ -17,8 +20,6 @@ from apps.competition.models import Activity, Competition, Participant, Match
 from apps.lan.models import LAN
 from apps.team.models import Team
 from apps.lottery.models import Lottery
-import re
-import time
 
 
 def main(request):
@@ -60,7 +61,7 @@ def main_filtered(request, lan_id):
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
         (_(u'Competitions'), reverse('competitions')),
-        (lan, '')
+        (lan, ''),
     )
     context['breadcrumbs'] = breadcrumbs
 
@@ -206,7 +207,7 @@ def competition_details(request, competition_id):
 
         context['owned_teams'] = owned_teams
     else:
-        messages.warning(request, _(u"Please log in to register for the competition."))
+        messages.warning(request, _(u'Please log in to register for the competition.'))
     context['competition'] = competition
 
     # admin control panel
@@ -246,7 +247,7 @@ def join(request, competition_id):
     # overridden by team signup, but not other way around
     for team in teams:
         if request.user == team.leader or request.user in team.members.all():
-            messages.error(request, _(u"You are already in this competition with ") + unicode(team))
+            messages.error(request, _(u'You are already in this competition with ') + unicode(team))
             return redirect(competition)
 
     # Checks that a form was posted, and if it contains a team id
@@ -258,21 +259,21 @@ def join(request, competition_id):
             # Check if team size restrictions are in place
             if competition.enforce_team_size:
                 if team.number_of_team_members() + 1 < competition.team_size:
-                    messages.error(request, _(unicode(team) + u" does not have enough members (") +
-                                   str(team.number_of_team_members() + 1) + u"/" + str(competition.team_size) + u")")
+                    messages.error(request, _(unicode(team) + u' does not have enough members (') +
+                                   str(team.number_of_team_members() + 1) + u'/' + str(competition.team_size) + u')')
                     return redirect(competition)
 
             # Check if payment restrictions are in place
             if competition.enforce_payment:
                 if team.number_of_attending_members(competition.lan) < team.number_of_team_members() + 1:
-                    messages.error(request, _(unicode(team) + u" has at least one member that is not signed up for " +
+                    messages.error(request, _(unicode(team) + u' has at least one member that is not signed up for ' +
                                               unicode(competition.lan)))
                     return redirect(competition)
                 else:
                     if team.number_of_paid_members(competition.lan) < competition.team_size:
-                        messages.error(request, _(unicode(team) + u" does not have enough members that have paid (") +
-                                       unicode(team.number_of_paid_members(competition.lan)) + u"/" + str(
-                            competition.team_size) + u")")
+                        messages.error(request, _(unicode(team) + u' does not have enough members that have paid (') +
+                                       unicode(team.number_of_paid_members(competition.lan)) + u'/' + str(
+                            competition.team_size) + u')')
                         return redirect(competition)
 
             # Check if alias restrictions are in place
@@ -280,22 +281,22 @@ def join(request, competition_id):
                 if team.number_of_aliases(competition) < team.number_of_team_members() + 1:
                     if team.number_of_team_members() + 1 - team.number_of_aliases(competition) < 4:
                         messages.error(request,
-                                       _(u"Several members of " + unicode(team) + u" are missing aliases for " +
+                                       _(u'Several members of ' + unicode(team) + u' are missing aliases for ' +
                                          unicode(competition)))
                         for member in team.members.all():
                             if not competition.has_alias(member):
-                                messages.error(request, _(unicode(member) + u" is missing an alias for ") +
+                                messages.error(request, _(unicode(member) + u' is missing an alias for ') +
                                                unicode(competition))
                         if not competition.has_alias(team.leader):
-                            messages.error(request, _(unicode(team.leader) + u" is missing an alias for ") +
+                            messages.error(request, _(unicode(team.leader) + u' is missing an alias for ') +
                                            unicode(competition))
                     else:
                         messages.error(request,
-                                       _(u"Several members of " + unicode(team) + u" are missing aliases for ") +
+                                       _(u'Several members of ' + unicode(team) + u' are missing aliases for ') +
                                        unicode(competition))
                     return redirect(competition)
 
-            # Go through all members of the team and delete their individual participation entries 
+            # Go through all members of the team and delete their individual participation entries
             if request.user in users:
                 participant = Participant.objects.get(user=request.user, competition=competition)
                 participant.delete()
@@ -313,12 +314,12 @@ def join(request, competition_id):
         else:
             # If solo signup and already signed
             if request.user in users:
-                messages.error(request, _(u"You are already in this competition as a solo player."))
+                messages.error(request, _(u'You are already in this competition as a solo player.'))
                 return redirect(competition)
             else:
                 if competition.require_alias:
                     if not competition.has_alias(request.user):
-                        messages.error(request, _(u"You do not have the required alias."))
+                        messages.error(request, _(u'You do not have the required alias.'))
                         return redirect(competition)
                     participant = Participant(user=request.user, competition=competition)
                     participant.save()
@@ -326,7 +327,7 @@ def join(request, competition_id):
                     participant = Participant(user=request.user, competition=competition)
                     participant.save()
 
-        messages.success(request, _(u"You have been signed up for ") + unicode(competition))
+        messages.success(request, _(u'You have been signed up for ') + unicode(competition))
     return redirect(competition)
 
 
@@ -336,13 +337,13 @@ def leave(request, competition_id):
 
     # If not participating, do nothing
     if not competition.has_participant(request.user):
-        messages.error(request, _(u"You are not participating in this competition."))
+        messages.error(request, _(u'You are not participating in this competition.'))
     else:
         if request.method == 'POST':
             if request.user in competition.get_users():
                 participant = Participant.objects.get(user=request.user, competition=competition)
                 participant.delete()
-                messages.success(request, _(u"You are no longer participating in ") + unicode(competition))
+                messages.success(request, _(u'You are no longer participating in ') + unicode(competition))
             else:
                 was_leader = False
                 for team in competition.get_teams():
@@ -351,10 +352,10 @@ def leave(request, competition_id):
                         participant = Participant.objects.get(team=team, competition=competition)
                         participant.delete()
                         messages.success(request,
-                                         _(u"You have removed ") + unicode(team) + _(u" from ") + unicode(competition))
+                                         _(u'You have removed ') + unicode(team) + _(u' from ') + unicode(competition))
                 if not was_leader:
                     messages.error(request,
-                                   "You cannot remove %s from %s, you are not the team leader." % (team, competition))
+                                   'You cannot remove {0} from {1}, you are not the team leader.'.format(team, competition))
 
     return redirect(competition)
 
@@ -379,8 +380,8 @@ def schedule(request):
 
     if lans:
         context['lan'] = lans[0]
-        context['start_date'] = lans[0].start_date.strftime("%Y%m%d")
-        context['end_date'] = lans[0].end_date.strftime("%Y%m%d")
+        context['start_date'] = lans[0].start_date.strftime('%Y%m%d')
+        context['end_date'] = lans[0].end_date.strftime('%Y%m%d')
         if settings.GOOGLE_CAL_SRC != '':
             context['cal_src'] = settings.GOOGLE_CAL_SRC
         else:
@@ -465,9 +466,9 @@ def register_score(request, competition_id, match_id, player_id):
                 return redirect(competition)
 
             if player_id == '1':
-                match.p1_reg_score = p1_score + "-" + p2_score
+                match.p1_reg_score = p1_score + '-' + p2_score
             elif player_id == '2':
-                match.p2_reg_score = p1_score + "-" + p2_score
+                match.p2_reg_score = p1_score + '-' + p2_score
 
         if match.p1_reg_score and match.p2_reg_score:
             if match.p1_reg_score == match.p2_reg_score:
@@ -481,7 +482,7 @@ def register_score(request, competition_id, match_id, player_id):
                     match.save()
                     reporting_error(match)
                     return redirect(competition)
-                complete_match(request,competition, match)
+                complete_match(request, competition, match)
             else:
                 reporting_error(match)
         match.save()
@@ -489,8 +490,7 @@ def register_score(request, competition_id, match_id, player_id):
 
 
 def complete_match(request, competition, match):
-    if settings.CHALLONGE_INTEGRATION_ENABELED and settings.CHALLONGE_API_USERNAME is not '' and \
-                    settings.CHALLONGE_API_KEY is not '':
+    if settings.CHALLONGE_INTEGRATION_ENABELED and settings.CHALLONGE_API_USERNAME != '' and settings.CHALLONGE_API_KEY != '':
         challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
         challonge.matches.update(competition.challonge_url, match.matchid, scores_csv=match.final_score,
                                  winner_id=match.winner.cid)
@@ -523,6 +523,6 @@ def submit_score(request, competition_id, match_id):
             winner = request.POST.get('winner')
             match.winner = Participant.objects.get(competition=competition, cid=winner)
             match.final_score = final_score
-            complete_match(request,competition, match)
+            complete_match(request, competition, match)
         match.save()
     return redirect(competition)

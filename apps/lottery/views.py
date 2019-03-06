@@ -22,7 +22,7 @@ def lottery_details(request, lottery_id):
         (lottery, ''),
     )
 
-    return render(request, 'lottery/lottery_details.html', {'lottery': lottery, 
+    return render(request, 'lottery/lottery_details.html', {'lottery': lottery,
                   'participants': participants, 'breadcrumbs': breadcrumbs})
 
 
@@ -70,10 +70,11 @@ def draw(request, lottery_id):
     if len(participants) < 1:
         messages.error(request, 'No eligible participants')
         return redirect(drawing, lottery_id)
-        
+
+    # FIXME use a cryptographic RNG, such a SystemRandom
     winner_id = randint(0, len(participants) - 1)
     winner = participants[winner_id].user
     participants[winner_id].has_won = True
     participants[winner_id].save()
     LotteryWinner.objects.create(user=winner, lottery=lottery)
-    return redirect(drawing, lottery_id) 
+    return redirect(drawing, lottery_id)

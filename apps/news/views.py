@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render, get_object_or_404, redirect
@@ -8,7 +7,6 @@ from django.utils.datetime_safe import datetime
 
 from apps.news.models import Article
 from apps.lan.models import Stream, LAN
-from django.core.exceptions import ObjectDoesNotExist
 
 
 def main(request, page):
@@ -37,8 +35,7 @@ def main(request, page):
         return render(request, 'news/news.html', {'articles': articles, 'page': page, 'stream': streams[0],
                                                   'languages': settings.LANGUAGES})
     else:
-        return render(request, 'news/news.html', {'articles': articles, 'page': page, 'languages':
-                                                    settings.LANGUAGES})
+        return render(request, 'news/news.html', {'articles': articles, 'page': page, 'languages': settings.LANGUAGES})
 
 
 def single(request, article_id):

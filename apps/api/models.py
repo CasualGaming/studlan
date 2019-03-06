@@ -9,4 +9,4 @@ class Key(models.Model):
     owner = models.ForeignKey(User)
 
     def __unicode__(self):
-        return "API key for %s" % self.owner
+        return 'API key for {0}'.format(self.owner)

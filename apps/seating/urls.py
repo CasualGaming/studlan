@@ -1,8 +1,9 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 from django.conf.urls import url
+
 from .views import main, seating_details, seating_map, seating_list, take, take2, leave, leave2
+
 
 urlpatterns = [
     # Main comp oversight

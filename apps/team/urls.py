@@ -3,6 +3,7 @@
 from django.conf.urls import url
 from .views import teams, my_teams, create_team, disband_team, add_member, invite_member, remove_invitation, join_team, remove_member, show_team
 
+
 urlpatterns = [
     url(r'^$', teams, name='teams'),
     url(r'^mine/$', my_teams, name='my_teams'),

@@ -6,15 +6,13 @@ from django.contrib.auth.models import User
 from django.db import models
 from translatable.models import TranslatableModel, get_translation_model
 
-from apps.userprofile.models import UserProfile
-
 
 class LAN(TranslatableModel):
-    title = models.CharField("title", max_length=100)
-    start_date = models.DateTimeField("start date")
-    end_date = models.DateTimeField("end date")
-    location = models.CharField("location", max_length=100)
-    map_link = models.CharField("map link", max_length=300, help_text="url for google maps embedded map", null=True)
+    title = models.CharField('title', max_length=100)
+    start_date = models.DateTimeField('start date')
+    end_date = models.DateTimeField('end date')
+    location = models.CharField('location', max_length=100)
+    map_link = models.CharField('map link', max_length=300, help_text='url for google maps embedded map', null=True)
 
     @property
     def attendees(self):
@@ -59,34 +57,34 @@ class LAN(TranslatableModel):
         ordering = ['start_date']
 
 
-class LANTranslation(get_translation_model(LAN, "LAN")):
-    description = models.TextField("description")
+class LANTranslation(get_translation_model(LAN, 'LAN')):
+    description = models.TextField('description')
 
 
 class Attendee(models.Model):
     user = models.ForeignKey(User)
     lan = models.ForeignKey(LAN)
-    has_paid = models.BooleanField("has paid", default=False)
-    arrived = models.BooleanField("has arrived", default=False)
+    has_paid = models.BooleanField('has paid', default=False)
+    arrived = models.BooleanField('has arrived', default=False)
 
     def __unicode__(self):
-        return self.user.get_full_name() + " - " + self.lan.title
+        return self.user.get_full_name() + ' - ' + self.lan.title
 
     class Meta:
-        ordering = ['-user', 'lan', ]
-        unique_together = ("user", "lan")
-        index_together = ["user", "lan"]
+        ordering = ['-user', 'lan']
+        unique_together = ('user', 'lan')
+        index_together = ['user', 'lan']
 
 
 class TicketType(TranslatableModel):
     lan = models.ForeignKey(LAN)
 
-    price = models.IntegerField("Price", default=50)
-    priority = models.IntegerField("Prioity", default=0, help_text="In what priority the tickets will show, "
-                                                                   "higher number will show first.")
-    available_from = models.DateTimeField("release date", default=datetime.now, help_text="When the tickets will be "
-                                                                                          "made available", null=False)
-    number_of_seats = models.IntegerField("Seats")
+    price = models.IntegerField('Price', default=50)
+    priority = models.IntegerField('Prioity', default=0, help_text='In what priority the tickets will show, '
+                                                                   'higher number will show first.')
+    available_from = models.DateTimeField('release date', default=datetime.now, help_text='When the tickets will be '
+                                                                                          'made available', null=False)
+    number_of_seats = models.IntegerField('Seats')
 
     def number_of_seats_used(self):
         return self.ticket_set.count()
@@ -98,11 +96,9 @@ class TicketType(TranslatableModel):
         return self.number_of_seats - self.number_of_seats_used()
 
 
-
-
-class TicketTypeTranslation(get_translation_model(TicketType, "TicketType")):
-    title = models.CharField("Title", max_length=50)
-    description = models.TextField("Description", null=True, blank=True)
+class TicketTypeTranslation(get_translation_model(TicketType, 'TicketType')):
+    title = models.CharField('Title', max_length=50)
+    description = models.TextField('Description', null=True, blank=True)
 
     def __unicode__(self):
         return self.title
@@ -119,26 +115,26 @@ class Ticket(models.Model):
     invalid_description = models.TextField(null=True, blank=True)
 
     def __unicode__(self):
-        return self.user.username + "(" + self.user.get_full_name() + ")"
+        return self.user.username + '(' + self.user.get_full_name() + ')'
 
     class Meta:
-        index_together = ["user", "ticket_type"]
+        index_together = ['user', 'ticket_type']
 
 
 class Directions(models.Model):
     lan = models.ForeignKey(LAN)
-    title = models.TextField("title", null=True)
-    description = models.TextField("directions", null=True)
+    title = models.TextField('title', null=True)
+    description = models.TextField('directions', null=True)
 
     def __unicode__(self):
-        return " direction " + str(self.pk)
+        return ' direction ' + str(self.pk)
 
 
 class Stream(models.Model):
-    title = models.CharField("title", max_length=100)
-    description = models.TextField("description", help_text="Short description that will show on front page.")
-    link = models.TextField("link", help_text="Embedding link for twitch etc. Include the complete IFrame.")
-    active = models.BooleanField(default=False, help_text="No more than one stream can be active at any given time.")
+    title = models.CharField('title', max_length=100)
+    description = models.TextField('description', help_text='Short description that will show on front page.')
+    link = models.TextField('link', help_text='Embedding link for twitch etc. Include the complete IFrame.')
+    active = models.BooleanField(default=False, help_text='No more than one stream can be active at any given time.')
 
     def is_active(self):
         return self.active

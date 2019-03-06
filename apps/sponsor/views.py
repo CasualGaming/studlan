@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
@@ -10,7 +9,6 @@ from apps.lan.models import LAN
 
 
 def index(request):
-    
     lans = LAN.objects.filter(end_date__gte=datetime.now())
     if lans:
         sponsor_relations = SponsorRelation.objects.filter(lan__in=lans)
@@ -27,5 +25,4 @@ def index(request):
 
     inactive_sponsors = [sponsor for sponsor in sponsors if sponsor not in active_sponsors]
 
-    return render(request, 'sponsor/sponsors.html', 
-        {'active_sponsors': active_sponsors, 'inactive_sponsors': inactive_sponsors})
+    return render(request, 'sponsor/sponsors.html', {'active_sponsors': active_sponsors, 'inactive_sponsors': inactive_sponsors})

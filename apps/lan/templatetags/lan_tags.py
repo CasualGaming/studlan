@@ -7,7 +7,7 @@ from django import template
 from apps.lan.models import Attendee, LAN
 
 
-register = template.Library()   
+register = template.Library()
 
 
 @register.filter

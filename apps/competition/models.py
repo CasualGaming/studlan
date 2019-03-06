@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 from translatable.models import TranslatableModel, get_translation_model
@@ -57,14 +56,14 @@ class Competition(TranslatableModel):
         'Tournament format', max_length=20, blank=True, null=True, choices=TOURNAMENT_FORMATS)
 
     max_participants = models.SmallIntegerField(
-        'Maximum participants', default=0, help_text="The maximum number of participants allowed for a competition."
-                                                     "Restricts participants based on competition type. 0 means"
-                                                     " infinite participants are allowed.")
+        'Maximum participants', default=0, help_text='The maximum number of participants allowed for a competition.'
+                                                     'Restricts participants based on competition type. 0 means'
+                                                     ' infinite participants are allowed.')
 
     use_teams = models.BooleanField(
         'use teams', default=False, help_text='If checked, participants will be ignored, and will '
-                                    'instead use teams. If left unchecked teams will be ignored, '
-                                    'and participants will be used.')
+                                              'instead use teams. If left unchecked teams will be ignored, '
+                                              'and participants will be used.')
 
     enforce_team_size = models.BooleanField(
         'enforce teams', default=False, help_text='If checked, teams will require x members (specified in team_size)'
@@ -75,12 +74,12 @@ class Competition(TranslatableModel):
                                                     ' with valid tickets before being able to sign up.')
 
     require_alias = models.BooleanField(
-        'require alias', default=False, help_text="If checked, players will need to register an alias for the "
-                                                  "Activity that the competition belongs to.")
+        'require alias', default=False, help_text='If checked, players will need to register an alias for the '
+                                                  'Activity that the competition belongs to.')
 
     max_match_points = models.SmallIntegerField(
-        'Maximum match points', default=1, help_text="This number represents how many points are needed to win "
-                                                     "a match. E.g. 3 in a BO 5 or 16 in BO 30")
+        'Maximum match points', default=1, help_text='This number represents how many points are needed to win '
+                                                     'a match. E.g. 3 in a BO 5 or 16 in BO 30')
 
     def get_teams(self):
         if self.use_teams:
@@ -136,23 +135,23 @@ class Competition(TranslatableModel):
 
     def status_label(self):
         return self.statuses[self.status][1]
-    
+
     @models.permalink
     def get_absolute_url(self):
         return ('competition_details', (), {'competition_id': self.id})
 
     class Meta:
-        ordering = ['status',]
+        ordering = ['status']
 
 
-class CompetitionTranslation(get_translation_model(Competition, "competition")):
+class CompetitionTranslation(get_translation_model(Competition, 'competition')):
     translated_title = models.CharField('title', max_length=50)
     translated_description = models.TextField('description',
-        help_text='Markdown-enabled. You may also use regular (x)HTML markup. For '
-        'blockquotes use the following markup:<br/><br/>&lt;blockquote&gt;<br/>&n'
-        'bsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Quote-text& lt;/p&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;'
-        'small&gt;Reference&lt;/small&gt;<br/>&lt;/blockquote&gt;')
-    
+                                              help_text='Markdown-enabled. You may also use regular (x)HTML markup. For '
+                                              'blockquotes use the following markup:<br/><br/>&lt;blockquote&gt;<br/>&n'
+                                              'bsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Quote-text& lt;/p&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;'
+                                              'small&gt;Reference&lt;/small&gt;<br/>&lt;/blockquote&gt;')
+
     def __unicode__(self):
         return self.translated_title
 
@@ -177,8 +176,8 @@ class Participant(models.Model):
 
     class Meta:
         unique_together = (
-            ('user', 'competition',),
-            ('team', 'competition',),
+            ('user', 'competition'),
+            ('team', 'competition'),
         )
         ordering = ['user', 'team']
 
@@ -201,7 +200,7 @@ class Match(models.Model):
             else:
                 return self.player1.user
         else:
-            return "TBA"
+            return 'TBA'
 
     def get_p2(self):
         if self.player2:
@@ -210,7 +209,7 @@ class Match(models.Model):
             else:
                 return self.player2.user
         else:
-            return "TBA"
+            return 'TBA'
 
     def get_compo(self):
         return self.competition.activity.title

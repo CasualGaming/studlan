@@ -4,7 +4,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from translatable.models import TranslatableModel, get_translation_model
 
-from apps.lan.models import LAN, Attendee
+from apps.lan.models import LAN
+
 
 class Lottery(TranslatableModel):
     lan = models.ForeignKey(LAN)
@@ -17,7 +18,7 @@ class Lottery(TranslatableModel):
                 return True
 
         return False
-    
+
     def has_won(self, user):
         for winner in self.lotterywinner_set.all():
             if winner.user == user:
@@ -30,7 +31,7 @@ class Lottery(TranslatableModel):
         return ('lottery_details', (), {'lottery_id': self.id})
 
     class Meta:
-        verbose_name_plural = "Lotteries"
+        verbose_name_plural = 'Lotteries'
 
 
 class LotteryTranslation(get_translation_model(Lottery, 'lottery')):
@@ -45,13 +46,14 @@ class LotteryParticipant(models.Model):
     lottery = models.ForeignKey(Lottery)
     user = models.ForeignKey(User)
     has_won = models.BooleanField('has won', default=False)
-    
+
     def __unicode__(self):
         return unicode(self.user)
+
 
 class LotteryWinner(models.Model):
     lottery = models.ForeignKey(Lottery)
     user = models.ForeignKey(User)
-    
+
     def __unicode__(self):
         return unicode(self.user)
