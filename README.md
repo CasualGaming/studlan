@@ -125,7 +125,7 @@ Only one file can be encrypted. To encrypt multiple files, add them to an archiv
 ### PostgreSQL Initial Setup
 Run this procedure for every instance of the app, with unique IDs and an actual password.
 1. Enter the postgres container from the host: `docker exec -it studlan-db bash`
-1. Log into the postgres user and automatically enter the DBMS tool: `su - postgres`
+1. Log into the postgres user and automatically enter the DBMS tool: `su - postgres -c psql postgres`
 1. `CREATE DATABASE studlan_example;`
 1. `CREATE USER studlan_example WITH PASSWORD 'example_password';` (quotes required)
 1. `ALTER ROLE studlan_example SET client_encoding TO 'utf8';`

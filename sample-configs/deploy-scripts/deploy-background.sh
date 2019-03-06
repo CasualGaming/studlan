@@ -2,16 +2,15 @@
 
 # This script is meant to be run as root and not directly from the CI/CD tool.
 # It starts the deployment script in a disconnected screen with a log file.
-# Suggested name: /srv/studlan/deploy-background-app-EXAMPLE.sh
+# Suggested name: /srv/studlan-EXAMPLE/deploy-background.sh
 
 set -eu # Exit on error and error on undefined var
 
-INSTANCE_NAME="app-EXAMPLE"
-NEW_PWD=/srv/studlan
+NEW_PWD=/srv/studlan-EXAMPLE
 LOG_DIR="deploy-log"
-LOG_FILE_PREFIX="${LOG_DIR}/${INSTANCE_NAME}_"
+LOG_FILE_PREFIX="${LOG_DIR}/"
 LOG_FILE_SUFFIX=".txt"
-DEPLOY_CMD="./deploy-foreground-${INSTANCE_NAME}.sh"
+DEPLOY_CMD="./deploy.sh"
 
 timestamp="$(date +'%Y-%m-%d_%H-%M-%S')"
 log_file="${LOG_FILE_PREFIX}${timestamp}${LOG_FILE_SUFFIX}"
