@@ -1,4 +1,7 @@
 [flake8]
-# E501: line too long
-ignore = E501
-exclude = **/settings, **/__init__.py, **/migrations, .venv, sample-configs
+application_import_names = apps
+exclude = **/__init__.py, **/migrations, **/settings/local.py, .venv, sample-configs
+# E501 line too long
+# W503 line break before binary operator
+# W504 line break after binary operator
+ignore = E501, W503, W504

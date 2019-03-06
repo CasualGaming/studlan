@@ -47,10 +47,10 @@ jobs:
       name: Run tests
       install: pip install --upgrade -r requirements/test.txt
       script: manage/ci-test.sh
-    #- stage: test
-    #  name: Analyze source code
-    #  install: pip install --upgrade -r requirements/test.txt
-    #  script: manage/ci-analyze-source.sh
+    - stage: test
+      name: Analyze source code
+      install: pip install --upgrade -r requirements/test.txt
+      script: manage/ci-analyze-source.sh
 
     # Deploy to registry stage
     - stage: deploy-registry
