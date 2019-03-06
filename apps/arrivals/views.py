@@ -86,9 +86,9 @@ def toggle(request, lan_id):
             attendee = Attendee.objects.get(lan=lan, user=user)
 
             if int(toggle_type) == 0:
-                attendee.has_paid = reverse(previous_value)
+                attendee.has_paid = flip_string_bool(previous_value)
             elif int(toggle_type) == 1:
-                attendee.arrived = reverse(previous_value)
+                attendee.arrived = flip_string_bool(previous_value)
             else:
                 raise Http404
 
@@ -101,7 +101,7 @@ def toggle(request, lan_id):
     return HttpResponse(status=404)
 
 
-def reverse(val):
+def flip_string_bool(val):
     if val == 'True':
         return False
     elif val == 'False':
