@@ -1,30 +1,35 @@
-import stripe
+# -*- coding: utf-8 -*-
+
 from datetime import datetime
 
 from django.conf import settings
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
-from django.utils.translation import ugettext as _  
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.utils.translation import ugettext as _
 
-from apps.lan.models import TicketType, Ticket
+import stripe
+
+from apps.lan.models import Ticket, TicketType
+
 
 def payment(request, ticket_id):
     stripe.api_key = settings.STRIPE_PRIVATE_KEY
 
     ticket_type = get_object_or_404(TicketType, pk=ticket_id)
 
-    if request.method == "POST":
+    if request.method == 'POST':
         token = request.POST['stripeToken']
 
         try:
-            charge = stripe.Charge.create(
-                #Ticket price is in cents meaning we have to add two zeroes
+            # Calls Stripe and raises error if it fails
+            stripe.Charge.create(
+                # Ticket price is in cents meaning we have to add two zeroes
                 amount=ticket_type.price * 100,
-                currency="nok",
+                currency='nok',
                 card=token,
-                description=request.user.email
+                description=request.user.email,
             )
             ticket = Ticket()
             ticket.user = request.user
@@ -34,7 +39,7 @@ def payment(request, ticket_id):
 
             send_ticket_mail(ticket, request.META['HTTP_HOST'])
 
-            messages.success(request, _(u"Payment complete - confirmation mail sent to ") + request.user.email)
+            messages.success(request, _(u'Payment complete — confirmation mail sent to ') + request.user.email)
         except stripe.CardError, e:
             messages.error(request, e)
             pass
@@ -43,15 +48,9 @@ def payment(request, ticket_id):
 
 
 def send_ticket_mail(ticket, host):
-    message = _(u"This is a confirmation on your purchase of a ") + ticket.ticket_type.get_translation().title
-    message += _(u" ticket for ") + ticket.ticket_type.lan.title
-    message += "\n\n" + _(u"The ticket is linked to ") + ticket.user.get_full_name()
-    message += "\n\n" + _(u"More information about the lan can be found at ") + host + "/lan"
-    #TODO add seating information
+    message = _(u'This is a confirmation on your purchase of a ') + ticket.ticket_type.get_translation().title
+    message += _(u' ticket for ') + ticket.ticket_type.lan.title
+    message += '\n\n' + _(u'The ticket is linked to ') + ticket.user.get_full_name()
+    message += '\n\n' + _(u'More information about the lan can be found at ') + host + '/lan'
 
-    send_mail(_(u'Ticket confirmation'), message, settings.STUDLAN_FROM_MAIL, [ticket.user.email,])
-
-        
-    
-
-
+    send_mail(_(u'Ticket confirmation'), message, settings.STUDLAN_FROM_MAIL, [ticket.user.email])

@@ -1,14 +1,12 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render, get_object_or_404, redirect
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.conf import settings
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.datetime_safe import datetime
 
+from apps.lan.models import LAN, Stream
 from apps.news.models import Article
-from apps.lan.models import Stream, LAN
-from django.core.exceptions import ObjectDoesNotExist
 
 
 def main(request, page):
@@ -29,7 +27,7 @@ def main(request, page):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         articles = paginator.page(paginator.num_pages)
-    except:
+    except Exception:
         # If no page is given, show the first
         articles = paginator.page(1)
 
@@ -37,8 +35,7 @@ def main(request, page):
         return render(request, 'news/news.html', {'articles': articles, 'page': page, 'stream': streams[0],
                                                   'languages': settings.LANGUAGES})
     else:
-        return render(request, 'news/news.html', {'articles': articles, 'page': page, 'languages':
-                                                    settings.LANGUAGES})
+        return render(request, 'news/news.html', {'articles': articles, 'page': page, 'languages': settings.LANGUAGES})
 
 
 def single(request, article_id):
@@ -61,7 +58,7 @@ def archive(request, page):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         articles = paginator.page(paginator.num_pages)
-    except:
+    except Exception:
         # If no page is given, show the first
         articles = paginator.page(1)
     return render(request, 'news/archive.html', {'articles': articles, 'page': page, 'languages': settings.LANGUAGES})

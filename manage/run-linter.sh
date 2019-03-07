@@ -8,9 +8,6 @@ MANAGE="python manage.py"
 source .venv/bin/activate
 trap deactivate EXIT
 
-# Run Django tests
-$MANAGE test
-
 # Run flake8 static code analysis
 # Uses settings from .flake8
 flake8

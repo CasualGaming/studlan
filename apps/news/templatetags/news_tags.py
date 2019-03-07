@@ -1,16 +1,19 @@
+# -*- coding: utf-8 -*-
+
 from django import template
+
 from apps.news.models import Article
 
 register = template.Library()
 
 
 def do_num_of_articles(parser, token):
-    #tag_name, format_string = token.split_contents()
+    # tag_name, format_string = token.split_contents()
 
-    return News_Renderer(len(Article.objects.all()))
+    return NewsRenderer(len(Article.objects.all()))
 
 
-class News_Renderer(template.Node):
+class NewsRenderer(template.Node):
     def __init__(self, num_of_articles):
         self.num_of_articles = num_of_articles
 

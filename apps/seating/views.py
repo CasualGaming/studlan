@@ -1,31 +1,33 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
-from reportlab.pdfgen import canvas
+
 from bs4 import BeautifulSoup
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
-from django.shortcuts import render, redirect, get_object_or_404
-from apps.seating.models import Seating, Seat
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext as _
-from django.http import HttpResponse, Http404
 
-from apps.lan.models import LAN, Attendee
+from reportlab.pdfgen import canvas
+
+from apps.lan.models import Attendee, LAN
+from apps.seating.models import Seat, Seating
 
 
 def main(request):
     lans = LAN.objects.filter(end_date__gt=datetime.now()).order_by('-start_date')
-    
+
     if lans:
         return seating_details(request, lans[0].id)
 
     context = {}
     breadcrumbs = (
         ('studLAN', '/'),
-        ('Seatings', reverse('seatings'))
+        ('Seatings', reverse('seatings')),
     )
     context['breadcrumbs'] = breadcrumbs
 
@@ -42,11 +44,11 @@ def main_filtered(request, lan_id):
     context['seating'] = seating
     context['active'] = 'all'
     context['lan'] = lan
-    
+
     breadcrumbs = (
         ('studLAN', '/'),
         ('Seatings', reverse('seatings')),
-        (lan, '')
+        (lan, ''),
     )
     context['breadcrumbs'] = breadcrumbs
 
@@ -66,10 +68,10 @@ def seating_details(request, lan_id, seating_id=None, seat_id=None):
         seating = seatings[0]
         return redirect(seating)
 
-    users = seating.get_user_registered()
+    # users = seating.get_user_registered()
     seats = seating.get_total_seats()
 
-    dom = BeautifulSoup(seating.layout.template, "html.parser")
+    dom = BeautifulSoup(seating.layout.template, 'html.parser')
     counter = 0
     for tag in dom.find_all('a'):
         children = tag.find_all('rect')
@@ -77,24 +79,23 @@ def seating_details(request, lan_id, seating_id=None, seat_id=None):
         children[0]['seat-display'] = seats[counter].placement
         if not seats[counter].user:
             children[0]['class'] = ' seating-node-free'
-            children[0]['status'] = "free"
+            children[0]['status'] = 'free'
         else:
             if seats[counter].user == request.user:
                 children[0]['class'] = ' seating-node-self'
-                children[0]['status'] = "mine"
+                children[0]['status'] = 'mine'
             else:
                 children[0]['class'] = ' seating-node-occupied'
-                children[0]['status'] = "occupied"
+                children[0]['status'] = 'occupied'
                 children[0]['seat-user'] = unicode(seats[counter].user.get_full_name())
 
-                #Separate title element for chrome support
-                title = dom.new_tag("title")
+                # Separate title element for chrome support
+                title = dom.new_tag('title')
                 title.string = unicode(seats[counter].user.get_full_name())
                 tag.append(title)
 
         counter += 1
-    dom.encode("utf-8")
-
+    dom.encode('utf-8')
 
     context = {}
     context['seatings'] = seatings
@@ -114,7 +115,7 @@ def take(request, seating_id, seat_id):
     occupied = seating.get_user_registered()
 
     if not seating.is_open():
-        messages.error(request, _(u"This seatmap is closed."))
+        messages.error(request, _(u'This seatmap is closed.'))
         return redirect(seating)
 
     for sibling in siblings:
@@ -135,13 +136,13 @@ def take(request, seating_id, seat_id):
                             os.save()
                 seat.user = request.user
                 seat.save()
-                messages.success(request, _(u"You have successfully reserved your seat."))
+                messages.success(request, _(u'You have successfully reserved your seat.'))
             else:
-                messages.error(request, _(u"That seat is reserved by " + unicode(seat.user)))
+                messages.error(request, _(u'That seat is reserved by ' + unicode(seat.user)))
         else:
-            messages.error(request, _(u"Your ticket does not allow reservation in this seating."))
+            messages.error(request, _(u'Your ticket does not allow reservation in this seating.'))
     else:
-        messages.error(request, _(u"You need to attend and pay before reserving your seat."))
+        messages.error(request, _(u'You need to attend and pay before reserving your seat.'))
     return redirect(seating)
 
 
@@ -156,15 +157,15 @@ def leave(request, seating_id, seat_id):
     seat = get_object_or_404(Seat, pk=seat_id)
 
     if not seating.is_open():
-        messages.error(request, _(u"This seatmap is closed."))
+        messages.error(request, _(u'This seatmap is closed.'))
         return redirect(seating)
 
     if seat.user == request.user:
         seat.user = None
         seat.save()
-        messages.success(request, _(u"You have unregistered your seat."))
+        messages.success(request, _(u'You have unregistered your seat.'))
     else:
-        messages.error(request, _(u"This seat is taken."))
+        messages.error(request, _(u'This seat is taken.'))
     return redirect(seating)
 
 
@@ -183,10 +184,10 @@ def seating_list(request, seating_id):
     cursor = 750
     for s in seats:
         if s.user:
-            p.drawString(230, cursor, "Plass " + unicode(s.placement) + ": ")
+            p.drawString(230, cursor, 'Plass ' + unicode(s.placement) + ': ')
             p.drawString(290, cursor, unicode(s.user))
         else:
-            p.drawString(230, cursor, "Plass " + unicode(s.placement) + ": ")
+            p.drawString(230, cursor, 'Plass ' + unicode(s.placement) + ': ')
             p.drawString(290, cursor, '[Ledig]')
         cursor -= 19
         if cursor < 50:
@@ -226,17 +227,16 @@ def seating_map(request, seating_id):
             pagecounter += 1
             y_value = 450
 
-        p.setFont("Helvetica", 30)
+        p.setFont('Helvetica', 30)
         p.drawString(180, y_value, lan.title)
-        p.drawString(180, y_value-80, seating.title)
+        p.drawString(180, y_value - 80, seating.title)
         if s.user:
-            p.drawString(180, y_value-130, "Plass " + unicode(s.placement) + ": ")
-            p.drawString(180, y_value-180, unicode(s.user))
+            p.drawString(180, y_value - 130, 'Plass ' + unicode(s.placement) + ': ')
+            p.drawString(180, y_value - 180, unicode(s.user))
         else:
-            p.drawString(180, y_value-130, "Plass " + unicode(s.placement) + ": ")
-            p.drawString(180, y_value-180, '[Ledig]')
+            p.drawString(180, y_value - 130, 'Plass ' + unicode(s.placement) + ': ')
+            p.drawString(180, y_value - 180, '[Ledig]')
 
     p.save()
 
     return response
-

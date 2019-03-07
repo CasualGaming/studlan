@@ -12,7 +12,7 @@ from apps.userprofile.models import UserProfile
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('nick', 'date_of_birth', 'address', 'zip_code', 'phone',)
+        fields = ('nick', 'date_of_birth', 'address', 'zip_code', 'phone')
         widgets = {
             'nick': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nickname', 'type': 'text'}),
             'date_of_birth': forms.TextInput(attrs={'class': 'form-control', 'type': 'date'}),
@@ -26,19 +26,19 @@ class UserProfileForm(forms.ModelForm):
 
             # Check nick
             nick = cleaned_data['nick']
-            if not re.match("^[a-zA-Z0-9_-]+$", nick):
-                self.add_error('nick', _(u"Your desired nickname contains illegal characters. Valid: a-Z 0-9 - _"))
+            if not re.match('^[a-zA-Z0-9_-]+$', nick):
+                self.add_error('nick', _(u'Your desired nickname contains illegal characters. Valid: a-Z 0-9 - _'))
 
             # Check date of birth
             # currently only checks that it is not after today
             date = cleaned_data['date_of_birth']
             if date >= datetime.date.today():
                 self.add_error('date_of_birth',
-                               _(u"You seem to be from the future, please enter a more believable date of birth."))
+                               _(u'You seem to be from the future, please enter a more believable date of birth.'))
 
             # ZIP code digits only
             zip_code = cleaned_data['zip_code']
             if len(zip_code) != 4 or not zip_code.isdigit():
-                self._add_error('zip_code', _(u"The ZIP code must be 4 digit number."))
+                self._add_error('zip_code', _(u'The ZIP code must be 4 digit number.'))
 
             return cleaned_data

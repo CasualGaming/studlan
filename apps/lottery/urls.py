@@ -1,8 +1,8 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 from django.conf.urls import url
-from .views import lottery_details, sign_up, sign_off, drawing, draw
+
+from .views import draw, drawing, lottery_details, sign_off, sign_up
 
 urlpatterns = [
     # Main comp oversight

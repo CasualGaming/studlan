@@ -1,7 +1,10 @@
-from django.db import models
+# -*- coding: utf-8 -*-
+
 from django.contrib.auth.models import User
+from django.db import models
 
 from apps.lan.models import LAN
+
 
 class Payment(models.Model):
     lan = models.ForeignKey(LAN)

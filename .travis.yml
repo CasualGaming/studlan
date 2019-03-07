@@ -52,13 +52,13 @@ jobs:
       install: pip install --upgrade -r requirements/test.txt
       script: manage/ci-test.sh
     - stage: test
+      name: Analyze source code
+      install: pip install --upgrade -r requirements/test.txt
+      script: manage/ci-analyze-source.sh
+    - stage: test
       name: Validate Docker image
       install: true # NOP
       script: manage/ci-validate-docker.sh
-    #- stage: test
-    #  name: Analyze source code
-    #  install: pip install --upgrade -r requirements/test.txt
-    #  script: manage/ci-analyze-source.sh
 
     # Deploy to registry stage
     - stage: deploy-registry

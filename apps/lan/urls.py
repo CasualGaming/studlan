@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django.conf.urls import url
-from .views import home, listing, details, attend, unattend, list_paid
+
+from .views import attend, details, home, list_paid, listing, unattend
 
 urlpatterns = [
     url(r'^$', home, name='lan_home'),

@@ -4,21 +4,20 @@ import uuid
 from datetime import datetime
 
 from django.conf import settings
-from django.contrib import messages
-from django.contrib import auth
-from django.contrib.auth.models import User
+from django.contrib import auth, messages
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect, get_object_or_404
-from django.views.decorators.debug import sensitive_post_parameters
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext as _
+from django.views.decorators.debug import sensitive_post_parameters
 
-from apps.authentication.forms import (LoginForm, RegisterForm, RecoveryForm, ChangePasswordForm)
+from apps.authentication.forms import ChangePasswordForm, LoginForm, RecoveryForm, RegisterForm
 from apps.authentication.models import RegisterToken
+from apps.lan.models import Attendee, LAN
 from apps.misc.forms import InlineSpanErrorList
 from apps.userprofile.models import UserProfile
-from apps.lan.models import LAN, Attendee
 
 
 @sensitive_post_parameters()
@@ -31,11 +30,12 @@ def login(request):
             if redirect_url:
                 return HttpResponseRedirect(redirect_url)
             return HttpResponseRedirect('/')
-        else: form = LoginForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
+        else:
+            form = LoginForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
     else:
         form = LoginForm()
 
-    response_dict = { 'form': form, 'next' : redirect_url}
+    response_dict = {'form': form, 'next': redirect_url}
     return render(request, 'auth/login.html', response_dict)
 
 
@@ -85,7 +85,7 @@ def register(request):
 
                 email_message = create_verify_message(request.META['HTTP_HOST'], token)
 
-                send_mail(_(u'Verify your account'), email_message, settings.STUDLAN_FROM_MAIL, [user.email,], fail_silently=False)
+                send_mail(_(u'Verify your account'), email_message, settings.STUDLAN_FROM_MAIL, [user.email], fail_silently=False)
 
                 messages.success(request, _(u'Registration successful. Check your email for verification instructions.'))
 
@@ -95,7 +95,7 @@ def register(request):
         else:
             form = RegisterForm()
 
-        return render(request, 'auth/register.html', {'form': form, })
+        return render(request, 'auth/register.html', {'form': form})
 
 
 @sensitive_post_parameters()
@@ -111,13 +111,12 @@ def direct_register(request):
                 messages.error(request, u'No upcoming LAN was found.')
                 return HttpResponseRedirect('/auth/direct_register')
 
-
             # Create user
             user = User(
-               username=cleaned['desired_username'],
-               first_name=cleaned['first_name'],
-               last_name=cleaned['last_name'],
-               email=cleaned['email'],
+                username=cleaned['desired_username'],
+                first_name=cleaned['first_name'],
+                last_name=cleaned['last_name'],
+                email=cleaned['email'],
             )
             user.set_password(cleaned['password'])
             user.is_active = True
@@ -161,11 +160,11 @@ def verify(request, token):
             user.save()
             rt.delete()
 
-            messages.success(request, _(u"User ") + user.username + _(u" successfully activated. You can now log in."))
+            messages.success(request, _(u'User ') + user.username + _(u' successfully activated. You can now log in.'))
 
             return redirect('auth_login')
         else:
-            messages.error(request, _(u"The token has expired. Please use the password recovery to get a new token."))
+            messages.error(request, _(u'The token has expired. Please use the password recovery to get a new token.'))
             return HttpResponseRedirect('/')
 
 
@@ -181,7 +180,7 @@ def recover(request):
                 users = User.objects.filter(email=email)
 
                 if len(users) == 0:
-                    messages.error(request, _(u"That email is not registered."))
+                    messages.error(request, _(u'That email is not registered.'))
                     return HttpResponseRedirect('/')
 
                 user = users[0]
@@ -194,7 +193,7 @@ def recover(request):
 
                 email_message = create_password_recovery_message(email, user.username, request.META['HTTP_HOST'], token)
 
-                send_mail(_(u'Account recovery'), email_message, settings.STUDLAN_FROM_MAIL, [email,])
+                send_mail(_(u'Account recovery'), email_message, settings.STUDLAN_FROM_MAIL, [email])
 
                 messages.success(request, _('A recovery link has been sent to ') + email)
 
@@ -226,27 +225,27 @@ def set_password(request, token=None):
 
                     rt.delete()
 
-                    messages.success(request, _(u"User ") + unicode(user) + _(u" successfully had it's password changed. You can now log in."))
+                    messages.success(request, _(u'User ') + unicode(user) + _(u' successfully had it\'s password changed. You can now log in.'))
 
                     return HttpResponseRedirect('/')
             else:
 
                 form = ChangePasswordForm()
 
-                messages.success(request, _(u"Token accepted. Please insert your new password."))
+                messages.success(request, _(u'Token accepted. Please insert your new password.'))
 
             return render(request, 'auth/set_password.html', {'form': form, 'token': token})
 
         else:
-            messages.error(request, _(u"The token has expired. Please use the password recovery to get a new token."))
+            messages.error(request, _(u'The token has expired. Please use the password recovery to get a new token.'))
             return HttpResponseRedirect('/')
 
 
 def create_verify_message(host, token):
-    message = _(u"You have registered an account at ") + host
-    message += _(u"\nTo use the account you need to verify it. You can do this by visiting the link below.\n\n")
+    message = _(u'You have registered an account at ') + host
+    message += _(u'\nTo use the account you need to verify it. You can do this by visiting the link below.\n\n')
 
-    message += "http://%s/auth/verify/%s/" %  (host, token)
+    message += 'http://{0}/auth/verify/{1}/'.format(host, token)
 
     message += _(u"""
 \nNote that tokens have a valid lifetime of 24 hours. If you do not use this
@@ -258,14 +257,14 @@ recovery option again to get your account verified.""")
 
 def create_password_recovery_message(email, username, host, token):
 
-    message = _(u"You have requested a password recovery for the account bound to ") + email
+    message = _(u'You have requested a password recovery for the account bound to ') + email
 
-    message += "\n\n" + _(u"Username") + ": " + username + "\n\n"
+    message += '\n\n' + _(u'Username') + ': ' + username + '\n\n'
 
-    message += _(u"If you did not ask for this password recovery, please ignore this email.")
+    message += _(u'If you did not ask for this password recovery, please ignore this email.')
 
-    message += _(u"\n\nOtherwise, click the link below to reset your password:\n")
-    message += "http://%s/auth/set_password/%s/" % (host, token)
+    message += _(u'\n\nOtherwise, click the link below to reset your password:\n')
+    message += 'http://{0}/auth/set_password/{1}/'.format(host, token)
 
     message += _(u"""
 \nNote that tokens have a valid lifetime of 24 hours. If you do not use this

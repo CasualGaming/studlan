@@ -4,10 +4,12 @@ from datetime import datetime
 
 from django import template
 
-from apps.sponsor.models import SponsorRelation, Sponsor
 from apps.lan.models import LAN
+from apps.sponsor.models import SponsorRelation
+
 
 register = template.Library()
+
 
 @register.inclusion_tag('sponsor/sponsor_list.html')
 def show_sponsor_list():

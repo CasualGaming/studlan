@@ -1,5 +1,9 @@
+# -*- coding: utf-8 -*-
+
 from django.conf.urls import url
-from .views import my_profile, update_profile, history, user_inbox, alias, add_alias, remove_alias, user_profile
+
+from .views import add_alias, alias, history, my_profile, remove_alias, update_profile, user_inbox, user_profile
+
 
 urlpatterns = [
     url(r'^$', my_profile, name='myprofile'),
@@ -10,5 +14,4 @@ urlpatterns = [
     url(r'^alias/add', add_alias, name='add_alias'),
     url(r'^alias/(?P<alias_id>\d+)/remove/$', remove_alias, name='remove_alias'),
     url(r'^(?P<username>[\w-]+)/$', user_profile, name='profile'),
-
 ]

@@ -35,7 +35,7 @@ class Seating(models.Model):
     desc = models.CharField('description', max_length=250)
     number_of_seats = models.IntegerField('number of seats', default=0, help_text='This field is automatically updated '
                                           'to match the chosen layout. Change the chosen layout to alter this field')
-    closing_date = models.DateTimeField("closing date")
+    closing_date = models.DateTimeField('closing date')
     layout = models.ForeignKey(Layout)
     ticket_types = models.ManyToManyField(TicketType, blank=True, related_name='ticket_types')
 
@@ -72,14 +72,14 @@ class Seating(models.Model):
 
     def populate_seats(self):
         for k in range(0, self.number_of_seats):
-            seat = Seat(seating=self, placement=k+1)
+            seat = Seat(seating=self, placement=k + 1)
             seat.save()
 
 
 class Seat(models.Model):
     user = models.ForeignKey(User, null=True, blank=True)
     seating = models.ForeignKey(Seating)
-    placement = models.IntegerField("placement id")
+    placement = models.IntegerField('placement id')
 
     def __unicode__(self):
         return str(self.id)

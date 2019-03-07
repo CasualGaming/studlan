@@ -1,9 +1,8 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
-from django.contrib import admin
-from django.conf import settings
 
-from apps.seating.models import Seat, Seating, Layout
+from django.contrib import admin
+
+from apps.seating.models import Layout, Seat, Seating
 
 
 class SeatAdmin (admin.ModelAdmin):

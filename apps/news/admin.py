@@ -5,14 +5,17 @@ from django.contrib import admin
 
 from apps.news.models import Article, ArticleTranslation
 
+
 class ArticleTranslationInlineAdmin(admin.StackedInline):
-    verbose_name = "Translation"
-    verbose_name_plural = "Translations"
+    verbose_name = 'Translation'
+    verbose_name_plural = 'Translations'
     model = ArticleTranslation
     max_num = len(settings.LANGUAGES)
     extra = 2
 
+
 class ArticleAdmin(admin.ModelAdmin):
-    inlines = [ArticleTranslationInlineAdmin,]
+    inlines = [ArticleTranslationInlineAdmin]
+
 
 admin.site.register(Article, ArticleAdmin)

@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from django.conf.urls import url
-from .views import teams, my_teams, create_team, disband_team, add_member, invite_member, remove_invitation, join_team, remove_member, show_team
+
+from .views import add_member, create_team, disband_team, invite_member, join_team, my_teams, remove_invitation, remove_member, show_team, teams
+
 
 urlpatterns = [
     url(r'^$', teams, name='teams'),

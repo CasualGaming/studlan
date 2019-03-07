@@ -2,11 +2,11 @@
 
 from random import SystemRandom
 
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib import messages
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 from django.core.urlresolvers import reverse
+from django.shortcuts import get_object_or_404, redirect, render
 
 from apps.lottery.models import Lottery, LotteryParticipant, LotteryWinner
 
@@ -22,7 +22,7 @@ def lottery_details(request, lottery_id):
         (lottery, ''),
     )
 
-    return render(request, 'lottery/lottery_details.html', {'lottery': lottery, 
+    return render(request, 'lottery/lottery_details.html', {'lottery': lottery,
                   'participants': participants, 'breadcrumbs': breadcrumbs})
 
 
@@ -65,16 +65,16 @@ def draw(request, lottery_id):
     else:
         participants = lottery.lotteryparticipant_set.all().exclude(has_won=True)
 
-    print lottery.lotterywinner_set.all()
+    # print lottery.lotterywinner_set.all()
 
     if len(participants) < 1:
         messages.error(request, 'No eligible participants')
         return redirect(drawing, lottery_id)
-        
+
     rand = SystemRandom()
     winner_id = rand.randrange(0, len(participants))
     winner = participants[winner_id].user
     participants[winner_id].has_won = True
     participants[winner_id].save()
     LotteryWinner.objects.create(user=winner, lottery=lottery)
-    return redirect(drawing, lottery_id) 
+    return redirect(drawing, lottery_id)
