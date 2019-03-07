@@ -209,6 +209,5 @@ for settings_module in ['local']:  # local last
         sys.exit(1)
     try:
         exec('from %s import *' % settings_module)
-    except ImportError, e:
-        print "Could not import settings for '%s' : %s" % (settings_module,
-                str(e))
+    except ImportError as e:
+        print ("Could not import settings for '%s' : %s" % (settings_module, str(e)))

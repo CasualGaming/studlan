@@ -1,8 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response
-from django.template.context import RequestContext
+from django.shortcuts import render
 from django.utils import translation
 
 
@@ -16,7 +15,7 @@ def remove_alert(request):
 
 
 def handler404(request):
-    return render_to_response('404.html', context_instance=RequestContext(request))
+    return render(request, '404.html')
 
 
 def change_language(request):
