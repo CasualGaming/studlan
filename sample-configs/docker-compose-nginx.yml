@@ -27,6 +27,7 @@ services:
         # TODO add static IP address
         ipv4_address: X.Y.Z.W
     ports:
+      # Alternatively, just port forward (firewall-style) to make source IP addresses correct
       - 80:80
       - 443:443
     mem_limit: 1024M
