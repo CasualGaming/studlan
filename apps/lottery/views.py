@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from random import randint
+from random import SystemRandom
 
 from django.conf import settings
 from django.contrib import messages
@@ -71,8 +71,8 @@ def draw(request, lottery_id):
         messages.error(request, 'No eligible participants')
         return redirect(drawing, lottery_id)
 
-    # FIXME use a cryptographic RNG, such a SystemRandom
-    winner_id = randint(0, len(participants) - 1)
+    rand = SystemRandom()
+    winner_id = rand.randrange(0, len(participants))
     winner = participants[winner_id].user
     participants[winner_id].has_won = True
     participants[winner_id].save()

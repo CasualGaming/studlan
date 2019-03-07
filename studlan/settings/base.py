@@ -204,5 +204,5 @@ for settings_module in ['local']:  # local last
         sys.exit(1)
     try:
         exec('from {0} import *'.format(settings_module))  # noqa: S102
-    except ImportError, e:
+    except ImportError as e:
         print 'Could not import settings for "{0}" : {1}'.format(settings_module, str(e))  # noqa: T001
