@@ -3,6 +3,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
+from django.urls import reverse
 from django.utils.translation import ugettext as _
 
 from translatable.models import TranslatableModel, get_translation_model
@@ -21,9 +22,8 @@ class Activity(models.Model):
     def __unicode__(self):
         return self.title
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('activity_details', (), {'activity_id': self.id})
+        return reverse('activity_details', kwargs={'activity_id': self.id})
 
     class Meta:
         ordering = ['title']
@@ -136,9 +136,8 @@ class Competition(TranslatableModel):
     def status_label(self):
         return self.statuses[self.status][1]
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('competition_details', (), {'competition_id': self.id})
+        return reverse('competition_details', kwargs={'competition_id': self.id})
 
     class Meta:
         ordering = ['status']

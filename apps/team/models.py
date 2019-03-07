@@ -2,6 +2,7 @@
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 
 from apps.lan.models import Attendee
 
@@ -12,9 +13,8 @@ class Team(models.Model):
     leader = models.ForeignKey(User, blank=False, related_name='newteamleader')
     members = models.ManyToManyField(User, related_name='new_team_members', through='Member')
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('show_team', (), {'team_id': self.id})
+        return reverse('show_team', kwargs={'team_id': self.id})
 
     def number_of_team_members(self):
         return Member.objects.filter(team=self).count()
