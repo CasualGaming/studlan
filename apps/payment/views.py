@@ -29,7 +29,7 @@ def payment(request, ticket_id):
                 amount=ticket_type.price * 100,
                 currency='nok',
                 card=token,
-                description=request.user.email
+                description=request.user.email,
             )
             ticket = Ticket()
             ticket.user = request.user
@@ -39,7 +39,7 @@ def payment(request, ticket_id):
 
             send_ticket_mail(ticket, request.META['HTTP_HOST'])
 
-            messages.success(request, _(u'Payment complete - confirmation mail sent to ') + request.user.email)
+            messages.success(request, _(u'Payment complete — confirmation mail sent to ') + request.user.email)
         except stripe.CardError, e:
             messages.error(request, e)
             pass
@@ -52,6 +52,5 @@ def send_ticket_mail(ticket, host):
     message += _(u' ticket for ') + ticket.ticket_type.lan.title
     message += '\n\n' + _(u'The ticket is linked to ') + ticket.user.get_full_name()
     message += '\n\n' + _(u'More information about the lan can be found at ') + host + '/lan'
-    # TODO add seating information
 
     send_mail(_(u'Ticket confirmation'), message, settings.STUDLAN_FROM_MAIL, [ticket.user.email])

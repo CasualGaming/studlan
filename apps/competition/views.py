@@ -520,7 +520,7 @@ def submit_score(request, competition_id, match_id):
     else:
         if request.method == 'POST':
             final_score = request.POST.get('final_score')
-            print final_score
+            # print final_score
             winner = request.POST.get('winner')
             match.winner = Participant.objects.get(competition=competition, cid=winner)
             match.final_score = final_score

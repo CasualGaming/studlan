@@ -65,7 +65,7 @@ def draw(request, lottery_id):
     else:
         participants = lottery.lotteryparticipant_set.all().exclude(has_won=True)
 
-    print lottery.lotterywinner_set.all()
+    # print lottery.lotterywinner_set.all()
 
     if len(participants) < 1:
         messages.error(request, 'No eligible participants')
