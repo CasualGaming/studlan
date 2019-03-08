@@ -4,6 +4,7 @@ from datetime import datetime
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 
 from translatable.models import TranslatableModel, get_translation_model
 
@@ -47,9 +48,8 @@ class LAN(TranslatableModel):
         else:
             return None
 
-    @models.permalink
     def get_absolute_url(self):
-        return 'lan_details', (), {'lan_id': self.id}
+        return reverse('lan_details', kwargs={'lan_id': self.id})
 
     def __unicode__(self):
         return self.title

@@ -40,7 +40,7 @@ def payment(request, ticket_id):
             send_ticket_mail(ticket, request.META['HTTP_HOST'])
 
             messages.success(request, _(u'Payment complete — confirmation mail sent to ') + request.user.email)
-        except stripe.CardError, e:
+        except stripe.error.CardError, e:
             messages.error(request, e)
             pass
 

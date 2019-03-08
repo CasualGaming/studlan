@@ -10,7 +10,7 @@ ALLOWED_HOSTS = [
 ]
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'studlan.db',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
@@ -18,7 +18,7 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
-SECRET_KEY = 'UKf79mPQPRngeH9Qh5ZUegFuiIa68ctkmqiR2aqH8pXEwmL5tUaP37orzA7Gkx4M' # Randomly generate
+SECRET_KEY = 'UKf79mPQPRngeH9Qh5ZUegFuiIa68ctkmqiR2aqH8pXEwmL5tUaP37orzA7Gkx4M'  # Randomly generate
 
 STUDLAN_FROM_MAIL = 'example@example.net'
 SUPPORT_MAIL = 'example@example.net'
@@ -28,17 +28,19 @@ ADMINS = (
     ('example', 'example@example.net'),
 )
 
-CSRF_COOKIE_SECURE = False # Requires HTTPS
+# Recommended settings that require HTTPS
+CSRF_COOKIE_SECURE = False
 SECURE_SSL_REDIRECT = False
 SECURE_HSTS_SECONDS = 0
-SESSION_COOKIE_SECURE = False # Requires HTTPS
+SECURE_HSTS_PRELOAD = False
+SESSION_COOKIE_SECURE = False
 
 # Dummy e-mail backend which prints to console
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # Mailgun (https://pypi.org/project/django-mailgun/)
-#EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
-#MAILGUN_ACCESS_KEY = 'ACCESS-KEY'
-#MAILGUN_SERVER_NAME = 'SERVER-NAME'
+# EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
+# MAILGUN_ACCESS_KEY = 'ACCESS-KEY'
+# MAILGUN_SERVER_NAME = 'SERVER-NAME'
 
 # Stripe
 STRIPE_PUBLIC_KEY = ''
