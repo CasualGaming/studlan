@@ -24,7 +24,7 @@ echo "Running migration ..."
 $MANAGE migrate --fake-initial --no-input
 
 # Check if new migrations can be made
-$MANAGE makemigrations --check --no-input
+$MANAGE makemigrations --dry-run --check --no-input
 
 # Validate
 echo "Checking validity ..."
