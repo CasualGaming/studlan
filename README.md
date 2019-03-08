@@ -73,7 +73,7 @@ This approach is faster than running with Docker, plus it has colors. It will cr
 This approach takes more time to build, but is more similar to production. It places a settings file, the SQLite database file and the logs under `/tmp/studlan`.
 * Build and run: `manage/run-docker-dev.sh`
 
-If Docker starts to fill up your hard drive, run `docker system prune -a` to delete all local Docker data.
+If Docker starts to fill up your hard drive, run `docker system prune -a` to delete all local Docker stopped containers, unused networks, unused images and build cache.
 
 # Testing and Validating
 * Setup: `manage/setup-test.sh` (first time or after project change)
