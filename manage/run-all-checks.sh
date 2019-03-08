@@ -36,3 +36,6 @@ $MANAGE test --no-input
 # Run flake8 static code analysis
 # Uses settings from .flake8
 flake8
+
+echo
+echo "Success!"
