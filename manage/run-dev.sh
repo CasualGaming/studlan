@@ -15,12 +15,4 @@ fi
 source .venv/bin/activate
 trap deactivate EXIT
 
-# Collect new static files
-echo "Collecting new static files ..."
-$MANAGE collectstatic --noinput
-
-# Run migration, but skip initial if matching table names already exist
-echo "Running migration ..."
-$MANAGE migrate --fake-initial
-
 exec uwsgi --ini uwsgi.ini

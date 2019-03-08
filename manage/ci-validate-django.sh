@@ -14,11 +14,14 @@ cp sample-configs/local-empty.py studlan/settings/local.py
 
 # Collect static files
 echo "Collecting static files ..."
-$MANAGE collectstatic --noinput --clear
+$MANAGE collectstatic --no-input --clear
 
 # Run migration, but skip initial if matching table names already exist
 echo "Running migration ..."
-$MANAGE migrate --fake-initial
+$MANAGE migrate --fake-initial --no-input
+
+# Check if new migrations can be made
+$MANAGE makemigrations --dry-run --check --no-input
 
 # Validate
 echo "Checking validity ..."

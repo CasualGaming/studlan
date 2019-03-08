@@ -26,13 +26,16 @@ class LoginForm(forms.Form):
         user = auth.authenticate(username=self.cleaned_data['username'], password=self.cleaned_data['password'])
 
         if user:
+            # Inactive users are not authenticated by the default backend, so all users returned from auth.authenticate are active.
+            # But keep this here in case the backend is changed.
             if user.is_active:
                 self.user = user
             else:
                 self.add_error('username', _(u'Your account is inactive, try to recover it.'))
         else:
-            self.add_error('username',
-                           _(u'The account does not exist, or username/password combination is incorrect.'))
+            self.add_error('password', _(u'Login failed!'
+                                         u' Either the account does not exist, is inactive, or the username–password combination is incorrect.'
+                                         u' If you believe the account exists or you have forgotten the username or password, try the password recovery feature.'))
         return self.cleaned_data
 
     def login(self, request):
