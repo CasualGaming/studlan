@@ -33,9 +33,7 @@ class LoginForm(forms.Form):
             else:
                 self.add_error('username', _(u'Your account is inactive, try to recover it.'))
         else:
-            self.add_error('password', _(u'Login failed!'
-                                         u' Either the account does not exist, is inactive, or the username–password combination is incorrect.'
-                                         u' If you believe the account exists or you have forgotten the username or password, try the password recovery feature.'))
+            self.add_error('password', _(u'Login failed! Either the account does not exist, is inactive, or the username–password combination is incorrect.'))
         return self.cleaned_data
 
     def login(self, request):
