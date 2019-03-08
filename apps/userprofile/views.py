@@ -5,7 +5,6 @@ from datetime import datetime
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -14,7 +13,6 @@ from django.utils.translation import ugettext as _
 from postman.models import Message
 
 from apps.lan.models import Attendee
-from apps.seating.models import Seat
 from apps.userprofile.forms import UserProfileForm
 from apps.userprofile.models import Alias, AliasType
 
@@ -49,26 +47,6 @@ def update_profile(request):
     )
 
     return render(request, 'user/update.html', {'form': form, 'breadcrumbs': breadcrumbs})
-
-
-def user_profile(request, username):
-    # Using quser for 'queried user', as 'user' is a reserved variable name in templates
-    quser = get_object_or_404(User, username=username)
-    user_seats = Seat.objects.filter(user=quser)
-    # If the user is authenticated and are doing a lookup on themselves, also create
-    # the form for updating and showing update information.
-    if request.user.is_authenticated() and request.user == quser:
-        return my_profile(request)
-
-    profile = quser.profile
-
-    breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        (_(u'Profile'), reverse('myprofile')),
-        (quser.get_full_name(), ''),
-    )
-
-    return render(request, 'user/profile.html', {'quser': quser, 'profile': profile, 'breadcrumbs': breadcrumbs, 'user_seats': user_seats})
 
 
 @login_required
