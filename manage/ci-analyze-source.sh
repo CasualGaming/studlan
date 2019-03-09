@@ -7,6 +7,8 @@ fi
 
 set -eu # Exit on error and undefined var is error
 
+[[ -e log]] mkdir -p log
+
 # Run flake8 static code analysis
 # Uses settings from .flake8
 flake8

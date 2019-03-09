@@ -14,7 +14,7 @@ COPY templates templates
 COPY docker-entrypoint.sh ./
 COPY manage.py ./
 COPY uwsgi.ini ./
-RUN mkdir log
+RUN mkdir -p log
 
 # Extra files
 COPY CHANGELOG.md $DIR/
