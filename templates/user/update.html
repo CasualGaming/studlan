@@ -9,7 +9,7 @@ Update profile
 {% block content %}
 <div class="row">
     <div class="col-md-9">
-         <h3>{% trans "Profile" %}</h3>
+         <h2>{% trans "Edit Profile" %}</h2>
     </div>
 </div>
 {% profile_tabs 'update' %}
@@ -20,7 +20,6 @@ Update profile
         <br>
         <form class="form-horizontal" action="{% url 'update_profile' %}" method="POST">{% csrf_token %}
             <fieldset>
-                <legend>{% trans "Update information" %}</legend>
                 {% for field in form %} 
                         <div class="form-group {% if field.errors %} has-error {% endif %} ">
                             <label class="col-md-2 control-label">{{ field.label }}</label>

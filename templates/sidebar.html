@@ -5,7 +5,7 @@
     <ul class="nav nav-stacked">
         {% if user.is_authenticated %}
             <li class="sidebar-header">
-                <a href="{% url 'myprofile' %}">{% trans "User Info" %}</a>
+                <a href="{% url 'my_profile' %}">{% trans "User Info" %}</a>
             </li>
             <li><strong>{% trans "User name" %}:</strong><br/>{{ user.username }}</li>
             <li><strong>{% trans "Name" %}:</strong><br/>{{ user.first_name }} {{ user.last_name }}</li>

@@ -14,9 +14,9 @@
         </a>
           <ul class="dropdown-menu" role="menu">
             <li>
-                <a href="{% url 'update_profile' %}">
+                <a href="{% url 'my_profile' %}">
                 <i class="glyphicon glyphicon-pencil">
-                </i> {% trans "Edit profile" %}</a>
+                </i> {% trans "Profile" %}</a>
             </li>
             <li>
                 <a href="{% url 'inbox' %}">
@@ -46,9 +46,9 @@
           </ul>
     </li>
             <li class="hidden-md hidden-lg hidden-sm">
-                <a href="{% url 'update_profile' %}">
+                <a href="{% url 'my_profile' %}">
                 <i class="glyphicon glyphicon-pencil">
-                </i> {% trans "Edit profile" %}</a>
+                </i> {% trans "Profile" %}</a>
             </li>
             {% if user.is_staff %}
                 <li class="divider hidden-md hidden-lg hidden-sm"></li>
