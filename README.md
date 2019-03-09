@@ -122,6 +122,7 @@ Only one file can be encrypted. To encrypt multiple files, add them to an archiv
 * Fix permissions to make sure unrelated users cannot read secret configs, and to prevent privilege escalation by replacing sudoable/setuided scripts.
 * Run [Qualys' SSL Server Test](https://www.ssllabs.com/ssltest/) against the web server and fix any problems.
 * Test both IPv4 and IPv6 reachability for the web server.
+* To test Stripe, get your pair of testing (not live) keys from your Stripe account, and try to pay with a [testing card](https://stripe.com/docs/testing)
 
 # Releasing
 * Check for outdated dependencies (e.g. use the `manage/check-deps.sh` script).
