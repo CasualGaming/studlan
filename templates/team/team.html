@@ -28,8 +28,8 @@
                     </thead>
                     <tbody>
                         <tr>
-                                <td class="underline" onclick="document.location='{% url 'profile' team.leader %}';">{{ team.leader }}<div class="pull-right btn btn-xs btn-info btn-disabeled">Admin</div></td>
-                                <td class="underline" onclick="document.location='{% url 'profile' team.leader %}';">{{ team.leader.get_full_name }}</td>
+                                <td class="underline" onclick="document.location='{% url 'public_profile' team.leader %}';">{{ team.leader }}<div class="pull-right btn btn-xs btn-info btn-disabeled">Admin</div></td>
+                                <td class="underline" onclick="document.location='{% url 'public_profile' team.leader %}';">{{ team.leader.get_full_name }}</td>
                                 <td>{% if team.is_mine %}
                                         <div class="btn btn-xs btn-danger" onclick="disband()">
                                             <i class="icon-remove icon-white"></i> Disband Team
@@ -39,7 +39,7 @@
                         </tr>
                         {% if team.members.all %}
                         {% for member in team.members.all %}
-                            <tr onclick="document.location='{% url 'profile' member %}';">
+                            <tr onclick="document.location='{% url 'public_profile' member %}';">
                                 <td class="underline">{{ member }}</td>
                                 <td class="underline">{{ member.get_full_name }}</td>
                                 <td>
@@ -100,7 +100,7 @@
                     </thead>
                     <tbody>
                         {% for invite in invitations %}
-                            <tr onclick="document.location='{% url 'profile' invite.invitee %}';">
+                            <tr onclick="document.location='{% url 'public_profile' invite.invitee %}';">
                                 <td class="underline">{{ invite.invitee }}</td>
                                 <td class="underline">{{ invite.invitee.get_full_name }}</td>
                                 <td>
