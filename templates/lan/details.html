@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load markdown_deux_tags %}
 {% load settings %}
+{% load static %}
 
 {% block title %}
 {{ lan }}
@@ -101,7 +102,7 @@
                                                 src="https://checkout.stripe.com/checkout.js"
                                                 class="stripe-button"
                                                 data-key={% stripe_public_key %}
-                                                data-image="{{STATIC_URL}}32x32-highlight.png"
+                                                data-image="{% static '32x32-highlight.png' %}"
                                                 data-name={% site_name %}
                                                 data-email={{ user.email }}
                                                 data-description="{{ ticket_type.get_translation.title }}"
