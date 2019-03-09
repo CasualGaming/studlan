@@ -1,0 +1,87 @@
+{% load i18n %}
+
+<div class="row">
+    <div class="col-md-9">
+        <h3>{% trans "Public Information" %}</h3>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>{% trans "Username" %}</td>
+                    <td>{{ quser.username }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans "Nick" %} </td>
+                    <td>{{ profile.nick }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-9">
+        {% if user == quser or user.is_staff %}
+        <h3>{% trans "Private Information" %}</h3>
+        <table class="table ">
+            <tbody>
+                <tr>
+                    <td>{% trans "First name" %}</td>
+                    <td>{{ quser.first_name }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans "Last name" %}</td>
+                    <td>{{ quser.last_name }}</td>
+                </tr>{% if user == quser or user.is_staff %}
+                <tr>
+                    <td>{% trans "Email" %}</td>
+                    <td>{{ quser.email }}</td>
+                </tr>{% endif %}
+                <tr>
+                    <td>{% trans "Date of birth" %}</td>
+                    <td>{{ profile.date_of_birth }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans "Street address" %}</td>
+                    <td>{{ profile.address }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans "Zip/Postal code" %}</td>
+                    <td>{{ profile.zip_code }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans "Phone" %}</td>
+                    <td>{{ profile.phone }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans "Is staff" %}</td>
+                    <td>{{ quser.is_staff }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans "Join date" %}</td>
+                    <td>{{ user.join_date }}</td>
+                </tr>
+                <tr>
+                    <td>{% trans "Last login" %}</td>
+                    <td>{{ user.last_login }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Seating info</h4>
+        {% for seat in user_seats %}
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <a href="{{seat.seating.lan.get_absolute_url}}">
+                <div class="panel-body">
+                    Event: {{seat.seating.lan}}
+                </div></a>
+                <a href="{{seat.seating.get_absolute_url}}{{seat.placement}}">
+                <div class="panel-footer">
+                    Seating: {{seat.seating}} <br> Seat: {{seat.placement}}
+                </div></a>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>

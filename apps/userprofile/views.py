@@ -5,6 +5,7 @@ from datetime import datetime
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -13,6 +14,7 @@ from django.utils.translation import ugettext as _
 from postman.models import Message
 
 from apps.lan.models import Attendee
+from apps.seating.models import Seat
 from apps.userprofile.forms import UserProfileForm
 from apps.userprofile.models import Alias, AliasType
 
@@ -23,7 +25,7 @@ def my_profile(request):
 
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
-        (_(u'Profile'), reverse('myprofile')),
+        (_(u'Profile'), reverse('my_profile')),
         (request.user.get_full_name(), ''),
     )
 
@@ -38,11 +40,11 @@ def update_profile(request):
         form = UserProfileForm(request.POST, instance=request.user.profile, auto_id=True)
         if form.is_valid():
             form.save()
-            return redirect('myprofile')
+            return redirect('my_profile')
 
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
-        (_(u'Profile'), reverse('myprofile')),
+        (_(u'Profile'), reverse('my_profile')),
         (_(u'Edit'), ''),
     )
 
@@ -59,7 +61,7 @@ def history(request):
 
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
-        (_(u'Profile'), reverse('myprofile')),
+        (_(u'Profile'), reverse('my_profile')),
         (_(u'History'), ''),
     )
 
@@ -85,7 +87,7 @@ def alias(request):
     alias_types = AliasType.objects.all().exclude(alias__in=aliases)
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
-        (_(u'Profile'), reverse('myprofile')),
+        (_(u'Profile'), reverse('my_profile')),
         (_(u'Alias'), ''),
     )
 
@@ -124,3 +126,11 @@ def remove_alias(request, alias_id):
         messages.success(request, _(u'Alias was removed'))
 
     return redirect('/profile/alias')
+
+
+def user_profile(request, username):
+    quser = get_object_or_404(User, username=username)
+    user_seats = Seat.objects.filter(user=quser)
+    profile = quser.profile
+
+    return render(request, 'user/public_profile.html', {'quser': quser, 'profile': profile, 'user_seats': user_seats})
