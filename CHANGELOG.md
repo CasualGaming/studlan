@@ -4,23 +4,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.3.13] - 2019-03-09
 ### Added
-- Added changelog as file.
+- Added changelog file.
 - Added HON95/Håvard N. as maintainer.
-- Added Docker image as release vector.
-- Added options for the Docker image: User UID+GID, initial superadmin, database flush, database import, database export, no-start.
+- Added Docker image as release medium.
 - Added sample configs and scripts for deployment.
+- Added actions in the user admin panel to activate and deactivate selected users.
+- Added action in the user admin panel to forcefully logout selected users.
+- Added error log file.
 
 ### Changed
 - Replaced build/test/CI/CD tools: Replace a bunch of scripts and stuff, remove Vagrant, remove tox, replace Drone CI with Travis CI, use Docker Hub as image repo.
-- Changed Docker image entry script.
-- Replaced lotto RNG with crypto RNG.
+- Updated Django from v1.10 to v1.11.
+- Updated dependency Stripe PyPI package from v1 to v2.
+- Changed the user profile slightly. The user's full name is no longer shown publicly.
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+- Invalid ZIP codes no longer cause crashes when trying to save.
+- Phone numbers are now required to adhere to an appropriate format.
 
 ### Security
+- Replaced lotto RNG with crypto RNG.
+- Added a minimum password length of 8 characters.
