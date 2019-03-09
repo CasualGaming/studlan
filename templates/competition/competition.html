@@ -161,7 +161,7 @@
                     <table class="table table-striped table-condensed table-bordered table-hover click-table">
                         <tbody>
                             {% for user in users %}
-                                <tr onclick="document.location='{% url 'profile' user %}';">
+                                <tr onclick="document.location='{% url 'public_profile' user %}';">
                                     {% if request.user == user %}
                                         <td class="participant-you underline" title="{{ user.get_full_name }}">{{ user }}</td>
                                     {% else %}
