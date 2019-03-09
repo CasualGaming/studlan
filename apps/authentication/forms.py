@@ -95,9 +95,13 @@ class RegisterForm(forms.Form):
                 self.add_error('date_of_birth',
                                _(u'You seem to be from the future, please enter a more believable date of birth.'))
 
-            # Check passwords
+            # Check passwords match
             if cleaned_data['password'] != cleaned_data['repeat_password']:
                 self.add_error('repeat_password', [_(u'Passwords did not match.')])
+
+            # Check passwords strength
+            if len(cleaned_data['password']) < 8:
+                self.add_error('password', [_(u'Password must be at least 8 characters long.')])
 
             # Check username
             username = cleaned_data['desired_username']
@@ -135,8 +139,12 @@ class ChangePasswordForm(forms.Form):
         if self.is_valid():
             cleaned_data = self.cleaned_data
 
-            # Check passwords
+            # Check passwords match
             if cleaned_data['new_password'] != cleaned_data['repeat_password']:
                 self._errors['repeat_password'] = self.error_class(_(u'Passwords did not match.'))
+
+            # Check passwords strength
+            if len(cleaned_data['new_password']) < 8:
+                self.add_error('new_password', [_(u'Password must be at least 8 characters long.')])
 
             return cleaned_data
