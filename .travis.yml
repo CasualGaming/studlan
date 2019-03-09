@@ -36,9 +36,9 @@ env:
 stages:
   - test
   - name: deploy-registry
-    if: (branch = master) AND NOT (type = pull_request)
+    if: NOT (type = pull_request)
   - name: deploy-site
-    if: (branch = master) AND NOT (type = pull_request)
+    if: NOT (type = pull_request)
 
 jobs:
   include:
@@ -62,20 +62,20 @@ jobs:
 
     # Deploy to registry stage
     - stage: deploy-registry
-      name: Build and deploy stable (versioned) to registry
+      name: Build and deploy stable to registry
       # Requires tag "vX.Y.Z" without suffix
       if: (tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$)
       install: true # NOP
       script: manage/ci-deploy-registry.sh stable $TRAVIS_TAG
     - stage: deploy-registry
-      name: Build and deploy bleeding (unversioned) to registry
-      if: NOT (tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$)
+      name: Build and deploy bleeding to registry
+      if: (branch = master)
       install: true # NOP
       script: manage/ci-deploy-registry.sh bleeding
 
     # Deploy to site stage
     - stage: deploy-site
-      name: Deploy stable (versioned) to site
+      name: Deploy stable to site
       if: (tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$)
       before_install:
       - openssl aes-256-cbc -K $encrypted_974f21a5dc05_key -iv $encrypted_974f21a5dc05_iv -in keys/ssh_deploy.key.enc -out keys/ssh_deploy.key -d
@@ -83,8 +83,8 @@ jobs:
       install: true # NOP
       script: ssh -oStrictHostKeyChecking=no -i keys/ssh_deploy.key ${SSH_USER}@${SSH_HOST} ./deploy-studlan-stable.sh
     - stage: deploy-site
-      name: Deploy bleeding (unversioned) to site
-      if: NOT (tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$)
+      name: Deploy bleeding to site
+      if: (branch = master)
       before_install:
       - openssl aes-256-cbc -K $encrypted_974f21a5dc05_key -iv $encrypted_974f21a5dc05_iv -in keys/ssh_deploy.key.enc -out keys/ssh_deploy.key -d
       - chmod 600 keys/ssh_deploy.key
