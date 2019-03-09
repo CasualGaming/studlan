@@ -7,7 +7,7 @@ DB_USER="studlan_EXAMPLE"
 DB_NAME="studlan_EXAMPLE"
 
 read -p "Enter gzipped database dump file to restore: " in_file
-if [[ -z $db_password ]]; then
+if [[ -z $in_file ]]; then
     echo "Error: No filename provided"
     exit -1
 fi
