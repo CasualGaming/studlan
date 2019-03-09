@@ -30,7 +30,7 @@ class UserProfileInline(admin.StackedInline):
 class UserProfileAdmin(UserAdmin):
     inlines = (UserProfileInline,)
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'is_active', 'date_joined', 'last_login')
-    list_filter = ('groups', 'is_staff', 'is_superuser')
+    list_filter = ('groups', 'is_staff', 'is_superuser', 'is_active')
     filter_horizontal = ('groups',)
     actions = ['activate_users', 'deactivate_users', 'forcefully_logout_users']
 
