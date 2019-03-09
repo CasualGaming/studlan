@@ -2,6 +2,7 @@
 import datetime
 
 from django.db import models
+from django.urls import reverse
 
 from translatable.models import TranslatableModel, get_translation_model
 
@@ -16,9 +17,8 @@ class Article(TranslatableModel):
     def count(self):
         return len(Article.objects.all())
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('news_single', (), {'article_id': self.id})
+        return reverse('news_single', kwargs={'article_id': self.id})
 
     class Meta:
         ordering = ['-pub_date']

@@ -25,7 +25,7 @@ def my_profile(request):
 
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
-        (_(u'Profile'), reverse('myprofile')),
+        (_(u'Profile'), reverse('my_profile')),
         (request.user.get_full_name(), ''),
     )
 
@@ -40,35 +40,15 @@ def update_profile(request):
         form = UserProfileForm(request.POST, instance=request.user.profile, auto_id=True)
         if form.is_valid():
             form.save()
-            return redirect('myprofile')
+            return redirect('my_profile')
 
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
-        (_(u'Profile'), reverse('myprofile')),
+        (_(u'Profile'), reverse('my_profile')),
         (_(u'Edit'), ''),
     )
 
     return render(request, 'user/update.html', {'form': form, 'breadcrumbs': breadcrumbs})
-
-
-def user_profile(request, username):
-    # Using quser for 'queried user', as 'user' is a reserved variable name in templates
-    quser = get_object_or_404(User, username=username)
-    user_seats = Seat.objects.filter(user=quser)
-    # If the user is authenticated and are doing a lookup on themselves, also create
-    # the form for updating and showing update information.
-    if request.user.is_authenticated() and request.user == quser:
-        return my_profile(request)
-
-    profile = quser.profile
-
-    breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        (_(u'Profile'), reverse('myprofile')),
-        (quser.get_full_name(), ''),
-    )
-
-    return render(request, 'user/profile.html', {'quser': quser, 'profile': profile, 'breadcrumbs': breadcrumbs, 'user_seats': user_seats})
 
 
 @login_required
@@ -81,7 +61,7 @@ def history(request):
 
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
-        (_(u'Profile'), reverse('myprofile')),
+        (_(u'Profile'), reverse('my_profile')),
         (_(u'History'), ''),
     )
 
@@ -107,7 +87,7 @@ def alias(request):
     alias_types = AliasType.objects.all().exclude(alias__in=aliases)
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
-        (_(u'Profile'), reverse('myprofile')),
+        (_(u'Profile'), reverse('my_profile')),
         (_(u'Alias'), ''),
     )
 
@@ -146,3 +126,11 @@ def remove_alias(request, alias_id):
         messages.success(request, _(u'Alias was removed'))
 
     return redirect('/profile/alias')
+
+
+def user_profile(request, username):
+    quser = get_object_or_404(User, username=username)
+    user_seats = Seat.objects.filter(user=quser)
+    profile = quser.profile
+
+    return render(request, 'user/public_profile.html', {'quser': quser, 'profile': profile, 'user_seats': user_seats})

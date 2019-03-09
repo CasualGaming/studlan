@@ -3,13 +3,13 @@
 {% load profile_tags %}
 
 {% block title %}
-Update profile
+{% trans "Alias" %}
 {% endblock title %} 
 
 {% block content %}
 <div class="row">
     <div class="col-md-9">
-         <h3>{% trans "Alias" %}</h3>
+         <h2>{% trans "Alias" %}</h2>
     </div>
 </div>
 {% profile_tabs 'alias' %}

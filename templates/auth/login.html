@@ -23,7 +23,7 @@ Login
                 {% endfor %}
                 <div class="form-actions login-buttons">
                     <input type="submit" class="btn btn-primary" value="{% trans "Login" %}" /> 
-                    <a href="{% url 'auth_recover' %}" class="btn btn-info">{% trans "Recover password" %}</a>
+                    <a href="{% url 'auth_recover' %}" class="btn btn-info">{% trans "Recover username and password" %}</a>
                 </div>
             </fieldset>
             <input type="hidden" name="next" value="{% if next %}{{ next }}{% endif %}"/>

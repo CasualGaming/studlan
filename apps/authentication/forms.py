@@ -23,19 +23,11 @@ class LoginForm(forms.Form):
         if self._errors:
             return
 
-        user = auth.authenticate(username=self.cleaned_data['username'], password=self.cleaned_data['password'])
-
-        if user:
-            # Inactive users are not authenticated by the default backend, so all users returned from auth.authenticate are active.
-            # But keep this here in case the backend is changed.
-            if user.is_active:
-                self.user = user
-            else:
-                self.add_error('username', _(u'Your account is inactive, try to recover it.'))
+        auth_user = auth.authenticate(username=self.cleaned_data['username'], password=self.cleaned_data['password'])
+        if auth_user and auth_user.is_active:
+            self.user = auth_user
         else:
-            self.add_error('password', _(u'Login failed!'
-                                         u' Either the account does not exist, is inactive, or the username–password combination is incorrect.'
-                                         u' If you believe the account exists or you have forgotten the username or password, try the password recovery feature.'))
+            self.add_error('password', _(u'Login failed! Either the account does not exist, is inactive, or the username–password combination is incorrect.'))
         return self.cleaned_data
 
     def login(self, request):
@@ -97,9 +89,13 @@ class RegisterForm(forms.Form):
                 self.add_error('date_of_birth',
                                _(u'You seem to be from the future, please enter a more believable date of birth.'))
 
-            # Check passwords
+            # Check passwords match
             if cleaned_data['password'] != cleaned_data['repeat_password']:
                 self.add_error('repeat_password', [_(u'Passwords did not match.')])
+
+            # Check passwords strength
+            if len(cleaned_data['password']) < 8:
+                self.add_error('password', [_(u'Password must be at least 8 characters long.')])
 
             # Check username
             username = cleaned_data['desired_username']
@@ -137,8 +133,12 @@ class ChangePasswordForm(forms.Form):
         if self.is_valid():
             cleaned_data = self.cleaned_data
 
-            # Check passwords
+            # Check passwords match
             if cleaned_data['new_password'] != cleaned_data['repeat_password']:
                 self._errors['repeat_password'] = self.error_class(_(u'Passwords did not match.'))
+
+            # Check passwords strength
+            if len(cleaned_data['new_password']) < 8:
+                self.add_error('new_password', [_(u'Password must be at least 8 characters long.')])
 
             return cleaned_data

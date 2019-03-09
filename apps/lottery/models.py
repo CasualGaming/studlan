@@ -2,6 +2,7 @@
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 
 from translatable.models import TranslatableModel, get_translation_model
 
@@ -27,9 +28,8 @@ class Lottery(TranslatableModel):
 
         return False
 
-    @models.permalink
     def get_absolute_url(self):
-        return ('lottery_details', (), {'lottery_id': self.id})
+        return reverse('lottery_details', kwargs={'lottery_id': self.id})
 
     class Meta:
         verbose_name_plural = 'Lotteries'
