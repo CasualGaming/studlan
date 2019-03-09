@@ -25,13 +25,13 @@ def change_arrived(request, api_key, lan_id, username, status):
         if status == '1':
             attendee.arrived = True
             attendee.save()
-            messages.success(request, 'Changed status for "{0}" at LAN "{1}" to "arrived"'.format(user, lan))
+            messages.success(request, u'Changed status for "{0}" at LAN "{1}" to "arrived"'.format(user, lan))
         elif status == '0':
             attendee.arrived = False
             attendee.save()
-            messages.success(request, 'Changed status for "{0}" at LAN "{1}" to "NOT arrived"'.format(user, lan))
+            messages.success(request, u'Changed status for "{0}" at LAN "{1}" to "NOT arrived"'.format(user, lan))
         else:
-            messages.warning(request, 'Status "{0}" unrecognized.'.format(status))
+            messages.warning(request, u'Status "{0}" unrecognized.'.format(status))
 
         return redirect('/')
 
@@ -50,13 +50,13 @@ def change_paid(request, api_key, lan_id, username, status):
         if status == '1':
             attendee.has_paid = True
             attendee.save()
-            messages.success(request, 'Changed status for "{0}" at LAN "{1}" to "paid"'.format(user, lan))
+            messages.success(request, u'Changed status for "{0}" at LAN "{1}" to "paid"'.format(user, lan))
         elif status == '0':
             attendee.has_paid = False
             attendee.save()
-            messages.success(request, 'Changed status for "{0}" at LAN "{1}" to "NOT paid"'.format(user, lan))
+            messages.success(request, u'Changed status for "{0}" at LAN "{1}" to "NOT paid"'.format(user, lan))
         else:
-            messages.warning(request, 'Status "{0}" unrecognized.'.format(status))
+            messages.warning(request, u'Status "{0}" unrecognized.'.format(status))
 
         return redirect('/')
 

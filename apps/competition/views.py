@@ -356,7 +356,7 @@ def leave(request, competition_id):
                                          _(u'You have removed ') + unicode(team) + _(u' from ') + unicode(competition))
                 if not was_leader:
                     messages.error(request,
-                                   'You cannot remove {0} from {1}, you are not the team leader.'.format(team, competition))
+                                   u'You cannot remove {0} from {1}, you are not the team leader.'.format(team, competition))
 
     return redirect(competition)
 

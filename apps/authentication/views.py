@@ -245,7 +245,7 @@ def create_verify_message(host, token):
     message = _(u'You have registered an account at ') + host
     message += _(u'\nTo use the account you need to verify it. You can do this by visiting the link below.\n\n')
 
-    message += 'http://{0}/auth/verify/{1}/'.format(host, token)
+    message += u'http://{0}/auth/verify/{1}/'.format(host, token)
 
     message += _(u"""
 \nNote that tokens have a valid lifetime of 24 hours. If you do not use this
@@ -264,7 +264,7 @@ def create_password_recovery_message(email, username, host, token):
     message += _(u'If you did not ask for this password recovery, please ignore this email.')
 
     message += _(u'\n\nOtherwise, click the link below to reset your password:\n')
-    message += 'http://{0}/auth/set_password/{1}/'.format(host, token)
+    message += u'http://{0}/auth/set_password/{1}/'.format(host, token)
 
     message += _(u"""
 \nNote that tokens have a valid lifetime of 24 hours. If you do not use this

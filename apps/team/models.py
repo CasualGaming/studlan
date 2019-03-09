@@ -51,7 +51,7 @@ class Team(models.Model):
         return paid
 
     def __unicode__(self):
-        return '[{0}] {1}'.format(self.tag, self.title)
+        return u'[{0}] {1}'.format(self.tag, self.title)
 
     class Meta:
         ordering = ['tag', 'title']
