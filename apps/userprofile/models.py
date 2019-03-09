@@ -19,10 +19,10 @@ class UserProfile(models.Model):
         return self.user.username
 
     def get_month(self):
-        return '{0:02d}'.format(self.date_of_birth.month)
+        return u'{0:02d}'.format(self.date_of_birth.month)
 
     def get_day(self):
-        return '{0:02d}'.format(self.date_of_birth.day)
+        return u'{0:02d}'.format(self.date_of_birth.day)
 
     def has_address(self):
         if self.address and self.zip_code:

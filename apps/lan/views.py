@@ -99,7 +99,7 @@ def list_paid(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
 
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename=paid_attendees_lan-{0}.xls'.format(lan_id)
+    response['Content-Disposition'] = u'attachment; filename=paid_attendees_lan-{0}.xls'.format(lan_id)
 
     doc = xlwt.Workbook(encoding='UTF-8')
     sheet = doc.add_sheet('Betalte deltakere')
@@ -122,8 +122,8 @@ def list_paid(request, lan_id):
 
 def write(sheet, person, row, payment_type):
     profile = person.profile
-    sheet.write(row, 0, '{0} {1}'.format(person.first_name.encode('UTF-8'), person.last_name.encode('UTF-8')))
-    sheet.write(row, 1, '{0}.{1}.{2}'.format(profile.date_of_birth.day, profile.date_of_birth.month, profile.date_of_birth.year))
+    sheet.write(row, 0, u'{0} {1}'.format(person.first_name.encode('UTF-8'), person.last_name.encode('UTF-8')))
+    sheet.write(row, 1, u'{0}.{1}.{2}'.format(profile.date_of_birth.day, profile.date_of_birth.month, profile.date_of_birth.year))
     sheet.write(row, 2, profile.address)
     sheet.write(row, 3, profile.zip_code)
     sheet.write(row, 4, person.email)
