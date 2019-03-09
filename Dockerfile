@@ -2,16 +2,18 @@ FROM python:2.7
 
 ENV DIR=/srv/studlan
 
+WORKDIR $DIR
+
 # Required files
-COPY apps $DIR/apps
-COPY files $DIR/files
-COPY locale $DIR/locale
-COPY requirements $DIR/requirements
-COPY studlan $DIR/studlan
-COPY templates $DIR/templates
-COPY docker-entrypoint.sh $DIR/
-COPY manage.py $DIR/
-COPY uwsgi.ini $DIR/
+COPY apps apps
+COPY files files
+COPY locale locale
+COPY requirements requirements
+COPY studlan studlan
+COPY templates templates
+COPY docker-entrypoint.sh ./
+COPY manage.py ./
+COPY uwsgi.ini ./
 RUN mkdir log
 
 # Extra files
@@ -19,8 +21,6 @@ COPY CHANGELOG.md $DIR/
 COPY CONTRIBUTORS $DIR/
 COPY LICENSE.txt $DIR/
 COPY MAINTAINERS $DIR/
-
-WORKDIR $DIR
 
 RUN pip install -r requirements/production.txt --upgrade
 
