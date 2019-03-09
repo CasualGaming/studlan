@@ -174,15 +174,20 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
+        'error_file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': 'log/error.log',
+        },
         'mail_admins': {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler',
         },
     },
     'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
+        'django': {
+            'handlers': ['error_file', 'mail_admins'],
+            'level': 'WARNING',
             'propagate': True,
         },
     },
