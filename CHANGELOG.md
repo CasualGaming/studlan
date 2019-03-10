@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Added command in Docker startup script for deleting expired sessions.
 
 ### Changed
 - Hide the full names of users where they aren't needed.
