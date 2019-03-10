@@ -88,11 +88,11 @@ def seating_details(request, lan_id, seating_id=None, seat_id=None):
             else:
                 children[0]['class'] = ' seating-node-occupied'
                 children[0]['status'] = 'occupied'
-                children[0]['seat-user'] = unicode(seats[counter].user.get_full_name())
+                children[0]['seat-user'] = unicode(seats[counter].user.username)
 
                 # Separate title element for chrome support
                 title = dom.new_tag('title')
-                title.string = unicode(seats[counter].user.get_full_name())
+                title.string = unicode(seats[counter].user.username)
                 tag.append(title)
 
         counter += 1
