@@ -5,6 +5,7 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
@@ -87,11 +88,11 @@ def seating_details(request, lan_id, seating_id=None, seat_id=None):
             else:
                 children[0]['class'] = ' seating-node-occupied'
                 children[0]['status'] = 'occupied'
-                children[0]['seat-user'] = unicode(seats[counter].user.get_full_name())
+                children[0]['seat-user'] = unicode(seats[counter].user.username)
 
                 # Separate title element for chrome support
                 title = dom.new_tag('title')
-                title.string = unicode(seats[counter].user.get_full_name())
+                title.string = unicode(seats[counter].user.username)
                 tag.append(title)
 
         counter += 1
@@ -169,6 +170,7 @@ def leave(request, seating_id, seat_id):
     return redirect(seating)
 
 
+@staff_member_required
 def seating_list(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
     lan = get_object_or_404(LAN, id=seating.lan.id)
@@ -207,6 +209,7 @@ def leave2(request, lan_id, seating_id, seat_id):
     return leave(request, seating_id, seat_id)
 
 
+@staff_member_required
 def seating_map(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
     lan = get_object_or_404(LAN, id=seating.lan.id)

@@ -69,7 +69,7 @@ class Attendee(models.Model):
     arrived = models.BooleanField('has arrived', default=False)
 
     def __unicode__(self):
-        return self.user.get_full_name() + ' - ' + self.lan.title
+        return self.user.username + ' – ' + self.lan.title
 
     class Meta:
         ordering = ['-user', 'lan']
@@ -116,7 +116,7 @@ class Ticket(models.Model):
     invalid_description = models.TextField(null=True, blank=True)
 
     def __unicode__(self):
-        return self.user.username + '(' + self.user.get_full_name() + ')'
+        return self.user.username
 
     class Meta:
         index_together = ['user', 'ticket_type']
