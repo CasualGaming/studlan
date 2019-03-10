@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
@@ -169,6 +170,7 @@ def leave(request, seating_id, seat_id):
     return redirect(seating)
 
 
+@staff_member_required
 def seating_list(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
     lan = get_object_or_404(LAN, id=seating.lan.id)
@@ -207,6 +209,7 @@ def leave2(request, lan_id, seating_id, seat_id):
     return leave(request, seating_id, seat_id)
 
 
+@staff_member_required
 def seating_map(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
     lan = get_object_or_404(LAN, id=seating.lan.id)
