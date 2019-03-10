@@ -1,5 +1,5 @@
 # Tools
-pip-review
+pip-review==1.0
 
 # App
 Django==1.11.20

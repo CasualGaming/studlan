@@ -1,8 +1,8 @@
 FROM python:2.7
 
-ENV DIR=/srv/studlan
+ENV STUDLAN_DIR=/srv/studlan
 
-WORKDIR $DIR
+WORKDIR $STUDLAN_DIR
 
 # Required files
 COPY apps apps
@@ -17,11 +17,12 @@ COPY uwsgi.ini ./
 RUN mkdir -p log
 
 # Extra files
-COPY CHANGELOG.md $DIR/
-COPY CONTRIBUTORS $DIR/
-COPY LICENSE.txt $DIR/
-COPY MAINTAINERS $DIR/
+COPY CHANGELOG.md ./
+COPY CONTRIBUTORS ./
+COPY LICENSE.txt ./
+COPY MAINTAINERS ./
 
+# Install requirements
 RUN pip install -r requirements/production.txt --upgrade
 
 # HTTP
