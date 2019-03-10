@@ -55,6 +55,9 @@ if [[ $IMPORT_DATABASE == "true" ]]; then
     fi
 fi
 
+# Clear expired sessions
+$MANAGE clearsessions
+
 # Optionally add superuser
 # Warning: These should be trusted to avoid code injection
 if [[ ! -z $SUPERUSER_USERNAME ]]; then
