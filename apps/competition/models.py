@@ -163,7 +163,7 @@ class Participant(models.Model):
 
     def __unicode__(self):
         if self.user:
-            return self.user.get_full_name()
+            return self.user.username
         else:
             return unicode(self.team)
 

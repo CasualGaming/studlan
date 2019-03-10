@@ -6,6 +6,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
@@ -145,13 +146,22 @@ def add_member(request, team_id):
 def invite_member(request, team_id):
     if request.method == 'POST':
         team = get_object_or_404(Team, pk=team_id)
+        username = request.POST.get('selectMember')
         if request.user != team.leader:
             messages.error(request, _(u'You are not the team leader, you cannot add team members.'))
+        elif not username:
+            messages.error(request, _(u'No username was specified.'))
         else:
-            user_id = request.POST.get('selectMember')
-            user = get_object_or_404(User, pk=user_id)
-            if len(Member.objects.filter(user=user, team=team)) > 0:
-                messages.error(request, unicode(user) + _(u' is already on your team.'))
+            try:
+                user = User.objects.get(username=username)
+            except ObjectDoesNotExist:
+                user = None
+            if not user:
+                messages.error(request, _(u'User ') + username + _(u' does not exist.'))
+            elif user == team.leader:
+                messages.error(request, _(u'You cannot invite the team leader.'))
+            elif len(Member.objects.filter(user=user, team=team)) > 0:
+                messages.error(request, _(u'User ') + unicode(user) + _(u' is already on your team.'))
             else:
                 existing_invitation = Invitation.objects.filter(invitee=user, team=team)
                 if not existing_invitation:
@@ -168,9 +178,9 @@ def invite_member(request, team_id):
                                           invitation.token + '"> Decline</a> the invitation.'
                     pm_write(request.user, user, invitation.token, body=invitation_message)
 
-                    messages.success(request, unicode(user) + _(u' was invited to your team'))
+                    messages.success(request, _(u'User ') + unicode(user) + _(u' was invited to your team.'))
                 else:
-                    messages.error(request, unicode(user) + _(u' has already been invited to your team'))
+                    messages.error(request, _(u'User ') + unicode(user) + _(u' has already been invited to your team.'))
 
     return redirect(team)
 

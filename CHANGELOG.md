@@ -5,6 +5,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [Unreleased]
+### Added
+
+### Changed
+- Hide the full names of users where they aren't needed.
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+- Fix broken auth for the downloadable PDF files for the seating.
+- Replace the drop-down list with all usernames in the team invite section with a text field.
+
+
 ## [1.4.0] - 2019-03-10
 ### Added
 - Added changelog file.

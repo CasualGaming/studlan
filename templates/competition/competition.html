@@ -164,9 +164,9 @@
                             {% for user in users %}
                                 <tr onclick="document.location='{% url 'public_profile' user %}';">
                                     {% if request.user == user %}
-                                        <td class="participant-you underline" title="{{ user.get_full_name }}">{{ user }}</td>
+                                        <td class="participant-you underline">{{ user }}</td>
                                     {% else %}
-                                        <td class="underline" title="{{ user.get_full_name }}">{{ user }}</td>
+                                        <td class="underline">{{ user }}</td>
                                     {% endif %}
                                 </tr>   
                             {% endfor %}

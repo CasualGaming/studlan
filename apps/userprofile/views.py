@@ -26,7 +26,7 @@ def my_profile(request):
     breadcrumbs = (
         (settings.SITE_NAME, '/'),
         (_(u'Profile'), reverse('my_profile')),
-        (request.user.get_full_name(), ''),
+        (request.user.username, ''),
     )
 
     return render(request, 'user/profile.html', {'quser': request.user, 'profile': profile, 'breadcrumbs': breadcrumbs})
