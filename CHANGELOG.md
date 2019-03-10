@@ -5,16 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [Unreleased]
+## [1.4.1] - 2019-03-10
 ### Added
 - Added command in Docker startup script for deleting expired sessions.
 
 ### Changed
 - Hide the full names of users where they aren't needed.
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 - Fixed join date on user profiles.
@@ -39,10 +35,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Django from v1.10 to v1.11.
 - Updated dependency Stripe PyPI package from v1 to v2.
 - Changed the user profile slightly. The user's full name is no longer shown publicly.
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 - Invalid ZIP codes no longer cause crashes when trying to save.
