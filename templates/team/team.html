@@ -68,13 +68,9 @@
                     <fieldset>
                         <legend>{% trans "Invite member" %}</legend>
                         <div class="form-group">
-                            <label class="col-md-1 control-label" for="selectMember">{% trans "Select" %}</label>
+                            <label class="col-md-1 control-label" for="selectMember">{% trans "Username" %}</label>
                             <div class="col-md-4">
-                                <select class="form-control" id="selectMember" name="selectMember">
-                                    {% for user in users %}
-                                        <option value="{{ user.id }}">{{ user }}</option>
-                                    {% endfor %}
-                                </select>
+                                <input type="text" class="form-control" id="selectMember" name="selectMember" required />
                             </div>
                             <div class="col-md-3 center-on-collapse form-actions-collapsed">
                                 <input type="submit" class="btn btn-primary" value="{% trans "Invite member" %}" />
