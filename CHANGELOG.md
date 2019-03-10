@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Fixed
+- Fixed join date on user profiles.
 
 ### Security
 - Fix broken auth for the downloadable PDF files for the seating.
