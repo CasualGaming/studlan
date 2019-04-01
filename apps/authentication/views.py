@@ -5,7 +5,7 @@ from datetime import datetime
 
 from django.conf import settings
 from django.contrib import auth, messages
-from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
@@ -99,7 +99,7 @@ def register(request):
 
 
 @sensitive_post_parameters()
-@staff_member_required
+@permission_required('lan.register_new_user')
 def direct_register(request):
     lan = LAN.objects.filter(end_date__gte=datetime.now()).first()
     if request.method == 'POST':

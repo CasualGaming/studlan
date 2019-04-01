@@ -27,17 +27,22 @@
 	                {% endif %}
                 </a>
             </li>
-            {% if user.is_staff %}
-                <li class="divider"></li>
-                <li><a href="{% url 'arrival_home' %}"><i class="glyphicon glyphicon-list-alt"></i> Register arrivals</a>
-                </li>
-                <li><a href="{% url 'auth_direct_register' %}"><i class="glyphicon glyphicon-list"></i> Manual registration</a>
-                </li>
-                <li><a href="/admin"><i class="glyphicon glyphicon-cog"></i> Admin</a>
-                </li>
-                <li><a href="{% url 'drawing' %}"><i class="glyphicon glyphicon-gift"></i> Drawing</a></li>
-            {% endif%}
             <li class="divider"></li>
+            {% if perms.lan.register_arrivals %}
+            <li><a href="{% url 'arrival_home' %}"><i class="glyphicon glyphicon-list-alt"></i> Register arrivals</a></li>
+            {% endif %}
+            {% if perms.lan.register_new_user %}
+            <li><a href="{% url 'auth_direct_register' %}"><i class="glyphicon glyphicon-list"></i> Manual registration</a></li>
+            {% endif %}
+            {% if perms.lottery.draw %}
+            <li><a href="{% url 'drawing' %}"><i class="glyphicon glyphicon-gift"></i> Drawing</a></li></li>
+            {% endif %}
+            {% if user.is_staff %}
+            <li><a href="/admin"><i class="glyphicon glyphicon-cog"></i> Admin</a>
+            {% endif %}
+            {% if perms.lan.register_arrivals or perms.lan.register_new_user or perms.lottery.draw or user.is_staff %}
+            <li class="divider"></li>
+            {% endif %}
             <li>
                 <a href="{% url 'auth_logout' %}">
                 <i class="glyphicon glyphicon-off">

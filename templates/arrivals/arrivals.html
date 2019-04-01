@@ -68,7 +68,7 @@ Register Arrivals
                 </table>
             </div>
         </div>
-        {% if user.is_staff %}
+        {% if perms.lan.export_paying_participants %}
         <div class="col-md-9">
             <a href="{% url 'lan_list_paid' lan.id %}" class="btn btn-info">Export to Excel sheet</a>
         </div>

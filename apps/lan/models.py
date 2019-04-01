@@ -56,6 +56,11 @@ class LAN(TranslatableModel):
 
     class Meta:
         ordering = ['start_date']
+        permissions = (
+            ('export_paying_participants', 'Can export list of paying participants to downloadable file'),
+            ('register_arrivals', 'Can register arrivals'),
+            ('register_new_user', 'Can directly register a new user'),
+        )
 
 
 class LANTranslation(get_translation_model(LAN, 'LAN')):

@@ -29,10 +29,13 @@ class Lottery(TranslatableModel):
         return False
 
     def get_absolute_url(self):
-        return reverse('lottery_details', kwargs={'lottery_id': self.id})
+        return reverse('details', kwargs={'lottery_id': self.id})
 
     class Meta:
         verbose_name_plural = 'Lotteries'
+        permissions = (
+            ('draw', 'Can draw winners'),
+        )
 
 
 class LotteryTranslation(get_translation_model(Lottery, 'lottery')):

@@ -3,8 +3,7 @@
 from datetime import datetime
 
 from django.contrib import messages
-from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext as _
@@ -94,7 +93,7 @@ def unattend(request, lan_id):
     return redirect(lan)
 
 
-@staff_member_required
+@permission_required('lan.export_paying_participants')
 def list_paid(request, lan_id):
     import xlwt
     lan = get_object_or_404(LAN, pk=lan_id)

@@ -3,8 +3,7 @@
 from datetime import datetime
 
 from django.contrib import messages
-from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponse
@@ -15,8 +14,7 @@ from apps.lan.models import Attendee, LAN, Ticket, TicketType
 from apps.seating.models import Seat
 
 
-@login_required
-@staff_member_required
+@permission_required('lan.register_arrivals')
 def home(request):
     lans = LAN.objects.filter(end_date__gte=datetime.now())
     if lans.count() == 1:
@@ -33,11 +31,8 @@ def home(request):
 
 
 @ensure_csrf_cookie
-@staff_member_required
+@permission_required('lan.register_arrivals')
 def arrivals(request, lan_id):
-    if not request.user.is_staff:
-        raise Http404
-
     lan = get_object_or_404(LAN, pk=lan_id)
     attendees = Attendee.objects.filter(lan=lan)
 
@@ -73,7 +68,7 @@ def arrivals(request, lan_id):
                    'tickets': tickets, 'ticket_users': ticket_users, 'user_seats': user_seats})
 
 
-@staff_member_required
+@permission_required('lan.register_arrivals')
 def toggle(request, lan_id):
     if request.method == 'POST':
         username = request.POST.get('username')
