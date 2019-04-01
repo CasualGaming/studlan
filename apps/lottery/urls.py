@@ -2,7 +2,7 @@
 
 from django.conf.urls import url
 
-from .views import draw, drawing, details, sign_off, sign_up
+from .views import details, draw, drawing, sign_off, sign_up
 
 urlpatterns = [
     url(r'^details/(?P<lottery_id>\d+)/$', details, name='details'),
