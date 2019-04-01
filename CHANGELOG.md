@@ -25,10 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added buttons on lottery pages to go between details and drawing pages.
 
 ### Changed
-- Changed authorization method for exporting paying participants from is-staff to permission.
-- Changed authorization method for registering arrivals from is-staff to permission.
-- Changed authorization method for directly registering users from is-staff to permission.
-- Changed authorization method for lottery drawing from is-staff to permission.
+- Replaced all is-staff checks with permission checks.
 - Updated dependencies: stripe
 
 ### Fixed

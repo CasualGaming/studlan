@@ -50,20 +50,31 @@
             </li>
           </ul>
     </li>
+            <li class="hidden-md hidden-lg hidden-sm"><a href="{% url 'my_profile' %}"><i class="glyphicon glyphicon-pencil"></i> {% trans "Profile" %}</a></li>
             <li class="hidden-md hidden-lg hidden-sm">
-                <a href="{% url 'my_profile' %}">
-                <i class="glyphicon glyphicon-pencil">
-                </i> {% trans "Profile" %}</a>
+                <a href="{% url 'inbox' %}"><i class="glyphicon glyphicon-envelope"></i>
+                    {% trans "Inbox" %}
+                    {% if unread_count %}
+                        <span class="badge">{{unread_count}}</span>
+                    {% endif %}
+                </a>
             </li>
-            {% if user.is_staff %}
-                <li class="divider hidden-md hidden-lg hidden-sm"></li>
-                <li class="hidden-md hidden-lg hidden-sm"><a href="{% url 'arrival_home' %}"><i class="glyphicon glyphicon-list-alt"></i> Register arrivals</a>
-                </li>
-                <li class="hidden-md hidden-lg hidden-sm"><a href="/admin"><i class="glyphicon glyphicon-cog"></i> Admin</a>
-                </li>
-                <li class="hidden-md hidden-lg hidden-sm"><a href="{% url 'drawing' %}"><i class="glyphicon glyphicon-gift"></i> Drawing</a></li>
-            {% endif%}
             <li class="divider hidden-md hidden-lg hidden-sm"></li>
+            {% if perms.lan.register_arrivals %}
+            <li class="hidden-md hidden-lg hidden-sm"><a href="{% url 'arrival_home' %}"><i class="glyphicon glyphicon-list-alt"></i> Register arrivals</a></li>
+            {% endif %}
+            {% if perms.lan.register_new_user %}
+            <li class="hidden-md hidden-lg hidden-sm"><a href="{% url 'auth_direct_register' %}"><i class="glyphicon glyphicon-list"></i> Manual registration</a></li>
+            {% endif %}
+            {% if perms.lottery.draw %}
+            <li class="hidden-md hidden-lg hidden-sm"><a href="{% url 'drawing' %}"><i class="glyphicon glyphicon-gift"></i> Drawing</a></li>
+            {% endif %}
+            {% if user.is_staff %}
+            <li class="hidden-md hidden-lg hidden-sm"><a href="/admin"><i class="glyphicon glyphicon-cog"></i> Admin</a></li>
+            {% endif %}
+            {% if perms.lan.register_arrivals or perms.lan.register_new_user or perms.lottery.draw or user.is_staff %}
+            <li class="divider hidden-md hidden-lg hidden-sm"></li>
+            {% endif %}
             <li class="hidden-md hidden-lg hidden-sm">
                 <a href="{% url 'auth_logout' %}">
                 <i class="glyphicon glyphicon-off">

@@ -75,6 +75,11 @@ class Seating(models.Model):
             seat = Seat(seating=self, placement=k + 1)
             seat.save()
 
+    class Meta:
+        permissions = (
+            ('export_seating', 'Can export seating to downloadable file'),
+        )
+
 
 class Seat(models.Model):
     user = models.ForeignKey(User, null=True, blank=True)

@@ -20,7 +20,7 @@
 
 <div class="row">
     <div class="col-md-9">
-        {% if user == quser or user.is_staff %}
+        {% if user == quser or perms.userprofile.show_private_info %}
         <h3>{% trans "Private Information" %}</h3>
         <table class="table ">
             <tbody>
@@ -31,11 +31,11 @@
                 <tr>
                     <td>{% trans "Last name" %}</td>
                     <td>{{ quser.last_name }}</td>
-                </tr>{% if user == quser or user.is_staff %}
+                </tr>
                 <tr>
                     <td>{% trans "Email" %}</td>
                     <td>{{ quser.email }}</td>
-                </tr>{% endif %}
+                </tr>
                 <tr>
                     <td>{% trans "Date of birth" %}</td>
                     <td>{{ profile.date_of_birth }}</td>
