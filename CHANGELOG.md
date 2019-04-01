@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed wrong join time and last login time on user profiles.
 - Fixed string encoding error when exporting paying participants for a LAN to an Excel sheet.
 - Fixed internal errors when viewing non-existing lotteries.
+- Fixed wrong font for username in top bar.
 
 
 ## [1.4.1] - 2019-03-10
