@@ -8,8 +8,7 @@ import challonge
 
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.db.models import Q
@@ -211,8 +210,8 @@ def competition_details(request, competition_id):
         messages.warning(request, _(u'Please log in to register for the competition.'))
     context['competition'] = competition
 
-    # admin control panel
-    if request.user.is_staff and competition.status > 1 and competition.challonge_url and use_challonge:
+    # Add open or errored matches to context
+    if competition.status > 1 and competition.challonge_url and use_challonge:
         context['open_matches'] = Match.objects.filter(
             Q(competition=competition, state='open') | Q(competition=competition, state='error'))
     return render(request, 'competition/competition.html', context)
@@ -391,8 +390,7 @@ def schedule(request):
     return render(request, 'competition/schedule.html', context)
 
 
-@staff_member_required
-@login_required
+@permission_required('competition.manage')
 def start_compo(request, competition_id):
     competition = get_object_or_404(Competition, pk=competition_id)
     if competition.status == 1:
@@ -509,8 +507,7 @@ def reporting_error(match):
     match.save()
 
 
-@staff_member_required
-@login_required
+@permission_required('competition.manage')
 def submit_score(request, competition_id, match_id):
     competition = get_object_or_404(Competition, pk=competition_id)
     try:

@@ -25,5 +25,5 @@ $MANAGE migrate --fake-initial
 
 # Add superuser
 echo "Adding superuser ..."
-echo "Press CTRL+C to cancel"
+read -p "Press ENTER to continue, or CTRL+C to cancel"
 $MANAGE createsuperuser

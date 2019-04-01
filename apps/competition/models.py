@@ -141,6 +141,9 @@ class Competition(TranslatableModel):
 
     class Meta:
         ordering = ['status']
+        permissions = (
+            ('manage', 'Manage compos and matches'),
+        )
 
 
 class CompetitionTranslation(get_translation_model(Competition, 'competition')):

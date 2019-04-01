@@ -31,6 +31,11 @@ class UserProfile(models.Model):
             return True
         return False
 
+    class Meta:
+        permissions = (
+            ('show_private_info', 'Can show private user info'),
+        )
+
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 

@@ -12,5 +12,5 @@ def profile_tabs(active):
 
 
 @register.inclusion_tag('user/profile_content.html', takes_context=True)
-def profile_content(context, quser, profile, user_seats):
-    return {'user': context['user'], 'quser': quser, 'profile': profile, 'user_seats': user_seats}
+def profile_content(context):
+    return {'user': context['user'], 'quser': context['quser'], 'profile': context['profile'], 'user_seats': context['user_seats'], 'perms': context['perms']}

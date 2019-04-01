@@ -12,7 +12,8 @@
         </div>
     </div>
 
-        <div class="row">
+    {% if lans %}
+    <div class="row">
         <div class="col-md-8">
             <table class="table table-bordered table-striped">
                 <thead><th>LAN</th><th>Arrivals</th></thead>
@@ -27,4 +28,11 @@
             </table>
         </div>
     </div>
+    {% else %}
+    <div class="row">
+        <div class="col-md-9">
+            <p class="alert alert-warning">There are no LANs.</p>
+        </div>
+    </div>
+    {% endif %}
 {% endblock content %}

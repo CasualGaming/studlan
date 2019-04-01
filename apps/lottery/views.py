@@ -4,16 +4,16 @@ from random import SystemRandom
 
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.core.urlresolvers import reverse
+from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 
 from apps.lottery.models import Lottery, LotteryParticipant, LotteryWinner
 
 
-def lottery_details(request, lottery_id):
-    lottery = Lottery.objects.get(pk=lottery_id)
-
+def details(request, lottery_id):
+    lottery = get_object_or_404(Lottery, pk=lottery_id)
     participants = [participant.user for participant in lottery.lotteryparticipant_set.all()]
 
     breadcrumbs = (
@@ -22,10 +22,11 @@ def lottery_details(request, lottery_id):
         (lottery, ''),
     )
 
-    return render(request, 'lottery/lottery_details.html', {'lottery': lottery,
+    return render(request, 'lottery/details.html', {'lottery': lottery,
                   'participants': participants, 'breadcrumbs': breadcrumbs})
 
 
+@login_required
 def sign_up(request, lottery_id):
     lottery = get_object_or_404(Lottery, pk=lottery_id)
     if lottery.registration_open and not lottery.is_participating(request.user):
@@ -34,6 +35,7 @@ def sign_up(request, lottery_id):
     return redirect(lottery)
 
 
+@login_required
 def sign_off(request, lottery_id):
     lottery = get_object_or_404(Lottery, pk=lottery_id)
     if lottery.registration_open:
@@ -43,13 +45,15 @@ def sign_off(request, lottery_id):
     return redirect(lottery)
 
 
-@staff_member_required
+@permission_required('lottery.draw')
 def drawing(request, lottery_id=False):
     winner = False
     if lottery_id:
         lottery = get_object_or_404(Lottery, pk=lottery_id)
-    else:
+    elif Lottery.objects.count() > 0:
         lottery = Lottery.objects.latest('pk')
+    else:
+        raise Http404('No lotteries exist')
 
     winners = LotteryWinner.objects.filter(lottery=lottery)
     if winners:
@@ -57,7 +61,7 @@ def drawing(request, lottery_id=False):
     return render(request, 'lottery/drawing.html', {'lottery': lottery, 'winner': winner})
 
 
-@staff_member_required
+@permission_required('lottery.draw')
 def draw(request, lottery_id):
     lottery = get_object_or_404(Lottery, pk=lottery_id)
     if lottery.multiple_winnings:

@@ -2,11 +2,10 @@
 
 from django.conf.urls import url
 
-from .views import draw, drawing, lottery_details, sign_off, sign_up
+from .views import details, draw, drawing, sign_off, sign_up
 
 urlpatterns = [
-    # Main comp oversight
-    url(r'^details/(?P<lottery_id>\d+)/$', lottery_details, name='lottery_details'),
+    url(r'^details/(?P<lottery_id>\d+)/$', details, name='details'),
     url(r'^signup/(?P<lottery_id>\d+)/$', sign_up, name='sign_up'),
     url(r'^signoff/(?P<lottery_id>\d+)/$', sign_off, name='sign_off'),
     url(r'^drawing/$', drawing, name='drawing'),

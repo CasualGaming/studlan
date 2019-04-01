@@ -30,4 +30,12 @@
         {% endif %}
     </div>
 </div>
+
+{% if perms.lottery.draw %}
+<div class="row">
+    <div class="col-md-9">
+        <a class="btn btn-info" href="{% url 'drawing' lottery.id %}">Drawing</a>
+    </div>
+</div>
+{% endif %}
 {% endblock content %}

@@ -82,7 +82,6 @@ def user_inbox(request):
 
 @login_required
 def alias(request):
-
     aliases = Alias.objects.filter(user=request.user)
     alias_types = AliasType.objects.all().exclude(alias__in=aliases)
     breadcrumbs = (
