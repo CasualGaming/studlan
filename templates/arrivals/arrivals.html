@@ -68,6 +68,11 @@ Register Arrivals
                 </table>
             </div>
         </div>
+        {% if user.is_staff %}
+        <div class="col-md-9">
+            <a href="{% url 'lan_list_paid' lan.id %}" class="btn btn-info">Export to Excel sheet</a>
+        </div>
+        {% endif %}
     {% else %}
         <div class="col-md-9">
             <div class="alert alert-warning">There are no attendees for this LAN.</div>

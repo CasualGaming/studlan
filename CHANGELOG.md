@@ -15,9 +15,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Fixed
-- Fixed wrong join time and last login time on user profiles.
 
 ### Security
+
+
+## [1.4.2] - 2019-04-01
+### Added
+- Added button on arrivals page for exporting paying participants for a LAN to an Excel sheet.
+
+### Fixed
+- Fixed wrong join time and last login time on user profiles.
+- Fixed string encoding error when exporting paying participants for a LAN to an Excel sheet.
 
 
 ## [1.4.1] - 2019-03-10
