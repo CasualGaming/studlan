@@ -23,6 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added button on arrivals page for exporting paying participants for a LAN to an Excel sheet.
 
+### Changed
+- Updated dependencies: stripe
+
 ### Fixed
 - Fixed wrong join time and last login time on user profiles.
 - Fixed string encoding error when exporting paying participants for a LAN to an Excel sheet.
