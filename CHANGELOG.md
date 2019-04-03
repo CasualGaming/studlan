@@ -19,6 +19,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 
+## [1.4.3] - 2019-04-03
+### Fixed
+- Fixed internal error when accessing `/profile`.
+
+
 ## [1.4.2] - 2019-04-01
 ### Added
 - Added button on arrivals page for exporting paying participants for a LAN to an Excel sheet.

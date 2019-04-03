@@ -7,7 +7,6 @@ from .views import add_alias, alias, history, my_profile, remove_alias, update_p
 
 urlpatterns = [
     url(r'^$', my_profile, name='my_profile'),
-    url(r'^seating/$', my_profile, name='seating'),
     url(r'^update/$', update_profile, name='update_profile'),
     url(r'^history/$', history, name='user_history'),
     url(r'^inbox/$', user_inbox, name='inbox'),

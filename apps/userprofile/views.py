@@ -21,6 +21,7 @@ from apps.userprofile.models import Alias, AliasType
 
 @login_required
 def my_profile(request):
+    user_seats = Seat.objects.filter(user=request.user)
     profile = request.user.profile
 
     breadcrumbs = (
@@ -29,7 +30,15 @@ def my_profile(request):
         (request.user.username, ''),
     )
 
-    return render(request, 'user/profile.html', {'quser': request.user, 'profile': profile, 'breadcrumbs': breadcrumbs})
+    return render(request, 'user/profile.html', {'quser': request.user, 'profile': profile, 'user_seats': user_seats, 'breadcrumbs': breadcrumbs})
+
+
+def user_profile(request, username):
+    quser = get_object_or_404(User, username=username)
+    user_seats = Seat.objects.filter(user=quser)
+    profile = quser.profile
+
+    return render(request, 'user/public_profile.html', {'quser': quser, 'profile': profile, 'user_seats': user_seats})
 
 
 @login_required
@@ -125,11 +134,3 @@ def remove_alias(request, alias_id):
         messages.success(request, _(u'Alias was removed'))
 
     return redirect('/profile/alias')
-
-
-def user_profile(request, username):
-    quser = get_object_or_404(User, username=username)
-    user_seats = Seat.objects.filter(user=quser)
-    profile = quser.profile
-
-    return render(request, 'user/public_profile.html', {'quser': quser, 'profile': profile, 'user_seats': user_seats})
