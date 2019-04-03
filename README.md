@@ -1,5 +1,6 @@
 studlan
 ==========
+[![GitHub release](https://img.shields.io/github/release/CasualGaming/studlan.svg)](https://github.com/CasualGaming/studlan/releases)
 [![Build Status](https://travis-ci.org/CasualGaming/studlan.svg?branch=master)](https://travis-ci.org/CasualGaming/studlan)
 
 * [Travis CI](https://travis-ci.org/CasualGaming/studlan)
