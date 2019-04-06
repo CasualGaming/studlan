@@ -50,6 +50,8 @@ jobs:
     - stage: test
       name: Analyze source code (SonarCloud)
       language: java
+      git:
+        depth: false
       script: sonar-scanner
     - stage: test
       name: Validate Docker image
