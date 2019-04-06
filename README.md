@@ -2,6 +2,7 @@ studlan
 ==========
 [![GitHub release](https://img.shields.io/github/release/CasualGaming/studlan.svg)](https://github.com/CasualGaming/studlan/releases)
 [![Build Status](https://travis-ci.org/CasualGaming/studlan.svg?branch=master)](https://travis-ci.org/CasualGaming/studlan)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?branch=master&project=CasualGaming_studlan&metric=alert_status)](https://sonarcloud.io/dashboard?id=CasualGaming_studlan)
 
 * [Travis CI](https://travis-ci.org/CasualGaming/studlan)
 * [Docker Hub](https://hub.docker.com/r/casualgaming/studlan)
