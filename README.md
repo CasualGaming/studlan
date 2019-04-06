@@ -5,6 +5,7 @@ studlan
 
 * [Travis CI](https://travis-ci.org/CasualGaming/studlan)
 * [Docker Hub](https://hub.docker.com/r/casualgaming/studlan)
+* [SonarCloud](https://sonarcloud.io/dashboard?id=CasualGaming_studlan)
 
 # Features
 * News

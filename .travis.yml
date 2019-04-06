@@ -47,6 +47,8 @@ jobs:
       name: Analyze source code (flake8)
       install: pip install --upgrade -r requirements/test.txt
       script: flake8
+      # This does not fail the build if the SonarCloud quality gate fails,
+      # but SonarCloud has a GitHub PR status check which can be made required.
     - stage: test
       name: Analyze source code (SonarCloud)
       language: java
