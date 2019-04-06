@@ -15,6 +15,11 @@ language: python
 python:
   - "2.7"
 
+addons:
+  sonarcloud:
+    organization: $SONARCLOUD_ORG
+    token: $SONARCLOUD_TOKEN
+
 services:
   - docker
 
@@ -39,9 +44,13 @@ jobs:
       install: pip install --upgrade -r requirements/test.txt
       script: manage/ci-test.sh
     - stage: test
-      name: Analyze source code
+      name: Analyze source code (flake8)
       install: pip install --upgrade -r requirements/test.txt
-      script: manage/ci-analyze-source.sh
+      script: flake8
+    - stage: test
+      name: Analyze source code (SonarCloud)
+      language: java
+      script: sonar-scanner
     - stage: test
       name: Validate Docker image
       install: true # NOP
