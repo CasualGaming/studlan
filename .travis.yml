@@ -15,11 +15,6 @@ language: python
 python:
   - "2.7"
 
-addons:
-  sonarcloud:
-    organization: $SONARCLOUD_ORG
-    token: $SONARCLOUD_TOKEN
-
 services:
   - docker
 
@@ -52,6 +47,10 @@ jobs:
     - stage: test
       name: Analyze source code (SonarCloud)
       language: java
+      addons:
+        sonarcloud:
+          organization: $SONARCLOUD_ORG
+          token: $SONARCLOUD_TOKEN
       git:
         depth: false
       script: sonar-scanner
