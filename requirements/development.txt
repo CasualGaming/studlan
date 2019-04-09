@@ -30,7 +30,7 @@ reportlab==3.5.18
 requests[security]==2.21.0
 six==1.12.0               # via cryptography, pyopenssl
 soupsieve==1.9            # via beautifulsoup4
-stripe==2.23.0
+stripe==2.24.1
 tzlocal==1.5.1            # via pychal
 urllib3==1.24.1           # via requests
 uwsgi==2.0.18

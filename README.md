@@ -88,6 +88,11 @@ If Docker starts to fill up your hard drive, run `docker system prune -a` to del
 * Cleanup after venv, Docker, etc.: `manage/clean.py`
 * Enter venv: `manage/enter-venv.py`
 
+## Upgrading dependencies
+* This priject uses pip-tools with all-dep pinning.
+* Run `manage/update-deps.sh` to update dependencies.
+* Go through all dep updates, read the changelogs and make sure they don't mess things up.
+
 # Deployment
 ## Docker Hub Registry
 Make sure your personal or organizational user exists. Copy the username and password to Travis, so that it can log in.
