@@ -45,7 +45,7 @@ studlan
 
 ### Installing Virtualenv and Stuff
 ```
-sudo pip install --upgrade pip virtualenv setuptools wheel
+sudo pip install --upgrade pip virtualenv setuptools wheel pip-tools pip-review
 ```
 
 ### Installing Travis Tool

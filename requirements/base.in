@@ -1,6 +1,3 @@
-# Tools
-pip-review==1.0
-
 # App
 Django==1.11.20
 django-markdown-deux==1.0.5

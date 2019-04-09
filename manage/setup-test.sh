@@ -13,4 +13,3 @@ trap deactivate EXIT
 # Install requirements inside venv, and check for outdated packages
 echo "Installing requirements ..."
 pip install --upgrade -r requirements/test.txt
-pip-review

@@ -15,3 +15,6 @@ rm -f studlan.db
 pyclean .
 find . -name "*.pyc" -exec rm -rf {} \;
 rm -rf *.egg-info
+
+# pip
+rm -f requirements/*.old.txt
