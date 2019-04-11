@@ -20,22 +20,16 @@ fi
 source .venv/bin/activate
 trap deactivate EXIT
 
-echo "Copying *.txt to *.old.txt"
-[[ ! -f requirements/development.txt ]] && touch requirements/development.txt
-[[ ! -f requirements/production.txt ]] && touch requirements/production.txt
-[[ ! -f requirements/test.txt ]] && touch requirements/test.txt
-cp requirements/development.txt requirements/development.old.txt
-cp requirements/production.txt requirements/production.old.txt
-cp requirements/test.txt requirements/test.old.txt
+[[ ! -f requirements/all.txt ]] && touch requirements/all.txt
+cp requirements/all.txt requirements/all.old.txt
 
 echo "Updating requirements files ..."
 pip-compile --quiet --upgrade requirements/development.in
 pip-compile --quiet --upgrade requirements/production.in
 pip-compile --quiet --upgrade requirements/test.in
+pip-compile --quiet --upgrade requirements/all.in
 
-echo; echo "Changes in development.txt:"
-diff requirements/development.old.txt requirements/development.txt || true
-echo; echo "Changes in production.txt:"
-diff requirements/production.old.txt requirements/production.txt || true
-echo; echo "Changes in test.txt:"
-diff requirements/test.old.txt requirements/test.txt || true
+echo "Dependency changes:"
+diff requirements/all.old.txt requirements/all.txt || true
+
+rm -f requirements/all.old.txt
