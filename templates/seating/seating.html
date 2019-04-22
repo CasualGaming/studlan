@@ -43,9 +43,9 @@ Seating
                                 <li>{% trans "Status" %}: <label class="label label-success">{% trans "Open" %}</label></li>
                                 <li>{% trans "Closes" %}: <label class="label label-info">{{ seating.closing_date }}</label></li>
                             {% else %}
-                                <li><strong>{% trans "Status" %}: <label class="label label-danger">{% trans "Closed" %}</label></li>
+                                <li><strong>{% trans "Status" %}:</strong> <label class="label label-danger">{% trans "Closed" %}</label></li>
                             {% endif %}
-                            <li>{% trans "Capacity" %}: <label class="label label-info">{{ seating.get_free_seats }}/{{ seating.get_number_of_seats }}</label></li>
+                            <li><strong>{% trans "Capacity" %}:</strong> <label class="label label-info">{{ seating.get_free_seats }}/{{ seating.get_number_of_seats }}</label></li>
 
                             {% if perms.seating.export_seating %}
                                 <a href="{% url 'list' seating.id %}"><i class="glyphicon glyphicon-th"></i>Seatlist</a>
