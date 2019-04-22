@@ -57,6 +57,7 @@ jobs:
     - stage: test
       name: Validate Docker image
       install: true # NOP
+      before_script: echo "v0.0.0-SNAPSHOT" > VERSION
       script: manage/ci-validate-docker.sh
 
     # Deploy to registry stage
@@ -65,11 +66,13 @@ jobs:
       # Requires tag "vX.Y.Z" without suffix
       if: (tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$)
       install: true # NOP
+      before_script: echo "$TRAVIS_TAG" > VERSION
       script: manage/ci-deploy-registry.sh stable $TRAVIS_TAG
     - stage: deploy-registry
       name: Build and deploy bleeding to registry
       if: (branch = master)
       install: true # NOP
+      before_script: echo "v0.0.0-SNAPSHOT+$(TZ=Etc/GMT date "+%Y-%m-%dT%H:%M:%SZ")" > VERSION
       script: manage/ci-deploy-registry.sh bleeding
 
     # Deploy to site stage

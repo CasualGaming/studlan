@@ -4,7 +4,7 @@ set -eu # Exit on error and undefined var is error
 
 IMAGE_ID="studlan:dev"
 CONTAINER_ID="studlan-dev"
-HOST_DIR=/tmp/studlan
+HOST_DIR="/tmp/studlan"
 VM_DIR="/srv/studlan"
 
 # Add persistent files
@@ -12,6 +12,9 @@ VM_DIR="/srv/studlan"
 [[ ! -e $HOST_DIR/studlan.db ]] && touch $HOST_DIR/studlan.db
 [[ ! -e $HOST_DIR/log ]] && mkdir -p $HOST_DIR/log
 [[ ! -e $HOST_DIR/settings.py ]] && cp sample-configs/local-dev.py $HOST_DIR/settings.py
+
+# Set version
+[[ ! -e VERSION ]] && echo "v0.0.0-SNAPSHOT" > VERSION
 
 # Build image
 docker build -t "$IMAGE_ID" .

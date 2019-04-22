@@ -284,3 +284,4 @@ ENV/
 /log/
 /studlan.db
 /keys/*.key
+VERSION

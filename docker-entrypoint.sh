@@ -23,6 +23,9 @@ IMPORT_DATABASE=${IMPORT_DATABASE:=}
 EXPORT_DATABASE=${EXPORT_DATABASE:=}
 NO_START=${NO_START:=}
 
+echo "Starting studlan $(cat VERSION)"
+echo
+
 # Check if settings exist
 APP_SETTINGS_FILE=studlan/settings/local.py
 if [[ ! -e $APP_SETTINGS_FILE ]]; then
