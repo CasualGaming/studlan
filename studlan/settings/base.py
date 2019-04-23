@@ -12,12 +12,6 @@ PROJECT_ROOT_DIRECTORY = os.path.join(PROJECT_SETTINGS_DIRECTORY, '..', '..')
 
 DEBUG = False
 
-ADMINS = (
-    ('example', 'example@example.net'),
-)
-
-MANAGERS = ADMINS
-
 INSTALLED_APPS = (
     # third party apps
     'markdown_deux',
@@ -172,22 +166,26 @@ POSTMAN_MAILER_APP = 'mailer'
 
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'standard': {
+            'format': '[%(asctime)s] [%(levelname)s] %(message)s'
+        },
+    },
     'handlers': {
         'error_file': {
             'level': 'WARNING',
-            'class': 'logging.FileHandler',
+            'class': 'logging.handlers.RotatingFileHandler',
             'filename': 'log/error.log',
-        },
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler',
+            'maxBytes': 5 * 1024 * 1024,  # 5 MB
+            'backupCount': 5,
+            'formatter': 'standard',
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['error_file', 'mail_admins'],
-            'level': 'WARNING',
+            'handlers': ['error_file'],
+            'level': 'INFO',
             'propagate': True,
         },
     },

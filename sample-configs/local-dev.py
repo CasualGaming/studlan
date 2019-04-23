@@ -24,9 +24,6 @@ STUDLAN_FROM_MAIL = 'example@example.net'
 SUPPORT_MAIL = 'example@example.net'
 DEFAULT_FROM_EMAIL = STUDLAN_FROM_MAIL
 REGISTER_FROM_MAIL = DEFAULT_FROM_EMAIL
-ADMINS = (
-    ('example', 'example@example.net'),
-)
 
 # Recommended settings that require HTTPS
 CSRF_COOKIE_SECURE = False
