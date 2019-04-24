@@ -68,7 +68,6 @@ def seating_details(request, lan_id, seating_id=None, seat_id=None):
         seating = seatings[0]
         return redirect(seating)
 
-    # users = seating.get_user_registered()
     seats = seating.get_total_seats()
 
     dom = BeautifulSoup(seating.layout.template, 'html.parser')
