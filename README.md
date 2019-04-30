@@ -1,8 +1,10 @@
-studlan
-==========
 [![GitHub release](https://img.shields.io/github/release/CasualGaming/studlan.svg)](https://github.com/CasualGaming/studlan/releases)
 [![Build Status](https://travis-ci.org/CasualGaming/studlan.svg?branch=master)](https://travis-ci.org/CasualGaming/studlan)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?branch=master&project=CasualGaming_studlan&metric=alert_status)](https://sonarcloud.io/dashboard?id=CasualGaming_studlan)
+
+studlan
+==========
+LAN-party event management system.
 
 * [Travis CI](https://travis-ci.org/CasualGaming/studlan)
 * [Docker Hub](https://hub.docker.com/r/casualgaming/studlan)
@@ -27,44 +29,33 @@ studlan
 		* Seating arrangements are fully customizable through SVG layouts.
 	* Export details of participants per event
 
-## Planned features
-* Teams
-	* Match history
-	* Seeding (for any activity)
-* Competitions
-	* Challonge integration with Automatic bracket creation/Tournament system that takes seeding into account.
-* Non-fluid responsive layout
-
 # Development Setup
 ## Tools
-* [Git](http://git-scm.com) (the [GitHub for Windows](http://windows.github.com/) app is probably the easiest way to install and use Git on Windows)
-* Python 2.7 w/ pip
-* Virtualenv (from pip)
+* [Git](https://git-scm.com) or [GitHub for Windows](https://windows.github.com/)
+* Python 2.7 w/ pip and friends (see section below)
 * Docker and Docker Compose (optional)
 * Travis Tool (optional)
 
-### Installing Virtualenv and Stuff
+## Installing Virtualenv and Stuff
 ```
 sudo pip install --upgrade pip virtualenv setuptools wheel
 ```
 
-### Installing Travis Tool
+## Installing Travis Tool
+Optional, used for encrypting Travis CI secrets and files and stuff.
 ```
 sudo apt install ruby-dev rubygems
 sudo gem install travis
 ```
 
 ## Configure Git
-```bash
+```
 git config --global core.autocrlf false
 git config --global user.name "<username>"
 git config --global user.email <email-address>
 ```
 
 Alternatively, on Windows, use the GitHub for Windows app to setup everything
-
-## Clone the Repo
-The following sections assume you are inside the cloned repo.
 
 # Running
 ## Run with Virtualenv
@@ -78,14 +69,13 @@ This approach takes more time to build, but is more similar to production. It pl
 
 If Docker starts to fill up your hard drive, run `docker system prune -a` to delete all local Docker stopped containers, unused networks, unused images and build cache.
 
-# Testing and Validating
+## Testing and Validating
 * Setup: `manage/setup-test.sh` (first time or after project change)
 * Run basic tests: `manage/run-simple-test.sh`
 * Run all tests and validations: `manage/run-full-test.sh`
 
-# Misc
-## Cleanup
-* Cleanup after venv, Docker, etc.: `manage/clean.py`
+## Miscellaneous
+* Cleanup temporary files: `manage/clean.py`
 * Enter venv: `manage/enter-venv.py`
 
 # Deployment
@@ -112,8 +102,8 @@ Only one file can be encrypted. To encrypt multiple files, add them to an archiv
 1. Copy the encrypted file to the repo.
 1. Optionally delete the unencrypted file.
 
-## Remote Site
-* Create a non-admin user which can login with pubkey alone (if deploying with CI/CD).
+## Deployment Site
+* (Optional) Create a non-admin user which can login with pubkey alone (if deploying with CI/CD).
 * Create a Django local settings file. Remember to add a randomly generated secret and disable debug mode.
 * Create a Docker Compose file with appropriate volume bindings and network settings.
 * Setup a database or use the built-in SQLite database or suggested PostgreSQL database.
