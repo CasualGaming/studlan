@@ -3,6 +3,7 @@ application_import_names = apps
 exclude = **/__init__.py, **/migrations, **/settings/local.py, .venv, sample-configs
 # B901 blind except: statement (duplicate of E722)
 # E501 line too long
+# Q003 Change outer quotes to avoid escaping inner quotes
 # W503 line break before binary operator
 # W504 line break after binary operator
-ignore = B901, E501, W503, W504
+ignore = B901, E501, Q003, W503, W504
