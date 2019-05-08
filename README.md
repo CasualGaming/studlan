@@ -38,7 +38,7 @@ LAN-party event management system.
 
 ## Installing Virtualenv and Stuff
 ```
-sudo pip install --upgrade pip virtualenv setuptools wheel pip-tools
+sudo pip install --upgrade pip virtualenv setuptools wheel
 ```
 
 ## Installing Travis Tool
@@ -79,7 +79,7 @@ If Docker starts to fill up your hard drive, run `docker system prune -a` to del
 * Enter venv: `manage/enter-venv.py`
 
 ## Upgrading dependencies
-* This priject uses pip-tools with all-dep pinning.
+* This project uses pip-tools with all-dep pinning.
 * Run `manage/update-deps.sh` to update dependencies.
 * Go through all dep updates, read the changelogs and make sure they don't mess things up.
 

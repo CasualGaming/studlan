@@ -1,5 +1,5 @@
 # App
-Django
+django==1.11.20
 django-markdown-deux
 django-translatable
 reportlab
