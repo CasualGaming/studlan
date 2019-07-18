@@ -18,9 +18,4 @@ def team_tabs(active):
 
 @register.filter
 def is_member(team, user):
-    if team.member_set.filter(user=user.id).exists():
-        return True
-    elif team.leader == user:
-        return True
-
-    return False
+    return team.member_set.filter(user=user.id).exists() or team.leader == user

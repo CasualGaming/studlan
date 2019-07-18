@@ -29,12 +29,12 @@
             
             {% if lan.map_link %}
                 {% for direction in directions %}
-                    <i class="glyphicon glyphicon-road"></i>  {{direction.title}}<br>
+                    <em class="glyphicon glyphicon-road"></em>  {{direction.title}}<br>
                     {{direction.description}}<br><br>
                 {% endfor %}
             </div>
             <div class="col-md-4">
-                <iframe src="{{ lan.map_link|safe }}" width="400" height="300" frameborder="0" style="border:0"></iframe>
+                <iframe title="Map" src="{{ lan.map_link|safe }}" width="400" height="300" style="border: none;"></iframe>
             </div>
             </div>
             <div class="col-md-8">

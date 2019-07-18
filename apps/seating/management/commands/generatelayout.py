@@ -18,8 +18,6 @@ class Command(BaseCommand):
         svg_width = 1000
         svg_margin_left = 20
         svg_margin_top = 120
-        # svg_margin_row = 20
-        # svg_margin_column = 5
         svg_margin_adjacent = 2
         svg_column_separator_margin = 50
         svg_row_separator_margin = 30
@@ -41,9 +39,9 @@ class Command(BaseCommand):
         current_y = svg_margin_top
         for column in range(0, columns):
             for row in range(0, rows):
-                for sc in range(0, seats_per_column):
+                for column_seat in range(0, seats_per_column):
                     current_x = svg_margin_left + (((seat_width * seats_per_row + svg_margin_adjacent) * (seats_per_row - 1)) + svg_column_separator_margin) * column
-                    for sr in range(0, seats_per_row):
+                    for row_seat in range(0, seats_per_row):
                         element_a = soup.new_tag('a')
                         element_rect = soup.new_tag('rect')
                         element_rect['height'] = seat_height_px

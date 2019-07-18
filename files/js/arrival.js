@@ -42,7 +42,8 @@ function toggle(username, type, previousValue, label)
             }
         },
         error: function(res) {
-                alert(res['responseText']);
+            alert("Failed to toggle.");
+            console.log("Failed to toggle: " + res['responseText']);
         },
         crossDomain: false
     });

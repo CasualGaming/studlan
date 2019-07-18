@@ -64,40 +64,27 @@ $(document).ready(function(){
         }
 
 
-        if(selectedSeat.attr("status") === "free"){
-
-            var takeButton = $('#take-button')
-
-            if(takeButton){
+        var takeButton = $('#take-button')
+        if(takeButton){
+            if(selectedSeat.attr("status") === "free"){
                 takeButton.attr("href", selectedSeat.attr("seat-number") + "/take")
                 takeButton.removeClass("hide")
             }
-        }
-        else{
-            var takeButton = $('#take-button')
-
-            if(takeButton){
+            else{
                 takeButton.addClass("hide")
             }
         }
 
-        if(selectedSeat.attr("status") === "mine"){
-
-            var leaveButton = $('#leave-button')
-
-            if(leaveButton){
+        var leaveButton = $('#leave-button')
+        if(leaveButton){
+            if(selectedSeat.attr("status") === "mine"){
                 leaveButton.attr("href", selectedSeat.attr("seat-number") + "/leave")
                 leaveButton.removeClass("hide")
             }
-        }
-        else{
-            var leaveButton = $('#leave-button')
-
-            if(leaveButton){
+            else{
                 leaveButton.addClass("hide")
             }
         }
-
     });
 
 });
