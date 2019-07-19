@@ -12,6 +12,5 @@ rm -f studlan/settings/local.py
 rm -f studlan.db
 
 # Python
-pyclean .
 find . -name "*.pyc" -exec rm -rf {} \;
 rm -rf *.egg-info

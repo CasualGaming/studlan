@@ -30,7 +30,7 @@
                                 <td class="underline" onclick="document.location='{% url 'public_profile' team.leader %}';">{{ team.leader }}<div class="pull-right btn btn-xs btn-info btn-disabeled">Admin</div></td>
                                 <td>{% if team.is_mine %}
                                         <div class="btn btn-xs btn-danger" onclick="disband()">
-                                            <i class="icon-remove icon-white"></i> Disband Team
+                                            <em class="icon-remove icon-white"></em> Disband Team
                                         </div>
                                     {% endif %}
                                 </td>

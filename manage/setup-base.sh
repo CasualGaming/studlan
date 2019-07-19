@@ -20,7 +20,7 @@ fi
 
 # Add dev app settings
 APP_SETTINGS_FILE=studlan/settings/local.py
-DEV_APP_SETTINGS_FILE=sample-configs/local-dev.py
+DEV_APP_SETTINGS_FILE=samples/local-dev.py
 if [[ ! -e $APP_SETTINGS_FILE ]]; then
     echo "Using sample local.py ..."
     cp $DEV_APP_SETTINGS_FILE $APP_SETTINGS_FILE

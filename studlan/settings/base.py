@@ -218,4 +218,4 @@ for settings_module in ['local']:  # local last
     try:
         exec(u'from {0} import *'.format(settings_module))  # noqa: S102
     except ImportError as e:
-        print u'Could not import settings for "{0}" : {1}'.format(settings_module, str(e))  # noqa: T001
+        print(u'Could not import settings for "{0}" : {1}'.format(settings_module, str(e)))  # noqa: T001

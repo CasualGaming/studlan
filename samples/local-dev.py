@@ -4,7 +4,7 @@
 
 DEBUG = True
 
-SITE_NAME = 'studlan dev'
+SITE_NAME = 'studlan local'
 ALLOWED_HOSTS = [
     '*'
 ]

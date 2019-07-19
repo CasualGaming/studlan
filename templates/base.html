@@ -33,19 +33,19 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <img class="navbar-brand" style="margin-right:-12px;" src="{% static '32x32-highlight.png' %}"/>
+                    <img class="navbar-brand" style="margin-right:-12px;" alt="brand" src="{% static '32x32-highlight.png' %}"/>
                     <a class="navbar-brand" href="{% url 'root' %}">{% site_name %}</a>
                 </div>
-                <ul class="collapse navbar-collapse nav navbar-nav navbar-right" id="userlist">
-                    {% include "userdropdown.html" %}
-                </ul>
+
+                {% include "userdropdown.html" %}
+
                 <div class="navbar-collapse collapse" id="navigationlist">
                     {% include "navigation.html" %}
                     <!-- Language selection -->
                     <ul class="nav navbar-nav navbar-right language-dropdown">
                         <li role="presentation" class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {% trans "Language" %} <b class="caret"></b>
+                                {% trans "Language" %} <strong class="caret"></strong>
                             </a>
                             <ul class="dropdown-menu" role="menu">
                             {% for lang in LANGUAGES %}
