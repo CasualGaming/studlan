@@ -48,9 +48,9 @@ Seating
                             <li>{% trans "Capacity" %}: <label class="label label-info">{{ seating.get_free_seats }}/{{ seating.get_number_of_seats }}</label></li>
 
                             {% if perms.seating.export_seating %}
-                                <a href="{% url 'list' seating.id %}"><i class="glyphicon glyphicon-th"></i>Seatlist</a>
+                                <a href="{% url 'list' seating.id %}"><em class="glyphicon glyphicon-th"></em>Seatlist</a>
                                 <br>
-                                <a href="{% url 'map' seating.id %}"><i class="glyphicon glyphicon-th"></i>SeatMap</a>
+                                <a href="{% url 'map' seating.id %}"><em class="glyphicon glyphicon-th"></em>SeatMap</a>
                             {% endif %}
 
 

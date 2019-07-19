@@ -103,9 +103,8 @@ def show_team(request, team_id):
     users = User.objects.all().exclude(Invitee__in=invitations)
     users2 = []
     for user in users:
-        if user != team.leader:
-            if user not in team.members.all():
-                users2.append(user)
+        if user != team.leader and user not in team.members.all():
+            users2.append(user)
 
     users2.sort(key=lambda x: x.username.lower(), reverse=False)
     invitation = Invitation.objects.filter(invitee=request.user.id, team=team)

@@ -42,7 +42,6 @@ def payment(request, ticket_id):
             messages.success(request, _(u'Payment complete — confirmation mail sent to ') + request.user.email)
         except stripe.error.CardError, e:
             messages.error(request, e)
-            pass
 
     return HttpResponseRedirect('/')
 

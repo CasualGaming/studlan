@@ -175,28 +175,27 @@ def competition_details(request, competition_id):
             if k:
                 p = Participant.objects.get(team=k.pop(), competition=competition)
 
-        if use_challonge:
-            if p:
-                try:
-                    match = Match.objects.get((Q(player1=p) | Q(player2=p)) & Q(state='open'))
-                    context['player_match'] = match
-                    context['point_choices'] = range(0, competition.max_match_points + 1)
-                    if match.player1 == p:
-                        context['player'] = 1
-                        if match.p1_reg_score:
-                            context['registered'] = True
-                        else:
-                            context['registered'] = False
+        if use_challonge and p:
+            try:
+                match = Match.objects.get((Q(player1=p) | Q(player2=p)) & Q(state='open'))
+                context['player_match'] = match
+                context['point_choices'] = range(0, competition.max_match_points + 1)
+                if match.player1 == p:
+                    context['player'] = 1
+                    if match.p1_reg_score:
+                        context['registered'] = True
                     else:
-                        context['player'] = 2
-                        if match.p2_reg_score:
-                            context['registered'] = True
-                        else:
-                            context['registered'] = False
-                except ObjectDoesNotExist:
-                    if 1 < competition.status < 4:
-                        messages.warning(request,
-                                         'You have no current match, please check the brackets for more information')
+                        context['registered'] = False
+                else:
+                    context['player'] = 2
+                    if match.p2_reg_score:
+                        context['registered'] = True
+                    else:
+                        context['registered'] = False
+            except ObjectDoesNotExist:
+                if 1 < competition.status < 4:
+                    messages.warning(request,
+                                     'You have no current match, please check the brackets for more information')
 
     # Insert placeholder image if the image_url is empty
     if not competition.activity.image_url:
@@ -257,11 +256,10 @@ def join(request, competition_id):
             team = get_object_or_404(Team, pk=team_id)
 
             # Check if team size restrictions are in place
-            if competition.enforce_team_size:
-                if team.number_of_team_members() + 1 < competition.team_size:
-                    messages.error(request, _(unicode(team) + u' does not have enough members (') +
-                                   str(team.number_of_team_members() + 1) + u'/' + str(competition.team_size) + u')')
-                    return redirect(competition)
+            if competition.enforce_team_size and team.number_of_team_members() + 1 < competition.team_size:
+                messages.error(request, _(unicode(team) + u' does not have enough members (') +
+                               str(team.number_of_team_members() + 1) + u'/' + str(competition.team_size) + u')')
+                return redirect(competition)
 
             # Check if payment restrictions are in place
             if competition.enforce_payment:
@@ -277,24 +275,23 @@ def join(request, competition_id):
                         return redirect(competition)
 
             # Check if alias restrictions are in place
-            if competition.require_alias:
-                if team.number_of_aliases(competition) < team.number_of_team_members() + 1:
-                    if team.number_of_team_members() + 1 - team.number_of_aliases(competition) < 4:
-                        messages.error(request,
-                                       _(u'Several members of ' + unicode(team) + u' are missing aliases for ' +
-                                         unicode(competition)))
-                        for member in team.members.all():
-                            if not competition.has_alias(member):
-                                messages.error(request, _(unicode(member) + u' is missing an alias for ') +
-                                               unicode(competition))
-                        if not competition.has_alias(team.leader):
-                            messages.error(request, _(unicode(team.leader) + u' is missing an alias for ') +
+            if competition.require_alias and team.number_of_aliases(competition) < team.number_of_team_members() + 1:
+                if team.number_of_team_members() + 1 - team.number_of_aliases(competition) < 4:
+                    messages.error(request,
+                                   _(u'Several members of ' + unicode(team) + u' are missing aliases for ' +
+                                     unicode(competition)))
+                    for member in team.members.all():
+                        if not competition.has_alias(member):
+                            messages.error(request, _(unicode(member) + u' is missing an alias for ') +
                                            unicode(competition))
-                    else:
-                        messages.error(request,
-                                       _(u'Several members of ' + unicode(team) + u' are missing aliases for ') +
+                    if not competition.has_alias(team.leader):
+                        messages.error(request, _(unicode(team.leader) + u' is missing an alias for ') +
                                        unicode(competition))
-                    return redirect(competition)
+                else:
+                    messages.error(request,
+                                   _(u'Several members of ' + unicode(team) + u' are missing aliases for ') +
+                                   unicode(competition))
+                return redirect(competition)
 
             # Go through all members of the team and delete their individual participation entries
             if request.user in users:
@@ -517,7 +514,6 @@ def submit_score(request, competition_id, match_id):
     else:
         if request.method == 'POST':
             final_score = request.POST.get('final_score')
-            # print final_score
             winner = request.POST.get('winner')
             match.winner = Participant.objects.get(competition=competition, cid=winner)
             match.final_score = final_score
