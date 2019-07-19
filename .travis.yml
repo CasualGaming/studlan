@@ -96,4 +96,4 @@ jobs:
       install:
       - openssl aes-256-cbc -K $encrypted_974f21a5dc05_key -iv $encrypted_974f21a5dc05_iv -in keys/ssh_deploy.key.enc -out keys/ssh_deploy.key -d
       - chmod 600 keys/ssh_deploy.key
-      script: ssh -oStrictHostKeyChecking=no -i keys/ssh_deploy.key ${SSH_USER}@${SSH_HOST}
+      script: ssh -oStrictHostKeyChecking=no -i keys/ssh_deploy.key ${SSH_USER}@${SSH_HOST} bleeding
