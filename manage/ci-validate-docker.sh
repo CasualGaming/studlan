@@ -17,6 +17,6 @@ docker run --rm \
     -e SUPERUSER_USERNAME="superman" -e SUPERUSER_EMAIL="superman@example.net" -e SUPERUSER_PASSWORD="loislane" -e SUPERUSER_INACTIVE=false \
     -e FLUSH_DATABASE=true -e IMPORT_DATABASE=true -e EXPORT_DATABASE=true \
     -e NO_START=true \
-    -v "$PWD/sample-configs/local-empty.py:/srv/studlan/studlan/settings/local.py:ro" \
+    -v "$PWD/samples/local-empty.py:/srv/studlan/studlan/settings/local.py:ro" \
     -p "8080:8080" \
     "$IMAGE_ID"

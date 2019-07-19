@@ -12,7 +12,7 @@ MANAGE="python manage.py"
 [[ ! -e log ]] && mkdir -p log
 
 # Add temporary config
-cp sample-configs/local-empty.py studlan/settings/local.py
+cp samples/local-empty.py studlan/settings/local.py
 
 # Run Django tests
 $MANAGE test
