@@ -26,7 +26,6 @@ stages:
     if: type = push
   - name: deploy-site
     if: type = push
-  - name: deploy-site-test
 
 jobs:
   include:
@@ -85,14 +84,6 @@ jobs:
     - stage: deploy-site
       name: Build and deploy bleeding to server
       if: (branch = master)
-      install:
-      - openssl aes-256-cbc -K $encrypted_974f21a5dc05_key -iv $encrypted_974f21a5dc05_iv -in keys/ssh_deploy.key.enc -out keys/ssh_deploy.key -d
-      - chmod 600 keys/ssh_deploy.key
-      script: ssh -oStrictHostKeyChecking=no -i keys/ssh_deploy.key ${SSH_USER}@${SSH_HOST} bleeding
-
-    # Stage: Deploy to site(s) test
-    - stage: deploy-site-test
-      name: Build and deploy to server (TEST)
       install:
       - openssl aes-256-cbc -K $encrypted_974f21a5dc05_key -iv $encrypted_974f21a5dc05_iv -in keys/ssh_deploy.key.enc -out keys/ssh_deploy.key -d
       - chmod 600 keys/ssh_deploy.key
