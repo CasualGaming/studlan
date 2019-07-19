@@ -38,10 +38,10 @@ class Command(BaseCommand):
         # Build svg with elements
         current_y = svg_margin_top
         for column in range(0, columns):
-            for row in range(0, rows):
-                for column_seat in range(0, seats_per_column):
+            for __ in range(0, rows):
+                for __ in range(0, seats_per_column):
                     current_x = svg_margin_left + (((seat_width * seats_per_row + svg_margin_adjacent) * (seats_per_row - 1)) + svg_column_separator_margin) * column
-                    for row_seat in range(0, seats_per_row):
+                    for __ in range(0, seats_per_row):
                         element_a = soup.new_tag('a')
                         element_rect = soup.new_tag('rect')
                         element_rect['height'] = seat_height_px
