@@ -13,3 +13,7 @@ rm -rf .local
 
 echo "Cleaning config ..."
 rm -f studlan/settings/local.py
+
+echo "Cleaning Docker ..."
+docker-compose -f setup/docker-compose.dev.yml down
+docker-compose -f setup/docker-compose.test.yml down
