@@ -33,11 +33,11 @@ jobs:
     - stage: test
       name: Validate Django project
       install: pip install --upgrade -r requirements/test.txt
-      script: manage/ci-validate-django.sh
+      script: manage/ci/validate-django.sh
     - stage: test
       name: Run tests
       install: pip install --upgrade -r requirements/test.txt
-      script: manage/ci-test.sh
+      script: manage/ci/test.sh
     - stage: test
       name: Analyze source code (flake8)
       install: pip install --upgrade -r requirements/test.txt
@@ -57,7 +57,7 @@ jobs:
     - stage: test
       name: Validate Docker image
       install: true # NOP
-      script: manage/ci-validate-docker.sh
+      script: manage/ci/validate-docker.sh
 
     # Stage: Deploy to registry
     - stage: deploy-registry
@@ -65,12 +65,12 @@ jobs:
       # Requires tag "vX.Y.Z" without suffix
       if: (tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$)
       install: true # NOP
-      script: manage/ci-deploy-registry.sh stable $TRAVIS_TAG
+      script: manage/ci/deploy-registry.sh stable $TRAVIS_TAG
     - stage: deploy-registry
       name: Build and deploy bleeding to registry
       if: (branch = master)
       install: true # NOP
-      script: manage/ci-deploy-registry.sh bleeding
+      script: manage/ci/deploy-registry.sh bleeding
 
     # Stage: Deploy to site(s)
     - stage: deploy-site
