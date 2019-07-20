@@ -25,6 +25,10 @@ git config --global user.name <username>
 git config --global user.email <email-address>
 ```
 
+### Installing and Configuring Docker
+Install both Docker and Docker Compose (combined app on Windows).
+On Linux, add yourself to the `docker` group and then re-log, so that you can run Docker commands as non-root.
+
 ### Installing Travis Tool
 Optional, used for encrypting Travis CI secrets and files and stuff.
 ```

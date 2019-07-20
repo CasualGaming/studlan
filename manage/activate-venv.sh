@@ -15,7 +15,7 @@ if [[ $(uname -s) == "MINGW"* ]]; then
     VENV_ACTIVATE_SCRIPT="$VENV_DIR/Scripts/activate"
 else
     PIP2_CMD="pip"
-    VENV_CMD="virtualenv -p \"$(which python)\""
+    VENV_CMD="virtualenv -p $(which python)"
     VENV_ACTIVATE_SCRIPT="$VENV_DIR/bin/activate"
 fi
 
