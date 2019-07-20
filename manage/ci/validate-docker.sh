@@ -10,8 +10,5 @@ if [[ $CI != "true" ]]; then
 fi
 
 $DC build
-
-# Don't exit if "up" fails
-set +e
 $DC up --exit-code-from=app
 $DC down

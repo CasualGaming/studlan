@@ -20,6 +20,6 @@ services:
     # Don't start the server
     - NO_START=true
     volumes:
-    - ../setup/local.test.py:/srv/studlan/studlan/settings/local.py:ro
+    - ../setup/local.ci.test.py:/srv/studlan/studlan/settings/local.py:ro
     ports:
     - "8000:8000"
