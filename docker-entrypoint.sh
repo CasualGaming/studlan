@@ -23,7 +23,7 @@ IMPORT_DATABASE=${IMPORT_DATABASE:=}
 EXPORT_DATABASE=${EXPORT_DATABASE:=}
 NO_START=${NO_START:=}
 
-echo "Starting studlan $(cat VERSION)"
+echo "Starting studlan v$(cat VERSION)"
 echo
 
 # Check if settings exist
