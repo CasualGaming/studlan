@@ -30,7 +30,7 @@ Home
             {% for lan in lans %}
             <tr>
                 <td><a href="{{ lan.get_absolute_url }}">{{ lan }}</a></td>
-                <td>{{ lan.start_date }} – {{ lan.end_date }} </td>
+                <td>{{ lan.start_date|date }} – {{ lan.end_date|date }} </td>
             </tr>
             {% endfor %}
         </tbody>
