@@ -10,9 +10,11 @@
     <li class="dropdown hidden-xs">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
             <span class="glyphicon glyphicon-user"></span>
-            <span aria-hidden="true">{{ request.user.username }}</span> {% if unread_count %}
-                        <span class="badge">{{unread_count}}</span>
-                    {% endif %}
+            <span aria-hidden="true">{{ request.user.username }}</span>
+            {% if unread_count %}
+            <span class="badge">{{unread_count}}</span>
+            {% endif %}
+            <strong class="caret"></strong>
         </a>
           <ul class="dropdown-menu" role="menu">
             <li>
