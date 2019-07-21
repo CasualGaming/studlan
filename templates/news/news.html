@@ -20,35 +20,16 @@
     {% endif %}
 
 {% for article in articles.object_list %} 
-    {% if forloop.counter < 3 and page == 1 %}
-        <div class="row">
-            <div class="col-md-9 news">
-                <h2><a href="{{ article.get_absolute_url }}">{{ article.get_translation.translated_title }}</a></h2>
-                <span class="label label-default info">{{ article.pub_date|date:"d/m/Y" }}
-                    {{article.pub_date|time:"H:i"}} {% if article.pinned %}
-                    - Pinned
-                    {% endif %}</span>
-                <p>{{ article.get_translation.translated_body|striptags|markdown }}</p>
-            </div>
+    <div class="row">
+        <div class="col-md-9 news">
+            <h2><a href="{{ article.get_absolute_url }}">{{ article.get_translation.translated_title }}</a></h2>
+            <span class="label label-default info">{{ article.pub_date|date:"d/m/Y" }} {{article.pub_date|time:"H:i"}}</span>
+            {% if article.pinned %}
+            <span class="label label-default info">{% trans "Pinned" %}</span>
+            {% endif %}
+            <p>{{ article.get_translation.translated_body|striptags|markdown|truncatewords:150 }}</p>
         </div>
-    {% else %} 
-        {% if not forloop.counter|divisibleby:"2" %}
-        <div class="row">
-            <div class="col-md-4">
-                <h2><a href="{{ article.get_absolute_url }}">{{ article.get_translation.translated_title }}</a></h2>
-                <span class="label label-default info">{{ article.pub_date|date:"d/m/Y" }} {{article.pub_date|time:"H:i"}}</span>
-                <p>{{ article.get_translation.translated_body|striptags|markdown }}</p>
-            </div>
-            <div class="col-md-1">&nbsp;</div>
-        {% else %}
-            <div class="col-md-4">
-                <h2><a href="{{ article.get_absolute_url }}">{{ article.get_translation.translated_title }}</a></h2>
-                <span class="label label-default info">{{ article.pub_date|date:"d/m/Y" }} {{article.pub_date|time:"H:i"}}</span>
-                <p>{{ article.get_translation.translated_body|striptags|markdown }}</p>
-            </div>
-        </div>
-        {% endif %} 
-    {% endif %} 
+    </div>
 {% endfor %}
     <div class="row">
         <div class="col-md-8">
@@ -57,7 +38,7 @@
         <div class="col-md-4">
             <a class="btn btn-primary" style="margin-top: 20px; margin-bottom: 20px;" href="{% url 'archive' %}">
                 <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
-                {% trans "Arkiv" %}
+                {% trans "Archive" %}
             </a>
         </div>
 
