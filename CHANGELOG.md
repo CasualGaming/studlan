@@ -7,16 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-* Added version info to the app, shown in the site footer.
+- Added version info to the app, shown in the site footer.
 
 ### Changed
+- Made footer prettier.
+- Removed user info from sidebar.
+- Made news list pages single-column and less wasteful of space.
+- Made sponsor page prettier.
+- Added list of active LANs to front page.
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
-* Fix HTML DOM bug in the seating app template.
+- Fix HTML DOM bug in the seating app template.
 
 ### Security
 
