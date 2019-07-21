@@ -32,10 +32,10 @@ def main(request, page):
         articles = paginator.page(1)
 
     if len(streams) > 0:
-        return render(request, 'news/news.html', {'articles': articles, 'page': page, 'stream': streams[0],
+        return render(request, 'news/news.html', {'lans': active_lans, 'articles': articles, 'page': page, 'stream': streams[0],
                                                   'languages': settings.LANGUAGES})
     else:
-        return render(request, 'news/news.html', {'articles': articles, 'page': page, 'languages': settings.LANGUAGES})
+        return render(request, 'news/news.html', {'lans': active_lans, 'articles': articles, 'page': page, 'languages': settings.LANGUAGES})
 
 
 def single(request, article_id):

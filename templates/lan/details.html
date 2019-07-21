@@ -9,12 +9,10 @@
 {% endblock title %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-8">
-            <h1>{{ lan }}</h1>
-        </div>
-    </div>
-<div class="col-md-12">
+<div class="row col-md-9">
+    <h1>{{ lan }}</h1>
+</div>
+
     <div class="row">
             {% if lan.map_link %}
                 <div class="col-md-4">
@@ -33,11 +31,11 @@
                     {{direction.description}}<br><br>
                 {% endfor %}
             </div>
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <iframe title="Map" src="{{ lan.map_link|safe }}" width="400" height="300" style="border: none;"></iframe>
             </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-9">
             {% endif %}
             <hr />
             {{ lan.get_translation.description|markdown }} 
@@ -149,6 +147,5 @@
                 {% endif %}
             {% endif %}
         </div>
-    </div>
 
 {% endblock content %}

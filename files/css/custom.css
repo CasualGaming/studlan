@@ -8,11 +8,7 @@ body {
 }
 
 body > div.container {
-    padding-top: 60px;
-}
-
-div.row {
-    margin-bottom: 2em;
+    padding-top: 80px;
 }
 
 .white-text {

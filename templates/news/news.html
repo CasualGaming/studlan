@@ -4,43 +4,60 @@
 {% load markdown_deux_tags %} 
 
 {% block title %} 
-    News 
+Home
 {% endblock title %} 
 {% block content %}
 
-    {% if stream %}
-    <div class="row">
-        <div class="col-md-9">
-            <div class="well">
-                <h2>{{stream.description|safe}}</h2>
-                {{stream.link|safe}}
-            </div>
+{% if stream %}
+<div class="row">
+    <div class="col-md-9">
+        <div class="well">
+            <h2>{{stream.description|safe}}</h2>
+            {{stream.link|safe}}
         </div>
     </div>
-    {% endif %}
+</div>
+{% endif %}
+
+<div class="row col-md-9">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th colspan="2">{% trans "LANs" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lan in lans %}
+            <tr>
+                <td><a href="{{ lan.get_absolute_url }}">{{ lan }}</a></td>
+                <td>{{ lan.start_date }} – {{ lan.end_date }} </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 {% for article in articles.object_list %} 
-    <div class="row">
-        <div class="col-md-9 news">
-            <h2><a href="{{ article.get_absolute_url }}">{{ article.get_translation.translated_title }}</a></h2>
-            <span class="label label-default info">{{ article.pub_date|date:"d/m/Y" }} {{article.pub_date|time:"H:i"}}</span>
-            {% if article.pinned %}
-            <span class="label label-default info">{% trans "Pinned" %}</span>
-            {% endif %}
-            <p>{{ article.get_translation.translated_body|striptags|markdown|truncatewords:150 }}</p>
-        </div>
+    <div class="row col-md-9 news">
+        <h3><a href="{{ article.get_absolute_url }}">{{ article.get_translation.translated_title }}</a></h3>
+        <span class="label label-default info">{{ article.pub_date|date:"d/m/Y" }} {{article.pub_date|time:"H:i"}}</span>
+        {% if article.pinned %}
+        <span class="label label-default info">{% trans "Pinned" %}</span>
+        {% endif %}
+        <p>{{ article.get_translation.translated_body|striptags|markdown|truncatewords:150 }}</p>
     </div>
 {% endfor %}
-    <div class="row">
-        <div class="col-md-8">
-            {% include "news/pagination.html" %}
-        </div>
-        <div class="col-md-4">
-            <a class="btn btn-primary" style="margin-top: 20px; margin-bottom: 20px;" href="{% url 'archive' %}">
-                <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
-                {% trans "Archive" %}
-            </a>
-        </div>
 
+<div class="row">
+    <div class="col-md-8">
+        {% include "news/pagination.html" %}
     </div>
+    <div class="col-md-4">
+        <a class="btn btn-primary" style="margin-top: 20px; margin-bottom: 20px;" href="{% url 'archive' %}">
+            <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
+            {% trans "Archive" %}
+        </a>
+    </div>
+
+</div>
 {% endblock content %}
