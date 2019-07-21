@@ -1,3 +1,2 @@
 -r base.txt
-
-uwsgi==2.0.18
+-r test.txt

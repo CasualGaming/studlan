@@ -1,0 +1,25 @@
+# Version 3.3 because of the Travis image
+version: '3.3'
+
+services:
+  app:
+    container_name: studlan-test-app
+    build:
+      context: ..
+    environment:
+    # Dummy UID+GID
+    - STUDLAN_UID=123
+    - STUDLAN_GID=123
+    - SUPERUSER_USERNAME=batman
+    - SUPERUSER_EMAIL=batman@localhost
+    - SUPERUSER_PASSWORD=manbat
+    - SUPERUSER_INACTIVE=false
+    - FLUSH_DATABASE=true
+    - IMPORT_DATABASE=true
+    - EXPORT_DATABASE=true
+    # Don't start the server
+    - NO_START=true
+    volumes:
+    - ../setup/local.ci.test.py:/srv/studlan/studlan/settings/local.py:ro
+    ports:
+    - "8000:8000"

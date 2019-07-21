@@ -1,23 +1,23 @@
-# Place or mount as studlan/settings/local.py
-# Remember to run "python manage.py check --deploy" to validate the settings
+# Place or mount as studlan/settings/local.py or specify it using env var CONFIG_FILE_DIR.
+# WARNING: This version contains settings for local development only!
 
-DEBUG = False
+DEBUG = True
 
-SITE_NAME = 'example'
+SITE_NAME = 'studlan dev'
 ALLOWED_HOSTS = [
-    'example.net'
+    '*'
 ]
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'studlan.db',                      # Or path to database file if using sqlite3.
+        'NAME': 'db.sqlite3',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
-SECRET_KEY = '00000000'  # Randomly generate
+SECRET_KEY = 'UKf79mPQPRngeH9Qh5ZUegFuiIa68ctkmqiR2aqH8pXEwmL5tUaP37orzA7Gkx4M'  # Randomly generate
 
 STUDLAN_FROM_MAIL = 'example@example.net'
 SUPPORT_MAIL = 'example@example.net'
