@@ -11,6 +11,10 @@ body > div.container {
     padding-top: 80px;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    word-wrap: break-word;
+}
+
 .white-text {
     color: #ccc;
 }
@@ -302,4 +306,27 @@ div#btn-profile {
 .competition-start-time {
     margin-bottom: 0;
     color: grey;
+}
+
+.lan-video-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    /* For constant aspect ratio */
+    padding-bottom: 56.25%;
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+
+.lan-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.lan-map {
+    width: 100%;
+    height: 300px;
 }

@@ -13,6 +13,14 @@
     <h1>{{ lan }}</h1>
 </div>
 
+{% if lan.video_link %}
+<div class="row col-md-9">
+    <div class="lan-video-container">
+        <iframe class="lan-video" title="Video" src="{{ lan.video_link|safe }}" frameborder="0" allowfullscreen></iframe>
+    </div>
+</div>
+{% endif %}
+
     <div class="row">
             {% if lan.map_link %}
                 <div class="col-md-4">
@@ -32,7 +40,7 @@
                 {% endfor %}
             </div>
             <div class="col-md-5">
-                <iframe title="Map" src="{{ lan.map_link|safe }}" width="400" height="300" style="border: none;"></iframe>
+                <iframe class="lan-map" title="Map" src="{{ lan.map_link|safe }}" frameborder="0"></iframe>
             </div>
             </div>
             <div class="col-md-9">
