@@ -17,14 +17,17 @@ Update profile
 <div class="row">
     {% if form %}
     <div class="col-md-9">
-        <br>
+        <br />
+        {% for error in form.non_field_errors %}
+        <p class="form-error">{{ error }}</p>
+        {% endfor %}
         <form class="form-horizontal" action="{% url 'update_profile' %}" method="POST">
             {% csrf_token %}
                 {% for field in form %} 
                         <div class="form-group {% if field.errors %} has-error {% endif %} ">
                             <label class="col-md-2 control-label">{{ field.label }}</label>
                             <div class="col-md-10">
-                              {{ field}}
+                              {{ field }}
                                 <div class="form-error">
                                     {{ field.errors }}
                                 </div>

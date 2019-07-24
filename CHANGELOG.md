@@ -17,7 +17,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed user info from sidebar.
 - Made news list pages single-column and less wasteful of space.
 - Made sponsor page prettier.
-- Changed seating map scaling (inconsistent across browsers and large maps too small).
 - Made breadcrumbs more consistent and changed which pages show them.
 - Made page headers visually more consistent and appropriate.
 
@@ -27,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fix HTML DOM bug in the seating app template.
+- Fix seating map size inconsistency across browsers.
 
 ### Security
 

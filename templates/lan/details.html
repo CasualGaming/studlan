@@ -16,7 +16,7 @@
 {% if lan.video_link %}
 <div class="row col-md-9">
     <div class="lan-video-container">
-        <iframe class="lan-video" title="Video" src="{{ lan.video_link|safe }}" frameborder="0" allowfullscreen></iframe>
+        <iframe class="lan-video" title="Video" src="{{ lan.video_link|safe }}" allowfullscreen></iframe>
     </div>
 </div>
 {% endif %}
@@ -40,7 +40,7 @@
                 {% endfor %}
             </div>
             <div class="col-md-5">
-                <iframe class="lan-map" title="Map" src="{{ lan.map_link|safe }}" frameborder="0"></iframe>
+                <iframe class="lan-map" title="Map" src="{{ lan.map_link|safe }}"></iframe>
             </div>
             </div>
             <div class="col-md-9">
@@ -70,9 +70,8 @@
                                 {% trans "Remove attendance" %}
                             </a>
                         </div>
-                        <br>
+                        <hr />
                         {% if ticket_types %}
-                            <br>
                             <h3>{% trans "Tickets" %}</h3>
                             <div role="tabpanel">
                             <ul id="tabs" class="nav nav-tabs" role="tablist">
@@ -129,7 +128,6 @@
                             </div>
                         </div>
                         {% else %}
-                            <br>
                             <div class="alert alert-danger">
                                 <p>{% trans "No tickets avalible at this time." %}</p>
                             </div>

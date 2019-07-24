@@ -11,33 +11,34 @@ Register
 </div>
 
 <div class="row">
-    <div class="col-md-9">{{ form.non_field_errors }}
+    <div class="col-md-9">
         {% if lan %}
         <p>{% trans "Register a new user" %} for {{ lan }}.</p>
         <br />
+        {% for error in form.non_field_errors %}
+        <p class="form-error">{{ error }}</p>
+        {% endfor %}
         <form id="register-form" class="form-horizontal" method="post" action="{% url 'auth_direct_register' %}">
             {% csrf_token %}
-            <fieldset>
-                    {% for field in form %} 
-                        <div class="form-group {% if field.errors %} has-error {% endif %} ">
-                            <label class="col-md-3 control-label">{{ field.label }}</label>
-                            <div class="col-md-9">
-                              {{ field}}
-                                <div class="form-error">
-                                    {{ field.errors }}
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                <div class="form-actions register-button">
-                    <input type="submit" class="btn btn-primary" value="Register and attend" />
+            {% for field in form %} 
+            <div class="form-group {% if field.errors %} has-error {% endif %} ">
+                <label class="col-md-3 control-label">{{ field.label }}</label>
+                <div class="col-md-9">
+                    {{ field }}
+                    <div class="form-error">
+                        {{ field.errors }}
+                    </div>
                 </div>
-            </fieldset>
+            </div>
+            {% endfor %}
+            <div class="form-actions register-button">
+                <input type="submit" class="btn btn-primary" value="Register and attend" />
+            </div>
         </form>
         {% else %}
-            <div class="alert alert-info">
-                No upcoming LAN was found, so this feature is disabled.   
-            </div>
+        <div class="alert alert-info">
+            {% trans "No active LAN was found." %}
+        </div>
         {% endif %}
     </div>
 </div>
