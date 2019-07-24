@@ -1,0 +1,62 @@
+{% extends "competition/competition_base.html" %}
+{% load i18n %}
+{% load markdown_deux_tags %}
+{% load competition_tags %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-9">
+        <h1>{% trans "Competitions" %}</h1>
+        <p class="lead">{% trans "Select a LAN to view competitions for it." %}</p>
+    </div>
+</div>
+
+{% if upcoming_lans %}
+<div class="row">
+    <div class="col-md-9">
+        <h2>{% trans "LANs" %}</h2>
+        <table class="table table-bordered table-hover click-table">
+            <thead>
+                <th class="col-md-4">{% trans "LAN" %}</th>
+                <th class="col-md-3">{% trans "Time" %}</th>
+                <th class="col-md-2">{% trans "Compo Count" %}</th>
+            </thead>
+            <tbody>
+                {% for lan in upcoming_lans %}
+                <tr onclick="document.location='{% url "competitions_lan_compos" lan.id %}';">
+                    <td>{{ lan }}</td>
+                    <td>{{ lan.start_date|date }} – {{ lan.end_date|date }}</td>
+                    <td>{{ lan | get_lan_compo_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+
+{% if previous_lans %}
+<div class="row">
+    <div class="col-md-9">
+        <h2>{% trans "Previous LANs" %}</h2>
+        <table class="table table-bordered table-striped table-hover click-table">
+            <thead>
+                <th class="col-md-4">{% trans "LAN" %}</th>
+                <th class="col-md-3">{% trans "Time" %}</th>
+                <th class="col-md-2">{% trans "Compo Count" %}</th>
+            </thead>
+            <tbody>
+                {% for lan in previous_lans %}
+                <tr onclick="document.location='{% url "competitions_lan_compos" lan.id %}';">
+                    <td>{{ lan }}</td>
+                    <td>{{ lan.start_date|date }} – {{ lan.end_date|date }}</td>
+                    <td>{{ lan | get_lan_compo_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endblock content %}
+
