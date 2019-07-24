@@ -2,24 +2,24 @@
 
 from random import SystemRandom
 
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.translation import ugettext as _
 
 from apps.lottery.models import Lottery, LotteryParticipant, LotteryWinner
 
 
 def details(request, lottery_id):
     lottery = get_object_or_404(Lottery, pk=lottery_id)
+    lan = lottery.lan
     participants = [participant.user for participant in lottery.lotteryparticipant_set.all()]
 
     breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        ('Events', reverse('competitions')),
-        (lottery, ''),
+        (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
+        (_(u'Lottery'), ''),
     )
 
     return render(request, 'lottery/details.html', {'lottery': lottery,

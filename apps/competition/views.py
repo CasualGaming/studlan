@@ -36,12 +36,6 @@ def main(request):
         context['competitions'] = competitions
         context['active'] = 'all'
 
-        breadcrumbs = (
-            (settings.SITE_NAME, '/'),
-            (_(u'Competitions'), ''),
-        )
-        context['breadcrumbs'] = breadcrumbs
-
         return render(request, 'competition/competitions.html', context)
 
 
@@ -59,9 +53,8 @@ def main_filtered(request, lan_id):
     context['lotteries'] = Lottery.objects.filter(lan=lan)
 
     breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        (_(u'Competitions'), reverse('competitions')),
-        (lan, ''),
+        (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
+        (_(u'Competitions'), ''),
     )
     context['breadcrumbs'] = breadcrumbs
 
@@ -84,13 +77,6 @@ def activity_details(request, activity_id):
         context['activities'] = Activity.objects.all()
         context['competitions'] = competitions
 
-        breadcrumbs = (
-            (settings.SITE_NAME, '/'),
-            ('Competitions', reverse('competitions')),
-            (activity, ''),
-        )
-        context['breadcrumbs'] = breadcrumbs
-
         return render(request, 'competition/competitions.html', context)
 
 
@@ -108,10 +94,8 @@ def activity_details_filtered(request, lan_id, activity_id):
     context['lan'] = lan
 
     breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        (_(u'Competitions'), reverse('competitions')),
         (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
-        (activity, ''),
+        (_(u'Competitions'), ''),
     )
     context['breadcrumbs'] = breadcrumbs
 
@@ -128,6 +112,7 @@ def shorten_descriptions(competitions, length):
 def competition_details(request, competition_id):
     context = {}
     competition = get_object_or_404(Competition, pk=competition_id)
+    lan = competition.lan
 
     # Get challonge settings
     try:
@@ -138,11 +123,10 @@ def competition_details(request, competition_id):
         use_challonge = False
     context['use_challonge'] = use_challonge
 
-    # Build breadcrumbs
     breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        (_(u'Competitions'), reverse('competitions')),
-        (competition, ''),
+        (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
+        (_(u'Competitions'), reverse('competitions_show_lan', kwargs={'lan_id': lan.id})),
+        (_(u'Competition'), ''),
     )
     context['breadcrumbs'] = breadcrumbs
 

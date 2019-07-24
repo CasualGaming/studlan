@@ -9,13 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added version info to the app, shown in the site footer.
 - Added video frame to LAN.
+- Added link(s) to active LAN(s) on front page.
+- Added links to both user profile and LAN seating in the arrivals list.
 
 ### Changed
 - Made footer prettier.
 - Removed user info from sidebar.
 - Made news list pages single-column and less wasteful of space.
 - Made sponsor page prettier.
-- Added list of active LANs to front page.
+- Changed seating map scaling (inconsistent across browsers and large maps too small).
+- Made breadcrumbs more consistent and changed which pages show them.
+- Made page headers visually more consistent and appropriate.
 
 ### Deprecated
 

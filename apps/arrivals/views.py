@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import ensure_csrf_cookie
 
 from apps.lan.models import Attendee, LAN, Ticket, TicketType
@@ -22,12 +23,7 @@ def home(request):
     else:
         lans = LAN.objects.all()
 
-    breadcrumbs = (
-        ('Home', '/'),
-        ('Arrivals', ''),
-    )
-
-    return render(request, 'arrivals/home.html', {'lans': lans, 'breadcrumbs': breadcrumbs})
+    return render(request, 'arrivals/home.html', {'lans': lans})
 
 
 @ensure_csrf_cookie
@@ -37,9 +33,8 @@ def arrivals(request, lan_id):
     attendees = Attendee.objects.filter(lan=lan)
 
     breadcrumbs = (
-        ('Home', '/'),
-        ('Arrivals', reverse('arrival_home')),
-        (lan, ''),
+        (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
+        (_(u'Arrivals'), ''),
     )
 
     ticket_types = TicketType.objects.filter(lan=lan)

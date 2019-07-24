@@ -8,13 +8,13 @@
 
 {% block content %}
 
-{% if active_sponsors %}
 <div class="row">
     <div class="col-md-9">
-        <h2>{% trans "Active Sponsors" %}</h2>
+        <h1 class="page-header">{% trans "Sponsors" %}</h1>
     </div>
 </div>
 
+{% if active_sponsors %}
 {% for sponsor in active_sponsors %}
 <div class="row col-md-9 panel panel-default">
         <div class="panel-body">

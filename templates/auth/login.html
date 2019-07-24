@@ -5,11 +5,16 @@ Login
 {% endblock title %} 
 {% block content %}
 <div class="row">
+    <div class="col-md-9">
+        <h1 class="page-header">{% trans "Login" %}</h1>
+    </div>
+</div>
+
+<div class="row">
     <div class="col-md-9">{{ form.non_field_errors }}
         <form class="form-horizontal" method="post" action="{% url 'auth_login' %}">
             {% csrf_token %}
             <fieldset>
-                <legend>{% trans "Login" %}</legend>
                 {% for field in form %}
                     <div class="form-group {% if field.errors %} has-error {% endif %} ">
                             <label class="col-md-2 control-label">{{ field.label }}</label>

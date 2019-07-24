@@ -1,12 +1,7 @@
 {% load i18n %}
-{% load lan_tags %}
 {% block navigation %}
     <ul id="navbar" class="nav navbar-nav">
-    	{% if user|is_attending %}
-        	<li class="navbar-item"><a href="{% url 'lan_home' %}">{% trans "Info" %}</a></li>
-        {% else %}
-        	<li class="navbar-item"><a href="{% url 'lan_home' %}">{% trans "Sign up" %}</a></li>
-        {% endif %}
+    	  <li class="navbar-item"><a href="{% url 'lan_home' %}">{% trans "LAN" %}</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{% trans "Competitions" %}<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">

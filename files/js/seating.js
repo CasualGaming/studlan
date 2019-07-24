@@ -20,7 +20,7 @@ $(document).ready(function(){
     });
 
     var main_svg = $("#svg-wrapper > svg");
-    var h = "60vh";
+
     if (main_svg.attr("viewBox") !== undefined || main_svg.attr("viewBox") !== false){
         main_svg.attr({
             viewBox: [0,0, main_svg.attr('width').replace('px', ''),main_svg.attr('height').replace('px', '')].join(' ')
@@ -28,11 +28,11 @@ $(document).ready(function(){
     }
 
     main_svg.attr({
-        height: h,
         preserveAspectRatio: "xMidYMid meet"
     });
 
     main_svg.removeAttr("width");
+    main_svg.removeAttr("height");
 
     var selectedSeat;
     var selectedSeatClass;

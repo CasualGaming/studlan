@@ -10,7 +10,7 @@ from apps.news.models import Article
 
 
 def main(request, page):
-    active_lans = LAN.objects.filter(end_date__gte=datetime.now())
+    active_lans = LAN.objects.filter(end_date__gte=datetime.now()).order_by('-start_date')
     if len(active_lans) > 0:
         articles = Article.objects.filter(relevant_to__in=active_lans).order_by('-pinned', '-pub_date')
     else:

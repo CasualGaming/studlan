@@ -9,7 +9,7 @@
 {% block content %}
 <div class="row">
     <div class="col-md-9">
-        <h2>{{ lottery }}</h2>
+        <h1>{{ lottery }}</h1>
         {{ lottery.get_translation.description|markdown }} 
         <p><strong>{% trans "Participants" %}:</strong> {{ participants|length }}
         <hr />

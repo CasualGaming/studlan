@@ -9,20 +9,18 @@ LAN list
     {% if upcoming %}
     <div class="row">
         <div class="col-md-8">
-            <h1>{% trans "Upcoming LANs" %}</h1>
+            <h1>{% trans "LANs" %}</h1>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-8">
-            <table class="table table-bordered table-striped">
-                <thead><th>LAN</th><th>{% trans "Start" %}</th><th>{% trans "End" %}</th></thead>
+            <table class="table table-bordered">
                 <tbody>
                     {% for lan in upcoming %}
                     <tr>
                         <td><a href="{{ lan.get_absolute_url }}">{{ lan }}</a></td>
-                        <td>{{ lan.start_date }}</td>
-                        <td>{{ lan.end_date }}</td>
+                        <td>{{ lan.start_date|date }} – {{ lan.end_date|date }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -34,7 +32,7 @@ LAN list
     {% if previous %}
     <div class="row">
         <div class="col-md-8">
-            <h1>{% trans "Previous LANs" %}</h1>
+            <h1 class="page-header">{% trans "Previous LANs" %}</h1>
         </div>
     </div>
 
