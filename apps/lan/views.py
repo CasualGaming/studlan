@@ -17,7 +17,7 @@ def home(request):
         next_lan = lans[0]
         return redirect('lan_details', lan_id=next_lan.id)
     else:
-        return listing(request)
+        return redirect('lan_listing')
 
 
 def listing(request):

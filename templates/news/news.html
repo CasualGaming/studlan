@@ -18,12 +18,14 @@ Home
 </div>
 {% endif %}
 
-<div class="row col-md-9">
-    {% if lans.count == 1 %}
-    <h1 class="page-header">{{ lans.0 }}</h1>
-    {% else %}
-    <h1 class="page-header">LANs</h1>
-    {% endif %}
+<div class="row">
+    <div class="col-md-9">
+        {% if lans.count == 1 %}
+        <h1 class="page-header">{{ lans.0 }}</h1>
+        {% else %}
+        <h1 class="page-header">LANs</h1>
+        {% endif %}
+    </div>
 </div>
 
 <div class="row">
@@ -36,12 +38,12 @@ Home
     </div>
     {% else %}
     <div class="col-md-9">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover click-table">
             <tbody>
                 {% for lan in lans %}
-                <tr>
-                    <td><a href="{{ lan.get_absolute_url }}">{{ lan }}</a></td>
-                    <td>{{ lan.start_date|date }} – {{ lan.end_date|date }}</td>
+                <tr onclick="document.location='{{ lan.get_absolute_url }}';">
+                    <td class="col-md-6 underline">{{ lan }}</td>
+                    <td class="col-md-3">{{ lan.start_date|date }} – {{ lan.end_date|date }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -51,7 +53,8 @@ Home
 </div>
 
 {% for article in articles.object_list %} 
-    <div class="row col-md-9 news">
+<div class="row">
+    <div class="col-md-9">
         <h3><a href="{{ article.get_absolute_url }}">{{ article.get_translation.translated_title }}</a></h3>
         <span class="label label-default info">{{ article.pub_date|date:"d/m/Y" }} {{article.pub_date|time:"H:i"}}</span>
         {% if lans.count > 1 %}
@@ -64,6 +67,7 @@ Home
         {% endif %}
         <p>{{ article.get_translation.translated_body|striptags|markdown|truncatewords:150 }}</p>
     </div>
+</div>
 {% endfor %}
 
 <div class="row">
@@ -76,6 +80,5 @@ Home
             {% trans "Archive" %}
         </a>
     </div>
-
 </div>
 {% endblock content %}

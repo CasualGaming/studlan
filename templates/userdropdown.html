@@ -38,7 +38,7 @@
             <li><a href="{% url 'auth_direct_register' %}"><span class="glyphicon glyphicon-list"></span> Manual registration</a></li>
             {% endif %}
             {% if perms.lottery.draw %}
-            <li><a href="{% url 'drawing' %}"><span class="glyphicon glyphicon-gift"></span> Drawing</a></li></li>
+            <li><a href="{% url 'drawing' %}"><span class="glyphicon glyphicon-gift"></span> Drawing</a></li>
             {% endif %}
             {% if user.is_staff %}
             <li><a href="/admin"><span class="glyphicon glyphicon-cog"></span> Admin</a>

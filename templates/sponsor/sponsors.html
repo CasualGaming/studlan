@@ -16,7 +16,8 @@
 
 {% if active_sponsors %}
 {% for sponsor in active_sponsors %}
-<div class="row col-md-9 panel panel-default">
+<div class="row">
+    <div class="col-md-9 panel panel-default">
         <div class="panel-body">
             <h3><a href="{{ sponsor.website }}" target="_blank"></a>
             {% if sponsor.banner %}
@@ -29,6 +30,7 @@
             <p>{{ sponsor.get_translation.description }}</p>
         </div>
     </div>
+</div>
 {% endfor %}
 {% endif %}
 
@@ -40,7 +42,8 @@
 </div>
 
 {% for sponsor in inactive_sponsors %}
-    <div class="row col-md-9 panel panel-default">
+<div class="row">
+    <div class="col-md-9 panel panel-default">
         <div class="panel-body">
             <h3><a href="{{ sponsor.website }}" target="_blank"></a>
             {% if sponsor.banner %}
@@ -53,6 +56,7 @@
             <p>{{ sponsor.get_translation.description }}</p>
         </div>
     </div>
+</div>
 {% endfor %}
 {% endif %}
 {% endblock content%}

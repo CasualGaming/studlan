@@ -2,55 +2,59 @@
 {% load i18n %}
 
 {% block title %}
-LAN list
+LAN List
 {% endblock title %}
 
 {% block content %}
-    {% if upcoming %}
-    <div class="row">
-        <div class="col-md-8">
-            <h1>{% trans "LANs" %}</h1>
-        </div>
+<div class="row">
+    <div class="col-md-8">
+        <h1>{% trans "LANs" %}</h1>
     </div>
+</div>
 
-    <div class="row">
-        <div class="col-md-8">
-            <table class="table table-bordered">
-                <tbody>
-                    {% for lan in upcoming %}
-                    <tr>
-                        <td><a href="{{ lan.get_absolute_url }}">{{ lan }}</a></td>
-                        <td>{{ lan.start_date|date }} – {{ lan.end_date|date }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+{% if upcoming %}
+<div class="row">
+    <div class="col-md-8">
+        <table class="table table-bordered table-hover click-table">
+            <tbody>
+                {% for lan in upcoming %}
+                <tr onclick="document.location='{{ lan.get_absolute_url }}';">
+                    <td class="underline">{{ lan }}</td>
+                    <td>{{ lan.start_date|date }} – {{ lan.end_date|date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-    {% endif %}
+</div>
+{% else %}
+<div class="row">
+    <div class="col-md-9">
+        <p>{% trans "No current or upcoming LANs." %}</p>
+    </div>
+</div>
+{% endif %}
 
-    {% if previous %}
-    <div class="row">
-        <div class="col-md-8">
-            <h1 class="page-header">{% trans "Previous LANs" %}</h1>
-        </div>
+{% if previous %}
+<div class="row">
+    <div class="col-md-8">
+        <h2>{% trans "Previous LANs" %}</h2>
     </div>
+</div>
 
-    <div class="row">
-        <div class="col-md-8">
-            <table class="table table-bordered table-striped">
-                <thead><th>LAN</th><th>{% trans "Start" %}</th><th>{% trans "End" %}</th></thead>
-                <tbody>
-                    {% for lan in previous %}
-                    <tr>
-                        <td><a href="{{ lan.get_absolute_url }}">{{ lan }}</a></td>
-                        <td>{{ lan.start_date }}</td>
-                        <td>{{ lan.end_date }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+<div class="row">
+    <div class="col-md-8">
+        <table class="table table-bordered table-hover click-table">
+            <tbody>
+                {% for lan in previous %}
+                <tr onclick="document.location='{{ lan.get_absolute_url }}';">
+                    <td class="underline">{{ lan }}</td>
+                    <td>{{ lan.start_date|date }} – {{ lan.end_date|date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-    {% endif %}
+</div>
+{% endif %}
 {% endblock content %}

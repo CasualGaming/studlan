@@ -24,7 +24,7 @@
             <tbody>
                 {% for lan in upcoming_lans %}
                 <tr onclick="document.location='{% url "competitions_lan_compos" lan.id %}';">
-                    <td>{{ lan }}</td>
+                    <td class="underline">{{ lan }}</td>
                     <td>{{ lan.start_date|date }} – {{ lan.end_date|date }}</td>
                     <td>{{ lan | get_lan_compo_count }}</td>
                 </tr>
@@ -48,7 +48,7 @@
             <tbody>
                 {% for lan in previous_lans %}
                 <tr onclick="document.location='{% url "competitions_lan_compos" lan.id %}';">
-                    <td>{{ lan }}</td>
+                    <td class="underline">{{ lan }}</td>
                     <td>{{ lan.start_date|date }} – {{ lan.end_date|date }}</td>
                     <td>{{ lan | get_lan_compo_count }}</td>
                 </tr>
