@@ -69,15 +69,8 @@
             </div>
         </div>
 
-        {# Sidebar #}
-        {% if not hide_sidebar %}
-            <div class="sidebar-wrapper">
-                {% include "sidebar.html" %}
-            </div>
-        {% endif %}
-
         {# Content and stuff #}
-        <div class="container content-container">
+        <div class="container main-container">
             {% if breadcrumbs %}
                 <div class="row breadcrumbs">
                     <div class="col-md-9">
@@ -108,20 +101,18 @@
                     </div>
                 </div>
             {% endif %}
+
             {% block content %}
                 <!-- Content goes here -->
             {% endblock content %}
-            <div class="row">
-                <div class="col-md-9">
-                    <footer>
-                        <p>
-                            <a href="https://github.com/CasualGaming/studlan">studlan v{% version %}</a>
-                            &copy; <a href="https://casualgaming.dev">Casual Gaming</a>
-                            — <a href="mailto:{% support_mail %}?Subject=&#91;{% site_name %} support&#93;" target="_top">{% trans "Support" %}</a>
-                        </p>
-                    </footer>
-                </div>
-            </div>
+
+            {# Sponsorbar #}
+            {% if not hide_sidebar %}
+            {% include "sponsorbar.html" %}
+            {% endif %}
+    
+            {# Footer #}
+            {% include "footer.html" %}
         </div>
 
         {# Extra scripts #}

@@ -26,11 +26,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made breadcrumbs more consistent and changed which pages show them.
 - Made page headers visually more consistent and appropriate.
 - Replaced logo images with higher-definition versions (but same graphics).
+- Replaced default sidebar with sponsorbar.
 
 ### Deprecated
 
 ### Removed
 - Removed unique email check from register form, since email addresses are non-unique.
+- Removed unused sponsor logo field.
+- Removed (moved) sidebar from top of page on small screens.
 
 ### Fixed
 - Fixed HTML DOM bug in the seating app template.

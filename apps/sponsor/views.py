@@ -11,7 +11,7 @@ from apps.sponsor.models import Sponsor, SponsorRelation
 def index(request):
     lans = LAN.objects.filter(end_date__gte=datetime.now())
     if lans:
-        sponsor_relations = SponsorRelation.objects.filter(lan__in=lans)
+        sponsor_relations = SponsorRelation.objects.filter(lan__in=lans).order_by('priority')
     else:
         sponsor_relations = []
     active_sponsors = [sponsor_relation.sponsor for sponsor_relation in sponsor_relations]

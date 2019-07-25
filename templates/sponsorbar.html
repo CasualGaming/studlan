@@ -1,0 +1,30 @@
+{% load i18n %}
+{% load sponsor_tags %}
+
+{% upcoming_lan_sponsors as sponsors %}
+
+{% if sponsors %}
+<div class="row">
+    <div class="col-md-9 sponsorbar-wrapper">
+        <div class="panel panel-default sponsorbar">
+            <div class="panel-heading sponsorbar-header">
+                {% trans "Sponsors" %}
+            </div>
+            <div class="panel-body sponsorbar-body">
+                {% for sponsor in sponsors %}
+                <hr />
+                <div class="sponsorbar-sponsor">
+                    <a title="{{ sponsor.title }}" href="{{ sponsor.website }}" target="_blank">
+                        {% if sponsor.banner %}
+                        <img class="sponsorbar-sponsor-image" alt="sponsor link" src="{{ sponsor.banner }}" />
+                        {% else %}
+                        <span class="sponsorbar-sponsor-title">{{ sponsor.title }}</span>
+                        {% endif %}
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
