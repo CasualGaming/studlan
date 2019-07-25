@@ -344,3 +344,7 @@ footer {
 iframe {
     border: 0;
 }
+
+.margin-bot-sm {
+    margin-bottom: 5px;
+}
