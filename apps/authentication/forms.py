@@ -105,11 +105,6 @@ class RegisterForm(forms.Form):
                 self.add_error('desired_username',
                                _(u'Your desired username contains illegal characters. Valid: a-Z 0-9 - _'))
 
-            # Check email
-            email = cleaned_data['email']
-            if User.objects.filter(email=email).count() > 0:
-                self.add_error('email', _(u'There is already a user with that email.'))
-
             # ZIP code digits only
             zip_code = cleaned_data['zip_code']
             if len(zip_code) != 4 or not zip_code.isdigit():

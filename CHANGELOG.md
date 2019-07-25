@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 
 ### Removed
+- Removed unique email check from register form, since email addresses are non-unique.
 
 ### Fixed
 - Fixed HTML DOM bug in the seating app template.
