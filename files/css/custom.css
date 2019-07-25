@@ -31,6 +31,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .activity_image {
     height: 140px;
+    margin-bottom: 20px;
     overflow: hidden;
 
     -webkit-box-shadow: rgba(0, 0, 0, 0.0742188) 0px 1px 1px 0px;

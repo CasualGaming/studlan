@@ -39,7 +39,7 @@ def payment(request, ticket_id):
 
             send_ticket_mail(ticket, request.META['HTTP_HOST'])
 
-            messages.success(request, _(u'Payment complete — confirmation mail sent to ') + request.user.email)
+            messages.success(request, _(u'Payment complete — Confirmation mail sent to ') + request.user.email)
         except stripe.error.CardError, e:
             messages.error(request, e)
 
@@ -48,8 +48,8 @@ def payment(request, ticket_id):
 
 def send_ticket_mail(ticket, host):
     message = _(u'This is a confirmation on your purchase of a ') + ticket.ticket_type.get_translation().title
-    message += _(u' ticket for ') + ticket.ticket_type.lan.title
-    message += '\n\n' + _(u'The ticket is linked to ') + ticket.user.get_full_name()
-    message += '\n\n' + _(u'More information about the lan can be found at ') + host + '/lan'
+    message += _(u' ticket for ') + ticket.ticket_type.lan.title + '.'
+    message += '\n\n' + _(u'The ticket is linked to ') + '{0} ({1}).'.format(ticket.user.get_full_name(), ticket.user.username)
+    message += '\n\n' + _(u'More information about the lan can be found at ') + host + '/lan.'
 
     send_mail(_(u'Ticket confirmation'), message, settings.STUDLAN_FROM_MAIL, [ticket.user.email])

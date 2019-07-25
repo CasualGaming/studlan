@@ -125,7 +125,7 @@ def competition_details(request, competition_id):
 
     breadcrumbs = (
         (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
-        (_(u'Competitions'), reverse('competitions_show_lan', kwargs={'lan_id': lan.id})),
+        (_(u'Competitions'), reverse('competitions_lan_compos', kwargs={'lan_id': lan.id})),
         (_(u'Competition'), ''),
     )
     context['breadcrumbs'] = breadcrumbs
@@ -180,10 +180,6 @@ def competition_details(request, competition_id):
                 if 1 < competition.status < 4:
                     messages.warning(request,
                                      'You have no current match, please check the brackets for more information')
-
-    # Insert placeholder image if the image_url is empty
-    if not competition.activity.image_url:
-        competition.activity.image_url = 'http://placehold.it/150x150'
 
     if request.user.is_authenticated():
         owned_teams = Team.objects.filter(leader=request.user)
