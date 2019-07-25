@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added instructions for changing email address and password.
 - Lottery now throws out all participants (but keeps winners) if the lottery does not have multiple winnings.
 - Slightly prettier email templates.
+- Added list of competitions a user has or is participating in.
+- Added seating info to user LAN history.
 
 ### Changed
 - Made footer prettier.

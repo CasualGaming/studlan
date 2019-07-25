@@ -77,6 +77,9 @@ class Attendee(models.Model):
     def __unicode__(self):
         return self.user.username + ' – ' + self.lan.title
 
+    def has_paid_or_has_ticket(self):
+        return self.has_paid or self.lan.has_ticket(self.user)
+
     class Meta:
         ordering = ['-user', 'lan']
         unique_together = ('user', 'lan')
