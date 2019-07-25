@@ -5,26 +5,32 @@ Register
 {% endblock title %} 
 {% block content %}
 <div class="row">
-    <div class="col-md-9">{{ form.non_field_errors }}
+    <div class="col-md-9">
+        <h1 class="page-header">{% trans "Register New User" %}</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-9">
+        {% for error in form.non_field_errors %}
+        <p class="form-error">{{ error }}</p>
+        {% endfor %}
         <form id="register-form" class="form-horizontal" method="post" action="{% url 'auth_register' %}">
             {% csrf_token %}
-            <fieldset>
-                <legend>{% trans "Register new user" %}</legend>
-                    {% for field in form %} 
-                        <div class="form-group {% if field.errors %} has-error {% endif %} ">
-                            <label class="col-md-3 control-label">{{ field.label }}</label>
-                            <div class="col-md-9">
-                              {{ field}}
-                                <div class="form-error">
-                                    {{ field.errors }}
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                <div class="form-actions register-button">
-                    <input type="submit" class="btn btn-primary" value="{% trans "Register" %}" />
+            {% for field in form %} 
+            <div class="form-group {% if field.errors %} has-error {% endif %} ">
+                <label class="col-md-3 control-label">{{ field.label }}</label>
+                <div class="col-md-9">
+                    {{ field }}
+                    <div class="form-error">
+                        {{ field.errors }}
+                    </div>
                 </div>
-            </fieldset>
+            </div>
+            {% endfor %}
+            <div class="form-actions register-button">
+                <input type="submit" class="btn btn-primary" value="{% trans "Register" %}" />
+            </div>
         </form>
     </div>
 </div>

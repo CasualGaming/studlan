@@ -193,12 +193,20 @@ LOGGING = {
     },
 }
 
-# studlan settings
 # Max teams a user can lead
 MAX_TEAMS = 10
 
 # Overiding messagetags to match bootstrap 3
 MESSAGE_TAGS = {message_constants.ERROR: 'danger'}
+
+VERSION = 'Unknown version'
+version_file_path = os.path.join(PROJECT_ROOT_DIRECTORY, 'VERSION')
+if os.path.isfile(version_file_path):
+    with open(version_file_path, 'r') as version_file:
+        content = version_file.read()
+    content = content.strip()
+    if (content):
+        VERSION = content
 
 # Remember to keep 'local' last, so it can override any setting.
 for settings_module in ['local']:  # local last

@@ -2,12 +2,10 @@
 
 from datetime import datetime
 
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext as _
 
@@ -24,13 +22,7 @@ def my_profile(request):
     user_seats = Seat.objects.filter(user=request.user)
     profile = request.user.profile
 
-    breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        (_(u'Profile'), reverse('my_profile')),
-        (request.user.username, ''),
-    )
-
-    return render(request, 'user/profile.html', {'quser': request.user, 'profile': profile, 'user_seats': user_seats, 'breadcrumbs': breadcrumbs})
+    return render(request, 'user/profile.html', {'quser': request.user, 'profile': profile, 'user_seats': user_seats})
 
 
 def user_profile(request, username):
@@ -51,13 +43,7 @@ def update_profile(request):
             form.save()
             return redirect('my_profile')
 
-    breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        (_(u'Profile'), reverse('my_profile')),
-        (_(u'Edit'), ''),
-    )
-
-    return render(request, 'user/update.html', {'form': form, 'breadcrumbs': breadcrumbs})
+    return render(request, 'user/update.html', {'form': form})
 
 
 @login_required
@@ -68,13 +54,7 @@ def history(request):
         if attendee.lan.has_ticket(request.user):
             attendee.has_paid = True
 
-    breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        (_(u'Profile'), reverse('my_profile')),
-        (_(u'History'), ''),
-    )
-
-    return render(request, 'user/history.html', {'attended': attended, 'breadcrumbs': breadcrumbs})
+    return render(request, 'user/history.html', {'attended': attended})
 
 
 @login_required
@@ -93,13 +73,8 @@ def user_inbox(request):
 def alias(request):
     aliases = Alias.objects.filter(user=request.user)
     alias_types = AliasType.objects.all().exclude(alias__in=aliases)
-    breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        (_(u'Profile'), reverse('my_profile')),
-        (_(u'Alias'), ''),
-    )
 
-    return render(request, 'user/alias.html', {'aliases': aliases, 'alias_types': alias_types, 'breadcrumbs': breadcrumbs})
+    return render(request, 'user/alias.html', {'aliases': aliases, 'alias_types': alias_types})
 
 
 @login_required

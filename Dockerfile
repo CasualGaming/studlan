@@ -21,6 +21,7 @@ COPY CHANGELOG.md ./
 COPY CONTRIBUTORS ./
 COPY LICENSE.txt ./
 COPY MAINTAINERS ./
+COPY VERSION ./
 
 # Install requirements
 RUN pip install -r requirements/production.txt --upgrade

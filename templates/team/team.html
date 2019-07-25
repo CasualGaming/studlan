@@ -11,23 +11,23 @@
 
     <div class="row">
         <div class="col-md-9">
-            <h2>
-                {{ team }}
-                            </h2>
+            <h1 class="page-header">Team {{ team }}</h1>
         </div>
     </div>
 
 	<div class="row">
         <div class="col-md-9">
-                <h3>{% trans "Members" %}</h3>
                 <table class="table table-bordered table-striped table-hover click-table    ">
                     <thead>
-                        <th class="col-md-4">{% trans "User name" %}</th>
-                        <th class="col-md-2">{% trans "Options" %}</th>
+                        <th class="col-md-4">{% trans "Team Members" %}</th>
+                        <th class="col-md-2">{% trans "Actions" %}</th>
                     </thead>
                     <tbody>
                         <tr>
-                                <td class="underline" onclick="document.location='{% url 'public_profile' team.leader %}';">{{ team.leader }}<div class="pull-right btn btn-xs btn-info btn-disabeled">Admin</div></td>
+                                <td class="underline" onclick="document.location='{% url 'public_profile' team.leader %}';">
+                                    {{ team.leader }}
+                                    <div class="pull-right btn btn-xs btn-info btn-disabeled">{% trans "Leader" %}</div>
+                                </td>
                                 <td>{% if team.is_mine %}
                                         <div class="btn btn-xs btn-danger" onclick="disband()">
                                             <em class="icon-remove icon-white"></em> Disband Team
@@ -68,11 +68,11 @@
                     <fieldset>
                         <legend>{% trans "Invite member" %}</legend>
                         <div class="form-group">
-                            <label class="col-md-1 control-label" for="selectMember">{% trans "Username" %}</label>
-                            <div class="col-md-4">
+                            <label class="col-md-2 control-label" for="selectMember">{% trans "Username" %}</label>
+                            <div class="col-md-3">
                                 <input type="text" class="form-control" id="selectMember" name="selectMember" required />
                             </div>
-                            <div class="col-md-3 center-on-collapse form-actions-collapsed">
+                            <div class="col-md-2 center-on-collapse form-actions-collapsed">
                                 <input type="submit" class="btn btn-primary" value="{% trans "Invite member" %}" />
                             </div>
                         </div>

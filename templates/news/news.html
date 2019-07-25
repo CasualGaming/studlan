@@ -1,65 +1,84 @@
 {% extends "base.html" %} 
 {% load i18n %}
-{% load lan_tags %}
 {% load markdown_deux_tags %} 
 
 {% block title %} 
-    News 
+Home
 {% endblock title %} 
 {% block content %}
 
-    {% if stream %}
-    <div class="row">
-        <div class="col-md-9">
-            <div class="well">
-                <h2>{{stream.description|safe}}</h2>
-                {{stream.link|safe}}
-            </div>
+{% if stream %}
+<div class="row">
+    <div class="col-md-9">
+        <div class="well">
+            <h2>{{stream.description|safe}}</h2>
+            {{stream.link|safe}}
         </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="row">
+    <div class="col-md-9">
+        {% if lans.count == 1 %}
+        <h1 class="page-header">{{ lans.0 }}</h1>
+        {% else %}
+        <h1 class="page-header">LANs</h1>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row">
+    {% if lans.count == 1 %}
+    <div class="col-md-6">
+        <p class="lead">{{ lans.0.start_date|date }} – {{ lans.0.end_date|date }}</p>
+    </div>
+    <div class="col-md-3">
+        <a class="btn btn-primary pull-right" href="{{ lans.0.get_absolute_url }}">{% trans "Go to LAN page" %}</a>
+    </div>
+    {% else %}
+    <div class="col-md-9">
+        <table class="table table-bordered table-hover click-table">
+            <tbody>
+                {% for lan in lans %}
+                <tr onclick="document.location='{{ lan.get_absolute_url }}';">
+                    <td class="col-md-6 underline">{{ lan }}</td>
+                    <td class="col-md-3">{{ lan.start_date|date }} – {{ lan.end_date|date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
     {% endif %}
+</div>
 
 {% for article in articles.object_list %} 
-    {% if forloop.counter < 3 and page == 1 %}
-        <div class="row">
-            <div class="col-md-9 news">
-                <h2><a href="{{ article.get_absolute_url }}">{{ article.get_translation.translated_title }}</a></h2>
-                <span class="label label-default info">{{ article.pub_date|date:"d/m/Y" }}
-                    {{article.pub_date|time:"H:i"}} {% if article.pinned %}
-                    - Pinned
-                    {% endif %}</span>
-                <p>{{ article.get_translation.translated_body|striptags|markdown }}</p>
-            </div>
-        </div>
-    {% else %} 
-        {% if not forloop.counter|divisibleby:"2" %}
-        <div class="row">
-            <div class="col-md-4">
-                <h2><a href="{{ article.get_absolute_url }}">{{ article.get_translation.translated_title }}</a></h2>
-                <span class="label label-default info">{{ article.pub_date|date:"d/m/Y" }} {{article.pub_date|time:"H:i"}}</span>
-                <p>{{ article.get_translation.translated_body|striptags|markdown }}</p>
-            </div>
-            <div class="col-md-1">&nbsp;</div>
-        {% else %}
-            <div class="col-md-4">
-                <h2><a href="{{ article.get_absolute_url }}">{{ article.get_translation.translated_title }}</a></h2>
-                <span class="label label-default info">{{ article.pub_date|date:"d/m/Y" }} {{article.pub_date|time:"H:i"}}</span>
-                <p>{{ article.get_translation.translated_body|striptags|markdown }}</p>
-            </div>
-        </div>
-        {% endif %} 
-    {% endif %} 
-{% endfor %}
-    <div class="row">
-        <div class="col-md-8">
-            {% include "news/pagination.html" %}
-        </div>
-        <div class="col-md-4">
-            <a class="btn btn-primary" style="margin-top: 20px; margin-bottom: 20px;" href="{% url 'archive' %}">
-                <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
-                {% trans "Arkiv" %}
-            </a>
-        </div>
-
+<div class="row">
+    <div class="col-md-9">
+        <h3><a href="{{ article.get_absolute_url }}">{{ article.get_translation.translated_title }}</a></h3>
+        <span class="label label-default info">{{ article.pub_date|date:"d/m/Y" }} {{article.pub_date|time:"H:i"}}</span>
+        {% if lans.count > 1 %}
+        {% for lan in article.relevant_to.all %}
+        <span class="label label-default info">{{ lan }}</span>
+        {% endfor %}
+        {% endif %}
+        {% if article.pinned %}
+        <span class="label label-default info">{% trans "Pinned" %}</span>
+        {% endif %}
+        <p>{{ article.get_translation.translated_body|striptags|markdown|truncatewords:150 }}</p>
     </div>
+</div>
+{% endfor %}
+
+<div class="row">
+    <div class="col-md-6">
+        {% include "news/pagination.html" %}
+    </div>
+    <div class="col-md-3">
+        <a class="btn btn-primary pull-right" style="margin-top: 20px; margin-bottom: 20px;" href="{% url 'archive' %}">
+            <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
+            {% trans "Archive" %}
+        </a>
+    </div>
+</div>
 {% endblock content %}

@@ -23,6 +23,9 @@ if [[ ! -e $DB_FILE ]]; then
     touch $DB_FILE
 fi
 
+# Add version file
+echo "0.0.0-SNAPSHOT" > VERSION
+
 echo
 echo "Removing any previous Docker Compose setup ..."
 $DC down

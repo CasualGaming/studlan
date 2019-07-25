@@ -1,34 +1,35 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
     <div class="row">
         <div class="col-md-9">
-            <h2>{{ lottery }}</h2>
+            <h1>{{ lottery }}</h1>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-9">
-            <a class="btn btn-success" href="{% url 'draw' lottery.id %}">Draw</a>
-            <a class="btn btn-info" href="{% url 'details' lottery.id %}">View lottery</a>
+            <a class="btn btn-success" href="{% url 'draw' lottery.id %}">{% trans "Draw winner" %}</a>
+            <a class="btn btn-info" href="{% url 'details' lottery.id %}">{% trans "Go to lottery" %}</a>
         </div>
     </div>
     
     {% if winner %}
     <div class="row">
         <div class="col-md-9">
-            <h3>Winner:</h3>
-            <p><a href="{% url 'public_profile' winner %}">{{ winner.user.username }}</a></p>
+            <h3>{% trans "Last Winner" %}</h3>
+            <p><strong><a href="{% url 'public_profile' winner %}">{{ winner.user.username }}</a></strong></p>
         </div>
     </div>
     {% endif %}
 
     <div class="row">
         <div class="col-md-9">
-            <h2>Winners</h2>
-            <table class="table table-bordered table-striped table-hover click-table">
+            <h3>{% trans "All Winners" %}</h3>
+            <table class="table table-bordered table-hover click-table">
                 <tbody>
-                    {% for winner in lottery.lotterywinner_set.all reversed %}
+                    {% for winner in winners %}
                         <tr onclick="document.location='{% url 'public_profile' winner %}';">
                             <td>{{ winner.user.username }}</td>
                         </tr>

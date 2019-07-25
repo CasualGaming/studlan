@@ -7,14 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Added version info to the app, shown in the site footer.
+- Added video frame to LAN.
+- Added link(s) to active LAN(s) on front page.
+- Added links to both user profile and LAN seating in the arrivals list.
+- Added LAN listing for competitions.
+- Added instructions for changing email address and password.
+- Lottery now throws out all participants (but keeps winners) if the lottery does not have multiple winnings.
+- Slightly prettier email templates.
 
 ### Changed
+- Made footer prettier.
+- Removed user info from sidebar.
+- Made news list pages single-column and less wasteful of space.
+- Made sponsor page prettier.
+- Made breadcrumbs more consistent and changed which pages show them.
+- Made page headers visually more consistent and appropriate.
+- Replaced logo images with higher-definition versions (but same graphics).
 
 ### Deprecated
 
 ### Removed
+- Removed unique email check from register form, since email addresses are non-unique.
 
 ### Fixed
+- Fixed HTML DOM bug in the seating app template.
+- Fixed seating map size inconsistency across browsers.
+- Fixed account recovery sending recovery emails to only one account for a certain email address.
 
 ### Security
 

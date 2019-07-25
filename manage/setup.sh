@@ -24,6 +24,9 @@ if [[ ! -e $CONFIG_FILE ]]; then
     cp $CONFIG_TEMPLATE_FILE $CONFIG_FILE
 fi
 
+# Add version file
+echo "0.0.0-SNAPSHOT" > VERSION
+
 echo
 echo "Collecting static files ..."
 $MANAGE collectstatic --noinput --clear

@@ -1,6 +1,5 @@
 {% extends "base.html" %} 
 {% load i18n %}
-{% load lan_tags %}
 {% load markdown_deux_tags %} 
 
 {% block title %} 
@@ -8,18 +7,26 @@
 {% endblock title %} 
 {% block content %}
 
-{% for article in articles.object_list %} 
+<div class="row">
+    <div class="col-md-9">
+        <h1 class="page-header">{% trans "News Archive" %}</h1>
+    </div>
+</div>
+
+{% for article in articles.object_list %}
     <div class="row">
-        <div class="col-md-offset-1 col-md-8">
+        <div class="col-md-9">
             <h2><a href="{{ article.get_absolute_url }}">{{ article.get_translation.translated_title }}</a></h2>
-            <span class="label label-default info">{{ article.pub_date|date:"d/m/Y" }} {{article.pub_date|time:"H:i"}}
-                - Archived</span>
-            <p>{{ article.get_translation.translated_body|striptags|markdown|truncatewords:75}}</p>
+            <span class="label label-default info">{{ article.pub_date|date:"d/m/Y" }} {{article.pub_date|time:"H:i"}}</span>
+            {% for lan in article.relevant_to.all %}
+            <span class="label label-default info">{{ lan }}</span>
+            {% endfor %}
+            <p>{{ article.get_translation.translated_body|striptags|markdown|truncatewords:75 }}</p>
         </div>
     </div>
 {% endfor %}
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-9">
             {% include "news/pagination.html" %}
         </div>
     </div>

@@ -27,7 +27,7 @@ class LoginForm(forms.Form):
         if auth_user and auth_user.is_active:
             self.user = auth_user
         else:
-            self.add_error('password', _(u'Login failed! Either the account does not exist, is inactive, or the username–password combination is incorrect.'))
+            self.add_error('__all__', _(u'Login failed! Either the account does not exist, it is inactive, or the username–password combination is incorrect.'))
         return self.cleaned_data
 
     def login(self, request):
@@ -105,11 +105,6 @@ class RegisterForm(forms.Form):
                 self.add_error('desired_username',
                                _(u'Your desired username contains illegal characters. Valid: a-Z 0-9 - _'))
 
-            # Check email
-            email = cleaned_data['email']
-            if User.objects.filter(email=email).count() > 0:
-                self.add_error('email', _(u'There is already a user with that email.'))
-
             # ZIP code digits only
             zip_code = cleaned_data['zip_code']
             if len(zip_code) != 4 or not zip_code.isdigit():
@@ -125,8 +120,14 @@ class RecoveryForm(forms.Form):
 
 
 class ChangePasswordForm(forms.Form):
-    new_password = forms.CharField(widget=forms.PasswordInput(render_value=False), label=_(u'New password'))
-    repeat_password = forms.CharField(widget=forms.PasswordInput(render_value=False), label=_(u'Repeat new password'))
+    new_password = forms.CharField(widget=forms.PasswordInput(render_value=False,
+                                                              attrs={'class': 'form-control',
+                                                                     'placeholder': _(u'Password'),
+                                                                     'type': 'password'}), label=_(u'New password'))
+    repeat_password = forms.CharField(widget=forms.PasswordInput(render_value=False,
+                                                                 attrs={'class': 'form-control',
+                                                                        'placeholder': _(u'Repeat password'),
+                                                                        'type': 'password'}), label=_(u'Repeat new password'))
 
     def clean(self):
         super(ChangePasswordForm, self).clean()

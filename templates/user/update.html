@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load profile_tags %}
+{% load settings %}
 
 {% block title %}
 Update profile
@@ -9,33 +10,46 @@ Update profile
 {% block content %}
 <div class="row">
     <div class="col-md-9">
-         <h2>{% trans "Edit Profile" %}</h2>
+         <h1>{% trans "Edit Profile" %}</h1>
     </div>
 </div>
+
 {% profile_tabs 'update' %}
 
 <div class="row">
-    {% if form %}
     <div class="col-md-9">
-        <br>
+        <h3>{% trans "Change Profile" %}</h3>
+        {% for error in form.non_field_errors %}
+        <p class="form-error">{{ error }}</p>
+        {% endfor %}
         <form class="form-horizontal" action="{% url 'update_profile' %}" method="POST">
             {% csrf_token %}
-                {% for field in form %} 
-                        <div class="form-group {% if field.errors %} has-error {% endif %} ">
-                            <label class="col-md-2 control-label">{{ field.label }}</label>
-                            <div class="col-md-10">
-                              {{ field}}
-                                <div class="form-error">
-                                    {{ field.errors }}
-                                </div>
-                            </div>
-                          </div>
-                    {% endfor %}
-                <div class="form-actions register-button">
-                    <input type="submit" class="btn btn-primary" value="{% trans "Update" %}"/>
+            {% for field in form %}
+            <div class="form-group {% if field.errors %} has-error {% endif %} ">
+                <label class="col-md-2 control-label">{{ field.label }}</label>
+                <div class="col-md-10">
+                    {{ field }}
+                    <div class="form-error">
+                        {{ field.errors }}
+                    </div>
                 </div>
+            </div>
+            {% endfor %}
+            <div class="form-actions register-button">
+                <input type="submit" class="btn btn-primary" value="{% trans "Update" %}"/>
+            </div>
         </form>
+
+        <h3>{% trans "Change Email Address" %}</h3>
+        <p>{% trans "Current email address:" %} <samp>{{ user.email }}</samp></p>
+        <p>
+            {% trans "To change it, send a request to" %}
+            <a href="mailto:{% support_mail %}?Subject=&#91;{% site_name %} support&#93;" target="_top">{% trans "support" %}</a>
+            {% trans " from the email address you're changing from, containing the new email address." %}
+        </p>
+
+        <h3>{% trans "Change Password" %}</h3>
+        <p>{% trans "Sign out, go to the sign in page, press the button to recover your password, then follow the instructions in the received email." %}</p>
     </div>
-    {% endif %}
 </div>
 {% endblock content %}

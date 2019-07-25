@@ -9,146 +9,179 @@
 {% endblock title %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-8">
-            <h1>{{ lan }}</h1>
+<div class="row">
+    <div class="col-md-9">
+        <h1 class="page-header">{{ lan }}</h1>
+    </div>
+</div>
+
+{% if not active %}
+<div class="row">
+    <div class="col-md-9">
+        <div class="alert alert-info">
+            <p>This lan is over</p>
         </div>
     </div>
-<div class="col-md-12">
-    <div class="row">
-            {% if lan.map_link %}
-                <div class="col-md-4">
-            {% endif %}
-            <table class="table table-bordered">
-                <tbody>
-                    <tr><td>{% trans "Start date" %}:</td><td>{{ lan.start_date|date:"d. F Y" }} - {{ lan.start_date|time:"H:i" }}</td></tr> 
-                    <tr><td>{% trans "End date" %}:</td><td>{{ lan.end_date|date:"d. F Y" }} - {{ lan.end_date|time:"H:i" }}</td></tr>
-                    <tr><td>{% trans "Location" %}:</td><td>{{ lan.location|safe }}</td></tr> 
-                </tbody>
-            </table>
-            
-            {% if lan.map_link %}
-                {% for direction in directions %}
-                    <em class="glyphicon glyphicon-road"></em>  {{direction.title}}<br>
-                    {{direction.description}}<br><br>
+</div>
+{% endif %}
+
+{% if lan.video_link %}
+<div class="row">
+    <div class="col-md-9">
+        <div class="lan-video-container">
+            <iframe class="lan-video" title="Video" src="{{ lan.video_link|safe }}" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="row">
+    <div class="col-md-4">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td><strong>{% trans "Start time" %}</strong></td>
+                    <td>{{ lan.start_date|date:"d. F Y" }}, {{ lan.start_date|time:"H:i" }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{% trans "End time" %}</strong></td>
+                    <td>{{ lan.end_date|date:"d. F Y" }}, {{ lan.end_date|time:"H:i" }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{% trans "Location" %}</strong></td>
+                    <td>{{ lan.location|safe }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        {% for direction in directions %}
+        <div class="well well-sm">
+            <span class="glyphicon glyphicon-road"></span>
+            <strong>{{ direction.title }}</strong>
+            <br />
+            {{ direction.description }}
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if lan.map_link %}
+    <div class="col-md-5">
+        <iframe class="lan-map" title="Map" src="{{ lan.map_link|safe }}"></iframe>
+    </div>
+    {% endif %}
+</div>
+
+<div class="row">
+    <div class="col-md-9">
+        <hr />
+        {{ lan.get_translation.description|markdown }}
+        <hr />
+    </div>
+</div>
+
+<div class="col-md-9">
+    <div class="col-md-9">
+        {% if user.is_authenticated %}
+        {% if status == 'paid' %}
+        <div class="center-on-collapse">
+            <a class="btn btn-success disabled center-on-collapse" href="#">
+                {% trans "You have paid for a ticket for this event:" %} 
+                {% if ticket %}
+                {{ ticket.0.ticket_type.get_translation.title }}
+                {% endif %}
+            </a>
+        </div>
+        {% elif status == 'attending' %}
+        <div class="center-on-collapse">
+            <a class="btn btn-danger" href="{% url 'lan_unattend' lan.id %}">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                {% trans "Remove attendance" %}
+            </a>
+        </div>
+        {% if ticket_types %}
+        <h3>{% trans "Tickets" %}</h3>
+        <div role="tabpanel">
+            <ul id="tabs" class="nav nav-tabs" role="tablist">
+                {% for ticket_type in ticket_types %}
+                <li {% if forloop.counter == 1 %} class="active" {% endif %} role="presentation">
+                    <a href="#ticket-{{ forloop.counter }}" aria-controls="#ticket-{{ forloop.counter }}" data-toggle="tab" role="tab">
+                        {{ ticket_type.get_translation.title }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="tab-content">
+                {% for ticket_type in ticket_types %}
+                {% if forloop.counter == 1 %}
+                <div role="tabpanel" class="tab-pane active well" id="ticket-{{ forloop.counter }}">
+                {% else %}
+                <div role="tabpanel" class="tab-pane well" id="ticket-{{ forloop.counter }}">
+                {% endif %}
+                    <p>{{ ticket_type.get_translation.description }}</p>
+                    <p><strong>{% trans "Price" %}:</strong> {{ ticket_type.price }}</p>
+                    <!-- <p><strong>{% trans "Seats" %}:</strong>{{ ticket_type.number_of_seats }}</p> -->
+                    <p><strong>{% trans "Free seats" %}:</strong>
+                        {% if ticket_type.number_of_free_seats <= 0 %}
+                        <span class="label label-danger">{% trans "Sold out" %}</span>
+                        {% else %}
+                        {{ ticket_type.number_of_free_seats }}
+                        {% endif %}
+                    </p>
+                    {% if not ticket_type.number_of_free_seats <= 0 and ticket_type.is_available %}
+                    <form action="/payment/{{ ticket_type.id }}/" method="POST" class="inline">
+                        {% csrf_token %}
+                        <script
+                            src="https://checkout.stripe.com/checkout.js"
+                            class="stripe-button"
+                            data-key="{% stripe_public_key %}"
+                            data-image="{% static 'logo/logo_128.png' %}"
+                            data-name="{% site_name %}"
+                            data-email="{{ user.email }}"
+                            data-description="{{ ticket_type.get_translation.title }}"
+                            data-label="{% trans "Pay with Card" %}"
+                            data-allow-remember-me="false"
+                            data-currency="NOK"
+                            data-amount="{{ ticket_type.price }}00"
+                            data-locale="{{ LANGUAGE_CODE }}"
+                        ></script>
+                    </form>
+                    {% elif not ticket_type.is_available %}
+                    <button type="button" class="btn btn-default disabled">
+                        {% trans "Tickets will be available" %}
+                        {{ ticket_type.available_from|date:"D d F Y" }}
+                        {{ ticket_type.available_from|time:"H:i" }}
+                    </button>
+                    {% endif %}
+                </div>
                 {% endfor %}
             </div>
-            <div class="col-md-4">
-                <iframe title="Map" src="{{ lan.map_link|safe }}" width="400" height="300" style="border: none;"></iframe>
-            </div>
-            </div>
-            <div class="col-md-8">
-            {% endif %}
-            <hr />
-            {{ lan.get_translation.description|markdown }} 
-
-            <hr />  
-
-            {% if not active %}
-                <div class="alert alert-info">
-                    <p>This lan is over</p>
-                </div>
-            {% else %}
-                {% if user.is_authenticated %}
-                    {% if status == 'paid' %}
-                        <a class="btn btn-success disabled center-on-collapse" href="#">
-                            {% trans "You have paid for a " %} 
-                            {% if ticket %} {{ ticket.0.ticket_type.get_translation.title }} {% endif %}
-                            {% trans "ticket for this event" %} 
-                        </a>
-                    {% endif %}
-                    {% if status == 'attending' %}
-                        <div class="center-on-collapse">
-                            <a class="btn btn-danger" href="{% url 'lan_unattend' lan.id %}">
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                {% trans "Remove attendance" %}
-                            </a>
-                        </div>
-                        <br>
-                        {% if ticket_types %}
-                            <br>
-                            <h3>{% trans "Tickets" %}</h3>
-                            <div role="tabpanel">
-                            <ul id="tabs" class="nav nav-tabs" role="tablist">
-                                {% for ticket_type in ticket_types %}
-                                    <li {% if forloop.counter == 1 %} class="active" {% endif %} role="presentation">
-                                        <a href="#ticket-{{ forloop.counter }}" aria-controls="#ticket-{{ forloop.counter }}" data-toggle="tab" role="tab">
-                                            {{ ticket_type.get_translation.title }}
-                                        </a>
-                                    </li>
-                                {% endfor %}
-                            </ul> 
-                            <div class="tab-content">
-                                {% for ticket_type in ticket_types %}
-                                    {% if forloop.counter == 1 %}
-                                        <div role="tabpanel" class="tab-pane active well" id="ticket-{{ forloop.counter }}">
-                                    {% else %}
-                                        <div role="tabpanel" class="tab-pane well" id="ticket-{{ forloop.counter }}">
-                                    {% endif %}
-                                    <p>{{ ticket_type.get_translation.description }}</p>
-                                    <p><strong>{% trans "Price" %}: </strong>{{ ticket_type.price }}</p>
-                                    <!-- <p><strong>{% trans "Seats" %}: </strong>{{ ticket_type.number_of_seats }}</p> -->
-                                    <p><strong>{% trans "Free seats" %}: </strong>
-                                        {% if ticket_type.number_of_free_seats <= 0 %}
-                                            <span class="label label-danger">{% trans "Sold out" %}</span>
-                                        {% else %}
-                                            {{ ticket_type.number_of_free_seats }}
-                                        {% endif %}
-                                    </p>
-                                    {% if not ticket_type.number_of_free_seats <= 0 and ticket_type.is_available %}
-                                        <form action="/payment/{{ ticket_type.id }}/" method="POST" class="inline">
-                                            {% csrf_token %}
-                                            <script
-                                                src="https://checkout.stripe.com/checkout.js"
-                                                class="stripe-button"
-                                                data-key={% stripe_public_key %}
-                                                data-image="{% static '32x32-highlight.png' %}"
-                                                data-name={% site_name %}
-                                                data-email={{ user.email }}
-                                                data-description="{{ ticket_type.get_translation.title }}"
-                                                data-label="{% trans "Pay with Card" %}"
-                                                data-allow-remember-me="false"
-                                                data-currency="NOK"
-                                                data-amount="{{ ticket_type.price }}00">
-                                            </script>
-                                        </form>
-                                    {% elif not ticket_type.is_available %}
-                                        <button type="button" class="btn btn-default disabled"> Tickets will be
-                                            available
-                                            {{ ticket_type.available_from|date:"D d F Y" }}
-                                            {{ ticket_type.available_from|time:"H:i" }}</button>
-                                    {% endif %}
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        {% else %}
-                            <br>
-                            <div class="alert alert-danger">
-                                <p>{% trans "No tickets avalible at this time." %}</p>
-                            </div>
-                        {% endif %}
-                    {% endif %}
-                    {% if status == 'open' %}
-                        {% if user.profile.has_address %}
-                            <div class="center-on-collapse">
-                                <a class="btn btn-primary" href="{% url 'lan_attend' lan.id %}">
-                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                    {% trans "Sign up" %}
-                                </a>
-                            </div>
-                        {% else %}
-                            <div class="alert alert-danger">
-                                {% trans "Your address and zip code is required in order to sign up for a LAN." %}
-                                {% trans "Go to your" %} <a href="{% url 'update_profile' %}">{% trans "profile" %}</a> {% trans "to add the information." %} 
-                            </div>
-                        {% endif %}
-                    {% endif %}
-                {% else %}
-                    <div class="alert alert-danger">{% trans "You need to login to see your status." %}</div>
-                {% endif %}
-            {% endif %}
         </div>
+        {% else %}
+        <div class="alert alert-danger">
+            <p>{% trans "No tickets avalible at this time." %}</p>
+        </div>
+        {% endif %}
+        {% elif status == 'open' %}
+        {% if user.profile.has_address %}
+        <div class="center-on-collapse">
+            <a class="btn btn-primary" href="{% url 'lan_attend' lan.id %}">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                {% trans "Sign up" %}
+            </a>
+        </div>
+        {% else %}
+        <div class="alert alert-danger">
+            {% trans "Your address and zip code is required in order to sign up for a LAN." %}
+            {% trans "Go to your" %} <a href="{% url 'update_profile' %}">{% trans "profile" %}</a> {% trans "to add the information." %} 
+        </div>
+        {% endif %}{# user.profile.has_address #}
+        {% endif %} {# status == ... #}
+        {% else %}{# user.is_authenticated #}
+        <div class="alert alert-danger">
+            {% trans "You need to login to see your status." %}
+        </div>
+        {% endif %}{# user.is_authenticated #}
     </div>
+</div>
 
 {% endblock content %}

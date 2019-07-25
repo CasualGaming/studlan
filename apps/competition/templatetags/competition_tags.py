@@ -73,3 +73,8 @@ class CompetitionRenderer(template.Node):
 
 register.tag('num_of_competitions', do_num_of_competitions)
 register.tag('user_competitions', get_user_competitions)
+
+
+@register.filter
+def get_lan_compo_count(lan):
+    return Competition.objects.filter(lan=lan).count()

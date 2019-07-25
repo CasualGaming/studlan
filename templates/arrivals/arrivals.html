@@ -1,7 +1,8 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load markdown_deux_tags %}
-{% load static %}
 {% load misc %}
+{% load static %}
 
 {% block title %}
 Register Arrivals
@@ -10,7 +11,7 @@ Register Arrivals
 {% block content %}
     <div class="row">
         <div class="col-md-9">
-	        <h1>Register Arrivals</h1>
+	        <h1>Arrivals</h1>
         </div>
     </div>
     
@@ -25,6 +26,7 @@ Register Arrivals
             <span>Arrived: {{arrived_count}}</span>
         </div>
     </div>
+    <br />
     <div class="row">
         <div class="col-md-9">
             <!-- Adding token here because using clientside js using the csrfcookie is a security liability -->
@@ -34,18 +36,21 @@ Register Arrivals
             <div class="table-responsive">
                 <table class="table table-bordered table-striped filterable">
                     <thead>
-                        <th>Username</th><th>Full name</th><th>Email Address</th><th>Paid</th><th>Arrived</th>
+                        <th>Username</th><th>Full name</th><th>Email Address</th><th>Seating</th><th>Paid</th><th>Arrived</th>
                     </thead>
                     <tbody>
                         {% for attendee in attendees %}
                         <tr>
-                            {% if attendee in user_seats%}
-                            <td class="username"><a href="{{ user_seats|get_seating_url:attendee }}{{ user_seats|get_seat_placement:attendee }}">{{ attendee.user.username }}</a></td>
-                            {% else %}
-                            <td class="username">{{ attendee.user.username }}</a></td>
-                            {% endif %}
+                            <td class="username"><a href="{% url 'public_profile' attendee.user %}" target="_blank">{{ attendee.user.username }}</a></td>
                             <td>{{ attendee.user.get_full_name }}</td>
                             <td>{{ attendee.user.email }}</td>
+                            <td>
+                                {% if attendee in user_seats%}
+                                <a href="{{ user_seats|get_seating_url:attendee }}{{ user_seats|get_seat_placement:attendee }}" target="_blank">{{ user_seats|get_seat_info:attendee }}</a>
+                                {% else %}
+                                {% trans "No seating" %}
+                                {% endif %}
+                            </td>
                             <td>
                                 {% if attendee.user in ticket_users %}
                                     <span class="label label-info">{{ ticket_users|get_user:attendee.user }} </span>

@@ -9,6 +9,8 @@ if [[ $CI != "true" ]]; then
     exit -1
 fi
 
+echo "0.0.0-SNAPSHOT" > VERSION
 $DC build
+
 $DC up --exit-code-from=app
 $DC down

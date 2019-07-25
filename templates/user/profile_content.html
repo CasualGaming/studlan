@@ -67,7 +67,7 @@
             </tbody>
         </table>
 
-        <h4>Seating info</h4>
+        <h4>{% trans "Seating Info" %}</h4>
         {% for seat in user_seats %}
         <div class="col-md-6">
             <div class="panel panel-default">
@@ -77,7 +77,7 @@
                 </div></a>
                 <a href="{{seat.seating.get_absolute_url}}{{seat.placement}}">
                 <div class="panel-footer">
-                    Seating: {{seat.seating}} <br> Seat: {{seat.placement}}
+                    {{seat.seating}}, seat {{seat.placement}}
                 </div></a>
             </div>
         </div>

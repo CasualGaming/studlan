@@ -24,44 +24,37 @@ from apps.team.models import Team
 
 def main(request):
     lans = LAN.objects.filter(end_date__gte=datetime.now())
-    if lans:
+    if lans.count() == 1:
         next_lan = lans[0]
-        return redirect('competitions_show_lan', lan_id=next_lan.id)
+        return redirect('competitions_lan_compos', lan_id=next_lan.id)
     else:
-        context = {}
-        competitions = Competition.objects.all()
-        competitions = shorten_descriptions(competitions, 200)
-
-        context['activities'] = Activity.objects.all()
-        context['competitions'] = competitions
-        context['active'] = 'all'
-
-        breadcrumbs = (
-            (settings.SITE_NAME, '/'),
-            (_(u'Competitions'), ''),
-        )
-        context['breadcrumbs'] = breadcrumbs
-
-        return render(request, 'competition/competitions.html', context)
+        return redirect('competitions_lan_list')
 
 
-def main_filtered(request, lan_id):
+def lan_list(request):
+    context = {}
+    context['upcoming_lans'] = LAN.objects.filter(end_date__gte=datetime.now()).all()
+    context['previous_lans'] = LAN.objects.filter(end_date__lt=datetime.now()).all()
+
+    return render(request, 'competition/lan_list.html', context)
+
+
+def lan_compos(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
 
     context = {}
     competitions = Competition.objects.filter(lan=lan)
     competitions = shorten_descriptions(competitions, 200)
 
+    context['lan'] = lan
     context['activities'] = Activity.objects.all()
     context['competitions'] = competitions
     context['active'] = 'all'
-    context['lan'] = lan
     context['lotteries'] = Lottery.objects.filter(lan=lan)
 
     breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        (_(u'Competitions'), reverse('competitions')),
-        (lan, ''),
+        (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
+        (_(u'Competitions'), ''),
     )
     context['breadcrumbs'] = breadcrumbs
 
@@ -84,13 +77,6 @@ def activity_details(request, activity_id):
         context['activities'] = Activity.objects.all()
         context['competitions'] = competitions
 
-        breadcrumbs = (
-            (settings.SITE_NAME, '/'),
-            ('Competitions', reverse('competitions')),
-            (activity, ''),
-        )
-        context['breadcrumbs'] = breadcrumbs
-
         return render(request, 'competition/competitions.html', context)
 
 
@@ -108,10 +94,8 @@ def activity_details_filtered(request, lan_id, activity_id):
     context['lan'] = lan
 
     breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        (_(u'Competitions'), reverse('competitions')),
         (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
-        (activity, ''),
+        (_(u'Competitions'), ''),
     )
     context['breadcrumbs'] = breadcrumbs
 
@@ -128,6 +112,7 @@ def shorten_descriptions(competitions, length):
 def competition_details(request, competition_id):
     context = {}
     competition = get_object_or_404(Competition, pk=competition_id)
+    lan = competition.lan
 
     # Get challonge settings
     try:
@@ -138,11 +123,10 @@ def competition_details(request, competition_id):
         use_challonge = False
     context['use_challonge'] = use_challonge
 
-    # Build breadcrumbs
     breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        (_(u'Competitions'), reverse('competitions')),
-        (competition, ''),
+        (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
+        (_(u'Competitions'), reverse('competitions_lan_compos', kwargs={'lan_id': lan.id})),
+        (_(u'Competition'), ''),
     )
     context['breadcrumbs'] = breadcrumbs
 
@@ -196,10 +180,6 @@ def competition_details(request, competition_id):
                 if 1 < competition.status < 4:
                     messages.warning(request,
                                      'You have no current match, please check the brackets for more information')
-
-    # Insert placeholder image if the image_url is empty
-    if not competition.activity.image_url:
-        competition.activity.image_url = 'http://placehold.it/150x150'
 
     if request.user.is_authenticated():
         owned_teams = Team.objects.filter(leader=request.user)
@@ -376,13 +356,19 @@ def schedule(request):
     context = {}
 
     if lans:
-        context['lan'] = lans[0]
-        context['start_date'] = lans[0].start_date.strftime('%Y%m%d')
-        context['end_date'] = lans[0].end_date.strftime('%Y%m%d')
+        lan = lans[0]
+
+        context['lan'] = lan
+        context['start_date'] = lan.start_date.strftime('%Y%m%d')
+        context['end_date'] = lan.end_date.strftime('%Y%m%d')
         if settings.GOOGLE_CAL_SRC != '':
             context['cal_src'] = settings.GOOGLE_CAL_SRC
         else:
             context['cal_src'] = None
+        context['breadcrumbs'] = (
+            (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
+            (_(u'Schedule'), ''),
+        )
 
     return render(request, 'competition/schedule.html', context)
 
