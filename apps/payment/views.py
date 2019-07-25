@@ -7,6 +7,8 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
+from django.template.loader import render_to_string
+from django.urls import reverse
 from django.utils.translation import ugettext as _
 
 import stripe
@@ -31,25 +33,32 @@ def payment(request, ticket_id):
                 card=token,
                 description=request.user.email,
             )
+        except stripe.error.CardError, e:
+            messages.error(request, e)
+        else:
             ticket = Ticket()
             ticket.user = request.user
             ticket.ticket_type = ticket_type
             ticket.bought_date = datetime.now()
             ticket.save()
 
-            send_ticket_mail(ticket, request.META['HTTP_HOST'])
+            lan = ticket.ticket_type.lan
+            lan_link = request.build_absolute_uri(reverse('lan_details', kwargs={'lan_id': lan.id}))
+            context = {
+                'ticket': ticket,
+                'lan': lan,
+                'lan_link': lan_link,
+            }
+            txt_message = render_to_string('payment/email/ticket_receipt.txt', context, request).strip()
+            html_message = render_to_string('payment/email/ticket_receipt.html', context, request).strip()
+            send_mail(
+                subject=_(u'Ticket confirmation'),
+                from_email=settings.STUDLAN_FROM_MAIL,
+                recipient_list=[ticket.user.email],
+                message=txt_message,
+                html_message=html_message,
+            )
 
             messages.success(request, _(u'Payment complete — Confirmation mail sent to ') + request.user.email)
-        except stripe.error.CardError, e:
-            messages.error(request, e)
 
     return HttpResponseRedirect('/')
-
-
-def send_ticket_mail(ticket, host):
-    message = _(u'This is a confirmation on your purchase of a ') + ticket.ticket_type.get_translation().title
-    message += _(u' ticket for ') + ticket.ticket_type.lan.title + '.'
-    message += '\n\n' + _(u'The ticket is linked to ') + '{0} ({1}).'.format(ticket.user.get_full_name(), ticket.user.username)
-    message += '\n\n' + _(u'More information about the lan can be found at ') + host + '/lan.'
-
-    send_mail(_(u'Ticket confirmation'), message, settings.STUDLAN_FROM_MAIL, [ticket.user.email])

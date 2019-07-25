@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 from django.views.decorators.debug import sensitive_post_parameters
@@ -85,13 +86,17 @@ def register(request):
                 rt.save()
 
                 link = request.build_absolute_uri(reverse('auth_verify', args=[token]))
-                email_message = create_verify_message(request.get_host(), link)
+                context = {
+                    'link': link,
+                }
+                txt_message = render_to_string('auth/email/verify_account.txt', context, request).strip()
+                html_message = render_to_string('auth/email/verify_account.html', context, request).strip()
                 send_mail(
                     subject=_(u'Verify your account'),
                     from_email=settings.STUDLAN_FROM_MAIL,
                     recipient_list=[user.email],
-                    message=email_message,
-                    html_message=email_message,
+                    message=txt_message,
+                    html_message=html_message,
                 )
 
                 messages.success(request, _(u'Registration successful. Check your email for verification instructions.'))
@@ -198,13 +203,19 @@ def recover(request):
                     rt.save()
 
                     link = request.build_absolute_uri(reverse('auth_set_password', args=[token]))
-                    email_message = create_password_recovery_message(email, user.username, request.get_host(), link)
+                    context = {
+                        'link': link,
+                        'username': user.username,
+                        'email': user.email,
+                    }
+                    txt_message = render_to_string('auth/email/recover_account.txt', context, request).strip()
+                    html_message = render_to_string('auth/email/recover_account.html', context, request).strip()
                     send_mail(
                         subject=_(u'Account recovery'),
                         from_email=settings.STUDLAN_FROM_MAIL,
-                        recipient_list=[email],
-                        message=email_message,
-                        html_message=email_message,
+                        recipient_list=[user.email],
+                        message=txt_message,
+                        html_message=html_message,
                     )
 
                 messages.success(request, _('A recovery link has been sent to all users with email "') + email + '".')
@@ -250,23 +261,3 @@ def set_password(request, token=None):
         else:
             messages.error(request, _(u'The token has expired. Please use the password recovery to get a new token.'))
             return HttpResponseRedirect('/')
-
-
-def create_verify_message(domain, link):
-    message = '<p>' + _(u'You have registered an account at ') + domain + '.' + '</p>\n'
-    message += '<p>' + _(u'To use the account you need to verify it. You can do this by visiting the link below.') + '</p>\n'
-    message += '<br />' + u'<a href="{0}">{0}</a>'.format(link) + '</p>\n'
-    message += '<p>' + _(u"""If you do not use this link within 24 hours, it will be invalidated.
-If that happens, you will need to use the password recovery option to get your account verified.""") + '</p>\n'
-    return message
-
-
-def create_password_recovery_message(email, username, domain, link):
-    message = '<p>' + _(u'You have requested a password recovery for the account(s) bound to this email address at ') + domain + '.' + '</p>\n'
-    message += '<p>' + _(u'Email address: ') + email + '</p>\n'
-    message += '<p>' + _(u'Username: ') + username + '</p>\n'
-    message += '<p>' + _(u'If you did not ask for this password recovery, please ignore this email.') + '</p>\n'
-    message += '<p>' + _(u'Otherwise, click the link below to reset your password:')
-    message += '<br />' + u'<a href="{0}">{0}</a>'.format(link) + '</p>\n'
-    message += '<p>' + _(u"""If you do not use this link within 24 hours, it will be invalidated.""") + '</p>\n'
-    return message

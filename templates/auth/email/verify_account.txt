@@ -1,0 +1,13 @@
+{% extends "email/base.txt" %}
+
+{% load i18n %}
+{% load settings %}
+
+{% block content %}
+{% trans "You have registered an account at" %} {% site_name %} ({{ request.get_host }}).
+
+{% trans "In order to validate your account, please click the link below:" %}
+{{ link }}
+
+{% trans "If you do not use this link within 24 hours, it will be invalidated. If that happens, you will need to use the password recovery option to get your account verified." %}
+{% endblock content %}
