@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made sponsor page prettier.
 - Made breadcrumbs more consistent and changed which pages show them.
 - Made page headers visually more consistent and appropriate.
+- Replaced logo images with higher-definition versions (but same graphics).
 
 ### Deprecated
 

@@ -134,7 +134,7 @@
                             src="https://checkout.stripe.com/checkout.js"
                             class="stripe-button"
                             data-key="{% stripe_public_key %}"
-                            data-image="{% static '32x32-highlight.png' %}"
+                            data-image="{% static 'logo/logo_128.png' %}"
                             data-name="{% site_name %}"
                             data-email="{{ user.email }}"
                             data-description="{{ ticket_type.get_translation.title }}"
@@ -142,6 +142,7 @@
                             data-allow-remember-me="false"
                             data-currency="NOK"
                             data-amount="{{ ticket_type.price }}00"
+                            data-locale="{{ LANGUAGE_CODE }}"
                         ></script>
                     </form>
                     {% elif not ticket_type.is_available %}
