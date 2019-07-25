@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added link(s) to active LAN(s) on front page.
 - Added links to both user profile and LAN seating in the arrivals list.
 - Added LAN listing for competitions.
+- Added instructions for changing email address and password.
 
 ### Changed
 - Made footer prettier.
