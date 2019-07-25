@@ -2,6 +2,7 @@
 
 from datetime import datetime
 
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.conf import settings
 from django.core.mail import send_mail
@@ -17,6 +18,7 @@ import json
 from apps.lan.models import Ticket, TicketType
 
 
+@login_required()
 def payment(request, ticket_id):
     stripe.api_key = settings.STRIPE_PRIVATE_KEY
 
