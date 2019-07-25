@@ -1,19 +1,18 @@
 # -*- coding: utf-8 -*-
 
+import json
 from datetime import datetime
 
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
+import stripe
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.translation import ugettext as _
-
-import stripe
-import json
 
 from apps.lan.models import Ticket, TicketType
 
@@ -30,7 +29,7 @@ def payment(request, ticket_id):
             'payment/checkout.html',
             {
                 'ticket_type': ticket_type,
-                'lan': ticket_type.lan
+                'lan': ticket_type.lan,
             })
 
     if request.method == 'POST':
@@ -60,8 +59,8 @@ def payment(request, ticket_id):
 def generate_payment_response(request, ticket_type, intent):
     if intent.status == 'requires_action' and intent.next_action.type == 'use_stripe_sdk':
         return JsonResponse({
-          'requires_action': True,
-          'payment_intent_client_secret': intent.client_secret,
+            'requires_action': True,
+            'payment_intent_client_secret': intent.client_secret,
         })
     elif intent.status == 'succeeded':
 
