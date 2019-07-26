@@ -5,7 +5,6 @@ from django.contrib import admin
 
 from apps.misc import views as misc_view
 from apps.news import views as news_view
-from apps.payment import views as payment_view
 from apps.sponsor import views as sponsor_view
 
 urlpatterns = [

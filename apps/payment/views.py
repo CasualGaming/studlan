@@ -3,16 +3,16 @@
 import json
 from datetime import datetime
 
-import stripe
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.translation import ugettext as _
+import stripe
 
 from apps.lan.models import Ticket, TicketType
 
@@ -26,7 +26,7 @@ def payment_info(request, ticket_type_id):
         request,
         'payment/info.html',
         {
-            'ticket_type_id': ticket_type_id
+            'ticket_type_id': ticket_type_id,
         })
 
 
