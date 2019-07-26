@@ -2,12 +2,13 @@
 
 from django.conf.urls import url
 
-from .views import add_alias, alias, history, my_profile, remove_alias, update_profile, user_inbox, user_profile
+from .views import add_alias, alias, history, my_profile, remove_alias, update_profile, user_competitions, user_inbox, user_profile
 
 
 urlpatterns = [
     url(r'^$', my_profile, name='my_profile'),
     url(r'^update/$', update_profile, name='update_profile'),
+    url(r'^competitions/$', user_competitions, name='user_competitions'),
     url(r'^history/$', history, name='user_history'),
     url(r'^inbox/$', user_inbox, name='inbox'),
     url(r'^alias/$', alias, name='alias'),

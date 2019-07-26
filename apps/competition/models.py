@@ -139,6 +139,19 @@ class Competition(TranslatableModel):
     def get_absolute_url(self):
         return reverse('competition_details', kwargs={'competition_id': self.id})
 
+    @staticmethod
+    def get_all_for_user(user, ignore_finished=False):
+        user_participations = Participant.objects.filter(user=user).select_related('competition').order_by('competition__status')
+        if ignore_finished:
+            user_participations = user_participations.filter(~Q(competition__status=4))
+
+        team_participations = Participant.objects.filter(Q(team__members=user) | Q(team__leader=user)).order_by('competition__status')
+        if ignore_finished:
+            team_participations = team_participations.filter(~Q(competition__status=4))
+
+        competitions = [p.competition for p in user_participations] + [p.competition for p in team_participations]
+        return competitions
+
     class Meta:
         ordering = ['status']
         permissions = (
