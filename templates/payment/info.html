@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load markdown_deux_tags %}
+{% load settings %}
+{% load static %}
+
+{% block title %}
+{{ lan }}
+{% endblock title %}
+
+{% block content %}
+    <div class="row">
+    <div class="col-md-6">
+      <h2>Payment security</h2><br>
+        <p>
+            We use <a href="https://stripe.com/en-no">Stripe</a> for all our payments. By using Stripe.js and the elements library that Stripe offers, your credit card is never touched by our servers. This technique also makes the payment system PCI compliant.
+        </p>
+        <p>
+            If you want to read more about the security of Stripe, please consult the following <a href="https://stripe.com/docs/security/stripe">documentation at Stripe.com</a>.
+        </p>
+        <p>
+            The studlan project is open sourced at <a href="https://github.com/CasualGaming/studlan/">GitHub</a>, so you are free to inspect the safety of the code yourself.
+        </p>
+    </div>
+    </div>
+    {% if ticket_type_id %}
+        <div class="row">
+            <div class="col-md-6">
+                <a href="{% url 'payment' ticket_type_id %}">Back to ticket page</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock content %}

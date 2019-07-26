@@ -20,6 +20,15 @@
         <button class="btn btn-success" id="card-button">Submit Payment</button>
     </div>
 </div>
+    <div class="row">
+        <div class="col-md-6  padding-bot-sm">
+
+        <a href="{% url 'payment_info' ticket_type.id %}">How safe it this payment page?</a>
+        </div>
+    </div>
+
+
+
     <script>
         var stripe = Stripe('{% stripe_public_key %}');
 

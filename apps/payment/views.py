@@ -17,11 +17,24 @@ from django.utils.translation import ugettext as _
 from apps.lan.models import Ticket, TicketType
 
 
+def payment_info_static(request):
+    return render(request, 'payment/info.html')
+
+
+def payment_info(request, ticket_type_id):
+    return render(
+        request,
+        'payment/info.html',
+        {
+            'ticket_type_id': ticket_type_id
+        })
+
+
 @login_required()
-def payment(request, ticket_id):
+def payment(request, ticket_type_id):
     stripe.api_key = settings.STRIPE_PRIVATE_KEY
 
-    ticket_type = get_object_or_404(TicketType, pk=ticket_id)
+    ticket_type = get_object_or_404(TicketType, pk=ticket_type_id)
 
     if ticket_type.lan.has_ticket(request.user):
         messages.info(request, _(u'You have already have a ticket for this event'))
