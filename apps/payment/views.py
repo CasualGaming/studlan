@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.translation import ugettext as _
@@ -22,6 +22,10 @@ def payment(request, ticket_id):
     stripe.api_key = settings.STRIPE_PRIVATE_KEY
 
     ticket_type = get_object_or_404(TicketType, pk=ticket_id)
+
+    if ticket_type.lan.has_ticket(request.user):
+        messages.info(request, _(u'You have already have a ticket for this event'))
+        return redirect('lan_details', lan_id=ticket_type.lan_id)
 
     if request.method == 'GET':
         return render(
