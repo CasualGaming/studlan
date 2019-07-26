@@ -9,89 +9,30 @@
 {% endblock title %}
 
 {% block content %}
-    <script src="https://js.stripe.com/v3/"></script>
     <div class="row">
-    <div class="col-md-6">
-        <h2>Do you want to buy {{ ticket_type }} for {{ lan }}?</h2><br>
-        <h4>Cardholder name:</h4>
-        <input class="form-control padding-bot-sm" id="cardholder-name" name="cardholder-name" type="text"/><br>
-        <h4>Card info:</h4>
-        <div class="form-control padding-bot-sm" id="card-element"></div><br>
-        <button class="btn btn-success" id="card-button">Submit Payment</button>
+        <div class="col-md-6">
+            <h2>Do you want to buy {{ ticket_type }} for {{ lan }}?</h2><br>
+            <h4>Cardholder name:</h4>
+            <input class="form-control padding-bot-sm" id="cardholder-name" name="cardholder-name" type="text"/><br>
+            <h4>Card info:</h4>
+            <div class="form-control padding-bot-sm" id="card-element"></div><br>
+            <button class="btn btn-success" id="card-button">Submit Payment</button>
+        </div>
     </div>
-</div>
     <div class="row">
         <div class="col-md-6  padding-bot-sm">
-
         <a href="{% url 'payment_info' ticket_type.id %}">How safe it this payment page?</a>
         </div>
     </div>
-
-
-
-    <script>
-        var stripe = Stripe('{% stripe_public_key %}');
-
-        var elements = stripe.elements();
-        var cardElement = elements.create(
-            'card',
-            {
-                hidePostalCode: true
-            });
-        cardElement.mount('#card-element');
-
-        var cardholderName = document.getElementById('cardholder-name');
-        var cardButton = document.getElementById('card-button');
-
-        cardButton.addEventListener('click', function(ev) {
-          stripe.createPaymentMethod('card', cardElement, {
-            billing_details: {name: cardholderName.value}
-          }).then(function(result) {
-            if (result.error) {
-            } else {
-              cardButton.disabled = true;
-              fetch("{% url 'payment' ticket_type.id %}", {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}'},
-                body: JSON.stringify({payment_method_id: result.paymentMethod.id})})
-                  .then(function(result) {
-                // Handle server response (see Step 3)
-                result.json().then(function(json) {
-                  handleServerResponse(json);
-                })
-              });
-            }
-          });
-        });
-
-        function handleServerResponse(response) {
-          if (response.error) {
-            setTimeout(function () {
-                        window.location.href = "{% url 'lan_details' lan.id %}";
-                  }, 100);
-          } else if (response.requires_action) {
-            stripe.handleCardAction(
-              response.payment_intent_client_secret
-            ).then(function(result) {
-              if (result.error) {
-                  setTimeout(function () {
-                        window.location.href = "{% url 'lan_details' lan.id %}";
-                  }, 100);
-              } else {
-                fetch("{% url 'payment' ticket_type.id %}", {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token }}'},
-                  body: JSON.stringify({ payment_intent_id: result.paymentIntent.id })
-                }).then(function(confirmResult) {
-                  return confirmResult.json();
-                }).then(handleServerResponse);
-              }
-            });
-          } else {
-              setTimeout(function () {
-                   window.location.href = "{% url 'lan_details' lan.id %}";
-              }, 100);
-          }
-        }
-    </script>
 {% endblock content %}
+
+{% block script %}
+    <script type="text/javascript">
+        var stripe_public_key = '{% stripe_public_key %}';
+        var csrf_token = '{{ csrf_token }}';
+        var lan_url = '{% url 'lan_details' lan.id %}';
+        var payment_url = '{% url 'payment' ticket_type.id %}';
+    </script>
+    <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
+    <script type="text/javascript" src="{% static 'js/payment.js' %}"></script>
+{% endblock script %}
