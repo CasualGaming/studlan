@@ -15,11 +15,7 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-md-9">
         {% if user == quser or perms.userprofile.show_private_info %}
         <h3>{% trans "Private Information" %}</h3>
         <table class="table ">
@@ -67,21 +63,28 @@
             </tbody>
         </table>
 
-        <h4>{% trans "Seating Info" %}</h4>
-        {% for seat in user_seats %}
-        <div class="col-md-6">
-            <div class="panel panel-default">
-                <a href="{{seat.seating.lan.get_absolute_url}}">
-                <div class="panel-body">
-                    Event: {{seat.seating.lan}}
-                </div></a>
-                <a href="{{seat.seating.get_absolute_url}}{{seat.placement}}">
-                <div class="panel-footer">
-                    {{seat.seating}}, seat {{seat.placement}}
-                </div></a>
-            </div>
-        </div>
-        {% endfor %}
+        {% if user_seats %}
+        <h4>{% trans "LAN Seatings" %}</h4>
+        <table class="well table">
+            <thead>
+                <th>{% trans "LAN" %}</th>
+                <th>{% trans "Seat" %}</th>
+            </thead>
+            <tbody>
+                {% for seat in user_seats %}
+                <tr>
+                    <td><a href="{{ seat.seating.lan.get_absolute_url }}">{{ seat.seating.lan }}</a></td>
+                    <td><a href="{{ seat.seating.get_absolute_url }}{{ seat.placement }}">{{ seat.seating }}, {% trans "seat" %} {{ seat.placement }}</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+
+        {% if competitions %}
+        <h4>{% trans "Competitions" %}</h4>
+        {% include "competition/competition_user_table.html" %}
+        {% endif %}
         {% endif %}
     </div>
 </div>

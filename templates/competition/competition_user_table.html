@@ -1,0 +1,24 @@
+{% load i18n %}
+
+<table class="well table">
+    <thead>
+        <th>{% trans "LAN" %}</th>
+        <th>{% trans "Competition" %}</th>
+        <th>{% trans "Type" %}</th>
+        <th>{% trans "Status" %}</th>
+    </thead>
+    <tbody>
+        {% for competition in competitions %}
+        <tr>
+            <td><a href="{{ competition.lan.get_absolute_url }}">{{ competition.lan }}</a></td>
+            <td><a href="{% url "competition_details" competition.id %}">{{ competition }}</a></td>
+            {% if competition.use_teams %}
+            <td><span class="label label-success">{% trans "Team" %}</span></td>
+            {% else %}
+            <td><span class="label label-info">{% trans "Solo" %}</span></td>
+            {% endif %}
+            <td><span class="label label-{{ competition.status_label }}">{{ competition.status_text }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

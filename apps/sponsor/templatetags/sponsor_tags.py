@@ -11,15 +11,11 @@ from apps.sponsor.models import SponsorRelation
 register = template.Library()
 
 
-@register.inclusion_tag('sponsor/sponsor_list.html')
-def show_sponsor_list():
-
+@register.assignment_tag
+def upcoming_lan_sponsors():
     lans = LAN.objects.filter(end_date__gte=datetime.now())
     if lans:
-        sponsor_relations = SponsorRelation.objects.filter(lan__in=lans)
+        sponsor_relations = SponsorRelation.objects.filter(lan__in=lans).select_related('sponsor').order_by('priority')
+        return [r.sponsor for r in sponsor_relations]
     else:
-        sponsor_relations = []
-
-    sponsors = [sponsor_relation.sponsor for sponsor_relation in sponsor_relations]
-
-    return {'sponsors': sponsors}
+        return None

@@ -16,5 +16,12 @@
     </div>
 
     {% profile_tabs 'profile' %}
+
     {% include "user/profile_content.html" %}
+
+    <div class="row">
+        <div class="col-md-9">
+            <a class="btn btn-primary" href="{% url "public_profile" request.user %}">{% trans "Go to public profile page" %}</a>
+        </div>
+    </div>
 {% endblock content %}

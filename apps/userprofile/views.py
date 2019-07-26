@@ -11,7 +11,7 @@ from django.utils.translation import ugettext as _
 
 from postman.models import Message
 
-from apps.lan.models import Attendee
+from apps.competition.models import Competition
 from apps.seating.models import Seat
 from apps.userprofile.forms import UserProfileForm
 from apps.userprofile.models import Alias, AliasType
@@ -19,18 +19,32 @@ from apps.userprofile.models import Alias, AliasType
 
 @login_required
 def my_profile(request):
-    user_seats = Seat.objects.filter(user=request.user)
-    profile = request.user.profile
+    context = {}
+    quser = request.user
+    context['quser'] = quser
+    context['profile'] = quser.profile
 
-    return render(request, 'user/profile.html', {'quser': request.user, 'profile': profile, 'user_seats': user_seats})
+    return render(request, 'user/profile.html', context)
 
 
 def user_profile(request, username):
+    context = {}
     quser = get_object_or_404(User, username=username)
-    user_seats = Seat.objects.filter(user=quser)
-    profile = quser.profile
+    context['quser'] = quser
+    context['profile'] = quser.profile
+    if request.user == quser or request.user.has_perm('userprofile.show_private_info'):
+        user_seats = Seat.objects.filter(user=quser)
+        competitions = Competition.get_all_for_user(quser)
+        context['user_seats'] = user_seats
+        context['competitions'] = competitions
 
-    return render(request, 'user/public_profile.html', {'quser': quser, 'profile': profile, 'user_seats': user_seats})
+    return render(request, 'user/public_profile.html', context)
+
+
+@login_required
+def user_competitions(request):
+    competitions = Competition.get_all_for_user(request.user)
+    return render(request, 'user/competitions.html', {'competitions': competitions})
 
 
 @login_required
@@ -48,13 +62,8 @@ def update_profile(request):
 
 @login_required
 def history(request):
-    attended = Attendee.objects.filter(user=request.user)
-
-    for attendee in attended:
-        if attendee.lan.has_ticket(request.user):
-            attendee.has_paid = True
-
-    return render(request, 'user/history.html', {'attended': attended})
+    user_seats = Seat.objects.filter(user=request.user)
+    return render(request, 'user/history.html', {'user_seats': user_seats})
 
 
 @login_required
