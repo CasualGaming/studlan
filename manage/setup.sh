@@ -36,6 +36,10 @@ echo "Running migration ..."
 $MANAGE migrate --fake-initial
 
 echo
+echo "Compiling translations ..."
+$MANAGE compilemessages --locale=nb
+
+echo
 echo "Adding superuser ..."
     $MANAGE shell << END
 # Python 2
