@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made email templates slightly prettier and added HTML version.
 - Replaced logo images with higher-definition versions (but same graphics).
 - Replaced default sidebar with sponsorbar.
+- Made seating layout generator use relative coordinated instead of pixels.
 
 ### Deprecated
 
