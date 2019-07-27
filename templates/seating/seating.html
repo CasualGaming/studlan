@@ -58,8 +58,8 @@ Seating
 
                             {% if perms.seating.export_seating %}
                             <li class="sidebar-header"><a href="">{% trans "Admin" %}</a></li>
-                            <li><a href="{% url 'list' seating.id %}"><span class="glyphicon glyphicon-th"></span>Seatlist</a></li>
-                            <li><a href="{% url 'map' seating.id %}"><span class="glyphicon glyphicon-th"></span>SeatMap</a></li>
+                            <li><a href="{% url 'list' seating.id %}"><span class="glyphicon glyphicon-th"></span>Seating list ({{ LANG_INFO.name }})</a></li>
+                            <li><a href="{% url 'map' seating.id %}"><span class="glyphicon glyphicon-th"></span>Seating map ({{ LANG_INFO.name }})</a></li>
                             {% endif %}
 
                             <li class="sidebar-header"><a href="">{% trans "Seat Info" %}</a></li>

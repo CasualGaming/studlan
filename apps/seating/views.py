@@ -12,7 +12,8 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext as _
 
-from reportlab.pdfgen import canvas
+from reportlab.lib import pagesizes
+from reportlab.pdfgen.canvas import Canvas as PdfCanvas
 
 from apps.lan.models import Attendee, LAN
 from apps.seating.models import Seat, Seating
@@ -180,24 +181,50 @@ def seating_list(request, seating_id):
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename=' + seating.title + '.pdf'
 
-    p = canvas.Canvas(response)
+    page_size = pagesizes.A4
+    page_width, page_height = page_size
+    page_width_center = page_width / 2
+    p = PdfCanvas(response, pagesize=page_size)
 
-    p.drawString(230, 820, lan.title)
-    p.drawString(230, 800, seating.title)
-    cursor = 750
-    for s in seats:
-        if s.user:
-            p.drawString(230, cursor, 'Plass ' + unicode(s.placement) + ': ')
-            p.drawString(290, cursor, unicode(s.user))
-        else:
-            p.drawString(230, cursor, 'Plass ' + unicode(s.placement) + ': ')
-            p.drawString(290, cursor, '[Ledig]')
-        cursor -= 19
-        if cursor < 50:
-            p.showPage()
-            p.drawString(230, 820, lan.title)
-            p.drawString(230, 800, seating.title)
-            cursor = 750
+    cursor_top = page_height - 120
+    left_col_offset = 50
+    right_col_offset = 300
+
+    # 1 is left, 2 is right
+    page_side = 1
+    cursor = cursor_top
+    new_page = True
+    x_offset = left_col_offset
+    page_num = 1
+    for seat in seats:
+        if cursor < 70:
+            # Flip to right side or new page
+            cursor = cursor_top
+            if page_side == 1:
+                page_side = 2
+                x_offset = right_col_offset
+            else:
+                page_side = 1
+                x_offset = left_col_offset
+                new_page = True
+                page_num += 1
+                p.showPage()
+
+        if new_page:
+            new_page = False
+            p.setFont('Times-Roman', 25)
+            p.drawCentredString(page_width_center, page_height - 60, lan.title)
+            p.setFont('Times-Roman', 20)
+            p.drawCentredString(page_width_center, page_height - 90, seating.title)
+            p.setFont('Helvetica', 14)
+            p.drawCentredString(page_width_center, 40, '{0} {1}'.format(_(u'Page'), page_num))
+            # For seat text
+            p.setFont('Helvetica', 14)
+
+        occupant = unicode(seat.user) if seat.user else ''
+        p.drawString(x_offset, cursor, u'{0} {1}: {2}'.format(_(u'Seat'), seat.placement, occupant))
+
+        cursor -= 20
 
     p.showPage()
     p.save()
@@ -214,28 +241,37 @@ def seating_map(request, seating_id):
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename=' + seating.title + '.pdf'
 
-    p = canvas.Canvas(response)
+    page_size = pagesizes.A4
+    page_width, page_height = page_size
+    page_width_center = page_width / 2
+    page_height_center = page_height / 2
+    p = PdfCanvas(response, pagesize=page_size)
 
-    pagecounter = 0
-    for s in seats:
-        if pagecounter == 1:
-            y_value = 780
+    new_page = True
+    y_offset = page_height_center
+    for seat in seats:
+        p.setFont('Times-Roman', 40)
+        p.drawCentredString(page_width_center, y_offset + 310, lan.title)
+        p.setFont('Times-Roman', 35)
+        text = _(u'%(seating)s, seat %(seat)d') % {'seating': seating.title, 'seat': seat.placement}
+        p.drawCentredString(page_width_center, y_offset + 250, text)
+        if seat.user:
+            p.setFont('Helvetica', 40)
+            occupant = unicode(seat.user)
+        else:
+            p.setFont('Helvetica', 40)
+            occupant = _(u'(Available)')
+        p.drawCentredString(page_width_center, y_offset + 150, occupant)
+
+        if new_page:
+            new_page = False
+            y_offset = 0
+        else:
+            new_page = True
+            y_offset = page_height_center
             p.showPage()
-            pagecounter = 0
-        else:
-            pagecounter += 1
-            y_value = 450
 
-        p.setFont('Helvetica', 30)
-        p.drawString(180, y_value, lan.title)
-        p.drawString(180, y_value - 80, seating.title)
-        if s.user:
-            p.drawString(180, y_value - 130, 'Plass ' + unicode(s.placement) + ': ')
-            p.drawString(180, y_value - 180, unicode(s.user))
-        else:
-            p.drawString(180, y_value - 130, 'Plass ' + unicode(s.placement) + ': ')
-            p.drawString(180, y_value - 180, '[Ledig]')
-
+    p.showPage()
     p.save()
 
     return response
