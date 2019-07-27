@@ -14,7 +14,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added LAN listing for competitions.
 - Added instructions for changing email address and password.
 - Lottery now throws out all participants (but keeps winners) if the lottery does not have multiple winnings.
-- Slightly prettier email templates.
 - Added list of competitions a user has or is participating in.
 - Added seating info to user LAN history.
 
@@ -25,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made sponsor page prettier.
 - Made breadcrumbs more consistent and changed which pages show them.
 - Made page headers visually more consistent and appropriate.
+- Made email templates slightly prettier and added HTML version.
 - Replaced logo images with higher-definition versions (but same graphics).
 - Replaced default sidebar with sponsorbar.
 

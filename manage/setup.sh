@@ -28,10 +28,6 @@ fi
 echo "0.0.0-SNAPSHOT" > VERSION
 
 echo
-echo "Collecting static files ..."
-$MANAGE collectstatic --noinput --clear
-
-echo
 echo "Running migration ..."
 $MANAGE migrate --fake-initial
 
