@@ -27,8 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made email templates slightly prettier and added HTML version.
 - Replaced logo images with higher-definition versions (but same graphics).
 - Replaced default sidebar with sponsorbar.
-- Made seating layout generator use relative coordinated instead of pixels.
-- Made exported seating list and map prettier.
+- Made seating layout generator use relative coordinates instead of pixels.
+- Made exported seating list and map prettier and i18n'd.
 
 ### Deprecated
 
@@ -38,10 +38,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed (moved) sidebar from top of page on small screens.
 
 ### Fixed
-- Fixed HTML DOM bug in the seating app template.
+- Fixed HTML DOM bug (unclosed tag) in the seating app template.
 - Fixed seating map size inconsistency across browsers.
 - Fixed account recovery sending recovery emails to only one account for a certain email address.
-- Fixed old translations being deactivated/removed.
+- Fixed old translations not being compiled and used.
 
 ### Security
 
