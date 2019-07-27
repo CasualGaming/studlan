@@ -40,6 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed HTML DOM bug in the seating app template.
 - Fixed seating map size inconsistency across browsers.
 - Fixed account recovery sending recovery emails to only one account for a certain email address.
+- Fixed old translations being deactivated/removed.
 
 ### Security
 
