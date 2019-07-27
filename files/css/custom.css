@@ -15,6 +15,17 @@ h1, h2, h3, h4, h5, h6 {
     word-wrap: break-word;
 }
 
+iframe {
+    border: 0;
+}
+
+footer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px solid #DDD;
+    margin-top: 30px;
+}
+
 .white-text {
     color: #ccc;
 }
@@ -409,18 +420,13 @@ img.navbar-brand {
     margin-top: 20px;
 }
 
-footer {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-top: 1px solid #DDD;
-    margin-top: 30px;
-}
-
 .alert {
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
-iframe {
-    border: 0;
+.schedule-calendar {
+    width: 100%;
+    height: 75vh;
+    margin-top: 10px;
 }

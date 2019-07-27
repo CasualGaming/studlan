@@ -1,8 +1,10 @@
 {% load i18n %}
 {% load settings %}
 {% load static %}
+{% load tz %}
 
 {% get_current_language as LANGUAGE_CODE %}
+{% get_current_timezone as TIME_ZONE %}
 
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE }}">
