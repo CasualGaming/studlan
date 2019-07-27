@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Replaced default sidebar with sponsorbar.
 - Made seating layout generator use relative coordinates instead of pixels.
 - Made exported seating list and map prettier and i18n'd.
+- Made schedule use current time zone instead of a hardcoded one.
 
 ### Deprecated
 
@@ -42,6 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed seating map size inconsistency across browsers.
 - Fixed account recovery sending recovery emails to only one account for a certain email address.
 - Fixed old translations not being compiled and used.
+- Fixed schedule failing to load.
 
 ### Security
 
