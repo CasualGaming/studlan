@@ -10,7 +10,7 @@ class Key(models.Model):
     owner = models.ForeignKey(User)
 
     def __unicode__(self):
-        return ugettext(u'API key for %(owner)s') % self.owner
+        return ugettext(u'API key for {owner}').format(owner=self.owner)
 
     class Meta:
         verbose_name = _(u'API key')

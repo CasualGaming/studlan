@@ -7,8 +7,10 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
 
 from postman.api import pm_write
@@ -35,7 +37,7 @@ def create_team(request):
     if request.method == 'POST':
         # Stop if a person tries to create more than the allowed ammount of teams.
         if Team.objects.filter(leader=request.user).count() >= settings.MAX_TEAMS:
-            messages.error(request, _(u'You cannot be leader of more than ') + settings.MAX_TEAMS + _(u' teams.'))
+            messages.error(request, _(u'You cannot be leader of more than {max} teams.').format(max=settings.MAX_TEAMS))
             return redirect('teams')
 
         form = TeamCreationForm(request.POST)
@@ -49,7 +51,7 @@ def create_team(request):
             )
             team.save()
 
-            messages.success(request, unicode(team) + _(u' has been created.'))
+            messages.success(request, _(u'{team} has been created.').format(team=team))
             return redirect(team)
         else:
             form = TeamCreationForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
@@ -68,7 +70,7 @@ def disband_team(request, team_id):
     else:
         team.delete()
 
-        messages.success(request, unicode(team) + _(u' was successfully deleted.'))
+        messages.success(request, _(u'{team} was successfully deleted.').format(team=team))
         return redirect('teams')
 
 
@@ -102,14 +104,14 @@ def add_member(request, team_id):
             user_id = request.POST.get('selectMember')
             user = get_object_or_404(User, pk=user_id)
             if len(Member.objects.filter(user=user, team=team)) > 0:
-                messages.error(request, unicode(user) + _(u' is already on your team.'))
+                messages.error(request, _(u'{member} is already on your team.').format(member=user))
             else:
                 member = Member()
                 member.team = team
                 member.user = user
                 member.save()
 
-                messages.success(request, unicode(user) + _(u' was added to your team'))
+                messages.success(request, _(u'{member} was added to your team.').format(member=user))
 
     return redirect(team)
 
@@ -129,11 +131,9 @@ def invite_member(request, team_id):
             except ObjectDoesNotExist:
                 user = None
             if not user:
-                messages.error(request, _(u'User ') + username + _(u' does not exist.'))
-            elif user == team.leader:
-                messages.error(request, _(u'You cannot invite the team leader.'))
-            elif len(Member.objects.filter(user=user, team=team)) > 0:
-                messages.error(request, _(u'User ') + unicode(user) + _(u' is already on your team.'))
+                messages.error(request, _(u'User {user} does not exist.').format(user=username))
+            elif user == team.leader or len(Member.objects.filter(user=user, team=team)) > 0:
+                messages.error(request, _(u'User {user} is already on your team.').format(user=user))
             else:
                 existing_invitation = Invitation.objects.filter(invitee=user, team=team)
                 if not existing_invitation:
@@ -142,17 +142,19 @@ def invite_member(request, team_id):
                     invitation.invitee = user
                     invitation.token = uuid.uuid1().hex
                     invitation.save()
-                    invitation_message = 'You have been invited to <a href="' + team.get_absolute_url() + '">' + team.title \
-                                         + '</a> by ' + unicode(request.user)
-                    invitation_message += '. You can either '
-                    invitation_message += '<a href="' + team.get_absolute_url() + 'join ' + '"> Accept</a> or'
-                    invitation_message += '<a href="' + team.get_absolute_url() + 'remove_invitation/' + \
-                                          invitation.token + '"> Decline</a> the invitation.'
-                    pm_write(request.user, user, invitation.token, body=invitation_message)
 
-                    messages.success(request, _(u'User ') + unicode(user) + _(u' was invited to your team.'))
+                    context = {
+                        'team': team,
+                        'inviter': request.user,
+                        'accept_link': request.build_absolute_uri(reverse('join_team', args=[team.id])),
+                        'decline_link': request.build_absolute_uri(reverse('remove_invitation', args=[team.id, invitation.token])),
+                    }
+                    message = render_to_string('team/message/team_invitation.html', context, request).strip()
+                    pm_write(request.user, user, invitation.token, body=message)
+
+                    messages.success(request, _(u'User {user} was invited to your team.').format(user=user))
                 else:
-                    messages.error(request, _(u'User ') + unicode(user) + _(u' has already been invited to your team.'))
+                    messages.error(request, _(u'User {user} has already been invited to your team.').format(user=user))
 
     return redirect(team)
 
@@ -179,7 +181,7 @@ def join_team(request, team_id):
     else:
         user = request.user
         if len(Member.objects.filter(user=user, team=team)) > 0:
-            messages.error(request, unicode(user) + _(u', you are already on this team.'))
+            messages.error(request, _(u'You are already on this team.'))
         else:
             member = Member()
             member.team = team
@@ -204,8 +206,8 @@ def remove_member(request, team_id, user_id):
         member = get_object_or_404(Member, user=user, team=team)
         member.delete()
         if request.user == user:
-            messages.success(request, _(u'You have left team ') + unicode(team))
+            messages.success(request, _(u'You have left team {team}.').format(team=team))
         else:
-            messages.success(request, unicode(user.username) + _(u' removed from your team.'))
+            messages.success(request, _(u'{user} removed from the team.').format(user=user))
 
     return redirect(team)

@@ -59,6 +59,6 @@ def payment(request, ticket_id):
                 html_message=html_message,
             )
 
-            messages.success(request, _(u'Payment complete — Confirmation mail sent to ') + request.user.email)
+            messages.success(request, _(u'Payment complete. Confirmation sent to {email}.').format(email=request.user.email))
 
     return HttpResponseRedirect('/')

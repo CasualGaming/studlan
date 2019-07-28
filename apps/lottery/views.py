@@ -56,7 +56,7 @@ def drawing(request, lottery_id=False):
     elif Lottery.objects.count() > 0:
         lottery = Lottery.objects.latest('pk')
     else:
-        raise Http404('No lotteries exist')
+        raise Http404(_(u'Lottery not found.'))
 
     winners = LotteryWinner.objects.filter(lottery=lottery).order_by('-id').all()
     winner = None
@@ -72,7 +72,7 @@ def draw(request, lottery_id):
     participants = lottery.lotteryparticipant_set.all()
 
     if len(participants) < 1:
-        messages.error(request, 'No eligible participants')
+        messages.error(request, _(u'No eligible participants.'))
         return redirect(drawing, lottery_id)
 
     rand = SystemRandom()

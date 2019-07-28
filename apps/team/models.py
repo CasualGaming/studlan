@@ -15,6 +15,11 @@ class Team(models.Model):
     leader = models.ForeignKey(User, verbose_name=_(u'leader'), blank=False, related_name='newteamleader')
     members = models.ManyToManyField(User, verbose_name=_(u'members'), related_name='new_team_members', through='Member')
 
+    @property
+    def full_member_count(self):
+        # Team leader not included
+        return Member.objects.filter(team=self).count() + 1
+
     def get_absolute_url(self):
         return reverse('show_team', kwargs={'team_id': self.id})
 

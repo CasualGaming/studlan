@@ -112,7 +112,7 @@ def take(request, seating_id, seat_id):
     occupied = seating.get_user_registered()
 
     if not seating.is_open():
-        messages.error(request, _(u'This seatmap is closed.'))
+        messages.error(request, _(u'This seat map is closed.'))
         return redirect(seating)
 
     for sibling in siblings:
@@ -135,7 +135,7 @@ def take(request, seating_id, seat_id):
                 seat.save()
                 messages.success(request, _(u'You have successfully reserved your seat.'))
             else:
-                messages.error(request, _(u'That seat is reserved by ' + unicode(seat.user)))
+                messages.error(request, _(u'That seat is reserved by {user}.').format(user=seat.user))
         else:
             messages.error(request, _(u'Your ticket does not allow reservation in this seating.'))
     else:

@@ -85,7 +85,7 @@ def toggle(request, lan_id):
             attendee.save()
 
         except Attendee.DoesNotExist:
-            messages.error(request, u'{0} was not found in attendees for {1}'.format(user, lan))
+            messages.error(request, _(u'{user} was not found in attendees for {lan}.').format(user=user, lan=lan))
 
         return HttpResponse(status=200)
     return HttpResponse(status=404)
