@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='activity',
             name='image_url',
-            field=models.CharField(blank=True, help_text='Use a mirrored image of at least a height of 150px.', max_length=100, verbose_name='image url'),
+            field=models.CharField(blank=True, help_text='Use a mirrored image of at least a height of 150px.', max_length=100, verbose_name='image URL'),
         ),
         migrations.AlterField(
             model_name='competition',
