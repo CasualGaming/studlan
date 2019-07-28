@@ -6,16 +6,16 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _lazy
+from django.utils.translation import ugettext_lazy as _
 
 from apps.lan.models import Attendee, LAN, TicketType
 
 
 class Layout(models.Model):
-    title = models.CharField(_lazy(u'title'), max_length=50)
-    description = models.CharField(_lazy(u'description'), max_length=250)
-    number_of_seats = models.IntegerField(_lazy(u'number of seats'))
-    template = models.TextField(_lazy(u'SVG layout for seating'), blank=True)
+    title = models.CharField(_(u'title'), max_length=50)
+    description = models.CharField(_(u'description'), max_length=250)
+    number_of_seats = models.IntegerField(_(u'number of seats'))
+    template = models.TextField(_(u'SVG layout for seating'), blank=True)
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -31,19 +31,19 @@ class Layout(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = _lazy(u'seating layout')
-        verbose_name_plural = _lazy(u'seating layouts')
+        verbose_name = _(u'seating layout')
+        verbose_name_plural = _(u'seating layouts')
 
 
 class Seating(models.Model):
-    lan = models.ForeignKey(LAN, verbose_name=_lazy(u'lan'))
-    title = models.CharField(_lazy(u'title'), max_length=50)
-    desc = models.CharField(_lazy(u'description'), max_length=250)
-    number_of_seats = models.IntegerField(_lazy(u'number of seats'), default=0, help_text=_lazy(u'This field is automatically updated '
+    lan = models.ForeignKey(LAN, verbose_name=_(u'lan'))
+    title = models.CharField(_(u'title'), max_length=50)
+    desc = models.CharField(_(u'description'), max_length=250)
+    number_of_seats = models.IntegerField(_(u'number of seats'), default=0, help_text=_(u'This field is automatically updated '
                                           'to match the chosen layout. Change the chosen layout to alter this field.'))
-    closing_date = models.DateTimeField(_lazy(u'closing date'))
-    layout = models.ForeignKey(Layout, verbose_name=_lazy(u'layout'))
-    ticket_types = models.ManyToManyField(TicketType, verbose_name=_lazy(u'ticket types'), blank=True, related_name='ticket_types')
+    closing_date = models.DateTimeField(_(u'closing date'))
+    layout = models.ForeignKey(Layout, verbose_name=_(u'layout'))
+    ticket_types = models.ManyToManyField(TicketType, verbose_name=_(u'ticket types'), blank=True, related_name='ticket_types')
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -81,17 +81,17 @@ class Seating(models.Model):
             seat.save()
 
     class Meta:
-        verbose_name = _lazy(u'seating')
-        verbose_name_plural = _lazy(u'seatings')
+        verbose_name = _(u'seating')
+        verbose_name_plural = _(u'seatings')
         permissions = (
             ('export_seating', 'Can export seating to downloadable file'),
         )
 
 
 class Seat(models.Model):
-    user = models.ForeignKey(User, verbose_name=_lazy(u'user'), null=True, blank=True)
-    seating = models.ForeignKey(Seating, verbose_name=_lazy(u'seating'))
-    placement = models.IntegerField(_lazy(u'placement ID'), help_text=_lazy(u'A unique ID within the seating.'))
+    user = models.ForeignKey(User, verbose_name=_(u'user'), null=True, blank=True)
+    seating = models.ForeignKey(Seating, verbose_name=_(u'seating'))
+    placement = models.IntegerField(_(u'placement ID'), help_text=_(u'A unique ID within the seating.'))
 
     def __unicode__(self):
         return str(self.id)
@@ -104,5 +104,5 @@ class Seat(models.Model):
             return None
 
     class Meta:
-        verbose_name = _lazy(u'seat')
-        verbose_name_plural = _lazy(u'seats')
+        verbose_name = _(u'seat')
+        verbose_name_plural = _(u'seats')

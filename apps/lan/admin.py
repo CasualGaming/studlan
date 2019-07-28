@@ -2,14 +2,14 @@
 
 from django.conf import settings
 from django.contrib import admin
-from django.utils.translation import ugettext_lazy as _lazy
+from django.utils.translation import ugettext_lazy as _
 
 from apps.lan.models import Directions, LAN, LANTranslation, Stream, Ticket, TicketType, TicketTypeTranslation
 
 
 class LANTranslationInlineAdmin(admin.StackedInline):
-    verbose_name = _lazy(u'Translation')
-    verbose_name_plural = _lazy(u'Translations')
+    verbose_name = _(u'Translation')
+    verbose_name_plural = _(u'Translations')
     model = LANTranslation
     max_num = len(settings.LANGUAGES)
     extra = 2
@@ -22,8 +22,8 @@ class LANAdmin(admin.ModelAdmin):
 
 
 class TicketTypeTranslationInlineAdmin(admin.StackedInline):
-    verbose_name = _lazy(u'Translation')
-    verbose_name_plural = _lazy(u'Translations')
+    verbose_name = _(u'Translation')
+    verbose_name_plural = _(u'Translations')
     model = TicketTypeTranslation
     max_num = len(settings.LANGUAGES)
     extra = 2

@@ -2,14 +2,14 @@
 
 from django.conf import settings
 from django.contrib import admin
-from django.utils.translation import ugettext_lazy as _lazy
+from django.utils.translation import ugettext_lazy as _
 
 from apps.competition.models import Activity, Competition, CompetitionTranslation, Match, Participant
 
 
 class CompetitionTranslationInlineAdmin(admin.StackedInline):
-    verbose_name = _lazy(u'Competition')
-    verbose_name_plural = _lazy(u'Competitions')
+    verbose_name = _(u'Competition')
+    verbose_name_plural = _(u'Competitions')
     model = CompetitionTranslation
     max_num = len(settings.LANGUAGES)
     extra = 2

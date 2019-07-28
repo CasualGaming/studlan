@@ -6,7 +6,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 from django.forms import models
-from django.utils.translation import ugettext_lazy as _lazy
+from django.utils.translation import ugettext_lazy as _
 
 from apps.userprofile.models import Alias, AliasType, UserProfile
 
@@ -41,7 +41,7 @@ class UserProfileAdmin(UserAdmin):
     def deactivate_users(self, request, queryset):
         for user in queryset:
             if user.id == request.user.id:
-                self.message_user(request, _lazy(u'You cannot deactivate yourself! No actions were performed.'), level=messages.WARNING)
+                self.message_user(request, _(u'You cannot deactivate yourself! No actions were performed.'), level=messages.WARNING)
                 return
         queryset.update(is_active=False)
 
@@ -58,11 +58,11 @@ class UserProfileAdmin(UserAdmin):
                     session.delete()
                     count += 1
 
-        self.message_user(request, _lazy(u'Deleted {0} user sessions.'.format(count)), level=messages.INFO)
+        self.message_user(request, _(u'Deleted {0} user sessions.'.format(count)), level=messages.INFO)
 
-    activate_users.short_description = _lazy(u'Activate')
-    deactivate_users.short_description = _lazy(u'Deactivate')
-    forcefully_logout_users.short_description = _lazy(u'Forcefully log out')
+    activate_users.short_description = _(u'Activate')
+    deactivate_users.short_description = _(u'Deactivate')
+    forcefully_logout_users.short_description = _(u'Forcefully log out')
 
 
 admin.site.register(User, UserProfileAdmin)

@@ -3,14 +3,14 @@
 import re
 
 from django import forms
-from django.utils.translation import ugettext, ugettext_lazy as _lazy
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 from apps.team.models import Team
 
 
 class TeamCreationForm(forms.Form):
-    title = forms.CharField(label=_lazy(u'Title'), max_length=30)
-    tag = forms.CharField(label=_lazy(u'Tag'), max_length=10)
+    title = forms.CharField(label=_(u'Title'), max_length=30)
+    tag = forms.CharField(label=_(u'Tag'), max_length=10)
 
     def clean(self):
         super(TeamCreationForm, self).clean()

@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
 from django.urls import reverse
-from django.utils.translation import ugettext as _, ugettext_lazy as _lazy
+from django.utils.translation import pgettext_lazy, ugettext, ugettext_lazy as _
 
 from translatable.models import TranslatableModel, get_translation_model
 
@@ -14,10 +14,10 @@ from apps.userprofile.models import Alias, AliasType
 
 class Activity(models.Model):
 
-    title = models.CharField(_lazy(u'title'), max_length=50)
-    image_url = models.CharField(_lazy(u'image url'), max_length=100, blank=True,
-                                 help_text=_lazy(u'Use a mirrored image of at least a height of 150px.'))
-    desc = models.TextField(_lazy(u'description'), blank=True)
+    title = models.CharField(_(u'title'), max_length=50)
+    image_url = models.CharField(_(u'image URL'), max_length=100, blank=True,
+                                 help_text=_(u'Use a mirrored image of at least a height of 150px.'))
+    desc = models.TextField(_(u'description'), blank=True)
 
     def __unicode__(self):
         return self.title
@@ -26,60 +26,65 @@ class Activity(models.Model):
         return reverse('activity_details', kwargs={'activity_id': self.id})
 
     class Meta:
-        verbose_name = _lazy(u'activity')
-        verbose_name_plural = _lazy(u'activities')
+        verbose_name = _(u'activity')
+        verbose_name_plural = _(u'activities')
         ordering = ['title']
 
 
 class Competition(TranslatableModel):
 
-    STATUS_OPTIONS = ((1, _lazy(u'Open')), (2, _lazy(u'Closed')), (3, _lazy(u'In progress')),
-                      (4, _lazy(u'Finished')))
+    STATUSES = (
+        (1, pgettext_lazy(u'competition status', u'Registration open')),
+        (2, pgettext_lazy(u'competition status', u'Registration closed')),
+        (3, pgettext_lazy(u'competition status', u'In progress')),
+        (4, pgettext_lazy(u'competition status', u'Finished')),
+    )
+    STATUS_LABELS = [
+        'success',
+        'danger',
+        'warning',
+        'info',
+    ]
+    TOURNAMENT_FORMATS = (
+        ('single elimination', _(u'Single elimination')),
+        ('double elimination', _(u'Double elimination')),
+    )
 
-    TOURNAMENT_FORMATS = (('single elimination', _lazy(u'Single elimination')), ('double elimination', _lazy(u'Double elimination')))
-
-    statuses = {
-        1: [_lazy(u'Registration open'), 'success'],
-        2: [_lazy(u'Registration closed'), 'danger'],
-        3: [_lazy(u'Competition in progress'), 'warning'],
-        4: [_lazy(u'Competition finished'), 'info'],
-    }
-
-    status = models.SmallIntegerField(_lazy(u'status'), choices=STATUS_OPTIONS)
-    activity = models.ForeignKey(Activity, verbose_name=_lazy(u'activity'))
-    lan = models.ForeignKey(LAN, verbose_name=_lazy(u'lan'))
-    challonge_url = models.CharField(_lazy(u'Challonge URL'), max_length=50, blank=True)
-    team_size = models.IntegerField(_lazy(u'team size'), default=5, blank=True)
-    start_time = models.DateTimeField(_lazy(u'start time'), blank=True, null=True)
+    status = models.SmallIntegerField(_(u'status'), choices=STATUSES)
+    activity = models.ForeignKey(Activity, verbose_name=_(u'activity'))
+    lan = models.ForeignKey(LAN, verbose_name=_(u'lan'))
+    challonge_url = models.CharField(_(u'Challonge URL'), max_length=50, blank=True)
+    team_size = models.IntegerField(_(u'team size'), default=5, blank=True)
+    start_time = models.DateTimeField(_(u'start time'), blank=True, null=True)
 
     tournament_format = models.CharField(
-        _lazy(u'tournament format'), max_length=20, blank=True, choices=TOURNAMENT_FORMATS)
+        _(u'tournament format'), max_length=20, blank=True, choices=TOURNAMENT_FORMATS)
 
     max_participants = models.SmallIntegerField(
-        _lazy(u'maximum participants'), default=0, help_text=_lazy(u'The maximum number of participants allowed for a competition.'
-                                                                   'Restricts participants based on competition type. 0 means'
-                                                                   ' infinite participants are allowed.'))
+        _(u'maximum participants'), default=0, help_text=_(u'The maximum number of participants allowed for a competition.'
+                                                           'Restricts participants based on competition type. 0 means'
+                                                           ' infinite participants are allowed.'))
 
     use_teams = models.BooleanField(
-        _lazy(u'use teams'), default=False, help_text=_lazy(u'If checked, participants will be ignored, and will '
-                                                            'instead use teams. If left unchecked teams will be ignored, '
-                                                            'and participants will be used.'))
+        _(u'use teams'), default=False, help_text=_(u'If checked, participants will be ignored, and will '
+                                                    'instead use teams. If left unchecked teams will be ignored, '
+                                                    'and participants will be used.'))
 
     enforce_team_size = models.BooleanField(
-        _lazy(u'enforce teams'), default=False, help_text=_lazy(u'If checked, teams will require x members (specified in team_size)'
-                                                                ' before being able to sign up.'))
+        _(u'enforce teams'), default=False, help_text=_(u'If checked, teams will require x members (specified in team_size)'
+                                                        ' before being able to sign up.'))
 
     enforce_payment = models.BooleanField(
-        _lazy(u'enforce payment'), default=False, help_text=_lazy(u'If checked, teams will require x members (specified in team_size)'
-                                                                  ' with valid tickets before being able to sign up.'))
+        _(u'enforce payment'), default=False, help_text=_(u'If checked, teams will require x members (specified in team_size)'
+                                                          ' with valid tickets before being able to sign up.'))
 
     require_alias = models.BooleanField(
-        _lazy(u'require alias'), default=False, help_text=_lazy(u'If checked, players will need to register an alias for the '
-                                                                'Activity that the competition belongs to.'))
+        _(u'require alias'), default=False, help_text=_(u'If checked, players will need to register an alias for the '
+                                                        'Activity that the competition belongs to.'))
 
     max_match_points = models.SmallIntegerField(
-        _lazy(u'maximum match points'), default=1, help_text=_lazy(u'This number represents how many points are needed to win '
-                                                                   'a match. E.g. 3 in a BO 5 or 16 in BO 30'))
+        _(u'maximum match points'), default=1, help_text=_(u'This number represents how many points are needed to win '
+                                                           'a match. E.g. 3 in a BO 5 or 16 in BO 30'))
 
     def get_teams(self):
         if self.use_teams:
@@ -128,13 +133,10 @@ class Competition(TranslatableModel):
             return -1
 
     def status_text(self):
-        return self.STATUS_OPTIONS[self.status - 1][1]
-
-    def status_text_verbose(self):
-        return self.statuses[self.status][0]
+        return self.STATUSES[self.status - 1][1]
 
     def status_label(self):
-        return self.statuses[self.status][1]
+        return self.STATUS_LABELS[self.status - 1]
 
     def get_absolute_url(self):
         return reverse('competition_details', kwargs={'competition_id': self.id})
@@ -153,8 +155,8 @@ class Competition(TranslatableModel):
         return competitions
 
     class Meta:
-        verbose_name = _lazy(u'competition')
-        verbose_name_plural = _lazy(u'competitions')
+        verbose_name = _(u'competition')
+        verbose_name_plural = _(u'competitions')
         ordering = ['status']
         permissions = (
             ('manage', 'Manage compos and matches'),
@@ -162,23 +164,23 @@ class Competition(TranslatableModel):
 
 
 class CompetitionTranslation(get_translation_model(Competition, 'competition')):
-    translated_title = models.CharField(_lazy(u'title'), max_length=50)
-    translated_description = models.TextField(_lazy(u'description'))
+    translated_title = models.CharField(_(u'title'), max_length=50)
+    translated_description = models.TextField(_(u'description'))
 
     def __unicode__(self):
         return self.translated_title
 
     class Meta:
-        verbose_name = _lazy(u'competition translation')
-        verbose_name_plural = _lazy(u'competition translations')
+        verbose_name = _(u'competition translation')
+        verbose_name_plural = _(u'competition translations')
 
 
 class Participant(models.Model):
-    user = models.ForeignKey(User, verbose_name=_lazy(u'user'), null=True)
-    team = models.ForeignKey('team.Team', verbose_name=_lazy(u'team'), null=True)
-    competition = models.ForeignKey(Competition, verbose_name=_lazy(u'competition'))
+    user = models.ForeignKey(User, verbose_name=_(u'user'), null=True)
+    team = models.ForeignKey('team.Team', verbose_name=_(u'team'), null=True)
+    competition = models.ForeignKey(Competition, verbose_name=_(u'competition'))
     # Nullable (x3)
-    cid = models.CharField(_lazy(u'cid'), max_length=50, null=True, blank=True)
+    cid = models.CharField(_(u'cid'), max_length=50, null=True, blank=True)
 
     def __unicode__(self):
         if self.user:
@@ -193,8 +195,8 @@ class Participant(models.Model):
             return True
 
     class Meta:
-        verbose_name = _lazy(u'competition participant')
-        verbose_name_plural = _lazy(u'competition participants')
+        verbose_name = _(u'competition participant')
+        verbose_name_plural = _(u'competition participants')
         unique_together = (
             ('user', 'competition'),
             ('team', 'competition'),
@@ -203,16 +205,16 @@ class Participant(models.Model):
 
 
 class Match(models.Model):
-    matchid = models.CharField(_lazy(u'match ID'), max_length=50)
-    player1 = models.ForeignKey(Participant, verbose_name=_lazy(u'player 1'), related_name='player1', null=True)
-    player2 = models.ForeignKey(Participant, verbose_name=_lazy(u'player 2'), related_name='player2', null=True)
-    competition = models.ForeignKey(Competition, verbose_name=_lazy(u'competition'))
+    matchid = models.CharField(_(u'match ID'), max_length=50)
+    player1 = models.ForeignKey(Participant, verbose_name=_(u'player 1'), related_name='player1', null=True)
+    player2 = models.ForeignKey(Participant, verbose_name=_(u'player 2'), related_name='player2', null=True)
+    competition = models.ForeignKey(Competition, verbose_name=_(u'competition'))
     # Nullable (x3)
-    p1_reg_score = models.CharField(_lazy(u'p1 reg score'), max_length=50, null=True, blank=True)
-    p2_reg_score = models.CharField(_lazy(u'p2 reg score'), max_length=50, null=True, blank=True)
-    final_score = models.CharField(_lazy(u'final score'), max_length=50, null=True, blank=True)
-    state = models.CharField(_lazy(u'state'), max_length=50)
-    winner = models.ForeignKey(Participant, verbose_name=_lazy(u'winner'), related_name='winner', null=True)
+    p1_reg_score = models.CharField(_(u'p1 reg score'), max_length=50, null=True, blank=True)
+    p2_reg_score = models.CharField(_(u'p2 reg score'), max_length=50, null=True, blank=True)
+    final_score = models.CharField(_(u'final score'), max_length=50, null=True, blank=True)
+    state = models.CharField(_(u'state'), max_length=50)
+    winner = models.ForeignKey(Participant, verbose_name=_(u'winner'), related_name='winner', null=True)
 
     def get_p1(self):
         if self.player1:
@@ -221,7 +223,7 @@ class Match(models.Model):
             else:
                 return self.player1.user
         else:
-            return _(u'TBA')
+            return ugettext(u'TBA')
 
     def get_p2(self):
         if self.player2:
@@ -230,7 +232,7 @@ class Match(models.Model):
             else:
                 return self.player2.user
         else:
-            return _(u'TBA')
+            return ugettext(u'TBA')
 
     def get_compo(self):
         return self.competition.activity.title
@@ -252,5 +254,5 @@ class Match(models.Model):
         return False
 
     class Meta:
-        verbose_name = _lazy(u'competition match')
-        verbose_name_plural = _lazy(u'competition matches')
+        verbose_name = _(u'competition match')
+        verbose_name_plural = _(u'competition matches')

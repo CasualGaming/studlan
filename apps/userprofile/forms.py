@@ -4,7 +4,7 @@ import datetime
 import re
 
 from django import forms
-from django.utils.translation import ugettext, ugettext_lazy as _lazy
+from django.utils.translation import ugettext, ugettext_lazy as _
 
 from apps.userprofile.models import UserProfile
 
@@ -14,11 +14,11 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ('nick', 'date_of_birth', 'address', 'zip_code', 'phone')
         widgets = {
-            'nick': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _lazy(u'Nickname'), 'type': 'text'}),
+            'nick': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _(u'Nickname'), 'type': 'text'}),
             'date_of_birth': forms.TextInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _lazy(u'Street address'), 'type': 'text'}),
-            'zip_code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _lazy(u'Zip code'), 'type': 'number'}),
-            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _lazy(u'Phone number'), 'type': 'tel'})}
+            'address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _(u'Street address'), 'type': 'text'}),
+            'zip_code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _(u'Zip code'), 'type': 'number'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _(u'Phone number'), 'type': 'tel'})}
 
     def clean(self):
         cleaned_data = super(UserProfileForm, self).clean()
