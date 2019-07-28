@@ -13,4 +13,4 @@ trap deactivate EXIT
 set -u
 
 echo "Making migrations ..."
-$MANAGE makemigrations
+$MANAGE makemigrations --no-input

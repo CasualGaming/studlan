@@ -27,6 +27,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made page headers visually more consistent and appropriate.
 - Replaced logo images with higher-definition versions (but same graphics).
 - Replaced default sidebar with sponsorbar.
+- Made activity description optional.
+- Made LAN directions description optional.
+- Made stream description optional.
 
 ### Deprecated
 
@@ -40,6 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed seating map size inconsistency across browsers.
 - Fixed account recovery sending recovery emails to only one account for a certain email address.
 - Fixed old translations being deactivated/removed.
+- Fixed admin panel crashing when trying to forcefully log out users.
 
 ### Security
 

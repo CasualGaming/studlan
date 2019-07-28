@@ -6,15 +6,16 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
 from django.urls import reverse
+from django.utils.translation import ugettext_lazy as _lazy
 
 from apps.lan.models import Attendee, LAN, TicketType
 
 
 class Layout(models.Model):
-    title = models.CharField('title', max_length=50)
-    description = models.CharField('description', max_length=250)
-    number_of_seats = models.IntegerField('number of seats')
-    template = models.TextField('SVG layout for seating', null=True, blank=True)
+    title = models.CharField(_lazy(u'title'), max_length=50)
+    description = models.CharField(_lazy(u'description'), max_length=250)
+    number_of_seats = models.IntegerField(_lazy(u'number of seats'))
+    template = models.TextField(_lazy(u'SVG layout for seating'), blank=True)
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -29,16 +30,20 @@ class Layout(models.Model):
     def __unicode__(self):
         return self.title
 
+    class Meta:
+        verbose_name = _lazy(u'seating layout')
+        verbose_name_plural = _lazy(u'seating layouts')
+
 
 class Seating(models.Model):
-    lan = models.ForeignKey(LAN)
-    title = models.CharField('title', max_length=50)
-    desc = models.CharField('description', max_length=250)
-    number_of_seats = models.IntegerField('number of seats', default=0, help_text='This field is automatically updated '
-                                          'to match the chosen layout. Change the chosen layout to alter this field')
-    closing_date = models.DateTimeField('closing date')
-    layout = models.ForeignKey(Layout)
-    ticket_types = models.ManyToManyField(TicketType, blank=True, related_name='ticket_types')
+    lan = models.ForeignKey(LAN, verbose_name=_lazy(u'lan'))
+    title = models.CharField(_lazy(u'title'), max_length=50)
+    desc = models.CharField(_lazy(u'description'), max_length=250)
+    number_of_seats = models.IntegerField(_lazy(u'number of seats'), default=0, help_text=_lazy(u'This field is automatically updated '
+                                          'to match the chosen layout. Change the chosen layout to alter this field.'))
+    closing_date = models.DateTimeField(_lazy(u'closing date'))
+    layout = models.ForeignKey(Layout, verbose_name=_lazy(u'layout'))
+    ticket_types = models.ManyToManyField(TicketType, verbose_name=_lazy(u'ticket types'), blank=True, related_name='ticket_types')
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -76,15 +81,17 @@ class Seating(models.Model):
             seat.save()
 
     class Meta:
+        verbose_name = _lazy(u'seating')
+        verbose_name_plural = _lazy(u'seatings')
         permissions = (
             ('export_seating', 'Can export seating to downloadable file'),
         )
 
 
 class Seat(models.Model):
-    user = models.ForeignKey(User, null=True, blank=True)
-    seating = models.ForeignKey(Seating)
-    placement = models.IntegerField('placement id')
+    user = models.ForeignKey(User, verbose_name=_lazy(u'user'), null=True, blank=True)
+    seating = models.ForeignKey(Seating, verbose_name=_lazy(u'seating'))
+    placement = models.IntegerField(_lazy(u'placement ID'), help_text=_lazy(u'A unique ID within the seating.'))
 
     def __unicode__(self):
         return str(self.id)
@@ -95,3 +102,7 @@ class Seat(models.Model):
             return attendances[0]
         else:
             return None
+
+    class Meta:
+        verbose_name = _lazy(u'seat')
+        verbose_name_plural = _lazy(u'seats')

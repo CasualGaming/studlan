@@ -3,16 +3,17 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+from django.utils.translation import ugettext_lazy as _lazy
 
 from apps.lan.models import Attendee
 
 
 class Team(models.Model):
-    title = models.CharField('title', max_length=50)
-    tag = models.CharField('tag', max_length=10, unique=True)
+    title = models.CharField(_lazy(u'title'), max_length=50)
+    tag = models.CharField(_lazy(u'tag'), max_length=10, unique=True)
     # Warning: Leader is (generally?) not included in members
-    leader = models.ForeignKey(User, blank=False, related_name='newteamleader')
-    members = models.ManyToManyField(User, related_name='new_team_members', through='Member')
+    leader = models.ForeignKey(User, verbose_name=_lazy(u'leader'), blank=False, related_name='newteamleader')
+    members = models.ManyToManyField(User, verbose_name=_lazy(u'members'), related_name='new_team_members', through='Member')
 
     def get_absolute_url(self):
         return reverse('show_team', kwargs={'team_id': self.id})
@@ -55,23 +56,31 @@ class Team(models.Model):
         return u'[{0}] {1}'.format(self.tag, self.title)
 
     class Meta:
+        verbose_name = _lazy(u'team')
+        verbose_name_plural = _lazy(u'teams')
         ordering = ['tag', 'title']
 
 
 class Member(models.Model):
-    team = models.ForeignKey(Team)
-    user = models.ForeignKey(User)
-    date_joined = models.DateTimeField('date joined', auto_now_add=True)
+    team = models.ForeignKey(Team, verbose_name=_lazy(u'team'))
+    user = models.ForeignKey(User, verbose_name=_lazy(u'user'))
+    date_joined = models.DateTimeField(_lazy(u'date joined'), auto_now_add=True)
 
     def __unicode__(self):
         return self.user.username
 
     class Meta:
+        verbose_name = _lazy(u'team member')
+        verbose_name_plural = _lazy(u'team members')
         unique_together = ('team', 'user')
         ordering = ['user']
 
 
 class Invitation(models.Model):
-    team = models.ForeignKey(Team)
-    invitee = models.ForeignKey(User, related_name='Invitee')
-    token = models.CharField('token', max_length=32, editable=False)
+    team = models.ForeignKey(Team, verbose_name=_lazy(u'team'))
+    invitee = models.ForeignKey(User, verbose_name=_lazy(u'invitee'), related_name='Invitee')
+    token = models.CharField(_lazy(u'token'), max_length=32, editable=False)
+
+    class Meta:
+        verbose_name = _lazy(u'team invitation')
+        verbose_name_plural = _lazy(u'team invitations')

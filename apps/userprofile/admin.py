@@ -6,6 +6,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 from django.forms import models
+from django.utils.translation import ugettext_lazy as _lazy
 
 from apps.userprofile.models import Alias, AliasType, UserProfile
 
@@ -40,20 +41,28 @@ class UserProfileAdmin(UserAdmin):
     def deactivate_users(self, request, queryset):
         for user in queryset:
             if user.id == request.user.id:
-                self.message_user(request, 'You cannot deactivate yourself! No actions were performed.', level=messages.WARNING)
+                self.message_user(request, _lazy(u'You cannot deactivate yourself! No actions were performed.'), level=messages.WARNING)
                 return
         queryset.update(is_active=False)
 
     def forcefully_logout_users(self, request, queryset):
+        # Works only with session engine
+        count = 0
         for session in Session.objects.all():
-            session_user = int(session.get_decoded().get('_auth_user_id'))
+            session_user_str = session.get_decoded().get('_auth_user_id')
+            if session_user_str is None:
+                continue
+            session_user = int(session_user_str)
             for user in queryset:
                 if user.id == session_user:
                     session.delete()
+                    count += 1
 
-    activate_users.short_description = 'Activate'
-    deactivate_users.short_description = 'Deactivate'
-    forcefully_logout_users.short_description = 'Forcefully logout'
+        self.message_user(request, _lazy(u'Deleted {0} user sessions.'.format(count)), level=messages.INFO)
+
+    activate_users.short_description = _lazy(u'Activate')
+    deactivate_users.short_description = _lazy(u'Deactivate')
+    forcefully_logout_users.short_description = _lazy(u'Forcefully log out')
 
 
 admin.site.register(User, UserProfileAdmin)
