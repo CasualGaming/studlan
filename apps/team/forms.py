@@ -3,14 +3,14 @@
 import re
 
 from django import forms
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext, ugettext_lazy as _lazy
 
 from apps.team.models import Team
 
 
 class TeamCreationForm(forms.Form):
-    title = forms.CharField(label=_(u'Title'), max_length=30)
-    tag = forms.CharField(label=_(u'Tag'), max_length=10)
+    title = forms.CharField(label=_lazy(u'Title'), max_length=30)
+    tag = forms.CharField(label=_lazy(u'Tag'), max_length=10)
 
     def clean(self):
         super(TeamCreationForm, self).clean()
@@ -20,10 +20,9 @@ class TeamCreationForm(forms.Form):
             # Validate the tag
             tag = cleaned_data['tag']
             if not re.match('^[a-zA-Z0-9_-]+$', tag):
-                self.add_error('tag', _(u'Your desired tag contains illegal characters. Valid: a-Z 0-9 - _'))
+                self.add_error('tag', ugettext(u'Your desired tag contains illegal characters. Valid: a-Z 0-9 - _'))
 
-            team = Team.objects.filter(tag=tag)
-            if team.count() > 0:
-                self.add_error('tag', _(u'This team tag is taken. The team belongs to ') + unicode(team[0].leader))
+            if Team.objects.filter(tag=tag).exists():
+                self.add_error('tag', ugettext(u'This team tag is already taken.'))
 
             return cleaned_data
