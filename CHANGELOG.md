@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made page headers visually more consistent and appropriate.
 - Replaced logo images with higher-definition versions (but same graphics).
 - Replaced default sidebar with sponsorbar.
+- Made schedule use current time zone instead of a hardcoded one.
 - Made activity description optional.
 - Made LAN directions description optional.
 - Made stream description optional.
@@ -43,8 +44,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed HTML DOM bug in the seating app template.
 - Fixed seating map size inconsistency across browsers.
 - Fixed account recovery sending recovery emails to only one account for a certain email address.
+- Fixed schedule failing to load.
 - Fixed old translations being deactivated/removed.
 - Fixed admin panel crashing when trying to forcefully log out users.
+
 
 ### Security
 
