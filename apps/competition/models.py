@@ -52,7 +52,7 @@ class Competition(TranslatableModel):
 
     status = models.SmallIntegerField(_(u'status'), choices=STATUSES)
     activity = models.ForeignKey(Activity, verbose_name=_(u'activity'))
-    lan = models.ForeignKey(LAN, verbose_name=_(u'lan'))
+    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
     challonge_url = models.CharField(_(u'Challonge URL'), max_length=50, blank=True)
     team_size = models.IntegerField(_(u'team size'), default=5, blank=True)
     start_time = models.DateTimeField(_(u'start time'), blank=True, null=True)
@@ -62,7 +62,7 @@ class Competition(TranslatableModel):
 
     max_participants = models.SmallIntegerField(
         _(u'maximum participants'), default=0, help_text=_(u'The maximum number of participants allowed for a competition.'
-                                                           'Restricts participants based on competition type. 0 means'
+                                                           ' Restricts participants based on competition type. 0 means'
                                                            ' infinite participants are allowed.'))
 
     use_teams = models.BooleanField(
@@ -80,7 +80,7 @@ class Competition(TranslatableModel):
 
     require_alias = models.BooleanField(
         _(u'require alias'), default=False, help_text=_(u'If checked, players will need to register an alias for the '
-                                                        'Activity that the competition belongs to.'))
+                                                        'activity that the competition belongs to.'))
 
     max_match_points = models.SmallIntegerField(
         _(u'maximum match points'), default=1, help_text=_(u'This number represents how many points are needed to win '

@@ -224,7 +224,7 @@ def join(request, competition_id):
     # overridden by team signup, but not other way around
     for team in teams:
         if request.user == team.leader or request.user in team.members.all():
-            messages.error(request, _(u'You are already in this competition with {team}').format(team=team))
+            messages.error(request, _(u'You are already in this competition with {team}.').format(team=team))
             return redirect(competition)
 
     # Checks that a form was posted, and if it contains a team id
@@ -253,14 +253,14 @@ def join(request, competition_id):
             # Check if alias restrictions are in place
             if competition.require_alias and team.number_of_aliases(competition) < team.number_of_team_members() + 1:
                 if team.number_of_team_members() + 1 - team.number_of_aliases(competition) < 4:
-                    messages.error(request, _(u'Several members of {team} are missing aliases for {competition}.').format(team=team, competition=competition))
+                    messages.error(request, _(u'Several members of {team} are missing an alias for {competition}.').format(team=team, competition=competition))
                     for member in team.members.all():
                         if not competition.has_alias(member):
                             messages.error(request, _(u'{member} is missing an alias for {competition}.').format(member=member, competition=competition))
                     if not competition.has_alias(team.leader):
                         messages.error(request, _(u'{leader} is missing an alias for {competition}.').format(leader=team.leader, competition=competition))
                 else:
-                    messages.error(request, _(u'Several members of {team} are missing aliases for {competition}').format(team=team, competition=competition))
+                    messages.error(request, _(u'Several members of {team} are missing an alias for {competition}.').format(team=team, competition=competition))
                 return redirect(competition)
 
             # Go through all members of the team and delete their individual participation entries
@@ -381,7 +381,7 @@ def start_compo(request, competition_id):
                 return redirect(competition)
 
             if competition.tournament_format is None:
-                messages.error(request, _(u'Set competition tournament format before using this feature'))
+                messages.error(request, _(u'Set competition tournament format before using this feature.'))
                 return redirect(competition)
 
             if settings.CHALLONGE_INTEGRATION_ENABELED and settings.CHALLONGE_API_USERNAME != '' and \
@@ -484,7 +484,7 @@ def submit_score(request, competition_id, match_id):
     try:
         match = get_object_or_404(Match, matchid=match_id, competition=competition)
     except (ObjectDoesNotExist):
-        messages.error(request, _(u'No match to submit score to'))
+        messages.error(request, _(u'No match to submit score to.'))
     else:
         if request.method == 'POST':
             final_score = request.POST.get('final_score')

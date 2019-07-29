@@ -31,10 +31,10 @@ class SponsorTranslation(get_translation_model(Sponsor, 'Sponsor')):
 
 
 class SponsorRelation(models.Model):
-    lan = models.ForeignKey(LAN, verbose_name=_(u'lan'))
+    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
     sponsor = models.ForeignKey(Sponsor, verbose_name=_(u'sponsor'))
     priority = models.IntegerField(_(u'priority'),
-                                   help_text=_(u'higher priority means closer to the top of the sponsor list.'))
+                                   help_text=_(u'Higher priority means closer to the top of the sponsor list.'))
 
     def __unicode__(self):
         return unicode(self.lan) + u' – ' + unicode(self.sponsor)

@@ -36,7 +36,7 @@ class Layout(models.Model):
 
 
 class Seating(models.Model):
-    lan = models.ForeignKey(LAN, verbose_name=_(u'lan'))
+    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
     title = models.CharField(_(u'title'), max_length=50)
     desc = models.CharField(_(u'description'), max_length=250)
     number_of_seats = models.IntegerField(_(u'number of seats'), default=0, help_text=_(u'This field is automatically updated '

@@ -15,8 +15,8 @@ class LAN(TranslatableModel):
     start_date = models.DateTimeField(_(u'start date'))
     end_date = models.DateTimeField(_(u'end date'))
     location = models.CharField(_(u'location'), max_length=100)
-    map_link = models.CharField(_(u'map link'), max_length=300, help_text=_(u'URL for an embedded map'), blank=True)
-    video_link = models.CharField(_(u'video link'), max_length=300, help_text=_(u'URL for an embedded video'), blank=True)
+    map_link = models.CharField(_(u'map link'), max_length=300, help_text=_(u'URL for an embedded map.'), blank=True)
+    video_link = models.CharField(_(u'video link'), max_length=300, help_text=_(u'URL for an embedded video.'), blank=True)
 
     @property
     def attendees(self):
@@ -77,7 +77,7 @@ class LANTranslation(get_translation_model(LAN, 'LAN')):
 
 class Attendee(models.Model):
     user = models.ForeignKey(User, verbose_name=_(u'user'))
-    lan = models.ForeignKey(LAN, verbose_name=_(u'lan'))
+    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
     has_paid = models.BooleanField(_(u'has paid'), default=False)
     arrived = models.BooleanField(_(u'has arrived'), default=False)
 
@@ -96,11 +96,11 @@ class Attendee(models.Model):
 
 
 class TicketType(TranslatableModel):
-    lan = models.ForeignKey(LAN, verbose_name=_(u'lan'))
+    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
 
     price = models.IntegerField(_(u'price'), default=50)
     priority = models.IntegerField(_(u'prioity'), default=0, help_text=_(u'In what priority the tickets will show, higher number will show first.'))
-    available_from = models.DateTimeField(_(u'release date'), default=datetime.now, help_text=_(u'When the tickets will be made available'))
+    available_from = models.DateTimeField(_(u'release date'), default=datetime.now, help_text=_(u'When the tickets will be made available.'))
     number_of_seats = models.IntegerField(_(u'seats'))
 
     def number_of_seats_used(self):
@@ -147,7 +147,7 @@ class Ticket(models.Model):
 
 
 class Directions(models.Model):
-    lan = models.ForeignKey(LAN, verbose_name=_(u'lan'))
+    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
     title = models.TextField(_(u'title'))
     description = models.TextField(_(u'description'), blank=True, help_text=_(u'Directions.'))
 
