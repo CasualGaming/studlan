@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Slightly prettier email templates.
 - Added list of competitions a user has or is participating in.
 - Added seating info to user LAN history.
+- Added new translations.
 
 ### Changed
 - Made footer prettier.
