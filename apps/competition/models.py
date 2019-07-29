@@ -237,10 +237,10 @@ class Match(models.Model):
             if (user == self.player1.user and player_id == '1') or (user == self.player2.user and player_id == '2'):
                 return True
         else:
-            if user == (self.player1.team.leader and player_id == '1')\
-                    or user == (self.player2.team.leader and player_id == '2'):
+            if (user == self.player1.team.leader and player_id == '1')\
+                    or (user == self.player2.team.leader and player_id == '2'):
                 return True
-            if user in (self.player1.team.members.all() and player_id == '1')\
-                    or (user in self.player2.members.all() and player_id == '2'):
+            if (user in self.player1.team.members.all() and player_id == '1')\
+                    or (user in self.player2.team.members.all() and player_id == '2'):
                 return True
         return False
