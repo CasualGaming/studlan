@@ -37,7 +37,7 @@ def payment(request, ticket_type_id):
 
     ticket_type = get_object_or_404(TicketType, pk=ticket_type_id)
 
-    if request.user in ticket_type.lan.attendees:
+    if request.user not in ticket_type.lan.attendees:
         messages.info(request, _(u'You must be an attendee to buy a ticket for this event'))
         return redirect('lan_details', lan_id=ticket_type.lan_id)
 
