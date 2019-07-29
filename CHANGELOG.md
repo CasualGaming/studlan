@@ -28,9 +28,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Replaced logo images with higher-definition versions (but same graphics).
 - Replaced default sidebar with sponsorbar.
 - Made schedule use current time zone instead of a hardcoded one.
-- Make stream description optional.
+- Made stream description optional.
 - (Breaking change) Changed stream link type from entire iframe to just the link.
-- (Breaking change) Changed stream description from HTML to markdown.
+- Changed stream description from HTML to markdown.
 
 ### Deprecated
 
