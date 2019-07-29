@@ -17,7 +17,7 @@ class CompetitionTranslationInlineAdmin(admin.StackedInline):
 class CompetitionAdmin(admin.ModelAdmin):
     inlines = [CompetitionTranslationInlineAdmin]
     list_display = ['__unicode__', 'lan']
-    if (not settings.CHALLONGE_INTERGRATION_ENABLED) or settings.CHALLONGE_API_USERNAME == '' or \
+    if (not settings.CHALLONGE_INTEGRATION_ENABLED) or settings.CHALLONGE_API_USERNAME == '' or \
             settings.CHALLONGE_API_KEY == '':
         exclude = ('challonge_url', 'max_match_points', 'tournament_format')
 
