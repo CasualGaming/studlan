@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added instructions for changing email address and password.
 - Lottery now throws out all participants (but keeps winners) if the lottery does not have multiple winnings.
 - Slightly prettier email templates.
+- Ticket payment page accessible from the lan page
 
 ### Changed
 - Made footer prettier.
@@ -24,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made breadcrumbs more consistent and changed which pages show them.
 - Made page headers visually more consistent and appropriate.
 - Replaced logo images with higher-definition versions (but same graphics).
+- Update stripe integration to use payment intents and Stripe.js v3 to support SCA
 
 ### Deprecated
 
@@ -34,7 +36,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed HTML DOM bug in the seating app template.
 - Fixed seating map size inconsistency across browsers.
 - Fixed account recovery sending recovery emails to only one account for a certain email address.
-
+- Users must now attend a lan before buying a ticket.
+- Users cannot remove attendance from a lan if they have paid.
 ### Security
 
 
