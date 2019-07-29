@@ -1,27 +1,20 @@
-{% extends "base.html" %} 
+{% extends "user/profile_base.html" %}
+
 {% load i18n %}
 {% load markdown_deux_tags %} 
 {% load misc %}
 {% load profile_tags %}
 
-{% block title %} 
-{% trans "My Profile" %} 
-{% endblock title %} 
+{% block tabs %}
+{% profile_tabs 'profile' %}
+{% endblock tabs %}
 
-{% block content %}
-    <div class="row">
-        <div class="col-md-9">
-            <h1>{% trans "My Profile" %}</h1>
-        </div>
+{% block page %}
+{% include "user/profile_content.html" %}
+
+<div class="row">
+    <div class="col-md-9">
+        <a class="btn btn-primary" href="{% url "public_profile" request.user %}">{% trans "Go to public profile page" %}</a>
     </div>
-
-    {% profile_tabs 'profile' %}
-
-    {% include "user/profile_content.html" %}
-
-    <div class="row">
-        <div class="col-md-9">
-            <a class="btn btn-primary" href="{% url "public_profile" request.user %}">{% trans "Go to public profile page" %}</a>
-        </div>
-    </div>
-{% endblock content %}
+</div>
+{% endblock page %}

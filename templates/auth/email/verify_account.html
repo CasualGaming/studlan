@@ -4,11 +4,13 @@
 {% load settings %}
 
 {% block content %}
-<p>{% trans "You have registered an account at" %} <a href="{{ request.get_host }}">{% site_name %}</a>.</p>
+{% blocktrans with request.get_host as host %}
+<p>You have registered an account at <a href="{{ host }}">{{ site_name }}</a>.</p>
 <p>
-    {% trans "In order to validate your account, please click the link below:" %}
+    In order to validate your account, please click the link below:
     <br />
     <a href="{{ link }}">{{ link }}</a>
 </p>
-<p>{% trans "If you do not use this link within 24 hours, it will be invalidated. If that happens, you will need to use the password recovery option to get your account verified." %}</p>
+<p>If you do not use this link within 24 hours, it will be invalidated. If that happens, you will need to use the password recovery option to get your account verified.</p>
+{% endblocktrans %}
 {% endblock content %}

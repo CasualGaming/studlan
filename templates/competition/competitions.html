@@ -1,7 +1,12 @@
 {% extends "competition/competition_base.html" %}
+
 {% load i18n %}
 {% load markdown_deux_tags %}
 {% load competition_tags %}
+
+{% block title %}
+{% trans "Competitions" %}
+{% endblock title %}
 
 {% block content %}
     <div class="row">
@@ -51,9 +56,9 @@
                         {% for lottery in lotteries %}
                         <tr onclick="document.location='{{ lottery.get_absolute_url }}';">
                             {% if lottery.registration_open %}
-                                <td><label class="label label-success">Open</label></td>
+                                <td><label class="label label-success">{% trans "Open" context "status" %}</label></td>
                             {% else %}
-                                <td><label class="label label-danger">Closed</label></td>
+                                <td><label class="label label-danger">{% trans "Closed" context "status" %}</label></td>
                             {% endif %}
                             <td class="underline">{{ lottery }}</td>
                         </tr>
@@ -65,9 +70,8 @@
     {% else %}
         <div class="row">
             <div class="col-md-9">
-                <div class="alert alert-warning">{% trans "No active raffles right now" %}</div>
+                <div class="alert alert-warning">{% trans "No active raffles right now." %}</div>
             </div>
         </div>
     {% endif %}
 {% endblock content %}
-

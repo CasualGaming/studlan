@@ -57,14 +57,6 @@ h1, h2, h3, h4, h5, h6 {
     padding: 4px;
 }
 
-.favico {
-    width: 28px;
-    height: 28px;
-    position: fixed;
-    top: 6px;
-    left: 6px;
-}
-
 .container-fluid {
     min-width: 0px;
 }
@@ -114,6 +106,8 @@ div#btn-profile {
 }
 
 img.navbar-brand {
+    width: 50px;
+    height: 50px;
     padding: 10px;
     vertical-align: middle;
 }
@@ -423,4 +417,14 @@ footer {
 
 iframe {
     border: 0;
+}
+
+.article-tags {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.article-content {
+    line-height: 1.5em;
+    text-align: justify;
 }

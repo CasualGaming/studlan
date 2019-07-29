@@ -1,9 +1,11 @@
 {% extends "base.html" %}
-{% block title %}
-Seating
-{% endblock title %}
+
 {% load i18n %}
 {% load static %}
+
+{% block title %}
+{% trans "Seating" %}
+{% endblock title %}
 
 {% block script %}
 <script type="text/javascript" src="{% static 'js/seating.js' %}"></script>
@@ -49,17 +51,17 @@ Seating
                         <ul class="nav nav-stacked">
                             <li class="sidebar-header"><a href="">{% trans "Room Info" %}</a></li>
                             {% if seating.is_open %}
-                                <li>{% trans "Status" %}: <label class="label label-success">{% trans "Open" %}</label></li>
+                                <li>{% trans "Status" %}: <label class="label label-success">{% trans "Open" context "status" %}</label></li>
                                 <li>{% trans "Closes" %}: <label class="label label-info">{{ seating.closing_date }}</label></li>
                             {% else %}
-                                <li>{% trans "Status" %}: <label class="label label-danger">{% trans "Closed" %}</label></li>
+                                <li>{% trans "Status" %}: <label class="label label-danger">{% trans "Closed" context "status" %}</label></li>
                             {% endif %}
                             <li>{% trans "Capacity" %}: <label class="label label-info">{{ seating.get_free_seats }}/{{ seating.get_number_of_seats }}</label></li>
 
                             {% if perms.seating.export_seating %}
                             <li class="sidebar-header"><a href="">{% trans "Admin" %}</a></li>
-                            <li><a href="{% url 'list' seating.id %}"><span class="glyphicon glyphicon-th"></span>Seatlist</a></li>
-                            <li><a href="{% url 'map' seating.id %}"><span class="glyphicon glyphicon-th"></span>SeatMap</a></li>
+                            <li><a href="{% url 'list' seating.id %}"><span class="glyphicon glyphicon-th"></span>{% trans "Seating list" %} ({{ LANG_INFO.name }})</a></li>
+                            <li><a href="{% url 'map' seating.id %}"><span class="glyphicon glyphicon-th"></span>{% trans "Seating map" %} ({{ LANG_INFO.name }})</a></li>
                             {% endif %}
 
                             <li class="sidebar-header"><a href="">{% trans "Seat Info" %}</a></li>
@@ -86,9 +88,8 @@ Seating
         {% endif %}
     {% else %}
         <div class="col-md-9">
-                <div class="alert alert-warning">There are no active seatings</div>
+                <div class="alert alert-warning">{% trans "There are no active seatings." %}</div>
             </div>
     {% endif %}
-
 
 {% endblock content %}

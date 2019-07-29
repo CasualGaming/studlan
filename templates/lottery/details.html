@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+
 {% load i18n %}
 {% load markdown_deux_tags %}
 
 {% block title %}
-{% trans "Raffle" %}
+{{ lottery }}
 {% endblock title %}
 
 {% block content %}
@@ -30,15 +31,15 @@
             {% if lottery.registration_open %}
             {% if user.is_authenticated %}
             {% if request.user in participants %}
-            <a class="btn btn-danger" href="{% url 'sign_off' lottery.id %}">{% trans "Unsign" %}</a>
+            <a class="btn btn-danger" href="{% url 'sign_off' lottery.id %}">{% trans "Leave" %}</a>
             {% else %}
-            <a class="btn btn-success" href="{% url 'sign_up' lottery.id %}">{% trans "Sign up" %}</a>
+            <a class="btn btn-success" href="{% url 'sign_up' lottery.id %}">{% trans "Join" %}</a>
             {% endif %}
             {% else %}
-            <div class="alert alert-danger">{% trans "You need to be logged inn to participate" %}</div>
+            <div class="alert alert-danger">{% trans "You need to be logged inn to participate." %}</div>
             {% endif %} {# user.is_authenticated #}
             {% else %}
-            <div class="alert alert-danger">{% trans "Signup closed" %}</div>
+            <div class="alert alert-danger">{% trans "Signup closed." %}</div>
             {% endif %} {# lottery.registration_open #}
 
             {% if perms.lottery.draw %}

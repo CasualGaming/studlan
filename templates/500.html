@@ -1,25 +1,15 @@
 {% extends "base.html" %}
-{% load markdown_deux_tags %}
+{% load i18n %}
 {% load misc %}
 
 {% block title %}
-studLAN - Error 500
+{% trans "Error 500" %}
 {% endblock title %}
 
-{% block navigation %}
-    <ul class="nav">
-        <li><a href="{% url 'root' %}">News</a></li>
-        {% if request.user.is_authenticated %}
-            <li><a href="{% url 'my_profile' %}">Profile</a></li>
-        {% endif %}
-        <li><a href="{% url 'competitions' %}">Competitions</a></li>
-        <li><a href="{% url 'teams' %}">Teams</a></li>
-    </ul>
-{% endblock navigation %}
-
 {% block content %}
-
-    <h1 class="page-header">Error: 500</h1>
-    <p>We've encountered an internal server error. Administrators have been notified.</p>
-    
+<h1 class="page-header">{% trans "Error 500: Server Error" %}</h1>
+{% blocktrans %}
+<p>We've encountered an internal server error.</p>
+<p>Administrators have been notified, but please contact us and tell us how it happened.</p>
+{% endblocktrans %}
 {% endblock content %}

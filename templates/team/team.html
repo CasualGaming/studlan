@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+
 {% load i18n %}
 {% load markdown_deux_tags %}
 {% load misc %}
@@ -8,7 +9,6 @@
 {% endblock title %}
 
 {% block content %}
-
     <div class="row">
         <div class="col-md-9">
             <h1 class="page-header">Team {{ team }}</h1>
@@ -52,15 +52,13 @@
                     </tbody>
                 </table>
 
-
             {% if invitation %}
-                <a class="btn btn-success btn" href="{% url 'join_team' team.id %}">Join team</a>
+                <a class="btn btn-success btn" href="{% url 'join_team' team.id %}">{% trans "Join team" %}</a>
             {% endif %}
         </div>
     </div>
 
     {% if team.is_mine and users %}
-
         <div class="row">
             <div class="col-md-9">
                 <form class="form-horizontal" action="{% url 'invite_member' team.id %}" method="POST">
@@ -87,7 +85,7 @@
                 <h3>{% trans "Invitations" %}</h3>
                 <table class="table table-bordered table-striped table-hover click-table    ">
                     <thead>
-                        <th class="col-md-4">{% trans "User name" %}</th>
+                        <th class="col-md-4">{% trans "Username" %}</th>
                         <th class="col-md-2">{% trans "Options" %}</th>
                     </thead>
                     <tbody>
@@ -106,14 +104,14 @@
             </div>
         </div>
     {% endif %}
-    
-
 {% endblock content %}
+
 {% block script %}
     {% if team.is_mine %}
+    {% blocktrans asvar disband_team_line %}Would you like to disband {{ team }}?{% endblocktrans %}
     <script>
         function disband() {
-            if(window.confirm('Would you like to disband {{ team }}?')) {
+            if(window.confirm('{{ disband_team_line }}')) {
             window.location='{% url 'disband_team' team.id %}';
             }
         }

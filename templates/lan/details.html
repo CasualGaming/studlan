@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+
 {% load i18n %}
 {% load markdown_deux_tags %}
 {% load settings %}
@@ -19,7 +20,7 @@
 <div class="row">
     <div class="col-md-9">
         <div class="alert alert-info">
-            <p>This lan is over</p>
+            <p>{% trans "This lan is over." %}</p>
         </div>
     </div>
 </div>
@@ -133,9 +134,9 @@
                         <script
                             src="https://checkout.stripe.com/checkout.js"
                             class="stripe-button"
-                            data-key="{% stripe_public_key %}"
+                            data-key="{{ stripe_public_key }}"
                             data-image="{% static 'logo/logo_128.png' %}"
-                            data-name="{% site_name %}"
+                            data-name="{{ site_name }}"
                             data-email="{{ user.email }}"
                             data-description="{{ ticket_type.get_translation.title }}"
                             data-label="{% trans "Pay with Card" %}"
@@ -171,8 +172,11 @@
         </div>
         {% else %}
         <div class="alert alert-danger">
-            {% trans "Your address and zip code is required in order to sign up for a LAN." %}
-            {% trans "Go to your" %} <a href="{% url 'update_profile' %}">{% trans "profile" %}</a> {% trans "to add the information." %} 
+            {% url 'update_profile' as update_profile_url %}
+            {% blocktrans %}
+            Your address and zip code is required in order to sign up for a LAN.
+            Go to your <a href="{{ update_profile_url }}">profile</a> to add the information.
+            {% endblocktrans %}
         </div>
         {% endif %}{# user.profile.has_address #}
         {% endif %} {# status == ... #}

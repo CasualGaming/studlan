@@ -1,4 +1,5 @@
 {% extends "competition/competition_base.html" %}
+
 {% load i18n %}
 {% load markdown_deux_tags %}
 {% load team_tags %}
@@ -140,7 +141,7 @@
                 </div>
         </div>
         <div>
-            <button id="brackets-button" class="btn btn-default">Show brackets</button>
+            <button id="brackets-button" class="btn btn-default">{% trans "Show brackets" %}</button>
             <div id="brackets-container" class="hide">
                 <iframe id="brackets-frame" title="Challonge brackets" width="100%" height="500px" onload="AdjustIFrame('RefFrame');" style="border: none;"
                         src="https://challonge.com/{{ competition.challonge_url }}/module?theme=3&show_final_results=1"></iframe>
@@ -218,7 +219,12 @@
                                     </div>
                                 </form>
                             {% else %}
-                                <div class="alert alert-danger" role="alert">{% trans "To join the competition as a team you have to" %} <a href="{% url 'create_team' %}">{% trans "create" %}</a> {% trans "or join a team" %}</div>
+                                <div class="alert alert-danger" role="alert">
+                                    {% url 'create_team' as create_team_url %}
+                                    {% blocktrans %}
+                                    To join the competition as a team you have to <a href="create_team_url">create</a> or join a team.
+                                    {% endblocktrans %}
+                                </div>
                             {% endif %}
                         </div>
                         <div class="col-md-1"></div>
@@ -246,7 +252,7 @@
                 <form class="form-inline" action="{% url 'start_compo' competition.id %}" method="POST">
                     {% csrf_token %}
                     <div class="center-on-collapse">
-                        <label for="start" class="control-label">{% trans "Click and wait to start compo" %}: </label>
+                        <label for="start" class="control-label">{% trans "Click and wait to start compo:" %}</label>
                         <input type="submit" class="btn btn-warning" value="{% trans "Start Compo" %}"/>
                     </div>
                 </form>
@@ -325,11 +331,13 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="alert alert-info">
-                    <strong>{% trans "Note: " %}</strong>
-                    {% trans "Signing up for a team compo as a solo player does not mean you are a participant." %} 
-                    {% trans "Try to find other players that sign up solo, make a team and sign up as a team." %}
-                    <br>
-                    <strong>{% trans "When you sign up as a team, your solo participation will be overriden." %}</strong>
+                    {% blocktrans %}
+                    <strong>Note:</strong>
+                    Signing up for a team compo as a solo player does not mean you are a participant.
+                    Try to find other players that sign up solo, make a team and sign up as a team.
+                    <br />
+                    <strong>When you sign up as a team, your solo participation will be overriden.</strong>
+                    {% endblocktrans %}
                 </div>  
             </div>
         </div>
@@ -341,8 +349,10 @@
     <div class="row">
         <div class="col-md-9">
             <div class="alert alert-info">
-                <strong>{% trans "This competition is full" %}</strong>
-               This competition only had room for {{ competition.max_participants }} participants, and that limit has been reached.
+                {% blocktrans with competition.max_participants as competition_max_participants %}
+                <strong>This competition is full.</strong>
+                This competition only had room for {{ competition_max_participants }} participants, and that limit has been reached.
+                {% endblocktrans %}
             </div>
         </div>
     </div>

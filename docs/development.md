@@ -54,6 +54,7 @@ Most of these use venv and therefore requires `manage/setup.sh` to be run first 
 * Run tests: `manage/test.py`
 * Run some checks (like the linter, tests, some validation): `manage/check.py`
 * Make migrations (after model changes): `manage/make-migrations.py`
+* Make translations (updates `locale/nb/django.po`): `manage/make-translations.py`
 
 ### Run with Docker
 This way is intended just for testing Docker stuff.
