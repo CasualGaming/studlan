@@ -37,6 +37,10 @@ def payment(request, ticket_type_id):
 
     ticket_type = get_object_or_404(TicketType, pk=ticket_type_id)
 
+    if request.user in ticket_type.lan.attendees:
+        messages.info(request, _(u'You must be an attendee to buy a ticket for this event'))
+        return redirect('lan_details', lan_id=ticket_type.lan_id)
+
     if ticket_type.lan.has_ticket(request.user):
         messages.info(request, _(u'You have already have a ticket for this event'))
         return redirect('lan_details', lan_id=ticket_type.lan_id)
@@ -75,6 +79,7 @@ def payment(request, ticket_type_id):
 
 
 def generate_payment_response(request, ticket_type, intent):
+    # Instruct Stripe.js to handle SCA if required
     if intent.status == 'requires_action' and intent.next_action.type == 'use_stripe_sdk':
         return JsonResponse({
             'requires_action': True,
