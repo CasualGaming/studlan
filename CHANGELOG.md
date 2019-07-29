@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added instructions for changing email address and password.
 - Lottery now throws out all participants (but keeps winners) if the lottery does not have multiple winnings.
 - Slightly prettier email templates.
+- Added list of competitions a user has or is participating in.
+- Added seating info to user LAN history.
 - Ticket payment page accessible from the lan page
 
 ### Changed
@@ -25,12 +27,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made breadcrumbs more consistent and changed which pages show them.
 - Made page headers visually more consistent and appropriate.
 - Replaced logo images with higher-definition versions (but same graphics).
+- Replaced default sidebar with sponsorbar.
 - Update stripe integration to use payment intents and Stripe.js v3 to support SCA
 
 ### Deprecated
 
 ### Removed
 - Removed unique email check from register form, since email addresses are non-unique.
+- Removed unused sponsor logo field.
+- Removed (moved) sidebar from top of page on small screens.
 
 ### Fixed
 - Fixed HTML DOM bug in the seating app template.
