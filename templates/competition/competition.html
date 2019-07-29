@@ -222,7 +222,7 @@
                                 <div class="alert alert-danger" role="alert">
                                     {% url 'create_team' as create_team_url %}
                                     {% blocktrans %}
-                                    To join the competition as a team you have to <a href="create_team_url">create</a> or join a team.
+                                    To join the competition as a team you have to <a href="{{ create_team_url }}">create</a> or join a team.
                                     {% endblocktrans %}
                                 </div>
                             {% endif %}

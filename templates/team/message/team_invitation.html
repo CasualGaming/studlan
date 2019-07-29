@@ -1,7 +1,7 @@
 {% load i18n %}
 
-{% blocktrans %}
-You have been invited to join team <a href="{{ team.get_absolute_url }}">{{ team }}</a> by {{ inviter }}.
+{% blocktrans with team_url=team.get_absolute_url %}
+You have been invited to join team <a href="{{ team_url }}">{{ team }}</a> by {{ inviter }}.
 You can either <a href="{{ accept_link }}"><strong>accept</strong></a>
 or <a href="{{ decline_link }}"><strong>decline</strong></a> the invitation.
 {% endblocktrans %}
