@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
+from bs4 import BeautifulSoup
+
 from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        from bs4 import BeautifulSoup
 
         # Settings for general layout
         rows = 5
@@ -24,16 +25,14 @@ class Command(BaseCommand):
 
         # Settings for seats
         seat_width = 30
-        seat_width_px = '30px'
         seat_height = 20
-        seat_height_px = '20px'
-        seat_rx = '2px'
-        seat_ry = '2px'
+        seat_rx = 2
+        seat_ry = 2
 
         # Initiate svg element
         soup = BeautifulSoup('<svg>', 'html.parser')
-        soup.svg['height'] = svg_height
-        soup.svg['width'] = svg_width
+        soup.svg['viewBox'] = '0 0 {0} {1}'.format(svg_width, svg_height)
+        soup.svg['xmlns'] = 'http://www.w3.org/2000/svg'
 
         # Build svg with elements
         current_y = svg_margin_top
@@ -44,8 +43,8 @@ class Command(BaseCommand):
                     for __ in range(0, seats_per_row):
                         element_a = soup.new_tag('a')
                         element_rect = soup.new_tag('rect')
-                        element_rect['height'] = seat_height_px
-                        element_rect['width'] = seat_width_px
+                        element_rect['height'] = seat_height
+                        element_rect['width'] = seat_width
                         element_rect['rx'] = seat_rx
                         element_rect['ry'] = seat_ry
                         element_rect['x'] = current_x
@@ -63,5 +62,5 @@ class Command(BaseCommand):
 
         # Print output to html file
         html = soup.prettify('utf-8')
-        with open('output.html', 'wb') as out_file:
+        with open('seating-layout.svg', 'wb') as out_file:
             out_file.write(html)

@@ -285,4 +285,5 @@ ENV/
 
 # studlan
 /.local/
-VERSION
+/VERSION
+/seating-layout.svg

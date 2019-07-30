@@ -418,6 +418,9 @@ img.navbar-brand {
     margin-top: 10px;
 }
 
+.inline-button-form {
+    display: inline-block;
+
 .stream {
     margin-top: 20px;
     margin-bottom: 20px;
