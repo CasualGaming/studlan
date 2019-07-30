@@ -28,6 +28,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Replaced logo images with higher-definition versions (but same graphics).
 - Replaced default sidebar with sponsorbar.
 - Made schedule use current time zone instead of a hardcoded one.
+- Made stream description optional.
+- (Breaking change) Changed stream link type from entire iframe to just the link.
+- Changed stream description from HTML to markdown.
 - Made seating layout generator use relative coordinates instead of pixels.
 - Made exported seating list and map prettier and i18n'd.
 
