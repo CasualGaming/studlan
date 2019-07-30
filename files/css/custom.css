@@ -431,3 +431,7 @@ img.navbar-brand {
     min-height: 300px;
     margin-top: 10px;
 }
+
+.inline-button-form {
+    display: inline-block;
+}

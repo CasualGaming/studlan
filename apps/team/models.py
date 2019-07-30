@@ -59,8 +59,8 @@ class Team(models.Model):
 
 
 class Member(models.Model):
-    team = models.ForeignKey(Team)
-    user = models.ForeignKey(User)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     date_joined = models.DateTimeField('date joined', auto_now_add=True)
 
     def __unicode__(self):
@@ -72,6 +72,6 @@ class Member(models.Model):
 
 
 class Invitation(models.Model):
-    team = models.ForeignKey(Team)
-    invitee = models.ForeignKey(User, related_name='Invitee')
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    invitee = models.ForeignKey(User, on_delete=models.CASCADE)
     token = models.CharField('token', max_length=32, editable=False)
