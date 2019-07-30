@@ -48,12 +48,15 @@ class Competition(TranslatableModel):
     status = models.SmallIntegerField('status', choices=STATUS_OPTIONS)
     activity = models.ForeignKey(Activity)
     lan = models.ForeignKey(LAN)
-    challonge_url = models.CharField('Challonge url', max_length=50, blank=True, null=True)
+    challonge_url = models.CharField('Challonge url', max_length=50, blank=True, null=True,
+                                     help_text='Do not set this field if challonge integration is enabled. '
+                                               'The challonge url will be generated after starting the competition.')
     team_size = models.IntegerField(default=5, blank=True)
     start_time = models.DateTimeField(blank=True, null=True)
 
     tournament_format = models.CharField(
-        'Tournament format', max_length=20, blank=True, null=True, choices=TOURNAMENT_FORMATS)
+        'Tournament format', max_length=20, blank=True, null=True, choices=TOURNAMENT_FORMATS,
+        help_text='Only set this field if the Challonge integration is being used for this competition.')
 
     max_participants = models.SmallIntegerField(
         'Maximum participants', default=0, help_text='The maximum number of participants allowed for a competition.'
