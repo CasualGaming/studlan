@@ -257,7 +257,7 @@ img.navbar-brand {
     margin-bottom: 0;
 }
 
-.sponsorbar-header {
+.sponsorbar-header, .sponsorbar-header > a {
     background-color: rgb(65, 131, 196) !important;
     color: white !important;
     text-align: center;
