@@ -24,14 +24,7 @@ def main(request):
     if lans:
         return seating_details(request, lans[0].id)
 
-    context = {}
-    breadcrumbs = (
-        ('studLAN', '/'),
-        ('Seatings', reverse('seatings')),
-    )
-    context['breadcrumbs'] = breadcrumbs
-
-    return render(request, 'seating/seating.html', context)
+    return render(request, 'seating/seating.html')
 
 
 def main_filtered(request, lan_id):
@@ -46,9 +39,8 @@ def main_filtered(request, lan_id):
     context['lan'] = lan
 
     breadcrumbs = (
-        ('studLAN', '/'),
-        ('Seatings', reverse('seatings')),
-        (lan, ''),
+        (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
+        (_(u'Seating'), ''),
     )
     context['breadcrumbs'] = breadcrumbs
 
@@ -68,7 +60,6 @@ def seating_details(request, lan_id, seating_id=None, seat_id=None):
         seating = seatings[0]
         return redirect(seating)
 
-    # users = seating.get_user_registered()
     seats = seating.get_total_seats()
 
     dom = BeautifulSoup(seating.layout.template, 'html.parser')
@@ -98,11 +89,17 @@ def seating_details(request, lan_id, seating_id=None, seat_id=None):
     dom.encode('utf-8')
 
     context = {}
+    context['lan'] = lan
     context['seatings'] = seatings
     context['seating'] = seating
     context['seat'] = seat_id
     context['hide_sidebar'] = True
     context['template'] = dom.__str__
+    breadcrumbs = (
+        (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
+        (_(u'Seating'), ''),
+    )
+    context['breadcrumbs'] = breadcrumbs
 
     return render(request, 'seating/seating.html', context)
 

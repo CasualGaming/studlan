@@ -2,18 +2,16 @@
 
 from datetime import datetime
 
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext as _
 
 from postman.models import Message
 
-from apps.lan.models import Attendee
+from apps.competition.models import Competition
 from apps.seating.models import Seat
 from apps.userprofile.forms import UserProfileForm
 from apps.userprofile.models import Alias, AliasType
@@ -21,24 +19,32 @@ from apps.userprofile.models import Alias, AliasType
 
 @login_required
 def my_profile(request):
-    user_seats = Seat.objects.filter(user=request.user)
-    profile = request.user.profile
+    context = {}
+    quser = request.user
+    context['quser'] = quser
+    context['profile'] = quser.profile
 
-    breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        (_(u'Profile'), reverse('my_profile')),
-        (request.user.username, ''),
-    )
-
-    return render(request, 'user/profile.html', {'quser': request.user, 'profile': profile, 'user_seats': user_seats, 'breadcrumbs': breadcrumbs})
+    return render(request, 'user/profile.html', context)
 
 
 def user_profile(request, username):
+    context = {}
     quser = get_object_or_404(User, username=username)
-    user_seats = Seat.objects.filter(user=quser)
-    profile = quser.profile
+    context['quser'] = quser
+    context['profile'] = quser.profile
+    if request.user == quser or request.user.has_perm('userprofile.show_private_info'):
+        user_seats = Seat.objects.filter(user=quser)
+        competitions = Competition.get_all_for_user(quser)
+        context['user_seats'] = user_seats
+        context['competitions'] = competitions
 
-    return render(request, 'user/public_profile.html', {'quser': quser, 'profile': profile, 'user_seats': user_seats})
+    return render(request, 'user/public_profile.html', context)
+
+
+@login_required
+def user_competitions(request):
+    competitions = Competition.get_all_for_user(request.user)
+    return render(request, 'user/competitions.html', {'competitions': competitions})
 
 
 @login_required
@@ -51,30 +57,13 @@ def update_profile(request):
             form.save()
             return redirect('my_profile')
 
-    breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        (_(u'Profile'), reverse('my_profile')),
-        (_(u'Edit'), ''),
-    )
-
-    return render(request, 'user/update.html', {'form': form, 'breadcrumbs': breadcrumbs})
+    return render(request, 'user/update.html', {'form': form})
 
 
 @login_required
 def history(request):
-    attended = Attendee.objects.filter(user=request.user)
-
-    for attendee in attended:
-        if attendee.lan.has_ticket(request.user):
-            attendee.has_paid = True
-
-    breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        (_(u'Profile'), reverse('my_profile')),
-        (_(u'History'), ''),
-    )
-
-    return render(request, 'user/history.html', {'attended': attended, 'breadcrumbs': breadcrumbs})
+    user_seats = Seat.objects.filter(user=request.user)
+    return render(request, 'user/history.html', {'user_seats': user_seats})
 
 
 @login_required
@@ -93,13 +82,8 @@ def user_inbox(request):
 def alias(request):
     aliases = Alias.objects.filter(user=request.user)
     alias_types = AliasType.objects.all().exclude(alias__in=aliases)
-    breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        (_(u'Profile'), reverse('my_profile')),
-        (_(u'Alias'), ''),
-    )
 
-    return render(request, 'user/alias.html', {'aliases': aliases, 'alias_types': alias_types, 'breadcrumbs': breadcrumbs})
+    return render(request, 'user/alias.html', {'aliases': aliases, 'alias_types': alias_types})
 
 
 @login_required

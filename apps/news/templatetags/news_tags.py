@@ -8,8 +8,6 @@ register = template.Library()
 
 
 def do_num_of_articles(parser, token):
-    # tag_name, format_string = token.split_contents()
-
     return NewsRenderer(len(Article.objects.all()))
 
 

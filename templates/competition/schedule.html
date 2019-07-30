@@ -1,36 +1,35 @@
 {% extends "competition/competition_base.html" %}
 {% load i18n %}
 {% load markdown_deux_tags %}
-{% load lan_tags %}
 {% block content %}
+<div class="row">
     <div class="col-md-9">
+        <h1>{% trans "Schedule" %}</h1>
+
         {% if lan %}
-            {% if cal_src %}
-<iframe src="https://calendar.google.com/calendar/embed?
-showTitle=0&amp;
-showNav=0&amp;
-showDate=0&amp;
-showPrint=0&amp;
-showTabs=0&amp;
-showCalendars=0&amp;
-showTz=0&amp;
-mode=WEEK&amp;
-height=600&amp;
-wkst=2&amp;
-bgcolor=%23FFFFFF&amp;
-dates={{ start_date }}/{{ end_date }}&amp;
-src={{ cal_src }}&amp;
-color=%23125A12&amp;
-ctz=Europe%2FOslo" style="border-width:0" width="1000" height="700" frameborder="0" scrolling="no"></iframe>
-            {% else %}
-                <div class="col-md-9">
-                    <div class="alert alert-info">There is no configured schedule</div>
-                </div>
-            {% endif %}
+        {% if cal_src %}
+        {# Comment below are for preventing adding whitespace #}
+        <iframe class="schedule-calendar" title="Schedule" src="https://calendar.google.com/calendar/embed?{% comment %}
+            {% endcomment %}&amp;src={{ cal_src }}{% comment %}
+            {% endcomment %}&amp;showTitle=0{% comment %}
+            {% endcomment %}&amp;showNav=0{% comment %}
+            {% endcomment %}&amp;showDate=0{% comment %}
+            {% endcomment %}&amp;showPrint=0{% comment %}
+            {% endcomment %}&amp;showTabs=0{% comment %}
+            {% endcomment %}&amp;showCalendars=0{% comment %}
+            {% endcomment %}&amp;showTz=0{% comment %}
+            {% endcomment %}&amp;mode=WEEK{% comment %}
+            {% endcomment %}&amp;wkst=2{% comment %}
+            {% endcomment %}&amp;bgcolor=%23FFFFFF{% comment %}
+            {% endcomment %}&amp;dates={{ start_date }}/{{ end_date }}{% comment %}
+            {% endcomment %}&amp;color=%23125A12{% comment %}
+            {% endcomment %}&amp;ctz={{ TIME_ZONE | urlencode }}"></iframe>
         {% else %}
-            <div class="col-md-9">
-                <div class="alert alert-info">No upcoming lan</div>
-            </div>
+        <div class="alert alert-info">{% trans "There is no schedule for this LAN." %}</div>
+        {% endif %}
+        {% else %}
+        <div class="alert alert-info">{% trans "There is no current or upcoming LAN." %}</div>
         {% endif %}
     </div>
+</div>
 {% endblock content %}

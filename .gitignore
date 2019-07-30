@@ -278,9 +278,11 @@ ENV/
 .vagrant
 /tmp/
 
-# studlan
-/studlan/settings/local.py
+# studlan old
 /static/
 /log/
-/studlan.db
-/keys/*.key
+/*.db
+
+# studlan
+/.local/
+VERSION

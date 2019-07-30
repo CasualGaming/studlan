@@ -7,7 +7,7 @@ from django.db import models
 from django.db.models import Q
 from django.urls import reverse
 
-from apps.lan.models import LAN, TicketType
+from apps.lan.models import Attendee, LAN, TicketType
 
 
 class Layout(models.Model):
@@ -88,3 +88,10 @@ class Seat(models.Model):
 
     def __unicode__(self):
         return str(self.id)
+
+    def get_attendance(self):
+        attendances = Attendee.objects.filter(lan=self.seating.lan, user=self.user)
+        if attendances.exists():
+            return attendances[0]
+        else:
+            return None

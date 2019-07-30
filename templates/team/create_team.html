@@ -16,42 +16,42 @@
 <br>
     <div class="row">
         <div class="col-md-9">
+            {% for error in form.non_field_errors %}
+            <p class="form-error">{{ error }}</p>
+            {% endfor %}
             <form class="form-horizontal" action="{% url 'create_team' %}" method="POST">
                 {% csrf_token %}
-                <fieldset>
-                    <legend>{% trans "Create new team" %}</legend>
-                    <div class="form-group {% if form.title.errors %} has-error {% endif %}">
-                        <label class="col-md-1 control-label" for="title">{{ form.title.label }}</label>
+                <div class="form-group {% if form.title.errors %} has-error {% endif %}">
+                    <label class="col-md-1 control-label" for="title">{{ form.title.label }}</label>
+                    <div class="col-md-4">
+                        <input class="form-control" id="title" name="title" type="text" value="{% if form.title.value %}{{ form.title.value }}{% endif %}" />
+                    </div>
+                    <div class="col-md-7">
+                        {% if form.title.errors %}
+                            <span class="alert alert-danger">{{ form.title.errors }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                    <div class="form-group {% if form.tag.errors %} has-error {% endif %}">
+                        <label class="col-md-1 control-label" for="tag">{{ form.tag.label }}</label>
                         <div class="col-md-4">
-                            <input class="form-control" id="title" name="title" type="text" value="{% if form.title.value %}{{ form.title.value }}{% endif %}" />
+                            <div class="input-group">
+                                <div class="input-group-addon">[{{ form.tag.label|lower }}]</div>
+                                <input class="form-control" id="tag" name="tag" type="text" value="{% if form.tag.value %}{{ form.tag.value }}{% endif %}" />
+                            </div>
                         </div>
                         <div class="col-md-7">
-                            {% if form.title.errors %}
-                                <span class="alert alert-danger">{{ form.title.errors }}</span>
+                            {% if form.tag.errors %}
+                                <span class="alert alert-danger">{{ form.tag.errors }}</span>
                             {% endif %}
                         </div>
+                        {% if not form.tag.errors %}
+                            <span class="help-block center-on-collapse">{% trans "Must be unique!" %}</span>
+                        {% endif %}
                     </div>
-                        <div class="form-group {% if form.tag.errors %} has-error {% endif %}">
-                            <label class="col-md-1 control-label" for="tag">{{ form.tag.label }}</label>
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <div class="input-group-addon">[{{ form.tag.label|lower }}]</div>
-                                    <input class="form-control" id="tag" name="tag" type="text" value="{% if form.tag.value %}{{ form.tag.value }}{% endif %}" />
-                                </div>
-                            </div>
-                            <div class="col-md-7">
-                                {% if form.tag.errors %}
-                                    <span class="alert alert-danger">{{ form.tag.errors }}</span>
-                                {% endif %}
-                            </div>
-                            {% if not form.tag.errors %}
-                                <span class="help-block center-on-collapse">{% trans "Must be unique!" %}</span>
-                            {% endif %}
-                        </div>
-                    <div class="form-actions center-on-collapse">
-                        <input type="submit" class="btn btn-primary" value="{% trans "Create team" %}"/>
-                    </div>
-                </fieldset>
+                <div class="form-actions center-on-collapse">
+                    <input type="submit" class="btn btn-primary" value="{% trans "Create team" %}"/>
+                </div>
             </form>
         </div>
     </div>

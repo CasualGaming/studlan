@@ -1,6 +1,6 @@
 [flake8]
 application_import_names = apps
-exclude = **/__init__.py, **/migrations, **/settings/local.py, .venv, sample-configs
+exclude = **/migrations, **/settings/local.py, **/settings/local.docker.py, .venv, samples, setup
 # B901 blind except: statement (duplicate of E722)
 # E501 line too long
 # W503 line break before binary operator

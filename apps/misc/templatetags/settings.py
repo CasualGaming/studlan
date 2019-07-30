@@ -20,3 +20,8 @@ def stripe_public_key():
 @register.simple_tag
 def support_mail():
     return getattr(settings, 'SUPPORT_MAIL', '')
+
+
+@register.simple_tag
+def version():
+    return getattr(settings, 'VERSION', '')

@@ -1,0 +1,25 @@
+{% load i18n %}
+{% load settings %}
+
+{% get_current_language as LANGUAGE_CODE %}
+
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="utf-8" />
+    <title>{% site_name %}</title>
+</head>
+<body>
+    <header>
+        <h1>{% site_name %}</h1>
+    </header>
+    <div class="content">
+        {% block content %}
+        {% endblock content %}
+    </div>
+    <footer>
+        <hr />
+        <p>{% trans "Sent automatically from" %} <a href="{{ request.get_host }}">{% site_name %}</a>.</p>
+    </footer>
+</body>
+</html>

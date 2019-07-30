@@ -3,39 +3,48 @@
 {% load markdown_deux_tags %}
 
 {% block title %}
-    Raffle
+{% trans "Raffle" %}
 {% endblock title %}
 
 {% block content %}
 <div class="row">
     <div class="col-md-9">
-        <h2>{{ lottery }}</h2>
-        {{ lottery.get_translation.description|markdown }} 
-        <p><strong>{% trans "Participants" %}:</strong> {{ participants|length }}
-        <hr />
-        {% if user.is_authenticated %}
-            {% if lottery.registration_open %}
-                <div class="center-on-collapse">
-                {% if request.user in participants %}
-                    <a class="btn btn-danger" href="{% url 'sign_off' lottery.id %}">{% trans "Unsign" %}</a>
-                {% else %}
-                    <a class="btn btn-success" href="{% url 'sign_up' lottery.id %}">{% trans "Sign up" %}</a>
-                {% endif %}
-                </div>
-            {% else %}
-            <div class="alert alert-danger">{% trans "Signup closed" %}</div>
-            {% endif %}
-        {% else %}
-            <div class="alert alert-danger">{% trans "You need to be logged inn to participate" %}</div>
-        {% endif %}
+        <h1 class="page-header">{{ lottery }}</h1>
     </div>
 </div>
 
-{% if perms.lottery.draw %}
 <div class="row">
     <div class="col-md-9">
-        <a class="btn btn-info" href="{% url 'drawing' lottery.id %}">Drawing</a>
+        {{ lottery.get_translation.description | markdown }}
+        <hr />
     </div>
 </div>
-{% endif %}
+
+<div class="row">
+    <div class="col-md-9">
+        <p><strong>{% trans "Participants:" %}</strong> {{ participants|length }}
+        {% if winner %}
+        <p><strong>{% trans "Last winner:" %}</strong> <a href="{% url 'public_profile' winner %}">{{ winner.user.username }}</a></p>
+        {% endif %}
+        <p>
+            {% if lottery.registration_open %}
+            {% if user.is_authenticated %}
+            {% if request.user in participants %}
+            <a class="btn btn-danger" href="{% url 'sign_off' lottery.id %}">{% trans "Unsign" %}</a>
+            {% else %}
+            <a class="btn btn-success" href="{% url 'sign_up' lottery.id %}">{% trans "Sign up" %}</a>
+            {% endif %}
+            {% else %}
+            <div class="alert alert-danger">{% trans "You need to be logged inn to participate" %}</div>
+            {% endif %} {# user.is_authenticated #}
+            {% else %}
+            <div class="alert alert-danger">{% trans "Signup closed" %}</div>
+            {% endif %} {# lottery.registration_open #}
+
+            {% if perms.lottery.draw %}
+            <a class="btn btn-info" href="{% url 'drawing' lottery.id %}">{% trans "Go to drawing" %}</a>
+            {% endif %}
+        </p>
+    </div>
+</div>
 {% endblock content %}
