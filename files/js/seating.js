@@ -63,26 +63,27 @@ $(document).ready(function(){
             $("#occupied-by").addClass("hide")
         }
 
+        // Set seat number in take and leave forms
+        var seatNumber = selectedSeat.attr("seat-number")
+        $(".seat-number-input").each(function() {
+            this.value = seatNumber;
+        });
 
-        var takeButton = $('#take-button')
-        if(takeButton){
-            if(selectedSeat.attr("status") === "free"){
-                takeButton.attr("href", selectedSeat.attr("seat-number") + "/take")
-                takeButton.removeClass("hide")
-            }
-            else{
-                takeButton.addClass("hide")
+        var takeForm = $('#take-form')
+        if (takeForm) {
+            if (selectedSeat.attr("status") === "free") {
+                takeForm.removeClass("hide")
+            } else{
+                takeForm.addClass("hide")
             }
         }
 
-        var leaveButton = $('#leave-button')
-        if(leaveButton){
-            if(selectedSeat.attr("status") === "mine"){
-                leaveButton.attr("href", selectedSeat.attr("seat-number") + "/leave")
-                leaveButton.removeClass("hide")
-            }
-            else{
-                leaveButton.addClass("hide")
+        var leaveForm = $('#leave-form')
+        if (leaveForm) {
+            if (selectedSeat.attr("status") === "mine") {
+                leaveForm.removeClass("hide")
+            } else{
+                leaveForm.addClass("hide")
             }
         }
     });
