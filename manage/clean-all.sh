@@ -8,6 +8,9 @@ rm -rf .venv
 echo "Cleaning Python cache ..."
 find . -name "*.pyc" -exec rm -rf {} \;
 
+echo "Cleaning misc. files ..."
+rm -f requirements/*.old.txt
+
 echo "Cleaning local data ..."
 rm -rf .local
 rm -rf VERSION

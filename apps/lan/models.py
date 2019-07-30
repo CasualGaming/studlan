@@ -161,8 +161,9 @@ class Directions(models.Model):
 
 class Stream(models.Model):
     title = models.CharField(_(u'title'), max_length=100)
-    description = models.TextField(_(u'description'), blank=True)
-    link = models.TextField(_(u'link'), help_text=_(u'Embedding link for twitch etc. Include the complete IFrame.'))
+    visible_title = models.CharField(_(u'visible title'), max_length=100, blank=True, help_text=_(u'Title to show above stream. May be empty.'))
+    description = models.TextField(_(u'description'), blank=True, help_text=_(u'Short description that will show on front page.'))
+    link = models.CharField(_(u'link'), max_length=300, help_text=_(u'Link to the embedding stream.'))
     active = models.BooleanField(_(u'is active'), default=False, help_text=_(u'No more than one stream can be active at any given time.'))
 
     def is_active(self):

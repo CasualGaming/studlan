@@ -13,7 +13,6 @@ from apps.userprofile.models import Alias, AliasType
 
 
 class Activity(models.Model):
-
     title = models.CharField(_(u'title'), max_length=50)
     image_url = models.CharField(_(u'image URL'), max_length=100, blank=True,
                                  help_text=_(u'Use a mirrored image of at least a height of 150px.'))
@@ -32,7 +31,6 @@ class Activity(models.Model):
 
 
 class Competition(TranslatableModel):
-
     STATUSES = (
         (1, pgettext_lazy(u'competition status', u'Registration open')),
         (2, pgettext_lazy(u'competition status', u'Registration closed')),
@@ -53,12 +51,15 @@ class Competition(TranslatableModel):
     status = models.SmallIntegerField(_(u'status'), choices=STATUSES)
     activity = models.ForeignKey(Activity, verbose_name=_(u'activity'))
     lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
-    challonge_url = models.CharField(_(u'Challonge URL'), max_length=50, blank=True)
+    challonge_url = models.CharField(_(u'Challonge URL'), max_length=50, blank=True,
+                                     help_text='Do not set this field if challonge integration is enabled. '
+                                               'The challonge url will be generated after starting the competition.')
     team_size = models.IntegerField(_(u'team size'), default=5, blank=True)
     start_time = models.DateTimeField(_(u'start time'), blank=True, null=True)
 
     tournament_format = models.CharField(
-        _(u'tournament format'), max_length=20, blank=True, choices=TOURNAMENT_FORMATS)
+        _(u'tournament format'), max_length=20, blank=True, choices=TOURNAMENT_FORMATS,
+        help_text='Only set this field if the Challonge integration is being used for this competition.')
 
     max_participants = models.SmallIntegerField(
         _(u'maximum participants'), default=0, help_text=_(u'The maximum number of participants allowed for a competition.'
@@ -245,11 +246,11 @@ class Match(models.Model):
             if (user == self.player1.user and player_id == '1') or (user == self.player2.user and player_id == '2'):
                 return True
         else:
-            if user == (self.player1.team.leader and player_id == '1')\
-                    or user == (self.player2.team.leader and player_id == '2'):
+            if (user == self.player1.team.leader and player_id == '1')\
+                    or (user == self.player2.team.leader and player_id == '2'):
                 return True
-            if user in (self.player1.team.members.all() and player_id == '1')\
-                    or (user in self.player2.members.all() and player_id == '2'):
+            if (user in self.player1.team.members.all() and player_id == '1')\
+                    or (user in self.player2.team.members.all() and player_id == '2'):
                 return True
         return False
 

@@ -29,8 +29,8 @@
 {% if lan.video_link %}
 <div class="row">
     <div class="col-md-9">
-        <div class="lan-video-container">
-            <iframe class="lan-video" title="Video" src="{{ lan.video_link|safe }}" allowfullscreen></iframe>
+        <div class="embed-responsive embed-responsive-16by9 lan-video">
+            <iframe class="embed-responsive-item" title="Video" src="{{ lan.video_link|safe }}" allowfullscreen></iframe>
         </div>
     </div>
 </div>
@@ -182,7 +182,7 @@
         {% endif %} {# status == ... #}
         {% else %}{# user.is_authenticated #}
         <div class="alert alert-danger">
-            {% trans "You need to login to see your status." %}
+            {% trans "You need to login to sign up for the LAN." %}
         </div>
         {% endif %}{# user.is_authenticated #}
     </div>

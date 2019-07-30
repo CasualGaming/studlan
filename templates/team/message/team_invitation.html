@@ -1,7 +1,6 @@
 {% load i18n %}
 
 {% blocktrans with team_url=team.get_absolute_url %}
-You have been invited to join team <a href="{{ team_url }}">{{ team }}</a> by {{ inviter }}.
-You can either <a href="{{ accept_link }}"><strong>accept</strong></a>
-or <a href="{{ decline_link }}"><strong>decline</strong></a> the invitation.
+{{ inviter }} has invited you to join team <a href="{{ team_url }}">{{ team }}</a>.
+You can accept or decline the invitation on the team page.
 {% endblocktrans %}

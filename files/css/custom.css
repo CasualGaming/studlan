@@ -388,22 +388,8 @@ div#btn-profile {
     color: grey;
 }
 
-.lan-video-container {
-    position: relative;
-    width: 100%;
-    height: 0;
-    /* For constant aspect ratio */
-    padding-bottom: 56.25%;
-    margin-top: 10px;
-    margin-bottom: 20px;
-}
-
 .lan-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    margin-bottom: 20px;
 }
 
 .lan-map {
@@ -436,4 +422,19 @@ div#btn-profile {
 .article-content {
     line-height: 1.5em;
     text-align: justify;
+}
+
+.inline-button-form {
+    display: inline-block;
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+
+.stream {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.stream-desc {
+    margin-top: 10px;
 }

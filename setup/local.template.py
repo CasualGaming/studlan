@@ -22,9 +22,6 @@ STUDLAN_FROM_MAIL = 'example@example.net'
 SUPPORT_MAIL = 'example@example.net'
 DEFAULT_FROM_EMAIL = STUDLAN_FROM_MAIL
 REGISTER_FROM_MAIL = DEFAULT_FROM_EMAIL
-ADMINS = (
-    ('example', 'example@example.net'),
-)
 
 # Recommended settings that require HTTPS
 CSRF_COOKIE_SECURE = False
@@ -48,6 +45,6 @@ STRIPE_PRIVATE_KEY = ''
 GOOGLE_CAL_SRC = ''
 
 # challonge credentials
-CHALLONGE_INTERGRATION_ENABLED = False
+CHALLONGE_INTEGRATION_ENABLED = False
 CHALLONGE_API_USERNAME = ''
 CHALLONGE_API_KEY = ''

@@ -116,7 +116,7 @@ def competition_details(request, competition_id):
 
     # Get challonge settings
     try:
-        use_challonge = settings.CHALLONGE_INTERGRATION_ENABLED
+        use_challonge = settings.CHALLONGE_INTEGRATION_ENABLED
         if use_challonge:
             challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
     except AttributeError:
@@ -195,7 +195,7 @@ def competition_details(request, competition_id):
 
 
 def update_match_list(request, competition):
-    if settings.CHALLONGE_INTEGRATION_ENABELED and settings.CHALLONGE_API_USERNAME != '' and \
+    if settings.CHALLONGE_INTEGRATION_ENABLED and settings.CHALLONGE_API_USERNAME != '' and \
             settings.CHALLONGE_API_KEY != '':
         challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
         c_open_matches = challonge.matches.index(competition.challonge_url)
@@ -384,7 +384,7 @@ def start_compo(request, competition_id):
                 messages.error(request, _(u'Set competition tournament format before using this feature.'))
                 return redirect(competition)
 
-            if settings.CHALLONGE_INTEGRATION_ENABELED and settings.CHALLONGE_API_USERNAME != '' and \
+            if settings.CHALLONGE_INTEGRATION_ENABLED and settings.CHALLONGE_API_USERNAME != '' and \
                     settings.CHALLONGE_API_KEY != '':
                 challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
                 url = unicode(competition.lan) + unicode(competition.activity) + unicode(int(time.time()))
@@ -460,7 +460,7 @@ def register_score(request, competition_id, match_id, player_id):
 
 
 def complete_match(request, competition, match):
-    if settings.CHALLONGE_INTEGRATION_ENABELED and settings.CHALLONGE_API_USERNAME != '' and settings.CHALLONGE_API_KEY != '':
+    if settings.CHALLONGE_INTEGRATION_ENABLED and settings.CHALLONGE_API_USERNAME != '' and settings.CHALLONGE_API_KEY != '':
         challonge.set_credentials(settings.CHALLONGE_API_USERNAME, settings.CHALLONGE_API_KEY)
         challonge.matches.update(competition.challonge_url, match.matchid, scores_csv=match.final_score,
                                  winner_id=match.winner.cid)
