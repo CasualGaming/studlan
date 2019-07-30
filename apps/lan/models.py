@@ -135,7 +135,7 @@ class Ticket(models.Model):
     bought_date = models.DateField(_(u'bought date'))
     valid = models.BooleanField(_(u'is valid'), default=True)
     invalid_date = models.DateField(_(u'invalid date'), null=True, blank=True)
-    invalid_description = models.TextField(_(u'invalid description'), blank=True)
+    invalid_description = models.TextField(_(u'invalid description'), null=True, blank=True)
 
     def __unicode__(self):
         return self.user.username
@@ -148,7 +148,7 @@ class Ticket(models.Model):
 
 class Directions(models.Model):
     lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
-    title = models.TextField(_(u'title'))
+    title = models.CharField(_(u'title'), max_length=100)
     description = models.TextField(_(u'description'), blank=True, help_text=_(u'Directions.'))
 
     class Meta:
