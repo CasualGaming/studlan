@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST, require_safe
 
@@ -131,14 +132,12 @@ def invite_member(request, team_id):
     invitation.token = uuid.uuid1().hex
     invitation.save()
 
-    # TODO
-    invitation_message = 'You have been invited to <a href="' + team.get_absolute_url() + '">' + team.title \
-                       + '</a> by ' + unicode(request.user)
-    invitation_message += '. You can either '
-    invitation_message += '<a href="' + team.get_absolute_url() + 'join ' + '"> Accept</a> or'
-    invitation_message += '<a href="' + team.get_absolute_url() + 'remove_invitation/' + \
-                          invitation.token + '"> Decline</a> the invitation.'
-    pm_write(request.user, user, invitation.token, body=invitation_message)
+    context = {
+        'team': team,
+        'inviter': request.user,
+    }
+    message = render_to_string('team/message/team_invitation.html', context, request).strip()
+    pm_write(request.user, user, invitation.token, body=message)
 
     messages.success(request, _(u'User {user} was invited to the team.').format(user=user))
     return redirect(team)
@@ -175,8 +174,7 @@ def uninvite_member(request, team_id):
     invitation = invitation_qs[0]
 
     # Delete both invitation and message
-    message = get_object_or_404(Message, subject=invitation.token)
-    message.delete()
+    Message.objects.filter(subject=invitation.token).delete()
     invitation.delete()
 
     messages.success(request, _(u'User {user} was uninvited to the team.').format(user=user))
@@ -209,8 +207,7 @@ def accept_member_invite(request, team_id):
     member.save()
 
     # Delete both invitation and message
-    message = get_object_or_404(Message, subject=invitation.token)
-    message.delete()
+    Message.objects.filter(subject=invitation.token).delete()
     invitation.delete()
 
     messages.success(request, _(u'You have accepted the membership invitation from team {team}.').format(team=team))
@@ -232,8 +229,7 @@ def decline_member_invite(request, team_id):
     invitation = invitation_qs[0]
 
     # Delete both invitation and message
-    message = get_object_or_404(Message, subject=invitation.token)
-    message.delete()
+    Message.objects.filter(subject=invitation.token).delete()
     invitation.delete()
 
     messages.success(request, _(u'You have declined the membership invitation from team {team}.').format(team=team))
