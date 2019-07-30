@@ -1,11 +1,10 @@
-# App
-django==1.11.20
+django
 django-markdown-deux
 django-translatable
 reportlab
 stripe
 beautifulsoup4
-xlwt==1.3.0
+xlwt
 django-postman
 requests
 olefile
