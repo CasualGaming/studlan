@@ -148,8 +148,8 @@ class Ticket(models.Model):
 
 class Directions(models.Model):
     lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
-    title = models.CharField(_(u'title'), max_length=100)
-    description = models.TextField(_(u'description'), blank=True, help_text=_(u'Directions.'))
+    title = models.CharField(_(u'title'), max_length=100, null=True)
+    description = models.TextField(_(u'description'), null=True, blank=True, help_text=_(u'Directions.'))
 
     class Meta:
         verbose_name = _(u'LAN directions')

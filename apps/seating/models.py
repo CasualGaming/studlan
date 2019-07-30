@@ -15,7 +15,7 @@ class Layout(models.Model):
     title = models.CharField(_(u'title'), max_length=50)
     description = models.CharField(_(u'description'), max_length=250)
     number_of_seats = models.IntegerField(_(u'number of seats'))
-    template = models.TextField(_(u'SVG layout for seating'), blank=True)
+    template = models.TextField(_(u'SVG layout for seating'), null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.pk:
