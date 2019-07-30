@@ -11,7 +11,7 @@ $(function () {
         if (e.data === parseInt(e.data)) 
         	var height = e.data - 150;
             //document.getElementById('brackets-frame').height = height + "px";
-    }, false);
+	}, false);
 
     $('#brackets-button').click(function(e){
     	$('#brackets-container').toggleClass('hide');

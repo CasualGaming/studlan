@@ -5,23 +5,14 @@
 
 export CUSTOM_COMPILE_COMMAND="manage/update-deps.sh"
 
-set -eu # Exit on error and undefined var is error
-
-# Setup virtual environment to install packages and stuff inside
-if [[ ! -d .venv ]]; then
-    echo "Creating venv ..."
-    # Don't use symlinks if in VirtualBox shared folder
-    if ( df -t vboxsf . 1>/dev/null 2>/dev/null ); then
-        echo "VirtualBox shared folder detected"
-        virtualenv -p $(which python2) --always-copy .venv
-    else
-        virtualenv -p $(which python2) .venv
-    fi
-fi
+set -eu
 
 # Activate venv and deactivate on exit
-source .venv/bin/activate
+# Allow undefined vars
+set +u
+source "$(dirname "$BASH_SOURCE[0]")/activate-venv.sh"
 trap deactivate EXIT
+set -u
 
 # Install pip-tools (needs to be inside venv to prevent conflict between the Python 2 and 3 versions)
 pip install pip-tools

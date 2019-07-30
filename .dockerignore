@@ -17,6 +17,7 @@ venv/
 
 # Django
 /studlan/settings/local.py
+/studlan/settings/local.docker.py
 /static/
 /studlan.db
 

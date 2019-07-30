@@ -1,0 +1,13 @@
+{% load i18n %}
+{% load settings %}
+
+{% get_current_language as LANGUAGE_CODE %}
+
+{% site_name %}
+--------------------------------------------------
+
+{% block content %}
+{% endblock content %}
+
+--------------------------------------------------
+{% trans "Sent automatically from" %} {% site_name %} ({{ request.get_host }}).

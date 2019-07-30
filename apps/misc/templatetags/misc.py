@@ -51,3 +51,9 @@ def get_seating_url(dictionary, key):
 @register.filter
 def get_seat_placement(dictionary, key):
     return dictionary.get(key).placement
+
+
+@register.filter
+def get_seat_info(dictionary, key):
+    seat = dictionary.get(key)
+    return '{0}, seat {1}'.format(seat.seating, seat.placement)

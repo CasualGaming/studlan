@@ -1,3 +1,2 @@
 -r base.in
-
-uwsgi
+-r test.in

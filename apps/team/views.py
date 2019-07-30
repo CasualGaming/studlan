@@ -7,7 +7,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext as _
@@ -22,26 +21,13 @@ from apps.team.models import Invitation, Member, Team
 
 def teams(request):
     teams = Team.objects.all()
-
-    breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        (_(u'Teams'), ''),
-    )
-
-    return render(request, 'team/teams.html', {'teams': teams, 'breadcrumbs': breadcrumbs})
+    return render(request, 'team/teams.html', {'teams': teams})
 
 
 @login_required
 def my_teams(request):
     teams = Team.objects.filter(Q(leader=request.user) | Q(members=request.user)).distinct()
-
-    breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        (_(u'Teams'), reverse('teams')),
-        (_(u'My teams'), ''),
-    )
-
-    return render(request, 'team/my_teams.html', {'teams': teams, 'breadcrumbs': breadcrumbs})
+    return render(request, 'team/my_teams.html', {'teams': teams})
 
 
 @login_required
@@ -70,13 +56,7 @@ def create_team(request):
     else:
         form = TeamCreationForm()
 
-    breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        (_(u'Teams'), reverse('teams')),
-        (_(u'Create team'), ''),
-    )
-
-    return render(request, 'team/create_team.html', {'breadcrumbs': breadcrumbs, 'form': form})
+    return render(request, 'team/create_team.html', {'form': form})
 
 
 @login_required
@@ -103,21 +83,13 @@ def show_team(request, team_id):
     users = User.objects.all().exclude(Invitee__in=invitations)
     users2 = []
     for user in users:
-        if user != team.leader:
-            if user not in team.members.all():
-                users2.append(user)
+        if user != team.leader and user not in team.members.all():
+            users2.append(user)
 
     users2.sort(key=lambda x: x.username.lower(), reverse=False)
     invitation = Invitation.objects.filter(invitee=request.user.id, team=team)
 
-    breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        (_(u'Teams'), reverse('teams')),
-        (team, ''),
-    )
-
-    return render(request, 'team/team.html', {'team': team, 'users': users2, 'invitation': invitation,
-                                              'invitations': invitations, 'breadcrumbs': breadcrumbs})
+    return render(request, 'team/team.html', {'team': team, 'users': users2, 'invitation': invitation, 'invitations': invitations})
 
 
 @login_required

@@ -14,7 +14,8 @@ class LAN(TranslatableModel):
     start_date = models.DateTimeField('start date')
     end_date = models.DateTimeField('end date')
     location = models.CharField('location', max_length=100)
-    map_link = models.CharField('map link', max_length=300, help_text='url for google maps embedded map', null=True)
+    map_link = models.CharField('map link', max_length=300, help_text='URL for an embedded map', blank=True)
+    video_link = models.CharField('video link', max_length=300, help_text='URL for an embedded video', blank=True)
 
     @property
     def attendees(self):
@@ -75,6 +76,9 @@ class Attendee(models.Model):
 
     def __unicode__(self):
         return self.user.username + ' – ' + self.lan.title
+
+    def has_paid_or_has_ticket(self):
+        return self.has_paid or self.lan.has_ticket(self.user)
 
     class Meta:
         ordering = ['-user', 'lan']

@@ -1,0 +1,21 @@
+{% extends "email/base.html" %}
+
+{% load i18n %}
+{% load settings %}
+
+{% block content %}
+<p>{% trans "You have requested a password recovery for the account(s) bound to this email address at" %} <a href="{{ request.get_host }}">{% site_name %}</a>.</p>
+
+<p>
+    {% trans "Email address:" %} {{ email }}
+    <br />
+    {% trans "Username:" %} {{ username }}
+</p>
+
+<p>
+    {% trans "If you did not ask for this password recovery, please ignore this email. Otherwise, click the link below to reset your password:" %}
+    <br />
+    <a href="{{ link }}">{{ link }}</a>
+</p>
+<p>{% trans "If you do not use this link within 24 hours, it will be invalidated." %}</p>
+{% endblock content %}

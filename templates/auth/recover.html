@@ -5,28 +5,34 @@
 {% endblock title %} 
 {% block content %}
 <div class="row">
-    <div class="col-md-9"> {{ form.non_field_errors }}
+    <div class="col-md-9">
+        <h1 class="page-header">{% trans "Account Recovery" %}</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-9">
+        {% for error in form.non_field_errors %}
+        <p class="form-error">{{ error }}</p>
+        {% endfor %}
         <form class="form-horizontal" method="post" action="{% url 'auth_recover' %}">
-        {% csrf_token %}
-            <fieldset>
-                <legend>{% trans "Account recovery" %}</legend>
-                {% for field in form %}
-                    <div class="form-group {% if field.errors %} has-error {% endif %}">
-                        <label label-default="label-default" class="col-md-1 control-label">
-                            {{ field.label }}
-                        </label>
-                        <div class="col-md-6">
-                            {{ field }}
-                            <div class="form-error">
-                                {{ field.errors }}
-                            </div>
-                        </div>
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group {% if field.errors %} has-error {% endif %}">
+                <label label-default="label-default" class="col-md-1 control-label">
+                    {{ field.label }}
+                </label>
+                <div class="col-md-6">
+                    {{ field }}
+                    <div class="form-error">
+                        {{ field.errors }}
                     </div>
-                {% endfor %}
-                <div class="form-actions center-on-collapse">
-                    <input type="submit" class="btn btn-primary" value="{% trans "Recover" %}" />
                 </div>
-            </fieldset>
+            </div>
+            {% endfor %}
+            <div class="form-actions center-on-collapse">
+                <input type="submit" class="btn btn-primary" value="{% trans "Send recovery email" %}" />
+            </div>
         </form>
     </div>
 </div>

@@ -20,7 +20,7 @@ $(document).ready(function(){
     });
 
     var main_svg = $("#svg-wrapper > svg");
-    var h = "60vh";
+
     if (main_svg.attr("viewBox") !== undefined || main_svg.attr("viewBox") !== false){
         main_svg.attr({
             viewBox: [0,0, main_svg.attr('width').replace('px', ''),main_svg.attr('height').replace('px', '')].join(' ')
@@ -28,11 +28,11 @@ $(document).ready(function(){
     }
 
     main_svg.attr({
-        height: h,
         preserveAspectRatio: "xMidYMid meet"
     });
 
     main_svg.removeAttr("width");
+    main_svg.removeAttr("height");
 
     var selectedSeat;
     var selectedSeatClass;
@@ -64,40 +64,27 @@ $(document).ready(function(){
         }
 
 
-        if(selectedSeat.attr("status") === "free"){
-
-            var takeButton = $('#take-button')
-
-            if(takeButton){
+        var takeButton = $('#take-button')
+        if(takeButton){
+            if(selectedSeat.attr("status") === "free"){
                 takeButton.attr("href", selectedSeat.attr("seat-number") + "/take")
                 takeButton.removeClass("hide")
             }
-        }
-        else{
-            var takeButton = $('#take-button')
-
-            if(takeButton){
+            else{
                 takeButton.addClass("hide")
             }
         }
 
-        if(selectedSeat.attr("status") === "mine"){
-
-            var leaveButton = $('#leave-button')
-
-            if(leaveButton){
+        var leaveButton = $('#leave-button')
+        if(leaveButton){
+            if(selectedSeat.attr("status") === "mine"){
                 leaveButton.attr("href", selectedSeat.attr("seat-number") + "/leave")
                 leaveButton.removeClass("hide")
             }
-        }
-        else{
-            var leaveButton = $('#leave-button')
-
-            if(leaveButton){
+            else{
                 leaveButton.addClass("hide")
             }
         }
-
     });
 
 });

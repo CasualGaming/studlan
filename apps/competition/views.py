@@ -24,44 +24,37 @@ from apps.team.models import Team
 
 def main(request):
     lans = LAN.objects.filter(end_date__gte=datetime.now())
-    if lans:
+    if lans.count() == 1:
         next_lan = lans[0]
-        return redirect('competitions_show_lan', lan_id=next_lan.id)
+        return redirect('competitions_lan_compos', lan_id=next_lan.id)
     else:
-        context = {}
-        competitions = Competition.objects.all()
-        competitions = shorten_descriptions(competitions, 200)
-
-        context['activities'] = Activity.objects.all()
-        context['competitions'] = competitions
-        context['active'] = 'all'
-
-        breadcrumbs = (
-            (settings.SITE_NAME, '/'),
-            (_(u'Competitions'), ''),
-        )
-        context['breadcrumbs'] = breadcrumbs
-
-        return render(request, 'competition/competitions.html', context)
+        return redirect('competitions_lan_list')
 
 
-def main_filtered(request, lan_id):
+def lan_list(request):
+    context = {}
+    context['upcoming_lans'] = LAN.objects.filter(end_date__gte=datetime.now()).all()
+    context['previous_lans'] = LAN.objects.filter(end_date__lt=datetime.now()).all()
+
+    return render(request, 'competition/competition_lan_list.html', context)
+
+
+def lan_compos(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
 
     context = {}
     competitions = Competition.objects.filter(lan=lan)
     competitions = shorten_descriptions(competitions, 200)
 
+    context['lan'] = lan
     context['activities'] = Activity.objects.all()
     context['competitions'] = competitions
     context['active'] = 'all'
-    context['lan'] = lan
     context['lotteries'] = Lottery.objects.filter(lan=lan)
 
     breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        (_(u'Competitions'), reverse('competitions')),
-        (lan, ''),
+        (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
+        (_(u'Competitions'), ''),
     )
     context['breadcrumbs'] = breadcrumbs
 
@@ -84,13 +77,6 @@ def activity_details(request, activity_id):
         context['activities'] = Activity.objects.all()
         context['competitions'] = competitions
 
-        breadcrumbs = (
-            (settings.SITE_NAME, '/'),
-            ('Competitions', reverse('competitions')),
-            (activity, ''),
-        )
-        context['breadcrumbs'] = breadcrumbs
-
         return render(request, 'competition/competitions.html', context)
 
 
@@ -108,10 +94,8 @@ def activity_details_filtered(request, lan_id, activity_id):
     context['lan'] = lan
 
     breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        (_(u'Competitions'), reverse('competitions')),
         (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
-        (activity, ''),
+        (_(u'Competitions'), ''),
     )
     context['breadcrumbs'] = breadcrumbs
 
@@ -128,6 +112,7 @@ def shorten_descriptions(competitions, length):
 def competition_details(request, competition_id):
     context = {}
     competition = get_object_or_404(Competition, pk=competition_id)
+    lan = competition.lan
 
     # Get challonge settings
     try:
@@ -138,11 +123,10 @@ def competition_details(request, competition_id):
         use_challonge = False
     context['use_challonge'] = use_challonge
 
-    # Build breadcrumbs
     breadcrumbs = (
-        (settings.SITE_NAME, '/'),
-        (_(u'Competitions'), reverse('competitions')),
-        (competition, ''),
+        (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
+        (_(u'Competitions'), reverse('competitions_lan_compos', kwargs={'lan_id': lan.id})),
+        (_(u'Competition'), ''),
     )
     context['breadcrumbs'] = breadcrumbs
 
@@ -175,32 +159,27 @@ def competition_details(request, competition_id):
             if k:
                 p = Participant.objects.get(team=k.pop(), competition=competition)
 
-        if use_challonge:
-            if p:
-                try:
-                    match = Match.objects.get((Q(player1=p) | Q(player2=p)) & Q(state='open'))
-                    context['player_match'] = match
-                    context['point_choices'] = range(0, competition.max_match_points + 1)
-                    if match.player1 == p:
-                        context['player'] = 1
-                        if match.p1_reg_score:
-                            context['registered'] = True
-                        else:
-                            context['registered'] = False
+        if use_challonge and p:
+            try:
+                match = Match.objects.get((Q(player1=p) | Q(player2=p)) & Q(state='open'))
+                context['player_match'] = match
+                context['point_choices'] = range(0, competition.max_match_points + 1)
+                if match.player1 == p:
+                    context['player'] = 1
+                    if match.p1_reg_score:
+                        context['registered'] = True
                     else:
-                        context['player'] = 2
-                        if match.p2_reg_score:
-                            context['registered'] = True
-                        else:
-                            context['registered'] = False
-                except ObjectDoesNotExist:
-                    if 1 < competition.status < 4:
-                        messages.warning(request,
-                                         'You have no current match, please check the brackets for more information')
-
-    # Insert placeholder image if the image_url is empty
-    if not competition.activity.image_url:
-        competition.activity.image_url = 'http://placehold.it/150x150'
+                        context['registered'] = False
+                else:
+                    context['player'] = 2
+                    if match.p2_reg_score:
+                        context['registered'] = True
+                    else:
+                        context['registered'] = False
+            except ObjectDoesNotExist:
+                if 1 < competition.status < 4:
+                    messages.warning(request,
+                                     'You have no current match, please check the brackets for more information')
 
     if request.user.is_authenticated():
         owned_teams = Team.objects.filter(leader=request.user)
@@ -257,11 +236,10 @@ def join(request, competition_id):
             team = get_object_or_404(Team, pk=team_id)
 
             # Check if team size restrictions are in place
-            if competition.enforce_team_size:
-                if team.number_of_team_members() + 1 < competition.team_size:
-                    messages.error(request, _(unicode(team) + u' does not have enough members (') +
-                                   str(team.number_of_team_members() + 1) + u'/' + str(competition.team_size) + u')')
-                    return redirect(competition)
+            if competition.enforce_team_size and team.number_of_team_members() + 1 < competition.team_size:
+                messages.error(request, _(unicode(team) + u' does not have enough members (') +
+                               str(team.number_of_team_members() + 1) + u'/' + str(competition.team_size) + u')')
+                return redirect(competition)
 
             # Check if payment restrictions are in place
             if competition.enforce_payment:
@@ -277,24 +255,23 @@ def join(request, competition_id):
                         return redirect(competition)
 
             # Check if alias restrictions are in place
-            if competition.require_alias:
-                if team.number_of_aliases(competition) < team.number_of_team_members() + 1:
-                    if team.number_of_team_members() + 1 - team.number_of_aliases(competition) < 4:
-                        messages.error(request,
-                                       _(u'Several members of ' + unicode(team) + u' are missing aliases for ' +
-                                         unicode(competition)))
-                        for member in team.members.all():
-                            if not competition.has_alias(member):
-                                messages.error(request, _(unicode(member) + u' is missing an alias for ') +
-                                               unicode(competition))
-                        if not competition.has_alias(team.leader):
-                            messages.error(request, _(unicode(team.leader) + u' is missing an alias for ') +
+            if competition.require_alias and team.number_of_aliases(competition) < team.number_of_team_members() + 1:
+                if team.number_of_team_members() + 1 - team.number_of_aliases(competition) < 4:
+                    messages.error(request,
+                                   _(u'Several members of ' + unicode(team) + u' are missing aliases for ' +
+                                     unicode(competition)))
+                    for member in team.members.all():
+                        if not competition.has_alias(member):
+                            messages.error(request, _(unicode(member) + u' is missing an alias for ') +
                                            unicode(competition))
-                    else:
-                        messages.error(request,
-                                       _(u'Several members of ' + unicode(team) + u' are missing aliases for ') +
+                    if not competition.has_alias(team.leader):
+                        messages.error(request, _(unicode(team.leader) + u' is missing an alias for ') +
                                        unicode(competition))
-                    return redirect(competition)
+                else:
+                    messages.error(request,
+                                   _(u'Several members of ' + unicode(team) + u' are missing aliases for ') +
+                                   unicode(competition))
+                return redirect(competition)
 
             # Go through all members of the team and delete their individual participation entries
             if request.user in users:
@@ -379,13 +356,19 @@ def schedule(request):
     context = {}
 
     if lans:
-        context['lan'] = lans[0]
-        context['start_date'] = lans[0].start_date.strftime('%Y%m%d')
-        context['end_date'] = lans[0].end_date.strftime('%Y%m%d')
+        lan = lans[0]
+
+        context['lan'] = lan
+        context['start_date'] = lan.start_date.strftime('%Y%m%d')
+        context['end_date'] = lan.end_date.strftime('%Y%m%d')
         if settings.GOOGLE_CAL_SRC != '':
             context['cal_src'] = settings.GOOGLE_CAL_SRC
         else:
             context['cal_src'] = None
+        context['breadcrumbs'] = (
+            (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
+            (_(u'Schedule'), ''),
+        )
 
     return render(request, 'competition/schedule.html', context)
 
@@ -517,7 +500,6 @@ def submit_score(request, competition_id, match_id):
     else:
         if request.method == 'POST':
             final_score = request.POST.get('final_score')
-            # print final_score
             winner = request.POST.get('winner')
             match.winner = Participant.objects.get(competition=competition, cid=winner)
             match.final_score = final_score

@@ -1,0 +1,23 @@
+version: '3.6'
+
+services:
+  app:
+    container_name: studlan-dev-app
+    build:
+      context: ..
+    environment:
+    - SUPERUSER_USERNAME=batman
+    - SUPERUSER_EMAIL=batman@localhost
+    - SUPERUSER_PASSWORD=manbat
+    - SUPERUSER_INACTIVE=false
+    volumes:
+    - ../studlan/settings/local.docker.py:/srv/studlan/studlan/settings/local.py:ro
+    - ../.local/docker/db.sqlite3:/srv/studlan/db.sqlite3:rw
+    - ../.local/docker/log:/srv/studlan/log:rw
+    # Source dirs, in case of changes
+    - ../apps/:/studlan/apps/:ro
+    - ../locale/:/studlan/locale/:ro
+    - ../studlan/:/studlan/studlan/:ro
+    - ../templates/:/studlan/templates/:ro
+    ports:
+    - "8000:8080"

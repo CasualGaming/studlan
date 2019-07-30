@@ -9,36 +9,54 @@
 {{ competition }}
 {% endblock title %}
 
+{% block script %}
+<script type="text/javascript" src="{% static 'js/competition.js' %}"></script>
+{% endblock script %}
+
 {% block content %}
-
-
 {% with competition.use_teams as teamcomp %} 
-    <script type="text/javascript" src="{% static 'js/competition.js' %}"></script>
     <div class="row">
         <div class="col-md-9">
-            <h2>{{ competition }}</h2>
-            {% if competition.start_time %}
-                <p class="competition-start-time">{{ competition.start_time }}</p>
-            {% endif %}
-            {% if competition.participant_spots_free > 0 %}
-                <p class="competition-start-time">Open spots: {{ competition.participant_spots_free }}</p>
-            {% endif %}
+            <h1>{{ competition }}</h1>
         </div>
+    </div>
 
-    </div>
-    <div class="row">
-        <div class="col-md-9">
-            <span class="label label-{{ competition.status_label }}">{{ competition.status_text_verbose }}</span>
-            <a href="#" class="label label-info" rel="popover" data-placement="below" data-html="true" data-content="{{ competition.activity.desc|markdown }}" data-original-title="{{ competition.activity.title }}">{{ competition.activity.title }}</a>
-        </div>
-    </div>
+    {% if competition.activity.image_url %}
     <div class="row">
         <div class="col-md-9">
             <div class="activity_image" style="background: url('{{ competition.activity.image_url }}');"></div>
         </div>
     </div>
-    
-    <br />
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-4">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td><strong>{% trans "Activity" %}</strong></td>
+                        <td>{{ competition.activity.title }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{% trans "Status" %}</strong></td>
+                        <td><span class="label label-{{ competition.status_label }}">{{ competition.status_text_verbose }}</span></td>
+                    </tr>
+                    {% if competition.start_time %}
+                    <tr>
+                        <td><strong>{% trans "Start time" %}</strong></td>
+                        <td>{{ competition.start_time }}</td>
+                    </tr>
+                    {% endif %}
+                    {% if competition.participant_spots_free > 0 %}
+                    <tr>
+                        <td><strong>{% trans "Open spots" %}</strong></td>
+                        <td>{{ competition.participant_spots_free }}</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     {% if competition.challonge_url %}
     {% if competition.status == 3 or competition.status == 4 %}
@@ -124,7 +142,8 @@
         <div>
             <button id="brackets-button" class="btn btn-default">Show brackets</button>
             <div id="brackets-container" class="hide">
-                <iframe id="brackets-frame" onload="AdjustIFrame('RefFrame');" src="https://challonge.com/{{ competition.challonge_url }}/module?theme=3&show_final_results=1" width="100%" height="500px" scrolling="auto" frameborder="0" allowtransparency="true"></iframe>
+                <iframe id="brackets-frame" title="Challonge brackets" width="100%" height="500px" onload="AdjustIFrame('RefFrame');" style="border: none;"
+                        src="https://challonge.com/{{ competition.challonge_url }}/module?theme=3&show_final_results=1"></iframe>
             </div>
         </div>
     {% endif %}
@@ -310,7 +329,7 @@
                     {% trans "Signing up for a team compo as a solo player does not mean you are a participant." %} 
                     {% trans "Try to find other players that sign up solo, make a team and sign up as a team." %}
                     <br>
-                    <b>{% trans "When you sign up as a team, your solo participation will be overriden." %}</b>
+                    <strong>{% trans "When you sign up as a team, your solo participation will be overriden." %}</strong>
                 </div>  
             </div>
         </div>
@@ -331,6 +350,7 @@
 
     <div class="row">
         <div class="col-md-9">
+            <hr />
             <p>{{ competition.get_translation.translated_description|markdown }}</p>
         </div>
     </div>

@@ -9,7 +9,7 @@
 {% block content %}
 <div class="row">
     <div class="col-md-9">
-         <h2>{% trans "Alias" %}</h2>
+         <h1>{% trans "Alias" %}</h1>
     </div>
 </div>
 {% profile_tabs 'alias' %}
@@ -31,7 +31,7 @@
                             {{alias.nick}}
                         {% endif%}
                     <td>
-                        <a href="{% url 'remove_alias' alias.id %}"><i class="glyphicon glyphicon-remove"></i>
+                        <a href="{% url 'remove_alias' alias.id %}"><span class="glyphicon glyphicon-remove"></span>
                     </td>
                 </tr>
                 {% endfor %}
@@ -39,7 +39,7 @@
         </table>
     </div>
 </div>
-{% if alias_types%}
+{% if alias_types %}
 <div class="col-md-9">
     <form class="form-horizontal" action="{% url 'add_alias' %}" method="POST">
         {% csrf_token %}
