@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-29 05:33+0200\n"
+"POT-Creation-Date: 2019-07-30 16:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -413,7 +413,7 @@ msgstr "Du har fjernet {team} fra {competition}."
 #, python-brace-format
 msgid ""
 "You cannot remove {team} from {competition}, you are not the team leader."
-msgstr "Du kan ikke fjerne {team} fra {competition}, du er ikke lagleder."
+msgstr "Du kan ikke fjerne {team} fra {competition}, du er ikke lagfører."
 
 msgid "Forfeit not yet implemented!"
 msgstr ""
@@ -554,23 +554,32 @@ msgstr "Retninger."
 msgid "LAN directions"
 msgstr "LAN-retninger"
 
+msgid "visible title"
+msgstr "synlig tittel"
+
+msgid "Title to show above stream. May be empty."
+msgstr "Tittel som vises over strømmingen. Kan være tom."
+
+msgid "Short description that will show on front page."
+msgstr "Kort beskrivelse som vises på fremsiden."
+
 msgid "link"
 msgstr "lenke"
 
-msgid "Embedding link for twitch etc. Include the complete IFrame."
-msgstr "Innebygget lenke for Twitch etc. Inkluder en komplett iFrame."
+msgid "Link to the embedding stream."
+msgstr "Lenke til en innebygget strømming."
 
 msgid "is active"
 msgstr "er aktiv"
 
 msgid "No more than one stream can be active at any given time."
-msgstr "Bare en strøm kan være aktiv samtidig."
+msgstr "Bare én strømming kan være aktiv samtidig."
 
 msgid "stream"
-msgstr "strøm"
+msgstr "strømming"
 
 msgid "streams"
-msgstr "strømmer"
+msgstr "strømminger"
 
 msgid "This LAN has finished and can no longer be attended."
 msgstr "Dette LANet er over og påmeldingen er derfor stengt."
@@ -737,15 +746,14 @@ msgstr "En unik ID innenfor plasskartet."
 msgid "seat"
 msgstr "plass"
 
-msgid "This seat map is closed."
-msgstr "Dette plasskartet er stengt."
+msgid "The seating is closed."
+msgstr "Plasskartet er stengt."
 
-msgid "You have successfully reserved your seat."
-msgstr "Plassen ble reservert."
+msgid "You have reserved your seat."
+msgstr "Du har reservert plassen din."
 
-#, python-brace-format
-msgid "That seat is reserved by {user}."
-msgstr "Plassen er reservert av {user}."
+msgid "That seat is already taken."
+msgstr "Plassen er allerede opptatt."
 
 msgid "Your ticket does not allow reservation in this seating."
 msgstr "Billetten din tillater ikke reservering i dette plasskartet."
@@ -753,14 +761,30 @@ msgstr "Billetten din tillater ikke reservering i dette plasskartet."
 msgid "You need to attend and pay before reserving your seat."
 msgstr "Du må melde deg på og betale før du kan reservere plass."
 
-msgid "This seatmap is closed."
-msgstr "Dette plasskartet er stengt."
+msgid "You have unreserved your seat."
+msgstr "Du har avreservert plassen din."
 
-msgid "You have unregistered your seat."
-msgstr "Du har forlatt plassen din."
+msgid "This is not your seat."
+msgstr ""
 
-msgid "This seat is taken."
-msgstr "Plassen er opptatt"
+msgid "No seat was specified."
+msgstr "Ingen plass var spesifisert."
+
+msgid "Illegal seat."
+msgstr "Ugyldig plass."
+
+msgid "Page"
+msgstr "Side"
+
+msgid "Seat"
+msgstr "Plass"
+
+#, python-format
+msgid "%(seating)s, seat %(seat)d"
+msgstr "%(seating)s, plass %(seat)d"
+
+msgid "(Available)"
+msgstr "(Ledig)"
 
 msgid "Sponsor"
 msgstr "Sponsor"
@@ -817,7 +841,7 @@ msgid "tag"
 msgstr "Tagg"
 
 msgid "leader"
-msgstr "leder"
+msgstr "lagfører"
 
 msgid "members"
 msgstr "medlemmer"
@@ -844,72 +868,100 @@ msgid "team invitations"
 msgstr "laginvitasjoner"
 
 #, python-brace-format
-msgid "You cannot be leader of more than {max} teams."
-msgstr "Du kan ikke være leder av flere enn {max} lag."
+msgid "You can't be the leader of more than {max} teams."
+msgstr "Du kan ikke være lagfører av flere enn {max} lag."
 
 #, python-brace-format
-msgid "{team} has been created."
-msgstr "{team} har blitt opprettet."
+msgid "Team {team} has been created."
+msgstr "Lag {team} har blitt opprettet."
 
-msgid "You can only disband teams that you are leader of."
-msgstr "Du kan bare oppløse lag du er leder for."
-
-#, python-brace-format
-msgid "{team} was successfully deleted."
-msgstr "{team} ble slettet."
-
-msgid "You are not the team leader, you cannot add team members."
-msgstr "Du er ikke lagleder og kan derfor ikke fjerne medlemmer."
+msgid "Only the team leader may disband the team."
+msgstr "Bare lagfører kan oppløse laget."
 
 #, python-brace-format
-msgid "{member} is already on your team."
-msgstr "{member} er allerede på laget ditt."
+msgid "Team {team} was deleted."
+msgstr "Lag {team} ble slettet."
 
-#, python-brace-format
-msgid "{member} was added to your team."
-msgstr "{member} er nå med på laget ditt"
+msgid "Only the team leader may invite members."
+msgstr "Bare lagfører kan invitere medlemmer."
 
 msgid "No username was specified."
 msgstr "Intet brukernavn ble spesifisert."
 
-#, python-brace-format
-msgid "User {user} does not exist."
-msgstr "Bruker {user} finnes ikke."
+msgid "You can't invite yourself."
+msgstr "Du kan ikke invitere deg selv."
 
 #, python-brace-format
-msgid "User {user} is already on your team."
+msgid "User {user} was not found."
+msgstr "Bruker {user} ble ikke funnet."
+
+#, python-brace-format
+msgid "User {user} is already on the team."
 msgstr "Bruker {user} er allerede på laget ditt."
 
 #, python-brace-format
-msgid "User {user} was invited to your team."
-msgstr "Bruker {user} er nå med på laget ditt"
+msgid "User {user} is already invited to the team."
+msgstr "Bruker {user} er allerede invitert til laget."
 
 #, python-brace-format
-msgid "User {user} has already been invited to your team."
-msgstr "Bruker {user} er allerede invitert til laget ditt."
+msgid "User {user} was invited to the team."
+msgstr "Bruker {user} ble invitert til laget."
 
-msgid "The invitation was deleted."
-msgstr "Invitasjonen ble slettet."
+msgid "Only the team leader may uninvite members."
+msgstr "Bare lagfører kan angre medlemskapsinvitasjoner."
 
-msgid "You are not invited to join this team."
-msgstr "Du er ikke invitert til å bli med i dette laget."
+#, python-brace-format
+msgid "User {user} is not invited to the team."
+msgstr "Bruker {user} er ikke invitert til laget."
 
-msgid "You are already on this team."
-msgstr "Du er allerede på dette laget."
+#, python-brace-format
+msgid "User {user} was uninvited to the team."
+msgstr "Bruker {user} er ikke lenger invitert til laget."
 
-msgid "You successfully joined the team."
-msgstr "Du har godtatt laginvitasjonen."
+#, python-brace-format
+msgid "You are already the team leader of team {team}."
+msgstr "Du er allerede lagfører for lag {team}."
 
-msgid "You are not the team leader, you cannot remove other team members."
-msgstr "Du er ikke lagleder og kan derfor ikke fjerne andre lagmedlemmer."
+#, python-brace-format
+msgid "You are already on team {team}."
+msgstr "Du er allerede på lag {team}."
+
+#, python-brace-format
+msgid "You are not invited to team {team}."
+msgstr "Du er ikke invitert til lag {team}."
+
+#, python-brace-format
+msgid "You have accepted the membership invitation from team {team}."
+msgstr "Du har akseptert medlemskapsinvitasjonen fra lag {team}."
+
+#, python-brace-format
+msgid "You have declined the membership invitation from team {team}."
+msgstr "Du har avslått medlemskapsinvitasjonen fra lag {team}."
+
+msgid "Only the team leader may kick members."
+msgstr "Bare lagfører kan sparke medlemmer."
+
+msgid "You can't kick yourself."
+msgstr "Du kan ikke sparke deg selv."
+
+#, python-brace-format
+msgid "User {user} is not a member of the team."
+msgstr "Bruker {user} er ikke medlem av laget."
+
+#, python-brace-format
+msgid "{user} was kicked from the team."
+msgstr "{user} ble sparket fra laget."
+
+msgid ""
+"You are the team leader, the only way to leave the team is to disband it."
+msgstr "Du er lagfører, eneste måte å forlate laget er ved å oppløse det."
+
+msgid "You are not a member of this team."
+msgstr "Du er ikke medlem av dette laget."
 
 #, python-brace-format
 msgid "You have left team {team}."
 msgstr "Du har forlatt lag {team}."
-
-#, python-brace-format
-msgid "{user} removed from the team."
-msgstr "{user} ble fjernet fra laget."
 
 msgid "You cannot deactivate yourself! No actions were performed."
 msgstr "Du kan ikke deaktivere deg selv! Ingen hanglinger ble gjennomført."
@@ -1285,6 +1337,7 @@ msgstr "Velg lag"
 msgid "Join competition (team)"
 msgstr "Bli med (lag)"
 
+#, python-format
 msgid ""
 "\n"
 "                                    To join the competition as a team you "
@@ -1293,7 +1346,8 @@ msgid ""
 msgstr ""
 "\n"
 "                                    For å bli med på konkurransen som et "
-"lag, må du <a href=\"%(create_team_url)s\">lage</a> eller bli med på et lag.\n"
+"lag, må du <a href=\"%(create_team_url)s\">lage</a> eller bli med på et "
+"lag.\n"
 "                                    "
 
 msgid "Join competition"
@@ -1352,6 +1406,18 @@ msgstr ""
 "deltagere, og den grensen er nådd.\n"
 "                "
 
+msgid "Select a LAN to view competitions for it."
+msgstr "Velg et LAN for å se konkurranser for det."
+
+msgid "Time"
+msgstr "Tid"
+
+msgid "Compo Count"
+msgstr "Antall compoer"
+
+msgid "Previous LANs"
+msgstr "Tidligere LAN"
+
 msgid "Type"
 msgstr "type"
 
@@ -1372,17 +1438,11 @@ msgstr "Stengt"
 msgid "No active raffles right now."
 msgstr "Ingen aktive trekninger for øyeblikket."
 
-msgid "Select a LAN to view competitions for it."
-msgstr "Velg et LAN for å se konkurranser for det."
+msgid "There is no schedule for this LAN."
+msgstr "Det er ingen timetabell for dette LAN-et."
 
-msgid "Time"
-msgstr "Tid"
-
-msgid "Compo Count"
-msgstr "Antall compoer"
-
-msgid "Previous LANs"
-msgstr "Tidligere LAN"
+msgid "There is no current or upcoming LAN."
+msgstr "Det er ingen nåværende eller kommende LAN."
 
 #, python-format
 msgid ""
@@ -1459,8 +1519,8 @@ msgstr ""
 "legge det til.\n"
 "            "
 
-msgid "You need to login to see your status."
-msgstr "Du må logge deg på for å se statusen din."
+msgid "You need to login to sign up for the LAN."
+msgstr "Du må logge deg på for å melde deg opp til LAN-et."
 
 msgid "LAN List"
 msgstr "LAN-liste"
@@ -1617,17 +1677,14 @@ msgstr "Må være unikt!"
 #, python-format
 msgid ""
 "\n"
-"You have been invited to join team <a href=\"%(team_url)s\">%(team)s</a> by "
-"%(inviter)s.\n"
-"You can either <a href=\"%(accept_link)s\"><strong>accept</strong></a>\n"
-"or <a href=\"%(decline_link)s\"><strong>decline</strong></a> the "
-"invitation.\n"
+"%(inviter)s has invited you to join team <a href=\"%(team_url)s\">%(team)s</"
+"a>.\n"
+"You can accept or decline the invitation on the team page.\n"
 msgstr ""
 "\n"
-"Du har blitt invitert til å bli med i lag <a href=\"%(team_url)s\">%(team)s</"
-"a> av %(inviter)s.\n"
-"Du kan enten <a href=\"%(accept_link)s\"><strong>akseptere</strong></a>\n"
-"eller <a href=\"%(decline_link)s\"><strong>avslå</strong></a> invitasjonen.\n"
+"%(inviter)s har invitert deg til å bli med på lag <a href=\"%(team_url)s\">"
+"%(team)s</a>.\n"
+"Du kan akseptere eller avslå invitasjonen på lagsiden.\n"
 
 msgid "My teams"
 msgstr "Mine lag"
@@ -1639,19 +1696,37 @@ msgid "Actions"
 msgstr "Handlinger"
 
 msgid "Leader"
-msgstr "Leder"
+msgstr "Lagfører"
+
+#, python-format
+msgid "Are you sure you want to kick %(member)s from %(team)s?"
+msgstr "Er du sikker på at du vil sparke %(member)s fra %(team)s?"
+
+msgid "Kick member"
+msgstr "Spark medlem"
+
+#, python-format
+msgid "Are you sure you want to disband team %(team)s?"
+msgstr "Er du sikker på at du vil oppløse lag %(team)s?"
 
 msgid "Disband team"
 msgstr "Oppløs lag"
 
-msgid "Remove"
-msgstr "Fjern"
+#, python-format
+msgid "Are you sure you want to leave team %(team)s?"
+msgstr "Er du sikker på at du vil forlate %(team)s?"
 
 msgid "Leave team"
 msgstr "Forlat lag"
 
-msgid "Join team"
-msgstr "Bli med"
+msgid "Accept invitation"
+msgstr "Aksepter invitasjon"
+
+msgid "Decline invitation"
+msgstr "Avslå invitasjon"
+
+msgid "Invite Member"
+msgstr "Inviter medlem"
 
 msgid "Invite member"
 msgstr "Inviter medlem"
@@ -1659,12 +1734,12 @@ msgstr "Inviter medlem"
 msgid "Invitations"
 msgstr "Invitasjoner"
 
-msgid "Options"
-msgstr "Valg"
-
 #, python-format
-msgid "Would you like to disband %(team)s?"
-msgstr "Vil du løse opp %(team)s?"
+msgid "Are you sure you want to uninvite %(member)s from %(team)s?"
+msgstr "Er du sikker på at du vil avinvitere %(member)s fra %(team)s?"
+
+msgid "Uninvite"
+msgstr "Angre invitasjon"
 
 msgid "Size"
 msgstr "Størrelse"
@@ -1746,9 +1821,6 @@ msgstr "Siste innlogging"
 
 msgid "LAN Seatings"
 msgstr "LAN-plasskart"
-
-msgid "Seat"
-msgstr "Plass"
 
 msgid "Edit Profile"
 msgstr "Endre profil"

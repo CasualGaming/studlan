@@ -169,7 +169,7 @@ def uninvite_member(request, team_id):
 
     invitation_qs = Invitation.objects.filter(team=team, invitee=user)
     if not invitation_qs.exists():
-        messages.error(request, _(u'User {user} is not invited to tthe team.').format(user=user))
+        messages.error(request, _(u'User {user} is not invited to the team.').format(user=user))
         return redirect(team)
     invitation = invitation_qs[0]
 
