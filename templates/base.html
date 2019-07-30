@@ -3,11 +3,12 @@
 {% load static %}
 {% load tz %}
 
-{% get_current_language as LANGUAGE_CODE %}
+{% get_current_language as LANG_CODE %}
+{% get_language_info for LANG_CODE as LANG_INFO %}
 {% get_current_timezone as TIME_ZONE %}
 
 <!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE }}">
+<html lang="{{ LANG_CODE }}">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

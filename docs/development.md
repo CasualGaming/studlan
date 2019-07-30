@@ -25,11 +25,11 @@ git config --global user.name <username>
 git config --global user.email <email-address>
 ```
 
-### Installing and Configuring Docker
+### (Optional) Installing and Configuring Docker
 Install both Docker and Docker Compose (combined app on Windows).
 On Linux, add yourself to the `docker` group and then re-log, so that you can run Docker commands as non-root.
 
-### Installing Travis Tool
+### (Optional) Installing Travis Tool
 Optional, used for encrypting Travis CI secrets and files and stuff.
 ```
 sudo apt install ruby-dev rubygems
@@ -40,10 +40,7 @@ Alternatively, on Windows, use the GitHub for Windows app to setup everything
 
 ## Running
 ### Run with Virtualenv
-This is the intended way to run the app and most scripts in `manage/`.
-
-* Setup: `manage/setup.sh` (first time or after project change)
-* Run server: `manage/run.sh`
+This is the intended way to run the app and most scripts in `manage/`. Run `manage/setup.sh` (to setup the virtual environment, add the temporary settings file, migrate the Django DB, add an admin user, etc.). The username and password of the added admin user is "batman" and "manbat". The DB file and log files are located in `.local/venv/`. The local settings file is located at `studlan/settings/local.py`.
 
 ### Tools
 Most of these use venv and therefore requires `manage/setup.sh` to be run first (once).

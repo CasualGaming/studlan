@@ -2,23 +2,16 @@
 
 from django.conf.urls import url
 
-from .views import leave, leave2, main, seating_details, seating_list, seating_map, take, take2
+from .views import leave_seat, main, seating_details, seating_list, seating_map, take_seat
 
 
 urlpatterns = [
-    # Main comp oversight
     url(r'^$', main, name='seatings'),
+    url(r'^(?P<lan_id>\d+)/$', seating_details, name='seating_details'),
     url(r'^(?P<lan_id>\d+)/(?P<seating_id>\d+)/$', seating_details, name='seating_details'),
     url(r'^(?P<lan_id>\d+)/(?P<seating_id>\d+)/(?P<seat_id>\d+)/$', seating_details, name='seating_details'),
-    url(r'^(?P<lan_id>\d+)/$', seating_details, name='seating_details'),
-
-    # Seating related
-    url(r'^map/(?P<seating_id>\d+)/$', seating_map, name='map'),
-    url(r'^list/(?P<seating_id>\d+)/$', seating_list, name='list'),
-
-    url(r'^(?P<seating_id>\d+)/(?P<seat_id>\d+)/take/$', take, name='take_seat'),
-    url(r'^(?P<lan_id>\d+)/(?P<seating_id>\d+)/(?P<seat_id>\d+)/take/$', take2, name='take_seat'),
-
-    url(r'^(?P<seating_id>\d+)/(?P<seat_id>\d+)/leave/$', leave, name='leave_seat'),
-    url(r'^(?P<lan_id>\d+)/(?P<seating_id>\d+)/(?P<seat_id>\d+)/leave/$', leave2, name='leave_seat'),
+    url(r'^(?P<seating_id>\d+)/take_seat/$', take_seat, name='take_seat'),
+    url(r'^(?P<seating_id>\d+)/leave_seat/$', leave_seat, name='leave_seat'),
+    url(r'^(?P<seating_id>\d+)/map/$', seating_map, name='seating_map'),
+    url(r'^(?P<seating_id>\d+)/list/$', seating_list, name='seating_list'),
 ]

@@ -6,18 +6,6 @@
 Home
 {% endblock title %} 
 {% block content %}
-
-{% if stream %}
-<div class="row">
-    <div class="col-md-9">
-        <div class="well">
-            <h2>{{stream.description|safe}}</h2>
-            {{stream.link|safe}}
-        </div>
-    </div>
-</div>
-{% endif %}
-
 <div class="row">
     <div class="col-md-9">
         {% if lans.count == 1 %}
@@ -51,6 +39,26 @@ Home
     </div>
     {% endif %}
 </div>
+
+{% if stream %}
+<div class="row">
+    <div class="col-md-9">
+        <div class="stream">
+            {% if stream.visible_title %}
+            <h3 class="stream-title">{{ stream.visible_title }}</h3>
+            {% endif %}
+            <div class="stream-content embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" title="Stream" src="{{ stream.link|safe }}" allowfullscreen></iframe>
+            </div>
+            {% if stream.description %}
+            <div class="stream-desc">
+                {{ stream.description | markdown }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}
 
 {% for article in articles.object_list %} 
 <div class="row">
