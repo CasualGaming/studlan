@@ -48,12 +48,15 @@ class Competition(TranslatableModel):
     status = models.SmallIntegerField('status', choices=STATUS_OPTIONS)
     activity = models.ForeignKey(Activity)
     lan = models.ForeignKey(LAN)
-    challonge_url = models.CharField('Challonge url', max_length=50, blank=True, null=True)
+    challonge_url = models.CharField('Challonge url', max_length=50, blank=True, null=True,
+                                     help_text='Do not set this field if challonge integration is enabled. '
+                                               'The challonge url will be generated after starting the competition.')
     team_size = models.IntegerField(default=5, blank=True)
     start_time = models.DateTimeField(blank=True, null=True)
 
     tournament_format = models.CharField(
-        'Tournament format', max_length=20, blank=True, null=True, choices=TOURNAMENT_FORMATS)
+        'Tournament format', max_length=20, blank=True, null=True, choices=TOURNAMENT_FORMATS,
+        help_text='Only set this field if the Challonge integration is being used for this competition.')
 
     max_participants = models.SmallIntegerField(
         'Maximum participants', default=0, help_text='The maximum number of participants allowed for a competition.'
@@ -237,10 +240,10 @@ class Match(models.Model):
             if (user == self.player1.user and player_id == '1') or (user == self.player2.user and player_id == '2'):
                 return True
         else:
-            if user == (self.player1.team.leader and player_id == '1')\
-                    or user == (self.player2.team.leader and player_id == '2'):
+            if (user == self.player1.team.leader and player_id == '1')\
+                    or (user == self.player2.team.leader and player_id == '2'):
                 return True
-            if user in (self.player1.team.members.all() and player_id == '1')\
-                    or (user in self.player2.members.all() and player_id == '2'):
+            if (user in self.player1.team.members.all() and player_id == '1')\
+                    or (user in self.player2.team.members.all() and player_id == '2'):
                 return True
         return False
