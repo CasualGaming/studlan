@@ -45,11 +45,13 @@ This is the intended way to run the app and most scripts in `manage/`. Run `mana
 ### Tools
 Most of these use venv and therefore requires `manage/setup.sh` to be run first (once).
 
-* Cleanup temporary files: `manage/clean.py`
+* Cleanup some unimportant local files (Python caches, logs, ...): `manage/clean-lightly.py`
+* Cleanup all local files (DB, config, Python caches, logs, ...): `manage/clean-all.py`
 * Run linter (check source formatting): `manage/lint.py`
 * Run tests: `manage/test.py`
 * Run some checks (like the linter, tests, some validation): `manage/check.py`
 * Make migrations (after model changes): `manage/make-migrations.py`
+* Make translations (updates `locale/nb/django.po`): `manage/make-translations.py`
 
 ### Upgrading Dependencies
 * This project uses pip-tools with all-dep pinning.

@@ -14,10 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added LAN listing for competitions.
 - Added instructions for changing email address and password.
 - Lottery now throws out all participants (but keeps winners) if the lottery does not have multiple winnings.
-- Slightly prettier email templates.
 - Added list of competitions a user has or is participating in.
 - Added seating info to user LAN history.
-- Added help texts to competition fields tournament format and challonge url
+- Added help texts to competition fields tournament format and Challonge URL.
+- Added new translations.
 
 ### Changed
 - Made footer prettier.
@@ -37,6 +37,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made exported seating list and map prettier and i18n'd.
 - Moved team invitation accept and decline links from invitation message to buttons on team page.
 - Made error log rotating.
+- Made activity description optional.
+- Made LAN directions description optional.
+- Made stream description optional.
 
 ### Deprecated
 
@@ -52,8 +55,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed account recovery sending recovery emails to only one account for a certain email address.
 - Fixed schedule failing to load.
 - Fixed old translations not being compiled and used.
-- (Breaking change) Fixed spelling of challonge integration configuration
-- Fixed bug in match reporting for challonge integration
+- (Breaking change) Fixed spelling of Challonge integration configuration.
+- Fixed bug in match reporting for Challonge integration.
+- Fixed old translations being deactivated/removed.
+- Fixed admin panel crashing when trying to forcefully log out users.
+
 
 ### Security
 - Fixed seating CSRF vulnerability.

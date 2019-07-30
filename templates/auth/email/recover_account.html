@@ -4,18 +4,20 @@
 {% load settings %}
 
 {% block content %}
-<p>{% trans "You have requested a password recovery for the account(s) bound to this email address at" %} <a href="{{ request.get_host }}">{% site_name %}</a>.</p>
+{% blocktrans with request.get_host as host %}
+<p>You have requested a password recovery for the account(s) bound to this email address at <a href="{{ host }}">{{ site_name }}</a>.</p>
 
 <p>
-    {% trans "Email address:" %} {{ email }}
+    Email address: {{ email }}
     <br />
-    {% trans "Username:" %} {{ username }}
+    Username: {{ username }}
 </p>
 
 <p>
-    {% trans "If you did not ask for this password recovery, please ignore this email. Otherwise, click the link below to reset your password:" %}
+    If you did not ask for this password recovery, please ignore this email. Otherwise, click the link below to reset your password:
     <br />
     <a href="{{ link }}">{{ link }}</a>
 </p>
-<p>{% trans "If you do not use this link within 24 hours, it will be invalidated." %}</p>
+<p>If you do not use this link within 24 hours, it will be invalidated.</p>
+{% endblocktrans %}
 {% endblock content %}

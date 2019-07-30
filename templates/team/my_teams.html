@@ -1,4 +1,5 @@
 {% extends "team/team_base.html" %}
+
 {% load i18n %}
 {% load markdown_deux_tags %}
 {% load misc %}
@@ -9,9 +10,9 @@
 {% endblock title %}
 
 {% block tabs %}
-    {% team_tabs 'mine' %}
+{% team_tabs 'mine' %}
 {% endblock tabs %}
 
 {% block teampage %}
-    {% team_list teams %}
+{% team_list teams %}
 {% endblock teampage %}

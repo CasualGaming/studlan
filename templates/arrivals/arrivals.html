@@ -1,29 +1,30 @@
 {% extends "base.html" %}
+
 {% load i18n %}
 {% load markdown_deux_tags %}
 {% load misc %}
 {% load static %}
 
 {% block title %}
-Register Arrivals
+{% trans "Register Arrivals" %}
 {% endblock title %}
 
 {% block content %}
     <div class="row">
         <div class="col-md-9">
-	        <h1>Arrivals</h1>
+	        <h1>{% trans "Arrivals" %}</h1>
         </div>
     </div>
     
     <div class="row">
     {% if attendees %}
         <div class="col-md-4">
-            <span>Filter: </span><input type="text" id="FilterTextBox" name="FilterTextBox" />
+            <span>{% trans "Filter:" %} </span><input type="text" id="FilterTextBox" name="FilterTextBox" />
         </div>
         <div class="col-md-5 attendee-counts">
-            <span>Attending: {{attendees.count}}</span>
-            <span>Paid: {{paid_count}}</span>
-            <span>Arrived: {{arrived_count}}</span>
+            <span>{% trans "Attending:" %} {{attendees.count}}</span>
+            <span>{% trans "Paid:" %} {{paid_count}}</span>
+            <span>{% trans "Arrived:" %} {{arrived_count}}</span>
         </div>
     </div>
     <br />
@@ -36,7 +37,12 @@ Register Arrivals
             <div class="table-responsive">
                 <table class="table table-bordered table-striped filterable">
                     <thead>
-                        <th>Username</th><th>Full name</th><th>Email Address</th><th>Seating</th><th>Paid</th><th>Arrived</th>
+                        <th>{% trans "Username" %}</th>
+                        <th>{% trans "Full Name" %}</th>
+                        <th>{% trans "Email Address" %}</th>
+                        <th>{% trans "Seating" %}</th>
+                        <th>{% trans "Paid" %}</th>
+                        <th>{% trans "Arrived" %}</th>
                     </thead>
                     <tbody>
                         {% for attendee in attendees %}
@@ -55,16 +61,16 @@ Register Arrivals
                                 {% if attendee.user in ticket_users %}
                                     <span class="label label-info">{{ ticket_users|get_user:attendee.user }} </span>
                                 {% elif attendee.has_paid %}
-                                    <span class="paid label label-success" value="True">Toggle</span>
+                                    <span class="paid label label-success" value="True">{% trans "Toggle" %}</span>
                                 {% else %}
-                                    <span class="paid label label-danger" value="False">Toggle</span>
+                                    <span class="paid label label-danger" value="False">{% trans "Toggle" %}</span>
                                 {% endif %}
                             </td>
                             <td>
                             {% if attendee.arrived %}
-                                <span class="arrived label label-success" value="True">Toggle</span>
+                                <span class="arrived label label-success" value="True">{% trans "Toggle" %}</span>
                             {% else %}
-                                <span class="arrived label label-danger" value="False">Toggle</span>
+                                <span class="arrived label label-danger" value="False">{% trans "Toggle" %}</span>
                             {% endif %}
                             </td>
                         </tr>
@@ -75,12 +81,12 @@ Register Arrivals
         </div>
         {% if perms.lan.export_paying_participants %}
         <div class="col-md-9">
-            <a href="{% url 'lan_list_paid' lan.id %}" class="btn btn-info">Export to Excel sheet</a>
+            <a href="{% url 'lan_list_paid' lan.id %}" class="btn btn-info">{% trans "Export to Excel sheet" %}</a>
         </div>
         {% endif %}
     {% else %}
         <div class="col-md-9">
-            <div class="alert alert-warning">There are no attendees for this LAN.</div>
+            <div class="alert alert-warning">{% trans "There are no attendees for this LAN." %}</div>
         </div>
     {% endif %}
     </div>

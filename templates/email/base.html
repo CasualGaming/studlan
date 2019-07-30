@@ -7,11 +7,11 @@
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="utf-8" />
-    <title>{% site_name %}</title>
+    <title>{{ site_name }}</title>
 </head>
 <body>
     <header>
-        <h1>{% site_name %}</h1>
+        <h1>{{ site_name }}</h1>
     </header>
     <div class="content">
         {% block content %}
@@ -19,7 +19,9 @@
     </div>
     <footer>
         <hr />
-        <p>{% trans "Sent automatically from" %} <a href="{{ request.get_host }}">{% site_name %}</a>.</p>
+        {% blocktrans with request.get_host as host %}
+        <p>Sent automatically from <a href="{{ host }}">{{ site_name }}</a>.</p>
+        {% endblocktrans %}
     </footer>
 </body>
 </html>

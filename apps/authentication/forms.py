@@ -6,17 +6,17 @@ import re
 from django import forms
 from django.contrib import auth
 from django.contrib.auth.models import User
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext, ugettext_lazy as _lazy
 
 
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control',
-                                                             'placeholder': _(u'Username'), 'type': 'text'}),
-                               label=_(u'Username'), max_length=50)
+                                                             'placeholder': _lazy(u'Username'), 'type': 'text'}),
+                               label=_lazy(u'Username'), max_length=50)
     password = forms.CharField(widget=forms.PasswordInput(render_value=False, attrs={'class': 'form-control',
-                                                                                     'placeholder': _(u'Password'),
+                                                                                     'placeholder': _lazy(u'Password'),
                                                                                      'type': 'password'}),
-                               label=_(u'Password'))
+                               label=_lazy(u'Password'))
     user = None
 
     def clean(self):
@@ -27,7 +27,7 @@ class LoginForm(forms.Form):
         if auth_user and auth_user.is_active:
             self.user = auth_user
         else:
-            self.add_error('__all__', _(u'Login failed! Either the account does not exist, it is inactive, or the username–password combination is incorrect.'))
+            self.add_error('__all__', ugettext(u'Login failed! Either the account does not exist, it is inactive, or the username–password combination is incorrect.'))
         return self.cleaned_data
 
     def login(self, request):
@@ -43,39 +43,39 @@ class LoginForm(forms.Form):
 
 
 class RegisterForm(forms.Form):
-    desired_username = forms.CharField(label=_(u'Desired username'), max_length=20,
+    desired_username = forms.CharField(label=_lazy(u'Desired username'), max_length=20,
                                        widget=forms.TextInput(
-                                           attrs={'class': 'form-control', 'placeholder': _(u'Username'),
+                                           attrs={'class': 'form-control', 'placeholder': _lazy(u'Username'),
                                                   'type': 'text'}))
-    first_name = forms.CharField(label=_(u'First name'), max_length=50,
+    first_name = forms.CharField(label=_lazy(u'First name'), max_length=50,
                                  widget=forms.TextInput(
-                                     attrs={'class': 'form-control', 'placeholder': _(u'First name'), 'type': 'text'}))
-    last_name = forms.CharField(label=_(u'Last name'), max_length=50,
+                                     attrs={'class': 'form-control', 'placeholder': _lazy(u'First name'), 'type': 'text'}))
+    last_name = forms.CharField(label=_lazy(u'Last name'), max_length=50,
                                 widget=forms.TextInput(
-                                    attrs={'class': 'form-control', 'placeholder': _(u'Last name'), 'type': 'text'}))
-    date_of_birth = forms.DateField(label=_(u'Date of birth'),
+                                    attrs={'class': 'form-control', 'placeholder': _lazy(u'Last name'), 'type': 'text'}))
+    date_of_birth = forms.DateField(label=_lazy(u'Date of birth'),
                                     widget=forms.TextInput(
                                         attrs={'class': 'form-control', 'placeholder': u'YYYY-MM-DD', 'type': 'date'}))
-    email = forms.EmailField(label=_(u'Email'), max_length=50,
+    email = forms.EmailField(label=_lazy(u'Email address'), max_length=50,
                              widget=forms.EmailInput(
-                                 attrs={'class': 'form-control', 'placeholder': _(u'Email'), 'type': 'text'}))
+                                 attrs={'class': 'form-control', 'placeholder': _lazy(u'Email address'), 'type': 'text'}))
     password = forms.CharField(widget=forms.PasswordInput(render_value=False,
-                                                          attrs={'class': 'form-control', 'placeholder': _(u'Password'),
-                                                                 'type': 'password'}), label=_(u'Password'))
+                                                          attrs={'class': 'form-control', 'placeholder': _lazy(u'Password'),
+                                                                 'type': 'password'}), label=_lazy(u'Password'))
     repeat_password = forms.CharField(widget=forms.PasswordInput(render_value=False,
                                                                  attrs={'class': 'form-control',
-                                                                        'placeholder': _(u'Repeat password'),
+                                                                        'placeholder': _lazy(u'Repeat password'),
                                                                         'type': 'password'}),
-                                      label=_(u'Repeat password'))
-    address = forms.CharField(label=_(u'Address'), max_length=50,
+                                      label=_lazy(u'Repeat password'))
+    address = forms.CharField(label=_lazy(u'Address'), max_length=50,
                               widget=forms.TextInput(
-                                  attrs={'class': 'form-control', 'placeholder': _(u'Address'), 'type': 'text'}))
-    zip_code = forms.CharField(label=_(u'ZIP code'), max_length=4,
+                                  attrs={'class': 'form-control', 'placeholder': _lazy(u'Address'), 'type': 'text'}))
+    zip_code = forms.CharField(label=_lazy(u'ZIP code'), max_length=4,
                                widget=forms.TextInput(
-                                   attrs={'class': 'form-control', 'placeholder': _(u'Zip code'), 'type': 'number'}))
-    phone = forms.CharField(label=_(u'Phone number'), max_length=20,
+                                   attrs={'class': 'form-control', 'placeholder': _lazy(u'Zip code'), 'type': 'number'}))
+    phone = forms.CharField(label=_lazy(u'Phone number'), max_length=20,
                             widget=forms.TextInput(
-                                attrs={'class': 'form-control', 'placeholder': _(u'Phone number'), 'type': 'number'}))
+                                attrs={'class': 'form-control', 'placeholder': _lazy(u'Phone number'), 'type': 'number'}))
 
     def clean(self):
         super(RegisterForm, self).clean()
@@ -87,47 +87,47 @@ class RegisterForm(forms.Form):
             date = cleaned_data['date_of_birth']
             if date >= datetime.date.today():
                 self.add_error('date_of_birth',
-                               _(u'You seem to be from the future, please enter a more believable date of birth.'))
+                               ugettext(u'You seem to be from the future, please enter a more believable date of birth.'))
 
             # Check passwords match
             if cleaned_data['password'] != cleaned_data['repeat_password']:
-                self.add_error('repeat_password', [_(u'Passwords did not match.')])
+                self.add_error('repeat_password', [ugettext(u'Passwords did not match.')])
 
             # Check passwords strength
             if len(cleaned_data['password']) < 8:
-                self.add_error('password', [_(u'Password must be at least 8 characters long.')])
+                self.add_error('password', [ugettext(u'Password must be at least 8 characters long.')])
 
             # Check username
             username = cleaned_data['desired_username']
             if User.objects.filter(username=username).count() > 0:
-                self.add_error('desired_username', _(u'There is already a user with that username.'))
+                self.add_error('desired_username', ugettext(u'There is already a user with that username.'))
             if not re.match('^[a-zA-Z0-9_-]+$', username):
                 self.add_error('desired_username',
-                               _(u'Your desired username contains illegal characters. Valid: a-Z 0-9 - _'))
+                               ugettext(u'Your desired username contains illegal characters. Valid: a-Z 0-9 - _'))
 
             # ZIP code digits only
             zip_code = cleaned_data['zip_code']
             if len(zip_code) != 4 or not zip_code.isdigit():
-                self.add_error('zip_code', _(u'The ZIP code must be 4 digit number.'))
+                self.add_error('zip_code', ugettext(u'The ZIP code must be 4 digit number.'))
 
             return cleaned_data
 
 
 class RecoveryForm(forms.Form):
-    email = forms.EmailField(label=_(u'Email'), max_length=50,
+    email = forms.EmailField(label=_lazy(u'Email'), max_length=50,
                              widget=forms.EmailInput(
-                                 attrs={'class': 'form-control', 'placeholder': _(u'Email'), 'type': 'text'}))
+                                 attrs={'class': 'form-control', 'placeholder': _lazy(u'Email'), 'type': 'text'}))
 
 
 class ChangePasswordForm(forms.Form):
     new_password = forms.CharField(widget=forms.PasswordInput(render_value=False,
                                                               attrs={'class': 'form-control',
-                                                                     'placeholder': _(u'Password'),
-                                                                     'type': 'password'}), label=_(u'New password'))
+                                                                     'placeholder': _lazy(u'Password'),
+                                                                     'type': 'password'}), label=_lazy(u'New password'))
     repeat_password = forms.CharField(widget=forms.PasswordInput(render_value=False,
                                                                  attrs={'class': 'form-control',
-                                                                        'placeholder': _(u'Repeat password'),
-                                                                        'type': 'password'}), label=_(u'Repeat new password'))
+                                                                        'placeholder': _lazy(u'Repeat password'),
+                                                                        'type': 'password'}), label=_lazy(u'Repeat new password'))
 
     def clean(self):
         super(ChangePasswordForm, self).clean()
@@ -136,10 +136,10 @@ class ChangePasswordForm(forms.Form):
 
             # Check passwords match
             if cleaned_data['new_password'] != cleaned_data['repeat_password']:
-                self._errors['repeat_password'] = self.error_class(_(u'Passwords did not match.'))
+                self._errors['repeat_password'] = self.error_class(ugettext(u'Passwords did not match.'))
 
             # Check passwords strength
             if len(cleaned_data['new_password']) < 8:
-                self.add_error('new_password', [_(u'Password must be at least 8 characters long.')])
+                self.add_error('new_password', [ugettext(u'Password must be at least 8 characters long.')])
 
             return cleaned_data

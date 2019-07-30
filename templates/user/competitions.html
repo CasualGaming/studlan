@@ -1,24 +1,16 @@
-{% extends "base.html" %}
+{% extends "user/profile_base.html" %}
+
 {% load i18n %}
 {% load profile_tags %}
 
-{% block title %}
-{% trans "My Competitions" %}
-{% endblock title %}
+{% block tabs %}
+{% profile_tabs 'competitions' %}
+{% endblock tabs %}
 
-{% block content %}
-    <div class="row">
-        <div class="col-md-9">
-		    <h1>{% trans "My Competitions" %}</h1>
-        </div>
+{% block page %}
+<div class="row">
+    <div class="col-md-9">
+        {% include "competition/competition_user_table.html" %}
     </div>
-
-    {% profile_tabs 'competitions' %}
-
-    <div class="row">
-        <div class="col-md-9">
-            {% include "competition/competition_user_table.html" %}
-        </div>
-    </div>
-    
-{% endblock content %}
+</div>
+{% endblock page %}

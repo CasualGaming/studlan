@@ -3,11 +3,9 @@
 
 {% get_current_language as LANGUAGE_CODE %}
 
-{% site_name %}
+{{ site_name }}
 --------------------------------------------------
-
 {% block content %}
 {% endblock content %}
-
 --------------------------------------------------
-{% trans "Sent automatically from" %} {% site_name %} ({{ request.get_host }}).
+{% blocktrans with request.get_host as host %}Sent automatically from {{ site_name }} ({{ host }}).{% endblocktrans %}

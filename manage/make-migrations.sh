@@ -6,4 +6,4 @@ MANAGE="manage/manage.sh"
 set -eu
 
 echo "Making migrations ..."
-$MANAGE makemigrations
+$MANAGE makemigrations --no-input

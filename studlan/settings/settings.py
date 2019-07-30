@@ -27,17 +27,19 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     # studlan apps
-    'apps.api',
-    'apps.authentication',
-    'apps.competition',
-    'apps.lan',
-    'apps.lottery',
-    'apps.misc',
-    'apps.news',
-    'apps.sponsor',
-    'apps.team',
-    'apps.userprofile',
-    'apps.seating',
+    'apps.api.config.Config',
+    'apps.arrivals.config.Config',
+    'apps.authentication.config.Config',
+    'apps.competition.config.Config',
+    'apps.lan.config.Config',
+    'apps.lottery.config.Config',
+    'apps.misc.config.Config',
+    'apps.news.config.Config',
+    'apps.payment.config.Config',
+    'apps.seating.config.Config',
+    'apps.sponsor.config.Config',
+    'apps.team.config.Config',
+    'apps.userprofile.config.Config',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -64,6 +66,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.i18n',
                 'django.contrib.messages.context_processors.messages',
+                'apps.misc.context_processors.global_variables',
             ],
         },
     },

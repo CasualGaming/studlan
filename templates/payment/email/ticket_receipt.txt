@@ -4,7 +4,11 @@
 {% load settings %}
 
 {% block content %}
-{% trans "This is a confirmation on your purchase of a ticket of type" %} {{ ticket.ticket_type.get_translation.title }} {% trans "ticket for" %} {{ lan.title }}.
-{% trans "The ticket is linked to" %} {{ ticket.user.get_full_name }} ({{ ticket.user.username }}).
-{% trans "More information about the lan can be found at" %} {{ lan.title }} ({{ lan_link }}).
+{% with ticket_type_title=ticket.ticket_type.get_translation.title lan_title=lan.title user_full_name=ticket.user.get_full_name user=ticket.user %}
+{% blocktrans  %}
+This is a confirmation on your purchase of a ticket of type {{ ticket_type_title }} for {{ lan_title }}.
+The ticket is linked to {{ user_full_name }} ({{ user }}).
+More information about the LAN can be found here: {{ lan_title }} ({{ lan_link }})
+{% endblocktrans %}
+{% endwith %}
 {% endblock content %}

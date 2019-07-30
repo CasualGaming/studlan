@@ -7,5 +7,3 @@ set -eu
 
 echo "Making translation text file ..."
 $MANAGE makemessages --no-location --locale=nb
-
-echo "Done, now edit it and run manage/compile-translations.sh afterwards."

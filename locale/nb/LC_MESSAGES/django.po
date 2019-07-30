@@ -1,14 +1,13 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Norwegian, bokmål, translations for studlan.
+# Copyright (C) Casual Gaming
+# This file is distributed under the same license as studlan.
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-27 08:34+0200\n"
+"POT-Creation-Date: 2019-07-30 16:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,255 +16,744 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#, fuzzy
-#| msgid "Arrived"
+msgid "API"
+msgstr "API"
+
+msgid "key"
+msgstr "nøkkel"
+
+#, python-brace-format
+msgid "API key for {owner}"
+msgstr "API-nøkkel for {owner}"
+
+msgid "API key"
+msgstr "API-nøkkel"
+
+msgid "API keys"
+msgstr "API-nøkler"
+
+msgid "Invalid API key."
+msgstr "Ugyldig API-nøkkel."
+
+#, python-brace-format
+msgid "Changed status for user \"{user}\" at LAN \"{lan}\" to \"arrived\""
+msgstr "Endret status for bruker \"{user}\" ved LAN \"{lan}\" til \"arrived\""
+
+#, python-brace-format
+msgid "Changed status for user \"{user}\" at LAN \"{lan}\" to \"NOT arrived\""
+msgstr ""
+"Endret status for bruker \"{user}\" ved LAN \"{lan}\" til \"NOT arrived\""
+
+#, python-brace-format
+msgid "Status \"{status}\" unrecognized."
+msgstr "Status \"{status}\" er ikke gjenkjent."
+
+#, python-brace-format
+msgid "Changed status for user \"{user}\" at LAN \"{lan}\" to \"paid\""
+msgstr "Endret status for bruker \"{user}\" ved LAN \"{lan}\" til \"paid\""
+
+#, python-brace-format
+msgid "Changed status for user \"{user}\" at LAN \"{lan}\" to \"NOT paid\""
+msgstr "Endret status for bruker \"{user}\" ved LAN \"{lan}\" til \"NOT paid\""
+
 msgid "Arrivals"
-msgstr "Ankommet"
+msgstr "Ankomster"
 
-msgid "Username"
-msgstr "Brukernavn"
+#, python-brace-format
+msgid "{user} was not found in attendees for {lan}."
+msgstr "{user} ble ikke funnet i ankomstlisten for {lan}."
 
-#, fuzzy
-#| msgid "Change password"
-msgid "Password"
-msgstr "Bytt passord"
+msgid "Authentication"
+msgstr "Autentisering"
 
-#, fuzzy
-#| msgid ""
-#| "The account does not exist, or username/password combination is incorrect."
 msgid ""
 "Login failed! Either the account does not exist, it is inactive, or the "
 "username–password combination is incorrect."
-msgstr "Kontoen finnes ikke, eller brukernavn/passord kombinasjonen er feil"
-
-msgid "Desired username"
-msgstr "Brukernavn"
-
-msgid "First name"
-msgstr "Fornavn"
-
-msgid "Last name"
-msgstr "Etternavn"
-
-msgid "Date of birth"
-msgstr "Fødselsdato"
-
-msgid "Email"
-msgstr "Epost"
-
-msgid "Repeat password"
-msgstr "Gjenta passord"
-
-msgid "Address"
-msgstr "Adresse"
-
-msgid "ZIP code"
-msgstr "Postnummer"
-
-msgid "Zip code"
-msgstr "Postnummer"
-
-msgid "Phone number"
-msgstr "Telefon-nummer"
+msgstr ""
+"Kontoen finnes ikke, er inaktiv, eller brukernavn–passord kombinasjonen er "
+"feil."
 
 msgid ""
 "You seem to be from the future, please enter a more believable date of birth."
 msgstr ""
-"Det ser ut som du kommer fra fremtiden. Du må legge til riktig fødselsdato"
+"Det ser ut som du kommer fra fremtiden, vennligst legg til riktig "
+"fødselsdato."
 
 msgid "Passwords did not match."
-msgstr "Passordene var ikke like"
+msgstr "Passordene var ikke like."
 
 msgid "Password must be at least 8 characters long."
-msgstr ""
+msgstr "Passordet må være minst 8 tegn langt."
 
 msgid "There is already a user with that username."
-msgstr "Brukernavnet er allerede i bruk"
+msgstr "Brukernavnet er allerede i bruk."
 
 msgid "Your desired username contains illegal characters. Valid: a-Z 0-9 - _"
 msgstr ""
-"Brukernavnet ditt kan ikke inneholde ulovlige tegn. Lovlige tegn: a-Z 0-9 - _"
+"Brukernavnet ditt kan inneholder ulovlige tegn. Lovlige tegn: a-Z 0-9 - _"
 
 msgid "The ZIP code must be 4 digit number."
-msgstr "Post-nummeret må inneholde 4 tall"
+msgstr "Post-nummeret må bestå av 4 tall."
 
-#, fuzzy
-#| msgid "Recover password"
-msgid "New password"
-msgstr "Glemt passord?"
+msgid "token"
+msgstr "token"
 
-msgid "Repeat new password"
-msgstr "Gjenta passord"
+msgid "created"
+msgstr "opprettet"
+
+msgid "register token"
+msgstr "registrer token"
+
+msgid "register tokens"
+msgstr "registrer tokens"
 
 msgid "You have successfully logged in."
-msgstr "Logget inn"
+msgstr "Du er nå logget inn."
 
 msgid "You have successfully logged out."
-msgstr "Logget ut"
+msgstr "Du er nå logget inn."
 
 msgid "You cannot be logged in when registering."
-msgstr "Du kan ikke være innlogget under registrering"
+msgstr "Du kan ikke være innlogget under registrering."
 
 msgid "Verify your account"
-msgstr "Verifiser kontoen"
+msgstr "Verifiser kontoen din"
 
 msgid ""
 "Registration successful. Check your email for verification instructions."
 msgstr ""
-"Registrering OK. Du skal ha fått en epost for å fullføre registreringen"
+"Registrering vellykket. Du mottar snart en e-post med videre instruksjoner."
+
+msgid "No upcoming LAN was found."
+msgstr "Ingen kommende LAN ble funnet."
 
 msgid "Registration successful."
-msgstr ""
+msgstr "Registrering vellykket."
 
-#, fuzzy
-#| msgid "User Info"
-msgid "User "
-msgstr "Bruker "
-
-msgid " successfully activated. You can now log in."
-msgstr " aktivert, du kan nå logge inn"
+#, python-brace-format
+msgid "User {user} successfully activated. You can now log in."
+msgstr "Bruker {user} er nå aktivert. Du kan nå logge inn."
 
 msgid ""
 "The token has expired. Please use the password recovery to get a new token."
-msgstr "Linken har gått ut. Bruk passord gjennoppretting for å få en ny link"
+msgstr ""
+"Lenken har utgått. Vennligst bruk passordgjennoppretting for å få en ny link."
 
-#, fuzzy
-#| msgid "There is already a user with that email."
 msgid "No users are registered with that email address."
-msgstr "Epost-adressen er allerede registrert"
+msgstr "Ingen brukere er registrert med den e-postadressen."
 
 msgid "Account recovery"
 msgstr "Gjenopprett konto"
 
-#, fuzzy
-#| msgid "A recovery link has been sent to "
-msgid "A recovery link has been sent to all users with email \""
-msgstr "En gjennopprettings-link har blitt sent til "
+#, python-brace-format
+msgid ""
+"A recovery link has been sent to all users with email address \"{email}\"."
+msgstr ""
+"En gjenopprettingslenke ble sendt til alle brukere med e-postadresse "
+"\"{email}\"."
 
-#, fuzzy
-#| msgid " successfully activated. You can now log in."
-msgid " successfully had it's password changed. You can now log in."
-msgstr " aktivert, du kan nå logge inn"
+#, python-brace-format
+msgid "Successfully changed password for user {user}. You can now log in."
+msgstr "Passorder for {user} ble endret. Du kan nå logge inn."
 
-msgid "Token accepted. Please insert your new password."
-msgstr "Link akseptert. Skriv inn nytt passord"
+msgid "Please insert your new password."
+msgstr "Vennligst skriv inn ditt nye passord."
 
-msgid "Open"
-msgstr "Åpen"
+msgid ""
+"The link has expired. Please use the password recovery to get a new one."
+msgstr ""
+"Lenken har utgått. Vennligst bruk passordgjennoppretting for å få en ny."
 
-msgid "Closed"
-msgstr "Stengt"
-
-msgid "In progress"
-msgstr "Pågår"
-
-msgid "Finished"
-msgstr "Ferdig"
-
-msgid "My competitions"
-msgstr "Påmeldte konkurranser"
+msgid "Competition"
+msgstr "Konkurranse"
 
 msgid "Competitions"
 msgstr "Konkurranser"
 
-#, fuzzy
-#| msgid "Competitions"
-msgid "Competition"
-msgstr "Konkurranser"
+msgid "title"
+msgstr "tittel"
+
+msgid "image URL"
+msgstr "bilde-URL"
+
+msgid "Use a mirrored image of at least a height of 150px."
+msgstr "Bruk et \"mirrored\" bilde med høyde på minst 150px."
+
+msgid "description"
+msgstr "beksrivelse"
+
+msgid "activity"
+msgstr "aktivitet"
+
+msgid "activities"
+msgstr "aktiviteter"
+
+msgctxt "competition status"
+msgid "Registration open"
+msgstr "Registrering åpnet"
+
+msgctxt "competition status"
+msgid "Registration closed"
+msgstr "Registrering lukket"
+
+msgctxt "competition status"
+msgid "In progress"
+msgstr "Pågår"
+
+msgctxt "competition status"
+msgid "Finished"
+msgstr "Ferdig"
+
+msgid "Single elimination"
+msgstr "Enkel eliminasjon"
+
+msgid "Double elimination"
+msgstr "Dobbel eliminasjon"
+
+msgid "status"
+msgstr "status"
+
+msgid "LAN"
+msgstr "LAN"
+
+msgid "Challonge URL"
+msgstr "Challonge-URL"
+
+msgid "team size"
+msgstr "lagstørrelse"
+
+msgid "start time"
+msgstr "starttid"
+
+msgid "tournament format"
+msgstr "turneringsformat"
+
+msgid "maximum participants"
+msgstr "maximum deltagere"
+
+msgid ""
+"The maximum number of participants allowed for a competition. Restricts "
+"participants based on competition type. 0 means infinite participants are "
+"allowed."
+msgstr ""
+"Det største antall deltagere tillatt for en konkurranse. Begrenser deltagere "
+"basert på konkurransetype. 0 betyr uendelig antall deltagere er tillatt."
+
+msgid "use teams"
+msgstr "bruk lag"
+
+msgid ""
+"If checked, participants will be ignored, and will instead use teams. If "
+"left unchecked teams will be ignored, and participants will be used."
+msgstr ""
+"Dersom avhuket vil deltagere bli ignorert og konkurransen vil heller bruke "
+"lag."
+
+msgid "enforce teams"
+msgstr "håndhev lag"
+
+msgid ""
+"If checked, teams will require x members (specified in team_size) before "
+"being able to sign up."
+msgstr ""
+"Dersom avhuket vil lag kreve x antall medlemmer (spesifisert i team_size) "
+"før de vil kunne melde seg opp."
+
+msgid "enforce payment"
+msgstr "håndhev betaling"
+
+msgid ""
+"If checked, teams will require x members (specified in team_size) with valid "
+"tickets before being able to sign up."
+msgstr ""
+"Dersom avhuket vil lag kreve x antall medlemmer (spesifisert i team_size) "
+"med gyldig billett før de vil kunne melde seg opp."
+
+msgid "require alias"
+msgstr "krev alias"
+
+msgid ""
+"If checked, players will need to register an alias for the activity that the "
+"competition belongs to."
+msgstr ""
+"Dersom avhuket vil spillere måtte registrere en alias for konkurransens "
+"aktivitet."
+
+msgid "maximum match points"
+msgstr "maks antall kamppoeng"
+
+msgid ""
+"This number represents how many points are needed to win a match. E.g. 3 in "
+"a BO 5 or 16 in BO 30"
+msgstr ""
+"Dette tallet representeter hvor mange poeng som kreves for å vinne en kamp. "
+"E.g. 3 i en BO 5 eller 16 i BO 30"
+
+msgid "competition"
+msgstr "konkurranse"
+
+msgid "competitions"
+msgstr "konkurranser"
+
+msgid "competition translation"
+msgstr "konkurranseoversettelse"
+
+msgid "competition translations"
+msgstr "konkurranseoversettelser"
+
+msgid "user"
+msgstr "bruker"
+
+msgid "team"
+msgstr "lag"
+
+msgid "cid"
+msgstr ""
+
+msgid "competition participant"
+msgstr "konkurransedeltager"
+
+msgid "competition participants"
+msgstr "konkurransedeltagere"
+
+msgid "match ID"
+msgstr "kamp-ID"
+
+msgid "player 1"
+msgstr "spiller 1"
+
+msgid "player 2"
+msgstr "spiller 2"
+
+msgid "p1 reg score"
+msgstr ""
+
+msgid "p2 reg score"
+msgstr ""
+
+msgid "final score"
+msgstr "endelig poengsum"
+
+msgid "state"
+msgstr "tilstand"
+
+msgid "winner"
+msgstr "Vinner"
+
+msgid "TBA"
+msgstr "TBA"
+
+msgid "competition match"
+msgstr "konkurransekamp"
+
+msgid "competition matches"
+msgstr "konkurransekamper"
+
+msgid "My competitions"
+msgstr "Mine konkurranser"
+
+msgid ""
+"You have no current match, please check the brackets for more information."
+msgstr ""
+"Du har ingen aktiv kamp, vennligst sjekk brakettene for mer informasjon."
 
 msgid "Please log in to register for the competition."
 msgstr "Vennligst logg inn for å melde deg på."
 
-msgid "You are already in this competition with "
-msgstr "Du er allerede påmeldt denne konkurransen med "
+#, python-brace-format
+msgid "You are already in this competition with {team}."
+msgstr "Du er allerede påmeldt denne konkurransen med {team}."
 
-msgid " does not have enough members ("
-msgstr ""
+#, python-brace-format
+msgid "{team} does not have enough members ({current}/{required})."
+msgstr "{team} har ikke nok deltagere ({current}/{required})."
 
-msgid " has at least one member that is not signed up for "
-msgstr ""
+#, python-brace-format
+msgid "{team} has at least one member that is not signed up for {lan}."
+msgstr "{team} har minst et medlem som ikke er oppmeldt for {lan}."
 
-msgid " does not have enough members that have paid ("
-msgstr ""
+#, python-brace-format
+msgid ""
+"{team} does not have enough members that have paid ({current}/{required})."
+msgstr "{team} har ikke nok deltagere som har betalt ({current}/{required})."
 
-msgid "Several members of "
-msgstr "Flere medlemmer av "
+#, python-brace-format
+msgid "Several members of {team} are missing an alias for {competition}."
+msgstr "Flere deltagere av {team} mangler alias for {competition}."
 
-msgid " is missing an alias for "
-msgstr " mangler et alias for  "
+#, python-brace-format
+msgid "{member} is missing an alias for {competition}."
+msgstr "{member} mangler et alias for {competition}."
+
+#, python-brace-format
+msgid "{leader} is missing an alias for {competition}."
+msgstr "{leader} mangler et alias for {competition}."
 
 msgid "You are already in this competition as a solo player."
 msgstr "Du er allerede påmeldt denne konkurransen."
 
 msgid "You do not have the required alias."
-msgstr ""
+msgstr "Du har ikke det påkrevde aliaset."
 
-msgid "You have been signed up for "
-msgstr "Du har meldt deg på "
+#, python-brace-format
+msgid "You have been signed up for {competition}."
+msgstr "Du har meldt deg på {competition}."
 
 msgid "You are not participating in this competition."
 msgstr "Du deltar ikke i denne konkurransen"
 
-#, fuzzy
-#| msgid "You need to login in to participate"
-msgid "You are no longer participating in "
-msgstr "Du må logge inn for og kunne melde deg på"
+#, python-brace-format
+msgid "You are no longer participating in {competition}."
+msgstr "Du deltar ikke lenger i {competition}."
 
-msgid "You have removed "
-msgstr "Du har fjernet "
+#, python-brace-format
+msgid "You have removed {team} from {competition}."
+msgstr "Du har fjernet {team} fra {competition}."
 
-msgid " from "
-msgstr " fra "
+#, python-brace-format
+msgid ""
+"You cannot remove {team} from {competition}, you are not the team leader."
+msgstr "Du kan ikke fjerne {team} fra {competition}, du er ikke lagfører."
+
+msgid "Forfeit not yet implemented!"
+msgstr ""
 
 msgid "Schedule"
 msgstr "Timeplan"
 
-msgid "This LAN has finished and can no longer be attended"
-msgstr "Dette LANet er over og påmeldingen er derfor stengt"
+msgid "Too few participants"
+msgstr "For få deltagere"
 
-#, fuzzy
-#| msgid "Your address and zip code is required in order to sign up for a LAN."
+msgid "Set competition tournament format before using this feature."
+msgstr "Sett konkurranseturneringsformat før du bruker denne funksjonen."
+
+msgid "Tournament has started."
+msgstr "Turneringen har startet."
+
+msgid "Something went wrong."
+msgstr "Noe gikk galt."
+
+msgid "Match does not exsist."
+msgstr "Kampen eksisterer ikke."
+
+msgid "You are unauthorized to report score for this match."
+msgstr "Du er ikke autorisert til å rapportere poengsum for denne kampen."
+
+#, python-brace-format
+msgid "Invalid score. Score must be >0 and <{max}."
+msgstr "Ugyldig poengsum. Den må være >0 and <{max}."
+
+msgid "No match to submit score to."
+msgstr "Ingen kamp å sende inn."
+
+msgid "Translation"
+msgstr "Oversettelse"
+
+msgid "Translations"
+msgstr "Oversettelser"
+
+msgid "start date"
+msgstr "startdato"
+
+msgid "end date"
+msgstr "sluttdato"
+
+msgid "location"
+msgstr "sted"
+
+msgid "map link"
+msgstr "kartlenke"
+
+msgid "URL for an embedded map."
+msgstr "URL til et innebygget kart."
+
+msgid "video link"
+msgstr "videolenke"
+
+msgid "URL for an embedded video."
+msgstr "URL til en innebygget video."
+
+msgid "upcoming"
+msgstr "kommende"
+
+msgid "in progress"
+msgstr "pågår"
+
+msgid "ended"
+msgstr "avsluttet"
+
+msgid "LANs"
+msgstr "LAN"
+
+msgid "LAN translation"
+msgstr "LAN-oversettelse"
+
+msgid "LAN translations"
+msgstr "LAN-oversettelser"
+
+msgid "has paid"
+msgstr "har betalt"
+
+msgid "has arrived"
+msgstr "har ankommet"
+
+msgid "LAN attendee"
+msgstr "LAN-deltager"
+
+msgid "LAN attendees"
+msgstr "LAN-deltagere"
+
+msgid "price"
+msgstr "pris"
+
+msgid "prioity"
+msgstr "prioritet"
+
+msgid "In what priority the tickets will show, higher number will show first."
+msgstr "I hvilken prioritet billettene vil vises. Høyere nummer vises først."
+
+msgid "release date"
+msgstr "utgivelsesdato"
+
+msgid "When the tickets will be made available."
+msgstr "Når billettene vil gjøres offentlige."
+
+msgid "seats"
+msgstr "plass"
+
+msgid "ticket type"
+msgstr "billettype"
+
+msgid "ticket types"
+msgstr "billettyper"
+
+msgid "ticket type translation"
+msgstr "bilettypeoversettelse"
+
+msgid "bought date"
+msgstr "kjøpt dato"
+
+msgid "is valid"
+msgstr "er gyldig"
+
+msgid "invalid date"
+msgstr "ugyldig dato"
+
+msgid "invalid description"
+msgstr "ugyldig beksrivelse"
+
+msgid "ticket"
+msgstr "billett"
+
+msgid "tickets"
+msgstr "billetter"
+
+msgid "Directions."
+msgstr "Retninger."
+
+msgid "LAN directions"
+msgstr "LAN-retninger"
+
+msgid "visible title"
+msgstr "synlig tittel"
+
+msgid "Title to show above stream. May be empty."
+msgstr "Tittel som vises over strømmingen. Kan være tom."
+
+msgid "Short description that will show on front page."
+msgstr "Kort beskrivelse som vises på fremsiden."
+
+msgid "link"
+msgstr "lenke"
+
+msgid "Link to the embedding stream."
+msgstr "Lenke til en innebygget strømming."
+
+msgid "is active"
+msgstr "er aktiv"
+
+msgid "No more than one stream can be active at any given time."
+msgstr "Bare én strømming kan være aktiv samtidig."
+
+msgid "stream"
+msgstr "strømming"
+
+msgid "streams"
+msgstr "strømminger"
+
+msgid "This LAN has finished and can no longer be attended."
+msgstr "Dette LANet er over og påmeldingen er derfor stengt."
+
 msgid ""
 "You need to fill in your address and zip code in order to sign up for a LAN."
-msgstr "Din adresse og postnummer kreves for å kunne melde seg på et LAN."
+msgstr "Adresse og postnummer kreves for å kunne melde seg på LAN."
 
-msgid "You are already in the attendee list for "
-msgstr "Du er allerede påmeldt "
+#, python-brace-format
+msgid "You are already in the attendee list for {lan}."
+msgstr "Du er allerede påmeldt {lan}."
 
-msgid "Successfully added you to attendee list for "
-msgstr "Du er nå påmeldt "
+#, python-brace-format
+msgid "Successfully added you to attendee list for {lan}."
+msgstr "Du er lagt til deltagerlisten for {lan}."
 
-msgid "This LAN has already started, you can not retract your signup"
-msgstr "Dette LANet har allerede startet, det er for sent å melde seg av"
+msgid "This LAN has already started, you can't retract your signup."
+msgstr "Dette LAN-et har allerede startet, det er for sent å melde seg av."
 
-msgid "You are not in the attendee list for "
-msgstr "Du er ikke påmeldt "
+#, python-brace-format
+msgid "You are not in the attendee list for {lan}."
+msgstr "Du er ikke påmeldt {lan}."
 
-msgid "Successfully removed you from attendee list for "
-msgstr "Du ble fjernet fra listen over deltakere til "
+#, python-brace-format
+msgid "Successfully removed you from attendee list for {lan}"
+msgstr "Du ble fjernet fra listen over deltakere for {lan}."
+
+msgid "Paying participants"
+msgstr "Betalende deltagere"
+
+msgctxt "payment type"
+msgid "cash"
+msgstr "cash"
+
+msgctxt "payment type"
+msgid "ticket"
+msgstr "billett"
 
 msgid "Lottery"
-msgstr ""
+msgstr "Lotteri"
+
+msgid "open"
+msgstr "åpen"
+
+msgid "multiple winnings"
+msgstr "flere premier"
+
+msgid "Allows a user to win more than one time."
+msgstr "Tillater en bruker å vinne flere ganger."
+
+msgid "lottery"
+msgstr "lotteri"
+
+msgid "lotteries"
+msgstr "lotterier"
+
+msgid "lottery translation"
+msgstr "lottooversettelse"
+
+msgid "lottery translations"
+msgstr "lottooversettelser"
+
+msgid "lottery participant"
+msgstr "lottodeltager"
+
+msgid "lottery participants"
+msgstr "lottodeltagere"
+
+msgid "lottery winner"
+msgstr "lotterivinner"
+
+msgid "lottery winners"
+msgstr "lotterivinnere"
+
+msgid "Lottery not found."
+msgstr "Lotteri ble ikke funner."
+
+msgid "No eligible participants."
+msgstr "Ingen kvalifiserte deltagere."
+
+msgid "Miscellaneous"
+msgstr "Diverse"
+
+msgid "News"
+msgstr "Nyheter"
+
+msgid "date published"
+msgstr "datu utgitt"
+
+msgid "relevant LANs"
+msgstr "relevante LAN"
+
+msgid "pinned"
+msgstr "festet"
+
+msgid "Pinned articles are shown before non-pinned ones."
+msgstr "Festede artikler vises før artikler som ikke er festet."
+
+msgid "news article"
+msgstr "nyhetsartikkel"
+
+msgid "news articles"
+msgstr "nyhetsartikler"
+
+msgid "content"
+msgstr "innhold"
+
+msgid "news article translation"
+msgstr "nyhetsartikkeloversettelse"
+
+msgid "news article translations"
+msgstr "nyhetsartikkeloversettelser"
+
+msgid "Payment"
+msgstr "Betaling"
 
 msgid "Ticket confirmation"
-msgstr "Billett-bekreftelse"
+msgstr "Billettbekreftelse"
 
-#, fuzzy
-#| msgid "Payment complete - confirmation mail sent to "
-msgid "Payment complete — Confirmation mail sent to "
-msgstr "Betalingen ble gjennomført - en bekreftelse sendes til "
+#, python-brace-format
+msgid "Payment complete. Confirmation sent to {email}."
+msgstr "Betalingen ble gjennomført. Bekreftelsen ble sendt til {email}."
 
 msgid "Seating"
 msgstr "Plasskart"
 
-msgid "This seatmap is closed."
-msgstr "Dette plasskartet er stengt."
+msgid "number of seats"
+msgstr "antall seter"
 
-msgid "You have successfully reserved your seat."
-msgstr "Plassen ble reservert."
+msgid "SVG layout for seating"
+msgstr "SVG-mal for plasskart"
 
-msgid "That seat is reserved by "
-msgstr "Plassen er reservert av "
+msgid "seating layout"
+msgstr "plasskartmal"
+
+msgid "seating layouts"
+msgstr "plasskartmaler"
+
+msgid ""
+"This field is automatically updated to match the chosen layout. Change the "
+"chosen layout to alter this field."
+msgstr ""
+"Dette feltet oppdateres automatisk for å matche malen. Endre malen for å "
+"oppdatere dette feltet."
+
+msgid "closing date"
+msgstr "stengningsdato"
+
+msgid "layout"
+msgstr "mal"
+
+msgid "seating"
+msgstr "plasskart"
+
+msgid "seatings"
+msgstr "plasskart"
+
+msgid "placement ID"
+msgstr "plasserings-ID"
+
+msgid "A unique ID within the seating."
+msgstr "En unik ID innenfor plasskartet."
+
+msgid "seat"
+msgstr "plass"
+
+msgid "The seating is closed."
+msgstr "Plasskartet er stengt."
+
+msgid "You have reserved your seat."
+msgstr "Du har reservert plassen din."
+
+msgid "That seat is already taken."
+msgstr "Plassen er allerede opptatt."
 
 msgid "Your ticket does not allow reservation in this seating."
 msgstr "Billetten din tillater ikke reservering i dette plasskartet."
@@ -273,11 +761,17 @@ msgstr "Billetten din tillater ikke reservering i dette plasskartet."
 msgid "You need to attend and pay before reserving your seat."
 msgstr "Du må melde deg på og betale før du kan reservere plass."
 
-msgid "You have unregistered your seat."
-msgstr "Du har forlatt plassen din."
+msgid "You have unreserved your seat."
+msgstr "Du har avreservert plassen din."
 
-msgid "This seat is taken."
-msgstr "Plassen er opptatt"
+msgid "This is not your seat."
+msgstr ""
+
+msgid "No seat was specified."
+msgstr "Ingen plass var spesifisert."
+
+msgid "Illegal seat."
+msgstr "Ugyldig plass."
 
 msgid "Page"
 msgstr "Side"
@@ -292,258 +786,544 @@ msgstr "%(seating)s, plass %(seat)d"
 msgid "(Available)"
 msgstr "(Ledig)"
 
+msgid "Sponsor"
+msgstr "Sponsor"
+
+msgid "name"
+msgstr "navm"
+
+msgid "banner URL"
+msgstr "banner-URL"
+
+msgid "website"
+msgstr "nettsted"
+
+msgid "sponsor"
+msgstr "sponsorer"
+
+msgid "sponsors"
+msgstr "sponsorer"
+
+msgid "sponsor translation"
+msgstr "sponsoroversettelse"
+
+msgid "sponsor translations"
+msgstr "sponsoroversettelser"
+
+msgid "priority"
+msgstr "prioritet"
+
+msgid "Higher priority means closer to the top of the sponsor list."
+msgstr "Høyere prioritet betyr nærmere toppen av sponsorlisten."
+
+msgid "sponsor relation"
+msgstr "sponsorrelasjon"
+
+msgid "sponsor relations"
+msgstr "sponsorrelasjoner"
+
+msgid "Team"
+msgstr "Lag"
+
 msgid "Title"
 msgstr "Tittel"
 
 msgid "Tag"
-msgstr "Tag"
+msgstr "Tagg"
 
-#, fuzzy
-#| msgid ""
-#| "Your desired username contains illegal characters. Valid: a-Z 0-9 - _"
 msgid "Your desired tag contains illegal characters. Valid: a-Z 0-9 - _"
-msgstr ""
-"Brukernavnet ditt kan ikke inneholde ulovlige tegn. Lovlige tegn: a-Z 0-9 - _"
+msgstr "Brukernavnet ditt inneholder ulovlige tegn. Lovlige tegn: a-Z 0-9 - _"
 
-msgid "This team tag is taken. The team belongs to "
-msgstr "Denne taggen er tatt. Laget tilhører "
+msgid "This team tag is already taken."
+msgstr "Lagtaggen er opptatt."
 
-#, fuzzy
-#| msgid "You cannot be logged in when registering."
-msgid "You cannot be leader of more than "
-msgstr "Du kan ikke være innlogget under registrering"
+msgid "tag"
+msgstr "Tagg"
 
-#, fuzzy
-#| msgid "My teams"
-msgid " teams."
-msgstr "Mine lag"
+msgid "leader"
+msgstr "lagfører"
 
-msgid " has been created."
-msgstr " har blitt opprettet"
+msgid "members"
+msgstr "medlemmer"
 
-msgid "You can only disband teams that you are leader of."
-msgstr "Du kan bare oppløse lag du er leder for."
+msgid "teams"
+msgstr "lag"
 
-#, fuzzy
-#| msgid "You have successfully logged in."
-msgid " was successfully deleted."
-msgstr "Logget inn"
+msgid "date joined"
+msgstr "dato innmeldt"
 
-#, fuzzy
-#| msgid "You are not the team leader, you cannot remove team members."
-msgid "You are not the team leader, you cannot add team members."
-msgstr "Du er ikke lagleder, og kan derfor ikke fjerne medlemmer."
+msgid "team member"
+msgstr "lagmedlem"
 
-#, fuzzy
-#| msgid "There is already a user with that username."
-msgid " is already on your team."
-msgstr "Brukernavnet er tatt"
+msgid "team members"
+msgstr "lagmedlemmer"
 
-msgid " was added to your team"
-msgstr " er nå med på laget ditt"
+msgid "invitee"
+msgstr "den inviterte"
+
+msgid "team invitation"
+msgstr "laginvitasjon"
+
+msgid "team invitations"
+msgstr "laginvitasjoner"
+
+#, python-brace-format
+msgid "You can't be the leader of more than {max} teams."
+msgstr "Du kan ikke være lagfører av flere enn {max} lag."
+
+#, python-brace-format
+msgid "Team {team} has been created."
+msgstr "Lag {team} har blitt opprettet."
+
+msgid "Only the team leader may disband the team."
+msgstr "Bare lagfører kan oppløse laget."
+
+#, python-brace-format
+msgid "Team {team} was deleted."
+msgstr "Lag {team} ble slettet."
+
+msgid "Only the team leader may invite members."
+msgstr "Bare lagfører kan invitere medlemmer."
 
 msgid "No username was specified."
-msgstr ""
+msgstr "Intet brukernavn ble spesifisert."
 
-msgid " does not exist."
-msgstr ""
+msgid "You can't invite yourself."
+msgstr "Du kan ikke invitere deg selv."
 
-#, fuzzy
-#| msgid "You are not participating in this competition."
-msgid "You cannot invite the team leader."
-msgstr "Du deltar ikke i denne konkurransen"
+#, python-brace-format
+msgid "User {user} was not found."
+msgstr "Bruker {user} ble ikke funnet."
 
-#, fuzzy
-#| msgid " was added to your team"
-msgid " was invited to your team."
-msgstr " er nå med på laget ditt"
+#, python-brace-format
+msgid "User {user} is already on the team."
+msgstr "Bruker {user} er allerede på laget ditt."
 
-#, fuzzy
-#| msgid "There is already a user with that username."
-msgid " has already been invited to your team."
-msgstr "Brukernavnet er tatt"
+#, python-brace-format
+msgid "User {user} is already invited to the team."
+msgstr "Bruker {user} er allerede invitert til laget."
 
-msgid "The invitation was deleted."
-msgstr "Invitasjonen ble slettet"
+#, python-brace-format
+msgid "User {user} was invited to the team."
+msgstr "Bruker {user} ble invitert til laget."
 
-#, fuzzy
-#| msgid "You are not participating in this competition."
-msgid "You are not invited to join this team."
-msgstr "Du deltar ikke i denne konkurransen"
+msgid "Only the team leader may uninvite members."
+msgstr "Bare lagfører kan angre medlemskapsinvitasjoner."
 
-#, fuzzy
-#| msgid "There is already a user with that username."
-msgid ", you are already on this team."
-msgstr "Brukernavnet er tatt"
+#, python-brace-format
+msgid "User {user} is not invited to the team."
+msgstr "Bruker {user} er ikke invitert til laget."
 
-msgid "You successfully joined the team."
-msgstr "Du har godtatt invitasjonen."
+#, python-brace-format
+msgid "User {user} was uninvited to the team."
+msgstr "Bruker {user} er ikke lenger invitert til laget."
 
-msgid "You are not the team leader, you cannot remove other team members."
-msgstr "Du er ikke lagleder, og kan derfor ikke fjerne medlemmer."
+#, python-brace-format
+msgid "You are already the team leader of team {team}."
+msgstr "Du er allerede lagfører for lag {team}."
 
-msgid "You have left team "
-msgstr "Du har forlatt "
+#, python-brace-format
+msgid "You are already on team {team}."
+msgstr "Du er allerede på lag {team}."
 
-msgid " removed from your team."
-msgstr " ble fjernet fra laget."
+#, python-brace-format
+msgid "You are not invited to team {team}."
+msgstr "Du er ikke invitert til lag {team}."
 
-#, fuzzy
-#| msgid ""
-#| "Your desired username contains illegal characters. Valid: a-Z 0-9 - _"
+#, python-brace-format
+msgid "You have accepted the membership invitation from team {team}."
+msgstr "Du har akseptert medlemskapsinvitasjonen fra lag {team}."
+
+#, python-brace-format
+msgid "You have declined the membership invitation from team {team}."
+msgstr "Du har avslått medlemskapsinvitasjonen fra lag {team}."
+
+msgid "Only the team leader may kick members."
+msgstr "Bare lagfører kan sparke medlemmer."
+
+msgid "You can't kick yourself."
+msgstr "Du kan ikke sparke deg selv."
+
+#, python-brace-format
+msgid "User {user} is not a member of the team."
+msgstr "Bruker {user} er ikke medlem av laget."
+
+#, python-brace-format
+msgid "{user} was kicked from the team."
+msgstr "{user} ble sparket fra laget."
+
+msgid ""
+"You are the team leader, the only way to leave the team is to disband it."
+msgstr "Du er lagfører, eneste måte å forlate laget er ved å oppløse det."
+
+msgid "You are not a member of this team."
+msgstr "Du er ikke medlem av dette laget."
+
+#, python-brace-format
+msgid "You have left team {team}."
+msgstr "Du har forlatt lag {team}."
+
+msgid "You cannot deactivate yourself! No actions were performed."
+msgstr "Du kan ikke deaktivere deg selv! Ingen hanglinger ble gjennomført."
+
+#, python-brace-format
+msgid "Deleted {count} user sessions."
+msgstr "Slettet {count} brukerøkter."
+
+msgid "Activate"
+msgstr "Aktiver"
+
+msgid "Deactivate"
+msgstr "Deaktiver"
+
+msgid "Forcefully log out"
+msgstr "Logg ut med makt"
+
+msgid "User"
+msgstr "Bruker "
+
+msgid "Nickname"
+msgstr "Kallenavn"
+
+msgid "Street address"
+msgstr "Gateadresse"
+
+msgid "Zip code"
+msgstr "Postnummer"
+
+msgid "Phone number"
+msgstr "Telefonnummer"
+
 msgid "Your desired nickname contains illegal characters. Valid: a-Z 0-9 - _"
 msgstr ""
-"Brukernavnet ditt kan ikke inneholde ulovlige tegn. Lovlige tegn: a-Z 0-9 - _"
+"Kallenavnet ditt kan ikke inneholde ulovlige tegn. Lovlige tegn: a-Z 0-9 - _"
 
 msgid ""
 "The phone number must consist of an optional country code followed by 8–10 "
 "digits (no spaces or symbols, but \"+\" allowed in country code)."
 msgstr ""
+"Telefonnummeret må bestå av en valgfri landskode, fulgt av 8–10 tall (ingen "
+"mellomrom eller symboler, men \"+\" er tillatt i landskode.)"
 
 msgid "nick"
 msgstr "kallenavn"
 
-msgid "Street address"
-msgstr "Adresse"
+msgid "Specify a nick name (display name)."
+msgstr "Spesifiser et kallenavn (visningsnavn)."
 
-msgid "Invalid alis. Max length is 40 characters"
-msgstr "Ugyldig alias. Makslengde er 40 karakterer"
+msgid "date of birth"
+msgstr "fødselsdato"
 
-msgid "Alias was added"
-msgstr "Aliaset ble lagt til"
+msgid "street address"
+msgstr "gateadresse"
 
-msgid "You can only remove your own alias"
-msgstr "Du kan kun fjerne dine egne alias"
+msgid "zip code"
+msgstr "postnummer"
 
-msgid "Alias was removed"
-msgstr "Aliaset ble fjernet"
+msgid "phone number"
+msgstr "telefonnummer"
 
-msgid "Django site admin"
-msgstr "Django site admin"
+msgid "user profile"
+msgstr "brukerprofil"
 
-#, fuzzy
-#| msgid "Seating"
+msgid "user profiles"
+msgstr "brukerprofiler"
+
+msgid "profile URL"
+msgstr "profil-URL"
+
+msgid ""
+"URL prefix where profile info can be retrieved. E.g. https://steamcommunity."
+"com/id/"
+msgstr ""
+"URL-prefiks der profilen kan hentes fra.E.g. https://steamcommunity.com/id/"
+
+msgid "user alias type"
+msgstr "brukeraliastype"
+
+msgid "user alias types"
+msgstr "brukeraliastyper"
+
+msgid "alias type"
+msgstr "aliastype"
+
+msgid "nickname"
+msgstr "kallenavn"
+
+msgid "user alias"
+msgstr "brukeralias"
+
+msgid "user aliases"
+msgstr "brukeraliaser"
+
+msgid "Invalid alias. Max length is 40 characters."
+msgstr "Ugyldig alias. Makslengde er 40 karakterer."
+
+msgid "Alias was added."
+msgstr "Aliaset ble lagt til."
+
+msgid "You can only remove your own alias."
+msgstr "Du kan kun fjerne dine egne aliaser."
+
+msgid "Alias was removed."
+msgstr "Aliaset ble fjernet."
+
+msgid "Error 404"
+msgstr "Feil 404"
+
+msgid "Error 404: File Not Found"
+msgstr "Feil 404: Filen ble ikke funnet"
+
+msgid ""
+"\n"
+"<p>We're sorry, but the page you requested could not be found.</p>\n"
+msgstr ""
+"\n"
+"<p>Vi beklager, men vi fant ikke siden du etterspurte.</p>\n"
+
+msgid "Error 500"
+msgstr "Feil 500"
+
+msgid "Error 500: Server Error"
+msgstr "Feil 500: Serverfeil"
+
+msgid ""
+"\n"
+"<p>We've encountered an internal server error.</p>\n"
+"<p>Administrators have been notified, but please contact us and tell us how "
+"it happened.</p>\n"
+msgstr ""
+"\n"
+"<p>Vi har støtt på en serverfeil.</p>\n"
+"<p>Administratorene har fått beskjed, men vennligst kontakt oss og fortell "
+"oss hvordan dette skjedde.</p>\n"
+
+msgid "Admin Panel"
+msgstr "Adminpanel"
+
+msgid "Register Arrivals"
+msgstr "Registrer ankomster"
+
+msgid "Filter:"
+msgstr "Filter:"
+
+msgid "Attending:"
+msgstr "Deltar:"
+
+msgid "Paid:"
+msgstr "Betalt:"
+
+msgid "Arrived:"
+msgstr "Ankommet:"
+
+msgid "Username"
+msgstr "Brukernavn"
+
+msgid "Full Name"
+msgstr "Fullt navn"
+
+msgid "Email Address"
+msgstr "E-postadresse"
+
+msgid "Paid"
+msgstr "Betalt"
+
+msgid "Arrived"
+msgstr "Ankommet"
+
 msgid "No seating"
 msgstr "Manglende plasskart"
 
-msgid "Manual Registration"
-msgstr ""
+msgid "Toggle"
+msgstr "Veksle"
 
-#, fuzzy
-#| msgid "Register new user"
-msgid "Register a new user"
-msgstr "Registrer ny bruker"
+msgid "Export to Excel sheet"
+msgstr "Eksporter til Excel-ark"
+
+msgid "There are no attendees for this LAN."
+msgstr "Det er ingen deltagere for dette LAN-et."
+
+msgid "Manual Register"
+msgstr "Registrer manuelt"
+
+msgid "Manual Registration"
+msgstr "Manuell registrering"
+
+#, python-format
+msgid "Register a new user for %(lan)s."
+msgstr "Registrer en ny bruker for %(lan)s."
 
 msgid "No active LAN was found."
-msgstr ""
+msgstr "Ingen aktive LAN ble funnet."
 
-#, fuzzy
-#| msgid "You have requested a password recovery for the account bound to "
+#, python-format
 msgid ""
+"\n"
+"<p>You have requested a password recovery for the account(s) bound to this "
+"email address at <a href=\"%(host)s\">%(site_name)s</a>.</p>\n"
+"\n"
+"<p>\n"
+"    Email address: %(email)s\n"
+"    <br />\n"
+"    Username: %(username)s\n"
+"</p>\n"
+"\n"
+"<p>\n"
+"    If you did not ask for this password recovery, please ignore this email. "
+"Otherwise, click the link below to reset your password:\n"
+"    <br />\n"
+"    <a href=\"%(link)s\">%(link)s</a>\n"
+"</p>\n"
+"<p>If you do not use this link within 24 hours, it will be invalidated.</p>\n"
+msgstr ""
+"\n"
+"<p>Du har etterspurt en passordgjenoppretting for kontoen/kontoene "
+"tilknyttet denne e-postadressen hos <a href=\"%(host)s\">%(site_name)s</a>.</"
+"p>\n"
+"\n"
+"<p>\n"
+"    E-postadresse: %(email)s\n"
+"    <br />\n"
+"    Brukernavn: %(username)s\n"
+"</p>\n"
+"\n"
+"<p>\n"
+"    Hvis du ikke har etterspurt passordgjenoppretting, vennligst ignorer "
+"denne e-posten. Hvis du etterspurte det, trykk på lenken under:\n"
+"    <br />\n"
+"    <a href=\"%(link)s\">%(link)s</a>\n"
+"</p>\n"
+"<p>Hvis du ikke bruker denne lenken innen 24 timer, vil den bli invalidert.</"
+"p>\n"
+
+#, python-format
+msgid ""
+"\n"
 "You have requested a password recovery for the account(s) bound to this "
-"email address at"
-msgstr "Passord-gjennoppretting har blitt etterspurt for kontoen knyttet til "
-
-msgid "Email address:"
-msgstr ""
-
-#, fuzzy
-#| msgid "Username"
-msgid "Username:"
-msgstr "Brukernavn"
-
-#, fuzzy
-#| msgid ""
-#| "If you did not ask for this password recovery, please ignore this email."
-msgid ""
+"email address at %(site_name)s (%(host)s).\n"
+"\n"
+"Email address: %(email)s\n"
+"Username: %(username)s\n"
+"\n"
 "If you did not ask for this password recovery, please ignore this email. "
-"Otherwise, click the link below to reset your password:"
+"Otherwise, click the link below to reset your password:\n"
+"%(link)s\n"
+"\n"
+"If you do not use this link within 24 hours, it will be invalidated.\n"
 msgstr ""
-"Hvis du ikke ba om denne passord-gjennopprettingen kan du ignore denne "
-"emailen"
+"\n"
+"Du har etterspurt en passordgjenoppretting for kontoen/kontoene tilknyttet "
+"denne e-postadressen hos %(site_name)s (%(host)s).\n"
+"\n"
+"E-postadresse: %(email)s\n"
+"Brukernavn: %(username)s\n"
+"\n"
+"Hvis du ikke har etterspurt passordgjenoppretting, vennligst ignorer denne e-"
+"posten. Hvis du etterspurte det, trykk på lenken under:\n"
+"%(link)s\n"
+"\n"
+"Hvis du ikke bruker denne lenken innen 24 timer, vil den bli invalidert.\n"
 
-msgid "If you do not use this link within 24 hours, it will be invalidated."
-msgstr ""
-
-#, fuzzy
-#| msgid "You have registered an account at "
-msgid "You have registered an account at"
-msgstr "Du har registrert en konto på "
-
-msgid "In order to validate your account, please click the link below:"
-msgstr ""
-
-#, fuzzy
-#| msgid ""
-#| "\n"
-#| "\n"
-#| "Note that tokens have a valid lifetime of 24 hours. If you do not use "
-#| "this\n"
-#| "link within 24 hours, it will be invalid, and you will need to use the "
-#| "password\n"
-#| "recovery option again to get your account verified."
+#, python-format
 msgid ""
+"\n"
+"<p>You have registered an account at <a href=\"%(host)s\">%(site_name)s</a>."
+"</p>\n"
+"<p>\n"
+"    In order to validate your account, please click the link below:\n"
+"    <br />\n"
+"    <a href=\"%(link)s\">%(link)s</a>\n"
+"</p>\n"
+"<p>If you do not use this link within 24 hours, it will be invalidated. If "
+"that happens, you will need to use the password recovery option to get your "
+"account verified.</p>\n"
+msgstr ""
+"\n"
+"<p>Du har registrert en konto hos <a href=\"%(host)s\">%(site_name)s</a>.</"
+"p>\n"
+"<p>\n"
+"    For a validere kontoen, vennligst trykk på lenken under:\n"
+"    <br />\n"
+"    <a href=\"%(link)s\">%(link)s</a>\n"
+"</p>\n"
+"<p>Hvis du ikke bruker denne lenken innen 24 timer, vil den bli invalidert. "
+"Hvis det skjer, så kan du bruke passordgjenopprettingsfunksjonen for å "
+"validere kontoen.</p>\n"
+
+#, python-format
+msgid ""
+"\n"
+"You have registered an account at %(site_name)s (%(host)s).\n"
+"\n"
+"In order to validate your account, please click the link below:\n"
+"%(link)s\n"
+"\n"
 "If you do not use this link within 24 hours, it will be invalidated. If that "
 "happens, you will need to use the password recovery option to get your "
-"account verified."
+"account verified.\n"
 msgstr ""
 "\n"
+"Du har registrert en konto hos %(site_name)s (%(host)s).\n"
 "\n"
-"NB: Denne linken er kun gyldig i 24 timer.\n"
-"Hvis linken ikke blir brukt innen 24 timer må du bruke passord "
-"gjennopprettings funksjonaliteten for og få en ny link"
+"For a validere kontoen, vennligst trykk på lenken under:\n"
+"%(link)s\n"
+"\n"
+"Hvis du ikke bruker denne lenken innen 24 timer, vil den bli invalidert. "
+"Hvis det skjer, så kan du bruke passordgjenopprettingsfunksjonen for å "
+"validere kontoen.\n"
+
+msgid "Log in"
+msgstr "Logg inn"
+
+msgid "<strong>NB:</strong> Both the username and password are case sensitive."
+msgstr ""
+"<strong>NB:</strong> Både brukernavnet og passorder er skiller mellom store "
+"og små bokstaver."
 
 msgid "Login"
 msgstr "Logg inn"
 
-msgid "Note: Both the username and password are case sensitive."
-msgstr ""
-
-#, fuzzy
-#| msgid "Recover password"
 msgid "Recover username and password"
-msgstr "Glemt passord?"
+msgstr "Gjenopprett brukernavn og passord"
 
-#, fuzzy
-#| msgid "Account recovery"
 msgid "Account Recovery"
-msgstr "Gjenopprett konto"
+msgstr "Kontogjenoppretting"
 
 msgid "Send recovery email"
-msgstr ""
+msgstr "Send gjenopprettings-e-post"
 
-#, fuzzy
-#| msgid "Register new user"
 msgid "Register New User"
 msgstr "Registrer ny bruker"
 
 msgid "Register"
 msgstr "Registrer"
 
-#, fuzzy
-#| msgid "Change password"
 msgid "Change Password"
 msgstr "Bytt passord"
 
 msgid "Change password"
 msgstr "Bytt passord"
 
+msgid "Toggle navigation"
+msgstr "Veksle navigasjon"
+
 msgid "Language"
 msgstr "Språk"
 
 msgid "Activity"
-msgstr ""
+msgstr "Aktivitet"
 
 msgid "Status"
 msgstr "Status"
 
-#, fuzzy
-#| msgid "Start date"
 msgid "Start time"
-msgstr "Start"
+msgstr "Starttid"
 
 msgid "Open spots"
-msgstr ""
+msgstr "Åpne plasser"
+
+msgid "Show brackets"
+msgstr "Vis braketter"
 
 msgid "Teams"
 msgstr "Lag"
@@ -555,120 +1335,144 @@ msgid "Select team"
 msgstr "Velg lag"
 
 msgid "Join competition (team)"
-msgstr "Meld på (lag)"
+msgstr "Bli med (lag)"
 
-msgid "To join the competition as a team you have to"
-msgstr "For å delta i konkurransen som et lag må du"
-
-msgid "create"
-msgstr "opprette"
-
-msgid "or join a team"
-msgstr "eller bli med på et lag"
+#, python-format
+msgid ""
+"\n"
+"                                    To join the competition as a team you "
+"have to <a href=\"%(create_team_url)s\">create</a> or join a team.\n"
+"                                    "
+msgstr ""
+"\n"
+"                                    For å bli med på konkurransen som et "
+"lag, må du <a href=\"%(create_team_url)s\">lage</a> eller bli med på et "
+"lag.\n"
+"                                    "
 
 msgid "Join competition"
-msgstr "Meld på"
+msgstr "Bli med"
 
 msgid "(solo)"
 msgstr "(solo)"
 
 msgid "Leave competition"
-msgstr "Meld av"
+msgstr "Forlat"
 
-msgid "Click and wait to start compo"
-msgstr ""
+msgid "Click and wait to start compo:"
+msgstr "Trykk og vent for å starte compo:"
 
-#, fuzzy
-#| msgid "Start"
 msgid "Start Compo"
-msgstr "Start"
+msgstr "Start Compo"
 
 msgid "Submit Score"
-msgstr ""
-
-msgid "Note: "
-msgstr "Merk: "
+msgstr "Send inn poengsum"
 
 msgid ""
-"Signing up for a team compo as a solo player does not mean you are a "
-"participant."
+"\n"
+"                    <strong>Note:</strong>\n"
+"                    Signing up for a team compo as a solo player does not "
+"mean you are a participant.\n"
+"                    Try to find other players that sign up solo, make a team "
+"and sign up as a team.\n"
+"                    <br />\n"
+"                    <strong>When you sign up as a team, your solo "
+"participation will be overriden.</strong>\n"
+"                    "
 msgstr ""
-"Å være påmeldt en lagkonkurranse uten lag betyr ikke automatisk at du er en "
-"deltaker"
+"\n"
+"                    <strong>Merk:</strong>\n"
+"                    Oppmelding på en lag-compo betyr ikke at du er "
+"deltager.\n"
+"                    Prøv å finne andre spillere som melder seg på solo, lag "
+"et lag, og meld opp laget.\n"
+"                    <br />\n"
+"                    <strong>Når du melder deg opp som lag, vil solo-"
+"oppmeldingen overskrives.</strong>\n"
+"                    "
 
+#, python-format
 msgid ""
-"Try to find other players that sign up solo, make a team and sign up as a "
-"team."
+"\n"
+"                <strong>This competition is full.</strong>\n"
+"                This competition only had room for "
+"%(competition_max_participants)s participants, and that limit has been "
+"reached.\n"
+"                "
 msgstr ""
-"Prøv å samle et lag av de andre deltakerne som har meldt seg på uten lag."
-
-msgid "When you sign up as a team, your solo participation will be overriden."
-msgstr "Når du melder på et lag vil solo-påmeldingen bli overskrevet."
-
-#, fuzzy
-#| msgid "My competitions"
-msgid "This competition is full"
-msgstr "Påmeldte konkurranser"
-
-msgid "LAN"
-msgstr ""
-
-msgid "Type"
-msgstr ""
-
-#, fuzzy
-#| msgid "Teams"
-msgid "Team"
-msgstr "Lag"
-
-msgid "Solo"
-msgstr "Solo"
-
-#, fuzzy
-#| msgid "Raffle"
-msgid "Raffles"
-msgstr "Trekning"
-
-#, fuzzy
-#| msgid "No active raffles right now."
-msgid "No active raffles right now"
-msgstr "Ingen aktive trekninger"
+"\n"
+"                <strong>Konkurransen er full.</strong>\n"
+"                Den hadde bare plass til %(competition_max_participants)s "
+"deltagere, og den grensen er nådd.\n"
+"                "
 
 msgid "Select a LAN to view competitions for it."
-msgstr ""
+msgstr "Velg et LAN for å se konkurranser for det."
 
-msgid "LANs"
-msgstr ""
-
-#, fuzzy
-#| msgid "Time span"
 msgid "Time"
-msgstr "Tidsrom"
+msgstr "Tid"
 
 msgid "Compo Count"
-msgstr ""
+msgstr "Antall compoer"
 
 msgid "Previous LANs"
 msgstr "Tidligere LAN"
 
-msgid "Sent automatically from"
+msgid "Type"
+msgstr "type"
+
+msgid "Solo"
+msgstr "Solo"
+
+msgid "Raffles"
+msgstr "Trekninger"
+
+msgctxt "status"
+msgid "Open"
+msgstr "Åpen"
+
+msgctxt "status"
+msgid "Closed"
+msgstr "Stengt"
+
+msgid "No active raffles right now."
+msgstr "Ingen aktive trekninger for øyeblikket."
+
+msgid "There is no schedule for this LAN."
+msgstr "Det er ingen timetabell for dette LAN-et."
+
+msgid "There is no current or upcoming LAN."
+msgstr "Det er ingen nåværende eller kommende LAN."
+
+#, python-format
+msgid ""
+"\n"
+"        <p>Sent automatically from <a href=\"%(host)s\">%(site_name)s</a>.</"
+"p>\n"
+"        "
 msgstr ""
+"\n"
+"        <p>Sendt automatisk fra <a href=\"%(host)s\">%(site_name)s</a>.</p>\n"
+"        "
+
+#, python-format
+msgid "Sent automatically from %(site_name)s (%(host)s)."
+msgstr "Sent automatisk fra %(site_name)s (%(host)s)."
 
 msgid "Support"
-msgstr ""
+msgstr "Brukerstøtte"
 
-#, fuzzy
-#| msgid "End date"
+msgid "This lan is over."
+msgstr "LAN-et er avsluttet."
+
 msgid "End time"
-msgstr "Slutt"
+msgstr "Sluttid"
 
 msgid "Location"
 msgstr "Sted"
 
-#, fuzzy
-#| msgid "You have paid for this event"
-msgid "You have paid for a ticket for this event:"
-msgstr "Du har betalt"
+msgid "You have paid for a ticket for this LAN:"
+msgstr "Du har betalt for en billett for dette LAN-et:"
 
 msgid "Remove attendance"
 msgstr "Meld deg av"
@@ -679,24 +1483,20 @@ msgstr "Billetter"
 msgid "Price"
 msgstr "Pris"
 
-#, fuzzy
-#| msgid "Seating"
 msgid "Seats"
-msgstr "Plasskart"
+msgstr "Plasser"
 
 msgid "Free seats"
 msgstr "Ledige plasser"
 
-#, fuzzy
-#| msgid "Log out"
 msgid "Sold out"
-msgstr "Log ut"
+msgstr "Utsolgt"
 
 msgid "Pay with Card"
 msgstr "Betal med Kort"
 
 msgid "Tickets will be available"
-msgstr ""
+msgstr "Billetter vil bli tilgjengelige"
 
 msgid "No tickets avalible at this time."
 msgstr "Det er ingen billetter tilgjengelig akkurat nå."
@@ -704,76 +1504,62 @@ msgstr "Det er ingen billetter tilgjengelig akkurat nå."
 msgid "Sign up"
 msgstr "Meld deg på"
 
-msgid "Your address and zip code is required in order to sign up for a LAN."
-msgstr "Din adresse og postnummer kreves for å kunne melde seg på et LAN."
+#, python-format
+msgid ""
+"\n"
+"            Your address and zip code is required in order to sign up for a "
+"LAN.\n"
+"            Go to your <a href=\"%(update_profile_url)s\">profile</a> to add "
+"the information.\n"
+"            "
+msgstr ""
+"\n"
+"            Adressen og postkoden din er nødvendig for å melde seg på LAN.\n"
+"            Gå til <a href=\"%(update_profile_url)s\">profilen din</a> for å "
+"legge det til.\n"
+"            "
 
-msgid "Go to your"
-msgstr "Gå til din"
-
-msgid "profile"
-msgstr "profil"
-
-msgid "to add the information."
-msgstr "for og legge til informasjonen."
-
-#, fuzzy
-#| msgid "You need to login to see your status."
 msgid "You need to login to sign up for the LAN."
-msgstr "Du må logge på for og se din status."
+msgstr "Du må logge deg på for å melde deg opp til LAN-et."
+
+msgid "LAN List"
+msgstr "LAN-liste"
 
 msgid "No current or upcoming LANs."
-msgstr ""
+msgstr "Ingen nåværende eller kommende LAN."
 
-#, fuzzy
-#| msgid "Raffle"
-msgid "Raffle"
-msgstr "Trekning"
-
-#, fuzzy
-#| msgid "Participants"
 msgid "Participants:"
-msgstr "Deltakere"
+msgstr "Deltakere:"
 
-#, fuzzy
-#| msgid "Last name"
 msgid "Last winner:"
-msgstr "Etternavn"
+msgstr "Siste vinner:"
 
-msgid "Unsign"
-msgstr "Meld av"
+msgid "Leave"
+msgstr "Forlat"
 
-#, fuzzy
-#| msgid "You need to login in to participate"
-msgid "You need to be logged inn to participate"
-msgstr "Du må logge inn for å kunne melde deg på"
+msgid "Join"
+msgstr "Bli med"
 
-#, fuzzy
-#| msgid "Sign up"
-msgid "Signup closed"
-msgstr "Påmelding"
+msgid "You need to be logged inn to participate."
+msgstr "Du må logge inn for å kunne delta."
 
-#, fuzzy
-#| msgid "Go to your"
+msgid "Signup closed."
+msgstr "Påmelding lukket."
+
 msgid "Go to drawing"
-msgstr "Gå til din"
+msgstr "Gå til trekking"
 
 msgid "Draw winner"
-msgstr ""
+msgstr "Trekk vinner"
 
-#, fuzzy
-#| msgid "Go to your"
 msgid "Go to lottery"
-msgstr "Gå til din"
+msgstr "Gå til lotteri"
 
-#, fuzzy
-#| msgid "Last name"
 msgid "Last Winner"
-msgstr "Etternavn"
+msgstr "Siste vinner"
 
-#, fuzzy
-#| msgid "All teams"
 msgid "All Winners"
-msgstr "Alle lag"
+msgstr "Alle vinnere"
 
 msgid "Sponsors"
 msgstr "Sponsorer"
@@ -781,34 +1567,52 @@ msgstr "Sponsorer"
 msgid "News Archive"
 msgstr "Nyhetsarkiv"
 
+msgid "Home"
+msgstr "Hjem"
+
 msgid "Go to LAN page"
-msgstr ""
+msgstr "Gå til LAN-side"
 
 msgid "Pinned"
-msgstr ""
+msgstr "Festet"
 
 msgid "Archive"
+msgstr "Arkiv"
+
+#, python-format
+msgid ""
+"\n"
+"<p>\n"
+"    This is a confirmation on your purchase of a ticket of type "
+"%(ticket_type_title)s for %(lan_title)s.\n"
+"    The ticket is linked to %(user_full_name)s (%(user)s).\n"
+"    More information about the LAN can be found here: <a href=\"%(lan_link)s"
+"\">%(lan_title)s</a>\n"
+"</p>\n"
 msgstr ""
+"\n"
+"<p>\n"
+"    Dette er en bekreftelse for kjøp av en billett av type "
+"%(ticket_type_title)s for %(lan_title)s.\n"
+"    Billetten er lenket til %(user_full_name)s (%(user)s).\n"
+"    Mer informasjon om LAN-et kan finnes her: <a href=\"%(lan_link)s\">"
+"%(lan_title)s</a>\n"
+"</p>\n"
 
-#, fuzzy
-#| msgid "This is a confirmation on your purchase of a "
-msgid "This is a confirmation on your purchase of a ticket of type"
-msgstr "Dette er en bekreftelse på kjøp av "
-
-#, fuzzy
-#| msgid " ticket for "
-msgid "ticket for"
-msgstr " billett for "
-
-#, fuzzy
-#| msgid "The ticket is linked to "
-msgid "The ticket is linked to"
-msgstr "Denne billetten er tilknyttet "
-
-#, fuzzy
-#| msgid "More information about the lan can be found at "
-msgid "More information about the lan can be found at"
-msgstr "Mer informasjon om LANet finnes på "
+#, python-format
+msgid ""
+"\n"
+"This is a confirmation on your purchase of a ticket of type "
+"%(ticket_type_title)s for %(lan_title)s.\n"
+"The ticket is linked to %(user_full_name)s (%(user)s).\n"
+"More information about the LAN can be found here: %(lan_title)s "
+"(%(lan_link)s)\n"
+msgstr ""
+"\n"
+"Dette er en bekreftelse for kjøp av en billett av type %(ticket_type_title)s "
+"for %(lan_title)s.\n"
+"Billetten er lenket til %(user_full_name)s (%(user)s).\n"
+"Mer informasjon om LAN-et kan finnes her: %(lan_title)s (%(lan_link)s)\n"
 
 msgid "Seating Map"
 msgstr "Plasskart"
@@ -832,7 +1636,13 @@ msgid "Capacity"
 msgstr "Kapasitet"
 
 msgid "Admin"
-msgstr ""
+msgstr "Admin"
+
+msgid "Seating list"
+msgstr "Plassliste"
+
+msgid "Seating map"
+msgstr "Plasskart"
 
 msgid "Seat Info"
 msgstr "Plassinfo"
@@ -840,10 +1650,8 @@ msgstr "Plassinfo"
 msgid "Seat number"
 msgstr "Plassnummer"
 
-#, fuzzy
-#| msgid "Select team"
 msgid "Select a seat"
-msgstr "Velg lag"
+msgstr "Velg en plass"
 
 msgid "Occupied by"
 msgstr "Tatt av"
@@ -854,8 +1662,9 @@ msgstr "Ta plass"
 msgid "Leave seat"
 msgstr "Forlat plass"
 
-#, fuzzy
-#| msgid "Previous sponsors"
+msgid "There are no active seatings."
+msgstr "Det finnes ingen aktive plasskart."
+
 msgid "Previous Sponsors"
 msgstr "Tidligere sponsorer"
 
@@ -865,98 +1674,135 @@ msgstr "Nytt lag"
 msgid "Must be unique!"
 msgstr "Må være unikt!"
 
+#, python-format
+msgid ""
+"\n"
+"%(inviter)s has invited you to join team <a href=\"%(team_url)s\">%(team)s</"
+"a>.\n"
+"You can accept or decline the invitation on the team page.\n"
+msgstr ""
+"\n"
+"%(inviter)s har invitert deg til å bli med på lag <a href=\"%(team_url)s\">"
+"%(team)s</a>.\n"
+"Du kan akseptere eller avslå invitasjonen på lagsiden.\n"
+
 msgid "My teams"
 msgstr "Mine lag"
 
-#, fuzzy
-#| msgid "Members"
 msgid "Team Members"
-msgstr "Medlemmer"
+msgstr "Lagmedlemmer"
 
 msgid "Actions"
 msgstr "Handlinger"
 
 msgid "Leader"
-msgstr "Leder"
+msgstr "Lagfører"
 
-msgid "Remove"
-msgstr "Fjern"
+#, python-format
+msgid "Are you sure you want to kick %(member)s from %(team)s?"
+msgstr "Er du sikker på at du vil sparke %(member)s fra %(team)s?"
+
+msgid "Kick member"
+msgstr "Spark medlem"
+
+#, python-format
+msgid "Are you sure you want to disband team %(team)s?"
+msgstr "Er du sikker på at du vil oppløse lag %(team)s?"
+
+msgid "Disband team"
+msgstr "Oppløs lag"
+
+#, python-format
+msgid "Are you sure you want to leave team %(team)s?"
+msgstr "Er du sikker på at du vil forlate %(team)s?"
 
 msgid "Leave team"
 msgstr "Forlat lag"
 
-#, fuzzy
-#| msgid "Add member"
+msgid "Accept invitation"
+msgstr "Aksepter invitasjon"
+
+msgid "Decline invitation"
+msgstr "Avslå invitasjon"
+
+msgid "Invite Member"
+msgstr "Inviter medlem"
+
 msgid "Invite member"
-msgstr "Legg til medlem"
+msgstr "Inviter medlem"
 
 msgid "Invitations"
 msgstr "Invitasjoner"
 
-msgid "User name"
-msgstr "Brukernavn"
+#, python-format
+msgid "Are you sure you want to uninvite %(member)s from %(team)s?"
+msgstr "Er du sikker på at du vil avinvitere %(member)s fra %(team)s?"
 
-msgid "Options"
-msgstr "Valg"
+msgid "Uninvite"
+msgstr "Angre invitasjon"
 
-msgid "No teams yet"
-msgstr "Det finnes ingen lag enda"
+msgid "Size"
+msgstr "Størrelse"
 
-msgid "All teams"
+msgid "No teams found."
+msgstr "Det finnes ingen lag."
+
+msgid "All Teams"
 msgstr "Alle lag"
 
-msgid "Alias"
-msgstr "Alias"
+msgid "My Teams"
+msgstr "Mine lag"
+
+msgid "Create Team"
+msgstr "Nytt lag"
 
 msgid "Account"
-msgstr "Kontotype"
+msgstr "Konto"
 
 msgid "Nick"
 msgstr "Kallenavn"
 
 msgid "Add alias"
-msgstr "Alias"
-
-#, fuzzy
-#| msgid "My competitions"
-msgid "My Competitions"
-msgstr "Påmeldte konkurranser"
+msgstr "Legg til alias"
 
 msgid "History"
 msgstr "Historikk"
 
-msgid "Paid"
-msgstr "Betalt"
-
-msgid "Arrived"
-msgstr "Ankommet"
-
-#, fuzzy
-#| msgid "Your seat"
-msgid "seat"
-msgstr "Din plass"
-
 msgid "Inbox"
 msgstr "Inboks"
 
-msgid "Inbox is empty"
-msgstr ""
-
-msgid "My Profile"
-msgstr "Min profil"
+msgid "Inbox is empty."
+msgstr "Inboksen er tom."
 
 msgid "Go to public profile page"
-msgstr ""
+msgstr "Gå til offentlig profilside"
 
-#, fuzzy
-#| msgid "Ticket confirmation"
+msgid "Profile"
+msgstr "Profil"
+
 msgid "Public Information"
-msgstr "Billett-bekreftelse"
+msgstr "Offentlig informasjon"
 
-#, fuzzy
-#| msgid "Update information"
+msgid "This information is visible to everyone."
+msgstr "Denne informasjonen er synlig for alle."
+
 msgid "Private Information"
-msgstr "Oppdater informasjon"
+msgstr "Privat informasjon"
+
+msgid "This information is only visible to you and select staff users."
+msgstr "Denne informasjonen er bare synlig for deg og utvalgt personale."
+
+msgid "First name"
+msgstr "Fornavn"
+
+msgid "Last name"
+msgstr "Etternavn"
+
+msgid "Email"
+msgstr "E-post"
+
+msgid "Date of birth"
+msgstr "Fødselsdato"
 
 msgid "Zip/Postal code"
 msgstr "Postnummer"
@@ -965,191 +1811,62 @@ msgid "Phone"
 msgstr "Telefon"
 
 msgid "Is staff"
-msgstr ""
+msgstr "Er personale"
 
-#, fuzzy
-#| msgid "End date"
 msgid "Join date"
-msgstr "Slutt"
+msgstr "Tilslutningsdato"
 
-#, fuzzy
-#| msgid "Login"
 msgid "Last login"
-msgstr "Logg inn"
+msgstr "Siste innlogging"
 
-#, fuzzy
-#| msgid "Seating"
 msgid "LAN Seatings"
-msgstr "Plasskart"
+msgstr "LAN-plasskart"
 
-msgid "Profile"
-msgstr "Profil"
-
-msgid "Edit profile"
-msgstr "Endre profil"
-
-#, fuzzy
-#| msgid "User Info"
-msgid "User"
-msgstr "Bruker "
-
-#, fuzzy
-#| msgid "Edit profile"
 msgid "Edit Profile"
 msgstr "Endre profil"
 
-#, fuzzy
-#| msgid "My Profile"
-msgid "Change Profile"
-msgstr "Min profil"
+msgid "Aliases"
+msgstr "Aliaser"
 
 msgid "Update"
 msgstr "Oppdater"
 
 msgid "Change Email Address"
-msgstr ""
+msgstr "Endre e-postadresse"
 
-#, fuzzy
-#| msgid "Street address"
 msgid "Current email address:"
-msgstr "Adresse"
+msgstr "Gjeldende e-postadresse:"
 
 msgid "To change it, send a request to"
-msgstr ""
+msgstr "For å endre den, send en forespørsel til"
 
 msgid "support"
-msgstr ""
+msgstr "brukerstøtte"
 
 msgid ""
 " from the email address you're changing from, containing the new email "
 "address."
 msgstr ""
+" fra e-postadressen du endrer fra, og ta med e-postadressen du endrer til."
 
 msgid ""
 "Sign out, go to the sign in page, press the button to recover your password, "
 "then follow the instructions in the received email."
 msgstr ""
+"Logg ut, gå til innloggingssiden, trykk på knappen for "
+"passordgjenoppretting, følg deretter instruksjonene i den motatte e-posten."
+
+msgid "Register arrivals"
+msgstr "Registrer ankonster"
+
+msgid "Manual registration"
+msgstr "Manuell resistrering"
+
+msgid "Drawing"
+msgstr "Trekking"
+
+msgid "Admin panel"
+msgstr "Adminpanel"
 
 msgid "Log out"
 msgstr "Logg ut"
-
-#~ msgid "Your account is inactive, try to recover it."
-#~ msgstr "Din konto er innaktiv og må aktiveres"
-
-#~ msgid "That email is not registered."
-#~ msgstr "Epost-adressen er ikke registrert"
-
-#~ msgid ""
-#~ "\n"
-#~ "To use the account you need to verify it. You can do this by visiting the "
-#~ "link below.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Kontoen må aktiveres før den kan brukes. For og aktivere kontoen må du "
-#~ "trykke på linken under\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "\n"
-#~ "Otherwise, click the link below to reset your password:\n"
-#~ msgstr ""
-#~ "\n"
-#~ "\n"
-#~ "Ellers kan du trykke på linken under for å endre passordet ditt:\n"
-
-#~ msgid "Male"
-#~ msgstr "Mann"
-
-#~ msgid "Female"
-#~ msgstr "Kvinne"
-
-#~ msgid "Gender"
-#~ msgstr "Kjønn"
-
-#, fuzzy
-#~| msgid "Username"
-#~ msgid "NTNU username"
-#~ msgstr "NTNU-Brukernavn"
-
-#~ msgid "Edit"
-#~ msgstr "Rediger"
-
-#~ msgid "Recover"
-#~ msgstr "Gjennopprett"
-
-#, fuzzy
-#~| msgid "You have paid for this event"
-#~ msgid "You have paid for a "
-#~ msgstr "Du har betalt for "
-
-#~ msgid "Upcoming LANs"
-#~ msgstr "Kommende LAN"
-
-#~ msgid "End"
-#~ msgstr "Slutt"
-
-#, fuzzy
-#~| msgid "User Info"
-#~ msgid "Info"
-#~ msgstr "Bruker-info"
-
-#~ msgid "User Info"
-#~ msgstr "Bruker-info"
-
-#~ msgid "Name"
-#~ msgstr "Navn"
-
-#~ msgid "Competition Info"
-#~ msgstr "Konkurranse-info"
-
-#~ msgid "competitions active."
-#~ msgstr "aktive konkurranser"
-
-#~ msgid "Active sponsors"
-#~ msgstr "Aktive sponsorer"
-
-#~ msgid "Create new team"
-#~ msgstr "Lag nytt lag"
-
-#~ msgid "Full name"
-#~ msgstr "Fullt navn"
-
-#~ msgid "Select"
-#~ msgstr "Velg"
-
-#~ msgid " are missing aliases for "
-#~ msgstr " mangler alias for  "
-
-#, fuzzy
-#~| msgid "Registration closed"
-#~ msgid "Seating is closed."
-#~ msgstr "Registreringen er lukket"
-
-#, fuzzy
-#~| msgid "There are currently no active lans"
-#~ msgid "There are no current LANs."
-#~ msgstr "Det er ingen aktive LAN"
-
-#, fuzzy
-#~| msgid "Username"
-#~ msgid "NTNU user"
-#~ msgstr "NTNU-Brukernavn"
-
-#~ msgid "Description"
-#~ msgstr "Beksrivelse"
-
-#~ msgid "Participating teams:"
-#~ msgstr "Deltakende lag"
-
-#~ msgid "without a team"
-#~ msgstr "uten lag"
-
-#~ msgid "News"
-#~ msgstr "Nyheter"
-
-#, fuzzy
-#~| msgid "Change password"
-#~ msgid "Old password"
-#~ msgstr "Bytt passord"

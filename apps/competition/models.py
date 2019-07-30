@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import Q
 from django.urls import reverse
-from django.utils.translation import ugettext as _
+from django.utils.translation import pgettext_lazy, ugettext, ugettext_lazy as _
 
 from translatable.models import TranslatableModel, get_translation_model
 
@@ -13,11 +13,10 @@ from apps.userprofile.models import Alias, AliasType
 
 
 class Activity(models.Model):
-
-    title = models.CharField('title', max_length=50)
-    image_url = models.CharField('Image url', max_length=100, blank=True,
-                                 help_text='Use a mirrored image of at least a height of 150px.')
-    desc = models.TextField('description')
+    title = models.CharField(_(u'title'), max_length=50)
+    image_url = models.CharField(_(u'image URL'), max_length=100, blank=True,
+                                 help_text=_(u'Use a mirrored image of at least a height of 150px.'))
+    desc = models.TextField(_(u'description'), blank=True)
 
     def __unicode__(self):
         return self.title
@@ -26,63 +25,67 @@ class Activity(models.Model):
         return reverse('activity_details', kwargs={'activity_id': self.id})
 
     class Meta:
+        verbose_name = _(u'activity')
+        verbose_name_plural = _(u'activities')
         ordering = ['title']
-        verbose_name = 'activity'
-        verbose_name_plural = 'activities'
 
 
 class Competition(TranslatableModel):
+    STATUSES = (
+        (1, pgettext_lazy(u'competition status', u'Registration open')),
+        (2, pgettext_lazy(u'competition status', u'Registration closed')),
+        (3, pgettext_lazy(u'competition status', u'In progress')),
+        (4, pgettext_lazy(u'competition status', u'Finished')),
+    )
+    STATUS_LABELS = [
+        'success',
+        'danger',
+        'warning',
+        'info',
+    ]
+    TOURNAMENT_FORMATS = (
+        ('single elimination', _(u'Single elimination')),
+        ('double elimination', _(u'Double elimination')),
+    )
 
-    STATUS_OPTIONS = ((1, _(u'Open')), (2, _(u'Closed')), (3, _(u'In progress')),
-                      (4, _(u'Finished')))
-
-    TOURNAMENT_FORMATS = (('single elimination', 'Single elimination'), ('double elimination', 'Double elimination'))
-
-    statuses = {
-        1: ['Registration open', 'success'],
-        2: ['Registration closed', 'danger'],
-        3: ['Competition in progress', 'warning'],
-        4: ['Competition finished', 'info'],
-    }
-
-    status = models.SmallIntegerField('status', choices=STATUS_OPTIONS)
-    activity = models.ForeignKey(Activity)
-    lan = models.ForeignKey(LAN)
-    challonge_url = models.CharField('Challonge url', max_length=50, blank=True, null=True,
+    status = models.SmallIntegerField(_(u'status'), choices=STATUSES)
+    activity = models.ForeignKey(Activity, verbose_name=_(u'activity'))
+    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
+    challonge_url = models.CharField(_(u'Challonge URL'), max_length=50, blank=True,
                                      help_text='Do not set this field if challonge integration is enabled. '
                                                'The challonge url will be generated after starting the competition.')
-    team_size = models.IntegerField(default=5, blank=True)
-    start_time = models.DateTimeField(blank=True, null=True)
+    team_size = models.IntegerField(_(u'team size'), default=5, blank=True)
+    start_time = models.DateTimeField(_(u'start time'), blank=True, null=True)
 
     tournament_format = models.CharField(
-        'Tournament format', max_length=20, blank=True, null=True, choices=TOURNAMENT_FORMATS,
+        _(u'tournament format'), max_length=20, blank=True, choices=TOURNAMENT_FORMATS,
         help_text='Only set this field if the Challonge integration is being used for this competition.')
 
     max_participants = models.SmallIntegerField(
-        'Maximum participants', default=0, help_text='The maximum number of participants allowed for a competition.'
-                                                     'Restricts participants based on competition type. 0 means'
-                                                     ' infinite participants are allowed.')
+        _(u'maximum participants'), default=0, help_text=_(u'The maximum number of participants allowed for a competition.'
+                                                           ' Restricts participants based on competition type. 0 means'
+                                                           ' infinite participants are allowed.'))
 
     use_teams = models.BooleanField(
-        'use teams', default=False, help_text='If checked, participants will be ignored, and will '
-                                              'instead use teams. If left unchecked teams will be ignored, '
-                                              'and participants will be used.')
+        _(u'use teams'), default=False, help_text=_(u'If checked, participants will be ignored, and will '
+                                                    'instead use teams. If left unchecked teams will be ignored, '
+                                                    'and participants will be used.'))
 
     enforce_team_size = models.BooleanField(
-        'enforce teams', default=False, help_text='If checked, teams will require x members (specified in team_size)'
-                                                  ' before being able to sign up.')
+        _(u'enforce teams'), default=False, help_text=_(u'If checked, teams will require x members (specified in team_size)'
+                                                        ' before being able to sign up.'))
 
     enforce_payment = models.BooleanField(
-        'enforce payment', default=False, help_text='If checked, teams will require x members (specified in team_size)'
-                                                    ' with valid tickets before being able to sign up.')
+        _(u'enforce payment'), default=False, help_text=_(u'If checked, teams will require x members (specified in team_size)'
+                                                          ' with valid tickets before being able to sign up.'))
 
     require_alias = models.BooleanField(
-        'require alias', default=False, help_text='If checked, players will need to register an alias for the '
-                                                  'Activity that the competition belongs to.')
+        _(u'require alias'), default=False, help_text=_(u'If checked, players will need to register an alias for the '
+                                                        'activity that the competition belongs to.'))
 
     max_match_points = models.SmallIntegerField(
-        'Maximum match points', default=1, help_text='This number represents how many points are needed to win '
-                                                     'a match. E.g. 3 in a BO 5 or 16 in BO 30')
+        _(u'maximum match points'), default=1, help_text=_(u'This number represents how many points are needed to win '
+                                                           'a match. E.g. 3 in a BO 5 or 16 in BO 30'))
 
     def get_teams(self):
         if self.use_teams:
@@ -131,13 +134,10 @@ class Competition(TranslatableModel):
             return -1
 
     def status_text(self):
-        return self.STATUS_OPTIONS[self.status - 1][1]
-
-    def status_text_verbose(self):
-        return self.statuses[self.status][0]
+        return self.STATUSES[self.status - 1][1]
 
     def status_label(self):
-        return self.statuses[self.status][1]
+        return self.STATUS_LABELS[self.status - 1]
 
     def get_absolute_url(self):
         return reverse('competition_details', kwargs={'competition_id': self.id})
@@ -156,6 +156,8 @@ class Competition(TranslatableModel):
         return competitions
 
     class Meta:
+        verbose_name = _(u'competition')
+        verbose_name_plural = _(u'competitions')
         ordering = ['status']
         permissions = (
             ('manage', 'Manage compos and matches'),
@@ -163,22 +165,23 @@ class Competition(TranslatableModel):
 
 
 class CompetitionTranslation(get_translation_model(Competition, 'competition')):
-    translated_title = models.CharField('title', max_length=50)
-    translated_description = models.TextField('description',
-                                              help_text='Markdown-enabled. You may also use regular (x)HTML markup. For '
-                                              'blockquotes use the following markup:<br/><br/>&lt;blockquote&gt;<br/>&n'
-                                              'bsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Quote-text& lt;/p&gt;<br/>&nbsp;&nbsp;&nbsp;&nbsp;&lt;'
-                                              'small&gt;Reference&lt;/small&gt;<br/>&lt;/blockquote&gt;')
+    translated_title = models.CharField(_(u'title'), max_length=50)
+    translated_description = models.TextField(_(u'description'))
 
     def __unicode__(self):
         return self.translated_title
 
+    class Meta:
+        verbose_name = _(u'competition translation')
+        verbose_name_plural = _(u'competition translations')
+
 
 class Participant(models.Model):
-    user = models.ForeignKey(User, null=True)
-    team = models.ForeignKey('team.Team', null=True)
-    competition = models.ForeignKey(Competition)
-    cid = models.CharField('cid', max_length=50, null=True)
+    user = models.ForeignKey(User, verbose_name=_(u'user'), null=True)
+    team = models.ForeignKey('team.Team', verbose_name=_(u'team'), null=True)
+    competition = models.ForeignKey(Competition, verbose_name=_(u'competition'))
+    # Nullable (x3)
+    cid = models.CharField(_(u'cid'), max_length=50, null=True, blank=True)
 
     def __unicode__(self):
         if self.user:
@@ -193,6 +196,8 @@ class Participant(models.Model):
             return True
 
     class Meta:
+        verbose_name = _(u'competition participant')
+        verbose_name_plural = _(u'competition participants')
         unique_together = (
             ('user', 'competition'),
             ('team', 'competition'),
@@ -201,15 +206,16 @@ class Participant(models.Model):
 
 
 class Match(models.Model):
-    matchid = models.CharField('matchid', max_length=50)
-    player1 = models.ForeignKey(Participant, related_name='player1', null=True)
-    player2 = models.ForeignKey(Participant, related_name='player2', null=True)
-    competition = models.ForeignKey(Competition)
-    p1_reg_score = models.CharField('p1_reg_score', max_length=50, null=True)
-    p2_reg_score = models.CharField('p2_reg_score', max_length=50, null=True)
-    final_score = models.CharField('final_score', max_length=50, null=True)
-    state = models.CharField('state', max_length=50)
-    winner = models.ForeignKey(Participant, related_name='winner', null=True)
+    matchid = models.CharField(_(u'match ID'), max_length=50)
+    player1 = models.ForeignKey(Participant, verbose_name=_(u'player 1'), related_name='player1', null=True)
+    player2 = models.ForeignKey(Participant, verbose_name=_(u'player 2'), related_name='player2', null=True)
+    competition = models.ForeignKey(Competition, verbose_name=_(u'competition'))
+    # Nullable (x3)
+    p1_reg_score = models.CharField(_(u'p1 reg score'), max_length=50, null=True, blank=True)
+    p2_reg_score = models.CharField(_(u'p2 reg score'), max_length=50, null=True, blank=True)
+    final_score = models.CharField(_(u'final score'), max_length=50, null=True, blank=True)
+    state = models.CharField(_(u'state'), max_length=50)
+    winner = models.ForeignKey(Participant, verbose_name=_(u'winner'), related_name='winner', null=True)
 
     def get_p1(self):
         if self.player1:
@@ -218,7 +224,7 @@ class Match(models.Model):
             else:
                 return self.player1.user
         else:
-            return 'TBA'
+            return ugettext(u'TBA')
 
     def get_p2(self):
         if self.player2:
@@ -227,7 +233,7 @@ class Match(models.Model):
             else:
                 return self.player2.user
         else:
-            return 'TBA'
+            return ugettext(u'TBA')
 
     def get_compo(self):
         return self.competition.activity.title
@@ -247,3 +253,7 @@ class Match(models.Model):
                     or (user in self.player2.team.members.all() and player_id == '2'):
                 return True
         return False
+
+    class Meta:
+        verbose_name = _(u'competition match')
+        verbose_name_plural = _(u'competition matches')

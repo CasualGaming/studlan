@@ -3,16 +3,22 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+from django.utils.translation import ugettext_lazy as _
 
 from apps.lan.models import Attendee
 
 
 class Team(models.Model):
-    title = models.CharField('title', max_length=50)
-    tag = models.CharField('tag', max_length=10, unique=True)
+    title = models.CharField(_(u'title'), max_length=50)
+    tag = models.CharField(_(u'tag'), max_length=10, unique=True)
     # Warning: Leader is (generally?) not included in members
-    leader = models.ForeignKey(User, blank=False, related_name='newteamleader')
-    members = models.ManyToManyField(User, related_name='new_team_members', through='Member')
+    leader = models.ForeignKey(User, verbose_name=_(u'leader'), blank=False, related_name='newteamleader')
+    members = models.ManyToManyField(User, verbose_name=_(u'members'), related_name='new_team_members', through='Member')
+
+    @property
+    def full_member_count(self):
+        # Team leader not included
+        return Member.objects.filter(team=self).count() + 1
 
     def get_absolute_url(self):
         return reverse('show_team', kwargs={'team_id': self.id})
@@ -55,23 +61,31 @@ class Team(models.Model):
         return u'[{0}] {1}'.format(self.tag, self.title)
 
     class Meta:
+        verbose_name = _(u'team')
+        verbose_name_plural = _(u'teams')
         ordering = ['tag', 'title']
 
 
 class Member(models.Model):
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    date_joined = models.DateTimeField('date joined', auto_now_add=True)
+    team = models.ForeignKey(Team, verbose_name=_(u'team'), on_delete=models.CASCADE)
+    user = models.ForeignKey(User, verbose_name=_(u'user'), on_delete=models.CASCADE)
+    date_joined = models.DateTimeField(_(u'date joined'), auto_now_add=True)
 
     def __unicode__(self):
         return self.user.username
 
     class Meta:
+        verbose_name = _(u'team member')
+        verbose_name_plural = _(u'team members')
         unique_together = ('team', 'user')
         ordering = ['user']
 
 
 class Invitation(models.Model):
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    invitee = models.ForeignKey(User, on_delete=models.CASCADE)
-    token = models.CharField('token', max_length=32, editable=False)
+    team = models.ForeignKey(Team, verbose_name=_(u'team'), on_delete=models.CASCADE)
+    invitee = models.ForeignKey(User, verbose_name=_(u'invitee'), on_delete=models.CASCADE)
+    token = models.CharField(_(u'token'), max_length=32, editable=False)
+
+    class Meta:
+        verbose_name = _(u'team invitation')
+        verbose_name_plural = _(u'team invitations')

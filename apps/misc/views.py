@@ -14,6 +14,10 @@ def handler404(request):
     return render(request, '404.html')
 
 
+def handler500(request):
+    return render(request, '500.html')
+
+
 def change_language(request):
     if request.method == 'POST':
         user_language = request.POST['language']
