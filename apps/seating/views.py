@@ -110,19 +110,12 @@ def seating_details(request, lan_id, seating_id=None, seat_id=None):
 @login_required()
 def take_seat(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
-
     if not seating.is_open():
         messages.error(request, _(u'The seating is closed.'))
         return redirect(seating)
 
-    seat_id_str = request.POST.get('seat')
-    if not seat_id_str:
-        messages.error(request, _(u'No seat was specified.'))
-        return redirect(seating)
-    try:
-        seat_id = int(seat_id_str)
-    except ValueError:
-        messages.error(request, _(u'Illegal seat.'))
+    seat_id = get_post_seat_id(request, seating)
+    if not seat_id:
         return redirect(seating)
     seat = get_object_or_404(Seat, pk=seat_id)
 
@@ -160,19 +153,12 @@ def take_seat(request, seating_id):
 @login_required()
 def leave_seat(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
-
     if not seating.is_open():
         messages.error(request, _(u'The seating is closed.'))
         return redirect(seating)
 
-    seat_id_str = request.POST.get('seat')
-    if not seat_id_str:
-        messages.error(request, _(u'No seat was specified.'))
-        return redirect(seating)
-    try:
-        seat_id = int(seat_id_str)
-    except ValueError:
-        messages.error(request, _(u'Illegal seat.'))
+    seat_id = get_post_seat_id(request, seating)
+    if not seat_id:
         return redirect(seating)
     seat = get_object_or_404(Seat, pk=seat_id)
 
@@ -183,6 +169,19 @@ def leave_seat(request, seating_id):
     else:
         messages.error(request, _(u'This is not your seat.'))
     return redirect(seating)
+
+
+def get_post_seat_id(request, seating):
+    seat_id_str = request.POST.get('seat')
+    if not seat_id_str:
+        messages.error(request, _(u'No seat was specified.'))
+        return None
+    try:
+        seat_id = int(seat_id_str)
+    except ValueError:
+        messages.error(request, _(u'Illegal seat.'))
+        return None
+    return seat_id
 
 
 @permission_required('seating.export_seating')
