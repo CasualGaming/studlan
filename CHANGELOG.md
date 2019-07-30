@@ -26,8 +26,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made sponsor page prettier.
 - Made breadcrumbs more consistent and changed which pages show them.
 - Made page headers visually more consistent and appropriate.
+- Made email templates slightly prettier and added HTML version.
 - Replaced logo images with higher-definition versions (but same graphics).
 - Replaced default sidebar with sponsorbar.
+- Made schedule use current time zone instead of a hardcoded one.
+- Made stream description optional.
+- (Breaking change) Changed stream link type from entire iframe to just the link.
+- Changed stream description from HTML to markdown.
+- Made seating layout generator use relative coordinates instead of pixels.
+- Made exported seating list and map prettier and i18n'd.
+- Moved team invitation accept and decline links from invitation message to buttons on team page.
+- Made error log rotating.
 
 ### Deprecated
 
@@ -35,14 +44,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed unique email check from register form, since email addresses are non-unique.
 - Removed unused sponsor logo field.
 - Removed (moved) sidebar from top of page on small screens.
+- Removed admin arror emails (it was broken anyways, and super spamming).
 
 ### Fixed
-- Fixed HTML DOM bug in the seating app template.
+- Fixed HTML DOM bug (unclosed tag) in the seating app template.
 - Fixed seating map size inconsistency across browsers.
 - Fixed account recovery sending recovery emails to only one account for a certain email address.
+- Fixed schedule failing to load.
+- Fixed old translations not being compiled and used.
 - (Breaking change) Fixed spelling of challonge integration configuration
 - Fixed bug in match reporting for challonge integration
+
 ### Security
+- Fixed seating CSRF vulnerability.
+- Fixed team join/leave/etc. CSRF vulnerability.
 
 
 ## [1.4.3] - 2019-04-03

@@ -15,6 +15,17 @@ h1, h2, h3, h4, h5, h6 {
     word-wrap: break-word;
 }
 
+iframe {
+    border: 0;
+}
+
+footer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px solid #DDD;
+    margin-top: 30px;
+}
+
 .white-text {
     color: #ccc;
 }
@@ -381,22 +392,8 @@ img.navbar-brand {
     color: grey;
 }
 
-.lan-video-container {
-    position: relative;
-    width: 100%;
-    height: 0;
-    /* For constant aspect ratio */
-    padding-bottom: 56.25%;
-    margin-top: 10px;
-    margin-bottom: 20px;
-}
-
 .lan-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    margin-bottom: 20px;
 }
 
 .lan-map {
@@ -409,18 +406,29 @@ img.navbar-brand {
     margin-top: 20px;
 }
 
-footer {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-top: 1px solid #DDD;
-    margin-top: 30px;
-}
-
 .alert {
     margin-top: 10px;
     margin-bottom: 10px;
 }
 
-iframe {
-    border: 0;
+.schedule-calendar {
+    width: 100%;
+    height: 70vh;
+    min-height: 300px;
+    margin-top: 10px;
+}
+
+.inline-button-form {
+    display: inline-block;
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+
+.stream {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.stream-desc {
+    margin-top: 10px;
 }
