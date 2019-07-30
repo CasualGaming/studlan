@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Replaced logo images with higher-definition versions (but same graphics).
 - Replaced default sidebar with sponsorbar.
 - Made schedule use current time zone instead of a hardcoded one.
+- Moved team invitation accept and decline links from invitation message to buttons on team page.
 
 ### Deprecated
 
@@ -43,6 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed schedule failing to load.
 
 ### Security
+- Fixed team join/leave/etc. CSRF vulnerability.
 
 
 ## [1.4.3] - 2019-04-03
