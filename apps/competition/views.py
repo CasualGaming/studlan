@@ -36,7 +36,7 @@ def lan_list(request):
     context['upcoming_lans'] = LAN.objects.filter(end_date__gte=datetime.now()).all()
     context['previous_lans'] = LAN.objects.filter(end_date__lt=datetime.now()).all()
 
-    return render(request, 'competition/lan_list.html', context)
+    return render(request, 'competition/competition_lan_list.html', context)
 
 
 def lan_compos(request, lan_id):

@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made page headers visually more consistent and appropriate.
 - Replaced logo images with higher-definition versions (but same graphics).
 - Replaced default sidebar with sponsorbar.
+- Made schedule use current time zone instead of a hardcoded one.
 - Update stripe integration to use payment intents and Stripe.js v3 to support SCA
 
 ### Deprecated
@@ -41,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed HTML DOM bug in the seating app template.
 - Fixed seating map size inconsistency across browsers.
 - Fixed account recovery sending recovery emails to only one account for a certain email address.
+- Fixed schedule failing to load.
 - Users must now attend a lan before buying a ticket.
 - Users cannot remove attendance from a lan if they have paid.
 ### Security
