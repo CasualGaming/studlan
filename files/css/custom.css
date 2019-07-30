@@ -420,6 +420,9 @@ img.navbar-brand {
 
 .inline-button-form {
     display: inline-block;
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
 
 .stream {
     margin-top: 20px;

@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed stream description from HTML to markdown.
 - Made seating layout generator use relative coordinates instead of pixels.
 - Made exported seating list and map prettier and i18n'd.
+- Moved team invitation accept and decline links from invitation message to buttons on team page.
 
 ### Deprecated
 
@@ -50,6 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 - Fixed seating CSRF vulnerability.
+- Fixed team join/leave/etc. CSRF vulnerability.
 
 
 ## [1.4.3] - 2019-04-03
