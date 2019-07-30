@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Slightly prettier email templates.
 - Added list of competitions a user has or is participating in.
 - Added seating info to user LAN history.
+- Added help texts to competition fields tournament format and challonge url
 
 ### Changed
 - Made footer prettier.
@@ -39,7 +40,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed HTML DOM bug in the seating app template.
 - Fixed seating map size inconsistency across browsers.
 - Fixed account recovery sending recovery emails to only one account for a certain email address.
-
+- (Breaking change) Fixed spelling of challonge integration configuration
+- Fixed bug in match reporting for challonge integration
 ### Security
 
 

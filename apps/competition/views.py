@@ -420,7 +420,7 @@ def start_compo(request, competition_id):
             competition.status = 3
             competition.save()
             messages.success(request, 'Tournament has started!')
-        except Exception, e:
+        except Exception:
             messages.error(request, 'Something went wrong')
 
     return redirect(competition)
