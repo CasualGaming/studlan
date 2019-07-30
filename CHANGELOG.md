@@ -46,6 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed old translations not being compiled and used.
 
 ### Security
+- Fixed seating CSRF vulnerability.
 
 
 ## [1.4.3] - 2019-04-03
