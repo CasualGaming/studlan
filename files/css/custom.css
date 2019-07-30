@@ -68,14 +68,6 @@ footer {
     padding: 4px;
 }
 
-.favico {
-    width: 28px;
-    height: 28px;
-    position: fixed;
-    top: 6px;
-    left: 6px;
-}
-
 .container-fluid {
     min-width: 0px;
 }
@@ -124,9 +116,13 @@ div#btn-profile {
     font-weight: bold;
 }
 
-img.navbar-brand {
-    padding: 10px;
-    vertical-align: middle;
+.navbar-logo {
+    width: 32px;
+    height: 32px;
+    margin: 9px;
+    background-image: url("/static/logo/logo_32.png");
+    background-size: contain;
+    image-rendering: crisp-edges;
 }
 
 .navbar .nav > li > a {
@@ -257,7 +253,7 @@ img.navbar-brand {
     margin-bottom: 0;
 }
 
-.sponsorbar-header {
+.sponsorbar-header, .sponsorbar-header > a {
     background-color: rgb(65, 131, 196) !important;
     color: white !important;
     text-align: center;
@@ -392,22 +388,8 @@ img.navbar-brand {
     color: grey;
 }
 
-.lan-video-container {
-    position: relative;
-    width: 100%;
-    height: 0;
-    /* For constant aspect ratio */
-    padding-bottom: 56.25%;
-    margin-top: 10px;
-    margin-bottom: 20px;
-}
-
 .lan-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    margin-bottom: 20px;
 }
 
 .lan-map {
@@ -429,5 +411,30 @@ img.navbar-brand {
     width: 100%;
     height: 70vh;
     min-height: 300px;
+    margin-top: 10px;
+}
+
+.article-tags {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.article-content {
+    line-height: 1.5em;
+    text-align: justify;
+}
+
+.inline-button-form {
+    display: inline-block;
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+
+.stream {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.stream-desc {
     margin-top: 10px;
 }

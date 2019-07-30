@@ -2,13 +2,14 @@
 
 from django.conf import settings
 from django.contrib import admin
+from django.utils.translation import ugettext_lazy as _
 
 from apps.competition.models import Activity, Competition, CompetitionTranslation, Match, Participant
 
 
 class CompetitionTranslationInlineAdmin(admin.StackedInline):
-    verbose_name = 'Competition'
-    verbose_name_plural = 'Competitions'
+    verbose_name = _(u'Competition')
+    verbose_name_plural = _(u'Competitions')
     model = CompetitionTranslation
     max_num = len(settings.LANGUAGES)
     extra = 2
@@ -17,7 +18,7 @@ class CompetitionTranslationInlineAdmin(admin.StackedInline):
 class CompetitionAdmin(admin.ModelAdmin):
     inlines = [CompetitionTranslationInlineAdmin]
     list_display = ['__unicode__', 'lan']
-    if (not settings.CHALLONGE_INTERGRATION_ENABLED) or settings.CHALLONGE_API_USERNAME == '' or \
+    if (not settings.CHALLONGE_INTEGRATION_ENABLED) or settings.CHALLONGE_API_USERNAME == '' or \
             settings.CHALLONGE_API_KEY == '':
         exclude = ('challonge_url', 'max_match_points', 'tournament_format')
 

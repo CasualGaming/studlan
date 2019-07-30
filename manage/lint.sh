@@ -2,8 +2,6 @@
 
 # Runs linter.
 
-MANAGE="python manage.py"
-
 set -eu
 
 # Activate venv and deactivate on exit

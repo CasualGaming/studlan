@@ -3,17 +3,18 @@
 {% load static %}
 {% load tz %}
 
-{% get_current_language as LANGUAGE_CODE %}
+{% get_current_language as LANG_CODE %}
+{% get_language_info for LANG_CODE as LANG_INFO %}
 {% get_current_timezone as TIME_ZONE %}
 
 <!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE }}">
+<html lang="{{ LANG_CODE }}">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         <title>
-            {% site_name %} –
+            {{ site_name }} –
             {% block title %}
             {% endblock title %}
         </title>
@@ -36,13 +37,13 @@
                         <span class="glyphicon glyphicon-user"></span>
                     </button>
                     <button type="button" class="navbar-toggle collapsed collapsed-button" data-toggle="collapse" data-target="#navigationlist">
-                        <span class="sr-only">Toggle navigation</span>
+                        <span class="sr-only">{% trans "Toggle navigation" %}</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <img class="navbar-brand" alt="brand" src="{% static 'logo/logo_64.png' %}"/>
-                    <a class="navbar-brand" href="{% url 'root' %}">{% site_name %}</a>
+                    <a href="{% url 'root' %}"><div class="navbar-brand navbar-logo"></div></a>
+                    <a class="navbar-brand" href="{% url 'root' %}">{{ site_name }}</a>
                 </div>
 
                 {% include "userdropdown.html" %}
@@ -58,7 +59,8 @@
                             <ul class="dropdown-menu" role="menu">
                             {% for lang in LANGUAGES %}
                                 <li>
-                                    <form class="language-list" name="setLang{{lang.1}}" action="/misc/change_language" method="POST">{% csrf_token %}
+                                    <form class="language-list" name="setLang{{lang.1}}" action="/misc/change_language" method="POST">
+                                        {% csrf_token %}
                                         <input type="hidden" name="language" value="{{ lang.0 }}"/>
                                     </form>
                                     <a href="#" onclick="document.setLang{{ lang.1 }}.submit();return false;">{{ lang.1 }}</a>
@@ -105,7 +107,6 @@
             {% endif %}
 
             {% block content %}
-                <!-- Content goes here -->
             {% endblock content %}
 
             {# Sponsorbar #}

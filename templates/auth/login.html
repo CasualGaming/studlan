@@ -1,12 +1,15 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
+
 {% load i18n %}
+
 {% block title %} 
-Login 
+{% trans "Log in" %}
 {% endblock title %} 
+
 {% block content %}
 <div class="row">
     <div class="col-md-9">
-        <h1 class="page-header">{% trans "Login" %}</h1>
+        <h1 class="page-header">{% trans "Log in" %}</h1>
     </div>
 </div>
 
@@ -15,7 +18,7 @@ Login
         {% for error in form.non_field_errors %}
         <p class="form-error">{{ error }}</p>
         {% endfor %}
-        <p>{% trans "Note: Both the username and password are case sensitive." %}</p>
+        <p>{% trans "<strong>NB:</strong> Both the username and password are case sensitive." %}</p>
         <form class="form-horizontal" method="post" action="{% url 'auth_login' %}">
             {% csrf_token %}
             {% for field in form %}

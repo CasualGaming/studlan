@@ -1,15 +1,16 @@
 {% extends "team/team_base.html" %}
+
 {% load i18n %}
 {% load markdown_deux_tags %}
 {% load misc %}
 {% load team_tags %}
 
 {% block title %}
-    {% trans "Create team" %}
+{% trans "Create team" %}
 {% endblock title %}
 
 {% block tabs %}
-    {% team_tabs 'create' %}
+{% team_tabs 'create' %}
 {% endblock tabs %}
 
 {% block teampage %}

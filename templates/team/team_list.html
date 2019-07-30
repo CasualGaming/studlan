@@ -1,12 +1,14 @@
 {% load i18n %}
+
 {% if teams %}
     <div class="row">
         <div class="col-md-9">
             <table class="table table-bordered table-striped table-hover click-table">
                 <thead>
-                    <th class="col-md-2">Tag</th>
-                    <th class="col-md-6">Title</th>
-                    <th class="col-md-4">{% trans "Leader" %}</th>
+                    <th class="col-md-2">{% trans "Tag" %}</th>
+                    <th class="col-md-4">{% trans "Title" %}</th>
+                    <th class="col-md-2">{% trans "Leader" %}</th>
+                    <th class="col-md-1">{% trans "Size" %}</th>
                 </thead>
                 <tbody>
                     {% for team in teams %}
@@ -14,6 +16,7 @@
                         <td>{{ team.tag }}</td>
                         <td>{{ team.title }}</td>
                         <td>{{ team.leader }}</td>
+                        <td>{{ team.full_member_count }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -23,7 +26,9 @@
 {% else %}
     <div class="row">
         <div class="col-md-9">
-            <div class="alert alert-warning"><p>{% trans "No teams yet" %}</p></div>
+            <div class="alert alert-warning">
+                <p>{% trans "No teams found." %}</p>
+            </div>
         </div>
     </div>
 {% endif %}

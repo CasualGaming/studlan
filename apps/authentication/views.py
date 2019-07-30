@@ -120,7 +120,7 @@ def direct_register(request):
             cleaned = form.cleaned_data
 
             if lan is None:
-                messages.error(request, u'No upcoming LAN was found.')
+                messages.error(request, _(u'No upcoming LAN was found.'))
                 return HttpResponseRedirect('/auth/direct_register')
 
             # Create user
@@ -172,7 +172,7 @@ def verify(request, token):
             user.save()
             rt.delete()
 
-            messages.success(request, _(u'User ') + user.username + _(u' successfully activated. You can now log in.'))
+            messages.success(request, _(u'User {user} successfully activated. You can now log in.').format(user=user))
 
             return redirect('auth_login')
         else:
@@ -218,7 +218,7 @@ def recover(request):
                         html_message=html_message,
                     )
 
-                messages.success(request, _('A recovery link has been sent to all users with email "') + email + '".')
+                messages.success(request, _(u'A recovery link has been sent to all users with email address "{email}".').format(email=email))
                 return HttpResponseRedirect('/')
             else:
                 form = RecoveryForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
@@ -247,17 +247,14 @@ def set_password(request, token=None):
 
                     rt.delete()
 
-                    messages.success(request, _(u'User ') + unicode(user) + _(u' successfully had it\'s password changed. You can now log in.'))
-
+                    messages.success(request, _(u'Successfully changed password for user {user}. You can now log in.').format(user=user))
                     return HttpResponseRedirect('/')
             else:
-
                 form = ChangePasswordForm()
-
-                messages.success(request, _(u'Token accepted. Please insert your new password.'))
+                messages.success(request, _(u'Please insert your new password.'))
 
             return render(request, 'auth/set_password.html', {'form': form, 'token': token})
 
         else:
-            messages.error(request, _(u'The token has expired. Please use the password recovery to get a new token.'))
+            messages.error(request, _(u'The link has expired. Please use the password recovery to get a new one.'))
             return HttpResponseRedirect('/')

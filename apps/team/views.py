@@ -6,10 +6,11 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
+from django.views.decorators.http import require_POST, require_safe
 
 from postman.api import pm_write
 from postman.models import Message
@@ -19,11 +20,30 @@ from apps.team.forms import TeamCreationForm
 from apps.team.models import Invitation, Member, Team
 
 
+@require_safe
 def teams(request):
     teams = Team.objects.all()
     return render(request, 'team/teams.html', {'teams': teams})
 
 
+@require_safe
+def show_team(request, team_id):
+    team = get_object_or_404(Team, pk=team_id)
+    invitations = Invitation.objects.filter(team=team)
+    authenticated = request.user.is_authenticated()
+
+    context = {
+        'team': team,
+        'is_leader': request.user == team.leader,
+        'is_normal_member': team.member_set.filter(user=request.user).exists() if authenticated else None,
+        'invitations': invitations,
+        'my_invitation': invitations.filter(invitee=request.user) if authenticated else None,
+    }
+
+    return render(request, 'team/team.html', context)
+
+
+@require_safe
 @login_required
 def my_teams(request):
     teams = Team.objects.filter(Q(leader=request.user) | Q(members=request.user)).distinct()
@@ -32,180 +52,239 @@ def my_teams(request):
 
 @login_required
 def create_team(request):
-    if request.method == 'POST':
-        # Stop if a person tries to create more than the allowed ammount of teams.
-        if Team.objects.filter(leader=request.user).count() >= settings.MAX_TEAMS:
-            messages.error(request, _(u'You cannot be leader of more than ') + settings.MAX_TEAMS + _(u' teams.'))
-            return redirect('teams')
+    if request.method != 'POST':
+        return render(request, 'team/create_team.html', {'form': TeamCreationForm()})
 
-        form = TeamCreationForm(request.POST)
-        if form.is_valid():
-            cleaned = form.cleaned_data
+    # Stop if a person tries to create more than the allowed ammount of teams.
+    if Team.objects.filter(leader=request.user).count() >= settings.MAX_TEAMS:
+        messages.error(request, _(u'You can\'t be the leader of more than {max} teams.').format(max=settings.MAX_TEAMS))
+        return redirect('teams')
 
-            team = Team(
-                leader=request.user,
-                title=cleaned['title'],
-                tag=cleaned['tag'],
-            )
-            team.save()
-
-            messages.success(request, unicode(team) + _(u' has been created.'))
-            return redirect(team)
-        else:
-            form = TeamCreationForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
+    form = TeamCreationForm(request.POST)
+    if form.is_valid():
+        cleaned = form.cleaned_data
+        team = Team(
+            leader=request.user,
+            title=cleaned['title'],
+            tag=cleaned['tag'],
+        )
+        team.save()
+        messages.success(request, _(u'Team {team} has been created.').format(team=team))
+        return redirect(team)
     else:
-        form = TeamCreationForm()
+        # Return with errors
+        form = TeamCreationForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
+        return render(request, 'team/create_team.html', {'form': form})
 
-    return render(request, 'team/create_team.html', {'form': form})
 
-
+@require_POST
 @login_required
 def disband_team(request, team_id):
     team = get_object_or_404(Team, pk=team_id)
     if request.user != team.leader:
-        messages.error(request, _(u'You can only disband teams that you are leader of.'))
+        messages.error(request, _(u'Only the team leader may disband the team.'))
         return redirect(team)
-    else:
-        team.delete()
 
-        messages.success(request, unicode(team) + _(u' was successfully deleted.'))
-        return redirect('teams')
+    # Delete all invite messages
+    for invitation in Invitation.objects.filter(team=team):
+        Message.objects.filter(subject=invitation.token).delete()
 
-
-def show_team(request, team_id):
-    team = get_object_or_404(Team, pk=team_id)
-    if request.user == team.leader:
-        team.is_mine = True
-    else:
-        team.is_mine = False
-
-    invitations = Invitation.objects.filter(team=team)
-    users = User.objects.all().exclude(Invitee__in=invitations)
-    users2 = []
-    for user in users:
-        if user != team.leader and user not in team.members.all():
-            users2.append(user)
-
-    users2.sort(key=lambda x: x.username.lower(), reverse=False)
-    invitation = Invitation.objects.filter(invitee=request.user.id, team=team)
-
-    return render(request, 'team/team.html', {'team': team, 'users': users2, 'invitation': invitation, 'invitations': invitations})
+    # Members and invitations are deleted by cascade
+    team.delete()
+    messages.success(request, _(u'Team {team} was deleted.').format(team=team))
+    return redirect('teams')
 
 
-@login_required
-def add_member(request, team_id):
-    if request.method == 'POST':
-        team = get_object_or_404(Team, pk=team_id)
-        if request.user != team.leader:
-            messages.error(request, _(u'You are not the team leader, you cannot add team members.'))
-        else:
-            user_id = request.POST.get('selectMember')
-            user = get_object_or_404(User, pk=user_id)
-            if len(Member.objects.filter(user=user, team=team)) > 0:
-                messages.error(request, unicode(user) + _(u' is already on your team.'))
-            else:
-                member = Member()
-                member.team = team
-                member.user = user
-                member.save()
-
-                messages.success(request, unicode(user) + _(u' was added to your team'))
-
-    return redirect(team)
-
-
+@require_POST
 @login_required
 def invite_member(request, team_id):
-    if request.method == 'POST':
-        team = get_object_or_404(Team, pk=team_id)
-        username = request.POST.get('selectMember')
-        if request.user != team.leader:
-            messages.error(request, _(u'You are not the team leader, you cannot add team members.'))
-        elif not username:
-            messages.error(request, _(u'No username was specified.'))
-        else:
-            try:
-                user = User.objects.get(username=username)
-            except ObjectDoesNotExist:
-                user = None
-            if not user:
-                messages.error(request, _(u'User ') + username + _(u' does not exist.'))
-            elif user == team.leader:
-                messages.error(request, _(u'You cannot invite the team leader.'))
-            elif len(Member.objects.filter(user=user, team=team)) > 0:
-                messages.error(request, _(u'User ') + unicode(user) + _(u' is already on your team.'))
-            else:
-                existing_invitation = Invitation.objects.filter(invitee=user, team=team)
-                if not existing_invitation:
-                    invitation = Invitation()
-                    invitation.team = team
-                    invitation.invitee = user
-                    invitation.token = uuid.uuid1().hex
-                    invitation.save()
-                    invitation_message = 'You have been invited to <a href="' + team.get_absolute_url() + '">' + team.title \
-                                         + '</a> by ' + unicode(request.user)
-                    invitation_message += '. You can either '
-                    invitation_message += '<a href="' + team.get_absolute_url() + 'join ' + '"> Accept</a> or'
-                    invitation_message += '<a href="' + team.get_absolute_url() + 'remove_invitation/' + \
-                                          invitation.token + '"> Decline</a> the invitation.'
-                    pm_write(request.user, user, invitation.token, body=invitation_message)
+    team = get_object_or_404(Team, pk=team_id)
 
-                    messages.success(request, _(u'User ') + unicode(user) + _(u' was invited to your team.'))
-                else:
-                    messages.error(request, _(u'User ') + unicode(user) + _(u' has already been invited to your team.'))
+    if request.user != team.leader:
+        messages.error(request, _(u'Only the team leader may invite members.'))
+        return redirect(team)
 
+    username = request.POST.get('user')
+    if not username:
+        messages.error(request, _(u'No username was specified.'))
+        return redirect(team)
+    elif username == request.user.username:
+        messages.error(request, _(u'You can\'t invite yourself.'))
+        return redirect(team)
+
+    user_qs = User.objects.filter(username=username)
+    if not user_qs.exists():
+        messages.error(request, _(u'User {user} was not found.').format(user=username))
+        return redirect(team)
+    user = user_qs[0]
+
+    if Member.objects.filter(team=team, user=user).exists():
+        messages.error(request, _(u'User {user} is already on the team.').format(user=user))
+        return redirect(team)
+
+    if Invitation.objects.filter(team=team, invitee=user).exists():
+        messages.error(request, _(u'User {user} is already invited to the team.').format(user=user))
+        return redirect(team)
+
+    invitation = Invitation()
+    invitation.team = team
+    invitation.invitee = user
+    invitation.token = uuid.uuid1().hex
+    invitation.save()
+
+    context = {
+        'team': team,
+        'inviter': request.user,
+    }
+    message = render_to_string('team/message/team_invitation.html', context, request).strip()
+    pm_write(request.user, user, invitation.token, body=message)
+
+    messages.success(request, _(u'User {user} was invited to the team.').format(user=user))
     return redirect(team)
 
 
+@require_POST
 @login_required
-def remove_invitation(request, team_id, invitation_token):
+def uninvite_member(request, team_id):
+    # Weird cases:
+    # - Team leaders may uninvite themselves
+    # - Members may be uninvited (no effect)
+
     team = get_object_or_404(Team, pk=team_id)
-    invitation = get_object_or_404(Invitation, token=invitation_token)
+
+    if request.user != team.leader:
+        messages.error(request, _(u'Only the team leader may uninvite members.'))
+        return redirect(team)
+
+    username = request.POST.get('user')
+    if not username:
+        messages.error(request, _(u'No username was specified.'))
+        return redirect(team)
+
+    user_qs = User.objects.filter(username=username)
+    if not user_qs.exists():
+        messages.error(request, _(u'User {user} was not found.').format(user=username))
+        return redirect(team)
+    user = user_qs[0]
+
+    invitation_qs = Invitation.objects.filter(team=team, invitee=user)
+    if not invitation_qs.exists():
+        messages.error(request, _(u'User {user} is not invited to the team.').format(user=user))
+        return redirect(team)
+    invitation = invitation_qs[0]
+
+    # Delete both invitation and message
+    Message.objects.filter(subject=invitation.token).delete()
     invitation.delete()
-    message = get_object_or_404(Message, subject=invitation_token)
-    message.delete()
 
-    messages.success(request, _(u'The invitation was deleted.'))
-
+    messages.success(request, _(u'User {user} was uninvited to the team.').format(user=user))
     return redirect(team)
 
 
+@require_POST
 @login_required
-def join_team(request, team_id):
+def accept_member_invite(request, team_id):
     team = get_object_or_404(Team, pk=team_id)
-    invitation = Invitation.objects.filter(invitee=request.user, team=team)
-    if not invitation:
-        messages.error(request, _(u'You are not invited to join this team.'))
-    else:
-        user = request.user
-        if len(Member.objects.filter(user=user, team=team)) > 0:
-            messages.error(request, unicode(user) + _(u', you are already on this team.'))
-        else:
-            member = Member()
-            member.team = team
-            member.user = user
-            member.save()
-            message = get_object_or_404(Message, subject=invitation[0].token)
-            message.delete()
-            invitation.delete()
+    user = request.user
 
-            messages.success(request, _(u'You successfully joined the team.'))
+    if request.user == team.leader:
+        messages.error(request, _(u'You are already the team leader of team {team}.').format(team=team))
+        return redirect(team)
 
+    if Member.objects.filter(team=team, user=user).exists():
+        messages.error(request, _(u'You are already on team {team}.').format(user=user, team=team))
+        return redirect(team)
+
+    invitation_qs = Invitation.objects.filter(team=team, invitee=user)
+    if not invitation_qs.exists():
+        messages.error(request, _(u'You are not invited to team {team}.').format(user=user, team=team))
+        return redirect(team)
+    invitation = invitation_qs[0]
+
+    member = Member()
+    member.team = team
+    member.user = user
+    member.save()
+
+    # Delete both invitation and message
+    Message.objects.filter(subject=invitation.token).delete()
+    invitation.delete()
+
+    messages.success(request, _(u'You have accepted the membership invitation from team {team}.').format(team=team))
     return redirect(team)
 
 
+@require_POST
 @login_required
-def remove_member(request, team_id, user_id):
-    team = get_object_or_404(Team, pk=team_id)
-    user = get_object_or_404(User, pk=user_id)
-    if request.user != team.leader and request.user != user:
-        messages.error(request, _(u'You are not the team leader, you cannot remove other team members.'))
-    else:
-        member = get_object_or_404(Member, user=user, team=team)
-        member.delete()
-        if request.user == user:
-            messages.success(request, _(u'You have left team ') + unicode(team))
-        else:
-            messages.success(request, unicode(user.username) + _(u' removed from your team.'))
+def decline_member_invite(request, team_id):
+    # Weird case: Team leaders and members may decline extra invites
 
+    team = get_object_or_404(Team, pk=team_id)
+    user = request.user
+
+    invitation_qs = Invitation.objects.filter(team=team, invitee=user)
+    if not invitation_qs.exists():
+        messages.error(request, _(u'You are not invited to team {team}.').format(user=user, team=team))
+        return redirect(team)
+    invitation = invitation_qs[0]
+
+    # Delete both invitation and message
+    Message.objects.filter(subject=invitation.token).delete()
+    invitation.delete()
+
+    messages.success(request, _(u'You have declined the membership invitation from team {team}.').format(team=team))
+    return redirect(team)
+
+
+@require_POST
+@login_required
+def kick_member(request, team_id):
+    team = get_object_or_404(Team, pk=team_id)
+
+    if request.user != team.leader:
+        messages.error(request, _(u'Only the team leader may kick members.'))
+        return redirect(team)
+
+    username = request.POST.get('user')
+    if not username:
+        messages.error(request, _(u'No username was specified.'))
+        return redirect(team)
+    elif username == request.user.username:
+        messages.error(request, _(u'You can\'t kick yourself.'))
+        return redirect(team)
+
+    user_qs = User.objects.filter(username=username)
+    if not user_qs.exists():
+        messages.error(request, _(u'User {user} was not found.').format(user=username))
+        return redirect(team)
+    user = user_qs[0]
+
+    member_qs = Member.objects.filter(team=team, user=user)
+    if not member_qs.exists():
+        messages.error(request, _(u'User {user} is not a member of the team.').format(user=user))
+        return redirect(team)
+    member = member_qs[0]
+
+    member.delete()
+    messages.success(request, _(u'{user} was kicked from the team.').format(user=member.user))
+    return redirect(team)
+
+
+@require_POST
+@login_required
+def leave_team(request, team_id):
+    team = get_object_or_404(Team, pk=team_id)
+
+    if request.user == team.leader:
+        messages.error(request, _(u'You are the team leader, the only way to leave the team is to disband it.'))
+        return redirect(team)
+
+    member_qs = Member.objects.filter(team=team, user=request.user)
+    if not member_qs.exists():
+        messages.error(request, _(u'You are not a member of this team.'))
+        return redirect(team)
+
+    member = member_qs[0]
+    member.delete()
+    messages.success(request, _(u'You have left team {team}.').format(team=team))
     return redirect(team)

@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.utils.translation import ugettext as _
+from django.utils.translation import pgettext, ugettext as _
 
 from apps.lan.models import Attendee, Directions, LAN, Ticket
 
@@ -57,19 +57,19 @@ def attend(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
 
     if lan.end_date < datetime.now():
-        messages.error(request, _(u'This LAN has finished and can no longer be attended'))
+        messages.error(request, _(u'This LAN has finished and can no longer be attended.'))
         return redirect(lan)
 
     if not request.user.profile.has_address():
         messages.error(request, _(u'You need to fill in your address and zip code in order to sign up for a LAN.'))
     else:
         if request.user in lan.attendees:
-            messages.error(request, _(u'You are already in the attendee list for ') + unicode(lan))
+            messages.error(request, _(u'You are already in the attendee list for {lan}.').format(lan=lan))
         else:
             attendee = Attendee(lan=lan, user=request.user)
             attendee.save()
 
-            messages.success(request, _(u'Successfully added you to attendee list for ') + unicode(lan))
+            messages.success(request, _(u'Successfully added you to attendee list for {lan}.').format(lan=lan))
 
     return redirect(lan)
 
@@ -79,11 +79,11 @@ def unattend(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
 
     if lan.start_date < datetime.now():
-        messages.error(request, _(u'This LAN has already started, you can not retract your signup'))
+        messages.error(request, _(u'This LAN has already started, you can\'t retract your signup.'))
         return redirect(lan)
 
     if request.user not in lan.attendees:
-        messages.error(request, _(u'You are not in the attendee list for ') + unicode(lan))
+        messages.error(request, _(u'You are not in the attendee list for {lan}.').format(lan=lan))
         return redirect(lan)
 
     ticket_types = lan.tickettype_set.all().order_by('-priority', '-price')
@@ -96,7 +96,7 @@ def unattend(request, lan_id):
         attendee = Attendee.objects.get(lan=lan, user=request.user)
         attendee.delete()
 
-        messages.success(request, _(u'Successfully removed you from attendee list for ') + unicode(lan))
+        messages.success(request, _(u'Successfully removed you from attendee list for {lan}').format(lan=lan))
 
     return redirect(lan)
 
@@ -107,11 +107,10 @@ def list_paid(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
 
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = u'attachment; filename=paid_attendees_lan-{0}.xls'.format(lan_id)
+    response['Content-Disposition'] = u'attachment; filename=paying-participants_lan-{0}.xls'.format(lan_id)
 
     doc = xlwt.Workbook(encoding='UTF-8')
-    # We paid the participants? In Norwegian?
-    sheet = doc.add_sheet('Betalte deltakere')
+    sheet = doc.add_sheet(_(u'Paying participants'))
 
     def write(sheet, person, row, payment_type):
         profile = person.profile
@@ -125,12 +124,12 @@ def list_paid(request, lan_id):
     row = 0
 
     for user in lan.paid_attendees:
-        write(sheet, user, row, 'cash')
+        write(sheet, user, row, pgettext(u'payment type', u'cash'))
         row += 1
 
     tickets = lan.tickets()
     for ticket in tickets:
-        write(sheet, ticket.user, row, 'ticket')
+        write(sheet, ticket.user, row, pgettext(u'payment type', u'ticket'))
         row += 1
 
     doc.save(response)

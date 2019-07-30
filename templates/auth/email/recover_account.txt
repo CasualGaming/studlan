@@ -4,13 +4,15 @@
 {% load settings %}
 
 {% block content %}
-{% trans "You have requested a password recovery for the account(s) bound to this email address at" %} {% site_name %} ({{ request.get_host }}).
+{% blocktrans with request.get_host as host %}
+You have requested a password recovery for the account(s) bound to this email address at {{ site_name }} ({{ host }}).
 
-{% trans "Email address:" %} {{ email }}
-{% trans "Username:" %} {{ username }}
+Email address: {{ email }}
+Username: {{ username }}
 
-{% trans "If you did not ask for this password recovery, please ignore this email. Otherwise, click the link below to reset your password:" %}
+If you did not ask for this password recovery, please ignore this email. Otherwise, click the link below to reset your password:
 {{ link }}
 
-{% trans "If you do not use this link within 24 hours, it will be invalidated." %}
+If you do not use this link within 24 hours, it will be invalidated.
+{% endblocktrans %}
 {% endblock content %}

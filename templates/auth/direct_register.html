@@ -1,8 +1,11 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
+
 {% load i18n %}
-{% block title %} 
-Register 
-{% endblock title %} 
+
+{% block title %}
+{% trans "Manual Register" %}
+{% endblock title %}
+
 {% block content %}
 <div class="row">
     <div class="col-md-9">
@@ -13,7 +16,7 @@ Register
 <div class="row">
     <div class="col-md-9">
         {% if lan %}
-        <p>{% trans "Register a new user" %} for {{ lan }}.</p>
+        <p>{% blocktrans %}Register a new user for {{ lan }}.{% endblocktrans %}</p>
         <br />
         {% for error in form.non_field_errors %}
         <p class="form-error">{{ error }}</p>

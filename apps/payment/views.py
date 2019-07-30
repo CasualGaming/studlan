@@ -110,7 +110,7 @@ def generate_payment_response(request, ticket_type, intent):
             html_message=html_message,
         )
 
-        messages.success(request, _(u'Payment complete — Confirmation mail sent to ') + request.user.email)
+            messages.success(request, _(u'Payment complete. Confirmation sent to {email}.').format(email=request.user.email))
 
         return JsonResponse({'success': True})
     else:

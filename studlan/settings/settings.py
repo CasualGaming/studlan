@@ -8,15 +8,9 @@ from django.contrib.messages import constants as message_constants
 # Directory that contains this file.
 PROJECT_SETTINGS_DIRECTORY = os.path.dirname(globals()['__file__'])
 # Root directory. Contains manage.py
-PROJECT_ROOT_DIRECTORY = os.path.join(PROJECT_SETTINGS_DIRECTORY, '..', '..')
+PROJECT_ROOT_DIRECTORY = os.path.normpath(os.path.join(PROJECT_SETTINGS_DIRECTORY, '..', '..'))
 
 DEBUG = False
-
-ADMINS = (
-    ('example', 'example@example.net'),
-)
-
-MANAGERS = ADMINS
 
 INSTALLED_APPS = (
     # third party apps
@@ -33,17 +27,19 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     # studlan apps
-    'apps.api',
-    'apps.authentication',
-    'apps.competition',
-    'apps.lan',
-    'apps.lottery',
-    'apps.misc',
-    'apps.news',
-    'apps.sponsor',
-    'apps.team',
-    'apps.userprofile',
-    'apps.seating',
+    'apps.api.config.Config',
+    'apps.arrivals.config.Config',
+    'apps.authentication.config.Config',
+    'apps.competition.config.Config',
+    'apps.lan.config.Config',
+    'apps.lottery.config.Config',
+    'apps.misc.config.Config',
+    'apps.news.config.Config',
+    'apps.payment.config.Config',
+    'apps.seating.config.Config',
+    'apps.sponsor.config.Config',
+    'apps.team.config.Config',
+    'apps.userprofile.config.Config',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -70,6 +66,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.i18n',
                 'django.contrib.messages.context_processors.messages',
+                'apps.misc.context_processors.global_variables',
             ],
         },
     },
@@ -172,22 +169,26 @@ POSTMAN_MAILER_APP = 'mailer'
 
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'standard': {
+            'format': '[%(asctime)s] [%(levelname)s] %(message)s',
+        },
+    },
     'handlers': {
         'error_file': {
             'level': 'WARNING',
-            'class': 'logging.FileHandler',
+            'class': 'logging.handlers.RotatingFileHandler',
             'filename': 'log/error.log',
-        },
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler',
+            'maxBytes': 5 * 1024 * 1024,  # 5 MB
+            'backupCount': 5,
+            'formatter': 'standard',
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['error_file', 'mail_admins'],
-            'level': 'WARNING',
+            'handlers': ['error_file'],
+            'level': 'INFO',
             'propagate': True,
         },
     },

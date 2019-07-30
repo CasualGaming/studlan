@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load markdown_deux_tags %} 
+{% load misc %}
+{% load profile_tags %}
+
+{% block title %} 
+{% trans "Profile" %} 
+{% endblock title %} 
+
+{% block content %}
+<div class="row">
+    <div class="col-md-9">
+        <h1>{% trans "Profile" %}</h1>
+    </div>
+</div>
+
+{% block tabs %}
+{% endblock tabs %}
+
+{% block page %}
+{% endblock page %}
+
+{% endblock content %}

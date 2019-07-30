@@ -1,24 +1,20 @@
-{% extends "base.html" %}
+{% extends "user/profile_base.html" %}
+
 {% load i18n %}
 {% load profile_tags %}
 
-{% block title %}
-{% trans "Alias" %}
-{% endblock title %} 
-
-{% block content %}
-<div class="row">
-    <div class="col-md-9">
-         <h1>{% trans "Alias" %}</h1>
-    </div>
-</div>
+{% block tabs %}
 {% profile_tabs 'alias' %}
+{% endblock tabs %}
 
+{% block page %}
 <div class="row">
     <div class="col-md-9">
         <table class="well table">
             <thead>
-                <th>{% trans "Account" %}</th><th>{% trans "Nick" %}</th><th>{% trans "Actions" %}</th>
+                <th>{% trans "Account" %}</th>
+                <th>{% trans "Nick" %}</th>
+                <th>{% trans "Actions" %}</th>
             </thead>
             <tbody>
                 {% for alias in aliases %}
@@ -67,4 +63,4 @@
 </div>
 {% else %}
 {% endif %}
-{% endblock content %}
+{% endblock page %}
