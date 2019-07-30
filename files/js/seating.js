@@ -64,7 +64,7 @@ $(document).ready(function(){
         }
 
         // Set seat number in take and leave forms
-        seatNumber = selectedSeat.attr("seat-number")
+        var seatNumber = selectedSeat.attr("seat-number")
         $(".seat-number-input").each(function() {
             this.value = seatNumber;
         });
