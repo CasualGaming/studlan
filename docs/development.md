@@ -51,6 +51,11 @@ Most of these use venv and therefore requires `manage/setup.sh` to be run first 
 * Run some checks (like the linter, tests, some validation): `manage/check.py`
 * Make migrations (after model changes): `manage/make-migrations.py`
 
+### Upgrading Dependencies
+* This project uses pip-tools with all-dep pinning.
+* Run `manage/update-deps.sh` to update dependencies.
+* Go through all dep updates (as shown in by the script or git diff), read the changelogs for the changes, and make sure they don't mess things up.
+
 ### Run with Docker
 This way is intended just for testing Docker stuff.
 
