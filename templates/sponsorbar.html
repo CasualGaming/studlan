@@ -8,7 +8,7 @@
     <div class="col-md-9 sponsorbar-wrapper">
         <div class="panel panel-default sponsorbar">
             <div class="panel-heading sponsorbar-header">
-                {% trans "Sponsors" %}
+                <a href="{% url "sponsors" %}">{% trans "Sponsors" %}</a>
             </div>
             <div class="panel-body sponsorbar-body">
                 {% for sponsor in sponsors %}
