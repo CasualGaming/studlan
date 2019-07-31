@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added help texts to competition fields tournament format and Challonge URL.
 - Added new translations.
 - Added ticket payment page, accessible from the LAN page.
+- Added attendee to admin panel.
 
 ### Changed
 - Made footer prettier.

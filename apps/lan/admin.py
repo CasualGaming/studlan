@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
-from apps.lan.models import Directions, LAN, LANTranslation, Stream, Ticket, TicketType, TicketTypeTranslation
+from apps.lan.models import Attendee, Directions, LAN, LANTranslation, Stream, Ticket, TicketType, TicketTypeTranslation
 
 
 class LANTranslationInlineAdmin(admin.StackedInline):
@@ -18,7 +18,11 @@ class LANTranslationInlineAdmin(admin.StackedInline):
 class LANAdmin(admin.ModelAdmin):
     model = LAN
     list_display = ['title', 'location', 'start_date', 'end_date']
-    inlines = [LANTranslationInlineAdmin]
+
+
+class AttendeeAdmin(admin.ModelAdmin):
+    model = Attendee
+    list_display = ['__unicode__', 'has_paid', 'arrived']
 
 
 class TicketTypeTranslationInlineAdmin(admin.StackedInline):
@@ -41,6 +45,7 @@ class TicketAdmin(admin.ModelAdmin):
 
 
 admin.site.register(LAN, LANAdmin)
+admin.site.register(Attendee, AttendeeAdmin)
 admin.site.register(TicketType, TicketTypeAdmin)
 admin.site.register(Ticket, TicketAdmin)
 admin.site.register(Directions)
