@@ -133,9 +133,9 @@
                         </a>
                     {% elif not ticket_type.is_available %}
                     <button type="button" class="btn btn-default disabled">
-                        {% trans "Tickets will be available" %}
-                        {{ ticket_type.available_from|date:"D d F Y" }}
-                        {{ ticket_type.available_from|time:"H:i" }}
+                        {% blocktrans with release_date=ticket_type.available_from|date release_time=ticket_type.available_from|time %}
+                        Tickets will be released {{ release_date }} at {{ release_time }}.
+                        {% endblocktrans %}
                     </button>
                     {% endif %}
                 </div>
