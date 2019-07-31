@@ -21,7 +21,7 @@ $(document).ready(function(){
 
     var main_svg = $("#svg-wrapper > svg");
 
-    if (main_svg.attr("viewBox") !== undefined || main_svg.attr("viewBox") !== false){
+    if (main_svg.attr("viewBox") === undefined){
         main_svg.attr({
             viewBox: [0,0, main_svg.attr('width').replace('px', ''),main_svg.attr('height').replace('px', '')].join(' ')
         });
