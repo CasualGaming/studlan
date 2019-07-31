@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+
+## [1.5.0] - 2019-07-31
+### Added
 - Added version info to the app, shown in the site footer.
 - Added video frame to LAN.
 - Added link(s) to active LAN(s) on front page.
@@ -43,8 +57,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made LAN directions description optional.
 - Made stream description optional.
 - Update stripe integration to use payment intents and Stripe.js v3 to support SCA.
-
-### Deprecated
 
 ### Removed
 - Removed unique email check from register form, since email addresses are non-unique.
