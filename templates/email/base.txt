@@ -7,4 +7,6 @@
 {% block content %}
 {% endblock content %}
 --------------------------------------------------
-{% blocktrans with request.get_host as host %}Sent automatically from {{ site_name }} ({{ host }}).{% endblocktrans %}
+{% blocktrans with request.get_host as host trimmed %}
+Sent automatically from {{ site_name }} ({{ host }}).
+{% endblocktrans %}

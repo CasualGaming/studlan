@@ -143,7 +143,7 @@ def take_seat(request, seating_id):
             else:
                 messages.error(request, _(u'That seat is already taken.'))
         else:
-            messages.error(request, _(u'Your ticket does not allow reservation in this seating.'))
+            messages.error(request, _(u'Your ticket does not work in this seating area.'))
     else:
         messages.error(request, _(u'You need to attend and pay before reserving your seat.'))
     return redirect(seating)

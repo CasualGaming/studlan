@@ -424,6 +424,11 @@ div#btn-profile {
     text-align: justify;
 }
 
+.lan-desctiption {
+    line-height: 1.5em;
+    text-align: justify;
+}
+
 .inline-button-form {
     display: inline-block;
     margin-right: 20px;
@@ -437,4 +442,13 @@ div#btn-profile {
 
 .stream-desc {
     margin-top: 10px;
+}
+
+.long-text-button {
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.label, .label a {
+    color: #FFF;
 }

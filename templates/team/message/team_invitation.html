@@ -1,6 +1,7 @@
 {% load i18n %}
 
-{% blocktrans with team_url=team.get_absolute_url %}
-{{ inviter }} has invited you to join team <a href="{{ team_url }}">{{ team }}</a>.
+{% blocktrans with team_url=team.get_absolute_url trimmed %}
+<strong>{{ inviter }}</strong> has invited you to join team <a href="{{ team_url }}"><strong>{{ team }}</strong></a>.
+<br />
 You can accept or decline the invitation on the team page.
 {% endblocktrans %}

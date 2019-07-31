@@ -15,9 +15,9 @@ services:
     - ../.local/docker/db.sqlite3:/srv/studlan/db.sqlite3:rw
     - ../.local/docker/log:/srv/studlan/log:rw
     # Source dirs, in case of changes
-    - ../apps/:/studlan/apps/:ro
-    - ../locale/:/studlan/locale/:ro
-    - ../studlan/:/studlan/studlan/:ro
-    - ../templates/:/studlan/templates/:ro
+    - ../apps/:/srv/studlan/apps/:ro
+    - ../locale/:/srv/studlan/locale/:ro
+    - ../studlan/:/srv/studlan/studlan/:ro
+    - ../templates/:/srv/studlan/templates/:ro
     ports:
     - "8000:8080"

@@ -4,29 +4,21 @@
 {% load static %}
 
 {% block title %}
-{{ lan }}
+{% trans "Payment Security" %}
 {% endblock title %}
 
 {% block content %}
-    <div class="row">
+<div class="row">
     <div class="col-md-9">
-      <h1 class="page-header">Payment security</h1><br>
-        <p>
-            We use <a href="https://stripe.com/en-no">Stripe</a> for all our payments. By using Stripe.js and the elements library that Stripe offers, your credit card is never touched by our servers. This technique also makes the payment system PCI compliant.
-        </p>
-        <p>
-            If you want to read more about the security of Stripe, please consult the following <a href="https://stripe.com/docs/security/stripe">documentation at Stripe.com</a>.
-        </p>
-        <p>
-            The studlan project is open sourced at <a href="https://github.com/CasualGaming/studlan/">GitHub</a>, so you are free to inspect the safety of the code yourself.
-        </p>
+        <h1 class="page-header">{% trans "Payment Security" %}</h1>
+        {% blocktrans %}
+        <p>We use <a href="https://stripe.com/en-no">Stripe</a> for all our payments. By using Stripe.js and the elements library that Stripe offers, your credit card is never touched by our servers. This technique also makes the payment system PCI compliant.</p>
+        <p>If you want to read more about the security of Stripe, please consult the following <a href="https://stripe.com/docs/security/stripe">documentation at Stripe.com</a>.</p>
+        <p>The studlan project is open sourced at <a href="https://github.com/CasualGaming/studlan/">GitHub</a>, so you are free to inspect the safety of the code yourself.</p>
+        {% endblocktrans %}
+        {% if ticket_type_id %}
+        <a class="btn btn-primary" href="{% url 'payment' ticket_type_id %}">{% trans "Back to ticket page" %}</a>
+        {% endif %}
     </div>
-    </div>
-    {% if ticket_type_id %}
-        <div class="row">
-            <div class="col-md-9">
-                <a href="{% url 'payment' ticket_type_id %}">Back to ticket page</a>
-            </div>
-        </div>
-    {% endif %}
+</div>
 {% endblock content %}

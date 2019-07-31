@@ -3,21 +3,15 @@
 .tx
 __pycache__
 *.pyc
-node_modules/
-venv/
-.venv/
+/node_modules/
+/venv/
+/.venv/
 /tmp/
 .git/
 /.github/
 /log/
 
-# pip
-/requirements/*.in
-/requirements/*.old.txt
-
 # Django
-/studlan/settings/local.py
-/studlan/settings/local.docker.py
 /static/
 /studlan.db
 

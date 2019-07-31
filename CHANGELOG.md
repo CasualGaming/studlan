@@ -18,7 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added seating info to user LAN history.
 - Added help texts to competition fields tournament format and Challonge URL.
 - Added new translations.
-- Ticket payment page accessible from the lan page
+- Added ticket payment page, accessible from the LAN page.
+- Added attendee to admin panel.
 
 ### Changed
 - Made footer prettier.
@@ -41,7 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made activity description optional.
 - Made LAN directions description optional.
 - Made stream description optional.
-- Update stripe integration to use payment intents and Stripe.js v3 to support SCA
+- Update stripe integration to use payment intents and Stripe.js v3 to support SCA.
 
 ### Deprecated
 
@@ -69,6 +70,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 - Fixed seating CSRF vulnerability.
 - Fixed team join/leave/etc. CSRF vulnerability.
+- Fixed ticket release date not being properly enforced.
 
 
 ## [1.4.3] - 2019-04-03

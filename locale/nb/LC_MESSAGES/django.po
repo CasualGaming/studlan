@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-30 16:04+0200\n"
+"POT-Creation-Date: 2019-07-31 20:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -519,7 +519,7 @@ msgid "When the tickets will be made available."
 msgstr "Når billettene vil gjøres offentlige."
 
 msgid "seats"
-msgstr "plass"
+msgstr "seter"
 
 msgid "ticket type"
 msgstr "billettype"
@@ -599,13 +599,16 @@ msgstr "Du er lagt til deltagerlisten for {lan}."
 msgid "This LAN has already started, you can't retract your signup."
 msgstr "Dette LAN-et har allerede startet, det er for sent å melde seg av."
 
-#, python-brace-format
-msgid "You are not in the attendee list for {lan}."
-msgstr "Du er ikke påmeldt {lan}."
+msgid "You are not in the attendee list for the LAN."
+msgstr "Du er ikke påmeldt LAN-et."
+
+msgid ""
+"You cannot remove attendance since you have paid for a ticket to the LAN."
+msgstr "Du kan ikke avmelde deg siden du har betalt for en billett til LAN-et."
 
 #, python-brace-format
-msgid "Successfully removed you from attendee list for {lan}"
-msgstr "Du ble fjernet fra listen over deltakere for {lan}."
+msgid "Successfully removed you from attendee list for {lan}."
+msgstr "Du ble fjernet fra deltagerlisten for {lan}."
 
 msgid "Paying participants"
 msgstr "Betalende deltagere"
@@ -696,27 +699,38 @@ msgstr "nyhetsartikkeloversettelser"
 msgid "Payment"
 msgstr "Betaling"
 
+msgid "You must be an attendee to buy a ticket for this LAN."
+msgstr "Du må melde deg opp før du kan kjøpe en billett for dette LAN-et."
+
+msgid "You have already have a ticket for this LAN."
+msgstr "Du har allerede en billett for dette LAN-et."
+
+msgid "This ticket is not yet available."
+msgstr "Billetten er ikke tilgjengelig ennå."
+
 msgid "Ticket confirmation"
 msgstr "Billettbekreftelse"
 
-#, python-brace-format
-msgid "Payment complete. Confirmation sent to {email}."
-msgstr "Betalingen ble gjennomført. Bekreftelsen ble sendt til {email}."
+msgid "Payment complete."
+msgstr "Betalingen ble gjennomført."
+
+msgid "Payment unsuccessful. Please contact support."
+msgstr "Betaling mislyktes. Vennligst kontakt brukerstøtte."
 
 msgid "Seating"
-msgstr "Plasskart"
+msgstr "Setekart"
 
 msgid "number of seats"
 msgstr "antall seter"
 
 msgid "SVG layout for seating"
-msgstr "SVG-mal for plasskart"
+msgstr "SVG-mal for setekart"
 
 msgid "seating layout"
-msgstr "plasskartmal"
+msgstr "setekartmal"
 
 msgid "seating layouts"
-msgstr "plasskartmaler"
+msgstr "setekartmaler"
 
 msgid ""
 "This field is automatically updated to match the chosen layout. Change the "
@@ -732,56 +746,56 @@ msgid "layout"
 msgstr "mal"
 
 msgid "seating"
-msgstr "plasskart"
+msgstr "setekart"
 
 msgid "seatings"
-msgstr "plasskart"
+msgstr "setekart"
 
 msgid "placement ID"
 msgstr "plasserings-ID"
 
 msgid "A unique ID within the seating."
-msgstr "En unik ID innenfor plasskartet."
+msgstr "En unik ID innenfor setekartet."
 
 msgid "seat"
-msgstr "plass"
+msgstr "sete"
 
 msgid "The seating is closed."
-msgstr "Plasskartet er stengt."
+msgstr "Setekartet er stengt."
 
 msgid "You have reserved your seat."
-msgstr "Du har reservert plassen din."
+msgstr "Du har reservert setet ditt."
 
 msgid "That seat is already taken."
-msgstr "Plassen er allerede opptatt."
+msgstr "Setet er allerede opptatt."
 
-msgid "Your ticket does not allow reservation in this seating."
-msgstr "Billetten din tillater ikke reservering i dette plasskartet."
+msgid "Your ticket does not work in this seating area."
+msgstr "Billetten din virker ikke i dette området."
 
 msgid "You need to attend and pay before reserving your seat."
-msgstr "Du må melde deg på og betale før du kan reservere plass."
+msgstr "Du må melde deg på og betale før du kan reservere sete."
 
 msgid "You have unreserved your seat."
-msgstr "Du har avreservert plassen din."
+msgstr "Du har avreservert setet din."
 
 msgid "This is not your seat."
-msgstr ""
+msgstr "Dette er ikke ditt sete."
 
 msgid "No seat was specified."
-msgstr "Ingen plass var spesifisert."
+msgstr "Intet sete var spesifisert."
 
 msgid "Illegal seat."
-msgstr "Ugyldig plass."
+msgstr "Ugyldig sete."
 
 msgid "Page"
 msgstr "Side"
 
 msgid "Seat"
-msgstr "Plass"
+msgstr "Sete"
 
 #, python-format
 msgid "%(seating)s, seat %(seat)d"
-msgstr "%(seating)s, plass %(seat)d"
+msgstr "%(seating)s, sete %(seat)d"
 
 msgid "(Available)"
 msgstr "(Ledig)"
@@ -1074,12 +1088,8 @@ msgstr "Feil 404"
 msgid "Error 404: File Not Found"
 msgstr "Feil 404: Filen ble ikke funnet"
 
-msgid ""
-"\n"
-"<p>We're sorry, but the page you requested could not be found.</p>\n"
-msgstr ""
-"\n"
-"<p>Vi beklager, men vi fant ikke siden du etterspurte.</p>\n"
+msgid "<p>We're sorry, but the page you requested could not be found.</p>"
+msgstr "<p>Vi beklager, men vi fant ikke siden du etterspurte.</p>"
 
 msgid "Error 500"
 msgstr "Feil 500"
@@ -1088,15 +1098,11 @@ msgid "Error 500: Server Error"
 msgstr "Feil 500: Serverfeil"
 
 msgid ""
-"\n"
-"<p>We've encountered an internal server error.</p>\n"
-"<p>Administrators have been notified, but please contact us and tell us how "
-"it happened.</p>\n"
+"<p>We've encountered an internal server error.</p> <p>Administrators have "
+"been notified, but please contact us and tell us how it happened.</p>"
 msgstr ""
-"\n"
-"<p>Vi har støtt på en serverfeil.</p>\n"
-"<p>Administratorene har fått beskjed, men vennligst kontakt oss og fortell "
-"oss hvordan dette skjedde.</p>\n"
+"<p>Vi har støtt på en serverfeil.</p><p>Administratorene har fått beskjed, "
+"men vennligst kontakt oss og fortell oss hvordan dette skjedde.</p>"
 
 msgid "Admin Panel"
 msgstr "Adminpanel"
@@ -1131,11 +1137,11 @@ msgstr "Betalt"
 msgid "Arrived"
 msgstr "Ankommet"
 
-msgid "No seating"
-msgstr "Manglende plasskart"
+msgid "No seat"
+msgstr "Intet sete"
 
 msgid "Toggle"
-msgstr "Veksle"
+msgstr "Vende"
 
 msgid "Export to Excel sheet"
 msgstr "Eksporter til Excel-ark"
@@ -1320,7 +1326,7 @@ msgid "Start time"
 msgstr "Starttid"
 
 msgid "Open spots"
-msgstr "Åpne plasser"
+msgstr "Åpne seter"
 
 msgid "Show brackets"
 msgstr "Vis braketter"
@@ -1339,16 +1345,11 @@ msgstr "Bli med (lag)"
 
 #, python-format
 msgid ""
-"\n"
-"                                    To join the competition as a team you "
-"have to <a href=\"%(create_team_url)s\">create</a> or join a team.\n"
-"                                    "
+"To join the competition as a team you have to <a href=\"%(create_team_url)s"
+"\">create</a> or join a team."
 msgstr ""
-"\n"
-"                                    For å bli med på konkurransen som et "
-"lag, må du <a href=\"%(create_team_url)s\">lage</a> eller bli med på et "
-"lag.\n"
-"                                    "
+"For å bli med på konkurransen som et lag, må du <a href=\"%(create_team_url)s"
+"\">lage</a> eller bli med på et lag."
 
 msgid "Join competition"
 msgstr "Bli med"
@@ -1369,42 +1370,24 @@ msgid "Submit Score"
 msgstr "Send inn poengsum"
 
 msgid ""
-"\n"
-"                    <strong>Note:</strong>\n"
-"                    Signing up for a team compo as a solo player does not "
-"mean you are a participant.\n"
-"                    Try to find other players that sign up solo, make a team "
-"and sign up as a team.\n"
-"                    <br />\n"
-"                    <strong>When you sign up as a team, your solo "
-"participation will be overriden.</strong>\n"
-"                    "
+"<strong>Note:</strong> Signing up for a team compo as a solo player does not "
+"mean you are a participant. Try to find other players that sign up solo, "
+"make a team and sign up as a team. <br /> <strong>When you sign up as a "
+"team, your solo participation will be overriden.</strong>"
 msgstr ""
-"\n"
-"                    <strong>Merk:</strong>\n"
-"                    Oppmelding på en lag-compo betyr ikke at du er "
-"deltager.\n"
-"                    Prøv å finne andre spillere som melder seg på solo, lag "
-"et lag, og meld opp laget.\n"
-"                    <br />\n"
-"                    <strong>Når du melder deg opp som lag, vil solo-"
-"oppmeldingen overskrives.</strong>\n"
-"                    "
+"<strong>Merk:</strong>Oppmelding på en lag-compo betyr ikke at du er "
+"deltager.Prøv å finne andre spillere som melder seg på solo, lag et lag, og "
+"meld opp laget.<br /><strong>Når du melder deg opp som lag, vil solo-"
+"oppmeldingen overskrives.</strong>"
 
 #, python-format
 msgid ""
-"\n"
-"                <strong>This competition is full.</strong>\n"
-"                This competition only had room for "
-"%(competition_max_participants)s participants, and that limit has been "
-"reached.\n"
-"                "
+"<strong>This competition is full.</strong> This competition only had room "
+"for %(competition_max_participants)s participants, and that limit has been "
+"reached."
 msgstr ""
-"\n"
-"                <strong>Konkurransen er full.</strong>\n"
-"                Den hadde bare plass til %(competition_max_participants)s "
-"deltagere, og den grensen er nådd.\n"
-"                "
+"<strong>Konkurransen er full.</strong>Den hadde bare plass til "
+"%(competition_max_participants)s deltagere, og den grensen er nådd."
 
 msgid "Select a LAN to view competitions for it."
 msgstr "Velg et LAN for å se konkurranser for det."
@@ -1414,6 +1397,9 @@ msgstr "Tid"
 
 msgid "Compo Count"
 msgstr "Antall compoer"
+
+msgid "No current or upcoming LANs."
+msgstr "Ingen nåværende eller kommende LAN."
 
 msgid "Previous LANs"
 msgstr "Tidligere LAN"
@@ -1445,15 +1431,8 @@ msgid "There is no current or upcoming LAN."
 msgstr "Det er ingen nåværende eller kommende LAN."
 
 #, python-format
-msgid ""
-"\n"
-"        <p>Sent automatically from <a href=\"%(host)s\">%(site_name)s</a>.</"
-"p>\n"
-"        "
-msgstr ""
-"\n"
-"        <p>Sendt automatisk fra <a href=\"%(host)s\">%(site_name)s</a>.</p>\n"
-"        "
+msgid "<p>Sent automatically from <a href=\"%(host)s\">%(site_name)s</a>.</p>"
+msgstr "<p>Sendt automatisk fra <a href=\"%(host)s\">%(site_name)s</a>.</p>"
 
 #, python-format
 msgid "Sent automatically from %(site_name)s (%(host)s)."
@@ -1471,8 +1450,12 @@ msgstr "Sluttid"
 msgid "Location"
 msgstr "Sted"
 
-msgid "You have paid for a ticket for this LAN:"
-msgstr "Du har betalt for en billett for dette LAN-et:"
+#, python-format
+msgid "You have a ticket: %(ticket_title)s"
+msgstr "Du har en billett: %(ticket_title)s"
+
+msgid "You have a ticket."
+msgstr "Du har en billett."
 
 msgid "Remove attendance"
 msgstr "Meld deg av"
@@ -1484,19 +1467,20 @@ msgid "Price"
 msgstr "Pris"
 
 msgid "Seats"
-msgstr "Plasser"
+msgstr "Seter"
 
 msgid "Free seats"
-msgstr "Ledige plasser"
+msgstr "Ledige seter"
 
 msgid "Sold out"
 msgstr "Utsolgt"
 
-msgid "Pay with Card"
-msgstr "Betal med Kort"
+msgid "Buy"
+msgstr "Kjøp"
 
-msgid "Tickets will be available"
-msgstr "Billetter vil bli tilgjengelige"
+#, python-format
+msgid "Tickets will be released %(release_date)s at %(release_time)s."
+msgstr "Billetter slippes %(release_date)s kl. %(release_time)s."
 
 msgid "No tickets avalible at this time."
 msgstr "Det er ingen billetter tilgjengelig akkurat nå."
@@ -1506,27 +1490,17 @@ msgstr "Meld deg på"
 
 #, python-format
 msgid ""
-"\n"
-"            Your address and zip code is required in order to sign up for a "
-"LAN.\n"
-"            Go to your <a href=\"%(update_profile_url)s\">profile</a> to add "
-"the information.\n"
-"            "
+"Your address and zip code is required in order to sign up for a LAN. Go to "
+"your <a href=\"%(update_profile_url)s\">profile</a> to add the information."
 msgstr ""
-"\n"
-"            Adressen og postkoden din er nødvendig for å melde seg på LAN.\n"
-"            Gå til <a href=\"%(update_profile_url)s\">profilen din</a> for å "
-"legge det til.\n"
-"            "
+"Adressen og postkoden din er nødvendig for å melde seg på LAN. Gå til <a "
+"href=\"%(update_profile_url)s\">profilen din</a> for å legge det til."
 
 msgid "You need to login to sign up for the LAN."
 msgstr "Du må logge deg på for å melde deg opp til LAN-et."
 
 msgid "LAN List"
 msgstr "LAN-liste"
-
-msgid "No current or upcoming LANs."
-msgstr "Ingen nåværende eller kommende LAN."
 
 msgid "Participants:"
 msgstr "Deltakere:"
@@ -1579,6 +1553,24 @@ msgstr "Festet"
 msgid "Archive"
 msgstr "Arkiv"
 
+msgid "Ticket Purchase for"
+msgstr "Billettkjøp for"
+
+msgid "Ticket type"
+msgstr "Billettype"
+
+msgid "Card holder name"
+msgstr "Navn på kortholder"
+
+msgid "Card info"
+msgstr "Kortinformasjon"
+
+msgid "Submit payment"
+msgstr "Send betaling"
+
+msgid "About our payment security"
+msgstr "Om betalingssikkerheten vår"
+
 #, python-format
 msgid ""
 "\n"
@@ -1614,20 +1606,41 @@ msgstr ""
 "Billetten er lenket til %(user_full_name)s (%(user)s).\n"
 "Mer informasjon om LAN-et kan finnes her: %(lan_title)s (%(lan_link)s)\n"
 
+msgid "Payment Security"
+msgstr "Betalingssikkerhet"
+
+msgid ""
+"\n"
+"        <p>We use <a href=\"https://stripe.com/en-no\">Stripe</a> for all "
+"our payments. By using Stripe.js and the elements library that Stripe "
+"offers, your credit card is never touched by our servers. This technique "
+"also makes the payment system PCI compliant.</p>\n"
+"        <p>If you want to read more about the security of Stripe, please "
+"consult the following <a href=\"https://stripe.com/docs/security/stripe"
+"\">documentation at Stripe.com</a>.</p>\n"
+"        <p>The studlan project is open sourced at <a href=\"https://github."
+"com/CasualGaming/studlan/\">GitHub</a>, so you are free to inspect the "
+"safety of the code yourself.</p>\n"
+"        "
+msgstr ""
+"\n"
+"        <p>Vi bruker <a href=\"https://stripe.com/en-no\">Stripe</a> for "
+"alle våre betalinger. Ved å bruke Stripe.js og element-biblioteket Stripe "
+"byr på, røres ikke kredittkortinformasjonen av våre tjenere. Denne teknikken "
+"gjør også betalingssystemet vårt PCI-kompatibelt.</p>\n"
+"        <p>Hvis du vil lese mer om sikkerheten til Stripe, vennligst se "
+"følgende <a href=\"https://stripe.com/docs/security/stripe\">dokumentasjon "
+"hos Stripe.com</a>.</p>\n"
+"        <p>studlan-prosjektet er open sourced hos <a href=\"https://github."
+"com/CasualGaming/studlan/\">GitHub</a>, så du kan fritt inspisere "
+"sikkerheten av koden selv.</p>\n"
+"        "
+
+msgid "Back to ticket page"
+msgstr "Tilbake til billettside"
+
 msgid "Seating Map"
-msgstr "Plasskart"
-
-msgid "Your seat"
-msgstr "Din plass"
-
-msgid "Taken seat"
-msgstr "Opptatt plass"
-
-msgid "Free seat"
-msgstr "Ledig plass"
-
-msgid "Room Info"
-msgstr "Rominfo"
+msgstr "Setekart"
 
 msgid "Closes"
 msgstr "Stenger"
@@ -1639,31 +1652,43 @@ msgid "Admin"
 msgstr "Admin"
 
 msgid "Seating list"
-msgstr "Plassliste"
+msgstr "Seteliste"
 
 msgid "Seating map"
-msgstr "Plasskart"
+msgstr "Setekart"
 
 msgid "Seat Info"
-msgstr "Plassinfo"
+msgstr "Seteinfo"
 
 msgid "Seat number"
-msgstr "Plassnummer"
+msgstr "Setenummer"
 
 msgid "Select a seat"
-msgstr "Velg en plass"
+msgstr "Velg et sete"
 
 msgid "Occupied by"
 msgstr "Tatt av"
 
 msgid "Take seat"
-msgstr "Ta plass"
+msgstr "Ta sete"
 
 msgid "Leave seat"
-msgstr "Forlat plass"
+msgstr "Forlat sete"
+
+msgid "Your seat"
+msgstr "Ditt sete"
+
+msgid "Taken seat"
+msgstr "Opptatt sete"
+
+msgid "Free seat"
+msgstr "Ledig sete"
+
+msgid "Unavailable seat"
+msgstr "Utilgjengelig sete"
 
 msgid "There are no active seatings."
-msgstr "Det finnes ingen aktive plasskart."
+msgstr "Det finnes ingen aktive setekart."
 
 msgid "Previous Sponsors"
 msgstr "Tidligere sponsorer"
@@ -1676,15 +1701,11 @@ msgstr "Må være unikt!"
 
 #, python-format
 msgid ""
-"\n"
 "%(inviter)s has invited you to join team <a href=\"%(team_url)s\">%(team)s</"
-"a>.\n"
-"You can accept or decline the invitation on the team page.\n"
+"a>. <br /> You can accept or decline the invitation on the team page."
 msgstr ""
-"\n"
 "%(inviter)s har invitert deg til å bli med på lag <a href=\"%(team_url)s\">"
-"%(team)s</a>.\n"
-"Du kan akseptere eller avslå invitasjonen på lagsiden.\n"
+"%(team)s</a>. <br /> Du kan akseptere eller avslå invitasjonen på lagsiden."
 
 msgid "My teams"
 msgstr "Mine lag"
@@ -1769,10 +1790,10 @@ msgid "History"
 msgstr "Historikk"
 
 msgid "Inbox"
-msgstr "Inboks"
+msgstr "Innboks"
 
 msgid "Inbox is empty."
-msgstr "Inboksen er tom."
+msgstr "Innboksen er tom."
 
 msgid "Go to public profile page"
 msgstr "Gå til offentlig profilside"
@@ -1820,7 +1841,7 @@ msgid "Last login"
 msgstr "Siste innlogging"
 
 msgid "LAN Seatings"
-msgstr "LAN-plasskart"
+msgstr "LAN-setekart"
 
 msgid "Edit Profile"
 msgstr "Endre profil"
@@ -1870,3 +1891,15 @@ msgstr "Adminpanel"
 
 msgid "Log out"
 msgstr "Logg ut"
+
+#~ msgid "How safe it this payment page?"
+#~ msgstr "Hvor trygg er denne betalingssiden?"
+
+#~ msgid "Tickets will be available"
+#~ msgstr "Billetter vil bli tilgjengelige"
+
+#~ msgid "Pay with Card"
+#~ msgstr "Betal med Kort"
+
+#~ msgid "Room Info"
+#~ msgstr "Rominfo"

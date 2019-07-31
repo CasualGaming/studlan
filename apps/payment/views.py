@@ -38,15 +38,15 @@ def payment(request, ticket_type_id):
     ticket_type = get_object_or_404(TicketType, pk=ticket_type_id)
 
     if request.user not in ticket_type.lan.attendees:
-        messages.info(request, _(u'You must be an attendee to buy a ticket for this event'))
+        messages.info(request, _(u'You must be an attendee to buy a ticket for this LAN.'))
         return redirect('lan_details', lan_id=ticket_type.lan_id)
 
     if ticket_type.lan.has_ticket(request.user):
-        messages.info(request, _(u'You have already have a ticket for this event'))
+        messages.info(request, _(u'You have already have a ticket for this LAN.'))
         return redirect('lan_details', lan_id=ticket_type.lan_id)
 
     if not ticket_type.is_available():
-        messages.info(request, _(u'This ticket is not yet available'))
+        messages.info(request, _(u'This ticket is not yet available.'))
         return redirect('lan_details', lan_id=ticket_type.lan_id)
 
     if request.method == 'GET':
@@ -116,10 +116,10 @@ def generate_payment_response(request, ticket_type, intent):
 
         messages.success(
             request,
-            _(u'Payment complete. Confirmation sent to {email}.').format(email=request.user.email),
+            _(u'Payment complete.'),
         )
 
         return JsonResponse({'success': True})
     else:
-        messages.error(request, _(u'Payment unsuccessful - please contact support'))
+        messages.error(request, _(u'Payment unsuccessful. Please contact support.'))
         return JsonResponse({'error': 'Invalid PaymentIntent status'})

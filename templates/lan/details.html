@@ -72,7 +72,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-9">
+    <div class="col-md-9 lan-desctiption">
         <hr />
         {{ lan.get_translation.description|markdown }}
         <hr />
@@ -82,13 +82,19 @@
 <div class="row">
     <div class="col-md-9">
         {% if user.is_authenticated %}
-        {% if status == 'paid' %}
+        {% if status == 'paid' and ticket %}
         <div class="center-on-collapse">
-            <a class="btn btn-success disabled center-on-collapse" href="#">
-                {% trans "You have paid for a ticket for this LAN:" %}
-                {% if ticket %}
-                {{ ticket.0.ticket_type.get_translation.title }}
-                {% endif %}
+            <a class="btn btn-success disabled center-on-collapse long-text-button" href="#">
+                {% blocktrans with ticket_title=ticket.0.ticket_type.get_translation.title trimmed %}
+                You have a ticket: {{ ticket_title }}
+                {% endblocktrans %}
+            </a>
+        </div>
+        {% elif status == 'paid' %}
+        {# If the user has no real ticket, but the attendance is marked as "payed" #}
+        <div class="center-on-collapse">
+            <a class="btn btn-success disabled center-on-collapse long-text-button" href="#">
+                {% trans "You have a ticket." %}
             </a>
         </div>
         {% elif status == 'attending' %}
@@ -133,9 +139,9 @@
                         </a>
                     {% elif not ticket_type.is_available %}
                     <button type="button" class="btn btn-default disabled">
-                        {% trans "Tickets will be available" %}
-                        {{ ticket_type.available_from|date:"D d F Y" }}
-                        {{ ticket_type.available_from|time:"H:i" }}
+                        {% blocktrans with release_date=ticket_type.available_from|date release_time=ticket_type.available_from|time trimmed %}
+                        Tickets will be released {{ release_date }} at {{ release_time }}.
+                        {% endblocktrans %}
                     </button>
                     {% endif %}
                 </div>
@@ -158,7 +164,7 @@
         {% else %}
         <div class="alert alert-danger">
             {% url 'update_profile' as update_profile_url %}
-            {% blocktrans %}
+            {% blocktrans trimmed %}
             Your address and zip code is required in order to sign up for a LAN.
             Go to your <a href="{{ update_profile_url }}">profile</a> to add the information.
             {% endblocktrans %}
