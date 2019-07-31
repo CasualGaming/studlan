@@ -45,6 +45,10 @@ def payment(request, ticket_type_id):
         messages.info(request, _(u'You have already have a ticket for this event'))
         return redirect('lan_details', lan_id=ticket_type.lan_id)
 
+    if not ticket_type.is_available():
+        messages.info(request, _(u'This ticket is not yet available'))
+        return redirect('lan_details', lan_id=ticket_type.lan_id)
+
     if request.method == 'GET':
         return render(
             request,
@@ -112,7 +116,7 @@ def generate_payment_response(request, ticket_type, intent):
 
         messages.success(
             request,
-            _(u'Payment complete. Confirmation sent to {email}.').format(email=request.user.email)
+            _(u'Payment complete. Confirmation sent to {email}.').format(email=request.user.email),
         )
 
         return JsonResponse({'success': True})
