@@ -94,7 +94,7 @@ class Seat(models.Model):
     placement = models.IntegerField(_(u'placement ID'), help_text=_(u'A unique ID within the seating.'))
 
     def __unicode__(self):
-        return str(self.id)
+        return u'{0} / {1} / {2}'.format(self.seating.lan, self.seating, self.placement)
 
     def get_attendance(self):
         attendances = Attendee.objects.filter(lan=self.seating.lan, user=self.user)

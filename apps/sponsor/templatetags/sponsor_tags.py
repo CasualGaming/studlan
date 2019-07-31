@@ -15,7 +15,7 @@ register = template.Library()
 def upcoming_lan_sponsors():
     lans = LAN.objects.filter(end_date__gte=datetime.now())
     if lans:
-        sponsor_relations = SponsorRelation.objects.filter(lan__in=lans).select_related('sponsor').order_by('priority')
+        sponsor_relations = SponsorRelation.objects.filter(lan__in=lans).select_related('sponsor').order_by('-priority')
         return [r.sponsor for r in sponsor_relations]
     else:
         return None

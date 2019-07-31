@@ -11,7 +11,7 @@ from apps.lan.models import LAN
 
 
 class Lottery(TranslatableModel):
-    lan = models.ForeignKey(LAN)
+    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
     registration_open = models.BooleanField(_(u'open'), default=False)
     multiple_winnings = models.BooleanField(_(u'multiple winnings'), default=False, help_text=_(u'Allows a user to win more than one time.'))
 
