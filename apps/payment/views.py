@@ -41,7 +41,7 @@ def payment(request, ticket_type_id):
         messages.info(request, _(u'You must be an attendee to buy a ticket for this LAN.'))
         return redirect('lan_details', lan_id=ticket_type.lan_id)
 
-    if ticket_type.lan.has_ticket(request.user):
+    if ticket_type.lan.has_ticket(request.user) or request.user in ticket_type.lan.paid_attendees:
         messages.info(request, _(u'You have already have a ticket for this LAN.'))
         return redirect('lan_details', lan_id=ticket_type.lan_id)
 
