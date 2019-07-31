@@ -9,7 +9,7 @@
 
 {% block script %}
 <script type="text/javascript" src="{% static 'js/seating.js' %}"></script>
-<script src="https//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 {% endblock script %}
 
 {% block content %}
@@ -20,19 +20,12 @@
 </div>
 
     {% if seatings %}
-        <div class="row">
-            <div class="col-md-9">
-                <input class="btn btn-warning" type="submit" value="{% trans "Your seat" %}" disabled/>
-                <input class="btn btn-danger" type="submit" value="{% trans "Taken seat" %}" disabled/>
-                <input class="btn btn-success" type="submit" value="{% trans "Free seat" %}" disabled/>
-            </div>
-        </div>
         {% if seatings|length >= 2 %}
             <div class="row table-tabs">
                 <div class="col-md-9">
                     <ul class="nav nav-tabs">
                         {% for tab_seating in seatings %}
-                            <li{% if tab_seating is seating %} class="active"{% endif %}><a href="{{ tab_seating.get_absolute_url }}">{{ tab_seating }}</a></li>
+                            <li{% if tab_seating.id is seating.id %} class="active"{% endif %}><a href="{{ tab_seating.get_absolute_url }}">{{ tab_seating }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -49,7 +42,9 @@
                 <div class="sidebar-wrapper seat-wrapper">
                 	<div class="well sidebar">
                         <ul class="nav nav-stacked">
-                            <li class="sidebar-header"><a href="">{% trans "Room Info" %}</a></li>
+                            <li class="sidebar-header"><a href="">{% trans "Seating" %}</a></li>
+                            <li>{% trans "LAN" %}: <label class="label label-info">{{ seating.lan.title }}</label></li>
+                            <li>{% trans "Seating" %}: <label class="label label-info">{{ seating.title }}</label></li>
                             {% if seating.is_open %}
                                 <li>{% trans "Status" %}: <label class="label label-success">{% trans "Open" context "status" %}</label></li>
                                 <li>{% trans "Closes" %}: <label class="label label-info">{{ seating.closing_date }}</label></li>
@@ -87,6 +82,14 @@
                     </div>
                 </div>
             </div> 
+        </div>
+
+        <div class="row">
+            <div class="col-md-9">
+                <input class="btn btn-warning" type="submit" value="{% trans "Your seat" %}" disabled/>
+                <input class="btn btn-danger" type="submit" value="{% trans "Taken seat" %}" disabled/>
+                <input class="btn btn-success" type="submit" value="{% trans "Free seat" %}" disabled/>
+            </div>
         </div>
 
         {% if seat %}
