@@ -438,3 +438,8 @@ div#btn-profile {
 .stream-desc {
     margin-top: 10px;
 }
+
+.long-text-button {
+    white-space: normal;
+    word-wrap: break-word;
+}

@@ -84,7 +84,7 @@
         {% if user.is_authenticated %}
         {% if status == 'paid' %}
         <div class="center-on-collapse">
-            <a class="btn btn-success disabled center-on-collapse" href="#">
+            <a class="btn btn-success disabled center-on-collapse long-text-button" href="#">
                 {% trans "You have paid for a ticket for this LAN:" %}
                 {% if ticket %}
                 {{ ticket.0.ticket_type.get_translation.title }}
