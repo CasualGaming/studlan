@@ -18,6 +18,7 @@ class LANTranslationInlineAdmin(admin.StackedInline):
 class LANAdmin(admin.ModelAdmin):
     model = LAN
     list_display = ['title', 'location', 'start_date', 'end_date']
+    inlines = [LANTranslationInlineAdmin]
 
 
 class AttendeeAdmin(admin.ModelAdmin):
