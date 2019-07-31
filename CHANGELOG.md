@@ -20,8 +20,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [1.5.1] - 2019-08-01
+### Changed
+- Removed sponsor sidebar from sponsor page.
+
 ### Fixed
 - Fixed missing LAN translations on LAN admin page.
+- Fixed reversed order for sponsor priority.
 
 
 ## [1.5.0] - 2019-07-31
