@@ -51,14 +51,14 @@ class Competition(TranslatableModel):
     status = models.SmallIntegerField(_(u'status'), choices=STATUSES)
     activity = models.ForeignKey(Activity, verbose_name=_(u'activity'))
     lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
-    challonge_url = models.CharField(_(u'Challonge URL'), max_length=50, blank=True,
+    challonge_url = models.CharField(_(u'Challonge URL'), max_length=50, null=True, blank=True,
                                      help_text='Do not set this field if challonge integration is enabled. '
                                                'The challonge url will be generated after starting the competition.')
     team_size = models.IntegerField(_(u'team size'), default=5, blank=True)
-    start_time = models.DateTimeField(_(u'start time'), blank=True, null=True)
+    start_time = models.DateTimeField(_(u'start time'), null=True, blank=True)
 
     tournament_format = models.CharField(
-        _(u'tournament format'), max_length=20, blank=True, choices=TOURNAMENT_FORMATS,
+        _(u'tournament format'), max_length=20, null=True, blank=True, choices=TOURNAMENT_FORMATS,
         help_text='Only set this field if the Challonge integration is being used for this competition.')
 
     max_participants = models.SmallIntegerField(
@@ -180,7 +180,6 @@ class Participant(models.Model):
     user = models.ForeignKey(User, verbose_name=_(u'user'), null=True)
     team = models.ForeignKey('team.Team', verbose_name=_(u'team'), null=True)
     competition = models.ForeignKey(Competition, verbose_name=_(u'competition'))
-    # Nullable (x3)
     cid = models.CharField(_(u'cid'), max_length=50, null=True, blank=True)
 
     def __unicode__(self):
@@ -210,12 +209,11 @@ class Match(models.Model):
     player1 = models.ForeignKey(Participant, verbose_name=_(u'player 1'), related_name='player1', null=True)
     player2 = models.ForeignKey(Participant, verbose_name=_(u'player 2'), related_name='player2', null=True)
     competition = models.ForeignKey(Competition, verbose_name=_(u'competition'))
-    # Nullable (x3)
     p1_reg_score = models.CharField(_(u'p1 reg score'), max_length=50, null=True, blank=True)
     p2_reg_score = models.CharField(_(u'p2 reg score'), max_length=50, null=True, blank=True)
     final_score = models.CharField(_(u'final score'), max_length=50, null=True, blank=True)
     state = models.CharField(_(u'state'), max_length=50)
-    winner = models.ForeignKey(Participant, verbose_name=_(u'winner'), related_name='winner', null=True)
+    winner = models.ForeignKey(Participant, verbose_name=_(u'winner'), related_name='winner', null=True, blank=True)
 
     def get_p1(self):
         if self.player1:
