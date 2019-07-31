@@ -59,6 +59,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed bug in match reporting for Challonge integration.
 - Fixed old translations being deactivated/removed.
 - Fixed admin panel crashing when trying to forcefully log out users.
+- Fixed seating tabs not showing which tab is active.
+- Fixed seating client script breaking if width and height of the SVG seating layout is not set.
 
 
 ### Security
