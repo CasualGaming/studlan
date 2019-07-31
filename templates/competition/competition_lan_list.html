@@ -33,6 +33,12 @@
         </table>
     </div>
 </div>
+{% else %}
+<div class="row">
+    <div class="col-md-9">
+        <div class="alert alert-warning">{% trans "No current or upcoming LANs." %}</div>
+    </div>
+</div>
 {% endif %}
 
 {% if previous_lans %}
