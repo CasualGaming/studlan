@@ -84,6 +84,14 @@ def unattend(request, lan_id):
 
     if request.user not in lan.attendees:
         messages.error(request, _(u'You are not in the attendee list for {lan}.').format(lan=lan))
+        return redirect(lan)
+
+    ticket_types = lan.tickettype_set.all().order_by('-priority', '-price')
+    user_tickets = Ticket.objects.filter(user=request.user.id, ticket_type__in=ticket_types)
+
+    if request.user in lan.paid_attendees or user_tickets:
+        messages.error(request, _(u'You cannot remove attendance since you have paid for ') + unicode(lan))
+        return redirect(lan)
     else:
         attendee = Attendee.objects.get(lan=lan, user=request.user)
         attendee.delete()

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load markdown_deux_tags %}
+{% load settings %}
+{% load static %}
+
+{% block title %}
+{{ lan }}
+{% endblock title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6">
+            <h1 class="page-header">Ticket purchase for {{ lan }}</h1><br>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td><strong>Ticket type</strong></td>
+                        <td>{{ ticket_type }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Price</strong></td>
+                        <td>{{ ticket_type.price }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Card holder name</h4>
+            <div>
+                <input class="form-control" id="cardholder-name" name="cardholder-name" placeholder="Card holder name" type="text"/><br>
+            </div>
+            <h4>Card info</h4>
+            <div class="form-control" id="card-element"></div><br>
+            <div>
+                <button class="btn btn-success" id="card-button">Submit Payment</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <br>
+            <a href="{% url 'payment_info' ticket_type.id %}">How safe it this payment page?</a>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block script %}
+    <script type="text/javascript">
+        var stripe_public_key = '{% stripe_public_key %}';
+        var csrf_token = '{{ csrf_token }}';
+        var lan_url = '{% url 'lan_details' lan.id %}';
+        var payment_url = '{% url 'payment' ticket_type.id %}';
+    </script>
+    <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
+    <script type="text/javascript" src="{% static 'js/payment.js' %}"></script>
+{% endblock script %}
