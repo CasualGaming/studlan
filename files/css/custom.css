@@ -448,3 +448,7 @@ div#btn-profile {
     white-space: normal;
     word-wrap: break-word;
 }
+
+.label, .label a {
+    color: #FFF;
+}
