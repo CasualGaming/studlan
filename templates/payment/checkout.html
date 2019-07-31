@@ -10,15 +10,15 @@
 {% block content %}
     <div class="row">
         <div class="col-md-6">
-            <h1 class="page-header">Ticket purchase for {{ lan }}</h1><br>
+            <h1 class="page-header">{% trans "Ticket Purchase for" %} {{ lan }}</h1><br>
             <table class="table table-bordered">
                 <tbody>
                     <tr>
-                        <td><strong>Ticket type</strong></td>
+                        <td><strong>{% trans "Ticket type" %}</strong></td>
                         <td>{{ ticket_type }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Price</strong></td>
+                        <td><strong>{% trans "Price" %}</strong></td>
                         <td>{{ ticket_type.price }}</td>
                     </tr>
                 </tbody>
@@ -27,21 +27,21 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <h4>Card holder name</h4>
+            <h4>{% trans "Card holder name" %}</h4>
             <div>
-                <input class="form-control" id="cardholder-name" name="cardholder-name" placeholder="Card holder name" type="text"/><br>
+                <input class="form-control" id="cardholder-name" name="cardholder-name" placeholder="{% trans "Card holder name" %}" type="text"/><br>
             </div>
-            <h4>Card info</h4>
+            <h4>{% trans "Card info" %}</h4>
             <div class="form-control" id="card-element"></div><br>
             <div>
-                <button class="btn btn-success" id="card-button">Submit Payment</button>
+                <button class="btn btn-success" id="card-button">{% trans "Submit payment" %}</button>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
             <br>
-            <a href="{% url 'payment_info' ticket_type.id %}">How safe it this payment page?</a>
+            <a href="{% url 'payment_info' ticket_type.id %}">{% trans "How safe it this payment page?" %}</a>
         </div>
     </div>
 {% endblock content %}

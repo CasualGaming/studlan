@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-30 16:04+0200\n"
+"POT-Creation-Date: 2019-07-31 16:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -599,13 +599,15 @@ msgstr "Du er lagt til deltagerlisten for {lan}."
 msgid "This LAN has already started, you can't retract your signup."
 msgstr "Dette LAN-et har allerede startet, det er for sent å melde seg av."
 
-#, python-brace-format
-msgid "You are not in the attendee list for {lan}."
-msgstr "Du er ikke påmeldt {lan}."
+msgid "You are not in the attendee list for the LAN."
+msgstr "Du er ikke påmeldt LAN-et."
 
-#, python-brace-format
-msgid "Successfully removed you from attendee list for {lan}"
-msgstr "Du ble fjernet fra listen over deltakere for {lan}."
+msgid ""
+"You cannot remove attendance since you have paid for a ticket to the LAN."
+msgstr "Du kan ikke avmelde deg siden du har betalt for en billett til LAN-et."
+
+msgid "Successfully removed you from attendee list for {lan}."
+msgstr "Du ble fjernet fra deltagerlisten for {lan}."
 
 msgid "Paying participants"
 msgstr "Betalende deltagere"
@@ -696,12 +698,23 @@ msgstr "nyhetsartikkeloversettelser"
 msgid "Payment"
 msgstr "Betaling"
 
+msgid "You must be an attendee to buy a ticket for this LAN."
+msgstr "Du må melde deg opp før du kan kjøpe en billett for dette LAN-et."
+
+msgid "You have already have a ticket for this LAN."
+msgstr "Du har allerede en billett for dette LAN-et."
+
+msgid "This ticket is not yet available."
+msgstr "Billetten er ikke tilgjengelig ennå."
+
 msgid "Ticket confirmation"
 msgstr "Billettbekreftelse"
 
-#, python-brace-format
-msgid "Payment complete. Confirmation sent to {email}."
-msgstr "Betalingen ble gjennomført. Bekreftelsen ble sendt til {email}."
+msgid "Payment complete."
+msgstr "Betalingen ble gjennomført."
+
+msgid "Payment unsuccessful. Please contact support."
+msgstr "Betaling mislyktes. Vennligst kontakt brukerstøtte."
 
 msgid "Seating"
 msgstr "Plasskart"
@@ -755,8 +768,8 @@ msgstr "Du har reservert plassen din."
 msgid "That seat is already taken."
 msgstr "Plassen er allerede opptatt."
 
-msgid "Your ticket does not allow reservation in this seating."
-msgstr "Billetten din tillater ikke reservering i dette plasskartet."
+msgid "Your ticket does not work in this seating area."
+msgstr "Billetten din virker ikke i dette området."
 
 msgid "You need to attend and pay before reserving your seat."
 msgstr "Du må melde deg på og betale før du kan reservere plass."
@@ -765,7 +778,7 @@ msgid "You have unreserved your seat."
 msgstr "Du har avreservert plassen din."
 
 msgid "This is not your seat."
-msgstr ""
+msgstr "Dette er ikke din plass."
 
 msgid "No seat was specified."
 msgstr "Ingen plass var spesifisert."
@@ -1492,8 +1505,8 @@ msgstr "Ledige plasser"
 msgid "Sold out"
 msgstr "Utsolgt"
 
-msgid "Pay with Card"
-msgstr "Betal med Kort"
+msgid "Buy"
+msgstr "Kjøp"
 
 msgid "Tickets will be available"
 msgstr "Billetter vil bli tilgjengelige"
@@ -1579,6 +1592,24 @@ msgstr "Festet"
 msgid "Archive"
 msgstr "Arkiv"
 
+msgid "Ticket Purchase for"
+msgstr "Billettkjøp for"
+
+msgid "Ticket type"
+msgstr "Billettype"
+
+msgid "Card holder name"
+msgstr "Navn på kortholder"
+
+msgid "Card info"
+msgstr "Kortinformasjon"
+
+msgid "Submit payment"
+msgstr "Send betaling"
+
+msgid "How safe it this payment page?"
+msgstr "Hvor trygg er denne betalingssiden?"
+
 #, python-format
 msgid ""
 "\n"
@@ -1614,20 +1645,41 @@ msgstr ""
 "Billetten er lenket til %(user_full_name)s (%(user)s).\n"
 "Mer informasjon om LAN-et kan finnes her: %(lan_title)s (%(lan_link)s)\n"
 
+msgid "Payment Security"
+msgstr "Betalingssikkerhet"
+
+msgid ""
+"\n"
+"        <p>We use <a href=\"https://stripe.com/en-no\">Stripe</a> for all "
+"our payments. By using Stripe.js and the elements library that Stripe "
+"offers, your credit card is never touched by our servers. This technique "
+"also makes the payment system PCI compliant.</p>\n"
+"        <p>If you want to read more about the security of Stripe, please "
+"consult the following <a href=\"https://stripe.com/docs/security/stripe"
+"\">documentation at Stripe.com</a>.</p>\n"
+"        <p>The studlan project is open sourced at <a href=\"https://github."
+"com/CasualGaming/studlan/\">GitHub</a>, so you are free to inspect the "
+"safety of the code yourself.</p>\n"
+"        "
+msgstr ""
+"\n"
+"        <p>Vi bruker <a href=\"https://stripe.com/en-no\">Stripe</a> for "
+"alle våre betalinger. Ved å bruke Stripe.js og element-biblioteket Stripe "
+"byr på, røres ikke kredittkortinformasjonen av våre tjenere. Denne teknikken "
+"gjør også betalingssystemet vårt PCI-kompatibelt.</p>\n"
+"        <p>Hvis du vil lese mer om sikkerheten til Stripe, vennligst se "
+"følgende <a href=\"https://stripe.com/docs/security/stripe\">dokumentasjon "
+"hos Stripe.com</a>.</p>\n"
+"        <p>studlan-prosjektet er open sourced hos <a href=\"https://github."
+"com/CasualGaming/studlan/\">GitHub</a>, så du kan fritt inspisere "
+"sikkerheten av koden selv.</p>\n"
+"        "
+
+msgid "Back to ticket page"
+msgstr "Tilbake til billettside"
+
 msgid "Seating Map"
 msgstr "Plasskart"
-
-msgid "Your seat"
-msgstr "Din plass"
-
-msgid "Taken seat"
-msgstr "Opptatt plass"
-
-msgid "Free seat"
-msgstr "Ledig plass"
-
-msgid "Room Info"
-msgstr "Rominfo"
 
 msgid "Closes"
 msgstr "Stenger"
@@ -1661,6 +1713,18 @@ msgstr "Ta plass"
 
 msgid "Leave seat"
 msgstr "Forlat plass"
+
+msgid "Your seat"
+msgstr "Din plass"
+
+msgid "Taken seat"
+msgstr "Opptatt plass"
+
+msgid "Free seat"
+msgstr "Ledig plass"
+
+msgid "Unavailable seat"
+msgstr "Utilgjengelig plass"
 
 msgid "There are no active seatings."
 msgstr "Det finnes ingen aktive plasskart."
@@ -1769,10 +1833,10 @@ msgid "History"
 msgstr "Historikk"
 
 msgid "Inbox"
-msgstr "Inboks"
+msgstr "Innboks"
 
 msgid "Inbox is empty."
-msgstr "Inboksen er tom."
+msgstr "Innboksen er tom."
 
 msgid "Go to public profile page"
 msgstr "Gå til offentlig profilside"
@@ -1870,3 +1934,9 @@ msgstr "Adminpanel"
 
 msgid "Log out"
 msgstr "Logg ut"
+
+#~ msgid "Pay with Card"
+#~ msgstr "Betal med Kort"
+
+#~ msgid "Room Info"
+#~ msgstr "Rominfo"
