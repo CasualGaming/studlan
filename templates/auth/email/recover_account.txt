@@ -1,8 +1,6 @@
 {% extends "email/base.txt" %}
 
 {% load i18n %}
-{% load settings %}
-
 {% block content %}
 {% blocktrans with request.get_host as host %}
 You have requested a password recovery for the account(s) bound to this email address at {{ site_name }} ({{ host }}).

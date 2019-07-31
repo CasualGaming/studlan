@@ -1,7 +1,6 @@
 {% extends "email/base.txt" %}
 
 {% load i18n %}
-{% load settings %}
 
 {% block content %}
 {% with ticket_type_title=ticket.ticket_type.get_translation.title lan_title=lan.title user_full_name=ticket.user.get_full_name user=ticket.user %}
