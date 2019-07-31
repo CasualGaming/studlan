@@ -221,7 +221,7 @@
                             {% else %}
                                 <div class="alert alert-danger" role="alert">
                                     {% url 'create_team' as create_team_url %}
-                                    {% blocktrans %}
+                                    {% blocktrans trimmed %}
                                     To join the competition as a team you have to <a href="{{ create_team_url }}">create</a> or join a team.
                                     {% endblocktrans %}
                                 </div>
@@ -331,7 +331,7 @@
         <div class="row">
             <div class="col-md-9">
                 <div class="alert alert-info">
-                    {% blocktrans %}
+                    {% blocktrans trimmed %}
                     <strong>Note:</strong>
                     Signing up for a team compo as a solo player does not mean you are a participant.
                     Try to find other players that sign up solo, make a team and sign up as a team.
@@ -349,7 +349,7 @@
     <div class="row">
         <div class="col-md-9">
             <div class="alert alert-info">
-                {% blocktrans with competition.max_participants as competition_max_participants %}
+                {% blocktrans with competition.max_participants as competition_max_participants trimmed %}
                 <strong>This competition is full.</strong>
                 This competition only had room for {{ competition_max_participants }} participants, and that limit has been reached.
                 {% endblocktrans %}

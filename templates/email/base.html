@@ -18,7 +18,7 @@
     </div>
     <footer>
         <hr />
-        {% blocktrans with request.get_host as host %}
+        {% blocktrans with request.get_host as host trimmed %}
         <p>Sent automatically from <a href="{{ host }}">{{ site_name }}</a>.</p>
         {% endblocktrans %}
     </footer>

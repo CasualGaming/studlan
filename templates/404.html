@@ -7,8 +7,12 @@
 {% endblock title %}
 
 {% block content %}
-<h1 class="page-header">{% trans "Error 404: File Not Found" %}</h1>
-{% blocktrans %}
-<p>We're sorry, but the page you requested could not be found.</p>
-{% endblocktrans %}
+<div class="row">
+    <div class="col-md-9">
+        <h1 class="page-header">{% trans "Error 404: File Not Found" %}</h1>
+        {% blocktrans trimmed %}
+        <p>We're sorry, but the page you requested could not be found.</p>
+        {% endblocktrans %}
+    </div>
+</div>
 {% endblock content %}

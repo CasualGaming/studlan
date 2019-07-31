@@ -7,9 +7,13 @@
 {% endblock title %}
 
 {% block content %}
-<h1 class="page-header">{% trans "Error 500: Server Error" %}</h1>
-{% blocktrans %}
-<p>We've encountered an internal server error.</p>
-<p>Administrators have been notified, but please contact us and tell us how it happened.</p>
-{% endblocktrans %}
+<div class="row">
+    <div class="col-md-9">
+        <h1 class="page-header">{% trans "Error 500: Server Error" %}</h1>
+        {% blocktrans trimmed %}
+        <p>We've encountered an internal server error.</p>
+        <p>Administrators have been notified, but please contact us and tell us how it happened.</p>
+        {% endblocktrans %}
+    </div>
+</div>
 {% endblock content %}
