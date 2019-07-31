@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-31 19:35+0200\n"
+"POT-Creation-Date: 2019-07-31 20:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -519,7 +519,7 @@ msgid "When the tickets will be made available."
 msgstr "Når billettene vil gjøres offentlige."
 
 msgid "seats"
-msgstr "plass"
+msgstr "seter"
 
 msgid "ticket type"
 msgstr "billettype"
@@ -718,19 +718,19 @@ msgid "Payment unsuccessful. Please contact support."
 msgstr "Betaling mislyktes. Vennligst kontakt brukerstøtte."
 
 msgid "Seating"
-msgstr "Plasskart"
+msgstr "Setekart"
 
 msgid "number of seats"
 msgstr "antall seter"
 
 msgid "SVG layout for seating"
-msgstr "SVG-mal for plasskart"
+msgstr "SVG-mal for setekart"
 
 msgid "seating layout"
-msgstr "plasskartmal"
+msgstr "setekartmal"
 
 msgid "seating layouts"
-msgstr "plasskartmaler"
+msgstr "setekartmaler"
 
 msgid ""
 "This field is automatically updated to match the chosen layout. Change the "
@@ -746,56 +746,56 @@ msgid "layout"
 msgstr "mal"
 
 msgid "seating"
-msgstr "plasskart"
+msgstr "setekart"
 
 msgid "seatings"
-msgstr "plasskart"
+msgstr "setekart"
 
 msgid "placement ID"
 msgstr "plasserings-ID"
 
 msgid "A unique ID within the seating."
-msgstr "En unik ID innenfor plasskartet."
+msgstr "En unik ID innenfor setekartet."
 
 msgid "seat"
-msgstr "plass"
+msgstr "sete"
 
 msgid "The seating is closed."
-msgstr "Plasskartet er stengt."
+msgstr "Setekartet er stengt."
 
 msgid "You have reserved your seat."
-msgstr "Du har reservert plassen din."
+msgstr "Du har reservert setet ditt."
 
 msgid "That seat is already taken."
-msgstr "Plassen er allerede opptatt."
+msgstr "Setet er allerede opptatt."
 
 msgid "Your ticket does not work in this seating area."
 msgstr "Billetten din virker ikke i dette området."
 
 msgid "You need to attend and pay before reserving your seat."
-msgstr "Du må melde deg på og betale før du kan reservere plass."
+msgstr "Du må melde deg på og betale før du kan reservere sete."
 
 msgid "You have unreserved your seat."
-msgstr "Du har avreservert plassen din."
+msgstr "Du har avreservert setet din."
 
 msgid "This is not your seat."
-msgstr "Dette er ikke din plass."
+msgstr "Dette er ikke ditt sete."
 
 msgid "No seat was specified."
-msgstr "Ingen plass var spesifisert."
+msgstr "Intet sete var spesifisert."
 
 msgid "Illegal seat."
-msgstr "Ugyldig plass."
+msgstr "Ugyldig sete."
 
 msgid "Page"
 msgstr "Side"
 
 msgid "Seat"
-msgstr "Plass"
+msgstr "Sete"
 
 #, python-format
 msgid "%(seating)s, seat %(seat)d"
-msgstr "%(seating)s, plass %(seat)d"
+msgstr "%(seating)s, sete %(seat)d"
 
 msgid "(Available)"
 msgstr "(Ledig)"
@@ -1146,7 +1146,7 @@ msgid "Arrived"
 msgstr "Ankommet"
 
 msgid "No seat"
-msgstr "Ingen plass"
+msgstr "Intet sete"
 
 msgid "Toggle"
 msgstr "Vende"
@@ -1334,7 +1334,7 @@ msgid "Start time"
 msgstr "Starttid"
 
 msgid "Open spots"
-msgstr "Åpne plasser"
+msgstr "Åpne seter"
 
 msgid "Show brackets"
 msgstr "Vis braketter"
@@ -1501,10 +1501,10 @@ msgid "Price"
 msgstr "Pris"
 
 msgid "Seats"
-msgstr "Plasser"
+msgstr "Seter"
 
 msgid "Free seats"
-msgstr "Ledige plasser"
+msgstr "Ledige seter"
 
 msgid "Sold out"
 msgstr "Utsolgt"
@@ -1617,8 +1617,8 @@ msgstr "Kortinformasjon"
 msgid "Submit payment"
 msgstr "Send betaling"
 
-msgid "How safe it this payment page?"
-msgstr "Hvor trygg er denne betalingssiden?"
+msgid "About our payment security"
+msgstr "Om betalingssikkerheten vår"
 
 #, python-format
 msgid ""
@@ -1689,7 +1689,7 @@ msgid "Back to ticket page"
 msgstr "Tilbake til billettside"
 
 msgid "Seating Map"
-msgstr "Plasskart"
+msgstr "Setekart"
 
 msgid "Closes"
 msgstr "Stenger"
@@ -1701,43 +1701,43 @@ msgid "Admin"
 msgstr "Admin"
 
 msgid "Seating list"
-msgstr "Plassliste"
+msgstr "Seteliste"
 
 msgid "Seating map"
-msgstr "Plasskart"
+msgstr "Setekart"
 
 msgid "Seat Info"
-msgstr "Plassinfo"
+msgstr "Seteinfo"
 
 msgid "Seat number"
-msgstr "Plassnummer"
+msgstr "Setenummer"
 
 msgid "Select a seat"
-msgstr "Velg en plass"
+msgstr "Velg et sete"
 
 msgid "Occupied by"
 msgstr "Tatt av"
 
 msgid "Take seat"
-msgstr "Ta plass"
+msgstr "Ta sete"
 
 msgid "Leave seat"
-msgstr "Forlat plass"
+msgstr "Forlat sete"
 
 msgid "Your seat"
-msgstr "Din plass"
+msgstr "Ditt sete"
 
 msgid "Taken seat"
-msgstr "Opptatt plass"
+msgstr "Opptatt sete"
 
 msgid "Free seat"
-msgstr "Ledig plass"
+msgstr "Ledig sete"
 
 msgid "Unavailable seat"
-msgstr "Utilgjengelig plass"
+msgstr "Utilgjengelig sete"
 
 msgid "There are no active seatings."
-msgstr "Det finnes ingen aktive plasskart."
+msgstr "Det finnes ingen aktive setekart."
 
 msgid "Previous Sponsors"
 msgstr "Tidligere sponsorer"
@@ -1894,7 +1894,7 @@ msgid "Last login"
 msgstr "Siste innlogging"
 
 msgid "LAN Seatings"
-msgstr "LAN-plasskart"
+msgstr "LAN-setekart"
 
 msgid "Edit Profile"
 msgstr "Endre profil"
@@ -1944,6 +1944,9 @@ msgstr "Adminpanel"
 
 msgid "Log out"
 msgstr "Logg ut"
+
+#~ msgid "How safe it this payment page?"
+#~ msgstr "Hvor trygg er denne betalingssiden?"
 
 #~ msgid "Tickets will be available"
 #~ msgstr "Billetter vil bli tilgjengelige"
