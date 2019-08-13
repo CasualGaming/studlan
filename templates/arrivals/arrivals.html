@@ -30,9 +30,14 @@
     <br />
     <div class="row">
         <div class="col-md-9">
-            <!-- Adding token here because using clientside js using the csrfcookie is a security liability -->
             <div style="display:none">
+                <!-- Adding token here because using clientside js using the csrfcookie is a security liability -->
                 <input id="token" type="hidden" value="{{ csrf_token }}">
+                <!-- Text used by JS toggle confirm dialogs -->
+                <span id="toggle-text-has-paid">{% trans "Set {user} to paid?" %}</span>
+                <span id="toggle-text-has-not-paid">{% trans "Set {user} to NOT paid?" %}</span>
+                <span id="toggle-text-has-arrived">{% trans "Set {user} to arrived?" %}</span>
+                <span id="toggle-text-has-not-arrived">{% trans "Set {user} to NOT arrived?" %}</span>
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered table-striped filterable">
@@ -59,18 +64,18 @@
                             </td>
                             <td>
                                 {% if attendee.user in ticket_users %}
-                                    <span class="label label-info">{{ ticket_users|get_user:attendee.user }} </span>
+                                <span class="label label-info">{{ ticket_users|get_user:attendee.user }} </span>
                                 {% elif attendee.has_paid %}
-                                    <span class="paid label label-success" value="True">{% trans "Toggle" %}</span>
+                                <span class="paid label label-success" value="True">{% trans "Toggle" %}</span>
                                 {% else %}
-                                    <span class="paid label label-danger" value="False">{% trans "Toggle" %}</span>
+                                <span class="paid label label-danger" value="False">{% trans "Toggle" %}</span>
                                 {% endif %}
                             </td>
                             <td>
                             {% if attendee.arrived %}
-                                <span class="arrived label label-success" value="True">{% trans "Toggle" %}</span>
+                            <span class="arrived label label-success" value="True">{% trans "Toggle" %}</span>
                             {% else %}
-                                <span class="arrived label label-danger" value="False">{% trans "Toggle" %}</span>
+                            <span class="arrived label label-danger" value="False">{% trans "Toggle" %}</span>
                             {% endif %}
                             </td>
                         </tr>

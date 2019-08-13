@@ -23,22 +23,42 @@ $.ajaxSetup({
 });
 /* END AJAX SETUP */
 
+const TYPE_PAID = 0;
+const TYPE_ARRIVED = 1;
+const VALUE_YES = "True"
+const VALUE_NO = "False"
 
 function toggle(username, type, previousValue, label)
 {
+    console.log("Toggle: type=" + type + " prev=" + previousValue)
+
+    let question_id;
+    if (type == TYPE_PAID && previousValue == VALUE_NO) {
+        question_id = "toggle-text-has-paid";
+    } else if (type == TYPE_PAID && previousValue == VALUE_YES) {
+        question_id = "toggle-text-has-not-paid";
+    } else if (type == TYPE_ARRIVED && previousValue == VALUE_NO) {
+        question_id = "toggle-text-has-arrived";
+    } else if (type == TYPE_ARRIVED && previousValue == VALUE_YES) {
+        question_id = "toggle-text-has-not-arrived";
+    }
+    question = $("#" + question_id).text().replace("{user}", username);
+    if (!confirm(question))
+        return;
+
     $.ajax({
         method: 'POST',
         url: 'toggle/',
         data: {'username': username, 'type': type, 'prev': previousValue},
         success: function() {
             $(label).toggleClass("label-success label-danger");
-            if(previousValue == "True")
+            if(previousValue == VALUE_YES)
             {
-                $(label).attr('value', "False");
+                $(label).attr('value', VALUE_NO);
             }
-            else if(previousValue == "False")
+            else if(previousValue == VALUE_NO)
             {
-                $(label).attr('value', "True");
+                $(label).attr('value', VALUE_YES);
             }
         },
         error: function(res) {
@@ -57,13 +77,13 @@ $(document).ready(function()
         {
             var username = $(row).find('.username').text();
             var prev = $(this).attr('value');
-            toggle(username, 0, prev, this);
+            toggle(username, TYPE_PAID, prev, this);
         });
         $(row).find('.arrived').click(function()
         {
             var username = $(row).find('.username').text();
             var prev = $(this).attr('value');
-            toggle(username, 1, prev, this);
+            toggle(username, TYPE_ARRIVED, prev, this);
         });
     });     
 });
