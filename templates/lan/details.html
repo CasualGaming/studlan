@@ -19,7 +19,7 @@
 <div class="row">
     <div class="col-md-9">
         <div class="alert alert-info">
-            <p>{% trans "This LAN is over." %}</p>
+            <p>{% trans "The LAN is over." %}</p>
         </div>
     </div>
 </div>
@@ -122,7 +122,7 @@
         </div>
         {% endif %}{# user.profile.has_address #}
         {% endif %} {# status == ... #}
-        {% else %}{# active and user.is_authenticated #}
+        {% elif not user.is_authenticated %}
         <div class="alert alert-danger">
             {% trans "You need to login to sign up for the LAN." %}
         </div>
