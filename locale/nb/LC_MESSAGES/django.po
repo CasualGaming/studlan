@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-31 20:59+0200\n"
+"POT-Creation-Date: 2019-08-13 21:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -521,6 +521,9 @@ msgstr "Når billettene vil gjøres offentlige."
 msgid "seats"
 msgstr "seter"
 
+msgid "{price}kr"
+msgstr "{price}kr"
+
 msgid "ticket type"
 msgstr "billettype"
 
@@ -699,14 +702,14 @@ msgstr "nyhetsartikkeloversettelser"
 msgid "Payment"
 msgstr "Betaling"
 
-msgid "You must be an attendee to buy a ticket for this LAN."
-msgstr "Du må melde deg opp før du kan kjøpe en billett for dette LAN-et."
+msgid "This ticket is not yet available."
+msgstr "Billetten er ikke tilgjengelig ennå."
 
 msgid "You have already have a ticket for this LAN."
 msgstr "Du har allerede en billett for dette LAN-et."
 
-msgid "This ticket is not yet available."
-msgstr "Billetten er ikke tilgjengelig ennå."
+msgid "You must attend first to buy a ticket for this LAN."
+msgstr "Du må melde deg opp før du kan kjøpe en billett for dette LAN-et."
 
 msgid "Ticket confirmation"
 msgstr "Billettbekreftelse"
@@ -1122,6 +1125,22 @@ msgstr "Betalt:"
 msgid "Arrived:"
 msgstr "Ankommet:"
 
+#, python-brace-format
+msgid "Set {user} to paid?"
+msgstr "Sett {user} til betalt?"
+
+#, python-brace-format
+msgid "Set {user} to NOT paid?"
+msgstr "Sett {user} til IKKE betalt?"
+
+#, python-brace-format
+msgid "Set {user} to arrived?"
+msgstr "Sett {user} til ankommet?"
+
+#, python-brace-format
+msgid "Set {user} to NOT arrived?"
+msgstr "Sett {user} til IKKE ankommet?"
+
 msgid "Username"
 msgstr "Brukernavn"
 
@@ -1441,7 +1460,7 @@ msgstr "Sent automatisk fra %(site_name)s (%(host)s)."
 msgid "Support"
 msgstr "Brukerstøtte"
 
-msgid "This lan is over."
+msgid "The LAN is over."
 msgstr "LAN-et er avsluttet."
 
 msgid "End time"
@@ -1457,36 +1476,11 @@ msgstr "Du har en billett: %(ticket_title)s"
 msgid "You have a ticket."
 msgstr "Du har en billett."
 
-msgid "Remove attendance"
-msgstr "Meld deg av"
+msgid "Unattend"
+msgstr "Ikke delta"
 
-msgid "Tickets"
-msgstr "Billetter"
-
-msgid "Price"
-msgstr "Pris"
-
-msgid "Seats"
-msgstr "Seter"
-
-msgid "Free seats"
-msgstr "Ledige seter"
-
-msgid "Sold out"
-msgstr "Utsolgt"
-
-msgid "Buy"
-msgstr "Kjøp"
-
-#, python-format
-msgid "Tickets will be released %(release_date)s at %(release_time)s."
-msgstr "Billetter slippes %(release_date)s kl. %(release_time)s."
-
-msgid "No tickets avalible at this time."
-msgstr "Det er ingen billetter tilgjengelig akkurat nå."
-
-msgid "Sign up"
-msgstr "Meld deg på"
+msgid "Attend"
+msgstr "Delta"
 
 #, python-format
 msgid ""
@@ -1498,6 +1492,42 @@ msgstr ""
 
 msgid "You need to login to sign up for the LAN."
 msgstr "Du må logge deg på for å melde deg opp til LAN-et."
+
+msgid "Tickets"
+msgstr "Billetter"
+
+msgid "Price"
+msgstr "Pris"
+
+msgid "Free seats"
+msgstr "Ledige seter"
+
+msgid "Sold out"
+msgstr "Utsolgt"
+
+msgid "Tickets will be released %(release_date)s at %(release_time)s"
+msgstr "Billetter slippes %(release_date)s kl. %(release_time)s"
+
+msgid "The LAN is over"
+msgstr "LAN-et er avsluttet"
+
+msgid "Not logged in"
+msgstr "Ikke innlogget"
+
+msgid "You already have a ticket"
+msgstr "Du har allerede en billett."
+
+msgid "You must attend first"
+msgstr "Du må delta først"
+
+msgid "Missing address in user profile"
+msgstr "Manglende adresse i brukerprofilen"
+
+msgid "Buy"
+msgstr "Kjøp"
+
+msgid "No tickets avalible at this time."
+msgstr "Det er ingen billetter tilgjengelig akkurat nå."
 
 msgid "LAN List"
 msgstr "LAN-liste"
@@ -1699,13 +1729,14 @@ msgstr "Nytt lag"
 msgid "Must be unique!"
 msgstr "Må være unikt!"
 
-#, python-format
 msgid ""
-"%(inviter)s has invited you to join team <a href=\"%(team_url)s\">%(team)s</"
-"a>. <br /> You can accept or decline the invitation on the team page."
+"<strong>%(inviter)s</strong> has invited you to join team <a href="
+"\"%(team_url)s\"><strong>%(team)s</strong></a>. <br /> You can accept or "
+"decline the invitation on the team page."
 msgstr ""
-"%(inviter)s har invitert deg til å bli med på lag <a href=\"%(team_url)s\">"
-"%(team)s</a>. <br /> Du kan akseptere eller avslå invitasjonen på lagsiden."
+"<strong>%(inviter)s</strong> har invitert deg til å bli med i lag <a href="
+"\"%(team_url)s\"><strong>%(team)s</strong></a>. <br /> Du kan akseptere "
+"eller avslå invitasjonen på lagsiden."
 
 msgid "My teams"
 msgstr "Mine lag"
@@ -1891,15 +1922,3 @@ msgstr "Adminpanel"
 
 msgid "Log out"
 msgstr "Logg ut"
-
-#~ msgid "How safe it this payment page?"
-#~ msgstr "Hvor trygg er denne betalingssiden?"
-
-#~ msgid "Tickets will be available"
-#~ msgstr "Billetter vil bli tilgjengelige"
-
-#~ msgid "Pay with Card"
-#~ msgstr "Betal med Kort"
-
-#~ msgid "Room Info"
-#~ msgstr "Rominfo"
