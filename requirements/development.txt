@@ -11,12 +11,12 @@ beautifulsoup4==4.8.0
 certifi==2019.6.16        # via requests
 cffi==1.12.3              # via cryptography
 chardet==3.0.4            # via requests
-configparser==3.7.4       # via entrypoints, flake8
+configparser==3.8.1       # via entrypoints, flake8
 cryptography==2.7         # via pyopenssl, requests
 django-markdown-deux==1.0.5
 django-postman==3.6.2
 django-translatable==0.1.1
-django==1.11.22
+django==1.11.23
 entrypoints==0.3          # via flake8
 enum34==1.1.6             # via cryptography, flake8, flake8-import-order
 flake8-bandit==2.1.1
@@ -32,7 +32,7 @@ flake8-mutable==1.2.0
 flake8-pep3101==1.2.1
 flake8-polyfill==1.0.2    # via flake8-bandit, pep8-naming
 flake8-print==3.1.0
-flake8-quotes==2.0.1
+flake8-quotes==2.1.0
 flake8-string-format==0.2.3
 flake8-tidy-imports==1.1.0
 flake8-todo==0.7
@@ -46,7 +46,7 @@ iso8601==0.1.12           # via pychal
 markdown2==2.3.8
 mccabe==0.6.1             # via flake8
 olefile==0.46
-pbr==5.4.1                # via stevedore
+pbr==5.4.2                # via stevedore
 pep8-naming==0.8.2
 pillow==6.1.0             # via reportlab
 pychal==1.8.1
@@ -54,15 +54,15 @@ pycodestyle==2.5.0        # via flake8, flake8-bandit, flake8-debugger, flake8-i
 pycparser==2.19           # via cffi
 pyflakes==2.1.1           # via flake8
 pyopenssl==19.0.0         # via requests
-pytz==2019.1              # via django, pychal, tzlocal
-pyyaml==5.1.1             # via bandit
+pytz==2019.2              # via django, pychal, tzlocal
+pyyaml==5.1.2             # via bandit
 reportlab==3.5.23
 requests[security]==2.22.0
 six==1.12.0               # via bandit, cryptography, flake8-print, pyopenssl, stevedore
 smmap2==2.0.5             # via gitdb2
 soupsieve==1.9.2          # via beautifulsoup4
 stevedore==1.30.1         # via bandit
-stripe==2.32.1
+stripe==2.35.0
 typing==3.7.4             # via flake8
 tzlocal==2.0.0            # via pychal
 urllib3==1.25.3           # via requests
