@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+- Made login, register, recover and set-password pages narrow.
+- Centered narrow pages.
 
 ### Deprecated
 
@@ -16,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed misaligned site logo.
+- Fixed navbar overflowing into two rows on medium screens when logged out.
 
 ### Security
 

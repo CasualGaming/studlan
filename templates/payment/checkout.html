@@ -9,7 +9,8 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-sm-2 col-md-1"></div>
+        <div class="col-sm-8 col-md-7">
             <h1 class="page-header">{% trans "Ticket Purchase for" %} {{ lan }}</h1><br>
             <table class="table table-bordered">
                 <tbody>
@@ -23,10 +24,7 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
+
             <h4>{% trans "Card holder name" %}</h4>
             <div>
                 <input class="form-control" id="cardholder-name" name="cardholder-name" placeholder="{% trans "Card holder name" %}" type="text"/><br>
@@ -36,10 +34,7 @@
             <div>
                 <button class="btn btn-success" id="card-button">{% trans "Submit payment" %}</button>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
+
             <br>
             <a href="{% url 'payment_info' ticket_type.id %}">{% trans "About our payment security" %}</a>
         </div>
