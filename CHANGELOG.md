@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed seating map rendering crashing if any seat objects are missing.
+- Fixed seating map client script triggering on pressing inactive seats.
 
 ### Security
 
