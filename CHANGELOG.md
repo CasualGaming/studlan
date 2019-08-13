@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+- Redirect users to the LAN page when trying to reserve a seat without any ticket.
 
 ### Deprecated
 

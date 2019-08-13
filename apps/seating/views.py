@@ -114,6 +114,7 @@ def seating_details(request, lan_id, seating_id=None, seat_id=None):
 @login_required()
 def take_seat(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
+    lan = seating.lan
     if not seating.is_open():
         messages.error(request, _(u'The seating is closed.'))
         return redirect(seating)
@@ -123,22 +124,22 @@ def take_seat(request, seating_id):
         return redirect(seating)
     seat = get_object_or_404(Seat, pk=seat_id)
 
-    siblings = list(Seating.objects.filter(lan=seating.lan))
+    siblings = list(Seating.objects.filter(lan=lan))
     occupied = seating.get_user_registered()
     for sibling in siblings:
         occupied = occupied + sibling.get_user_registered()
 
     try:
-        attendee = Attendee.objects.get(user=request.user, lan=seating.lan)
+        attendee = Attendee.objects.get(user=request.user, lan=lan)
     except ObjectDoesNotExist:
         attendee = None
-    if (attendee and attendee.has_paid) or seating.lan.has_ticket(request.user):
-        if not seating.ticket_types or (seating.lan.has_ticket(request.user) and seating.lan.has_ticket(request.user).ticket_type in seating.ticket_types.all()):
+    if (attendee and attendee.has_paid) or lan.has_ticket(request.user):
+        if not seating.ticket_types or (lan.has_ticket(request.user) and lan.has_ticket(request.user).ticket_type in seating.ticket_types.all()):
             if not seat.user:
                 if request.user in occupied:
                     old_seats = Seat.objects.filter(user=request.user)
                     for os in old_seats:
-                        if os.seating.lan == seating.lan:
+                        if os.seating.lan == lan:
                             os.user = None
                             os.save()
                 seat.user = request.user
@@ -147,9 +148,10 @@ def take_seat(request, seating_id):
             else:
                 messages.error(request, _(u'That seat is already taken.'))
         else:
-            messages.error(request, _(u'Your ticket does not work in this seating area.'))
+            messages.warning(request, _(u'Your ticket does not work in this seating area.'))
     else:
-        messages.error(request, _(u'You need to attend and pay before reserving your seat.'))
+        messages.warning(request, _(u'You need a ticket before reserving a seat.'))
+        return redirect(lan)
     return redirect(seating)
 
 
