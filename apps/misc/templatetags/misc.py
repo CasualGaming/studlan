@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.template import Library
+from django.utils.translation import ugettext as _
 
 
 register = Library()
@@ -56,4 +57,4 @@ def get_seat_placement(dictionary, key):
 @register.filter
 def get_seat_info(dictionary, key):
     seat = dictionary.get(key)
-    return '{0}, seat {1}'.format(seat.seating, seat.placement)
+    return _(u'{0}, seat {1}').format(seat.seating.title, seat.placement)
