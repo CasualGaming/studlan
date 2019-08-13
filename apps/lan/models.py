@@ -103,6 +103,10 @@ class TicketType(TranslatableModel):
     available_from = models.DateTimeField(_(u'release date'), default=datetime.now, help_text=_(u'When the tickets will be made available.'))
     number_of_seats = models.IntegerField(_(u'seats'))
 
+    @property
+    def verbose_price(self):
+        return _(u'{price}kr').format(price=self.price)
+
     def number_of_seats_used(self):
         return self.ticket_set.count()
 
