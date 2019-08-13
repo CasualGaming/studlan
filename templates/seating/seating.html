@@ -43,24 +43,49 @@
                 	<div class="well sidebar">
                         <ul class="nav nav-stacked">
                             <li class="sidebar-header"><a href="">{% trans "Seating" %}</a></li>
-                            <li>{% trans "LAN" %}: <label class="label label-info">{{ seating.lan.title }}</label></li>
-                            <li>{% trans "Seating" %}: <label class="label label-info">{{ seating.title }}</label></li>
+                            <li>{% trans "Seating" %}: <span class="label label-info">{{ seating.title }}</span></li>
                             {% if seating.is_open %}
-                                <li>{% trans "Status" %}: <label class="label label-success">{% trans "Open" context "status" %}</label></li>
-                                <li>{% trans "Closes" %}: <label class="label label-info">{{ seating.closing_date }}</label></li>
+                                <li>{% trans "Status" %}: <span class="label label-success">{% trans "Open" context "seating status" %}</span></li>
+                                <li>{% trans "Closes" %}: <span class="label label-info">{{ seating.closing_date }}</span></li>
                             {% else %}
-                                <li>{% trans "Status" %}: <label class="label label-danger">{% trans "Closed" context "status" %}</label></li>
+                                <li>{% trans "Status" %}: <span class="label label-danger">{% trans "Closed" context "seating status" %}</span></li>
                             {% endif %}
-                            <li>{% trans "Capacity" %}: <label class="label label-info">{{ seating.get_free_seats }}/{{ seating.get_number_of_seats }}</label></li>
+                            <li>
+                                {% trans "Tickets" %}:
+                                {% if seating.ticket_types.exists %}
+                                {% if seating.ticket_types.count > 1 %}
+                                <br />
+                                {% endif %}
+                                {% for ticket_type in seating.ticket_types.all %}
+                                {% if ticket_type in user_ticket_types %}
+                                <span class="label label-success">{{ ticket_type }}</span>
+                                {% else %}
+                                <span class="label label-warning">{{ ticket_type }}</span>
+                                {% endif %}
+                                {% endfor %}
+                                {% else %}
+                                <span class="label label-danger">{% trans "None" context "ticket types" %}</span>
+                                {% endif %}
+                            </li>
+                            <li>
+                                {% trans "Available seats" %}:
+                                {% with free_seat_count=seating.get_free_seats total_seat_count=seating.get_number_of_seats %}
+                                {% if free_seat_count > 0 %}
+                                <span class="label label-success">{{ free_seat_count }}/{{ total_seat_count }}</span>
+                                {% else %}
+                                <span class="label label-danger">{{ free_seat_count }}/{{ total_seat_count }}</span>
+                                {% endif %}
+                                {% endwith %}
+                            </li>
 
                             {% if perms.seating.export_seating %}
                             <li class="sidebar-header"><a href="">{% trans "Admin" %}</a></li>
-                            <li><a href="{% url 'seating_list' seating.id %}"><span class="glyphicon glyphicon-th"></span>{% trans "Seating list" %} ({{ LANG_INFO.name }})</a></li>
-                            <li><a href="{% url 'seating_map' seating.id %}"><span class="glyphicon glyphicon-th"></span>{% trans "Seating map" %} ({{ LANG_INFO.name }})</a></li>
+                            <li><a href="{% url 'seating_list' seating.id %}"><span class="glyphicon glyphicon-th"></span> {% trans "Seating list" %} <small>({{ LANG_INFO.name }})</small></a></li>
+                            <li><a href="{% url 'seating_map' seating.id %}"><span class="glyphicon glyphicon-th"></span> {% trans "Seating map" %} <small>({{ LANG_INFO.name }})</small></a></li>
                             {% endif %}
 
                             <li class="sidebar-header"><a href="">{% trans "Seat Info" %}</a></li>
-                            <li>{% trans "Seat number" %}: <span id="seat-number">({% trans "Select a seat" %})</span></li>
+                            <li>{% trans "Seat number" %}: <span id="seat-number" class="label label-info">({% trans "Select a seat" %})</span></li>
                             <div id="occupied-by" class="hide">
                                 <li>{% trans "Occupied by" %}: <strong><span id="seat-user"></span></strong></li>
                             </div>

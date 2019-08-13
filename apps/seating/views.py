@@ -99,13 +99,13 @@ def seating_details(request, lan_id, seating_id=None, seat_id=None):
     context['seatings'] = seatings
     context['seating'] = seating
     context['seat'] = seat_id
+    context['user_ticket_types'] = seating.ticket_types.filter(ticket__user=request.user)
     context['hide_sidebar'] = True
     context['template'] = dom.__str__
-    breadcrumbs = (
+    context['breadcrumbs'] = (
         (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
         (_(u'Seating'), ''),
     )
-    context['breadcrumbs'] = breadcrumbs
 
     return render(request, 'seating/seating.html', context)
 
