@@ -20,7 +20,7 @@ class SeatAdmin(admin.ModelAdmin):
     model = Seat
     list_display = ('__unicode__', 'user')
     list_filter = ('seating__lan',)
-    search_fields = ['placement', 'user__username']
+    search_fields = ['=placement', 'user__username']
 
 
 admin.site.register(Layout, LayoutAdmin)
