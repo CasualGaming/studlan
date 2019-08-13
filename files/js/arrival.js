@@ -40,7 +40,7 @@ function toggle(username, type, previousValue, label)
     } else if (type == TYPE_ARRIVED && previousValue == VALUE_YES) {
         question_id = "toggle-text-has-not-arrived";
     }
-    question = $("#" + question_id).text().replace("{user}", username);
+    let question = $("#" + question_id).text().replace("{user}", username);
     if (!confirm(question))
         return;
 
