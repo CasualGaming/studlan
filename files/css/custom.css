@@ -130,9 +130,30 @@ div#btn-profile {
     color:  #000000;
 }
 
-.sponsor_banner {
+.sponsor-panel {
+    text-align: center;
+}
+
+.sponsor-banner {
+    height: 120px;
+    max-width: 75%;
+    margin: 20px auto;
+    line-height: 120px;
+}
+
+.sponsor-banner-image, .sponsor-banner-text {
     max-width: 100%;
-    max-height: 150px;
+    max-height: 100%;
+}
+
+.sponsor-banner-text {
+    display: inline-block;
+    font-size: 200%;
+}
+
+.sponsor-banner a, .sponsor-banner a:hover {
+    color: #000000;
+    text-decoration: none;
 }
 
 .tab-pane pre {
@@ -260,24 +281,23 @@ div#btn-profile {
     text-align: center;
 }
 
-.sponsorbar-body > hr:first-child {
-    display: none;
-}
-
 .sponsorbar-body > hr {
-    margin: 10px;
+    margin: 0;
 }
 
 .sponsorbar-sponsor {
-    height: 80px;
-    /* For vertically centering */
-    line-height: 80px;
-    padding-bottom: 10px;
+    height: 100px;
+    margin: 10px;
+    /* Same as height, for vertically centering */
+    line-height: 100px;
     text-align: center;
+    font-size: 150%;
+    font-weight: bold;
 }
 
-.sponsorbar-sponsor-title {
-    font-weight: bold;
+.sponsorbar-sponsor a, .sponsorbar-sponsor a:hover {
+    color: #000000;
+    text-decoration: none;
 }
 
 .sponsorbar-sponsor-image {
@@ -286,7 +306,7 @@ div#btn-profile {
 }
 
 .svg-container {
-      position: relative;
+    position: relative;
 }
 
 .svg-container svg {

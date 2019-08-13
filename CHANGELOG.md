@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Added list of sponsored LANs to sponsor panels on sponsor page.
 
 ### Changed
 - Made login, register, recover and set-password pages narrow.
@@ -19,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed misaligned site logo.
 - Fixed navbar overflowing into two rows on medium screens when logged out.
+- Fixed unfair sponsor banner sizes, where some appeared larger than others.
 
 ### Security
 

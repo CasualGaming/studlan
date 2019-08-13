@@ -1,0 +1,19 @@
+{% load i18n %}
+
+<div class="panel panel-default">
+    <div class="panel-body sponsor-panel">
+        <h3 class="sponsor-banner"><a title="{{ sponsor.title }}" href="{{ sponsor.website }}" target="_blank">
+        {% if sponsor.banner %}
+        <img class="sponsor-banner-image" alt="{{ sponsor.title }}" src="{{ sponsor.banner }}">
+        {% else %}
+        <span class="sponsor-banner-text">{{ sponsor.title }}</span>
+        {% endif %}
+        </a></h3>
+        <p>
+        {% for lan in sponsor.get_sponsored_lans %}
+        <span class="label label-primary"><a href="{{ lan.get_absolute_url }}">{{ lan }}</a></span>
+        {% endfor %}
+        </p>
+        <p>{{ sponsor.get_translation.description }}</p>
+    </div>
+</div>

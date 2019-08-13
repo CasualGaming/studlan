@@ -17,6 +17,9 @@ class Sponsor(TranslatableModel):
     def __unicode__(self):
         return self.title
 
+    def get_sponsored_lans(self):
+        return LAN.objects.filter(sponsorrelation__sponsor=self)
+
     class Meta:
         verbose_name = _(u'sponsor')
         verbose_name_plural = _(u'sponsors')
