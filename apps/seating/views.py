@@ -53,41 +53,45 @@ def seating_details(request, lan_id, seating_id=None, seat_id=None):
     lan = get_object_or_404(LAN, pk=lan_id)
     seatings = Seating.objects.filter(lan=lan)
 
-    if not seatings:
-        return render(request, 'seating/seating.html')
+    if not seating_id:
+        if seatings:
+            seating = seatings[0]
+            return redirect(seating)
+        else:
+            return render(request, 'seating/seating.html')
 
-    if seating_id:
-        seating = get_object_or_404(Seating, pk=seating_id, lan=lan)
-    else:
-        seating = seatings[0]
-        return redirect(seating)
-
+    seating = get_object_or_404(Seating, pk=seating_id, lan=lan)
     seats = seating.get_total_seats()
 
     dom = BeautifulSoup(seating.layout.template, 'html.parser')
-    counter = 0
+    seat_counter = 0
     for tag in dom.find_all('a'):
+        seat_counter += 1
+        seat_qs = seats.filter(placement=seat_counter)
+        if not seat_qs.exists():
+            continue
+
+        seat = seat_qs[0]
         children = tag.find_all('rect')
-        children[0]['seat-number'] = seats[counter].pk
-        children[0]['seat-display'] = seats[counter].placement
-        if not seats[counter].user:
+        children[0]['seat-number'] = seat.pk
+        children[0]['seat-display'] = seat.placement
+        if not seat.user:
             children[0]['class'] = ' seating-node-free'
             children[0]['status'] = 'free'
         else:
-            if seats[counter].user == request.user:
+            if seat.user == request.user:
                 children[0]['class'] = ' seating-node-self'
                 children[0]['status'] = 'mine'
             else:
                 children[0]['class'] = ' seating-node-occupied'
                 children[0]['status'] = 'occupied'
-                children[0]['seat-user'] = unicode(seats[counter].user.username)
+                children[0]['seat-user'] = unicode(seat.user.username)
 
                 # Separate title element for chrome support
                 title = dom.new_tag('title')
-                title.string = unicode(seats[counter].user.username)
+                title.string = unicode(seat.user.username)
                 tag.append(title)
 
-        counter += 1
     dom.encode('utf-8')
 
     context = {}
