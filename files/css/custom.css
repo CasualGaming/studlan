@@ -30,16 +30,6 @@ footer {
     color: #ccc;
 }
 
-.brand:hover {
-    text-decoration: none;
-}
-
-.brand img {
-    margin-top: -4px;
-    margin-right: 4px;
-    overflow: hidden;
-}
-
 .activity_image {
     height: 140px;
     margin-bottom: 20px;
@@ -116,13 +106,24 @@ div#btn-profile {
     font-weight: bold;
 }
 
-.navbar-logo {
+.navbar-brand-logo {
+    /* Gutter is 15px */
+    padding: 0 15px;
+}
+
+.navbar-brand-logo > div {
     width: 32px;
     height: 32px;
-    margin: 9px;
+    /* Navbar is 50px tall */
+    margin: 9px 0;
     background-image: url("/static/logo/logo_32.png");
     background-size: contain;
     image-rendering: crisp-edges;
+}
+
+.navbar-brand-text {
+    /* Gutter is 15px */
+    margin-left: -15px;
 }
 
 .navbar .nav > li > a {
