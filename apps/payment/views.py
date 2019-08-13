@@ -37,16 +37,20 @@ def payment(request, ticket_type_id):
 
     ticket_type = get_object_or_404(TicketType, pk=ticket_type_id)
 
-    if request.user not in ticket_type.lan.attendees:
-        messages.info(request, _(u'You must be an attendee to buy a ticket for this LAN.'))
+    if not ticket_type.is_available():
+        messages.info(request, _(u'This ticket is not yet available.'))
+        return redirect('lan_details', lan_id=ticket_type.lan_id)
+
+    if ticket_type.lan.end_date < datetime.now():
+        # "The LAN is over" is already visible on the page
         return redirect('lan_details', lan_id=ticket_type.lan_id)
 
     if ticket_type.lan.has_ticket(request.user) or request.user in ticket_type.lan.paid_attendees:
         messages.info(request, _(u'You have already have a ticket for this LAN.'))
         return redirect('lan_details', lan_id=ticket_type.lan_id)
 
-    if not ticket_type.is_available():
-        messages.info(request, _(u'This ticket is not yet available.'))
+    if request.user not in ticket_type.lan.attendees:
+        messages.info(request, _(u'You must attend first to buy a ticket for this LAN.'))
         return redirect('lan_details', lan_id=ticket_type.lan_id)
 
     if request.method == 'GET':
