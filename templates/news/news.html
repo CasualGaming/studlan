@@ -61,27 +61,30 @@
 </div>
 {% endif %}
 
-{% for article in articles.object_list %} 
 <div class="row">
     <div class="col-md-9">
-        <h3><a href="{{ article.get_absolute_url }}">{{ article.get_translation.translated_title }}</a></h3>
-        <div class="article-tags">
-            <span class="label label-default info">{{ article.pub_date|date:"d/m/Y" }} {{article.pub_date|time:"H:i"}}</span>
-            {% if lans.count > 1 %}
-            {% for lan in article.relevant_to.all %}
-            <span class="label label-default info">{{ lan }}</span>
-            {% endfor %}
-            {% endif %}
-            {% if article.pinned %}
-            <span class="label label-default info">{% trans "Pinned" %}</span>
-            {% endif %}
+        <h2>{% trans "News" %}</h3>
+        {% for article in articles.object_list %}
+        <div class="article">
+            <h3><a href="{{ article.get_absolute_url }}">{{ article.get_translation.translated_title }}</a></h3>
+            <div class="article-tags">
+                <span class="label label-default info">{{ article.pub_date|date:"d/m/Y" }} {{article.pub_date|time:"H:i"}}</span>
+                {% if lans.count > 1 %}
+                {% for lan in article.relevant_to.all %}
+                <span class="label label-default info">{{ lan }}</span>
+                {% endfor %}
+                {% endif %}
+                {% if article.pinned %}
+                <span class="label label-default info">{% trans "Pinned" %}</span>
+                {% endif %}
+            </div>
+            <div class="article-content">
+                {{ article.get_translation.translated_body|striptags|markdown|truncatewords:150 }}
+            </div>
         </div>
-        <div class="article-content">
-            {{ article.get_translation.translated_body|striptags|markdown|truncatewords:150 }}
-        </div>
+        {% endfor %}
     </div>
 </div>
-{% endfor %}
 
 <div class="row">
     <div class="col-md-6">
