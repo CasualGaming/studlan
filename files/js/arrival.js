@@ -30,8 +30,6 @@ const VALUE_NO = "False"
 
 function toggle(username, type, previousValue, label)
 {
-    console.log("Toggle: type=" + type + " prev=" + previousValue)
-
     let question_id;
     if (type == TYPE_PAID && previousValue == VALUE_NO) {
         question_id = "toggle-text-has-paid";
