@@ -254,35 +254,52 @@ div#btn-profile {
     padding: 1px;
 }
 
-@media (min-width:992px) {
-    .sponsorbar-wrapper {
-        position: absolute;
-        top: 100px;
-        right: 1vw;
-        width: 25vw;
-        max-width: 300px;
-    }
-}
-
-@media (min-width:1400px) {
-    .sponsorbar-wrapper {
-        right: 5vw;
-    }
-}
-
 .sponsorbar {
     margin-top: 20px;
     margin-bottom: 0;
 }
 
-.sponsorbar-header, .sponsorbar-header > a {
+.sponsorbar-header {
     background-color: rgb(65, 131, 196) !important;
-    color: white !important;
     text-align: center;
+    padding: 5px 10px;
+}
+
+.sponsorbar-header > a {
+    color: white !important;
+    text-decoration: none;
+    font-size: 120%;
+}
+
+.sponsorbar-body {
+    max-width: 300px;
+    margin: 0 auto;
 }
 
 .sponsorbar-body > hr {
     margin: 0;
+}
+
+@media (min-width:992px) {
+    .sponsorbar-wrapper {
+        position: absolute;
+        top: 120px;
+        right: 2vw;
+        width: 20vw;
+        max-width: 300px;
+    }
+
+    .sponsorbar-body {
+        width: 100%;
+    }
+}
+
+@media (min-width:1600px) {
+    .sponsorbar-wrapper {
+        left: calc(50vw + 450px);
+        width: 20vw;
+        max-width: 350px;
+    }
 }
 
 .sponsorbar-sponsor {
