@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-31 20:59+0200\n"
+"POT-Creation-Date: 2019-08-14 23:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -656,9 +656,6 @@ msgstr "lotterivinner"
 
 msgid "lottery winners"
 msgstr "lotterivinnere"
-
-msgid "Lottery not found."
-msgstr "Lotteri ble ikke funner."
 
 msgid "No eligible participants."
 msgstr "Ingen kvalifiserte deltagere."
@@ -1421,8 +1418,8 @@ msgctxt "status"
 msgid "Closed"
 msgstr "Stengt"
 
-msgid "No active raffles right now."
-msgstr "Ingen aktive trekninger for øyeblikket."
+msgid "No active raffles for this LAN."
+msgstr "Ingen aktive trekninger for dette LAN-et."
 
 msgid "There is no schedule for this LAN."
 msgstr "Det er ingen timetabell for dette LAN-et."
@@ -1502,38 +1499,70 @@ msgstr "Du må logge deg på for å melde deg opp til LAN-et."
 msgid "LAN List"
 msgstr "LAN-liste"
 
-msgid "Participants:"
-msgstr "Deltakere:"
+msgctxt "lottery"
+msgid "Open"
+msgstr "Åpen"
 
-msgid "Last winner:"
-msgstr "Siste vinner:"
+msgctxt "lottery"
+msgid "Closed"
+msgstr "Stengt"
 
-msgid "Leave"
-msgstr "Forlat"
+msgid "Mode"
+msgstr "Modus"
 
-msgid "Join"
-msgstr "Bli med"
+msgid "Multiple wins (winners may stay in the participant list and win again)"
+msgstr "Flere seiere (vinnere kan bli gjenværende i deltagerlisten og vinne igjen)"
+
+msgid ""
+"Single win (winners are removed from the participant list to prevent winning "
+"again)"
+msgstr ""
+"Enkel seier (vinnere fjernes fra deltagerlisten for å forhindre å vinne igjen)"
+
+msgid "Winners"
+msgstr "Vinnere"
 
 msgid "You need to be logged inn to participate."
 msgstr "Du må logge inn for å kunne delta."
 
-msgid "Signup closed."
-msgstr "Påmelding lukket."
+msgid "Unattend"
+msgstr "Ikke delta"
 
-msgid "Go to drawing"
-msgstr "Gå til trekking"
+msgid "Attend"
+msgstr "Delta"
+
+msgid "Close the raffle?"
+msgstr "Lukke trekningen?"
+
+msgid "Close raffle"
+msgstr "Lukk trekning"
+
+msgid "Open the raffle?"
+msgstr "Åpne trekningen="
+
+msgid "Open raffle"
+msgstr "Åpne trekning"
+
+msgid "Draw a new winner?"
+msgstr "Trekke en ny vinner?"
 
 msgid "Draw winner"
 msgstr "Trekk vinner"
 
-msgid "Go to lottery"
-msgstr "Gå til lotteri"
+msgid "Winner"
+msgstr "Vinner"
 
-msgid "Last Winner"
-msgstr "Siste vinner"
+msgid "No winner has been drawn."
+msgstr "Ingen vinnere har blitt trukket."
+
+msgid "No participants yet."
+msgstr "Ingen deltagere ennå."
 
 msgid "All Winners"
 msgstr "Alle vinnere"
+
+msgid "No winners yet."
+msgstr "Ingen vinnere ennå."
 
 msgid "Sponsors"
 msgstr "Sponsorer"
@@ -1699,13 +1728,14 @@ msgstr "Nytt lag"
 msgid "Must be unique!"
 msgstr "Må være unikt!"
 
-#, python-format
 msgid ""
-"%(inviter)s has invited you to join team <a href=\"%(team_url)s\">%(team)s</"
-"a>. <br /> You can accept or decline the invitation on the team page."
+"<strong>%(inviter)s</strong> has invited you to join team <a href="
+"\"%(team_url)s\"><strong>%(team)s</strong></a>. <br /> You can accept or "
+"decline the invitation on the team page."
 msgstr ""
-"%(inviter)s har invitert deg til å bli med på lag <a href=\"%(team_url)s\">"
-"%(team)s</a>. <br /> Du kan akseptere eller avslå invitasjonen på lagsiden."
+"<strong>%(inviter)s</strong> har invitert deg til å bli med i lag <a href="
+"\"%(team_url)s\"><strong>%(team)s</strong></a>. <br /> Du kan akseptere "
+"eller avslå invitasjonen på lagsiden."
 
 msgid "My teams"
 msgstr "Mine lag"
@@ -1883,23 +1913,8 @@ msgstr "Registrer ankonster"
 msgid "Manual registration"
 msgstr "Manuell resistrering"
 
-msgid "Drawing"
-msgstr "Trekking"
-
 msgid "Admin panel"
 msgstr "Adminpanel"
 
 msgid "Log out"
 msgstr "Logg ut"
-
-#~ msgid "How safe it this payment page?"
-#~ msgstr "Hvor trygg er denne betalingssiden?"
-
-#~ msgid "Tickets will be available"
-#~ msgstr "Billetter vil bli tilgjengelige"
-
-#~ msgid "Pay with Card"
-#~ msgstr "Betal med Kort"
-
-#~ msgid "Room Info"
-#~ msgstr "Rominfo"
