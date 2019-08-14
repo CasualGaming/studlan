@@ -37,13 +37,10 @@
             {% if perms.lan.register_new_user %}
             <li><a href="{% url 'auth_direct_register' %}"><span class="glyphicon glyphicon-list"></span> {% trans "Manual registration" %}</a></li>
             {% endif %}
-            {% if perms.lottery.draw %}
-            <li><a href="{% url 'drawing' %}"><span class="glyphicon glyphicon-gift"></span> {% trans "Drawing" %}</a></li>
-            {% endif %}
             {% if user.is_staff %}
             <li><a href="/admin"><span class="glyphicon glyphicon-cog"></span> {% trans "Admin panel" %}</a>
             {% endif %}
-            {% if perms.lan.register_arrivals or perms.lan.register_new_user or perms.lottery.draw or user.is_staff %}
+            {% if perms.lan.register_arrivals or perms.lan.register_new_user or user.is_staff %}
             <li class="divider"></li>
             {% endif %}
             <li>
@@ -68,13 +65,10 @@
             {% if perms.lan.register_new_user %}
             <li class="hidden-md hidden-lg hidden-sm"><a href="{% url 'auth_direct_register' %}"><span class="glyphicon glyphicon-list"></span> {% trans "Manual registration" %}</a></li>
             {% endif %}
-            {% if perms.lottery.draw %}
-            <li class="hidden-md hidden-lg hidden-sm"><a href="{% url 'drawing' %}"><span class="glyphicon glyphicon-gift"></span> {% trans "Drawing" %}</a></li>
-            {% endif %}
             {% if user.is_staff %}
             <li class="hidden-md hidden-lg hidden-sm"><a href="/admin"><span class="glyphicon glyphicon-cog"></span> {% trans "Admin panel" %}</a></li>
             {% endif %}
-            {% if perms.lan.register_arrivals or perms.lan.register_new_user or perms.lottery.draw or user.is_staff %}
+            {% if perms.lan.register_arrivals or perms.lan.register_new_user or user.is_staff %}
             <li class="divider hidden-md hidden-lg hidden-sm"></li>
             {% endif %}
             <li class="hidden-md hidden-lg hidden-sm">

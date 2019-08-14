@@ -7,16 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Added list of participants and winners on lottery page.
+- Added buttons to open and close raffles, including a permission to do so.
 
 ### Changed
+- Merged lottery info page and draw page.
 
 ### Deprecated
 
 ### Removed
+- Removed link to lottery drawing from navbar.
 
 ### Fixed
 
 ### Security
+- Fixed lottery CSRF vulnerability.
 
 
 ## [1.5.1] - 2019-08-01

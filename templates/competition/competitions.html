@@ -9,69 +9,53 @@
 {% endblock title %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-9">
-            <h1>{% trans "Competitions" %}</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-9">
-            <table class="table table-bordered table-striped table-hover click-table">
-                <thead>
-                    <th class="col-md-1">Status</th>
-                    <th class="col-md-7">Title</th>
-                    <th class="col-md-1">Type</th>
-                </thead>
-                <tbody>
-                    {% for competition in competitions %}
-                    <tr onclick="document.location='{% url "competition_details" competition.id %}';">
-                        <td><span class="label label-{{ competition.status_label }}">{{ competition.status_text }}</td>
-                        <td class="underline">{{ competition }}</td>
-                        {% if competition.use_teams %}
-                        <td><span class="label label-success">{% trans "Team" %}</span></td>
-                        {% else %}
-                        <td><span class="label label-info">{% trans "Solo" %}</span></td>
-                        {% endif %}
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
+<div class="row">
+    <div class="col-md-9">
+        <h1>{% trans "Competitions" %}</h1>
+        <table class="table table-bordered table-striped table-hover click-table">
+            <thead>
+                <th class="col-md-1">Status</th>
+                <th class="col-md-7">Title</th>
+                <th class="col-md-1">Type</th>
+            </thead>
+            <tbody>
+                {% for competition in competitions %}
+                <tr onclick="document.location='{% url "competition_details" competition.id %}';">
+                    <td><span class="label label-{{ competition.status_label }}">{{ competition.status_text }}</td>
+                    <td class="underline">{{ competition }}</td>
+                    {% if competition.use_teams %}
+                    <td><span class="label label-success">{% trans "Team" %}</span></td>
+                    {% else %}
+                    <td><span class="label label-info">{% trans "Solo" %}</span></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-    <div class="row">
-        <div class="col-md-9">
-            <h2>{% trans "Raffles" %}</h2>
-        </div>
+        <h2>{% trans "Raffles" %}</h2>
+        {% if lotteries %}
+        <table class="table table-bordered table-striped table-hover click-table">
+            <thead>
+                <th class="col-md-1">Status</th>
+                <th class="col-md-11">Title</th>
+            </thead>
+            <tbody>
+                {% for lottery in lotteries %}
+                <tr onclick="document.location='{{ lottery.get_absolute_url }}';">
+                    {% if lottery.registration_open %}
+                        <td><label class="label label-success">{% trans "Open" context "status" %}</label></td>
+                    {% else %}
+                        <td><label class="label label-danger">{% trans "Closed" context "status" %}</label></td>
+                    {% endif %}
+                    <td class="underline">{{ lottery }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="alert alert-info">{% trans "No active raffles for this LAN." %}</div>
+        {% endif %}
     </div>
-    {% if lotteries %}
-        <div class="row">
-            <div class="col-md-9">
-                <table class="table table-bordered table-striped table-hover click-table">
-                    <thead>
-                        <th class="col-md-1">Status</th>
-                        <th class="col-md-11">Title</th>
-                    </thead>
-                    <tbody>
-                        {% for lottery in lotteries %}
-                        <tr onclick="document.location='{{ lottery.get_absolute_url }}';">
-                            {% if lottery.registration_open %}
-                                <td><label class="label label-success">{% trans "Open" context "status" %}</label></td>
-                            {% else %}
-                                <td><label class="label label-danger">{% trans "Closed" context "status" %}</label></td>
-                            {% endif %}
-                            <td class="underline">{{ lottery }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    {% else %}
-        <div class="row">
-            <div class="col-md-9">
-                <div class="alert alert-warning">{% trans "No active raffles right now." %}</div>
-            </div>
-        </div>
-    {% endif %}
+</div>
 {% endblock content %}

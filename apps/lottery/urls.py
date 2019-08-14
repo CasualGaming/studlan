@@ -1,14 +1,21 @@
+
 # -*- coding: utf-8 -*-
 
 from django.conf.urls import url
+from django.core.urlresolvers import reverse_lazy
+from django.views.generic.base import RedirectView
 
-from .views import details, draw, drawing, sign_off, sign_up
+from .views import close, details, draw, open_, sign_off, sign_up
+
+
+list_ = RedirectView.as_view(url=reverse_lazy('competitions'), permanent=False)
 
 urlpatterns = [
-    url(r'^details/(?P<lottery_id>\d+)/$', details, name='details'),
-    url(r'^signup/(?P<lottery_id>\d+)/$', sign_up, name='sign_up'),
-    url(r'^signoff/(?P<lottery_id>\d+)/$', sign_off, name='sign_off'),
-    url(r'^drawing/$', drawing, name='drawing'),
-    url(r'^drawing/(?P<lottery_id>\d+)/$', drawing, name='drawing'),
-    url(r'^draw/(?P<lottery_id>\d+)/$', draw, name='draw'),
+    url(r'^$', list_, name='lottery_list'),
+    url(r'^(?P<lottery_id>\d+)/$', details, name='lottery_details'),
+    url(r'^(?P<lottery_id>\d+)/signup/$', sign_up, name='lottery_sign_up'),
+    url(r'^(?P<lottery_id>\d+)/signoff/$', sign_off, name='lottery_sign_off'),
+    url(r'^(?P<lottery_id>\d+)/open/$', open_, name='lottery_open'),
+    url(r'^(?P<lottery_id>\d+)/close/$', close, name='lottery_close'),
+    url(r'^(?P<lottery_id>\d+)/draw/$', draw, name='lottery_draw'),
 ]
