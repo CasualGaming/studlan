@@ -14,17 +14,18 @@ MANAGE="python manage.py"
 # Add temporary config
 cp setup/local.ci.test.py studlan/settings/local.py
 
+# Validate
+$MANAGE check --deploy --fail-level=ERROR
+
 # Collect static files
 echo "Collecting static files ..."
 $MANAGE collectstatic --no-input --clear
 
-# Run migration, but skip initial if matching table names already exist
-echo "Running migration ..."
+# Apply migrations, but skip initial if matching table names already exist
 $MANAGE migrate --fake-initial --no-input
 
 # Check if new migrations can be made
 $MANAGE makemigrations --dry-run --check --no-input
 
-# Validate
-echo "Checking validity ..."
-$MANAGE check --deploy --fail-level=ERROR
+# Compiling translations
+$MANAGE compilemessages --locale=nb
