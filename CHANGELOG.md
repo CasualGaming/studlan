@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added more info to compo page table.
 
 ### Changed
+- Don't auto close compos when all spots are taken.
 
 ### Deprecated
 

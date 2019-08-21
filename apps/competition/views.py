@@ -135,17 +135,6 @@ def competition_details(request, competition_id):
     context['teams'] = teams
     context['users'] = users
 
-    # Check if competition has reached participant limit
-    if competition.max_participants > 0:
-        if competition.use_teams:
-            if len(teams) >= competition.max_participants:
-                competition.status = 2
-                competition.save()
-        else:
-            if len(users) >= competition.max_participants:
-                competition.status = 2
-                competition.save()
-
     if competition.has_participant(request.user):
         p = None
         if request.user in users:
