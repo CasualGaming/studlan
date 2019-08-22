@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-14 23:21+0200\n"
+"POT-Creation-Date: 2019-08-22 03:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -633,6 +633,9 @@ msgstr "flere premier"
 msgid "Allows a user to win more than one time."
 msgstr "Tillater en bruker å vinne flere ganger."
 
+msgid "Require users to have paid for the LAN in order to participate."
+msgstr "Krev at brukere har betalt for LAN-et for å kunne delta."
+
 msgid "lottery"
 msgstr "lotteri"
 
@@ -656,6 +659,12 @@ msgstr "lotterivinner"
 
 msgid "lottery winners"
 msgstr "lotterivinnere"
+
+msgid "You are not signed up for the LAN."
+msgstr "Du er ikke påmeldt LAN-et."
+
+msgid "You have not paid for the LAN."
+msgstr "Du har ikke betalt for LAN-et."
 
 msgid "No eligible participants."
 msgstr "Ingen kvalifiserte deltagere."
@@ -1511,13 +1520,15 @@ msgid "Mode"
 msgstr "Modus"
 
 msgid "Multiple wins (winners may stay in the participant list and win again)"
-msgstr "Flere seiere (vinnere kan bli gjenværende i deltagerlisten og vinne igjen)"
+msgstr ""
+"Flere seiere (vinnere kan bli gjenværende i deltagerlisten og vinne igjen)"
 
 msgid ""
 "Single win (winners are removed from the participant list to prevent winning "
 "again)"
 msgstr ""
-"Enkel seier (vinnere fjernes fra deltagerlisten for å forhindre å vinne igjen)"
+"Enkel seier (vinnere fjernes fra deltagerlisten for å forhindre å vinne "
+"igjen)"
 
 msgid "Winners"
 msgstr "Vinnere"
@@ -1728,6 +1739,7 @@ msgstr "Nytt lag"
 msgid "Must be unique!"
 msgstr "Må være unikt!"
 
+#, python-format
 msgid ""
 "<strong>%(inviter)s</strong> has invited you to join team <a href="
 "\"%(team_url)s\"><strong>%(team)s</strong></a>. <br /> You can accept or "
