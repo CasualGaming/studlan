@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-22 03:12+0200\n"
+"POT-Creation-Date: 2019-08-22 03:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1326,6 +1326,9 @@ msgstr "Veksle navigasjon"
 msgid "Language"
 msgstr "Språk"
 
+msgid "Competition info"
+msgstr "Konkurranseinfo"
+
 msgid "Activity"
 msgstr "Aktivitet"
 
@@ -1356,7 +1359,13 @@ msgstr "Vis braketter"
 msgid "Participating Teams"
 msgstr "Deltagende lag"
 
+msgid "Participating teams"
+msgstr "Deltagende lag"
+
 msgid "Solo Participants"
+msgstr "Solo-deltakere"
+
+msgid "Solo participants"
 msgstr "Solo-deltakere"
 
 msgid "Select team"
@@ -1369,8 +1378,8 @@ msgid ""
 "To join the competition as a team you have to be part of a team. Only team "
 "leaders may enter the team in the competition."
 msgstr ""
-"For å bli med på konkurransen som et lag, må du være del av et lag. "
-"Bare lagførere kan melde opp laget til konkurransen."
+"For å bli med på konkurransen som et lag, må du være del av et lag. Bare "
+"lagførere kan melde opp laget til konkurransen."
 
 msgid "Join competition"
 msgstr "Bli med"
@@ -1717,6 +1726,7 @@ msgstr "Nytt lag"
 msgid "Must be unique!"
 msgstr "Må være unikt!"
 
+#, python-format
 msgid ""
 "<strong>%(inviter)s</strong> has invited you to join team <a href="
 "\"%(team_url)s\"><strong>%(team)s</strong></a>. <br /> You can accept or "
@@ -1728,6 +1738,9 @@ msgstr ""
 
 msgid "My teams"
 msgstr "Mine lag"
+
+msgid "Team members"
+msgstr "Lagmedlemmer"
 
 msgid "Team Members"
 msgstr "Lagmedlemmer"
@@ -1773,6 +1786,9 @@ msgstr "Inviter medlem"
 
 msgid "Invitations"
 msgstr "Invitasjoner"
+
+msgid "Team member invitations"
+msgstr "Lagmedlemsinvitasjoner"
 
 #, python-format
 msgid "Are you sure you want to uninvite %(member)s from %(team)s?"
