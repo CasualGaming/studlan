@@ -51,7 +51,7 @@
                         {% if competition.use_teams and competition.team_size > 1 %}
                         <td>{{ competition.team_size }}</td>
                         {% else %}
-                        <td><span class="label label-default">{% trans "N/A" %}</span></td>
+                        <td>{% trans "N/A" %}</td>
                         {% endif %}
                     </tr>
                 </tbody>
@@ -252,10 +252,11 @@
                                     </div>
                                 </form>
                             {% else %}
-                                <div class="alert alert-danger" role="alert">
+                                <div class="alert alert-warning" role="alert">
                                     {% url 'create_team' as create_team_url %}
                                     {% blocktrans trimmed %}
-                                    To join the competition as a team you have to <a href="{{ create_team_url }}">create</a> or join a team.
+                                    To join the competition as a team you have to be part of a team.
+                                    Only team leaders may enter the team in the competition.
                                     {% endblocktrans %}
                                 </div>
                             {% endif %}
@@ -269,7 +270,7 @@
                             </div>
                         </form>
                     </div>
-                {% else %}
+                {% elif participating == "solo" or participating_owned_teams %}
                     <div class="col-md-9">
                         <form class="form-inline" action="{% url 'leave_comp' competition.id %}" method="POST">
                             {% csrf_token %}

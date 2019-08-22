@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Fixed
+- Fixed compo sign-up as solo bypassing payment enforcement.
 
 ### Security
 
