@@ -33,6 +33,7 @@
     <div class="row">
         <div class="col-md-4">
             <table class="table table-bordered">
+                <caption>{% trans "Competition info" %}</caption>
                 <tbody>
                     <tr>
                         <td><strong>{% trans "Activity" %}</strong></td>
@@ -60,6 +61,7 @@
         <div class="col-md-1"></div>
         <div class="col-md-4">
             <table class="table table-bordered">
+                <caption>{% trans "Competition info" %}</caption>
                 <tbody>
                     <tr>
                         <td><strong>{% trans "Status" %}</strong></td>
@@ -190,6 +192,7 @@
                 <div class="panel-heading participants-heading">{% trans "Participating Teams" %} <span class="pull-right"> {{ teams|length }}</div>
                 {% if teams %}
                     <table class="table table-striped table-condensed table-bordered table-hover click-table">
+                        <caption>{% trans "Participating teams" %}</caption>
                         <tbody>
                             {% for team in teams %}
                                 <tr onclick="document.location='{{ team.get_absolute_url }}';">
@@ -213,6 +216,7 @@
                 <div class="panel-heading participants-heading">{% trans "Solo Participants" %} <span class="pull-right"> {{ users|length }}</div>
                 {% if users %}
                     <table class="table table-striped table-condensed table-bordered table-hover click-table">
+                        <caption>{% trans "Solo participants" %}</caption>
                         <tbody>
                             {% for user in users %}
                                 <tr onclick="document.location='{% url 'public_profile' user %}';">
