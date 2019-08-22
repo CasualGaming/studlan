@@ -13,10 +13,11 @@
     <div class="col-md-9">
         <h1>{% trans "Competitions" %}</h1>
         <table class="table table-bordered table-striped table-hover click-table">
+            <caption>{% trans "Competitions" %}</caption>
             <thead>
-                <th class="col-md-1">Status</th>
-                <th class="col-md-7">Title</th>
-                <th class="col-md-1">Type</th>
+                <th scope="col" class="col-md-1">Status</th>
+                <th scope="col" class="col-md-7">Title</th>
+                <th scope="col" class="col-md-1">Type</th>
             </thead>
             <tbody>
                 {% for competition in competitions %}
@@ -33,12 +34,13 @@
             </tbody>
         </table>
 
-        <h2>{% trans "Raffles" %}</h2>
+        <h2>{% trans "Lotteries" %}</h2>
         {% if lotteries %}
         <table class="table table-bordered table-striped table-hover click-table">
+            <caption>{% trans "Lotteries" %}</caption>
             <thead>
-                <th class="col-md-1">Status</th>
-                <th class="col-md-11">Title</th>
+                <th scope="col" class="col-md-1">Status</th>
+                <th scope="col" class="col-md-11">Title</th>
             </thead>
             <tbody>
                 {% for lottery in lotteries %}
