@@ -14,6 +14,7 @@ class Lottery(TranslatableModel):
     lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
     registration_open = models.BooleanField(_(u'open'), default=False)
     multiple_winnings = models.BooleanField(_(u'multiple winnings'), default=False, help_text=_(u'Allows a user to win more than one time.'))
+    enforce_payment = models.BooleanField(_(u'enforce payment'), default=False, help_text=_(u'Require users to have paid for the LAN in order to participate.'))
 
     def is_participating(self, user):
         for participant in self.lotteryparticipant_set.all():

@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added list of participants and winners on lottery page.
 - Added buttons to open and close raffles, including a permission to do so.
+- Added optional payment enforcement to lotteries.
 
 ### Changed
 - Merged lottery info page and draw page.

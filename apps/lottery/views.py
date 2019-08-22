@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST, require_safe
 
+from apps.lan.models import Attendee
 from apps.lottery.models import Lottery, LotteryParticipant, LotteryWinner
 from apps.userprofile.models import User
 
@@ -38,8 +39,22 @@ def details(request, lottery_id):
 @login_required
 def sign_up(request, lottery_id):
     lottery = get_object_or_404(Lottery, pk=lottery_id)
-    if lottery.registration_open and not lottery.is_participating(request.user):
-        LotteryParticipant.objects.create(user=request.user, lottery=lottery)
+
+    if not lottery.registration_open or lottery.is_participating(request.user):
+        # No error message needed
+        return redirect(lottery)
+
+    if lottery.enforce_payment:
+        attendance = Attendee.objects.filter(lan=lottery.lan, user=request.user)
+        if not attendance:
+            messages.error(request, _(u'You are not signed up for the LAN.'))
+            return redirect(lottery)
+        has_paid = attendance[0].has_paid or lottery.lan.has_ticket(request.user)
+        if not has_paid:
+            messages.error(request, _(u'You have not paid for the LAN.'))
+            return redirect(lottery)
+
+    LotteryParticipant.objects.create(user=request.user, lottery=lottery)
     return redirect(lottery)
 
 
