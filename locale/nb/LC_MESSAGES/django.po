@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-31 20:59+0200\n"
+"POT-Creation-Date: 2019-08-22 03:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -389,8 +389,18 @@ msgstr "{member} mangler et alias for {competition}."
 msgid "{leader} is missing an alias for {competition}."
 msgstr "{leader} mangler et alias for {competition}."
 
-msgid "You are already in this competition as a solo player."
+#, python-brace-format
+msgid "You have been signed up for {competition} with team {team}."
+msgstr "Du har meldt deg på {competition} med lag {team}."
+
+msgid "You are already in this competition."
 msgstr "Du er allerede påmeldt denne konkurransen."
+
+msgid "You are not signed up for the LAN."
+msgstr "Du er ikke meldt opp til LAN-et."
+
+msgid "You have not paid for the LAN."
+msgstr "Du har ikke betalt for LAN-et."
 
 msgid "You do not have the required alias."
 msgstr "Du har ikke det påkrevde aliaset."
@@ -1319,6 +1329,18 @@ msgstr "Språk"
 msgid "Activity"
 msgstr "Aktivitet"
 
+msgid "Type"
+msgstr "Type"
+
+msgid "Solo"
+msgstr "Solo"
+
+msgid "Minimum team size"
+msgstr "Minimum lagstørrelse"
+
+msgid "N/A"
+msgstr ""
+
 msgid "Status"
 msgstr "Status"
 
@@ -1331,11 +1353,11 @@ msgstr "Åpne seter"
 msgid "Show brackets"
 msgstr "Vis braketter"
 
-msgid "Teams"
-msgstr "Lag"
+msgid "Participating Teams"
+msgstr "Deltagende lag"
 
-msgid "Participants"
-msgstr "Deltakere"
+msgid "Solo Participants"
+msgstr "Solo-deltakere"
 
 msgid "Select team"
 msgstr "Velg lag"
@@ -1343,13 +1365,12 @@ msgstr "Velg lag"
 msgid "Join competition (team)"
 msgstr "Bli med (lag)"
 
-#, python-format
 msgid ""
-"To join the competition as a team you have to <a href=\"%(create_team_url)s"
-"\">create</a> or join a team."
+"To join the competition as a team you have to be part of a team. Only team "
+"leaders may enter the team in the competition."
 msgstr ""
-"For å bli med på konkurransen som et lag, må du <a href=\"%(create_team_url)s"
-"\">lage</a> eller bli med på et lag."
+"For å bli med på konkurransen som et lag, må du være del av et lag. "
+"Bare lagførere kan melde opp laget til konkurransen."
 
 msgid "Join competition"
 msgstr "Bli med"
@@ -1375,7 +1396,7 @@ msgid ""
 "make a team and sign up as a team. <br /> <strong>When you sign up as a "
 "team, your solo participation will be overriden.</strong>"
 msgstr ""
-"<strong>Merk:</strong>Oppmelding på en lag-compo betyr ikke at du er "
+"<strong>Merk:</strong> Oppmelding på en lag-compo betyr ikke at du er "
 "deltager.Prøv å finne andre spillere som melder seg på solo, lag et lag, og "
 "meld opp laget.<br /><strong>Når du melder deg opp som lag, vil solo-"
 "oppmeldingen overskrives.</strong>"
@@ -1403,12 +1424,6 @@ msgstr "Ingen nåværende eller kommende LAN."
 
 msgid "Previous LANs"
 msgstr "Tidligere LAN"
-
-msgid "Type"
-msgstr "type"
-
-msgid "Solo"
-msgstr "Solo"
 
 msgid "Raffles"
 msgstr "Trekninger"
@@ -1534,6 +1549,9 @@ msgstr "Siste vinner"
 
 msgid "All Winners"
 msgstr "Alle vinnere"
+
+msgid "Teams"
+msgstr "Lag"
 
 msgid "Sponsors"
 msgstr "Sponsorer"
@@ -1699,13 +1717,14 @@ msgstr "Nytt lag"
 msgid "Must be unique!"
 msgstr "Må være unikt!"
 
-#, python-format
 msgid ""
-"%(inviter)s has invited you to join team <a href=\"%(team_url)s\">%(team)s</"
-"a>. <br /> You can accept or decline the invitation on the team page."
+"<strong>%(inviter)s</strong> has invited you to join team <a href="
+"\"%(team_url)s\"><strong>%(team)s</strong></a>. <br /> You can accept or "
+"decline the invitation on the team page."
 msgstr ""
-"%(inviter)s har invitert deg til å bli med på lag <a href=\"%(team_url)s\">"
-"%(team)s</a>. <br /> Du kan akseptere eller avslå invitasjonen på lagsiden."
+"<strong>%(inviter)s</strong> har invitert deg til å bli med i lag <a href="
+"\"%(team_url)s\"><strong>%(team)s</strong></a>. <br /> Du kan akseptere "
+"eller avslå invitasjonen på lagsiden."
 
 msgid "My teams"
 msgstr "Mine lag"
@@ -1891,15 +1910,3 @@ msgstr "Adminpanel"
 
 msgid "Log out"
 msgstr "Logg ut"
-
-#~ msgid "How safe it this payment page?"
-#~ msgstr "Hvor trygg er denne betalingssiden?"
-
-#~ msgid "Tickets will be available"
-#~ msgstr "Billetter vil bli tilgjengelige"
-
-#~ msgid "Pay with Card"
-#~ msgstr "Betal med Kort"
-
-#~ msgid "Room Info"
-#~ msgstr "Rominfo"

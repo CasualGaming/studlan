@@ -9,7 +9,7 @@ from django.utils.translation import pgettext_lazy, ugettext, ugettext_lazy as _
 from translatable.models import TranslatableModel, get_translation_model
 
 from apps.lan.models import LAN
-from apps.userprofile.models import Alias, AliasType
+from apps.userprofile.models import AliasType
 
 
 class Activity(models.Model):
