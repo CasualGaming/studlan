@@ -1907,7 +1907,7 @@ msgid "Register arrivals"
 msgstr "Registrer ankonster"
 
 msgid "Manual registration"
-msgstr "Manuell resistrering"
+msgstr "Manuell registrering"
 
 msgid "Drawing"
 msgstr "Trekking"
