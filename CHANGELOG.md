@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed compo sign-up as solo bypassing payment enforcement.
+- Fix ordering of LANs on front page for multiple active LANs.
 
 ### Security
 
