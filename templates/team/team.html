@@ -17,8 +17,7 @@
 
 <div class="row">
     <div class="col-md-9">
-        <table class="table table-bordered table-striped">
-            <caption>{% trans "Team members" %}</caption>
+        <table class="table table-bordered table-striped" role="presentation">
             <thead>
                 <th scope="col" class="col-md-4">{% trans "Team Members" %}</th>
                 <th scope="col" class="col-md-2">{% trans "Actions" %}</th>
@@ -96,8 +95,7 @@
 
         {% if invitations %}
         <h3>{% trans "Invitations" %}</h3>
-        <table class="table table-bordered table-striped">
-            <caption>{% trans "Team member invitations" %}</caption>
+        <table class="table table-bordered table-striped" role="presentation">
             <thead>
                 <th scope="col" class="col-md-4">{% trans "Username" %}</th>
                 <th scope="col" class="col-md-2">{% trans "Actions" %}</th>
