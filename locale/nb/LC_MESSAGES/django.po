@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 00:35+0200\n"
+"POT-Creation-Date: 2019-10-08 00:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1552,6 +1552,9 @@ msgstr "Siste vinner"
 
 msgid "All Winners"
 msgstr "Alle vinnere"
+
+msgid "Esports"
+msgstr "E-sport"
 
 msgid "Teams"
 msgstr "Lag"
