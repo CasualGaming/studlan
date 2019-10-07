@@ -64,6 +64,9 @@ class Team(models.Model):
         verbose_name = _(u'team')
         verbose_name_plural = _(u'teams')
         ordering = ['tag', 'title']
+        permissions = (
+            ('show_invitations', 'Show users invited to teams'),
+        )
 
 
 class Member(models.Model):
