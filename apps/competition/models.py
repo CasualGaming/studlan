@@ -32,16 +32,16 @@ class Activity(models.Model):
 
 class Competition(TranslatableModel):
     STATUSES = (
-        (1, pgettext_lazy(u'competition status', u'Registration open')),
-        (2, pgettext_lazy(u'competition status', u'Registration closed')),
+        (1, pgettext_lazy(u'competition status', u'Open')),
+        (2, pgettext_lazy(u'competition status', u'Closed')),
         (3, pgettext_lazy(u'competition status', u'In progress')),
         (4, pgettext_lazy(u'competition status', u'Finished')),
     )
     STATUS_LABELS = [
         'success',
-        'danger',
         'warning',
         'info',
+        'danger',
     ]
     TOURNAMENT_FORMATS = (
         ('single elimination', _(u'Single elimination')),

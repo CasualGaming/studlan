@@ -7,10 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Added more info to compo page table.
+- Added more info to compo page info tables and compo list.
 
 ### Changed
 - Don't auto close compos when all spots are taken.
+- Order competitions by status and then start time.
 
 ### Deprecated
 

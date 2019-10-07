@@ -43,10 +43,9 @@ def lan_list(request):
 def lan_compos(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
 
-    context = {}
-    competitions = Competition.objects.filter(lan=lan)
-    competitions = shorten_descriptions(competitions, 200)
+    competitions = Competition.objects.filter(lan=lan).order_by('status', 'start_time')
 
+    context = {}
     context['lan'] = lan
     context['activities'] = Activity.objects.all()
     context['competitions'] = competitions

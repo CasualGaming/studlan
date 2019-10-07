@@ -1,13 +1,13 @@
 # Norwegian, bokmål, translations for studlan.
 # Copyright (C) Casual Gaming
 # This file is distributed under the same license as studlan.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-22 03:59+0200\n"
+"POT-Creation-Date: 2019-10-07 08:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -189,12 +189,12 @@ msgid "activities"
 msgstr "aktiviteter"
 
 msgctxt "competition status"
-msgid "Registration open"
-msgstr "Registrering åpnet"
+msgid "Open"
+msgstr "Åpen"
 
 msgctxt "competition status"
-msgid "Registration closed"
-msgstr "Registrering lukket"
+msgid "Closed"
+msgstr "Stengt"
 
 msgctxt "competition status"
 msgid "In progress"
@@ -1326,9 +1326,6 @@ msgstr "Veksle navigasjon"
 msgid "Language"
 msgstr "Språk"
 
-msgid "Competition info"
-msgstr "Konkurranseinfo"
-
 msgid "Activity"
 msgstr "Aktivitet"
 
@@ -1359,13 +1356,7 @@ msgstr "Vis braketter"
 msgid "Participating Teams"
 msgstr "Deltagende lag"
 
-msgid "Participating teams"
-msgstr "Deltagende lag"
-
 msgid "Solo Participants"
-msgstr "Solo-deltakere"
-
-msgid "Solo participants"
 msgstr "Solo-deltakere"
 
 msgid "Select team"
@@ -1406,7 +1397,7 @@ msgid ""
 "team, your solo participation will be overriden.</strong>"
 msgstr ""
 "<strong>Merk:</strong> Oppmelding på en lag-compo betyr ikke at du er "
-"deltager.Prøv å finne andre spillere som melder seg på solo, lag et lag, og "
+"deltager. Prøv å finne andre spillere som melder seg på solo, lag et lag, og "
 "meld opp laget.<br /><strong>Når du melder deg opp som lag, vil solo-"
 "oppmeldingen overskrives.</strong>"
 
@@ -1433,6 +1424,9 @@ msgstr "Ingen nåværende eller kommende LAN."
 
 msgid "Previous LANs"
 msgstr "Tidligere LAN"
+
+msgid "Tid"
+msgstr "Time"
 
 msgid "Raffles"
 msgstr "Trekninger"
@@ -1739,9 +1733,6 @@ msgstr ""
 msgid "My teams"
 msgstr "Mine lag"
 
-msgid "Team members"
-msgstr "Lagmedlemmer"
-
 msgid "Team Members"
 msgstr "Lagmedlemmer"
 
@@ -1786,9 +1777,6 @@ msgstr "Inviter medlem"
 
 msgid "Invitations"
 msgstr "Invitasjoner"
-
-msgid "Team member invitations"
-msgstr "Lagmedlemsinvitasjoner"
 
 #, python-format
 msgid "Are you sure you want to uninvite %(member)s from %(team)s?"
