@@ -2,6 +2,7 @@
 {% block navigation %}
     <ul id="navbar" class="nav navbar-nav">
     	  <li class="navbar-item"><a href="{% url 'lan_home' %}">{% trans "LAN" %}</a></li>
+        <li class="navbar-item"><a href="{% url 'seatings' %}">{% trans "Seating" %}</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{% trans "Esports" %}<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
@@ -10,7 +11,6 @@
             <li><a href="{% url 'competition_schedule' %}">{% trans "Schedule" %}</a></li>
           </ul>
         </li>
-        <li class="navbar-item"><a href="{% url 'seatings' %}">{% trans "Seating" %}</a></li>
         <li class="navbar-item"><a href="{% url 'sponsors' %}">{% trans "Sponsors" %}</a></li>
     </ul>
 {% endblock navigation %}

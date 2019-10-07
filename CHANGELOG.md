@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Don't auto close compos when all spots are taken.
 - Order competitions by status and then start time.
 - Changed "competitions" in the navbar to "esports".
+- Swapped positions for seating and esports in the navbar.
 
 ### Deprecated
 
