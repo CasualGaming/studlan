@@ -1,23 +1,24 @@
 {% extends "base.html" %}
+
 {% load i18n %}
 {% load profile_tags %}
 
 {% block title %}
-{% trans "History" %}
+{% trans "LANs" %}
 {% endblock title %}
 
 {% block content %}
 <div class="row">
     <div class="col-md-9">
-        <h1>{% trans "History" %}</h1>
+        <h1 id="history-header">{% trans "LANs" %}</h1>
     </div>
 </div>
 
 {% profile_tabs 'history' %}
+
 <div class="row">
     <div class="col-md-9">
         {% include "user/history_table.html" %}
     </div>
 </div>
-
 {% endblock content %}

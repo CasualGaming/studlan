@@ -1,12 +1,12 @@
 {% load i18n %}
 
-<table class="well table">
+<table class="well table" aria-describedby="history-header">
     <thead>
-        <th>{% trans "LAN" %}</th>
-        <th>{% trans "Time" %}</th>
-        <th>{% trans "Ticket" %}</th>
-        <th>{% trans "Seat" %}</th>
-        <th>{% trans "Arrived" %}</th>
+        <th scope="col">{% trans "LAN" %}</th>
+        <th scope="col">{% trans "Time" %}</th>
+        <th scope="col">{% trans "Ticket" %}</th>
+        <th scope="col">{% trans "Seat" %}</th>
+        <th scope="col">{% trans "Arrived" %}</th>
     </thead>
     <tbody>
         {% for attendance in attendances %}

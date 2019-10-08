@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 06:48+0200\n"
+"POT-Creation-Date: 2019-10-08 09:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1796,6 +1796,12 @@ msgstr "Mine lag"
 msgid "Create Team"
 msgstr "Nytt lag"
 
+msgid "History"
+msgstr "Historikk"
+
+msgid "Aliases"
+msgstr "Aliaser"
+
 msgid "Account"
 msgstr "Konto"
 
@@ -1804,9 +1810,6 @@ msgstr "Kallenavn"
 
 msgid "Add alias"
 msgstr "Legg til alias"
-
-msgid "History"
-msgstr "Historikk"
 
 msgctxt "ticket"
 msgid "Has paid"
@@ -1875,9 +1878,6 @@ msgstr "Konkurransehistorikk"
 
 msgid "Edit Profile"
 msgstr "Endre profil"
-
-msgid "Aliases"
-msgstr "Aliaser"
 
 msgid "Update"
 msgstr "Oppdater"
