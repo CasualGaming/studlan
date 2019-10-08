@@ -118,6 +118,9 @@ class TicketType(TranslatableModel):
     def number_of_free_seats(self):
         return self.number_of_seats - self.number_of_seats_used()
 
+    def is_sold_out(self):
+        return self.number_of_seats <= self.number_of_seats_used()
+
     class Meta:
         verbose_name = _(u'ticket type')
         verbose_name_plural = _(u'ticket types')
