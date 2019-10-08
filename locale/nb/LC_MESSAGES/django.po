@@ -420,7 +420,7 @@ msgstr "Du har fjernet {team} fra {competition}."
 #, python-brace-format
 msgid ""
 "You cannot remove {team} from {competition}, you are not the team leader."
-msgstr "Du kan ikke fjerne {team} fra {competition}, du er ikke lagfører."
+msgstr "Du kan ikke fjerne {team} fra {competition}, du er ikke lagleder."
 
 msgid "Forfeit not yet implemented!"
 msgstr ""
@@ -862,7 +862,7 @@ msgid "tag"
 msgstr "Tagg"
 
 msgid "leader"
-msgstr "lagfører"
+msgstr "lagleder"
 
 msgid "members"
 msgstr "medlemmer"
@@ -890,21 +890,21 @@ msgstr "laginvitasjoner"
 
 #, python-brace-format
 msgid "You can't be the leader of more than {max} teams."
-msgstr "Du kan ikke være lagfører av flere enn {max} lag."
+msgstr "Du kan ikke være lagleder av flere enn {max} lag."
 
 #, python-brace-format
 msgid "Team {team} has been created."
 msgstr "Lag {team} har blitt opprettet."
 
 msgid "Only the team leader may disband the team."
-msgstr "Bare lagfører kan oppløse laget."
+msgstr "Bare lagleder kan oppløse laget."
 
 #, python-brace-format
 msgid "Team {team} was deleted."
 msgstr "Lag {team} ble slettet."
 
 msgid "Only the team leader may invite members."
-msgstr "Bare lagfører kan invitere medlemmer."
+msgstr "Bare lagleder kan invitere medlemmer."
 
 msgid "No username was specified."
 msgstr "Intet brukernavn ble spesifisert."
@@ -929,7 +929,7 @@ msgid "User {user} was invited to the team."
 msgstr "Bruker {user} ble invitert til laget."
 
 msgid "Only the team leader may uninvite members."
-msgstr "Bare lagfører kan angre medlemskapsinvitasjoner."
+msgstr "Bare lagleder kan angre medlemskapsinvitasjoner."
 
 #, python-brace-format
 msgid "User {user} is not invited to the team."
@@ -941,7 +941,7 @@ msgstr "Bruker {user} er ikke lenger invitert til laget."
 
 #, python-brace-format
 msgid "You are already the team leader of team {team}."
-msgstr "Du er allerede lagfører for lag {team}."
+msgstr "Du er allerede lagleder for lag {team}."
 
 #, python-brace-format
 msgid "You are already on team {team}."
@@ -960,7 +960,7 @@ msgid "You have declined the membership invitation from team {team}."
 msgstr "Du har avslått medlemskapsinvitasjonen fra lag {team}."
 
 msgid "Only the team leader may kick members."
-msgstr "Bare lagfører kan sparke medlemmer."
+msgstr "Bare lagleder kan sparke medlemmer."
 
 msgid "You can't kick yourself."
 msgstr "Du kan ikke sparke deg selv."
@@ -975,7 +975,7 @@ msgstr "{user} ble sparket fra laget."
 
 msgid ""
 "You are the team leader, the only way to leave the team is to disband it."
-msgstr "Du er lagfører, eneste måte å forlate laget er ved å oppløse det."
+msgstr "Du er lagleder, eneste måte å forlate laget er ved å oppløse det."
 
 msgid "You are not a member of this team."
 msgstr "Du er ikke medlem av dette laget."
@@ -1367,7 +1367,7 @@ msgid ""
 "leaders may enter the team in the competition."
 msgstr ""
 "For å bli med på konkurransen som et lag, må du være del av et lag. Bare "
-"lagførere kan melde opp laget til konkurransen."
+"lagledere kan melde opp laget til konkurransen."
 
 msgid "Join competition"
 msgstr "Bli med"
@@ -1746,7 +1746,7 @@ msgid "Actions"
 msgstr "Handlinger"
 
 msgid "Leader"
-msgstr "Lagfører"
+msgstr "Lagleder"
 
 #, python-format
 msgid "Are you sure you want to kick %(member)s from %(team)s?"
