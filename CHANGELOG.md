@@ -9,10 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added list of participants and winners on lottery page.
 - Added buttons to open and close raffles, including a permission to do so.
-- Added optional payment enforcement to lotteries.
+- Added optional payment enforcement to lotteries.- Added more info to compo page info tables and compo list.
+- Added permission for showing team invites, regardless of membership status.
 
 ### Changed
 - Merged lottery info page and draw page.
+- Don't auto close compos when all spots are taken.
+- Order competitions by status and then start time.
+- Changed "competitions" in the navbar to "esports".
+- Swapped positions for seating and esports in the navbar.
+- Show team invitations to team members and staff only.
 - Redirect users to the LAN page when trying to reserve a seat without any ticket.
 - Changed seating sidebar appearance and added list of applicable ticket types.
 
@@ -22,6 +28,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed link to lottery drawing from navbar.
 
 ### Fixed
+- Fixed compo sign-up as solo bypassing payment enforcement.
+- Fix ordering of LANs on front page for multiple active LANs.
+- Fix ordering of LANs on competition page for multiple active LANs.
 - Fixed seating map rendering crashing if any seat objects are missing.
 - Fixed seating map client script triggering on pressing inactive seats.
 - Fixed LAN history list for users only including history with reserved seats.

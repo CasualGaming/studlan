@@ -9,7 +9,7 @@ from django.utils.translation import pgettext_lazy, ugettext, ugettext_lazy as _
 from translatable.models import TranslatableModel, get_translation_model
 
 from apps.lan.models import LAN
-from apps.userprofile.models import Alias, AliasType
+from apps.userprofile.models import AliasType
 
 
 class Activity(models.Model):
@@ -32,16 +32,16 @@ class Activity(models.Model):
 
 class Competition(TranslatableModel):
     STATUSES = (
-        (1, pgettext_lazy(u'competition status', u'Registration open')),
-        (2, pgettext_lazy(u'competition status', u'Registration closed')),
+        (1, pgettext_lazy(u'competition status', u'Open')),
+        (2, pgettext_lazy(u'competition status', u'Closed')),
         (3, pgettext_lazy(u'competition status', u'In progress')),
         (4, pgettext_lazy(u'competition status', u'Finished')),
     )
     STATUS_LABELS = [
         'success',
-        'danger',
         'warning',
         'info',
+        'danger',
     ]
     TOURNAMENT_FORMATS = (
         ('single elimination', _(u'Single elimination')),
@@ -109,19 +109,10 @@ class Competition(TranslatableModel):
         return teams, users
 
     def has_participant(self, user):
-        if user in self.get_users():
-            return True
-        for team in self.get_teams():
-            if user == team.leader or user in team.members.all():
-                return True
+        return Participant.objects.filter(Q(competition=self) & (Q(user=user) | Q(team__leader=user) | Q(team__member__user=user))).exists()
 
     def has_alias(self, user):
-        if AliasType.objects.filter(activity=self.activity).exists():
-            alias_types = AliasType.objects.get(activity=self.activity)
-            for alias_type in alias_types:
-                if Alias.objects.filter(user=user, alias_type=alias_type).exists():
-                    return True
-        return False
+        return AliasType.objects.filter(activity=self.activity, alias__user=user).exists()
 
     def participant_spots_free(self):
         teams, users = self.get_participants()
