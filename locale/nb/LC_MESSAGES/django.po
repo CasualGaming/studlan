@@ -1540,9 +1540,6 @@ msgstr "Vinnere"
 msgid "You need to be logged inn to participate."
 msgstr "Du må logge inn for å kunne delta."
 
-msgid "Unattend"
-msgstr "Ikke delta"
-
 msgid "Attend"
 msgstr "Delta"
 
