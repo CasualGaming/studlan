@@ -7,11 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+<<<<<<< HEAD
 - Added confirm dialogs for arrival toggle buttons.
 - Added filters on arrivals page for paid and arrived statuses.
+- Added more info to compo page info tables and compo list.
+- Added permission for showing team invites, regardless of membership status.
+- Added config option to show version and default to hidden.
 
 ### Changed
-- Make tickets for a LAN always visible.
+- Made tickets for a LAN always visible.
+- Don't auto close compos when all spots are taken.
+- Order competitions by status and then start time.
+- Changed "competitions" in the navbar to "esports".
+- Swapped positions for seating and esports in the navbar.
+- Show team invitations to team members and staff only.
+- Redirect users to the LAN page when trying to reserve a seat without any ticket.
+- Changed seating sidebar appearance and added list of applicable ticket types.
 
 ### Deprecated
 
@@ -22,6 +33,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enforce disabled ticket sale when the LAN is over.
 - Enforce closed ticket sale when all tickets are sold.
 - Fix errors during payment being suppressed.
+- Fixed compo sign-up as solo bypassing payment enforcement.
+- Fix ordering of LANs on front page for multiple active LANs.
+- Fix ordering of LANs on competition page for multiple active LANs.
+- Fixed seating map rendering crashing if any seat objects are missing.
+- Fixed seating map client script triggering on pressing inactive seats.
+- Fixed LAN history list for users only including history with reserved seats.
 
 ### Security
 

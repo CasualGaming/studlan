@@ -8,7 +8,7 @@ from django.db.models import Q
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from apps.lan.models import Attendee, LAN, TicketType
+from apps.lan.models import LAN, TicketType
 
 
 class Layout(models.Model):
@@ -70,7 +70,7 @@ class Seating(models.Model):
         return Seat.objects.filter(Q(user=None), Q(seating=self)).count()
 
     def __unicode__(self):
-        return self.title
+        return u'{0} / {1}'.format(self.lan, self.title)
 
     def get_absolute_url(self):
         return reverse('seating_details', kwargs={'lan_id': self.lan.id, 'seating_id': self.id})
@@ -94,14 +94,7 @@ class Seat(models.Model):
     placement = models.IntegerField(_(u'placement ID'), help_text=_(u'A unique ID within the seating.'))
 
     def __unicode__(self):
-        return u'{0} / {1} / {2}'.format(self.seating.lan, self.seating, self.placement)
-
-    def get_attendance(self):
-        attendances = Attendee.objects.filter(lan=self.seating.lan, user=self.user)
-        if attendances.exists():
-            return attendances[0]
-        else:
-            return None
+        return u'{0} / {1} / {2}'.format(self.seating.lan, self.seating.title, self.placement)
 
     class Meta:
         verbose_name = _(u'seat')
