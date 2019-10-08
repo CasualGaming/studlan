@@ -52,7 +52,7 @@
         {% if lottery.registration_open and not user.is_authenticated %}
         <div class="alert alert-warning">{% trans "You need to be logged inn to participate." %}</div>
         {% endif %}
-        <div class="lottery-buttons">
+        <div class="lottery-content-centered">
             {% if lottery.registration_open and user.is_authenticated %}
             {% if request.user in participants %}
             <form class="inline-button-form" action="{% url 'lottery_sign_off' lottery.id %}" method="post">
@@ -94,7 +94,7 @@
 
         <hr />
 
-        <div class="lottery-winner-container">
+        <div class="lottery-content-centered">
             <h2>{% trans "Winner" %}</h2>
             {% if last_winner %}
             <p class="lottery-winner"><a href="{% url 'public_profile' last_winner %}">{{ last_winner }}</a></p>
