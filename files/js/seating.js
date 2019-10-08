@@ -40,7 +40,7 @@ $(document).ready(function(){
 
 
 
-    $('rect').click( function(e) {
+    $('a > rect').click( function(e) {
         e.preventDefault();
 
         if(selectedSeat){

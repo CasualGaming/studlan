@@ -14,9 +14,7 @@
             <h1 class="page-header">{% trans "User" %} {{ quser.username }}</h1>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-9">
-            {% include "user/profile_content.html" %}
-        </div>
-    </div>
+
+{% include "user/profile_content.html" %}
+
 {% endblock content %}

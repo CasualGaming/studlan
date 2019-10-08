@@ -10,12 +10,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Add config option to show version and default to hidden.
+- Redirect users to the LAN page when trying to reserve a seat without any ticket.
+- Changed seating sidebar appearance and added list of applicable ticket types.
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+- Fixed seating map rendering crashing if any seat objects are missing.
+- Fixed seating map client script triggering on pressing inactive seats.
+- Fixed LAN history list for users only including history with reserved seats.
 
 ### Security
 
