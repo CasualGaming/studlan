@@ -1,13 +1,13 @@
 # Norwegian, bokmål, translations for studlan.
 # Copyright (C) Casual Gaming
 # This file is distributed under the same license as studlan.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-13 21:25+0200\n"
+"POT-Creation-Date: 2019-10-08 02:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -521,6 +521,7 @@ msgstr "Når billettene vil gjøres offentlige."
 msgid "seats"
 msgstr "seter"
 
+#, python-brace-format
 msgid "{price}kr"
 msgstr "{price}kr"
 
@@ -1345,7 +1346,7 @@ msgid "Start time"
 msgstr "Starttid"
 
 msgid "Open spots"
-msgstr "Åpne seter"
+msgstr "Åpne plasser"
 
 msgid "Show brackets"
 msgstr "Vis braketter"
@@ -1499,20 +1500,21 @@ msgstr "Billetter"
 msgid "Price"
 msgstr "Pris"
 
-msgid "Free seats"
-msgstr "Ledige seter"
+msgid "Available tickets"
+msgstr "Tilgjengelig billetter"
 
-msgid "Sold out"
-msgstr "Utsolgt"
-
+#, python-format
 msgid "Tickets will be released %(release_date)s at %(release_time)s"
 msgstr "Billetter slippes %(release_date)s kl. %(release_time)s"
 
 msgid "The LAN is over"
 msgstr "LAN-et er avsluttet"
 
-msgid "Not logged in"
-msgstr "Ikke innlogget"
+msgid "Sold out"
+msgstr "Utsolgt"
+
+msgid "Please log in"
+msgstr "Vennligst logg inn"
 
 msgid "You already have a ticket"
 msgstr "Du har allerede en billett."
@@ -1729,6 +1731,7 @@ msgstr "Nytt lag"
 msgid "Must be unique!"
 msgstr "Må være unikt!"
 
+#, python-format
 msgid ""
 "<strong>%(inviter)s</strong> has invited you to join team <a href="
 "\"%(team_url)s\"><strong>%(team)s</strong></a>. <br /> You can accept or "
