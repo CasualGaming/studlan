@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Hide attend button on finished LANs.
 - Enforce disabled ticket sale when the LAN is over.
 - Enforce closed ticket sale when all tickets are sold.
+- Fix errors during payment being suppressed.
 
 ### Security
 
