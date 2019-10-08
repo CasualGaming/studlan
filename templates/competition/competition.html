@@ -255,7 +255,6 @@
                                 </form>
                             {% else %}
                                 <div class="alert alert-warning" role="alert">
-                                    {% url 'create_team' as create_team_url %}
                                     {% blocktrans trimmed %}
                                     To join the competition as a team you have to be part of a team.
                                     Only team leaders may enter the team in the competition.
@@ -299,6 +298,14 @@
             <a class="btn large danger" href="/competition/{{ competition.id }}/forfeit.html">Forfeit competition</a>
             -->
         {% endif %}
+    {% else %}
+        <div class="col-md-9">
+            <div class="alert alert-warning" role="alert">
+                {% blocktrans trimmed %}
+                Please log in to register for the competition.
+                {% endblocktrans %}
+            </div>
+        </div>
     {% endif %}
 
 </div>
@@ -371,8 +378,7 @@
                     <strong>Note:</strong>
                     Signing up for a team compo as a solo player does not mean you are a participant.
                     Try to find other players that sign up solo, make a team and sign up as a team.
-                    <br />
-                    <strong>When you sign up as a team, your solo participation will be overriden.</strong>
+                    When you sign up as a team, your solo participation will be overriden.
                     {% endblocktrans %}
                 </div>  
             </div>

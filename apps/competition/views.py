@@ -135,7 +135,7 @@ def competition_details(request, competition_id):
     context['teams'] = teams
     context['users'] = users
 
-    if competition.has_participant(request.user):
+    if request.user.is_authenticated() and competition.has_participant(request.user):
         p = None
         if request.user in users:
             context['participating'] = 'solo'
@@ -172,8 +172,6 @@ def competition_details(request, competition_id):
         owned_teams = Team.objects.filter(leader=request.user)
         context['owned_teams'] = owned_teams
         context['participating_owned_teams'] = owned_teams.filter(participant__competition=competition)
-    else:
-        messages.warning(request, _(u'Please log in to register for the competition.'))
 
     context['competition'] = competition
 
