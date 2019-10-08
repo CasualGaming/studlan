@@ -673,11 +673,15 @@ msgstr "Ingen kvalifiserte deltagere."
 msgid "Miscellaneous"
 msgstr "Diverse"
 
+#, python-brace-format
+msgid "{0}, seat {1}"
+msgstr "{0}, sete {1}"
+
 msgid "News"
 msgstr "Nyheter"
 
 msgid "date published"
-msgstr "datu utgitt"
+msgstr "dato utgitt"
 
 msgid "relevant LANs"
 msgstr "relevante LAN"
@@ -779,8 +783,8 @@ msgstr "Setet er allerede opptatt."
 msgid "Your ticket does not work in this seating area."
 msgstr "Billetten din virker ikke i dette området."
 
-msgid "You need to attend and pay before reserving your seat."
-msgstr "Du må melde deg på og betale før du kan reservere sete."
+msgid "You need a ticket before reserving a seat."
+msgstr "Du trenger en billett før du kan reservere sete."
 
 msgid "You have unreserved your seat."
 msgstr "Du har avreservert setet din."
@@ -850,16 +854,16 @@ msgid "Title"
 msgstr "Tittel"
 
 msgid "Tag"
-msgstr "Tagg"
+msgstr "Tag"
 
 msgid "Your desired tag contains illegal characters. Valid: a-Z 0-9 - _"
 msgstr "Brukernavnet ditt inneholder ulovlige tegn. Lovlige tegn: a-Z 0-9 - _"
 
 msgid "This team tag is already taken."
-msgstr "Lagtaggen er opptatt."
+msgstr "Lagtagen er opptatt."
 
 msgid "tag"
-msgstr "Tagg"
+msgstr "Tag"
 
 msgid "leader"
 msgstr "lagleder"
@@ -1144,9 +1148,6 @@ msgstr "Betalt"
 msgid "Arrived"
 msgstr "Ankommet"
 
-msgid "No seat"
-msgstr "Intet sete"
-
 msgid "Toggle"
 msgstr "Vende"
 
@@ -1345,7 +1346,7 @@ msgid "Start time"
 msgstr "Starttid"
 
 msgid "Open spots"
-msgstr "Åpne seter"
+msgstr "Åpne plasser"
 
 msgid "Show brackets"
 msgstr "Vis braketter"
@@ -1478,8 +1479,8 @@ msgstr "Du har en billett: %(ticket_title)s"
 msgid "You have a ticket."
 msgstr "Du har en billett."
 
-msgid "Remove attendance"
-msgstr "Meld deg av"
+msgid "Unattend"
+msgstr "Ikke delta"
 
 msgid "Tickets"
 msgstr "Billetter"
@@ -1506,8 +1507,8 @@ msgstr "Billetter slippes %(release_date)s kl. %(release_time)s."
 msgid "No tickets avalible at this time."
 msgstr "Det er ingen billetter tilgjengelig akkurat nå."
 
-msgid "Sign up"
-msgstr "Meld deg på"
+msgid "Attend"
+msgstr "Delta"
 
 #, python-format
 msgid ""
@@ -1669,11 +1670,26 @@ msgstr "Tilbake til billettside"
 msgid "Seating Map"
 msgstr "Setekart"
 
+msgctxt "seating status"
+msgid "Open"
+msgstr "Åpent"
+
 msgid "Closes"
 msgstr "Stenger"
 
-msgid "Capacity"
-msgstr "Kapasitet"
+msgctxt "seating status"
+msgid "Closed"
+msgstr "Stengt"
+
+msgid "Ticket"
+msgstr "Billett"
+
+msgctxt "ticket types"
+msgid "None"
+msgstr "Ingen"
+
+msgid "Available seats"
+msgstr "Tilgjengelige seter"
 
 msgid "Admin"
 msgstr "Admin"
@@ -1723,8 +1739,9 @@ msgstr "Tidligere sponsorer"
 msgid "Create team"
 msgstr "Nytt lag"
 
+msgctxt "team tag"
 msgid "Must be unique!"
-msgstr "Må være unikt!"
+msgstr "Må være unik!"
 
 #, python-format
 msgid ""
@@ -1795,7 +1812,7 @@ msgid "Size"
 msgstr "Størrelse"
 
 msgid "No teams found."
-msgstr "Det finnes ingen lag."
+msgstr "Fant ingen lag."
 
 msgid "All Teams"
 msgstr "Alle lag"
@@ -1806,6 +1823,12 @@ msgstr "Mine lag"
 msgid "Create Team"
 msgstr "Nytt lag"
 
+msgid "History"
+msgstr "Historikk"
+
+msgid "Aliases"
+msgstr "Aliaser"
+
 msgid "Account"
 msgstr "Konto"
 
@@ -1815,8 +1838,13 @@ msgstr "Kallenavn"
 msgid "Add alias"
 msgstr "Legg til alias"
 
-msgid "History"
-msgstr "Historikk"
+msgctxt "ticket"
+msgid "Has paid"
+msgstr "Har betalt"
+
+msgctxt "ticket"
+msgid "None"
+msgstr "Ingen"
 
 msgid "Inbox"
 msgstr "Innboks"
@@ -1869,14 +1897,14 @@ msgstr "Tilslutningsdato"
 msgid "Last login"
 msgstr "Siste innlogging"
 
-msgid "LAN Seatings"
-msgstr "LAN-setekart"
+msgid "LAN History"
+msgstr "LAN-historikk"
+
+msgid "Competition History"
+msgstr "Konkurransehistorikk"
 
 msgid "Edit Profile"
 msgstr "Endre profil"
-
-msgid "Aliases"
-msgstr "Aliaser"
 
 msgid "Update"
 msgstr "Oppdater"
@@ -1904,7 +1932,7 @@ msgid ""
 "then follow the instructions in the received email."
 msgstr ""
 "Logg ut, gå til innloggingssiden, trykk på knappen for "
-"passordgjenoppretting, følg deretter instruksjonene i den motatte e-posten."
+"passordgjenoppretting, følg deretter instruksjonene i den mottatte e-posten."
 
 msgid "Register arrivals"
 msgstr "Registrer ankonster"
