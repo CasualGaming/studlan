@@ -45,7 +45,7 @@ def payment(request, ticket_type_id):
         return redirect('lan_details', lan_id=ticket_type.lan_id)
 
     if ticket_type.lan.has_ticket(request.user) or request.user in ticket_type.lan.paid_attendees:
-        messages.info(request, _(u'You have already have a ticket for this LAN.'))
+        messages.info(request, _(u'You already have a ticket for this LAN.'))
         if is_post:
             return JsonResponse({'error': ''})
         return redirect('lan_details', lan_id=ticket_type.lan_id)
