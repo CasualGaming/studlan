@@ -11,10 +11,9 @@
 <div class="row">
     <div class="col-sm-2 col-md-1"></div>
     <div class="col-sm-8 col-md-7">
-        <h1>{{ lottery }}</h1>
+        <h1 id="lottery">{{ lottery }}</h1>
 
-        <table class="table table-bordered">
-            <caption>{% trans "Lottery info" %}</caption>
+        <table class="table table-bordered" aria-describedby="lottery">
             <tbody>
                 <tr>
                     <td><strong>{% trans "Status" %}</strong></td>

@@ -17,8 +17,7 @@
 
 <div class="row">
     <div class="col-md-9">
-        <table class="table table-bordered table-striped">
-            <caption>{% trans "Team members" %}</caption>
+        <table class="table table-bordered table-striped" aria-describedby="page-header">
             <thead>
                 <th scope="col" class="col-md-4">{% trans "Team Members" %}</th>
                 <th scope="col" class="col-md-2">{% trans "Actions" %}</th>
@@ -95,9 +94,8 @@
         {% endif %}
 
         {% if invitations %}
-        <h3>{% trans "Invitations" %}</h3>
-        <table class="table table-bordered table-striped">
-            <caption>{% trans "Team member invitations" %}</caption>
+        <h3 id="invitations">{% trans "Invitations" %}</h3>
+        <table class="table table-bordered table-striped" aria-describedby="invitations">
             <thead>
                 <th scope="col" class="col-md-4">{% trans "Username" %}</th>
                 <th scope="col" class="col-md-2">{% trans "Actions" %}</th>

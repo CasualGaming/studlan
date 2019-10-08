@@ -11,9 +11,8 @@
 {% block content %}
 <div class="row">
     <div class="col-md-9">
-        <h1>{% trans "Competitions" %}</h1>
-        <table class="table table-bordered table-striped table-hover click-table">
-            <caption>{% trans "Competitions" %}</caption>
+        <h1 id="competitions">{% trans "Competitions" %}</h1>
+        <table class="table table-bordered table-striped table-hover click-table" aria-describedby="competitions">
             <thead>
                 <th scope="col" class="col-md-1">Status</th>
                 <th scope="col" class="col-md-7">Title</th>
@@ -34,10 +33,9 @@
             </tbody>
         </table>
 
-        <h2>{% trans "Lotteries" %}</h2>
+        <h2 id="lotteries">{% trans "Lotteries" %}</h2>
         {% if lotteries %}
-        <table class="table table-bordered table-striped table-hover click-table">
-            <caption>{% trans "Lotteries" %}</caption>
+        <table class="table table-bordered table-striped table-hover click-table" aria-describedby="lotteries">
             <thead>
                 <th scope="col" class="col-md-1">Status</th>
                 <th scope="col" class="col-md-11">Title</th>
