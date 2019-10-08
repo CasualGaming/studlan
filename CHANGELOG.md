@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Centered narrow pages.
 - Improved sponsorbar responsiveness.
 - Left-aligned articles and LANs (they were block-aligned).
+- Redirect users to the LAN page when trying to reserve a seat without any ticket.
+- Changed seating sidebar appearance and added list of applicable ticket types.
 
 ### Deprecated
 
@@ -23,6 +25,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed misaligned site logo.
 - Fixed navbar overflowing into two rows on medium screens when logged out.
 - Fixed unfair sponsor banner sizes, where some appeared larger than others.
+- Fixed seating map rendering crashing if any seat objects are missing.
+- Fixed seating map client script triggering on pressing inactive seats.
+- Fixed LAN history list for users only including history with reserved seats.
 
 ### Security
 

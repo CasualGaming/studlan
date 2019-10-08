@@ -65,28 +65,16 @@
             </tbody>
         </table>
 
-        {% if user_seats %}
-        <h4>{% trans "LAN Seatings" %}</h4>
-        <table class="well table">
-            <thead>
-                <th>{% trans "LAN" %}</th>
-                <th>{% trans "Seat" %}</th>
-            </thead>
-            <tbody>
-                {% for seat in user_seats %}
-                <tr>
-                    <td><a href="{{ seat.seating.lan.get_absolute_url }}">{{ seat.seating.lan }}</a></td>
-                    <td><a href="{{ seat.seating.get_absolute_url }}{{ seat.placement }}">{{ seat.seating }}, {% trans "seat" %} {{ seat.placement }}</a></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        {% if attendances %}
+        <h4>{% trans "LAN History" %}</h4>
+        {% include "user/history_table.html" %}
         {% endif %}
 
         {% if competitions %}
-        <h4>{% trans "Competitions" %}</h4>
+        <h4>{% trans "Competition History" %}</h4>
         {% include "competition/competition_user_table.html" %}
         {% endif %}
-        {% endif %}
+
+        {% endif %}{# Authorized to view private info #}
     </div>
 </div>

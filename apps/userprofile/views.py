@@ -12,7 +12,7 @@ from django.utils.translation import ugettext as _
 from postman.models import Message
 
 from apps.competition.models import Competition
-from apps.seating.models import Seat
+from apps.lan.models import Attendee
 from apps.userprofile.forms import UserProfileForm
 from apps.userprofile.models import Alias, AliasType
 
@@ -33,9 +33,9 @@ def user_profile(request, username):
     context['quser'] = quser
     context['profile'] = quser.profile
     if request.user == quser or request.user.has_perm('userprofile.show_private_info'):
-        user_seats = Seat.objects.filter(user=quser)
+        attendances = Attendee.objects.filter(user=quser)
         competitions = Competition.get_all_for_user(quser)
-        context['user_seats'] = user_seats
+        context['attendances'] = attendances
         context['competitions'] = competitions
 
     return render(request, 'user/public_profile.html', context)
@@ -62,8 +62,8 @@ def update_profile(request):
 
 @login_required
 def history(request):
-    user_seats = Seat.objects.filter(user=request.user)
-    return render(request, 'user/history.html', {'user_seats': user_seats})
+    attendances = Attendee.objects.filter(user=request.user)
+    return render(request, 'user/history.html', {'attendances': attendances})
 
 
 @login_required

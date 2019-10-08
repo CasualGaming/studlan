@@ -1,0 +1,42 @@
+{% load i18n %}
+
+<table class="well table" aria-describedby="history-header">
+    <thead>
+        <th scope="col">{% trans "LAN" %}</th>
+        <th scope="col">{% trans "Time" %}</th>
+        <th scope="col">{% trans "Ticket" %}</th>
+        <th scope="col">{% trans "Seat" %}</th>
+        <th scope="col">{% trans "Arrived" %}</th>
+    </thead>
+    <tbody>
+        {% for attendance in attendances %}
+        {% with ticket=attendance.get_ticket seat=attendance.get_seat %}
+        <tr>
+            <td><a href="{{ attendance.lan.get_absolute_url }}">{{ attendance.lan }}</a></td>
+            <td>{{ attendance.lan.start_date|date }} – {{ attendance.lan.end_date|date }}</td>
+            <td>
+                {% if ticket %}
+                <span class="label label-success">{{ ticket.ticket_type }}</span></span>
+                {% elif attendance.has_paid %}
+                <span class="label label-success">{% trans "Has paid" context "ticket" %}</span></span>
+                {% else %}
+                <span class="label label-danger">{% trans "None" context "ticket" %}</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if seat %}
+                <a href="{{ seat.seating.get_absolute_url }}{{ seat.placement }}">{{ seat.seating.title }}, {% trans "seat" %} {{ seat.placement }}</a>
+                {% endif %}
+            </td>
+            <td>
+                {% if attendance.arrived %}
+                <span class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
+                {% else %}
+                <span class="label label-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endwith %}
+        {% endfor %}
+    </tbody>
+</table>

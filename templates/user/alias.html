@@ -1,13 +1,21 @@
-{% extends "user/profile_base.html" %}
+{% extends "base.html" %}
 
 {% load i18n %}
 {% load profile_tags %}
 
-{% block tabs %}
-{% profile_tabs 'alias' %}
-{% endblock tabs %}
+{% block title %}
+{% trans "History" %}
+{% endblock title %}
 
-{% block page %}
+{% block content %}
+<div class="row">
+    <div class="col-md-9">
+        <h1 id="aliases-header">{% trans "Aliases" %}</h1>
+    </div>
+</div>
+
+{% profile_tabs 'aliases' %}
+
 <div class="row">
     <div class="col-md-9">
         <table class="well table">
@@ -63,4 +71,4 @@
 </div>
 {% else %}
 {% endif %}
-{% endblock page %}
+{% endblock content %}

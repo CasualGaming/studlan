@@ -101,7 +101,7 @@
         <div class="center-on-collapse">
             <a class="btn btn-danger" href="{% url 'lan_unattend' lan.id %}">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                {% trans "Remove attendance" %}
+                {% trans "Unattend" %}
             </a>
         </div>
         {% if ticket_types %}
@@ -158,7 +158,7 @@
         <div class="center-on-collapse">
             <a class="btn btn-primary" href="{% url 'lan_attend' lan.id %}">
                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                {% trans "Sign up" %}
+                {% trans "Attend" %}
             </a>
         </div>
         {% else %}
