@@ -84,8 +84,21 @@ class Attendee(models.Model):
     def __unicode__(self):
         return self.user.username + u' – ' + self.lan.title
 
-    def has_paid_or_has_ticket(self):
-        return self.has_paid or self.lan.has_ticket(self.user)
+    def get_ticket(self):
+        tickets = Ticket.objects.filter(user=self.user, ticket_type__lan=self.lan)
+        if tickets:
+            # Ignore extra tickets
+            return tickets[0]
+        return None
+
+    def get_seat(self):
+        from apps.seating.models import Seat
+
+        seats = Seat.objects.filter(user=self.user, seating__lan=self.lan)
+        if seats:
+            # Ignore extra seats
+            return seats[0]
+        return None
 
     class Meta:
         verbose_name = _(u'LAN attendee')
@@ -138,7 +151,7 @@ class Ticket(models.Model):
     invalid_description = models.TextField(_(u'invalid description'), null=True, blank=True)
 
     def __unicode__(self):
-        return self.user.username
+        return unicode(self.ticket_type) + u' – ' + self.user.username
 
     class Meta:
         verbose_name = _(u'ticket')
