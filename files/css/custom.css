@@ -174,9 +174,15 @@ div#btn-profile {
 
 .sidebar-wrapper {
     margin-top: 80px;
-    right: 100px;
+    right: 150px;
     position: fixed;
-    width: 220px;
+    width: 250px;
+}
+
+@media (max-width:1499px) {
+    .sidebar-wrapper{
+        right: 50px;
+    }
 }
 
 @media (max-width:1199px) {

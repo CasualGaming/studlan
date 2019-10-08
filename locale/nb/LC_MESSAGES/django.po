@@ -1,13 +1,13 @@
 # Norwegian, bokmål, translations for studlan.
 # Copyright (C) Casual Gaming
 # This file is distributed under the same license as studlan.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-13 18:44+0200\n"
+"POT-Creation-Date: 2019-10-08 06:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1645,7 +1645,7 @@ msgstr "Setekart"
 
 msgctxt "seating status"
 msgid "Open"
-msgstr "Åpen"
+msgstr "Åpent"
 
 msgid "Closes"
 msgstr "Stenger"
@@ -1653,6 +1653,9 @@ msgstr "Stenger"
 msgctxt "seating status"
 msgid "Closed"
 msgstr "Stengt"
+
+msgid "Ticket"
+msgstr "Billett"
 
 msgctxt "ticket types"
 msgid "None"
@@ -1804,9 +1807,6 @@ msgstr "Legg til alias"
 
 msgid "History"
 msgstr "Historikk"
-
-msgid "Ticket"
-msgstr "Billett"
 
 msgctxt "ticket"
 msgid "Has paid"
