@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-14 01:39+0200\n"
+"POT-Creation-Date: 2019-10-08 11:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -231,12 +231,12 @@ msgid "activities"
 msgstr "aktiviteter"
 
 msgctxt "competition status"
-msgid "Registration open"
-msgstr "Registrering åpnet"
+msgid "Open"
+msgstr "Åpen"
 
 msgctxt "competition status"
-msgid "Registration closed"
-msgstr "Registrering lukket"
+msgid "Closed"
+msgstr "Stengt"
 
 msgctxt "competition status"
 msgid "In progress"
@@ -399,9 +399,6 @@ msgid ""
 msgstr ""
 "Du har ingen aktiv kamp, vennligst sjekk brakettene for mer informasjon."
 
-msgid "Please log in to register for the competition."
-msgstr "Vennligst logg inn for å melde deg på."
-
 #, python-brace-format
 msgid "You are already in this competition with {team}."
 msgstr "Du er allerede påmeldt denne konkurransen med {team}."
@@ -431,8 +428,18 @@ msgstr "{member} mangler et alias for {competition}."
 msgid "{leader} is missing an alias for {competition}."
 msgstr "{leader} mangler et alias for {competition}."
 
-msgid "You are already in this competition as a solo player."
+#, python-brace-format
+msgid "You have been signed up for {competition} with team {team}."
+msgstr "Du har meldt deg på {competition} med lag {team}."
+
+msgid "You are already in this competition."
 msgstr "Du er allerede påmeldt denne konkurransen."
+
+msgid "You are not signed up for the LAN."
+msgstr "Du er ikke meldt opp til LAN-et."
+
+msgid "You have not paid for the LAN."
+msgstr "Du har ikke betalt for LAN-et."
 
 msgid "You do not have the required alias."
 msgstr "Du har ikke det påkrevde aliaset."
@@ -455,7 +462,7 @@ msgstr "Du har fjernet {team} fra {competition}."
 #, python-brace-format
 msgid ""
 "You cannot remove {team} from {competition}, you are not the team leader."
-msgstr "Du kan ikke fjerne {team} fra {competition}, du er ikke lagfører."
+msgstr "Du kan ikke fjerne {team} fra {competition}, du er ikke lagleder."
 
 msgid "Forfeit not yet implemented!"
 msgstr ""
@@ -562,6 +569,10 @@ msgstr "Når billettene vil gjøres offentlige."
 
 msgid "seats"
 msgstr "seter"
+
+#, python-brace-format
+msgid "{price}kr"
+msgstr "{price}kr"
 
 msgid "ticket type"
 msgstr "billettype"
@@ -746,14 +757,17 @@ msgstr "nyhetsartikkeloversettelser"
 msgid "Payment"
 msgstr "Betaling"
 
-msgid "You must be an attendee to buy a ticket for this LAN."
-msgstr "Du må melde deg opp før du kan kjøpe en billett for dette LAN-et."
-
-msgid "You have already have a ticket for this LAN."
+msgid "You already have a ticket for this LAN."
 msgstr "Du har allerede en billett for dette LAN-et."
 
 msgid "This ticket is not yet available."
 msgstr "Billetten er ikke tilgjengelig ennå."
+
+msgid "All tickets have sold out."
+msgstr "Alle billettene er utsolgte."
+
+msgid "You must attend first to buy a ticket for this LAN."
+msgstr "Du må melde deg opp før du kan kjøpe en billett for dette LAN-et."
 
 msgid "Ticket confirmation"
 msgstr "Billettbekreftelse"
@@ -902,7 +916,7 @@ msgid "tag"
 msgstr "Tag"
 
 msgid "leader"
-msgstr "lagfører"
+msgstr "lagleder"
 
 msgid "members"
 msgstr "medlemmer"
@@ -930,21 +944,21 @@ msgstr "laginvitasjoner"
 
 #, python-brace-format
 msgid "You can't be the leader of more than {max} teams."
-msgstr "Du kan ikke være lagfører av flere enn {max} lag."
+msgstr "Du kan ikke være lagleder av flere enn {max} lag."
 
 #, python-brace-format
 msgid "Team {team} has been created."
 msgstr "Lag {team} har blitt opprettet."
 
 msgid "Only the team leader may disband the team."
-msgstr "Bare lagfører kan oppløse laget."
+msgstr "Bare lagleder kan oppløse laget."
 
 #, python-brace-format
 msgid "Team {team} was deleted."
 msgstr "Lag {team} ble slettet."
 
 msgid "Only the team leader may invite members."
-msgstr "Bare lagfører kan invitere medlemmer."
+msgstr "Bare lagleder kan invitere medlemmer."
 
 msgid "No username was specified."
 msgstr "Intet brukernavn ble spesifisert."
@@ -969,7 +983,7 @@ msgid "User {user} was invited to the team."
 msgstr "Bruker {user} ble invitert til laget."
 
 msgid "Only the team leader may uninvite members."
-msgstr "Bare lagfører kan angre medlemskapsinvitasjoner."
+msgstr "Bare lagleder kan angre medlemskapsinvitasjoner."
 
 #, python-brace-format
 msgid "User {user} is not invited to the team."
@@ -981,7 +995,7 @@ msgstr "Bruker {user} er ikke lenger invitert til laget."
 
 #, python-brace-format
 msgid "You are already the team leader of team {team}."
-msgstr "Du er allerede lagfører for lag {team}."
+msgstr "Du er allerede lagleder for lag {team}."
 
 #, python-brace-format
 msgid "You are already on team {team}."
@@ -1000,7 +1014,7 @@ msgid "You have declined the membership invitation from team {team}."
 msgstr "Du har avslått medlemskapsinvitasjonen fra lag {team}."
 
 msgid "Only the team leader may kick members."
-msgstr "Bare lagfører kan sparke medlemmer."
+msgstr "Bare lagleder kan sparke medlemmer."
 
 msgid "You can't kick yourself."
 msgstr "Du kan ikke sparke deg selv."
@@ -1015,7 +1029,7 @@ msgstr "{user} ble sparket fra laget."
 
 msgid ""
 "You are the team leader, the only way to leave the team is to disband it."
-msgstr "Du er lagfører, eneste måte å forlate laget er ved å oppløse det."
+msgstr "Du er lagleder, eneste måte å forlate laget er ved å oppløse det."
 
 msgid "You are not a member of this team."
 msgstr "Du er ikke medlem av dette laget."
@@ -1151,9 +1165,6 @@ msgstr "Adminpanel"
 msgid "Register Arrivals"
 msgstr "Registrer ankomster"
 
-msgid "Filter:"
-msgstr "Filter:"
-
 msgid "Attending:"
 msgstr "Deltar:"
 
@@ -1162,6 +1173,31 @@ msgstr "Betalt:"
 
 msgid "Arrived:"
 msgstr "Ankommet:"
+
+msgid "Filter:"
+msgstr "Filter:"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nei"
+
+#, python-brace-format
+msgid "Set {user} to paid?"
+msgstr "Sett {user} til betalt?"
+
+#, python-brace-format
+msgid "Set {user} to NOT paid?"
+msgstr "Sett {user} til IKKE betalt?"
+
+#, python-brace-format
+msgid "Set {user} to arrived?"
+msgstr "Sett {user} til ankommet?"
+
+#, python-brace-format
+msgid "Set {user} to NOT arrived?"
+msgstr "Sett {user} til IKKE ankommet?"
 
 msgid "Full Name"
 msgstr "Fullt navn"
@@ -1357,6 +1393,18 @@ msgstr "Språk"
 msgid "Activity"
 msgstr "Aktivitet"
 
+msgid "Type"
+msgstr "Type"
+
+msgid "Solo"
+msgstr "Solo"
+
+msgid "Minimum team size"
+msgstr "Minimum lagstørrelse"
+
+msgid "N/A"
+msgstr ""
+
 msgid "Status"
 msgstr "Status"
 
@@ -1369,11 +1417,11 @@ msgstr "Åpne plasser"
 msgid "Show brackets"
 msgstr "Vis braketter"
 
-msgid "Teams"
-msgstr "Lag"
+msgid "Participating Teams"
+msgstr "Deltagende lag"
 
-msgid "Participants"
-msgstr "Deltakere"
+msgid "Solo Participants"
+msgstr "Solo-deltakere"
 
 msgid "Select team"
 msgstr "Velg lag"
@@ -1381,13 +1429,12 @@ msgstr "Velg lag"
 msgid "Join competition (team)"
 msgstr "Bli med (lag)"
 
-#, python-format
 msgid ""
-"To join the competition as a team you have to <a href=\"%(create_team_url)s"
-"\">create</a> or join a team."
+"To join the competition as a team you have to be part of a team. Only team "
+"leaders may enter the team in the competition."
 msgstr ""
-"For å bli med på konkurransen som et lag, må du <a href=\"%(create_team_url)s"
-"\">lage</a> eller bli med på et lag."
+"For å bli med på konkurransen som et lag, må du være del av et lag. Bare "
+"lagledere kan melde opp laget til konkurransen."
 
 msgid "Join competition"
 msgstr "Bli med"
@@ -1404,19 +1451,22 @@ msgstr "Trykk og vent for å starte compo:"
 msgid "Start Compo"
 msgstr "Start Compo"
 
+msgid "Please log in to register for the competition."
+msgstr "Vennligst logg inn for å melde deg på."
+
 msgid "Submit Score"
 msgstr "Send inn poengsum"
 
 msgid ""
 "<strong>Note:</strong> Signing up for a team compo as a solo player does not "
 "mean you are a participant. Try to find other players that sign up solo, "
-"make a team and sign up as a team. <br /> <strong>When you sign up as a "
-"team, your solo participation will be overriden.</strong>"
+"make a team and sign up as a team. When you sign up as a team, your solo "
+"participation will be overriden."
 msgstr ""
-"<strong>Merk:</strong>Oppmelding på en lag-compo betyr ikke at du er "
-"deltager.Prøv å finne andre spillere som melder seg på solo, lag et lag, og "
-"meld opp laget.<br /><strong>Når du melder deg opp som lag, vil solo-"
-"oppmeldingen overskrives.</strong>"
+"<strong>Merk:</strong> Oppmelding på en lag-compo betyr ikke at du er "
+"deltager. Prøv å finne andre spillere som melder seg på solo, lag et lag, og "
+"meld opp laget. Når du melder deg opp som lag, vil solo-oppmeldingen "
+"overskrives."
 
 #, python-format
 msgid ""
@@ -1442,11 +1492,11 @@ msgstr "Ingen nåværende eller kommende LAN."
 msgid "Previous LANs"
 msgstr "Tidligere LAN"
 
-msgid "Type"
-msgstr "type"
+msgid "Start Time"
+msgstr "Starttid"
 
-msgid "Solo"
-msgstr "Solo"
+msgid "No competitions for this LAN."
+msgstr "Ingen konkurranser for dette LAN-et."
 
 msgid "Raffles"
 msgstr "Trekninger"
@@ -1459,8 +1509,8 @@ msgctxt "status"
 msgid "Closed"
 msgstr "Stengt"
 
-msgid "No active raffles right now."
-msgstr "Ingen aktive trekninger for øyeblikket."
+msgid "No raffles for this LAN."
+msgstr "Ingen trekninger for dette LAN-et."
 
 msgid "There is no schedule for this LAN."
 msgstr "Det er ingen timetabell for dette LAN-et."
@@ -1479,7 +1529,7 @@ msgstr "Sent automatisk fra %(site_name)s (%(host)s)."
 msgid "Support"
 msgstr "Brukerstøtte"
 
-msgid "This lan is over."
+msgid "The LAN is over."
 msgstr "LAN-et er avsluttet."
 
 msgid "End time"
@@ -1498,44 +1548,56 @@ msgstr "Du har en billett."
 msgid "Unattend"
 msgstr "Ikke delta"
 
+msgid "Attend"
+msgstr "Delta"
+
+#, python-format
+msgid ""
+"Your address and zip code is required in order to sign up for a LAN. Go to "
+"your <a href=\"%(update_profile_url)s\">profile</a> to add the information."
+msgstr ""
+"Adressen og postkoden din er nødvendig for å melde seg på LAN. Gå til <a "
+"href=\"%(update_profile_url)s\">profilen din</a> for å legge det til."
+
+msgid "You need to login to sign up for the LAN."
+msgstr "Du må logge deg på for å melde deg opp til LAN-et."
+
 msgid "Tickets"
 msgstr "Billetter"
 
 msgid "Price"
 msgstr "Pris"
 
-msgid "Seats"
-msgstr "Seter"
+msgid "Available tickets"
+msgstr "Tilgjengelig billetter"
 
-msgid "Free seats"
-msgstr "Ledige seter"
+#, python-format
+msgid "Tickets will be released %(release_date)s at %(release_time)s"
+msgstr "Billetter slippes %(release_date)s kl. %(release_time)s"
+
+msgid "The LAN is over"
+msgstr "LAN-et er avsluttet"
 
 msgid "Sold out"
 msgstr "Utsolgt"
 
+msgid "Please log in"
+msgstr "Vennligst logg inn"
+
+msgid "You already have a ticket"
+msgstr "Du har allerede en billett."
+
+msgid "You must attend first"
+msgstr "Du må delta først"
+
+msgid "Missing address in user profile"
+msgstr "Manglende adresse i brukerprofilen"
+
 msgid "Buy"
 msgstr "Kjøp"
 
-#, python-format
-msgid "Tickets will be released %(release_date)s at %(release_time)s."
-msgstr "Billetter slippes %(release_date)s kl. %(release_time)s."
-
 msgid "No tickets avalible at this time."
 msgstr "Det er ingen billetter tilgjengelig akkurat nå."
-
-msgid "Attend"
-msgstr "Delta"
-
-msgid ""
-"Your address and postal code is required in order to sign up for a LAN. Go "
-"to your <a href=\"%(update_profile_url)s\">profile</a> to add the "
-"information."
-msgstr ""
-"Adressen og postnummeret ditt er nødvendig for å melde seg på LAN. Gå til <a "
-"href=\"%(update_profile_url)s\">profilen din</a> for å legge det til."
-
-msgid "You need to login to sign up for the LAN."
-msgstr "Du må logge deg på for å melde deg opp til LAN-et."
 
 msgid "LAN List"
 msgstr "LAN-liste"
@@ -1559,7 +1621,7 @@ msgid "Signup closed."
 msgstr "Påmelding lukket."
 
 msgid "Go to drawing"
-msgstr "Gå til trekking"
+msgstr "Gå til trekning"
 
 msgid "Draw winner"
 msgstr "Trekk vinner"
@@ -1572,6 +1634,12 @@ msgstr "Siste vinner"
 
 msgid "All Winners"
 msgstr "Alle vinnere"
+
+msgid "Esports"
+msgstr "E-sport"
+
+msgid "Teams"
+msgstr "Lag"
 
 msgid "Sponsors"
 msgstr "Sponsorer"
@@ -1769,14 +1837,14 @@ msgstr ""
 msgid "My teams"
 msgstr "Mine lag"
 
-msgid "Team Members"
-msgstr "Lagmedlemmer"
+msgid "Members"
+msgstr "Medlemmer"
 
 msgid "Actions"
 msgstr "Handlinger"
 
 msgid "Leader"
-msgstr "Lagfører"
+msgstr "Lagleder"
 
 #, python-format
 msgid "Are you sure you want to kick %(member)s from %(team)s?"
@@ -1805,12 +1873,6 @@ msgstr "Aksepter invitasjon"
 msgid "Decline invitation"
 msgstr "Avslå invitasjon"
 
-msgid "Invite Member"
-msgstr "Inviter medlem"
-
-msgid "Invite member"
-msgstr "Inviter medlem"
-
 msgid "Invitations"
 msgstr "Invitasjoner"
 
@@ -1820,6 +1882,12 @@ msgstr "Er du sikker på at du vil avinvitere %(member)s fra %(team)s?"
 
 msgid "Uninvite"
 msgstr "Angre invitasjon"
+
+msgid "Invite New Member"
+msgstr "Inviter nytt medlem"
+
+msgid "Invite member"
+msgstr "Inviter medlem"
 
 msgid "Size"
 msgstr "Størrelse"
@@ -1936,13 +2004,21 @@ msgid "Register arrivals"
 msgstr "Registrer ankonster"
 
 msgid "Manual registration"
-msgstr "Manuell resistrering"
+msgstr "Manuell registrering"
 
 msgid "Drawing"
-msgstr "Trekking"
+msgstr "Trekning"
 
 msgid "Admin panel"
 msgstr "Adminpanel"
 
 msgid "Log out"
 msgstr "Logg ut"
+
+#~ msgid ""
+#~ "Your address and postal code is required in order to sign up for a LAN. "
+#~ "Go to your <a href=\"%(update_profile_url)s\">profile</a> to add the "
+#~ "information."
+#~ msgstr ""
+#~ "Adressen og postnummeret ditt er nødvendig for å melde seg på LAN. Gå til "
+#~ "<a href=\"%(update_profile_url)s\">profilen din</a> for å legge det til."

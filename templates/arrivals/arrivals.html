@@ -16,40 +16,65 @@
         </div>
     </div>
     
-    <div class="row">
     {% if attendees %}
-        <div class="col-md-4">
-            <span>{% trans "Filter:" %} </span><input type="text" id="FilterTextBox" name="FilterTextBox" />
-        </div>
-        <div class="col-md-5 attendee-counts">
-            <span>{% trans "Attending:" %} {{attendees.count}}</span>
-            <span>{% trans "Paid:" %} {{paid_count}}</span>
-            <span>{% trans "Arrived:" %} {{arrived_count}}</span>
-        </div>
-    </div>
-    <br />
     <div class="row">
         <div class="col-md-9">
-            <!-- Adding token here because using clientside js using the csrfcookie is a security liability -->
+            <div class="attendee-counts">
+                <span>{% trans "Attending:" %} {{attendees.count}}</span>
+                <span>{% trans "Paid:" %} {{paid_count}}</span>
+                <span>{% trans "Arrived:" %} {{arrived_count}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <div class="arrival-filter-group">
+                <span>{% trans "Filter:" %}</span>
+                <input type="text" id="filter-text-input" />
+                <span>{% trans "Paid:" %}</span>
+                <select id="filter-paid-input">
+                    <option value=""></option>
+                    <option value="yes">{% trans "Yes" %}</option>
+                    <option value="no">{% trans "No" %}</option>
+                </select>
+                <span>{% trans "Arrived:" %}</span>
+                <select id="filter-arrived-input">
+                    <option value=""></option>
+                    <option value="yes">{% trans "Yes" %}</option>
+                    <option value="no">{% trans "No" %}</option>
+                </select>
+                </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
             <div style="display:none">
+                <!-- Adding token here because using clientside js using the csrfcookie is a security liability -->
                 <input id="token" type="hidden" value="{{ csrf_token }}">
+                <!-- Text used by JS toggle confirm dialogs -->
+                <span id="toggle-text-has-paid">{% trans "Set {user} to paid?" %}</span>
+                <span id="toggle-text-has-not-paid">{% trans "Set {user} to NOT paid?" %}</span>
+                <span id="toggle-text-has-arrived">{% trans "Set {user} to arrived?" %}</span>
+                <span id="toggle-text-has-not-arrived">{% trans "Set {user} to NOT arrived?" %}</span>
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered table-striped filterable">
                     <thead>
-                        <th>{% trans "Username" %}</th>
-                        <th>{% trans "Full Name" %}</th>
-                        <th>{% trans "Email Address" %}</th>
-                        <th>{% trans "Seat" %}</th>
-                        <th>{% trans "Paid" %}</th>
-                        <th>{% trans "Arrived" %}</th>
+                        <tr>
+                            <th>{% trans "Username" %}</th>
+                            <th>{% trans "Full Name" %}</th>
+                            <th>{% trans "Email Address" %}</th>
+                            <th>{% trans "Seat" %}</th>
+                            <th>{% trans "Paid" %}</th>
+                            <th>{% trans "Arrived" %}</th>
+                        </tr>
                     </thead>
                     <tbody>
                         {% for attendee in attendees %}
                         <tr>
                             <td class="username"><a href="{% url 'public_profile' attendee.user %}" target="_blank">{{ attendee.user.username }}</a></td>
-                            <td>{{ attendee.user.get_full_name }}</td>
-                            <td>{{ attendee.user.email }}</td>
+                            <td class="name">{{ attendee.user.get_full_name }}</td>
+                            <td class="email">{{ attendee.user.email }}</td>
                             <td>
                                 {% if attendee in user_seats%}
                                 <a href="{{ user_seats|get_seating_url:attendee }}{{ user_seats|get_seat_placement:attendee }}" target="_blank">{{ user_seats|get_seat_info:attendee }}</a>
@@ -57,19 +82,19 @@
                             </td>
                             <td>
                                 {% if attendee.user in ticket_users %}
-                                    <span class="label label-info">{{ ticket_users|get_user:attendee.user }} </span>
+                                <span class="paid label label-info" value="True">{{ ticket_users|get_user:attendee.user }} </span>
                                 {% elif attendee.has_paid %}
-                                    <span class="paid label label-success" value="True">{% trans "Toggle" %}</span>
+                                <span class="paid label label-success" value="True">{% trans "Toggle" %}</span>
                                 {% else %}
-                                    <span class="paid label label-danger" value="False">{% trans "Toggle" %}</span>
+                                <span class="paid label label-danger" value="False">{% trans "Toggle" %}</span>
                                 {% endif %}
                             </td>
                             <td>
-                            {% if attendee.arrived %}
+                                {% if attendee.arrived %}
                                 <span class="arrived label label-success" value="True">{% trans "Toggle" %}</span>
-                            {% else %}
+                                {% else %}
                                 <span class="arrived label label-danger" value="False">{% trans "Toggle" %}</span>
-                            {% endif %}
+                                {% endif %}
                             </td>
                         </tr>
                         {% endfor %}
@@ -82,12 +107,16 @@
             <a href="{% url 'lan_list_paid' lan.id %}" class="btn btn-info">{% trans "Export to Excel sheet" %}</a>
         </div>
         {% endif %}
+    </div>
     {% else %}
+    <div class="row">
         <div class="col-md-9">
             <div class="alert alert-warning">{% trans "There are no attendees for this LAN." %}</div>
         </div>
-    {% endif %}
     </div>
-    <script src="{% static 'js/arrival.js' %}"></script>
-
+    {% endif %}
 {% endblock content %}
+
+{% block script %}
+<script src="{% static 'js/arrival.js' %}"></script>
+{% endblock script %}

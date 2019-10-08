@@ -11,22 +11,20 @@
 {% block content %}
 <div class="row">
     <div class="col-md-9">
-        <h1 class="page-header">{% trans "Team" %} {{ team }}</h1>
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-md-9">
-        <table class="table table-bordered table-striped">
+        <h1 class="page-header">{% trans "Team" %} {{ team }}</h1>
+
+        <h3 id="members">{% trans "Members" %}</h3>
+        <table class="table table-bordered table-striped" aria-describedby="members">
             <thead>
-                <th class="col-md-4">{% trans "Team Members" %}</th>
-                <th class="col-md-2">{% trans "Actions" %}</th>
+                <th scope="col" class="col-md-4">{% trans "Username" %}</th>
+                <th scope="col" class="col-md-2">{% trans "Actions" %}</th>
             </thead>
             <tbody>
                 <tr>
                     <td>
                         <a href="{% url 'public_profile' team.leader %}">{{ team.leader }}</a>
-                        <span class="label label-info">{% trans "Leader" %}</span>
+                        <span class="label label-info pull-right">{% trans "Leader" %}</span>
                     </td>
                     <td></td>
                 </tr>
@@ -77,28 +75,12 @@
         </form>
         {% endif %}
 
-        {% if is_leader %}
-        <h3>{% trans "Invite Member" %}</h3>
-        <form class="form-horizontal" action="{% url 'invite_member' team.id %}" method="post">
-            {% csrf_token %}
-            <div class="form-group">
-                <label class="col-md-2 control-label" for="user">{% trans "User" %}</label>
-                <div class="col-md-3">
-                    <input type="text" class="form-control" name="user" required placeholder="{% trans "Username" %}" />
-                </div>
-                <div class="col-md-2 center-on-collapse form-actions-collapsed">
-                    <input type="submit" class="btn btn-primary" value="{% trans "Invite member" %}" />
-                </div>
-            </div>
-        </form>
-        {% endif %}
-
-        {% if invitations %}
-        <h3>{% trans "Invitations" %}</h3>
-        <table class="table table-bordered table-striped">
+        {% if is_leader or is_normal_member or perms.team.show_invitations %}
+        <h3 id="invitations">{% trans "Invitations" %}</h3>
+        <table class="table table-bordered table-striped" aria-describedby="invitations">
             <thead>
-                <th class="col-md-4">{% trans "Username" %}</th>
-                <th class="col-md-2">{% trans "Actions" %}</th>
+                <th scope="col" class="col-md-4">{% trans "Username" %}</th>
+                <th scope="col" class="col-md-2">{% trans "Actions" %}</th>
             </thead>
             <tbody>
                 {% for invite in invitations %}
@@ -120,6 +102,22 @@
                 {% endfor %}
             </tbody>
         </table>
+        {% endif %}
+
+        {% if is_leader %}
+        <h4>{% trans "Invite New Member" %}</h4>
+        <form class="form-horizontal" action="{% url 'invite_member' team.id %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="col-md-1 control-label" for="user">{% trans "User" %}</label>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="user" required placeholder="{% trans "Username" %}" />
+                </div>
+                <div class="col-md-2 center-on-collapse form-actions-collapsed">
+                    <input type="submit" class="btn btn-primary" value="{% trans "Invite member" %}" />
+                </div>
+            </div>
+        </form>
         {% endif %}
     </div>
 </div>
