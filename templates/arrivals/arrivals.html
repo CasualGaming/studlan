@@ -53,8 +53,6 @@
                             <td>
                                 {% if attendee in user_seats%}
                                 <a href="{{ user_seats|get_seating_url:attendee }}{{ user_seats|get_seat_placement:attendee }}" target="_blank">{{ user_seats|get_seat_info:attendee }}</a>
-                                {% else %}
-                                {% trans "No seat" %}
                                 {% endif %}
                             </td>
                             <td>

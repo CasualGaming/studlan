@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Merged lottery info page and draw page.
+- Redirect users to the LAN page when trying to reserve a seat without any ticket.
+- Changed seating sidebar appearance and added list of applicable ticket types.
 
 ### Deprecated
 
@@ -20,6 +22,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed link to lottery drawing from navbar.
 
 ### Fixed
+- Fixed seating map rendering crashing if any seat objects are missing.
+- Fixed seating map client script triggering on pressing inactive seats.
+- Fixed LAN history list for users only including history with reserved seats.
 
 ### Security
 - Fixed lottery CSRF vulnerability.

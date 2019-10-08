@@ -1,57 +1,24 @@
 {% extends "base.html" %}
+
 {% load i18n %}
 {% load profile_tags %}
 
 {% block title %}
-{% trans "History" %}
+{% trans "LANs" %}
 {% endblock title %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-9">
-		    <h1>{% trans "History" %}</h1>
-        </div>
+<div class="row">
+    <div class="col-md-9">
+        <h1 id="history-header">{% trans "LANs" %}</h1>
     </div>
-        
-    {% profile_tabs 'history' %}
-		
-    <div class="row">
-        <div class="col-md-9">
-            <table class="well table">
-                <thead>
-                    <th>{% trans "LAN" %}</th>
-                    <th>{% trans "Time" %}</th>
-                    <th>{% trans "Seat" %}</th>
-                    <th>{% trans "Paid" %}</th>
-                    <th>{% trans "Arrived" %}</th>
-                </thead>
-                <tbody>
-                    {% for seat in user_seats %}
-                    {% with seat.get_attendance as attend %}
-                    <tr>
-                        <td><a href="{{ attend.lan.get_absolute_url }}">{{ attend.lan }}</a></td>
-                        <td>{{ attend.lan.start_date|date }} – {{ attend.lan.end_date|date }}</td>
-                        <td><a href="{{ seat.seating.get_absolute_url }}{{ seat.placement }}">{{ seat.seating }}, {% trans "seat" %} {{ seat.placement }}</a></td>
-                        <td>
-                        {% if attend.has_paid_or_has_ticket %}
-                            <span class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
-                        {% else %}
-                            <span class="label label-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>
-                        {% endif %}
-                        </td>
-                        <td>
-                        {% if attend.arrived %}
-                            <span class="label label-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>
-                        {% else %}
-                            <span class="label label-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></span>
-                        {% endif %}
-                        </td>
-                    </tr>
-                    {% endwith %}
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+</div>
+
+{% profile_tabs 'history' %}
+
+<div class="row">
+    <div class="col-md-9">
+        {% include "user/history_table.html" %}
     </div>
-    
+</div>
 {% endblock content %}

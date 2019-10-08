@@ -164,7 +164,7 @@ div#btn-profile {
     height: 50px;
     width: 40px;
     margin-top: 0;
-    margin-bottom: 0; 
+    margin-bottom: 0;
     border: none;
 }
 
@@ -174,9 +174,15 @@ div#btn-profile {
 
 .sidebar-wrapper {
     margin-top: 80px;
-    right: 100px;
+    right: 150px;
     position: fixed;
-    width: 220px;  
+    width: 250px;
+}
+
+@media (max-width:1499px) {
+    .sidebar-wrapper{
+        right: 50px;
+    }
 }
 
 @media (max-width:1199px) {
@@ -193,43 +199,36 @@ div#btn-profile {
 }
 
 .sidebar {
-    padding: 0;
-}
-
-.sidebar .nav {
-    text-align: center;
-    margin: 0px -1px;
+    text-align: left;
     padding: 0px;
-    padding-bottom: 15px;
 }
 
-.sidebar .nav li {
+.sidebar li {
     overflow-x: hidden;
+    padding: 5px 10px;
 }
 
-.sidebar .nav li:not(.active) {
-    padding: 4px 0px;
-    margin-left: 1px;
-    margin-right: 1px;
+.sidebar a {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.sidebar form {
+    width: 100%;
+    text-align: center !important;
 }
 
 .sidebar-header {
     background-color: rgb(65, 131, 196);
-    padding: 0;
+    text-align: center;
 }
 
 .sidebar-header a {
     color: white;
-    padding: 0 !important;
 }
 
 .sidebar-header a:hover {
     background: none !important;
-}
-
-.sidebar li:not(.sidebar-header) a {
-    margin: 0;
-    padding: 1px;
 }
 
 @media (min-width:992px) {
@@ -313,7 +312,7 @@ div#btn-profile {
 
     .center-on-collapse{
         text-align: center;
-        margin-bottom: 5px; 
+        margin-bottom: 5px;
     }
 
     .form-actions-collapsed {
