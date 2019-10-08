@@ -16,6 +16,10 @@ $MANAGE makemigrations --check --no-input --dry-run
 $MANAGE migrate --fake-initial --no-input --fake
 
 echo
+echo "Compiling translations ..."
+$MANAGE compilemessages --locale=nb
+
+echo
 echo "Checking validity ..."
 $MANAGE check --deploy --fail-level=ERROR
 

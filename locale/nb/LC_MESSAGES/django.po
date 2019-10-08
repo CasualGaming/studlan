@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 02:13+0200\n"
+"POT-Creation-Date: 2019-10-08 10:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -394,7 +394,7 @@ msgid "You are already in this competition."
 msgstr "Du er allerede påmeldt denne konkurransen."
 
 msgid "You are not signed up for the LAN."
-msgstr "Du er ikke meldt opp til LAN-et."
+msgstr "Du er ikke påmeldt LAN-et."
 
 msgid "You have not paid for the LAN."
 msgstr "Du har ikke betalt for LAN-et."
@@ -666,12 +666,6 @@ msgstr "lotterivinner"
 
 msgid "lottery winners"
 msgstr "lotterivinnere"
-
-msgid "You are not signed up for the LAN."
-msgstr "Du er ikke påmeldt LAN-et."
-
-msgid "You have not paid for the LAN."
-msgstr "Du har ikke betalt for LAN-et."
 
 msgid "No eligible participants."
 msgstr "Ingen kvalifiserte deltagere."
@@ -1405,8 +1399,8 @@ msgid ""
 msgstr ""
 "<strong>Merk:</strong> Oppmelding på en lag-compo betyr ikke at du er "
 "deltager. Prøv å finne andre spillere som melder seg på solo, lag et lag, og "
-"meld opp laget. Når du melder deg opp som lag, vil solo-"
-"oppmeldingen overskrives."
+"meld opp laget. Når du melder deg opp som lag, vil solooppmeldingen "
+"overskrives."
 
 #, python-format
 msgid ""
@@ -1530,9 +1524,6 @@ msgstr "Du må logge deg på for å melde deg opp til LAN-et."
 msgid "LAN List"
 msgstr "LAN-liste"
 
-msgid "Lottery info"
-msgstr "Lotteriinfo"
-
 msgctxt "lottery"
 msgid "Open"
 msgstr "Åpen"
@@ -1555,14 +1546,14 @@ msgstr ""
 "Enkel seier (vinnere fjernes fra deltagerlisten for å forhindre å vinne "
 "igjen)"
 
+msgid "Participants"
+msgstr "Solodeltakere"
+
 msgid "Winners"
 msgstr "Vinnere"
 
 msgid "You need to be logged inn to participate."
 msgstr "Du må logge inn for å kunne delta."
-
-msgid "Attend"
-msgstr "Delta"
 
 msgid "Close the raffle?"
 msgstr "Lukke trekningen?"
@@ -1576,13 +1567,8 @@ msgstr "Åpne trekningen="
 msgid "Open raffle"
 msgstr "Åpne trekning"
 
-<<<<<<< HEAD
 msgid "Draw a new winner?"
 msgstr "Trekke en ny vinner?"
-=======
-msgid "Go to drawing"
-msgstr "Gå til trekning"
->>>>>>> master
 
 msgid "Draw winner"
 msgstr "Trekk vinner"
@@ -1599,16 +1585,14 @@ msgstr "Ingen deltagere ennå."
 msgid "All Winners"
 msgstr "Alle vinnere"
 
-<<<<<<< HEAD
 msgid "No winners yet."
 msgstr "Ingen vinnere ennå."
-=======
+
 msgid "Esports"
 msgstr "E-sport"
 
 msgid "Teams"
 msgstr "Lag"
->>>>>>> master
 
 msgid "Sponsors"
 msgstr "Sponsorer"
@@ -1803,16 +1787,8 @@ msgstr ""
 msgid "My teams"
 msgstr "Mine lag"
 
-<<<<<<< HEAD
-msgid "Team members"
-msgstr "Lagmedlemmer"
-
-msgid "Team Members"
-msgstr "Lagmedlemmer"
-=======
 msgid "Members"
 msgstr "Medlemmer"
->>>>>>> master
 
 msgid "Actions"
 msgstr "Handlinger"
@@ -1849,9 +1825,6 @@ msgstr "Avslå invitasjon"
 
 msgid "Invitations"
 msgstr "Invitasjoner"
-
-msgid "Team member invitations"
-msgstr "Lagmedlemsinvitasjoner"
 
 #, python-format
 msgid "Are you sure you want to uninvite %(member)s from %(team)s?"
@@ -1998,12 +1971,6 @@ msgstr "Registrer ankonster"
 msgid "Manual registration"
 msgstr "Manuell registrering"
 
-<<<<<<< HEAD
-=======
-msgid "Drawing"
-msgstr "Trekning"
-
->>>>>>> master
 msgid "Admin panel"
 msgstr "Adminpanel"
 
