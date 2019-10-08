@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 00:44+0200\n"
+"POT-Creation-Date: 2019-10-08 02:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1428,6 +1428,9 @@ msgstr "Tidligere LAN"
 msgid "Start Time"
 msgstr "Starttid"
 
+msgid "No competitions for this LAN."
+msgstr "Ingen konkurranser for dette LAN-et."
+
 msgid "Raffles"
 msgstr "Trekninger"
 
@@ -1439,8 +1442,8 @@ msgctxt "status"
 msgid "Closed"
 msgstr "Stengt"
 
-msgid "No active raffles right now."
-msgstr "Ingen aktive trekninger for øyeblikket."
+msgid "No raffles for this LAN."
+msgstr "Ingen trekninger for dette LAN-et."
 
 msgid "There is no schedule for this LAN."
 msgstr "Det er ingen timetabell for dette LAN-et."
@@ -1539,7 +1542,7 @@ msgid "Signup closed."
 msgstr "Påmelding lukket."
 
 msgid "Go to drawing"
-msgstr "Gå til trekking"
+msgstr "Gå til trekning"
 
 msgid "Draw winner"
 msgstr "Trekk vinner"
@@ -1736,8 +1739,8 @@ msgstr ""
 msgid "My teams"
 msgstr "Mine lag"
 
-msgid "Team Members"
-msgstr "Lagmedlemmer"
+msgid "Members"
+msgstr "Medlemmer"
 
 msgid "Actions"
 msgstr "Handlinger"
@@ -1772,12 +1775,6 @@ msgstr "Aksepter invitasjon"
 msgid "Decline invitation"
 msgstr "Avslå invitasjon"
 
-msgid "Invite Member"
-msgstr "Inviter medlem"
-
-msgid "Invite member"
-msgstr "Inviter medlem"
-
 msgid "Invitations"
 msgstr "Invitasjoner"
 
@@ -1787,6 +1784,12 @@ msgstr "Er du sikker på at du vil avinvitere %(member)s fra %(team)s?"
 
 msgid "Uninvite"
 msgstr "Angre invitasjon"
+
+msgid "Invite New Member"
+msgstr "Inviter nytt medlem"
+
+msgid "Invite member"
+msgstr "Inviter medlem"
 
 msgid "Size"
 msgstr "Størrelse"
@@ -1910,7 +1913,7 @@ msgid "Manual registration"
 msgstr "Manuell registrering"
 
 msgid "Drawing"
-msgstr "Trekking"
+msgstr "Trekning"
 
 msgid "Admin panel"
 msgstr "Adminpanel"
