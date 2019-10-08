@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added permission for showing team invites, regardless of membership status.
 
 ### Changed
+- Add config option to show version and default to hidden.
 - Don't auto close compos when all spots are taken.
 - Order competitions by status and then start time.
 - Changed "competitions" in the navbar to "esports".

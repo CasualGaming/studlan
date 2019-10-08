@@ -209,6 +209,8 @@ if os.path.isfile(version_file_path):
     if (content):
         VERSION = content
 
+SHOW_VERSION = False
+
 # Remember to keep 'local' last, so it can override any setting.
 for settings_module in ['local']:  # local last
     if not os.path.exists(os.path.join(PROJECT_SETTINGS_DIRECTORY, settings_module + '.py')):
