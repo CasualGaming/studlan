@@ -53,41 +53,45 @@ def seating_details(request, lan_id, seating_id=None, seat_id=None):
     lan = get_object_or_404(LAN, pk=lan_id)
     seatings = Seating.objects.filter(lan=lan)
 
-    if not seatings:
-        return render(request, 'seating/seating.html')
+    if not seating_id:
+        if seatings:
+            seating = seatings[0]
+            return redirect(seating)
+        else:
+            return render(request, 'seating/seating.html')
 
-    if seating_id:
-        seating = get_object_or_404(Seating, pk=seating_id, lan=lan)
-    else:
-        seating = seatings[0]
-        return redirect(seating)
-
+    seating = get_object_or_404(Seating, pk=seating_id, lan=lan)
     seats = seating.get_total_seats()
 
     dom = BeautifulSoup(seating.layout.template, 'html.parser')
-    counter = 0
+    seat_counter = 0
     for tag in dom.find_all('a'):
+        seat_counter += 1
+        seat_qs = seats.filter(placement=seat_counter)
+        if not seat_qs.exists():
+            continue
+
+        seat = seat_qs[0]
         children = tag.find_all('rect')
-        children[0]['seat-number'] = seats[counter].pk
-        children[0]['seat-display'] = seats[counter].placement
-        if not seats[counter].user:
+        children[0]['seat-number'] = seat.pk
+        children[0]['seat-display'] = seat.placement
+        if not seat.user:
             children[0]['class'] = ' seating-node-free'
             children[0]['status'] = 'free'
         else:
-            if seats[counter].user == request.user:
+            if seat.user == request.user:
                 children[0]['class'] = ' seating-node-self'
                 children[0]['status'] = 'mine'
             else:
                 children[0]['class'] = ' seating-node-occupied'
                 children[0]['status'] = 'occupied'
-                children[0]['seat-user'] = unicode(seats[counter].user.username)
+                children[0]['seat-user'] = unicode(seat.user.username)
 
                 # Separate title element for chrome support
                 title = dom.new_tag('title')
-                title.string = unicode(seats[counter].user.username)
+                title.string = unicode(seat.user.username)
                 tag.append(title)
 
-        counter += 1
     dom.encode('utf-8')
 
     context = {}
@@ -95,13 +99,13 @@ def seating_details(request, lan_id, seating_id=None, seat_id=None):
     context['seatings'] = seatings
     context['seating'] = seating
     context['seat'] = seat_id
+    context['user_ticket_types'] = seating.ticket_types.filter(ticket__user=request.user)
     context['hide_sidebar'] = True
     context['template'] = dom.__str__
-    breadcrumbs = (
+    context['breadcrumbs'] = (
         (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
         (_(u'Seating'), ''),
     )
-    context['breadcrumbs'] = breadcrumbs
 
     return render(request, 'seating/seating.html', context)
 
@@ -110,6 +114,7 @@ def seating_details(request, lan_id, seating_id=None, seat_id=None):
 @login_required()
 def take_seat(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
+    lan = seating.lan
     if not seating.is_open():
         messages.error(request, _(u'The seating is closed.'))
         return redirect(seating)
@@ -119,22 +124,22 @@ def take_seat(request, seating_id):
         return redirect(seating)
     seat = get_object_or_404(Seat, pk=seat_id)
 
-    siblings = list(Seating.objects.filter(lan=seating.lan))
+    siblings = list(Seating.objects.filter(lan=lan))
     occupied = seating.get_user_registered()
     for sibling in siblings:
         occupied = occupied + sibling.get_user_registered()
 
     try:
-        attendee = Attendee.objects.get(user=request.user, lan=seating.lan)
+        attendee = Attendee.objects.get(user=request.user, lan=lan)
     except ObjectDoesNotExist:
         attendee = None
-    if (attendee and attendee.has_paid) or seating.lan.has_ticket(request.user):
-        if not seating.ticket_types or (seating.lan.has_ticket(request.user) and seating.lan.has_ticket(request.user).ticket_type in seating.ticket_types.all()):
+    if (attendee and attendee.has_paid) or lan.has_ticket(request.user):
+        if not seating.ticket_types or (lan.has_ticket(request.user) and lan.has_ticket(request.user).ticket_type in seating.ticket_types.all()):
             if not seat.user:
                 if request.user in occupied:
                     old_seats = Seat.objects.filter(user=request.user)
                     for os in old_seats:
-                        if os.seating.lan == seating.lan:
+                        if os.seating.lan == lan:
                             os.user = None
                             os.save()
                 seat.user = request.user
@@ -143,9 +148,10 @@ def take_seat(request, seating_id):
             else:
                 messages.error(request, _(u'That seat is already taken.'))
         else:
-            messages.error(request, _(u'Your ticket does not work in this seating area.'))
+            messages.warning(request, _(u'Your ticket does not work in this seating area.'))
     else:
-        messages.error(request, _(u'You need to attend and pay before reserving your seat.'))
+        messages.warning(request, _(u'You need a ticket before reserving a seat.'))
+        return redirect(lan)
     return redirect(seating)
 
 
