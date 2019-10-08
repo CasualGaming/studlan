@@ -7,11 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+<<<<<<< HEAD
+- Added confirm dialogs for arrival toggle buttons.
+- Added filters on arrivals page for paid and arrived statuses.
 - Added more info to compo page info tables and compo list.
 - Added permission for showing team invites, regardless of membership status.
+- Added config option to show version and default to hidden.
 
 ### Changed
-- Add config option to show version and default to hidden.
+- Made tickets for a LAN always visible.
 - Don't auto close compos when all spots are taken.
 - Order competitions by status and then start time.
 - Changed "competitions" in the navbar to "esports".
@@ -25,6 +29,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Fixed
+- Hide attend button on finished LANs.
+- Enforce disabled ticket sale when the LAN is over.
+- Enforce closed ticket sale when all tickets are sold.
+- Fix errors during payment being suppressed.
 - Fixed compo sign-up as solo bypassing payment enforcement.
 - Fix ordering of LANs on front page for multiple active LANs.
 - Fix ordering of LANs on competition page for multiple active LANs.

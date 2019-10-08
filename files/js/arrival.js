@@ -23,23 +23,42 @@ $.ajaxSetup({
 });
 /* END AJAX SETUP */
 
+const TYPE_PAID = 0;
+const TYPE_ARRIVED = 1;
+const VALUE_YES = "True"
+const VALUE_NO = "False"
 
 function toggle(username, type, previousValue, label)
 {
+    let question_id;
+    if (type == TYPE_PAID && previousValue == VALUE_NO) {
+        question_id = "toggle-text-has-paid";
+    } else if (type == TYPE_PAID && previousValue == VALUE_YES) {
+        question_id = "toggle-text-has-not-paid";
+    } else if (type == TYPE_ARRIVED && previousValue == VALUE_NO) {
+        question_id = "toggle-text-has-arrived";
+    } else if (type == TYPE_ARRIVED && previousValue == VALUE_YES) {
+        question_id = "toggle-text-has-not-arrived";
+    }
+    let question = $("#" + question_id).text().replace("{user}", username);
+    if (!confirm(question))
+        return;
+
     $.ajax({
         method: 'POST',
         url: 'toggle/',
         data: {'username': username, 'type': type, 'prev': previousValue},
         success: function() {
             $(label).toggleClass("label-success label-danger");
-            if(previousValue == "True")
+            if(previousValue == VALUE_YES)
             {
-                $(label).attr('value', "False");
+                $(label).attr('value', VALUE_NO);
             }
-            else if(previousValue == "False")
+            else if(previousValue == VALUE_NO)
             {
-                $(label).attr('value', "True");
+                $(label).attr('value', VALUE_YES);
             }
+            updateTable();
         },
         error: function(res) {
             alert("Failed to toggle.");
@@ -57,34 +76,73 @@ $(document).ready(function()
         {
             var username = $(row).find('.username').text();
             var prev = $(this).attr('value');
-            toggle(username, 0, prev, this);
+            toggle(username, TYPE_PAID, prev, this);
         });
         $(row).find('.arrived').click(function()
         {
             var username = $(row).find('.username').text();
             var prev = $(this).attr('value');
-            toggle(username, 1, prev, this);
+            toggle(username, TYPE_ARRIVED, prev, this);
         });
     });     
 });
 
-$(document).ready(function(){
-             //add index column with all content.
-             $(".filterable tr:has(td)").each(function(){
-               var t = $(this).text().toLowerCase(); //all row text
-               $("<td class='indexColumn'></td>")
-                .hide().text(t).appendTo(this);
-             });//each tr
-             $("#FilterTextBox").keyup(function(){
-               var s = $(this).val().toLowerCase().split(" ");
-               //show all rows.
-               $(".filterable tr:hidden").show();
-               $.each(s, function(){
-                   $(".filterable tr:visible .indexColumn:not(:contains('"
-                      + this + "'))").parent().hide();
-               });//each
-             });//key up.
-             $("input:text:visible:first").focus();
-            });//document.ready
+let updateTable = function(){
+    // Re-show all rows
+    $(".filterable tr:hidden").show();
 
+    // Filter paid
+    let filterPaidRaw = $("#filter-paid-input").val().toLowerCase();
+    if (filterPaidRaw === "yes" || filterPaidRaw === "no") {
+        let selector = filterPaidRaw === "yes" ? "span.paid[value='True']" : "span.paid[value='False']";
+        $(".filterable > tbody > tr:visible").each(function(){
+            if ($("td > " + selector, this).length) {
+                return;
+            }
+            $(this).hide();
+        });
+    }
+
+    // Filter arrived
+    let filterArrivedRaw = $("#filter-arrived-input").val().toLowerCase();
+    if (filterArrivedRaw === "yes" || filterArrivedRaw === "no") {
+        let selector = filterArrivedRaw === "yes" ? "span.arrived[value='True']" : "span.arrived[value='False']";
+        $(".filterable > tbody > tr:visible").each(function(){
+            if ($("td > " + selector, this).length) {
+                return;
+            }
+            $(this).hide();
+        });
+    }
+
+    // Filter text
+    let filterText = $("#filter-text-input").val().toLowerCase();
+    if (filterText) {
+        $(".filterable > tbody > tr:visible").each(function(){
+            if ($("td.username > a", this).text().toLowerCase().indexOf(filterText) != -1) {
+                return;
+            }
+            if ($("td.name", this).text().toLowerCase().indexOf(filterText) != -1) {
+                return;
+            }
+            if ($("td.email", this).text().toLowerCase().indexOf(filterText) != -1) {
+                return;
+            }
+            $(this).hide();
+        });
+    }
+}
+
+$(document).ready(function(){
+    // Focus filter field
+    $("input:text:visible:first").focus();
+    // Remove values if they remain
+    $("#filter-text-input").val("");
+    $("#filter-paid-input").val("");
+    $("#filter-arrived-input").val("");
+    // Add triggers
+    $("#filter-text-input").keyup(updateTable);
+    $("#filter-paid-input").change(updateTable);
+    $("#filter-arrived-input").change(updateTable);
+});
 });
