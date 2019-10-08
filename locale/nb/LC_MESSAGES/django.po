@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 02:53+0200\n"
+"POT-Creation-Date: 2019-10-08 04:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1114,9 +1114,6 @@ msgstr "Adminpanel"
 msgid "Register Arrivals"
 msgstr "Registrer ankomster"
 
-msgid "Filter:"
-msgstr "Filter:"
-
 msgid "Attending:"
 msgstr "Deltar:"
 
@@ -1125,6 +1122,15 @@ msgstr "Betalt:"
 
 msgid "Arrived:"
 msgstr "Ankommet:"
+
+msgid "Filter:"
+msgstr "Filter:"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nei"
 
 #, python-brace-format
 msgid "Set {user} to paid?"
