@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Merged lottery info page and draw page.
+- Add config option to show version and default to hidden.
 - Don't auto close compos when all spots are taken.
 - Order competitions by status and then start time.
 - Changed "competitions" in the navbar to "esports".
