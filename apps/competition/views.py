@@ -34,8 +34,8 @@ def main(request):
 
 def lan_list(request):
     context = {}
-    context['upcoming_lans'] = LAN.objects.filter(end_date__gte=datetime.now()).all()
-    context['previous_lans'] = LAN.objects.filter(end_date__lt=datetime.now()).all()
+    context['upcoming_lans'] = LAN.objects.filter(end_date__gte=datetime.now()).order_by('start_date')
+    context['previous_lans'] = LAN.objects.filter(end_date__lt=datetime.now()).order_by('start_date')
 
     return render(request, 'competition/competition_lan_list.html', context)
 
