@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made login, register, recover and set-password pages narrow.
 - Centered narrow pages.
 - Improved sponsorbar responsiveness.
+- Left-aligned articles and LANs (they were block-aligned).
 
 ### Deprecated
 
