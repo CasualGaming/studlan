@@ -19,10 +19,10 @@
 
 <div class="row">
     {% if lans.count == 1 %}
-    <div class="col-md-6">
+    <div class="col-md-6 col-xs-7">
         <p class="lead">{{ lans.0.start_date|date }} – {{ lans.0.end_date|date }}</p>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 col-xs-5">
         <a class="btn btn-primary pull-right" href="{{ lans.0.get_absolute_url }}">{% trans "Go to LAN page" %}</a>
     </div>
     {% else %}
