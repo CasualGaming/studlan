@@ -109,10 +109,9 @@ class Attendee(models.Model):
 
 
 class TicketType(TranslatableModel):
-    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
-
     # Note: "seats" in this context means "tickets" or "spots", not actual seats.
 
+    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
     price = models.IntegerField(_(u'price'), default=50)
     priority = models.IntegerField(_(u'prioity'), default=0, help_text=_(u'In what priority the tickets will show, higher number will show first.'))
     available_from = models.DateTimeField(_(u'release date'), default=datetime.now, help_text=_(u'When the tickets will be made available.'))
