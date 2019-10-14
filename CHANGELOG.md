@@ -7,12 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-<<<<<<< HEAD
 - Added confirm dialogs for arrival toggle buttons.
 - Added filters on arrivals page for paid and arrived statuses.
 - Added more info to compo page info tables and compo list.
 - Added permission for showing team invites, regardless of membership status.
 - Added config option to show version and default to hidden.
+- Added Stripe payment descriptions for tickets.
 
 ### Changed
 - Made tickets for a LAN always visible.

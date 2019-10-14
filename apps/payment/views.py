@@ -78,6 +78,7 @@ def payment(request, ticket_type_id):
             })
 
     if request.method == 'POST':
+        description = u'{lan} {ticket} ticket for {user}'.format(ticket=ticket_type, lan=ticket_type.lan, user=request.user)
         json_data = json.loads(request.body)
         intent = None
         try:
@@ -87,6 +88,7 @@ def payment(request, ticket_type_id):
                     payment_method=str(json_data['payment_method_id']),
                     amount=ticket_type.price * 100,
                     currency='nok',
+                    description=description,
                     confirmation_method='manual',
                     confirm=True,
                 )
