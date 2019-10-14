@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added more info to compo page info tables and compo list.
 - Added permission for showing team invites, regardless of membership status.
 - Added config option to show version and default to hidden.
+- Added Stripe payment descriptions for tickets.
 
 ### Changed
 - Merged lottery info page and draw page.
