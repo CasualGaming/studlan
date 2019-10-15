@@ -23,6 +23,9 @@ class SponsorAdmin(admin.ModelAdmin):
 
 class SponsorRelationAdmin(admin.ModelAdmin):
     model = SponsorRelation
+    list_display = ('__unicode__', 'priority')
+    list_filter = ('lan',)
+    search_fields = ['sponsor__title']
 
 
 admin.site.register(Sponsor, SponsorAdmin)

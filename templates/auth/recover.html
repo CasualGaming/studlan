@@ -8,33 +8,28 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-9">
+    <div class="col-sm-2 col-md-1"></div>
+    <div class="col-sm-8 col-md-7">
         <h1 class="page-header">{% trans "Account Recovery" %}</h1>
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-md-9">
         {% for error in form.non_field_errors %}
         <p class="form-error">{{ error }}</p>
         {% endfor %}
-        <form class="form-horizontal" method="post" action="{% url 'auth_recover' %}">
+        <form method="post" action="{% url 'auth_recover' %}">
             {% csrf_token %}
             {% for field in form %}
             <div class="form-group {% if field.errors %} has-error {% endif %}">
-                <label label-default="label-default" class="col-md-1 control-label">
+                <label label-default="label-default" class="control-label">
                     {{ field.label }}
                 </label>
-                <div class="col-md-6">
-                    {{ field }}
-                    <div class="form-error">
-                        {{ field.errors }}
-                    </div>
+                {{ field }}
+                <div class="form-error">
+                    {{ field.errors }}
                 </div>
             </div>
             {% endfor %}
-            <div class="form-actions center-on-collapse">
-                <input type="submit" class="btn btn-primary" value="{% trans "Send recovery email" %}" />
+            <div class="form-actions">
+                <input type="submit" class="btn btn-primary pull-right" value="{% trans "Send recovery email" %}" />
             </div>
         </form>
     </div>

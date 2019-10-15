@@ -12,7 +12,7 @@ class UserProfile(models.Model):
     nick = models.CharField(_(u'nick'), max_length=20, help_text=_(u'Specify a nick name (display name).'), db_index=True)
     date_of_birth = models.DateField(_(u'date of birth'), default=date.today)
     address = models.CharField(_(u'street address'), max_length=100)
-    zip_code = models.CharField(_(u'zip code'), max_length=4)
+    zip_code = models.CharField(_(u'postal code'), max_length=4)
     phone = models.CharField(_(u'phone number'), max_length=20)
 
     def __unicode__(self):

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 11:22+0200\n"
+"POT-Creation-Date: 2019-10-08 11:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -66,12 +66,45 @@ msgstr "{user} ble ikke funnet i ankomstlisten for {lan}."
 msgid "Authentication"
 msgstr "Autentisering"
 
+msgid "Username"
+msgstr "Brukernavn"
+
+msgid "Password"
+msgstr "Passord"
+
 msgid ""
 "Login failed! Either the account does not exist, it is inactive, or the "
 "username–password combination is incorrect."
 msgstr ""
 "Kontoen finnes ikke, er inaktiv, eller brukernavn–passord kombinasjonen er "
 "feil."
+
+msgid "Desired username"
+msgstr "Ønsket brukernavn"
+
+msgid "First name"
+msgstr "Fornavn"
+
+msgid "Last name"
+msgstr "Etternavn"
+
+msgid "Date of birth"
+msgstr "Fødselsdato"
+
+msgid "Email address"
+msgstr "E-postadresse"
+
+msgid "Repeat password"
+msgstr "Gjenta passord"
+
+msgid "Address"
+msgstr "Adresse"
+
+msgid "Postal code"
+msgstr "Postnummer"
+
+msgid "Phone number"
+msgstr "Telefonnummer"
 
 msgid ""
 "You seem to be from the future, please enter a more believable date of birth."
@@ -92,8 +125,17 @@ msgid "Your desired username contains illegal characters. Valid: a-Z 0-9 - _"
 msgstr ""
 "Brukernavnet ditt kan inneholder ulovlige tegn. Lovlige tegn: a-Z 0-9 - _"
 
-msgid "The ZIP code must be 4 digit number."
-msgstr "Post-nummeret må bestå av 4 tall."
+msgid "The postal code must be a 4 digit number."
+msgstr "Postnummeret må bestå av 4 tall."
+
+msgid "Email"
+msgstr "E-post"
+
+msgid "New password"
+msgstr "Nytt passord"
+
+msgid "Repeat new password"
+msgstr "Gjenta nytt passord"
 
 msgid "token"
 msgstr "token"
@@ -596,7 +638,8 @@ msgid "This LAN has finished and can no longer be attended."
 msgstr "Dette LANet er over og påmeldingen er derfor stengt."
 
 msgid ""
-"You need to fill in your address and zip code in order to sign up for a LAN."
+"You need to fill in your address and postal code in order to sign up for a "
+"LAN."
 msgstr "Adresse og postnummer kreves for å kunne melde seg på LAN."
 
 #, python-brace-format
@@ -1020,12 +1063,6 @@ msgstr "Kallenavn"
 msgid "Street address"
 msgstr "Gateadresse"
 
-msgid "Zip code"
-msgstr "Postnummer"
-
-msgid "Phone number"
-msgstr "Telefonnummer"
-
 msgid "Your desired nickname contains illegal characters. Valid: a-Z 0-9 - _"
 msgstr ""
 "Kallenavnet ditt kan ikke inneholde ulovlige tegn. Lovlige tegn: a-Z 0-9 - _"
@@ -1049,7 +1086,7 @@ msgstr "fødselsdato"
 msgid "street address"
 msgstr "gateadresse"
 
-msgid "zip code"
+msgid "postal code"
 msgstr "postnummer"
 
 msgid "phone number"
@@ -1161,9 +1198,6 @@ msgstr "Sett {user} til ankommet?"
 #, python-brace-format
 msgid "Set {user} to NOT arrived?"
 msgstr "Sett {user} til IKKE ankommet?"
-
-msgid "Username"
-msgstr "Brukernavn"
 
 msgid "Full Name"
 msgstr "Fullt navn"
@@ -1320,14 +1354,17 @@ msgstr "Logg inn"
 
 msgid "<strong>NB:</strong> Both the username and password are case sensitive."
 msgstr ""
-"<strong>NB:</strong> Både brukernavnet og passorder er skiller mellom store "
-"og små bokstaver."
+"<strong>NB:</strong> Både brukernavnet og passordet skiller mellom store og "
+"små bokstaver."
+
+msgid "Register new user"
+msgstr "Registrer ny bruker"
+
+msgid "Recover user"
+msgstr "Gjenopprett bruker"
 
 msgid "Login"
 msgstr "Logg inn"
-
-msgid "Recover username and password"
-msgstr "Gjenopprett brukernavn og passord"
 
 msgid "Account Recovery"
 msgstr "Kontogjenoppretting"
@@ -1805,6 +1842,9 @@ msgstr "Utilgjengelig sete"
 msgid "There are no active seatings."
 msgstr "Det finnes ingen aktive setekart."
 
+msgid "No current sponsors."
+msgstr "Ingen nåværende sponsorer."
+
 msgid "Previous Sponsors"
 msgstr "Tidligere sponsorer"
 
@@ -1942,21 +1982,6 @@ msgstr "Privat informasjon"
 msgid "This information is only visible to you and select staff users."
 msgstr "Denne informasjonen er bare synlig for deg og utvalgt personale."
 
-msgid "First name"
-msgstr "Fornavn"
-
-msgid "Last name"
-msgstr "Etternavn"
-
-msgid "Email"
-msgstr "E-post"
-
-msgid "Date of birth"
-msgstr "Fødselsdato"
-
-msgid "Zip/Postal code"
-msgstr "Postnummer"
-
 msgid "Phone"
 msgstr "Telefon"
 
@@ -2017,3 +2042,11 @@ msgstr "Adminpanel"
 
 msgid "Log out"
 msgstr "Logg ut"
+
+#~ msgid ""
+#~ "Your address and postal code is required in order to sign up for a LAN. "
+#~ "Go to your <a href=\"%(update_profile_url)s\">profile</a> to add the "
+#~ "information."
+#~ msgstr ""
+#~ "Adressen og postnummeret ditt er nødvendig for å melde seg på LAN. Gå til "
+#~ "<a href=\"%(update_profile_url)s\">profilen din</a> for å legge det til."

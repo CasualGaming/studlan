@@ -4,7 +4,6 @@
 
 <ul class="collapse navbar-collapse nav navbar-nav navbar-right" id="userlist">
 {% if not user.is_authenticated %}
-    <li><a href="{% url 'auth_register' %}">{% trans "Register" %}</a></li>
     <li><a href="{% url 'auth_login' %}">{% trans "Login" %}</a></li>
 {% else %}
     <li class="dropdown hidden-xs">

@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added list of participants and winners on lottery page.
 - Added buttons to open and close raffles, including a permission to do so.
 - Added optional payment enforcement to lotteries.- Added more info to compo page info tables and compo list.
+- Added list of sponsored LANs to sponsor panels on sponsor page.
 - Added confirm dialogs for arrival toggle buttons.
 - Added filters on arrivals page for paid and arrived statuses.
 - Added more info to compo page info tables and compo list.
@@ -19,12 +20,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Merged lottery info page and draw page.
+- Made login, register, recover and set-password pages narrow.
+- Centered narrow pages.
+- Improved sponsorbar responsiveness.
+- Left-aligned articles and LANs (they were block-aligned).
 - Made tickets for a LAN always visible.
 - Don't auto close compos when all spots are taken.
 - Order competitions by status and then start time.
 - Changed "competitions" in the navbar to "esports".
 - Swapped positions for seating and esports in the navbar.
 - Show team invitations to team members and staff only.
+- Hide attend button on finished LANs.
+- Enforce disabled ticket sale when the LAN is over.
+- Enforce closed ticket sale when all tickets are sold.
 - Redirect users to the LAN page when trying to reserve a seat without any ticket.
 - Changed seating sidebar appearance and added list of applicable ticket types.
 
@@ -34,13 +42,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed link to lottery drawing from navbar.
 
 ### Fixed
-- Hide attend button on finished LANs.
-- Enforce disabled ticket sale when the LAN is over.
-- Enforce closed ticket sale when all tickets are sold.
-- Fix errors during payment being suppressed.
+- Fixed misaligned site logo.
+- Fixed navbar overflowing into two rows on medium screens when logged out.
+- Fixed unfair sponsor banner sizes, where some appeared larger than others.
+- Fixee errors during payment being suppressed.
 - Fixed compo sign-up as solo bypassing payment enforcement.
-- Fix ordering of LANs on front page for multiple active LANs.
-- Fix ordering of LANs on competition page for multiple active LANs.
+- Fixed ordering of LANs on front page for multiple active LANs.
+- Fixed ordering of LANs on competition page for multiple active LANs.
 - Fixed seating map rendering crashing if any seat objects are missing.
 - Fixed seating map client script triggering on pressing inactive seats.
 - Fixed LAN history list for users only including history with reserved seats.

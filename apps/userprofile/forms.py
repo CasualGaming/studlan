@@ -17,7 +17,7 @@ class UserProfileForm(forms.ModelForm):
             'nick': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _(u'Nickname'), 'type': 'text'}),
             'date_of_birth': forms.TextInput(attrs={'class': 'form-control', 'type': 'date'}),
             'address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _(u'Street address'), 'type': 'text'}),
-            'zip_code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _(u'Zip code'), 'type': 'number'}),
+            'zip_code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _(u'Postal code'), 'type': 'number'}),
             'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _(u'Phone number'), 'type': 'tel'})}
 
     def clean(self):
@@ -38,7 +38,7 @@ class UserProfileForm(forms.ModelForm):
             # ZIP code digits only
             zip_code = cleaned_data['zip_code']
             if len(zip_code) != 4 or not zip_code.isdigit():
-                self.add_error('zip_code', ugettext(u'The ZIP code must be 4 digit number.'))
+                self.add_error('zip_code', ugettext(u'The postal code must be a 4 digit number.'))
 
             # Phone number digits and plus only
             phone = cleaned_data['phone']

@@ -12,7 +12,9 @@
             </div>
             <div class="panel-body sponsorbar-body">
                 {% for sponsor in sponsors %}
+                {% if forloop.counter > 1 %}
                 <hr />
+                {% endif %}
                 <div class="sponsorbar-sponsor">
                     <a title="{{ sponsor.title }}" href="{{ sponsor.website }}" target="_blank">
                         {% if sponsor.banner %}
