@@ -436,7 +436,7 @@ msgid "You are already in this competition."
 msgstr "Du er allerede påmeldt denne konkurransen."
 
 msgid "You are not signed up for the LAN."
-msgstr "Du er ikke meldt opp til LAN-et."
+msgstr "Du er ikke påmeldt LAN-et."
 
 msgid "You have not paid for the LAN."
 msgstr "Du har ikke betalt for LAN-et."
@@ -687,6 +687,9 @@ msgstr "flere premier"
 msgid "Allows a user to win more than one time."
 msgstr "Tillater en bruker å vinne flere ganger."
 
+msgid "Require users to have paid for the LAN in order to participate."
+msgstr "Krev at brukere har betalt for LAN-et for å kunne delta."
+
 msgid "lottery"
 msgstr "lotteri"
 
@@ -710,9 +713,6 @@ msgstr "lotterivinner"
 
 msgid "lottery winners"
 msgstr "lotterivinnere"
-
-msgid "Lottery not found."
-msgstr "Lotteri ble ikke funner."
 
 msgid "No eligible participants."
 msgstr "Ingen kvalifiserte deltagere."
@@ -1465,7 +1465,7 @@ msgid ""
 msgstr ""
 "<strong>Merk:</strong> Oppmelding på en lag-compo betyr ikke at du er "
 "deltager. Prøv å finne andre spillere som melder seg på solo, lag et lag, og "
-"meld opp laget. Når du melder deg opp som lag, vil solo-oppmeldingen "
+"meld opp laget. Når du melder deg opp som lag, vil solooppmeldingen "
 "overskrives."
 
 #, python-format
@@ -1498,8 +1498,8 @@ msgstr "Starttid"
 msgid "No competitions for this LAN."
 msgstr "Ingen konkurranser for dette LAN-et."
 
-msgid "Raffles"
-msgstr "Trekninger"
+msgid "Lotteries"
+msgstr "Lotterier"
 
 msgctxt "status"
 msgid "Open"
@@ -1602,38 +1602,69 @@ msgstr "Det er ingen billetter tilgjengelig akkurat nå."
 msgid "LAN List"
 msgstr "LAN-liste"
 
-msgid "Participants:"
-msgstr "Deltakere:"
+msgctxt "lottery"
+msgid "Open"
+msgstr "Åpen"
 
-msgid "Last winner:"
-msgstr "Siste vinner:"
+msgctxt "lottery"
+msgid "Closed"
+msgstr "Stengt"
 
-msgid "Leave"
-msgstr "Forlat"
+msgid "Mode"
+msgstr "Modus"
 
-msgid "Join"
-msgstr "Bli med"
+msgid "Multiple wins (winners may stay in the participant list and win again)"
+msgstr ""
+"Flere seiere (vinnere kan bli gjenværende i deltagerlisten og vinne igjen)"
+
+msgid ""
+"Single win (winners are removed from the participant list to prevent winning "
+"again)"
+msgstr ""
+"Enkel seier (vinnere fjernes fra deltagerlisten for å forhindre å vinne "
+"igjen)"
+
+msgid "Participants"
+msgstr "Solodeltakere"
+
+msgid "Winners"
+msgstr "Vinnere"
 
 msgid "You need to be logged inn to participate."
 msgstr "Du må logge inn for å kunne delta."
 
-msgid "Signup closed."
-msgstr "Påmelding lukket."
+msgid "Close the raffle?"
+msgstr "Lukke trekningen?"
 
-msgid "Go to drawing"
-msgstr "Gå til trekning"
+msgid "Close raffle"
+msgstr "Lukk trekning"
+
+msgid "Open the raffle?"
+msgstr "Åpne trekningen="
+
+msgid "Open raffle"
+msgstr "Åpne trekning"
+
+msgid "Draw a new winner?"
+msgstr "Trekke en ny vinner?"
 
 msgid "Draw winner"
 msgstr "Trekk vinner"
 
-msgid "Go to lottery"
-msgstr "Gå til lotteri"
+msgid "Winner"
+msgstr "Vinner"
 
-msgid "Last Winner"
-msgstr "Siste vinner"
+msgid "No winner has been drawn."
+msgstr "Ingen vinnere har blitt trukket."
+
+msgid "No participants yet."
+msgstr "Ingen deltagere ennå."
 
 msgid "All Winners"
 msgstr "Alle vinnere"
+
+msgid "No winners yet."
+msgstr "Ingen vinnere ennå."
 
 msgid "Esports"
 msgstr "E-sport"
@@ -2005,9 +2036,6 @@ msgstr "Registrer ankonster"
 
 msgid "Manual registration"
 msgstr "Manuell registrering"
-
-msgid "Drawing"
-msgstr "Trekning"
 
 msgid "Admin panel"
 msgstr "Adminpanel"

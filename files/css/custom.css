@@ -518,3 +518,12 @@ div#btn-profile {
 .label, .label a {
     color: #FFF;
 }
+
+.lottery-content-centered {
+    text-align: center;
+}
+
+.lottery-winner {
+    font-weight: bold;
+    font-size: 150%;
+}

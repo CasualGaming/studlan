@@ -9,43 +9,131 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-9">
-        <h1 class="page-header">{{ lottery }}</h1>
-    </div>
-</div>
+    <div class="col-sm-2 col-md-1"></div>
+    <div class="col-sm-8 col-md-7">
+        <h1 id="lottery">{{ lottery }}</h1>
 
-<div class="row">
-    <div class="col-md-9">
+        <table class="table table-bordered" role="presentation">
+            <tbody>
+                <tr>
+                    <td><strong>{% trans "Status" %}</strong></td>
+                    <td>
+                        {% if lottery.registration_open %}
+                        <span class="label label-success">{% trans "Open" context "lottery" %}</span>
+                        {% else %}
+                        <span class="label label-danger">{% trans "Closed" context "lottery" %}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>{% trans "Mode" %}</strong></td>
+                    <td>
+                        {% if lottery.multiple_winnings %}
+                        {% trans "Multiple wins (winners may stay in the participant list and win again)" %}
+                        {% else %}
+                        {% trans "Single win (winners are removed from the participant list to prevent winning again)" %}
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>{% trans "Participants" %}</strong></td>
+                    <td>{{ participants|length }}</td>
+                </tr>
+                <tr>
+                    <td><strong>{% trans "Winners" %}</strong></td>
+                    <td>{{ winners|length }}</td>
+                </tr>
+            </tbody>
+        </table>
+
         {{ lottery.get_translation.description | markdown }}
-        <hr />
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-md-9">
-        <p><strong>{% trans "Participants:" %}</strong> {{ participants|length }}
-        {% if winner %}
-        <p><strong>{% trans "Last winner:" %}</strong> <a href="{% url 'public_profile' winner %}">{{ winner.user.username }}</a></p>
+        {% if lottery.registration_open and not user.is_authenticated %}
+        <div class="alert alert-warning">{% trans "You need to be logged inn to participate." %}</div>
         {% endif %}
-        <p>
-            {% if lottery.registration_open %}
-            {% if user.is_authenticated %}
+        <div class="lottery-content-centered">
+            {% if lottery.registration_open and user.is_authenticated %}
             {% if request.user in participants %}
-            <a class="btn btn-danger" href="{% url 'sign_off' lottery.id %}">{% trans "Leave" %}</a>
+            <form class="inline-button-form" action="{% url 'lottery_sign_off' lottery.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">{% trans "Unattend" %}</button>
+            </form>
             {% else %}
-            <a class="btn btn-success" href="{% url 'sign_up' lottery.id %}">{% trans "Join" %}</a>
+            <form class="inline-button-form" action="{% url 'lottery_sign_up' lottery.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">{% trans "Attend" %}</button>
+            </form>
             {% endif %}
+            {% endif %}
+
+            {% if perms.lottery.open_close %}
+            {% if lottery.registration_open %}
+            {% blocktrans asvar close_raffle_line %}Close the raffle?{% endblocktrans %}
+            <form class="inline-button-form" action="{% url 'lottery_close' lottery.id %}" method="post" onsubmit="return confirm('{{ close_raffle_line }}');">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">{% trans "Close raffle" %}</button>
+            </form>
             {% else %}
-            <div class="alert alert-danger">{% trans "You need to be logged inn to participate." %}</div>
-            {% endif %} {# user.is_authenticated #}
-            {% else %}
-            <div class="alert alert-danger">{% trans "Signup closed." %}</div>
-            {% endif %} {# lottery.registration_open #}
+            {% blocktrans asvar open_raffle_line %}Open the raffle?{% endblocktrans %}
+            <form class="inline-button-form" action="{% url 'lottery_open' lottery.id %}" method="post" onsubmit="return confirm('{{ open_raffle_line }}');">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">{% trans "Open raffle" %}</button>
+            </form>
+            {% endif %}
+            {% endif %}
 
             {% if perms.lottery.draw %}
-            <a class="btn btn-info" href="{% url 'drawing' lottery.id %}">{% trans "Go to drawing" %}</a>
+            {% blocktrans asvar draw_raffle_line %}Draw a new winner?{% endblocktrans %}
+            <form class="inline-button-form" action="{% url 'lottery_draw' lottery.id %}" method="post" onsubmit="return confirm('{{ draw_raffle_line }}');">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-warning">{% trans "Draw winner" %}</button>
+            </form>
             {% endif %}
-        </p>
+        </div>
+
+        <hr />
+
+        <div class="lottery-content-centered">
+            <h2>{% trans "Winner" %}</h2>
+            {% if last_winner %}
+            <p class="lottery-winner"><a href="{% url 'public_profile' last_winner %}">{{ last_winner }}</a></p>
+            {% else %}
+            <p>{% trans "No winner has been drawn." %}</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-2 col-md-1"></div>
+    <div class="col-sm-4 col-md-3">
+        <div class="lottery-participants-container">
+            <h3>{% trans "Participants" %}</h2>
+            {% if participants %}
+            <ul>
+                {% for participant in participants %}
+                <li><a href="{% url 'public_profile' participant %}">{{ participant }}</a></li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>{% trans "No participants yet." %}</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-sm-0 col-md-1"></div>
+    <div class="col-sm-4 col-md-3">
+        <div class="lottery-winners-container">
+            <h3>{% trans "All Winners" %}</h3>
+            {% if winners %}
+            <ol>
+                {% for winner in winners %}
+                <li><a href="{% url 'public_profile' winner %}">{{ winner }}</a></li>
+                {% endfor %}
+            </ol>
+            {% else %}
+            <p>{% trans "No winners yet." %}</p>
+            {% endif %}
+        </div>
     </div>
 </div>
 {% endblock content %}

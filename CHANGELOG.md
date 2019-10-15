@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Added list of participants and winners on lottery page.
+- Added buttons to open and close raffles, including a permission to do so.
+- Added optional payment enforcement to lotteries.- Added more info to compo page info tables and compo list.
 - Added list of sponsored LANs to sponsor panels on sponsor page.
 - Added confirm dialogs for arrival toggle buttons.
 - Added filters on arrivals page for paid and arrived statuses.
@@ -16,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Stripe payment descriptions for tickets.
 
 ### Changed
+- Merged lottery info page and draw page.
 - Made login, register, recover and set-password pages narrow.
 - Centered narrow pages.
 - Improved sponsorbar responsiveness.
@@ -35,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 
 ### Removed
+- Removed link to lottery drawing from navbar.
 
 ### Fixed
 - Fixed misaligned site logo.
@@ -49,6 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed LAN history list for users only including history with reserved seats.
 
 ### Security
+- Fixed lottery CSRF vulnerability.
 
 
 ## [1.5.1] - 2019-08-01

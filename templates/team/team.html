@@ -12,7 +12,7 @@
 <div class="row">
     <div class="col-md-9">
 
-        <h1 class="page-header">{% trans "Team" %} {{ team }}</h1>
+        <h1>{% trans "Team" %} {{ team }}</h1>
 
         <h3 id="members">{% trans "Members" %}</h3>
         <table class="table table-bordered table-striped" aria-describedby="members">
@@ -54,7 +54,7 @@
         {% blocktrans asvar disband_team_line %}Are you sure you want to disband team {{ team }}?{% endblocktrans %}
         <form class="inline-button-form" action="{% url 'disband_team' team.id %}" method="post" onsubmit="return confirm('{{ disband_team_line }}');">
             {% csrf_token %}
-            <button type="submit" class="btn btn-danger ">{% trans "Disband team" %}</button>
+            <button type="submit" class="btn btn-danger">{% trans "Disband team" %}</button>
         </form>
         {% endif %}
         {% if is_normal_member %}
