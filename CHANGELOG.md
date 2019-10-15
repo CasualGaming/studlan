@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+
+## [v1.6.0] - 2019-10-16
+### Added
 - Added list of participants and winners on lottery page.
 - Added buttons to open and close raffles, including a permission to do so.
 - Added optional payment enforcement to lotteries.- Added more info to compo page info tables and compo list.
@@ -35,8 +49,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enforce closed ticket sale when all tickets are sold.
 - Redirect users to the LAN page when trying to reserve a seat without any ticket.
 - Changed seating sidebar appearance and added list of applicable ticket types.
-
-### Deprecated
 
 ### Removed
 - Removed link to lottery drawing from navbar.
