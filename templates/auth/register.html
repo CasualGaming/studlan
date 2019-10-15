@@ -8,31 +8,26 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-9">
+    <div class="col-sm-2 col-md-1"></div>
+    <div class="col-sm-8 col-md-7">
         <h1 class="page-header">{% trans "Register New User" %}</h1>
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-md-9">
         {% for error in form.non_field_errors %}
         <p class="form-error">{{ error }}</p>
         {% endfor %}
-        <form id="register-form" class="form-horizontal" method="post" action="{% url 'auth_register' %}">
+        <form id="register-form" method="post" action="{% url 'auth_register' %}">
             {% csrf_token %}
             {% for field in form %} 
             <div class="form-group {% if field.errors %} has-error {% endif %} ">
-                <label class="col-md-3 control-label">{{ field.label }}</label>
-                <div class="col-md-9">
-                    {{ field }}
-                    <div class="form-error">
-                        {{ field.errors }}
-                    </div>
+                <label class="control-label">{{ field.label }}</label>
+                {{ field }}
+                <div class="form-error">
+                    {{ field.errors }}
                 </div>
             </div>
             {% endfor %}
-            <div class="form-actions register-button">
-                <input type="submit" class="btn btn-primary" value="{% trans "Register" %}" />
+            <div class="form-actions">
+                <input type="submit" class="btn btn-primary pull-right" value="{% trans "Register" %}" />
             </div>
         </form>
     </div>

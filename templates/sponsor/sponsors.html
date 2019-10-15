@@ -11,56 +11,24 @@
 <div class="row">
     <div class="col-md-9">
         <h1 class="page-header">{% trans "Sponsors" %}</h1>
+        {% if active_sponsors %}
+        {% for sponsor in active_sponsors %}
+        {% include "sponsor/sponsor_panel.html" %}
+        {% endfor %}
+        {% else %}
+        <div class="alert alert-info">{% trans "No current sponsors." %}</div>
+        {% endif %}
     </div>
 </div>
-
-{% if active_sponsors %}
-{% for sponsor in active_sponsors %}
-<div class="row">
-    <div class="col-md-9">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <h3><a href="{{ sponsor.website }}" target="_blank">
-                {% if sponsor.banner %}
-                <img class="sponsor_banner" alt="{{ sponsor.title }}" src="{{ sponsor.banner }}">
-                <br /><br />
-                {% else %}
-                {{ sponsor.title }}
-                {% endif %}
-                </a></h3>
-                <p>{{ sponsor.get_translation.description }}</p>
-            </div>
-        </div>
-    </div>
-</div>
-{% endfor %}
-{% endif %}
 
 {% if inactive_sponsors %}
 <div class="row">
     <div class="col-md-9">
         <h2>{% trans "Previous Sponsors" %}</h2>
+        {% for sponsor in inactive_sponsors %}
+        {% include "sponsor/sponsor_panel.html" %}
+        {% endfor %}
     </div>
 </div>
-
-{% for sponsor in inactive_sponsors %}
-<div class="row">
-        <div class="col-md-9">
-            <div class="panel panel-default">
-            <div class="panel-body">
-                <h3><a href="{{ sponsor.website }}" target="_blank">
-                {% if sponsor.banner %}
-                <img class="sponsor_banner" alt="{{ sponsor.title }}" src="{{ sponsor.banner }}">
-                <br /><br />
-                {% else %}
-                {{ sponsor.title }}
-                {% endif %}
-                </a></h3>
-                <p>{{ sponsor.get_translation.description }}</p>
-            </div>
-        </div>
-    </div>
-</div>
-{% endfor %}
 {% endif %}
 {% endblock content%}

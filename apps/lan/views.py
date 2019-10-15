@@ -61,7 +61,7 @@ def attend(request, lan_id):
         return redirect(lan)
 
     if not request.user.profile.has_address():
-        messages.error(request, _(u'You need to fill in your address and zip code in order to sign up for a LAN.'))
+        messages.error(request, _(u'You need to fill in your address and postal code in order to sign up for a LAN.'))
     else:
         if request.user in lan.attendees:
             messages.error(request, _(u'You are already in the attendee list for {lan}.').format(lan=lan))

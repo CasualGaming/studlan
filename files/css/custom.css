@@ -11,6 +11,12 @@ body {
     padding-top: 60px;
 }
 
+@media (max-width:574px) {
+    .main-container {
+        padding-top: 50px;
+    }
+}
+
 h1, h2, h3, h4, h5, h6 {
     word-wrap: break-word;
 }
@@ -28,16 +34,6 @@ footer {
 
 .white-text {
     color: #ccc;
-}
-
-.brand:hover {
-    text-decoration: none;
-}
-
-.brand img {
-    margin-top: -4px;
-    margin-right: 4px;
-    overflow: hidden;
 }
 
 .activity_image {
@@ -120,22 +116,54 @@ div#btn-profile {
     font-weight: bold;
 }
 
-.navbar-logo {
+.navbar-brand-logo {
+    /* Gutter is 15px */
+    padding: 0 15px;
+}
+
+.navbar-brand-logo > div {
     width: 32px;
     height: 32px;
-    margin: 9px;
+    /* Navbar is 50px tall */
+    margin: 9px 0;
     background-image: url("/static/logo/logo_32.png");
     background-size: contain;
     image-rendering: crisp-edges;
+}
+
+.navbar-brand-text {
+    /* Gutter is 15px */
+    margin-left: -15px;
 }
 
 .navbar .nav > li > a {
     color:  #000000;
 }
 
-.sponsor_banner {
+.sponsor-panel {
+    text-align: center;
+}
+
+.sponsor-banner {
+    height: 120px;
+    max-width: 50%;
+    margin: 20px auto;
+    line-height: 120px;
+}
+
+.sponsor-banner-image, .sponsor-banner-text {
     max-width: 100%;
-    max-height: 150px;
+    max-height: 100%;
+}
+
+.sponsor-banner-text {
+    display: inline-block;
+    font-size: 200%;
+}
+
+.sponsor-banner a, .sponsor-banner a:hover {
+    color: #000000;
+    text-decoration: none;
 }
 
 .tab-pane pre {
@@ -235,6 +263,11 @@ div#btn-profile {
     background: none !important;
 }
 
+.sidebar li:not(.sidebar-header) a {
+    margin: 0;
+    padding: 1px;
+}
+
 @media (min-width:992px) {
     .sponsorbar-wrapper {
         position: absolute;
@@ -249,6 +282,7 @@ div#btn-profile {
     .sponsorbar-wrapper {
         right: 5vw;
     }
+
 }
 
 .sponsorbar {
@@ -256,30 +290,61 @@ div#btn-profile {
     margin-bottom: 0;
 }
 
-.sponsorbar-header, .sponsorbar-header > a {
+.sponsorbar-header {
     background-color: rgb(65, 131, 196) !important;
-    color: white !important;
     text-align: center;
 }
 
-.sponsorbar-body > hr:first-child {
-    display: none;
+.sponsorbar-header > a {
+    color: white !important;
+    text-decoration: none;
+    font-size: 120%;
+}
+
+.sponsorbar-body {
+    max-width: 300px;
+    margin: 0 auto;
 }
 
 .sponsorbar-body > hr {
-    margin: 10px;
+    margin: 0;
+}
+
+@media (min-width:992px) {
+    .sponsorbar-wrapper {
+        position: absolute;
+        top: 120px;
+        right: 2vw;
+        width: 20vw;
+        max-width: 300px;
+    }
+
+    .sponsorbar-body {
+        width: 100%;
+    }
+}
+
+@media (min-width:1600px) {
+    .sponsorbar-wrapper {
+        left: calc(50vw + 450px);
+        width: 20vw;
+        max-width: 350px;
+    }
 }
 
 .sponsorbar-sponsor {
-    height: 80px;
-    /* For vertically centering */
-    line-height: 80px;
-    padding-bottom: 10px;
+    height: 100px;
+    margin: 10px;
+    /* Same as height, for vertically centering */
+    line-height: 100px;
     text-align: center;
+    font-size: 150%;
+    font-weight: bold;
 }
 
-.sponsorbar-sponsor-title {
-    font-weight: bold;
+.sponsorbar-sponsor a, .sponsorbar-sponsor a:hover {
+    color: #000000;
+    text-decoration: none;
 }
 
 .sponsorbar-sponsor-image {
@@ -288,7 +353,7 @@ div#btn-profile {
 }
 
 .svg-container {
-      position: relative;
+    position: relative;
 }
 
 .svg-container svg {
@@ -424,12 +489,10 @@ div#btn-profile {
 
 .article-content {
     line-height: 1.5em;
-    text-align: justify;
 }
 
 .lan-desctiption {
     line-height: 1.5em;
-    text-align: justify;
 }
 
 .inline-button-form {
