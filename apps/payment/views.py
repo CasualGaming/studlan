@@ -38,35 +38,32 @@ def payment(request, ticket_type_id):
     ticket_type = get_object_or_404(TicketType, pk=ticket_type_id)
     is_post = request.method == 'POST'
 
+    if is_post:
+        # Stripe
+        error_response = JsonResponse({'error': ''})
+    else:
+        # User
+        error_response = redirect('lan_details', lan_id=ticket_type.lan_id)
+
     if ticket_type.lan.end_date < datetime.now():
         # "The LAN is over" is already visible on the page
-        if is_post:
-            return JsonResponse({'error': ''})
-        return redirect('lan_details', lan_id=ticket_type.lan_id)
+        return error_response
 
     if ticket_type.lan.has_ticket(request.user) or request.user in ticket_type.lan.paid_attendees:
         messages.info(request, _(u'You already have a ticket for this LAN.'))
-        if is_post:
-            return JsonResponse({'error': ''})
-        return redirect('lan_details', lan_id=ticket_type.lan_id)
+        return error_response
 
     if not ticket_type.is_available():
         messages.info(request, _(u'This ticket is not yet available.'))
-        if is_post:
-            return JsonResponse({'error': ''})
-        return redirect('lan_details', lan_id=ticket_type.lan_id)
+        return error_response
 
     if ticket_type.is_sold_out():
         messages.info(request, _(u'All tickets have sold out.'))
-        if is_post:
-            return JsonResponse({'error': ''})
-        return redirect('lan_details', lan_id=ticket_type.lan_id)
+        return error_response
 
     if request.user not in ticket_type.lan.attendees:
         messages.info(request, _(u'You must attend first to buy a ticket for this LAN.'))
-        if is_post:
-            return JsonResponse({'error': ''})
-        return redirect('lan_details', lan_id=ticket_type.lan_id)
+        return error_response
 
     if request.method == 'GET':
         return render(
