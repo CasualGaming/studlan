@@ -99,7 +99,8 @@ def seating_details(request, lan_id, seating_id=None, seat_id=None):
     context['seatings'] = seatings
     context['seating'] = seating
     context['seat'] = seat_id
-    context['user_ticket_types'] = seating.ticket_types.filter(ticket__user=request.user)
+    if request.user.is_authenticated:
+        context['user_ticket_types'] = seating.ticket_types.filter(ticket__user=request.user)
     context['hide_sidebar'] = True
     context['template'] = dom.__str__
     context['breadcrumbs'] = (
