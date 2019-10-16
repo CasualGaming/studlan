@@ -26,6 +26,12 @@ footer {
     margin-top: 30px;
 }
 
+@media (max-width:991px) {
+    footer {
+        text-align: center;
+    }
+}
+
 .white-text {
     color: #ccc;
 }
