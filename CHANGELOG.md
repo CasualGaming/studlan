@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [v1.6.1] - 2019-10-16
 ### Fixed
 - Fixed server error when viewing team competition page when not logged in.
+- Fixed sponsor title text wrapping.
 
 
 ## [v1.6.0] - 2019-10-16

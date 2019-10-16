@@ -153,6 +153,13 @@ div#btn-profile {
 .sponsor-banner-text {
     display: inline-block;
     font-size: 200%;
+    line-height: 1em;
+}
+
+@media (max-width:575px) {
+    .sponsor-banner-text {
+        font-size: 100%;
+    }
 }
 
 .sponsor-banner a, .sponsor-banner a:hover {
