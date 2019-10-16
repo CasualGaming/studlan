@@ -21,6 +21,8 @@ def competition_tabs(activities, active):
 
 @register.filter
 def show_solo_note(compo, user):
+    if not user.is_authenticated:
+        return True
     if not compo.has_participant(user):
         return True
     else:

@@ -19,6 +19,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 
+## [v1.6.1] - 2019-10-16
+### Fixed
+- Fixed server error when viewing team competition page when not logged in.
+
+
 ## [v1.6.0] - 2019-10-16
 ### Added
 - Added list of participants and winners on lottery page.
