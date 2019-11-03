@@ -9,11 +9,14 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-sm-2 col-md-1"></div>
-        <div class="col-sm-8 col-md-7">
-            <h1 class="page-header">{% trans "Ticket Purchase for" %} {{ lan }}</h1><br>
+        <div class="col-sm-offset-2 col-sm-8 col-md-offset-1 col-md-7">
+            <h1>{% trans "Ticket Purchase" %}</h1>
             <table class="table table-bordered">
                 <tbody>
+                    <tr>
+                        <td><strong>{% trans "LAN" %}</strong></td>
+                        <td>{{ lan }}</td>
+                    </tr>
                     <tr>
                         <td><strong>{% trans "Ticket type" %}</strong></td>
                         <td>{{ ticket_type }}</td>
@@ -25,16 +28,19 @@
                 </tbody>
             </table>
 
-            <h4>{% trans "Card holder name" %}</h4>
-            <div>
-                <input class="form-control" id="cardholder-name" name="cardholder-name" placeholder="{% trans "Card holder name" %}" type="text"/><br>
-            </div>
-            <h4>{% trans "Card info" %}</h4>
-            <div class="form-control" id="card-element"></div><br>
-            <div>
-                <button class="btn btn-success" id="card-button">{% trans "Submit payment" %}</button>
-            </div>
-
+            <form id="card-form">
+                <h4>{% trans "Card holder name" %}</h4>
+                <div>
+                    <input class="form-control" id="cardholder-name" name="cardholder-name" placeholder="{% trans "Card holder name" %}" type="text" required/>
+                </div>
+                <br>
+                <h4>{% trans "Card info" %}</h4>
+                <div class="form-control" id="card-element"></div>
+                <br>
+                <div>
+                    <button class="btn btn-success" id="card-button">{% trans "Submit payment" %}</button>
+                </div>
+            </form>
             <br>
             <a href="{% url 'payment_info' ticket_type.id %}">{% trans "About our payment security" %}</a>
         </div>

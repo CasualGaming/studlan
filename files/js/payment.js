@@ -8,16 +8,32 @@ var cardElement = elements.create(
     });
 cardElement.mount('#card-element');
 
+var cardForm = document.getElementById('card-form');
 var cardholderName = document.getElementById('cardholder-name');
 var cardButton = document.getElementById('card-button');
 
-cardButton.addEventListener('click', function(ev) {
+cardForm.addEventListener('submit', function(ev) {
+  // Prevent real submit
+  ev.preventDefault();
+
+  // Ignore any type of submit if the button is disabled
+  if (cardButton.disabled) {
+    return;
+  }
+
+  if (!cardholderName.value) {
+    return;
+  }
+
+  cardButton.disabled = true;
   stripe.createPaymentMethod('card', cardElement, {
     billing_details: {name: cardholderName.value}
   }).then(function(result) {
     if (result.error) {
+      console.error(result.error);
+      // Allow user to submit again
+      cardButton.disabled = false;
     } else {
-      cardButton.disabled = true;
       fetch(payment_url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrf_token},
