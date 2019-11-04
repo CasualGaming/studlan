@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed users with multiple tickets or seats causing error 500.
+- Fixed ticket paid status in arrivals being clickable.
 
 ### Security
 

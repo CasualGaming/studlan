@@ -62,7 +62,7 @@ function toggle(username, type, previousValue, label)
         },
         error: function(res) {
             alert("Failed to toggle.");
-            console.log("Failed to toggle: " + res['responseText']);
+            console.log("Failed to toggle: (status " + res['status'] + ") " + res['responseText']);
         },
         crossDomain: false
     });

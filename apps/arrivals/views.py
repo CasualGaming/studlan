@@ -5,16 +5,17 @@ from datetime import datetime
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_GET, require_POST
 
 from apps.lan.models import Attendee, LAN, Ticket
 from apps.seating.models import Seat
 
 
+@require_GET
 @permission_required('lan.register_arrivals')
 def home(request):
     lans = LAN.objects.filter(end_date__gte=datetime.now())
@@ -26,6 +27,7 @@ def home(request):
     return render(request, 'arrivals/home.html', {'lans': lans})
 
 
+@require_GET
 @ensure_csrf_cookie
 @permission_required('lan.register_arrivals')
 def arrivals(request, lan_id):
@@ -90,18 +92,27 @@ def toggle(request, lan_id):
 
     lan = get_object_or_404(LAN, pk=lan_id)
     user = get_object_or_404(User, username=username)
-    attendee = get_object_or_404(Attendee, lan=lan, user=user)
+    try:
+        attendee = Attendee.objects.get(lan=lan, user=user)
 
-    if int(toggle_type) == 0:
-        attendee.has_paid = flip_string_bool(previous_value)
-    elif int(toggle_type) == 1:
-        attendee.arrived = flip_string_bool(previous_value)
-    else:
-        return HttpResponseBadRequest()
+        # Has paid
+        if int(toggle_type) == 0:
+            # Reject if user has ticket
+            if lan.has_ticket(user):
+                return HttpResponse(status=409)
+            attendee.has_paid = flip_string_bool(previous_value)
+        # Has arrived
+        elif int(toggle_type) == 1:
+            attendee.arrived = flip_string_bool(previous_value)
+        else:
+            return HttpResponse(status=400)
 
-    attendee.save()
+        attendee.save()
 
-    return HttpResponse()
+        return HttpResponse(status=200)
+
+    except Attendee.DoesNotExist:
+        return HttpResponse(status=404)
 
 
 def flip_string_bool(val):
