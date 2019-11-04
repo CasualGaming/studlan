@@ -82,7 +82,7 @@
                             </td>
                             <td>
                                 {% if attendee.user in ticket_users %}
-                                <span class="paid label label-info" value="True">{{ ticket_users|get_user:attendee.user }} </span>
+                                <span class="paid ticket label label-info" value="True">{{ ticket_users|get_user:attendee.user }} </span>
                                 {% elif attendee.has_paid %}
                                 <span class="paid label label-success" value="True">{% trans "Toggle" %}</span>
                                 {% else %}

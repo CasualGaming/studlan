@@ -62,7 +62,7 @@ function toggle(username, type, previousValue, label)
         },
         error: function(res) {
             alert("Failed to toggle.");
-            console.log("Failed to toggle: " + res['responseText']);
+            console.log("Failed to toggle: (status " + res['status'] + ") " + res['responseText']);
         },
         crossDomain: false
     });
@@ -72,7 +72,7 @@ $(document).ready(function()
 {
      $('tr').each(function(i, row)
     {
-        $(row).find('.paid').click(function()
+        $(row).find('.paid:not(.ticket)').click(function()
         {
             var username = $(row).find('.username').text();
             var prev = $(this).attr('value');
