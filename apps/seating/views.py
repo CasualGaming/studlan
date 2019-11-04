@@ -23,10 +23,19 @@ from apps.seating.models import Seat, Seating
 def main(request):
     lans = LAN.objects.filter(end_date__gt=datetime.now()).order_by('-start_date')
 
-    if lans:
-        return seating_details(request, lans[0].id)
+    if lans.count() == 1:
+        next_lan = lans[0]
+        return redirect('seating_details', lan_id=next_lan.id)
+    else:
+        return redirect('seating_lan_list')
 
-    return render(request, 'seating/seating.html')
+
+def lan_list(request):
+    context = {}
+    context['upcoming_lans'] = LAN.objects.filter(end_date__gte=datetime.now()).order_by('start_date')
+    context['previous_lans'] = LAN.objects.filter(end_date__lt=datetime.now()).order_by('-start_date')
+
+    return render(request, 'seating/lan_list.html', context)
 
 
 def main_filtered(request, lan_id):

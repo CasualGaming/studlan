@@ -35,7 +35,7 @@ def main(request):
 def lan_list(request):
     context = {}
     context['upcoming_lans'] = LAN.objects.filter(end_date__gte=datetime.now()).order_by('start_date')
-    context['previous_lans'] = LAN.objects.filter(end_date__lt=datetime.now()).order_by('start_date')
+    context['previous_lans'] = LAN.objects.filter(end_date__lt=datetime.now()).order_by('-start_date')
 
     return render(request, 'competition/competition_lan_list.html', context)
 
@@ -336,23 +336,38 @@ def translate_competitions(competitions):
 
 
 def schedule(request):
-    lans = LAN.objects.filter(end_date__gte=datetime.now())
+    lans = LAN.objects.filter(end_date__gt=datetime.now()).order_by('-start_date')
+
+    if lans.count() == 1:
+        next_lan = lans[0]
+        return redirect('schedule_details', lan_id=next_lan.id)
+    else:
+        return redirect('schedule_lan_list')
+
+
+def schedule_lan_list(request):
     context = {}
+    context['upcoming_lans'] = LAN.objects.filter(end_date__gte=datetime.now()).order_by('start_date')
+    context['previous_lans'] = LAN.objects.filter(end_date__lt=datetime.now()).order_by('-start_date')
 
-    if lans:
-        lan = lans[0]
+    return render(request, 'competition/schedule_lan_list.html', context)
 
-        context['lan'] = lan
-        context['start_date'] = lan.start_date.strftime('%Y%m%d')
-        context['end_date'] = lan.end_date.strftime('%Y%m%d')
-        if settings.GOOGLE_CAL_SRC != '':
-            context['cal_src'] = settings.GOOGLE_CAL_SRC
-        else:
-            context['cal_src'] = None
-        context['breadcrumbs'] = (
-            (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
-            (_(u'Schedule'), ''),
-        )
+
+def schedule_details(request, lan_id):
+    lan = get_object_or_404(LAN, pk=lan_id)
+
+    context = {}
+    context['lan'] = lan
+    context['start_date'] = lan.start_date.strftime('%Y%m%d')
+    context['end_date'] = lan.end_date.strftime('%Y%m%d')
+    if settings.GOOGLE_CAL_SRC != '':
+        context['cal_src'] = settings.GOOGLE_CAL_SRC
+    else:
+        context['cal_src'] = None
+    context['breadcrumbs'] = (
+        (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
+        (_(u'Schedule'), ''),
+    )
 
     return render(request, 'competition/schedule.html', context)
 

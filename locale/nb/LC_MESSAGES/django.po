@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 11:49+0200\n"
+"POT-Creation-Date: 2019-11-04 06:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1477,9 +1477,6 @@ msgstr ""
 "<strong>Konkurransen er full.</strong>Den hadde bare plass til "
 "%(competition_max_participants)s deltagere, og den grensen er nådd."
 
-msgid "Select a LAN to view competitions for it."
-msgstr "Velg et LAN for å se konkurranser for det."
-
 msgid "Time"
 msgstr "Tid"
 
@@ -1776,6 +1773,9 @@ msgstr ""
 msgid "Back to ticket page"
 msgstr "Tilbake til billettside"
 
+msgid "Seatings"
+msgstr "Setekart"
+
 msgid "Seating Map"
 msgstr "Setekart"
 
@@ -1839,8 +1839,8 @@ msgstr "Ledig sete"
 msgid "Unavailable seat"
 msgstr "Utilgjengelig sete"
 
-msgid "There are no active seatings."
-msgstr "Det finnes ingen aktive setekart."
+msgid "There are no seatings for this LAN."
+msgstr "Det er ingen setekart for dette LAN-et."
 
 msgid "No current sponsors."
 msgstr "Ingen nåværende sponsorer."
@@ -2042,11 +2042,3 @@ msgstr "Adminpanel"
 
 msgid "Log out"
 msgstr "Logg ut"
-
-#~ msgid ""
-#~ "Your address and postal code is required in order to sign up for a LAN. "
-#~ "Go to your <a href=\"%(update_profile_url)s\">profile</a> to add the "
-#~ "information."
-#~ msgstr ""
-#~ "Adressen og postnummeret ditt er nødvendig for å melde seg på LAN. Gå til "
-#~ "<a href=\"%(update_profile_url)s\">profilen din</a> for å legge det til."
