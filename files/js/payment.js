@@ -29,6 +29,7 @@ cardForm.addEventListener('submit', function(ev) {
     return;
   }
 
+  // Try to create the payment intent
   cardButton.disabled = true;
   stripe.createPaymentMethod('card', cardElement, {
     billing_details: {name: cardholderName.value}

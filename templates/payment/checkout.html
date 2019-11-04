@@ -53,7 +53,7 @@
         var stripe_public_key = '{{ stripe_public_key }}';
         var csrf_token = '{{ csrf_token }}';
         var lan_url = '{% url 'lan_details' lan.id %}';
-        var payment_url = '{% url 'payment' ticket_type.id %}';
+        var payment_url = '{% url 'make_payment' ticket_type.id %}';
     </script>
     <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
     <script type="text/javascript" src="{% static 'js/payment.js' %}"></script>

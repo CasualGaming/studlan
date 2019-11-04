@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed enter-to-submit for ticket purchase form.
 - Fixed ticket purchase form not getting disabled when submitted with valid data.
+- Fixed ticket purchase view not being thread safe.
 
 ### Security
 
