@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 11:49+0200\n"
+"POT-Creation-Date: 2019-11-04 05:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -757,6 +757,27 @@ msgstr "nyhetsartikkeloversettelser"
 msgid "Payment"
 msgstr "Betaling"
 
+msgid "lan"
+msgstr "LAN"
+
+msgid "LAN ticket purchase lock"
+msgstr "LAN-billettkjøpslås"
+
+msgid "LAN ticket purchase locks"
+msgstr "LAN-billettkjøpslåser"
+
+msgid "Payment failed: "
+msgstr "Betaling feilet: "
+
+msgid "Ticket confirmation"
+msgstr "Billettbekreftelse"
+
+msgid "Payment complete."
+msgstr "Betalingen ble gjennomført."
+
+msgid "Payment unsuccessful."
+msgstr "Betaling mislyktes."
+
 msgid "You already have a ticket for this LAN."
 msgstr "Du har allerede en billett for dette LAN-et."
 
@@ -768,15 +789,6 @@ msgstr "Alle billettene er utsolgte."
 
 msgid "You must attend first to buy a ticket for this LAN."
 msgstr "Du må melde deg opp før du kan kjøpe en billett for dette LAN-et."
-
-msgid "Ticket confirmation"
-msgstr "Billettbekreftelse"
-
-msgid "Payment complete."
-msgstr "Betalingen ble gjennomført."
-
-msgid "Payment unsuccessful. Please contact support."
-msgstr "Betaling mislyktes. Vennligst kontakt brukerstøtte."
 
 msgid "Seating"
 msgstr "Setekart"
@@ -1690,8 +1702,8 @@ msgstr "Festet"
 msgid "Archive"
 msgstr "Arkiv"
 
-msgid "Ticket Purchase for"
-msgstr "Billettkjøp for"
+msgid "Ticket Purchase"
+msgstr "Billettkjøp"
 
 msgid "Ticket type"
 msgstr "Billettype"
