@@ -26,13 +26,14 @@ Only one file can be encrypted. To encrypt multiple files, add them to an archiv
 * (Optional) Create a non-admin user which can login with pubkey alone (if deploying with CI/CD).
 * Create a Django local settings file. Remember to add a randomly generated secret and disable debug mode.
 * Create a Docker Compose file with appropriate volume bindings and network settings.
-* Setup a database or use the built-in SQLite database or suggested PostgreSQL database.
+* Setup a database, preferably PostgreSQL.
+    * **Warning:** Purchase locking is not supported if using SQLite, so don't use it in production! (The database must support SELECT FOR UPDATE.)
 * For PostgreSQL, use the sample `recreate-db.sh` script to setup or recreate the DB.
 * Setup an Nginx reverse proxy to serve the site over TLS.
 * Setup TLS certs with automatic renewal (Let's Encrypt).
 * Setup a mail relay (Mailgun).
 * Setup backup.
 * Fix permissions to make sure unrelated users cannot read secret configs, and to prevent privilege escalation by replacing sudoable/setuided scripts.
-* Run [Qualys' SSL Server Test](https://www.ssllabs.com/ssltest/) against the web server and fix any problems.
-* Test both IPv4 and IPv6 reachability for the web server.
-* To test Stripe, get your pair of testing (not live) keys from your Stripe account, and try to pay with a [testing card](https://stripe.com/docs/testing)
+* (Optional) Run [Qualys' SSL Server Test](https://www.ssllabs.com/ssltest/) against the web server and fix any problems.
+* (Optional) Test both IPv4 and IPv6 reachability for the web server.
+* To test Stripe, get your pair of testing (not live) keys from your Stripe account, and try to pay with a [testing card](https://stripe.com/docs/testing).

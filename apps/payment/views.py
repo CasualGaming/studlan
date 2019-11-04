@@ -61,6 +61,7 @@ def make_payment(request, ticket_type_id):
         return JsonResponse({'error': ''})
 
     # Lock wrt. LAN
+    # Warning: Doesn't work for SQLite, so don't use that in production
     with transaction.atomic():
         LANTicketPurchaseLock.objects.get_or_create(lan=ticket_type.lan)
         lock = LANTicketPurchaseLock.objects.select_for_update().filter(lan=ticket_type.lan)
