@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-04 05:33+0100\n"
+"POT-Creation-Date: 2019-11-04 09:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1197,19 +1197,19 @@ msgstr "Nei"
 
 #, python-brace-format
 msgid "Set {user} to paid?"
-msgstr "Sett {user} til betalt?"
+msgstr "Sette {user} til betalt?"
 
 #, python-brace-format
 msgid "Set {user} to NOT paid?"
-msgstr "Sett {user} til IKKE betalt?"
+msgstr "Sette {user} til IKKE betalt?"
 
 #, python-brace-format
 msgid "Set {user} to arrived?"
-msgstr "Sett {user} til ankommet?"
+msgstr "Sette {user} til ankommet?"
 
 #, python-brace-format
 msgid "Set {user} to NOT arrived?"
-msgstr "Sett {user} til IKKE ankommet?"
+msgstr "Sette {user} til IKKE ankommet?"
 
 msgid "Full Name"
 msgstr "Fullt navn"
