@@ -11,17 +11,21 @@ cardElement.mount('#card-element');
 var cardForm = document.getElementById('card-form');
 var cardholderName = document.getElementById('cardholder-name');
 var cardButton = document.getElementById('card-button');
+var testSubmit = document.getElementById('test-submit');
 
 cardForm.addEventListener('submit', function(ev) {
   // Prevent real submit
   ev.preventDefault();
 
-  // Ignore any type of submit if the button is disabled
-  if (cardButton.disabled) {
+  if (!cardholderName.value) {
+    // Use extra submit button to force native form validation
+    // Since the field is empty, it won't submit
+    testSubmit.click();
     return;
   }
 
-  if (!cardholderName.value) {
+  // Ignore any type of submit if the button is disabled
+  if (cardButton.disabled) {
     return;
   }
 

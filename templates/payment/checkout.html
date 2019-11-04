@@ -40,6 +40,7 @@
                 <div>
                     <button class="btn btn-success" id="card-button">{% trans "Submit payment" %}</button>
                 </div>
+                <input type="submit" id="test-submit" style="display: none" />
             </form>
             <br>
             <a href="{% url 'payment_info' ticket_type.id %}">{% trans "About our payment security" %}</a>
