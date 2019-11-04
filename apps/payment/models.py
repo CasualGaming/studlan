@@ -6,7 +6,7 @@ from apps.lan.models import LAN
 
 
 class LANTicketPurchaseLock(models.Model):
-    lan = models.OneToOneField(LAN, verbose_name=_(u'lan'), related_name='ticket_purchase_lock')
+    lan = models.OneToOneField(LAN, verbose_name=_(u'lan'), related_name='ticket_purchase_lock', primary_key=True)
 
     class Meta:
         verbose_name = _(u'LAN ticket purchase lock')
