@@ -61,9 +61,9 @@ def make_payment(request, ticket_type_id):
         return JsonResponse({'error': ''})
 
     # Lock wrt. LAN
-    LANTicketPurchaseLock.objects.get_or_create(lan=ticket_type.lan)
-    lock = LANTicketPurchaseLock.objects.select_for_update().filter(lan=ticket_type.lan)
     with transaction.atomic():
+        LANTicketPurchaseLock.objects.get_or_create(lan=ticket_type.lan)
+        lock = LANTicketPurchaseLock.objects.select_for_update().filter(lan=ticket_type.lan)
         lock[0].evaluate()
         return make_payment_unsafe(request, ticket_type)
 
