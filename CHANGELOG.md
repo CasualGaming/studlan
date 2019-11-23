@@ -9,13 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+- Show users with tickets or seats on arrivals page even if they haven't attended.
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
-- Fixed error on arrivals page when users had multiple seats.
+- Fixed users with multiple tickets or seats causing error 500.
 
 ### Security
 

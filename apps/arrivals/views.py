@@ -11,7 +11,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import ensure_csrf_cookie
 
-from apps.lan.models import Attendee, LAN, Ticket, TicketType
+from apps.lan.models import Attendee, LAN, Ticket
 from apps.seating.models import Seat
 
 
@@ -30,36 +30,54 @@ def home(request):
 @permission_required('lan.register_arrivals')
 def arrivals(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
+    total_paid_count = 0
+    users_set = set()
+
+    # Attendees (incl. paid and arrived)
     attendees = Attendee.objects.filter(lan=lan)
+    users_set.update(map(lambda o: o.user, attendees))
+    paid_users = map(lambda d: d['user'], attendees.filter(has_paid=True).values('user'))
+    total_paid_count += len(paid_users)
+    arrived_users = map(lambda d: d['user'], attendees.filter(arrived=True).values('user'))
+
+    # Tickets
+    tickets = Ticket.objects.filter(ticket_type__lan=lan)
+    user_tickets = {}
+    for serial_user in tickets.values('user').distinct():
+        user = tickets.filter(user=serial_user['user'])[0].user
+        users_set.add(user)
+        user_tickets[user] = tickets.filter(user=user)
+        total_paid_count += len(user_tickets[user])
+
+    # Seats
+    seats = Seat.objects.filter(user__isnull=False, seating__lan=lan)
+    user_seats = {}
+    for serial_user in seats.values('user').distinct():
+        user = seats.filter(user=serial_user['user'])[0].user
+        users_set.add(user)
+        user_seats[user] = seats.filter(user=user)
+        user_seats_count = len(user_seats[user])
+
+    # Users
+    users = sorted(list(users_set), key=lambda user: user.username)
 
     breadcrumbs = (
-        (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
-        (_(u'Arrivals'), ''),
+        (lan, reverse('lan_details', kwargs={'lan_id': lan.id})), (_(u'Arrivals'), ''),
     )
+    context = {
+        'breadcrumbs': breadcrumbs,
+        'lan': lan,
+        'users': users,
+        'total_paid_count': total_paid_count,
+        'attendee_count': attendees.count(),
+        'paid_users': paid_users,
+        'arrived_users': arrived_users,
+        'user_seats': user_seats,
+        'user_seats_count': user_seats_count,
+        'user_tickets': user_tickets,
+    }
 
-    ticket_types = TicketType.objects.filter(lan=lan)
-    tickets = Ticket.objects.filter(ticket_type__in=ticket_types)
-    user_seats = {}
-    ticket_users = {}
-
-    for ticket in tickets:
-        ticket_users[ticket.user] = ticket
-
-    paid_count = 0
-    arrived_count = 0
-    for attendee in attendees:
-        user_seats[attendee] = Seat.objects.filter(user=attendee.user, seating__lan=lan)
-        if attendee.has_paid:
-            paid_count += 1
-        if attendee.arrived:
-            arrived_count += 1
-
-    paid_count += len(tickets)
-
-    return render(request, 'arrivals/arrivals.html',
-                  {'attendees': attendees, 'lan': lan,
-                   'paid_count': paid_count, 'arrived_count': arrived_count, 'breadcrumbs': breadcrumbs,
-                   'tickets': tickets, 'ticket_users': ticket_users, 'user_seats': user_seats})
+    return render(request, 'arrivals/arrivals.html', context)
 
 
 @permission_required('lan.register_arrivals')

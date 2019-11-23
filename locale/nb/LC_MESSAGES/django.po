@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-23 13:31+0100\n"
+"POT-Creation-Date: 2019-11-23 15:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1167,6 +1167,9 @@ msgstr "Deltar:"
 msgid "Paid:"
 msgstr "Betalt:"
 
+msgid "Reserved seats:"
+msgstr "Reserverte seter:"
+
 msgid "Arrived:"
 msgstr "Ankommet:"
 
@@ -1201,12 +1204,13 @@ msgstr "Fullt navn"
 msgid "Email Address"
 msgstr "E-postadresse"
 
-msgid "Paid"
-msgstr "Betalt"
+msgid "Ticket/Paid"
+msgstr "Billett/betalt"
 
 msgid "Arrived"
 msgstr "Ankommet"
 
+#, python-format
 msgid "%(seating_title)s, seat %(seat_placement)s"
 msgstr "%(seating_title)s, sete %(seat_placement)s"
 
