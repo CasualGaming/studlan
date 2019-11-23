@@ -15,8 +15,7 @@
 	        <h1>{% trans "Arrivals" %}</h1>
         </div>
     </div>
-    
-    {% if attendees %}
+
     <div class="row">
         <div class="col-md-9">
             <div class="attendee-counts">
@@ -43,7 +42,7 @@
                     <option value="yes">{% trans "Yes" %}</option>
                     <option value="no">{% trans "No" %}</option>
                 </select>
-                </div>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -108,13 +107,6 @@
         </div>
         {% endif %}
     </div>
-    {% else %}
-    <div class="row">
-        <div class="col-md-9">
-            <div class="alert alert-warning">{% trans "There are no attendees for this LAN." %}</div>
-        </div>
-    </div>
-    {% endif %}
 {% endblock content %}
 
 {% block script %}
