@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 11:49+0200\n"
+"POT-Creation-Date: 2019-11-23 13:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -720,10 +720,6 @@ msgstr "Ingen kvalifiserte deltagere."
 msgid "Miscellaneous"
 msgstr "Diverse"
 
-#, python-brace-format
-msgid "{0}, seat {1}"
-msgstr "{0}, sete {1}"
-
 msgid "News"
 msgstr "Nyheter"
 
@@ -1211,14 +1207,14 @@ msgstr "Betalt"
 msgid "Arrived"
 msgstr "Ankommet"
 
+msgid "%(seating_title)s, seat %(seat_placement)s"
+msgstr "%(seating_title)s, sete %(seat_placement)s"
+
 msgid "Toggle"
 msgstr "Vende"
 
 msgid "Export to Excel sheet"
 msgstr "Eksporter til Excel-ark"
-
-msgid "There are no attendees for this LAN."
-msgstr "Det er ingen deltagere for dette LAN-et."
 
 msgid "Manual Register"
 msgstr "Registrer manuelt"
@@ -2042,11 +2038,3 @@ msgstr "Adminpanel"
 
 msgid "Log out"
 msgstr "Logg ut"
-
-#~ msgid ""
-#~ "Your address and postal code is required in order to sign up for a LAN. "
-#~ "Go to your <a href=\"%(update_profile_url)s\">profile</a> to add the "
-#~ "information."
-#~ msgstr ""
-#~ "Adressen og postnummeret ditt er nødvendig for å melde seg på LAN. Gå til "
-#~ "<a href=\"%(update_profile_url)s\">profilen din</a> for å legge det til."

@@ -75,13 +75,24 @@
                             <td class="name">{{ attendee.user.get_full_name }}</td>
                             <td class="email">{{ attendee.user.email }}</td>
                             <td>
-                                {% if attendee in user_seats%}
-                                <a href="{{ user_seats|get_seating_url:attendee }}{{ user_seats|get_seat_placement:attendee }}" target="_blank">{{ user_seats|get_seat_info:attendee }}</a>
+                                {% for seat in user_seats|get_dict_val:attendee %}
+                                {% if not forloop.first %}
+                                    <br />
                                 {% endif %}
+                                <span class="label label-info">
+                                    <a href="{{ seat.get_absolute_url }}" target="_blank">
+                                        {% with seating_title=seat.seating.title seat_placement=seat.placement %}
+                                        {% blocktrans trimmed %}
+                                        {{ seating_title }}, seat {{ seat_placement }}
+                                        {% endblocktrans %}
+                                        {% endwith %}
+                                    </a>
+                                </span> 
+                                {% endfor %}
                             </td>
                             <td>
                                 {% if attendee.user in ticket_users %}
-                                <span class="paid label label-info" value="True">{{ ticket_users|get_user:attendee.user }} </span>
+                                <span class="paid label label-info" value="True">{{ ticket_users|get_user_ticket:attendee.user }} </span>
                                 {% elif attendee.has_paid %}
                                 <span class="paid label label-success" value="True">{% trans "Toggle" %}</span>
                                 {% else %}

@@ -48,8 +48,7 @@ def arrivals(request, lan_id):
     paid_count = 0
     arrived_count = 0
     for attendee in attendees:
-        if Seat.objects.filter(user=attendee.user, seating__lan=lan):
-            user_seats[attendee] = Seat.objects.get(user=attendee.user, seating__lan=lan)
+        user_seats[attendee] = Seat.objects.filter(user=attendee.user, seating__lan=lan)
         if attendee.has_paid:
             paid_count += 1
         if attendee.arrived:
