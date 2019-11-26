@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Fixed
+- Removed duplicates in sponsor sidebar for when the same sponsor is related to multiple upcoming LANs.
 
 ### Security
 
