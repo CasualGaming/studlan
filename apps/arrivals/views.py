@@ -36,6 +36,7 @@ def arrivals(request, lan_id):
     # Attendees (incl. paid and arrived)
     attendees = Attendee.objects.filter(lan=lan)
     users_set.update(map(lambda o: o.user, attendees))
+    attendee_users = map(lambda d: d['user'], attendees.values('user'))
     paid_users = map(lambda d: d['user'], attendees.filter(has_paid=True).values('user'))
     total_paid_count += len(paid_users)
     arrived_users = map(lambda d: d['user'], attendees.filter(arrived=True).values('user'))
@@ -69,7 +70,7 @@ def arrivals(request, lan_id):
         'lan': lan,
         'users': users,
         'total_paid_count': total_paid_count,
-        'attendee_count': attendees.count(),
+        'attendee_users': attendee_users,
         'paid_users': paid_users,
         'arrived_users': arrived_users,
         'user_seats': user_seats,
