@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Security
+- Fixed alias CSRF vulnerability.
+- Fixed logout CSRF vulnerability.
 
 
 ## [v1.6.1] - 2019-10-17

@@ -43,8 +43,12 @@
             <li class="divider"></li>
             {% endif %}
             <li>
-                <a href="{% url 'auth_logout' %}">
-                <span class="glyphicon glyphicon-off"></span> {% trans "Log out" %}</a>
+                <form action="{% url 'auth_logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-link">
+                        <span class="glyphicon glyphicon-off"></span> {% trans "Log out" %}
+                    </button>
+                </form>
             </li>
           </ul>
     </li>
@@ -71,8 +75,12 @@
             <li class="divider hidden-md hidden-lg hidden-sm"></li>
             {% endif %}
             <li class="hidden-md hidden-lg hidden-sm">
-                <a href="{% url 'auth_logout' %}">
-                <span class="glyphicon glyphicon-off"></span> {% trans "Log out" %}</a>
+                <form action="{% url 'auth_logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-link">
+                        <span class="glyphicon glyphicon-off"></span> {% trans "Log out" %}
+                    </button>
+                </form>
             </li>
 {% endif %}
 </ul>

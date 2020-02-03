@@ -6,12 +6,14 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.utils.translation import ugettext as _
+from django.views.decorators.http import require_POST, require_safe
 
 from apps.api.models import Key
 from apps.lan.models import Attendee, LAN
 from apps.userprofile.models import UserProfile
 
 
+@require_POST
 def change_arrived(request, api_key, lan_id, username, status):
     keys = Key.objects.filter(content=api_key)
     if len(keys) != 1:
@@ -37,6 +39,7 @@ def change_arrived(request, api_key, lan_id, username, status):
         return redirect('/')
 
 
+@require_POST
 def change_paid(request, api_key, lan_id, username, status):
     keys = Key.objects.filter(content=api_key)
     if len(keys) != 1:
@@ -62,6 +65,7 @@ def change_paid(request, api_key, lan_id, username, status):
         return redirect('/')
 
 
+@require_safe
 def check_status(request, api_key, lan_id, username):
     keys = Key.objects.filter(content=api_key)
     response_data = {}
