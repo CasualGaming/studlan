@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-23 15:38+0100\n"
+"POT-Creation-Date: 2020-02-03 10:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,10 +58,6 @@ msgstr "Endret status for bruker \"{user}\" ved LAN \"{lan}\" til \"NOT paid\""
 
 msgid "Arrivals"
 msgstr "Ankomster"
-
-#, python-brace-format
-msgid "{user} was not found in attendees for {lan}."
-msgstr "{user} ble ikke funnet i ankomstlisten for {lan}."
 
 msgid "Authentication"
 msgstr "Autentisering"
@@ -1164,11 +1160,11 @@ msgstr "Registrer ankomster"
 msgid "Attending:"
 msgstr "Deltar:"
 
-msgid "Paid:"
-msgstr "Betalt:"
-
 msgid "Reserved seats:"
 msgstr "Reserverte seter:"
+
+msgid "Paid:"
+msgstr "Betalt:"
 
 msgid "Arrived:"
 msgstr "Ankommet:"
