@@ -15,7 +15,7 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import translation
 from django.utils.translation import ugettext as _
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_safe
 
 from apps.competition.models import Activity, Competition, Match, Participant
 from apps.lan.models import Attendee, LAN
@@ -23,6 +23,7 @@ from apps.lottery.models import Lottery
 from apps.team.models import Team
 
 
+@require_safe
 def main(request):
     lans = LAN.objects.filter(end_date__gte=datetime.now())
     if lans.count() == 1:
@@ -32,6 +33,7 @@ def main(request):
         return redirect('competitions_lan_list')
 
 
+@require_safe
 def lan_list(request):
     context = {}
     context['upcoming_lans'] = LAN.objects.filter(end_date__gte=datetime.now()).order_by('start_date')
@@ -40,6 +42,7 @@ def lan_list(request):
     return render(request, 'competition/competition_lan_list.html', context)
 
 
+@require_safe
 def lan_compos(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
 
@@ -61,6 +64,7 @@ def lan_compos(request, lan_id):
     return render(request, 'competition/competitions.html', context)
 
 
+@require_safe
 def activity_details(request, activity_id):
     lans = LAN.objects.filter(end_date__gte=datetime.now())
     if lans:
@@ -80,6 +84,7 @@ def activity_details(request, activity_id):
         return render(request, 'competition/competitions.html', context)
 
 
+@require_safe
 def activity_details_filtered(request, lan_id, activity_id):
     lan = get_object_or_404(LAN, pk=lan_id)
     activity = get_object_or_404(Activity, pk=activity_id)
@@ -109,6 +114,7 @@ def shorten_descriptions(competitions, length):
     return competitions
 
 
+@require_safe
 def competition_details(request, competition_id):
     context = {}
     competition = get_object_or_404(Competition, pk=competition_id)
@@ -335,6 +341,7 @@ def translate_competitions(competitions):
     return translated_competitions
 
 
+@require_safe
 def schedule(request):
     lans = LAN.objects.filter(end_date__gt=datetime.now()).order_by('-start_date')
 
@@ -345,6 +352,7 @@ def schedule(request):
         return redirect('schedule_lan_list')
 
 
+@require_safe
 def schedule_lan_list(request):
     context = {}
     context['upcoming_lans'] = LAN.objects.filter(end_date__gte=datetime.now()).order_by('start_date')
@@ -353,6 +361,7 @@ def schedule_lan_list(request):
     return render(request, 'competition/schedule_lan_list.html', context)
 
 
+@require_safe
 def schedule_details(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
 

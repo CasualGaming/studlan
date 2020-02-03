@@ -11,7 +11,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext as _
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_safe
 
 from reportlab.lib import pagesizes
 from reportlab.pdfgen.canvas import Canvas as PdfCanvas
@@ -20,6 +20,7 @@ from apps.lan.models import Attendee, LAN
 from apps.seating.models import Seat, Seating
 
 
+@require_safe
 def main(request):
     lans = LAN.objects.filter(end_date__gt=datetime.now()).order_by('-start_date')
 
@@ -30,6 +31,7 @@ def main(request):
         return redirect('seating_lan_list')
 
 
+@require_safe
 def lan_list(request):
     context = {}
     context['upcoming_lans'] = LAN.objects.filter(end_date__gte=datetime.now()).order_by('start_date')
@@ -38,6 +40,7 @@ def lan_list(request):
     return render(request, 'seating/lan_list.html', context)
 
 
+@require_safe
 def main_filtered(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
 
@@ -58,6 +61,7 @@ def main_filtered(request, lan_id):
     return render(request, 'seating/seating.html', context)
 
 
+@require_safe
 def seating_details(request, lan_id, seating_id=None, seat_id=None):
     lan = get_object_or_404(LAN, pk=lan_id)
     seatings = Seating.objects.filter(lan=lan)
@@ -200,6 +204,7 @@ def get_post_seat_id(request, seating):
     return seat_id
 
 
+@require_safe
 @permission_required('seating.export_seating')
 def seating_list(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
@@ -260,6 +265,7 @@ def seating_list(request, seating_id):
     return response
 
 
+@require_safe
 @permission_required('seating.export_seating')
 def seating_map(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
