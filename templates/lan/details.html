@@ -168,7 +168,7 @@
                     <button type="button" class="btn btn-default disabled">
                         {% trans "Please log in" %}
                     </button>
-                    {% elif ticket %}
+                    {% elif status == 'paid' %}
                     <button type="button" class="btn btn-default disabled">
                         {% trans "You already have a ticket" %}
                     </button>
