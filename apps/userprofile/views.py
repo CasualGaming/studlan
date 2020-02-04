@@ -53,14 +53,13 @@ def user_competitions(request):
 
 @login_required
 def update_profile(request):
-    if request.method == 'GET':
-        form = UserProfileForm(instance=request.user.profile, auto_id=True)
-    elif request.method == 'POST':
+    if request.method == 'POST':
         form = UserProfileForm(request.POST, instance=request.user.profile, auto_id=True)
         if form.is_valid():
             form.save()
             return redirect('my_profile')
-
+    else:
+        form = UserProfileForm(instance=request.user.profile, auto_id=True)
     return render(request, 'user/update.html', {'form': form})
 
 

@@ -65,15 +65,6 @@ def payment(request, ticket_type_id):
         messages.info(request, _(u'You must attend first to buy a ticket for this LAN.'))
         return error_response
 
-    if request.method == 'GET':
-        return render(
-            request,
-            'payment/checkout.html',
-            {
-                'ticket_type': ticket_type,
-                'lan': ticket_type.lan,
-            })
-
     if request.method == 'POST':
         description = u'{lan} {ticket} ticket for {user}'.format(ticket=ticket_type, lan=ticket_type.lan, user=request.user)
         json_data = json.loads(request.body)
@@ -96,8 +87,14 @@ def payment(request, ticket_type_id):
             return JsonResponse({'error': e.user_message})
 
         return generate_payment_response(request, ticket_type, intent)
-
-    return HttpResponseRedirect('/')
+    else:
+        return render(
+            request,
+            'payment/checkout.html',
+            {
+                'ticket_type': ticket_type,
+                'lan': ticket_type.lan,
+            })
 
 
 def generate_payment_response(request, ticket_type, intent):
