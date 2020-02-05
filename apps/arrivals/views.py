@@ -2,14 +2,14 @@
 
 from datetime import datetime
 
-from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.http import Http404, HttpResponse
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.http import require_POST
 
 from apps.lan.models import Attendee, LAN, Ticket, TicketType
 from apps.seating.models import Seat
@@ -63,32 +63,34 @@ def arrivals(request, lan_id):
                    'tickets': tickets, 'ticket_users': ticket_users, 'user_seats': user_seats})
 
 
+@require_POST
 @permission_required('lan.register_arrivals')
 def toggle(request, lan_id):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        toggle_type = request.POST.get('type')
-        previous_value = request.POST.get('prev')
+    username = request.POST.get('username')
+    toggle_type = request.POST.get('type')
+    previous_value = request.POST.get('prev')
 
-        lan = get_object_or_404(LAN, pk=lan_id)
-        user = get_object_or_404(User, username=username)
-        try:
-            attendee = Attendee.objects.get(lan=lan, user=user)
+    lan = LAN.objects.filter(pk=lan_id).first()
+    if lan is None:
+        return HttpResponse(status=404, content=_('LAN not found.'))
 
-            if int(toggle_type) == 0:
-                attendee.has_paid = flip_string_bool(previous_value)
-            elif int(toggle_type) == 1:
-                attendee.arrived = flip_string_bool(previous_value)
-            else:
-                raise Http404
+    user = User.objects.filter(username=username).first()
+    if user is None:
+        return HttpResponse(status=404, content=_('User not found.'))
 
-            attendee.save()
+    attendee = Attendee.objects.filter(lan=lan, user=user).first()
+    if attendee is None:
+        return HttpResponse(status=404, content=_('The user is not attending the LAN.'))
 
-        except Attendee.DoesNotExist:
-            messages.error(request, _(u'{user} was not found in attendees for {lan}.').format(user=user, lan=lan))
+    if int(toggle_type) == 0:
+        attendee.has_paid = flip_string_bool(previous_value)
+    elif int(toggle_type) == 1:
+        attendee.arrived = flip_string_bool(previous_value)
+    else:
+        return HttpResponse(status=400, content=_('Invalid toggle type.'))
 
-        return HttpResponse(status=200)
-    return HttpResponse(status=404)
+    attendee.save()
+    return HttpResponse(status=200)
 
 
 def flip_string_bool(val):
