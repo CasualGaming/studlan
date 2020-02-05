@@ -37,13 +37,16 @@ class UserProfileAdmin(UserAdmin):
 
     def activate_users(self, request, queryset):
         queryset.update(is_active=True)
+        messages.success(request, _(u'Successfully activated the selected users.'))
 
     def deactivate_users(self, request, queryset):
         for user in queryset:
             if user.id == request.user.id:
-                self.message_user(request, _(u'You cannot deactivate yourself! No actions were performed.'), level=messages.WARNING)
+                messages.warning(request, _(u'You cannot deactivate yourself! No actions were performed.'))
                 return
+
         queryset.update(is_active=False)
+        messages.success(request, _(u'Successfully deactivated the selected users.'))
 
     def forcefully_logout_users(self, request, queryset):
         # Works only with session engine
@@ -58,7 +61,7 @@ class UserProfileAdmin(UserAdmin):
                     session.delete()
                     count += 1
 
-        self.message_user(request, _(u'Deleted {count} user sessions.'.format(count=count)), level=messages.INFO)
+        messages.success(request, _(u'Successfully invalidated {count} user sessions.').format(count=count))
 
     activate_users.short_description = _(u'Activate')
     deactivate_users.short_description = _(u'Deactivate')

@@ -301,9 +301,7 @@
     {% else %}
         <div class="col-md-9">
             <div class="alert alert-warning" role="alert">
-                {% blocktrans trimmed %}
-                Please log in to register for the competition.
-                {% endblocktrans %}
+                {% trans "Please log in to register for the competition." %}
             </div>
         </div>
     {% endif %}
@@ -390,11 +388,8 @@
 {% if competition.status == 2 and competition.participant_spots_free == 0 %}
     <div class="row">
         <div class="col-md-9">
-            <div class="alert alert-info">
-                {% blocktrans with competition.max_participants as competition_max_participants trimmed %}
-                <strong>This competition is full.</strong>
-                This competition only had room for {{ competition_max_participants }} participants, and that limit has been reached.
-                {% endblocktrans %}
+            <div class="alert alert-warning">
+                {% trans "The competition is full." %}
             </div>
         </div>
     </div>

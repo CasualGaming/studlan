@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 11:49+0200\n"
+"POT-Creation-Date: 2020-02-05 03:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -166,20 +166,20 @@ msgid ""
 msgstr ""
 "Registrering vellykket. Du mottar snart en e-post med videre instruksjoner."
 
-msgid "No upcoming LAN was found."
-msgstr "Ingen kommende LAN ble funnet."
+msgid "No current or upcoming LANs."
+msgstr "Ingen nåværende eller kommende LAN."
 
 msgid "Registration successful."
 msgstr "Registrering vellykket."
 
-#, python-brace-format
-msgid "User {user} successfully activated. You can now log in."
-msgstr "Bruker {user} er nå aktivert. Du kan nå logge inn."
+msgid "User {user} was successfully activated. You can now log in."
+msgstr "Bruker {user} ble aktivert. Du kan nå logge inn."
 
 msgid ""
-"The token has expired. Please use the password recovery to get a new token."
+"The activation link has expired. Please use the password recovery form to "
+"get a new link."
 msgstr ""
-"Lenken har utgått. Vennligst bruk passordgjennoppretting for å få en ny link."
+"Aktiveringslenken har utgått. Vennligst bruk passordnullstillingsskjemaet for å få en ny lenke."
 
 msgid "No users are registered with that email address."
 msgstr "Ingen brukere er registrert med den e-postadressen."
@@ -198,13 +198,14 @@ msgstr ""
 msgid "Successfully changed password for user {user}. You can now log in."
 msgstr "Passorder for {user} ble endret. Du kan nå logge inn."
 
-msgid "Please insert your new password."
-msgstr "Vennligst skriv inn ditt nye passord."
+msgid "Please set a new password."
+msgstr "Vennligst sett et nytt passord."
 
 msgid ""
-"The link has expired. Please use the password recovery to get a new one."
+"The recovery link has expired. Please use the password recovery form to get "
+"a new link."
 msgstr ""
-"Lenken har utgått. Vennligst bruk passordgjennoppretting for å få en ny."
+"Gjenopprettingslenken har utgått. Vennligst bruk passordnullstillingsskjemaet for å få en ny lenke."
 
 msgid "Competition"
 msgstr "Konkurranse"
@@ -485,12 +486,11 @@ msgstr "Noe gikk galt."
 msgid "Match does not exsist."
 msgstr "Kampen eksisterer ikke."
 
-msgid "You are unauthorized to report score for this match."
+msgid "You are not authorized to report score for this match."
 msgstr "Du er ikke autorisert til å rapportere poengsum for denne kampen."
 
-#, python-brace-format
-msgid "Invalid score. Score must be >0 and <{max}."
-msgstr "Ugyldig poengsum. Den må være >0 and <{max}."
+msgid "Invalid score. Score must be between 0 and {max} (exclusive)."
+msgstr "Ugyldig poengsum. Den må være mellom 0 og {max} (eksklusivt)."
 
 msgid "No match to submit score to."
 msgstr "Ingen kamp å sende inn."
@@ -1038,12 +1038,17 @@ msgstr "Du er ikke medlem av dette laget."
 msgid "You have left team {team}."
 msgstr "Du har forlatt lag {team}."
 
+msgid "Successfully activated the selected users."
+msgstr "De valgte brukerene ble aktivert."
+
 msgid "You cannot deactivate yourself! No actions were performed."
 msgstr "Du kan ikke deaktivere deg selv! Ingen hanglinger ble gjennomført."
 
-#, python-brace-format
-msgid "Deleted {count} user sessions."
-msgstr "Slettet {count} brukerøkter."
+msgid "Successfully deactivated the selected users."
+msgstr ""
+
+msgid "Successfully invalidated {count} user sessions."
+msgstr "{count} brukerøkter ble invaliderte."
 
 msgid "Activate"
 msgstr "Aktiver"
@@ -1128,13 +1133,13 @@ msgstr "brukeraliaser"
 msgid "Invalid alias. Max length is 40 characters."
 msgstr "Ugyldig alias. Makslengde er 40 karakterer."
 
-msgid "Alias was added."
+msgid "The alias was added."
 msgstr "Aliaset ble lagt til."
 
-msgid "You can only remove your own alias."
+msgid "You can only remove your own aliases."
 msgstr "Du kan kun fjerne dine egne aliaser."
 
-msgid "Alias was removed."
+msgid "The alias was removed."
 msgstr "Aliaset ble fjernet."
 
 msgid "Error 404"
@@ -1468,14 +1473,8 @@ msgstr ""
 "meld opp laget. Når du melder deg opp som lag, vil solooppmeldingen "
 "overskrives."
 
-#, python-format
-msgid ""
-"<strong>This competition is full.</strong> This competition only had room "
-"for %(competition_max_participants)s participants, and that limit has been "
-"reached."
-msgstr ""
-"<strong>Konkurransen er full.</strong>Den hadde bare plass til "
-"%(competition_max_participants)s deltagere, og den grensen er nådd."
+msgid "The competition is full."
+msgstr "Konkurransen er full."
 
 msgid "Select a LAN to view competitions for it."
 msgstr "Velg et LAN for å se konkurranser for det."
@@ -1485,9 +1484,6 @@ msgstr "Tid"
 
 msgid "Compo Count"
 msgstr "Antall compoer"
-
-msgid "No current or upcoming LANs."
-msgstr "Ingen nåværende eller kommende LAN."
 
 msgid "Previous LANs"
 msgstr "Tidligere LAN"
@@ -1512,11 +1508,8 @@ msgstr "Stengt"
 msgid "No raffles for this LAN."
 msgstr "Ingen trekninger for dette LAN-et."
 
-msgid "There is no schedule for this LAN."
-msgstr "Det er ingen timetabell for dette LAN-et."
-
-msgid "There is no current or upcoming LAN."
-msgstr "Det er ingen nåværende eller kommende LAN."
+msgid "No schedule for this LAN."
+msgstr "Ingen timetabell for dette LAN-et."
 
 #, python-format
 msgid "<p>Sent automatically from <a href=\"%(host)s\">%(site_name)s</a>.</p>"
@@ -1596,11 +1589,14 @@ msgstr "Manglende adresse i brukerprofilen"
 msgid "Buy"
 msgstr "Kjøp"
 
-msgid "No tickets avalible at this time."
-msgstr "Det er ingen billetter tilgjengelig akkurat nå."
+msgid "No tickets are available at this time."
+msgstr "Ingen billetter er tilgjengelig akkurat nå."
 
 msgid "LAN List"
 msgstr "LAN-liste"
+
+msgid "No LANs have been created."
+msgstr "Ingen LAN har blitt laget."
 
 msgctxt "lottery"
 msgid "Open"
@@ -1839,8 +1835,8 @@ msgstr "Ledig sete"
 msgid "Unavailable seat"
 msgstr "Utilgjengelig sete"
 
-msgid "There are no active seatings."
-msgstr "Det finnes ingen aktive setekart."
+msgid "This LAN does not have any seatings."
+msgstr "Dette LAN-et har ingen aktive setekart."
 
 msgid "No current sponsors."
 msgstr "Ingen nåværende sponsorer."
@@ -1923,8 +1919,8 @@ msgstr "Inviter medlem"
 msgid "Size"
 msgstr "Størrelse"
 
-msgid "No teams found."
-msgstr "Fant ingen lag."
+msgid "No teams."
+msgstr "Ingen lag."
 
 msgid "All Teams"
 msgstr "Alle lag"
@@ -1961,8 +1957,8 @@ msgstr "Ingen"
 msgid "Inbox"
 msgstr "Innboks"
 
-msgid "Inbox is empty."
-msgstr "Innboksen er tom."
+msgid "No messages."
+msgstr "Ingen meldinger."
 
 msgid "Go to public profile page"
 msgstr "Gå til offentlig profilside"
@@ -2042,11 +2038,3 @@ msgstr "Adminpanel"
 
 msgid "Log out"
 msgstr "Logg ut"
-
-#~ msgid ""
-#~ "Your address and postal code is required in order to sign up for a LAN. "
-#~ "Go to your <a href=\"%(update_profile_url)s\">profile</a> to add the "
-#~ "information."
-#~ msgstr ""
-#~ "Adressen og postnummeret ditt er nødvendig for å melde seg på LAN. Gå til "
-#~ "<a href=\"%(update_profile_url)s\">profilen din</a> for å legge det til."

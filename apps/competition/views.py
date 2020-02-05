@@ -422,7 +422,7 @@ def register_score(request, competition_id, match_id, player_id):
     else:
         if request.method == 'POST':
             if not match.is_valid_score_reporter(request.user, player_id):
-                messages.error(request, _(u'You are unauthorized to report score for this match.'))
+                messages.error(request, _(u'You are not authorized to report score for this match.'))
                 return redirect(competition)
 
             max_score = competition.max_match_points
@@ -430,7 +430,7 @@ def register_score(request, competition_id, match_id, player_id):
             p2_score = request.POST.get('player2score')
 
             if int(p1_score) > max_score or int(p1_score) < 0 or int(p2_score) > max_score or int(p2_score) < 0:
-                messages.error(request, _(u'Invalid score. Score must be >0 and <{max}.').format(max=max_score))
+                messages.error(request, _(u'Invalid score. Score must be between 0 and {max} (exclusive).').format(max=max_score))
                 return redirect(competition)
 
             if player_id == '1':
