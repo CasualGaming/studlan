@@ -1,0 +1,18 @@
+{% load i18n %}
+{% load markdown_deux_tags %}
+
+<div class="article">
+    <h3><a href="{{ article.get_absolute_url }}">{{ article.get_translation.translated_title }}</a></h3>
+    <div class="article-tags">
+        <span class="label label-default">{{ article.pub_date|date:"d/m/Y" }} {{article.pub_date|time:"H:i"}}</span>
+        {% if article.pinned %}
+        <span class="label label-default">{% trans "Pinned" %}</span>
+        {% endif %}
+        {% for lan in article.relevant_to.all %}
+        <span class="label label-default"><a href="{{ lan.get_absolute_url }}">{{ lan }}</a></span>
+        {% endfor %}
+    </div>
+    <div class="article-content">
+        {{ article.get_translation.translated_body|striptags|markdown|truncatewords:100 }}
+    </div>
+</div>
