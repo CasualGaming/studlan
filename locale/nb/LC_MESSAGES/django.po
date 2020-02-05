@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-05 03:30+0100\n"
+"POT-Creation-Date: 2020-02-05 04:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -59,9 +59,17 @@ msgstr "Endret status for bruker \"{user}\" ved LAN \"{lan}\" til \"NOT paid\""
 msgid "Arrivals"
 msgstr "Ankomster"
 
-#, python-brace-format
-msgid "{user} was not found in attendees for {lan}."
-msgstr "{user} ble ikke funnet i ankomstlisten for {lan}."
+msgid "LAN not found."
+msgstr ""
+
+msgid "User not found."
+msgstr "Brukeren ble ikke funnet."
+
+msgid "The user is not attending the LAN."
+msgstr "Brukeren deltar ikke på LAN-et."
+
+msgid "Invalid toggle type."
+msgstr "Ugyldig toggle-type."
 
 msgid "Authentication"
 msgstr "Autentisering"
@@ -172,6 +180,7 @@ msgstr "Ingen nåværende eller kommende LAN."
 msgid "Registration successful."
 msgstr "Registrering vellykket."
 
+#, python-brace-format
 msgid "User {user} was successfully activated. You can now log in."
 msgstr "Bruker {user} ble aktivert. Du kan nå logge inn."
 
@@ -179,7 +188,8 @@ msgid ""
 "The activation link has expired. Please use the password recovery form to "
 "get a new link."
 msgstr ""
-"Aktiveringslenken har utgått. Vennligst bruk passordnullstillingsskjemaet for å få en ny lenke."
+"Aktiveringslenken har utgått. Vennligst bruk passordnullstillingsskjemaet "
+"for å få en ny lenke."
 
 msgid "No users are registered with that email address."
 msgstr "Ingen brukere er registrert med den e-postadressen."
@@ -205,7 +215,8 @@ msgid ""
 "The recovery link has expired. Please use the password recovery form to get "
 "a new link."
 msgstr ""
-"Gjenopprettingslenken har utgått. Vennligst bruk passordnullstillingsskjemaet for å få en ny lenke."
+"Gjenopprettingslenken har utgått. Vennligst bruk "
+"passordnullstillingsskjemaet for å få en ny lenke."
 
 msgid "Competition"
 msgstr "Konkurranse"
@@ -489,6 +500,7 @@ msgstr "Kampen eksisterer ikke."
 msgid "You are not authorized to report score for this match."
 msgstr "Du er ikke autorisert til å rapportere poengsum for denne kampen."
 
+#, python-brace-format
 msgid "Invalid score. Score must be between 0 and {max} (exclusive)."
 msgstr "Ugyldig poengsum. Den må være mellom 0 og {max} (eksklusivt)."
 
@@ -1047,6 +1059,7 @@ msgstr "Du kan ikke deaktivere deg selv! Ingen hanglinger ble gjennomført."
 msgid "Successfully deactivated the selected users."
 msgstr ""
 
+#, python-brace-format
 msgid "Successfully invalidated {count} user sessions."
 msgstr "{count} brukerøkter ble invaliderte."
 
