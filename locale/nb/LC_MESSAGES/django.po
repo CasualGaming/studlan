@@ -1230,7 +1230,7 @@ msgid "Arrived"
 msgstr "Ankommet"
 
 msgid "Toggle"
-msgstr "Vende"
+msgstr "Vend"
 
 msgid "Export to Excel sheet"
 msgstr "Eksporter til Excel-ark"
