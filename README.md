@@ -2,6 +2,7 @@
 [![Build Status](https://travis-ci.org/CasualGaming/studlan.svg?branch=master)](https://travis-ci.org/CasualGaming/studlan)
 [![Snyk](https://snyk.io/test/github/CasualGaming/studlan/badge.svg)](https://snyk.io/test/github/CasualGaming/studlan)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?branch=master&project=CasualGaming_studlan&metric=alert_status)](https://sonarcloud.io/dashboard?id=CasualGaming_studlan)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FCasualGaming%2Fstudlan.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FCasualGaming%2Fstudlan?ref=badge_shield)
 
 # studlan
 LAN-party event management system.
@@ -38,3 +39,7 @@ LAN-party event management system.
 	* Export details of participants per event
 
 (This list may be slightly outdated.)
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FCasualGaming%2Fstudlan.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FCasualGaming%2Fstudlan?ref=badge_large)
