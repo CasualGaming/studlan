@@ -66,7 +66,7 @@ def check_status(request, api_key, lan_id, username):
     keys = Key.objects.filter(content=api_key)
     response_data = {}
     if len(keys) != 1:
-        messages.error(request, _(u'Invalid API key.'))
+        messages.error(request, _(u'Invalid API key. TEST123'))
         return redirect('/')
     else:
         lan = get_object_or_404(LAN, pk=lan_id)
