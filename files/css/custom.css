@@ -463,7 +463,8 @@ div#btn-profile {
     color: grey;
 }
 
-.lan-video {
+.lan-banner {
+    width: 100%;
     margin-bottom: 20px;
 }
 
