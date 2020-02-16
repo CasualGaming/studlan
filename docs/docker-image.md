@@ -1,7 +1,9 @@
 # Docker Image
+
 The Docker images are the intended way to run this application stack.
 
 ## Environment Variables
+
 * `STUDLAN_UID=<uid>`: UID to use for the `studlan` user. Has effect only for the first start of the container.
 * `STUDLAN_GID=<gid>`: Same as `STUDLAN_UID`, but for GID.
 * `SUPERUSER_USERNAME=<username>`: If set, a superuser with the specified username is attempted created if a user with the specified username does not yet exist. `SUPERUSER_USERNAME`, `SUPERUSER_USERNAME` and `SUPERUSER_USERNAME` adds the superuser to the database, and can be removed after being set for one application start.
@@ -14,6 +16,7 @@ The Docker images are the intended way to run this application stack.
 * `NO_START=[true]`: If the uWSGI server should start or not at the end of the entrypoint script.
 
 ## Internal Directories and Files
+
 * `/srv/studlan/studlan/settings/local.py`: (Required) Settings file for the Django app.
 * `/srv/studlan/log`: Log directory for the uWSGI server hosting the Django app.
 * `/srv/studlan/static`: Where static files are collected to on application start. Can be mounted to serve static files directly from reverse proxy.
