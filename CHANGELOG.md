@@ -9,12 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+- Replaced LAN banner video with LAN banner media which supports images as well.
+  It is also shown on the front page together with the usual brief LAN info.
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+- Fixed Markdown images in the LAN descriptions and article contents not being contained.
+- Fixed news archive pagination.
 
 ### Security
 - Fixed alias CSRF vulnerability.

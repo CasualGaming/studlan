@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-03 11:54+0100\n"
+"POT-Creation-Date: 2020-02-05 05:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1678,17 +1678,20 @@ msgstr "Sponsorer"
 msgid "News Archive"
 msgstr "Nyhetsarkiv"
 
+msgid "No news."
+msgstr "Ingen nyheter."
+
+msgid "Pinned"
+msgstr "Festet"
+
 msgid "Home"
 msgstr "Hjem"
 
 msgid "Go to LAN page"
 msgstr "Gå til LAN-side"
 
-msgid "Pinned"
-msgstr "Festet"
-
-msgid "Archive"
-msgstr "Arkiv"
+msgid "News archive"
+msgstr "Nyhetsarkiv"
 
 msgid "Ticket Purchase for"
 msgstr "Billettkjøp for"
@@ -2042,11 +2045,3 @@ msgstr "Adminpanel"
 
 msgid "Log out"
 msgstr "Logg ut"
-
-#~ msgid ""
-#~ "Your address and postal code is required in order to sign up for a LAN. "
-#~ "Go to your <a href=\"%(update_profile_url)s\">profile</a> to add the "
-#~ "information."
-#~ msgstr ""
-#~ "Adressen og postnummeret ditt er nødvendig for å melde seg på LAN. Gå til "
-#~ "<a href=\"%(update_profile_url)s\">profilen din</a> for å legge det til."

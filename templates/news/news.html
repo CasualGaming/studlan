@@ -1,46 +1,12 @@
 {% extends "base.html" %}
 
 {% load i18n %}
-{% load markdown_deux_tags %} 
+{% load markdown_deux_tags %}
 
 {% block title %} 
 {% trans "Home" %}
 {% endblock title %} 
 {% block content %}
-<div class="row">
-    <div class="col-md-9">
-        {% if lans.count == 1 %}
-        <h1 class="page-header">{{ lans.0 }}</h1>
-        {% else %}
-        <h1 class="page-header">{% trans "LANs" %}</h1>
-        {% endif %}
-    </div>
-</div>
-
-<div class="row">
-    {% if lans.count == 1 %}
-    <div class="col-md-6 col-xs-7">
-        <p class="lead">{{ lans.0.start_date|date }} – {{ lans.0.end_date|date }}</p>
-    </div>
-    <div class="col-md-3 col-xs-5">
-        <a class="btn btn-primary pull-right" href="{{ lans.0.get_absolute_url }}">{% trans "Go to LAN page" %}</a>
-    </div>
-    {% else %}
-    <div class="col-md-9">
-        <table class="table table-bordered table-hover click-table">
-            <tbody>
-                {% for lan in lans %}
-                <tr onclick="document.location='{{ lan.get_absolute_url }}';">
-                    <td class="col-md-6 underline">{{ lan }}</td>
-                    <td class="col-md-3">{{ lan.start_date|date }} – {{ lan.end_date|date }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    {% endif %}
-</div>
-
 {% if stream %}
 <div class="row">
     <div class="col-md-9">
@@ -48,8 +14,8 @@
             {% if stream.visible_title %}
             <h3 class="stream-title">{{ stream.visible_title }}</h3>
             {% endif %}
-            <div class="stream-content embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" title="Stream" src="{{ stream.link|safe }}" allowfullscreen></iframe>
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" title="Stream" src="{{ stream.link | safe }}" allowfullscreen></iframe>
             </div>
             {% if stream.description %}
             <div class="stream-desc">
@@ -63,37 +29,60 @@
 
 <div class="row">
     <div class="col-md-9">
+        {% if lans.count == 1 %}
+        <h1 class="page-header">{{ lans.0 }}</h1>
+        {% else %}
+        <h1 class="page-header">{% trans "LANs" %}</h1>
+        {% endif %}
+    </div>
+</div>
+
+{% if lans.count == 1 %}
+{% include "lan/media.html" with lan=lans.0 %}
+<div class="row">
+    <div class="col-md-6 col-xs-7">
+        <p class="lead">{{ lans.0.start_date|date }} – {{ lans.0.end_date|date }}</p>
+    </div>
+    <div class="col-md-3 col-xs-5">
+        <a class="btn btn-primary pull-right" href="{{ lans.0.get_absolute_url }}">{% trans "Go to LAN page" %}</a>
+    </div>
+</div>
+{% else %}
+<div class="row">
+    <div class="col-md-9">
+        <table class="table table-bordered table-hover click-table">
+            <tbody>
+                {% for lan in lans %}
+                <tr onclick="document.location='{{ lan.get_absolute_url }}';">
+                    <td class="col-md-6 underline">{{ lan }}</td>
+                    <td class="col-md-3">{{ lan.start_date|date }} – {{ lan.end_date|date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+
+<div class="row">
+    <div class="col-md-9">
         <h2>{% trans "News" %}</h3>
         {% for article in articles.object_list %}
-        <div class="article">
-            <h3><a href="{{ article.get_absolute_url }}">{{ article.get_translation.translated_title }}</a></h3>
-            <div class="article-tags">
-                <span class="label label-default info">{{ article.pub_date|date:"d/m/Y" }} {{article.pub_date|time:"H:i"}}</span>
-                {% if lans.count > 1 %}
-                {% for lan in article.relevant_to.all %}
-                <span class="label label-default info">{{ lan }}</span>
-                {% endfor %}
-                {% endif %}
-                {% if article.pinned %}
-                <span class="label label-default info">{% trans "Pinned" %}</span>
-                {% endif %}
-            </div>
-            <div class="article-content">
-                {{ article.get_translation.translated_body|striptags|markdown|truncatewords:150 }}
-            </div>
-        </div>
+        {% include "news/article_card.html" %}
+        {% empty %}
+        <div class="alert alert-info">{% trans "No news." %}</div>
         {% endfor %}
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-6">
-        {% include "news/pagination.html" %}
+        {% include "news/pagination.html" with news_area='news' %}
     </div>
     <div class="col-md-3">
-        <a class="btn btn-primary pull-right" style="margin-top: 20px; margin-bottom: 20px;" href="{% url 'archive' %}">
+        <a class="btn btn-primary pull-right" style="margin-top: 20px; margin-bottom: 20px;" href="{% url 'archive_main' %}">
             <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
-            {% trans "Archive" %}
+            {% trans "News archive" %}
         </a>
     </div>
 </div>
