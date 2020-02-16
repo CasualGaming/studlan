@@ -22,7 +22,7 @@
             </li>
             <li>
                 <a href="{% url 'inbox' %}">
-	                <span class="glyphicon glyphicon-envelope"></span>
+	                <span class="glyphicon glyphicon-inbox"></span>
 	                {% trans "Inbox" %}
 	                {% if unread_count %}
 	                	<span class="badge">{{unread_count}}</span>
@@ -35,6 +35,9 @@
             {% endif %}
             {% if perms.lan.register_new_user %}
             <li><a href="{% url 'auth_direct_register' %}"><span class="glyphicon glyphicon-list"></span> {% trans "Manual registration" %}</a></li>
+            {% endif %}
+            {% if perms.sendmail.send_mail %}
+            <li><a href="{% url 'sendmail_send' %}"><span class="glyphicon glyphicon-envelope"></span> {% trans "Send mail" %}</a></li>
             {% endif %}
             {% if user.is_staff %}
             <li><a href="/admin"><span class="glyphicon glyphicon-cog"></span> {% trans "Admin panel" %}</a>
@@ -50,7 +53,7 @@
     </li>
             <li class="hidden-md hidden-lg hidden-sm"><a href="{% url 'my_profile' %}"><span class="glyphicon glyphicon-pencil"></span> {% trans "Profile" %}</a></li>
             <li class="hidden-md hidden-lg hidden-sm">
-                <a href="{% url 'inbox' %}"><span class="glyphicon glyphicon-envelope"></span>
+                <a href="{% url 'inbox' %}"><span class="glyphicon glyphicon-inbox"></span>
                     {% trans "Inbox" %}
                     {% if unread_count %}
                         <span class="badge">{{unread_count}}</span>
@@ -63,6 +66,9 @@
             {% endif %}
             {% if perms.lan.register_new_user %}
             <li class="hidden-md hidden-lg hidden-sm"><a href="{% url 'auth_direct_register' %}"><span class="glyphicon glyphicon-list"></span> {% trans "Manual registration" %}</a></li>
+            {% endif %}
+            {% if perms.sendmail.send_mail %}
+            <li class="hidden-md hidden-lg hidden-sm"><a href="{% url 'sendmail_send' %}"><span class="glyphicon glyphicon-envelope"></span> {% trans "Send mail" %}</a></li>
             {% endif %}
             {% if user.is_staff %}
             <li class="hidden-md hidden-lg hidden-sm"><a href="/admin"><span class="glyphicon glyphicon-cog"></span> {% trans "Admin panel" %}</a></li>

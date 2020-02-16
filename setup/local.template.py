@@ -48,3 +48,6 @@ GOOGLE_CAL_SRC = ''
 CHALLONGE_INTEGRATION_ENABLED = False
 CHALLONGE_API_USERNAME = ''
 CHALLONGE_API_KEY = ''
+
+# Show studlan version in footer
+SHOW_VERSION = False

@@ -534,3 +534,13 @@ div#btn-profile {
     font-weight: bold;
     font-size: 150%;
 }
+
+.send-message-form input[type="text"],
+.send-message-form textarea,
+.send-message-form select {
+    width: 100%;
+}
+
+.send-message-form textarea {
+    resize: vertical;
+}

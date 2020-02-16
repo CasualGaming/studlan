@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-08 11:49+0200\n"
+"POT-Creation-Date: 2020-02-16 06:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -861,6 +861,83 @@ msgstr "%(seating)s, sete %(seat)d"
 msgid "(Available)"
 msgstr "(Ledig)"
 
+msgid "Send-Mail"
+msgstr "Send-Mail"
+
+msgid "Select zero, one or multiple by control-clicking."
+msgstr "Velg null, én eller flere ved å kontroll-klikke."
+
+msgid "All users"
+msgstr "Alle brukere"
+
+msgid "LAN payers"
+msgstr "LAN-betalere"
+
+msgid "Ticket owners"
+msgstr "Billett-eiere"
+
+msgid "Teams"
+msgstr "Lag"
+
+msgid "Individual users"
+msgstr "Individuelle brukere"
+
+msgid "Specify usernames separated by comma. Case sensitive."
+msgstr "Spesifiser brukernavn separert av komma. Versalsensitiv."
+
+msgid "Yourself"
+msgstr "Deg selv"
+
+msgid "Subject"
+msgstr "Emne"
+
+msgid "Content"
+msgstr "Innhold"
+
+msgid "Markdown formatting is supported."
+msgstr "Markdown-formattering er støttet."
+
+msgid "At least one recipient is required."
+msgstr "Minst én mottaker er påkrevd."
+
+#, python-brace-format
+msgid "Users not found: {users}"
+msgstr "Brukere ble ikke funnet: {users}"
+
+msgid "time sent"
+msgstr "tid sendt"
+
+msgid "subject"
+msgstr "emne"
+
+msgid "recipient everyone"
+msgstr "mottaker alle"
+
+msgid "recipient LANs"
+msgstr "mottaker-LAN"
+
+msgid "recipient tickets"
+msgstr "mottakerbilletter"
+
+msgid "recipient teams"
+msgstr "mottakerlag"
+
+msgid "recipient competitions"
+msgstr "mottakerkonkurranser"
+
+msgid "recipient users"
+msgstr "mottakerbrukere"
+
+msgid "mail"
+msgstr "e-post"
+
+msgid "mails"
+msgstr "e-poster"
+
+#, python-brace-format
+msgid "Successfully sent the message to {success} of {all} users."
+msgstr "Sendte meldingen til {success} av {all} brukere."
+
 msgid "Sponsor"
 msgstr "Sponsor"
 
@@ -1519,12 +1596,12 @@ msgid "There is no current or upcoming LAN."
 msgstr "Det er ingen nåværende eller kommende LAN."
 
 #, python-format
-msgid "<p>Sent automatically from <a href=\"%(host)s\">%(site_name)s</a>.</p>"
-msgstr "<p>Sendt automatisk fra <a href=\"%(host)s\">%(site_name)s</a>.</p>"
+msgid "<p>Sent from <a href=\"%(host)s\">%(site_name)s</a>.</p>"
+msgstr "<p>Sendt fra <a href=\"%(host)s\">%(site_name)s</a>.</p>"
 
 #, python-format
-msgid "Sent automatically from %(site_name)s (%(host)s)."
-msgstr "Sent automatisk fra %(site_name)s (%(host)s)."
+msgid "Sent from %(site_name)s (%(host)s)."
+msgstr "Sent fra %(site_name)s (%(host)s)."
 
 msgid "Support"
 msgstr "Brukerstøtte"
@@ -1668,9 +1745,6 @@ msgstr "Ingen vinnere ennå."
 
 msgid "Esports"
 msgstr "E-sport"
-
-msgid "Teams"
-msgstr "Lag"
 
 msgid "Sponsors"
 msgstr "Sponsorer"
@@ -1841,6 +1915,33 @@ msgstr "Utilgjengelig sete"
 
 msgid "There are no active seatings."
 msgstr "Det finnes ingen aktive setekart."
+
+msgid "Send Mail"
+msgstr "Send post"
+
+msgctxt "action"
+msgid "Close"
+msgstr "Lukk"
+
+msgid "Recipients"
+msgstr "Mottakere"
+
+msgid "Message"
+msgstr "Melding"
+
+msgctxt "verb"
+msgid "Preview"
+msgstr "Forhåndsvis"
+
+msgid "Send"
+msgstr "Send"
+
+msgctxt "noun"
+msgid "Preview"
+msgstr "Forhåndsvisning"
+
+msgid "Total number of receivers:"
+msgstr "Totalt antall mottakere:"
 
 msgid "No current sponsors."
 msgstr "Ingen nåværende sponsorer."
@@ -2037,16 +2138,11 @@ msgstr "Registrer ankonster"
 msgid "Manual registration"
 msgstr "Manuell registrering"
 
+msgid "Send mail"
+msgstr "Send e-post"
+
 msgid "Admin panel"
 msgstr "Adminpanel"
 
 msgid "Log out"
 msgstr "Logg ut"
-
-#~ msgid ""
-#~ "Your address and postal code is required in order to sign up for a LAN. "
-#~ "Go to your <a href=\"%(update_profile_url)s\">profile</a> to add the "
-#~ "information."
-#~ msgstr ""
-#~ "Adressen og postnummeret ditt er nødvendig for å melde seg på LAN. Gå til "
-#~ "<a href=\"%(update_profile_url)s\">profilen din</a> for å legge det til."

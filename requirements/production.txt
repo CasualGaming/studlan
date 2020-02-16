@@ -7,18 +7,20 @@
 backports.functools-lru-cache==1.6.1  # via soupsieve
 beautifulsoup4==4.8.2
 certifi==2019.11.28       # via requests
-cffi==1.13.2              # via cryptography
+cffi==1.14.0              # via cryptography
 chardet==3.0.4            # via requests
 cryptography==2.8         # via pyopenssl, requests
+django-mailer==2.0
 django-mailgun==0.9.1
 django-markdown-deux==1.0.5
 django-postman==3.6.2
 django-translatable==0.1.1
-django==1.11.27
+django==1.11.28
 enum34==1.1.6             # via cryptography
 idna==2.8                 # via requests
 ipaddress==1.0.23         # via cryptography
 iso8601==0.1.12           # via pychal
+lockfile==0.12.2          # via django-mailer
 markdown2==2.3.8
 olefile==0.46
 pillow==6.2.2             # via reportlab
@@ -29,7 +31,7 @@ pyopenssl==19.1.0         # via requests
 pytz==2019.3              # via django, pychal, tzlocal
 reportlab==3.5.34
 requests[security]==2.22.0
-six==1.14.0               # via cryptography, django-mailgun, pyopenssl
+six==1.14.0               # via cryptography, django-mailer, django-mailgun, pyopenssl
 soupsieve==1.9.5          # via beautifulsoup4
 stripe==2.42.0
 tzlocal==2.0.0            # via pychal
