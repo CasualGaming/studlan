@@ -90,20 +90,19 @@ def sendmail_send(request):
                 mail_connection = django_mail.get_connection()
                 mail_connection.open()
 
-                for x in range(0, 500):
-                    for user in all_recipients:
-                        if not user.email:
-                            continue
+                for user in all_recipients:
+                    if not user.email:
+                        continue
 
-                        email_message = django_mail.EmailMultiAlternatives(
-                            subject=subject,
-                            body=txt_message,
-                            from_email=settings.STUDLAN_FROM_MAIL,
-                            to=[user.email],
-                            connection=mail_connection,
-                        )
-                        email_message.attach_alternative(html_message, 'text/html')
-                        email_message.send(fail_silently=True)
+                    email_message = django_mail.EmailMultiAlternatives(
+                        subject=subject,
+                        body=txt_message,
+                        from_email=settings.STUDLAN_FROM_MAIL,
+                        to=[user.email],
+                        connection=mail_connection,
+                    )
+                    email_message.attach_alternative(html_message, 'text/html')
+                    email_message.send(fail_silently=True)
 
                 mail_connection.close()
 
