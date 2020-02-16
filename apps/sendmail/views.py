@@ -3,13 +3,11 @@
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
-from django.core.mail import send_mail
+from django.core import mail as django_mail
 from django.db.models import Q
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
-
-#import mailer
 
 from apps.misc.forms import InlineSpanErrorList
 from apps.userprofile.models import User
@@ -61,24 +59,24 @@ def sendmail_send(request):
             all_recipient_count = all_recipients.count()
 
             if 'send' in form.data:
-                mail = Mail()
-                mail.subject = subject
-                mail.content = content
+                message = Mail()
+                message.subject = subject
+                message.content = content
                 if everyone:
                     # Ignore other recipients if "everyone" is chosen
-                    mail.recipient_everyone = everyone
+                    message.recipient_everyone = everyone
                 else:
                     if lan_attendees:
-                        mail.recipient_lan_attendees = lan_attendees
+                        message.recipient_lan_attendees = lan_attendees
                     if lan_payers:
-                        mail.recipient_lan_payers = lan_payers
+                        message.recipient_lan_payers = lan_payers
                     if tickets:
-                        mail.recipient_tickets = tickets
+                        message.recipient_tickets = tickets
                     if teams:
-                        mail.recipient_teams = teams
+                        message.recipient_teams = teams
                     if competitions:
-                        mail.recipient_competitions = competitions
-                mail.save()
+                        message.recipient_competitions = competitions
+                message.save()
 
                 # Prepare mail
                 context = {
@@ -88,24 +86,30 @@ def sendmail_send(request):
                 txt_message = render_to_string('sendmail/email/mail.txt', context, request).strip()
                 html_message = render_to_string('sendmail/email/mail.html', context, request).strip()
 
-                # Send to all users
-                successful_recipient_count = 0
-                for user in all_recipients:
-                    if not user.email:
-                        continue
-                    successful_recipient_count += 1
-                    # TODO use django-mailer
-                    send_mail(
-                        subject=subject,
-                        from_email=settings.STUDLAN_FROM_MAIL,
-                        recipient_list=[user.email],
-                        message=txt_message,
-                        html_message=html_message,
-                    )
+                # Send all emails using the same connection
+                mail_connection = django_mail.get_connection()
+                mail_connection.open()
 
-                # Show new form
+                for x in range(0, 500):
+                    for user in all_recipients:
+                        if not user.email:
+                            continue
+
+                        email_message = django_mail.EmailMultiAlternatives(
+                            subject=subject,
+                            body=txt_message,
+                            from_email=settings.STUDLAN_FROM_MAIL,
+                            to=[user.email],
+                            connection=mail_connection,
+                        )
+                        email_message.attach_alternative(html_message, 'text/html')
+                        email_message.send(fail_silently=True)
+
+                mail_connection.close()
+
+                # Show empty form
                 form = SendMessageForm()
-                messages.success(request, _(u'Successfully sent the message to {success} of {all} users.').format(success=successful_recipient_count, all=all_recipient_count))
+                messages.success(request, _(u'Successfully attempted to send the message to {user_count} users.').format(user_count=all_recipient_count))
             elif 'preview' in form.data:
                 context['mail_subject'] = subject
                 context['mail_content'] = content

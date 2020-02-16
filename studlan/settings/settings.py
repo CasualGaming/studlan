@@ -138,6 +138,13 @@ MARKDOWN_DEUX_STYLES = {
     },
 }
 
+# Email defaults
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Mailgun
+EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
+MAILGUN_ACCESS_KEY = ''
+MAILGUN_SERVER_NAME = ''
+
 # Postman
 # Used for internal invitation messages
 POSTMAN_DISALLOW_ANONYMOUS = True

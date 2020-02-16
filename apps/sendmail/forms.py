@@ -61,7 +61,7 @@ class SendMessageForm(forms.Form):
         label=_(u'Content'),
         required=True,
         strip=True,
-        help_text=_(u'Markdown formatting is supported.'),
+        help_text=_(u'Markdown formatting is supported. The message will be sent as both HTML and plaintext, so make sure to add important links as plaintext.'),
         widget=forms.Textarea)
 
     def clean(self):
