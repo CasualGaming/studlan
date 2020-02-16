@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-16 16:32+0100\n"
+"POT-Creation-Date: 2020-02-16 16:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1246,9 +1246,6 @@ msgstr "Ankommet"
 #, python-format
 msgid "%(seating_title)s, seat %(seat_placement)s"
 msgstr "%(seating_title)s, sete %(seat_placement)s"
-
-msgid "Toggle"
-msgstr "Vend"
 
 msgid "Export to Excel sheet"
 msgstr "Eksporter til Excel-ark"
