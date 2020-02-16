@@ -1,0 +1,15 @@
+{% extends "competition/competition_base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-9">
+        <h1 class="page-header">{% trans "Schedule" %}</h1>
+    </div>
+</div>
+
+{% with object_view_name="schedule_details" %}
+{% include "common/lan_list.html" %}
+{% endwith %}
+{% endblock content %}
