@@ -30,6 +30,7 @@ class Mail(models.Model):
     A mail sent using the Send-Mail feature.
     """
 
+    form_id = models.UUIDField(_(u'form id'), null=True, blank=True, help_text=_(u'To prevent sending the same mail twice.'))
     sent_time = models.DateTimeField(_(u'time sent'), default=datetime.now)
     subject = models.CharField(_(u'subject'), max_length=80)
     content = models.TextField(_(u'content'))

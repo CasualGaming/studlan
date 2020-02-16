@@ -35,6 +35,9 @@
             <h2>{% trans "Message" %}</h2>
             {% endif %}
 
+            {% if field.field.widget.input_type == 'hidden' %}
+            {{ field }}
+            {% else %}
             <div class="form-group row {% if field.errors %} has-error {% endif %} ">
                 <label for="{{ field.id_for_label }}" class="col-md-2 control-label">{{ field.label }}</label>
                 <div class="col-md-10">
@@ -51,6 +54,7 @@
                     {% endif %}
                 </div>
             </div>
+            {% endif %}
             {% endfor %}
 
             {% if mail_recipient_count > 50 %}

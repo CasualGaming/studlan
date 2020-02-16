@@ -19,119 +19,134 @@ from .models import Mail
 @login_required
 @permission_required('sendmail.send_mail')
 def sendmail_send(request):
-    context = {}
+    template_context = {}
 
     if request.method == 'POST':
-        form = SendMessageForm(request.POST, error_class=InlineSpanErrorList)
-        if form.is_valid():
-            fields = form.cleaned_data
-            subject = fields['subject']
-            content = fields['content']
-            everyone = fields['everyone']
-            yourself = fields['yourself']
-            lan_attendees = fields['lan_attendees']
-            lan_attendee_users = User.objects.filter(attendee__lan__in=lan_attendees)
-            lan_payers = fields['lan_payers']
-            lan_payer_users = User.objects.filter(
-                (Q(attendee__lan__in=lan_payers) & Q(attendee__has_paid=True))
-                | Q(ticket__ticket_type__lan__in=lan_payers),
-            )
-            tickets = fields['tickets']
-            ticket_users = User.objects.filter(ticket__ticket_type__in=tickets)
-            teams = fields['teams']
-            team_users = User.objects.filter(Q(newteamleader__in=teams) | Q(new_team_members__in=teams))
-            competitions = fields['competitions']
-            competition_users = User.objects.filter(
-                Q(newteamleader__participant__competition__in=competitions)
-                | Q(new_team_members__participant__competition__in=competitions)
-                | Q(participant__competition__in=competitions),
-            )
-            specific_users = fields['users_parsed']
-
-            # Aggregate users
-            if everyone:
-                all_recipients = User.objects.all()
-            else:
-                # competition_users breaks on "|" but not "union" for some reason
-                all_recipients = lan_attendee_users | lan_payer_users | ticket_users | team_users | specific_users.union(competition_users)
-                if yourself:
-                    all_recipients = all_recipients | User.objects.filter(id=request.user.id)
-            all_recipient_count = all_recipients.count()
-
-            if 'send' in form.data:
-                message = Mail()
-                message.subject = subject
-                message.content = content
-                if everyone:
-                    # Ignore other recipients if "everyone" is chosen
-                    message.recipient_everyone = everyone
-                else:
-                    if lan_attendees:
-                        message.recipient_lan_attendees = lan_attendees
-                    if lan_payers:
-                        message.recipient_lan_payers = lan_payers
-                    if tickets:
-                        message.recipient_tickets = tickets
-                    if teams:
-                        message.recipient_teams = teams
-                    if competitions:
-                        message.recipient_competitions = competitions
-                message.recipients_total = all_recipient_count
-                message.save()
-
-                # Prepare mail
-                context = {
-                    'subject': subject,
-                    'content': content,
-                }
-                txt_message = render_to_string('sendmail/email/mail.txt', context, request).strip()
-                html_message = render_to_string('sendmail/email/mail.html', context, request).strip()
-
-                # Send all emails using the same connection
-                mail_connection = django_mail.get_connection()
-                mail_connection.open()
-
-                counter = 0
-                for user in all_recipients:
-                    counter += 1
-                    if not user.email:
-                        message.failed_mails += 1
-                        continue
-
-                    email_message = django_mail.EmailMultiAlternatives(
-                        subject=subject,
-                        body=txt_message,
-                        from_email=settings.STUDLAN_FROM_MAIL,
-                        to=[user.email],
-                        connection=mail_connection,
-                    )
-                    email_message.attach_alternative(html_message, 'text/html')
-                    try:
-                        email_message.send()
-                        message.successful_mails += 1
-                    except Exception:
-                        message.failed_mails += 1
-                        continue
-
-                    # Save the the message stats regularly so that the sending process can be kept track of
-                    if counter % 10 == 0:
-                        message.save()
-
-                mail_connection.close()
-
-                message.done_sending = True
-                message.save()
-
-                # Show empty form
-                form = SendMessageForm()
-                messages.success(request, _(u'Successfully attempted to send the message to {user_count} users.').format(user_count=all_recipient_count))
-            elif 'preview' in form.data:
-                context['mail_subject'] = subject
-                context['mail_content'] = content
-                context['mail_recipient_count'] = all_recipient_count
-
+        old_form = SendMessageForm(request.POST, error_class=InlineSpanErrorList)
+        form = handle_submitted_form(request, old_form, template_context)
     else:
         form = SendMessageForm()
 
-    context['form'] = form
-    return render(request, 'sendmail/send.html', context)
+    template_context['form'] = form
+    return render(request, 'sendmail/send.html', template_context)
+
+
+def handle_submitted_form(request, old_form, template_context):
+    if not old_form.is_valid():
+        return old_form
+
+    fields = old_form.cleaned_data
+
+    form_id = fields['form_id']
+    if Mail.objects.filter(form_id=form_id).exists():
+        # Reject duplicate message
+        messages.error(request, _(u'The mail has already been sent. If this is a new message, please reload the page and try again.'))
+        return old_form
+
+    subject = fields['subject']
+    content = fields['content']
+    everyone = fields['everyone']
+    yourself = fields['yourself']
+    lan_attendees = fields['lan_attendees']
+    lan_attendee_users = User.objects.filter(attendee__lan__in=lan_attendees)
+    lan_payers = fields['lan_payers']
+    lan_payer_users = User.objects.filter(
+        (Q(attendee__lan__in=lan_payers) & Q(attendee__has_paid=True))
+        | Q(ticket__ticket_type__lan__in=lan_payers),
+    )
+    tickets = fields['tickets']
+    ticket_users = User.objects.filter(ticket__ticket_type__in=tickets)
+    teams = fields['teams']
+    team_users = User.objects.filter(Q(newteamleader__in=teams) | Q(new_team_members__in=teams))
+    competitions = fields['competitions']
+    competition_users = User.objects.filter(
+        Q(newteamleader__participant__competition__in=competitions)
+        | Q(new_team_members__participant__competition__in=competitions)
+        | Q(participant__competition__in=competitions),
+    )
+    specific_users = fields['users_parsed']
+
+    # Aggregate users
+    if everyone:
+        all_recipients = User.objects.all()
+    else:
+        # competition_users breaks on "|" but not "union" for some reason
+        all_recipients = lan_attendee_users | lan_payer_users | ticket_users | team_users | specific_users.union(competition_users)
+        if yourself:
+            all_recipients = all_recipients | User.objects.filter(id=request.user.id)
+    all_recipient_count = all_recipients.count()
+
+    if 'send' in old_form.data:
+        message = Mail()
+        message.form_id = form_id
+        message.subject = subject
+        message.content = content
+        if everyone:
+            # Ignore other recipients if "everyone" is chosen
+            message.recipient_everyone = everyone
+        else:
+            if lan_attendees:
+                message.recipient_lan_attendees = lan_attendees
+            if lan_payers:
+                message.recipient_lan_payers = lan_payers
+            if tickets:
+                message.recipient_tickets = tickets
+            if teams:
+                message.recipient_teams = teams
+            if competitions:
+                message.recipient_competitions = competitions
+        message.recipients_total = all_recipient_count
+        message.save()
+
+        # Prepare mail
+        context = {
+            'subject': subject,
+            'content': content,
+        }
+        txt_message = render_to_string('sendmail/email/mail.txt', context, request).strip()
+        html_message = render_to_string('sendmail/email/mail.html', context, request).strip()
+
+        # Send all emails using the same connection
+        mail_connection = django_mail.get_connection()
+        mail_connection.open()
+
+        counter = 0
+        for user in all_recipients:
+            counter += 1
+            if not user.email:
+                message.failed_mails += 1
+                continue
+
+            email_message = django_mail.EmailMultiAlternatives(
+                subject=subject,
+                body=txt_message,
+                from_email=settings.STUDLAN_FROM_MAIL,
+                to=[user.email],
+                connection=mail_connection,
+            )
+            email_message.attach_alternative(html_message, 'text/html')
+            try:
+                email_message.send()
+                message.successful_mails += 1
+            except Exception:
+                message.failed_mails += 1
+                continue
+
+            # Save the the message stats regularly so that the sending process can be kept track of
+            if counter % 10 == 0:
+                message.save()
+
+        mail_connection.close()
+
+        message.done_sending = True
+        message.save()
+
+        # Show new form
+        messages.success(request, _(u'Successfully attempted to send the message to {user_count} users.').format(user_count=all_recipient_count))
+        return SendMessageForm()
+    else:
+        # Preview
+        context['mail_subject'] = subject
+        context['mail_content'] = content
+        context['mail_recipient_count'] = all_recipient_count
+        return old_form

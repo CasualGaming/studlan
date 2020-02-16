@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-16 11:12+0100\n"
+"POT-Creation-Date: 2020-02-16 11:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -908,6 +908,12 @@ msgstr "Minst én mottaker er påkrevd."
 msgid "Users not found: {users}"
 msgstr "Brukere ble ikke funnet: {users}"
 
+msgid "form id"
+msgstr "skjema-ID"
+
+msgid "To prevent sending the same mail twice."
+msgstr "For å forhindre sending av samme e-post flere ganger."
+
 msgid "time sent"
 msgstr "tid sendt"
 
@@ -961,6 +967,13 @@ msgstr "e-post"
 
 msgid "mails"
 msgstr "e-poster"
+
+msgid ""
+"The mail has already been sent. If this is a new message, please reload the "
+"page and try again."
+msgstr ""
+"E-posten har allerede blitt sent. Hvis dette er en ny melding, "
+"vennligst last inn siden på nytt og prøv igjen."
 
 #, python-brace-format
 msgid "Successfully attempted to send the message to {user_count} users."

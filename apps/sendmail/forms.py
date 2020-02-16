@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import uuid
+
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
@@ -13,6 +15,11 @@ class SendMessageForm(forms.Form):
     _select_multiple_help = _(u'Select zero, one or multiple by control-clicking.')
     _select_multiple_size = '5'
 
+    form_id = forms.UUIDField(
+        required=True,
+        initial=uuid.uuid4().hex,
+        widget=forms.HiddenInput(),
+    )
     everyone = forms.BooleanField(
         label=_(u'All users'),
         required=False)

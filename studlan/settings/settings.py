@@ -227,6 +227,6 @@ for settings_module in ['local']:  # local last
 if EMAIL_BACKEND == 'django_mailgun.MailgunBackend':
     EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
 if 'MAILGUN_ACCESS_KEY' in globals() and not ANYMAIL['MAILGUN_API_KEY']:
-    ANYMAIL['MAILGUN_API_KEY'] = MAILGUN_ACCESS_KEY
+    ANYMAIL['MAILGUN_API_KEY'] = MAILGUN_ACCESS_KEY  # noqa: F821 (undefined name)
 if 'MAILGUN_SERVER_NAME' in globals() and not ANYMAIL['MAILGUN_SENDER_DOMAIN']:
-    ANYMAIL['MAILGUN_SENDER_DOMAIN'] = MAILGUN_SERVER_NAME
+    ANYMAIL['MAILGUN_SENDER_DOMAIN'] = MAILGUN_SERVER_NAME  # noqa: F821 (undefined name)
