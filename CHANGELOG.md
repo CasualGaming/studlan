@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Changed
+- Replaced LAN banner video with LAN banner media which supports images as well.
+  It is also shown on the front page together with the usual brief LAN info.
 
 ### Deprecated
 
@@ -17,8 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed enter-to-submit for ticket purchase form.
 - Fixed ticket purchase form not getting disabled when submitted with valid data.
+- Fixed Markdown images in the LAN descriptions and article contents not being contained.
+- Fixed news archive pagination.
 
 ### Security
+- Fixed alias CSRF vulnerability.
+- Fixed logout CSRF vulnerability.
 
 
 ## [v1.6.1] - 2019-10-17

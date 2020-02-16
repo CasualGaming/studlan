@@ -10,11 +10,13 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.http import require_POST, require_safe
 
 from apps.lan.models import Attendee, LAN, Ticket, TicketType
 from apps.seating.models import Seat
 
 
+@require_safe
 @permission_required('lan.register_arrivals')
 def home(request):
     lans = LAN.objects.filter(end_date__gte=datetime.now())
@@ -26,6 +28,7 @@ def home(request):
     return render(request, 'arrivals/home.html', {'lans': lans})
 
 
+@require_safe
 @ensure_csrf_cookie
 @permission_required('lan.register_arrivals')
 def arrivals(request, lan_id):
@@ -63,6 +66,7 @@ def arrivals(request, lan_id):
                    'tickets': tickets, 'ticket_users': ticket_users, 'user_seats': user_seats})
 
 
+@require_POST
 @permission_required('lan.register_arrivals')
 def toggle(request, lan_id):
     if request.method == 'POST':
