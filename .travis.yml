@@ -4,13 +4,10 @@
 # - DOCKER_REPO
 # - DOCKER_USER (secure)
 # - DOCKER_PASSWORD (secure)
-# - SONARCLOUD_TOKEN (secure)
-# - SONARCLOUD_ORG
 # - SSH_HOST
 # - SSH_USER
 # - (automatic encryption keys) (secure)
 
-# virtualenv is implicit for python
 language: python
 python:
   - "2.7"
@@ -42,18 +39,6 @@ jobs:
       name: Lint
       install: pip install --upgrade -r requirements/test.txt
       script: flake8
-      # This does not fail the build if the SonarCloud quality gate fails,
-      # but SonarCloud has a GitHub PR status check which can be made required.
-    - stage: test
-      name: SonarCloud
-      language: java
-      addons:
-        sonarcloud:
-          organization: $SONARCLOUD_ORG
-          token: $SONARCLOUD_TOKEN
-      git:
-        depth: false
-      script: sonar-scanner
     - stage: test
       name: Validate Docker image
       install: true # NOP
