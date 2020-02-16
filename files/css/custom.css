@@ -495,12 +495,14 @@ div#btn-profile {
     margin-bottom: 10px;
 }
 
-.article-content {
+.article-content,
+.lan-desctiption {
     line-height: 1.5em;
 }
 
-.lan-desctiption {
-    line-height: 1.5em;
+.article-content img,
+.lan-desctiption img {
+    max-width: 100%;
 }
 
 .inline-button-form {
