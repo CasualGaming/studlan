@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed Markdown images in the LAN descriptions and article contents not being contained.
+- Fixed news archive pagination.
 
 ### Security
 

@@ -1,7 +1,7 @@
 <ul class="pagination">
     {% if articles.has_previous %}
     <li class="active">
-        <a href="{% url 'news' articles.previous_page_number %}">&laquo;</a>
+        <a href="{% url news_area articles.previous_page_number %}">&laquo;</a>
     {% else %}
     <li class="disabled">
         <a href="#">&laquo;</a>
@@ -10,15 +10,15 @@
 
     {% for page in articles.paginator.page_range %}
         {% if articles.number == page %}
-            <li class="active"><a href="{% url 'news' page %}">{{ page }}</a></li>
+            <li class="active"><a href="{% url news_area page %}">{{ page }}</a></li>
         {% else %}
-            <li><a href="{% url 'news' page %}">{{ page }}</a></li>
+            <li><a href="{% url news_area page %}">{{ page }}</a></li>
         {% endif %}
     {% endfor %}
 
     {% if articles.has_next %}
         <li class="active">
-            <a href="{% url 'news' articles.next_page_number %}">&raquo;</a>
+            <a href="{% url news_area articles.next_page_number %}">&raquo;</a>
     {% else %}
         <li class="disabled">
             <a href="#">&raquo;</a>

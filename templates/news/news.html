@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% load i18n %}
-{% load markdown_deux_tags %} 
+{% load markdown_deux_tags %}
 
 {% block title %} 
 {% trans "Home" %}
@@ -68,35 +68,21 @@
     <div class="col-md-9">
         <h2>{% trans "News" %}</h3>
         {% for article in articles.object_list %}
-        <div class="article">
-            <h3><a href="{{ article.get_absolute_url }}">{{ article.get_translation.translated_title }}</a></h3>
-            <div class="article-tags">
-                <span class="label label-default info">{{ article.pub_date|date:"d/m/Y" }} {{article.pub_date|time:"H:i"}}</span>
-                {% if lans.count > 1 %}
-                {% for lan in article.relevant_to.all %}
-                <span class="label label-default info">{{ lan }}</span>
-                {% endfor %}
-                {% endif %}
-                {% if article.pinned %}
-                <span class="label label-default info">{% trans "Pinned" %}</span>
-                {% endif %}
-            </div>
-            <div class="article-content">
-                {{ article.get_translation.translated_body|striptags|markdown|truncatewords:150 }}
-            </div>
-        </div>
+        {% include "news/article_card.html" %}
+        {% empty %}
+        <div class="alert alert-info">{% trans "No news." %}</div>
         {% endfor %}
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-6">
-        {% include "news/pagination.html" %}
+        {% include "news/pagination.html" with news_area='news' %}
     </div>
     <div class="col-md-3">
-        <a class="btn btn-primary pull-right" style="margin-top: 20px; margin-bottom: 20px;" href="{% url 'archive' %}">
+        <a class="btn btn-primary pull-right" style="margin-top: 20px; margin-bottom: 20px;" href="{% url 'archive_main' %}">
             <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
-            {% trans "Archive" %}
+            {% trans "News archive" %}
         </a>
     </div>
 </div>
