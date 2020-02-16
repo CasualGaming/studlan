@@ -25,15 +25,7 @@
 </div>
 {% endif %}
 
-{% if lan.video_link %}
-<div class="row">
-    <div class="col-md-9">
-        <div class="embed-responsive embed-responsive-16by9 lan-video">
-            <iframe class="embed-responsive-item" title="Video" src="{{ lan.video_link|safe }}" allowfullscreen></iframe>
-        </div>
-    </div>
-</div>
-{% endif %}
+{% include "lan/media.html" with lan=lan %}
 
 <div class="row">
     <div class="col-md-4">
@@ -168,7 +160,7 @@
                     <button type="button" class="btn btn-default disabled">
                         {% trans "Please log in" %}
                     </button>
-                    {% elif ticket %}
+                    {% elif status == 'paid' %}
                     <button type="button" class="btn btn-default disabled">
                         {% trans "You already have a ticket" %}
                     </button>

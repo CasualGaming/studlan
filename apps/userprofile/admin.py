@@ -58,7 +58,7 @@ class UserProfileAdmin(UserAdmin):
                     session.delete()
                     count += 1
 
-        self.message_user(request, _(u'Deleted {count} user sessions.'.format(count=count)), level=messages.INFO)
+        self.message_user(request, _(u'Deleted {count} user sessions.').format(count=count), level=messages.INFO)
 
     activate_users.short_description = _(u'Activate')
     deactivate_users.short_description = _(u'Deactivate')
