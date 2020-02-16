@@ -1693,8 +1693,8 @@ msgstr "Gå til LAN-side"
 msgid "News archive"
 msgstr "Nyhetsarkiv"
 
-msgid "Ticket Purchase for"
-msgstr "Billettkjøp for"
+msgid "Ticket Purchase"
+msgstr "Billettkjøp"
 
 msgid "Ticket type"
 msgstr "Billettype"
