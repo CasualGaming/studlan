@@ -91,18 +91,24 @@
         </div>
         {% elif status == 'attending' %}
         <div class="center-on-collapse">
-            <a class="btn btn-danger" href="{% url 'lan_unattend' lan.id %}">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                {% trans "Unattend" %}
-            </a>
+            <form class="form-inline" action="{% url 'lan_unattend' lan.id %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-danger">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    {% trans "Unattend" %}
+                </button>
+            </form>
         </div>
         {% elif status == 'open' %}
         {% if user.profile.has_address %}
         <div class="center-on-collapse">
-            <a class="btn btn-primary" href="{% url 'lan_attend' lan.id %}">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                {% trans "Attend" %}
-            </a>
+            <form class="form-inline" action="{% url 'lan_attend' lan.id %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-primary">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    {% trans "Attend" %}
+                </button>
+            </form>
         </div>
         {% else %}
         <div class="alert alert-warning">
