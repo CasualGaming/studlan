@@ -60,7 +60,7 @@ msgid "Arrivals"
 msgstr "Ankomster"
 
 msgid "LAN not found."
-msgstr ""
+msgstr "LAN-et finnes ikke."
 
 msgid "User not found."
 msgstr "Brukeren ble ikke funnet."
@@ -1057,7 +1057,7 @@ msgid "You cannot deactivate yourself! No actions were performed."
 msgstr "Du kan ikke deaktivere deg selv! Ingen hanglinger ble gjennomført."
 
 msgid "Successfully deactivated the selected users."
-msgstr ""
+msgstr "De valgte brukerene ble deaktivert."
 
 #, python-brace-format
 msgid "Successfully invalidated {count} user sessions."
@@ -1421,7 +1421,7 @@ msgid "Minimum team size"
 msgstr "Minimum lagstørrelse"
 
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 msgid "Status"
 msgstr "Status"
