@@ -7,7 +7,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
@@ -34,11 +34,9 @@ def payment_info(request, ticket_type_id):
 @login_required()
 def payment(request, ticket_type_id):
     stripe.api_key = settings.STRIPE_PRIVATE_KEY
-
     ticket_type = get_object_or_404(TicketType, pk=ticket_type_id)
-    is_post = request.method == 'POST'
 
-    if is_post:
+    if request.method == 'POST':
         # Stripe
         error_response = JsonResponse({'error': ''})
     else:
@@ -65,15 +63,6 @@ def payment(request, ticket_type_id):
         messages.error(request, _(u'You must attend first to buy a ticket for this LAN.'))
         return error_response
 
-    if request.method == 'GET':
-        return render(
-            request,
-            'payment/checkout.html',
-            {
-                'ticket_type': ticket_type,
-                'lan': ticket_type.lan,
-            })
-
     if request.method == 'POST':
         description = u'{lan} {ticket} ticket for {user}'.format(ticket=ticket_type, lan=ticket_type.lan, user=request.user)
         json_data = json.loads(request.body)
@@ -96,8 +85,14 @@ def payment(request, ticket_type_id):
             return JsonResponse({'error': e.user_message})
 
         return generate_payment_response(request, ticket_type, intent)
-
-    return HttpResponseRedirect('/')
+    else:
+        return render(
+            request,
+            'payment/checkout.html',
+            {
+                'ticket_type': ticket_type,
+                'lan': ticket_type.lan,
+            })
 
 
 def generate_payment_response(request, ticket_type, intent):

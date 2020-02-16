@@ -15,14 +15,14 @@
 	        <h1>{% trans "Arrivals" %}</h1>
         </div>
     </div>
-    
-    {% if attendees %}
+
     <div class="row">
         <div class="col-md-9">
             <div class="attendee-counts">
-                <span>{% trans "Attending:" %} {{attendees.count}}</span>
-                <span>{% trans "Paid:" %} {{paid_count}}</span>
-                <span>{% trans "Arrived:" %} {{arrived_count}}</span>
+                <span>{% trans "Attending:" %} {{ attendee_users|length }}</span>
+                <span>{% trans "Reserved seats:" %} {{ user_seats_count }}</span>
+                <span>{% trans "Paid:" %} {{ total_paid_count }}</span>
+                <span>{% trans "Arrived:" %} {{ arrived_users|length }}</span>
             </div>
         </div>
     </div>
@@ -43,7 +43,7 @@
                     <option value="yes">{% trans "Yes" %}</option>
                     <option value="no">{% trans "No" %}</option>
                 </select>
-                </div>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -65,35 +65,55 @@
                             <th>{% trans "Full Name" %}</th>
                             <th>{% trans "Email Address" %}</th>
                             <th>{% trans "Seat" %}</th>
-                            <th>{% trans "Paid" %}</th>
+                            <th>{% trans "Ticket/Paid" %}</th>
                             <th>{% trans "Arrived" %}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for attendee in attendees %}
+                        {% for user in users %}
                         <tr>
-                            <td class="username"><a href="{% url 'public_profile' attendee.user %}" target="_blank">{{ attendee.user.username }}</a></td>
-                            <td class="name">{{ attendee.user.get_full_name }}</td>
-                            <td class="email">{{ attendee.user.email }}</td>
+                            <td class="username"><a href="{% url 'public_profile' user %}" target="_blank">{{ user.username }}</a></td>
+                            <td class="name">{{ user.get_full_name }}</td>
+                            <td class="email">{{ user.email }}</td>
                             <td>
-                                {% if attendee in user_seats%}
-                                <a href="{{ user_seats|get_seating_url:attendee }}{{ user_seats|get_seat_placement:attendee }}" target="_blank">{{ user_seats|get_seat_info:attendee }}</a>
+                                {% for seat in user_seats|get_dict_val:user %}
+                                {% if not forloop.first %}
+                                    <br />
                                 {% endif %}
+                                <span class="label label-info">
+                                    <a href="{{ seat.get_absolute_url }}" target="_blank">
+                                        {% with seating_title=seat.seating.title seat_placement=seat.placement %}
+                                        {% blocktrans trimmed %}
+                                        {{ seating_title }}, seat {{ seat_placement }}
+                                        {% endblocktrans %}
+                                        {% endwith %}
+                                    </a>
+                                </span> 
+                                {% endfor %}
                             </td>
                             <td>
-                                {% if attendee.user in ticket_users %}
-                                <span class="paid label label-info" value="True">{{ ticket_users|get_user:attendee.user }} </span>
-                                {% elif attendee.has_paid %}
-                                <span class="paid label label-success" value="True">{% trans "Toggle" %}</span>
-                                {% else %}
-                                <span class="paid label label-danger" value="False">{% trans "Toggle" %}</span>
+                                {% for ticket in user_tickets|get_dict_val:user %}
+                                {% if not forloop.first %}
+                                <br />
                                 {% endif %}
+                                <span class="paid label label-primary" value="True">{{ ticket.ticket_type }} </span>
+                                {% empty %}
+                                {% if user.id in attendee_users %}
+                                {% if user.id in paid_users %}
+                                <span class="paid toggle label label-success" value="True">{% trans "Toggle" %}</span>
+                                {% else %}
+                                <span class="paid toggle label label-danger" value="False">{% trans "Toggle" %}</span>
+                                {% endif %}
+                                {% endif %}
+                                {% endfor %}
                             </td>
                             <td>
-                                {% if attendee.arrived %}
-                                <span class="arrived label label-success" value="True">{% trans "Toggle" %}</span>
+                                {% if user.id in attendee_users %}
+                                {% if user.id in arrived_users %}
+                                <span class="arrived toggle label label-success" value="True">{% trans "Toggle" %}</span>
                                 {% else %}
-                                <span class="arrived label label-danger" value="False">{% trans "Toggle" %}</span>
+                                <span class="arrived toggle label label-danger" value="False">{% trans "Toggle" %}</span>
+                                {% endif %}
                                 {% endif %}
                             </td>
                         </tr>
@@ -108,13 +128,6 @@
         </div>
         {% endif %}
     </div>
-    {% else %}
-    <div class="row">
-        <div class="col-md-9">
-            <div class="alert alert-info">{% trans "There are no attendees for this LAN." %}</div>
-        </div>
-    </div>
-    {% endif %}
 {% endblock content %}
 
 {% block script %}

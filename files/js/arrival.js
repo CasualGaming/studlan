@@ -77,13 +77,13 @@ $(document).ready(function()
 {
      $('tr').each(function(i, row)
     {
-        $(row).find('.paid').click(function()
+        $(row).find('.paid.toggle').click(function()
         {
             var username = $(row).find('.username').text();
             var prev = $(this).attr('value');
             toggle(username, TYPE_PAID, prev, this);
         });
-        $(row).find('.arrived').click(function()
+        $(row).find('.arrived.toggle').click(function()
         {
             var username = $(row).find('.username').text();
             var prev = $(this).attr('value');

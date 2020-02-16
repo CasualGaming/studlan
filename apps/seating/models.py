@@ -96,6 +96,9 @@ class Seat(models.Model):
     def __unicode__(self):
         return u'{0} / {1} / {2}'.format(self.seating.lan, self.seating.title, self.placement)
 
+    def get_absolute_url(self):
+        return reverse('seating_details', kwargs={'lan_id': self.seating.lan.id, 'seating_id': self.seating.id, 'seat_id': self.placement})
+
     class Meta:
         verbose_name = _(u'seat')
         verbose_name_plural = _(u'seats')
