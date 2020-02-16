@@ -16,8 +16,9 @@ services:
     - ../.local/docker/log:/srv/studlan/log:rw
     # Source dirs, in case of changes
     - ../apps/:/srv/studlan/apps/:ro
-    - ../locale/:/srv/studlan/locale/:ro
     - ../studlan/:/srv/studlan/studlan/:ro
     - ../templates/:/srv/studlan/templates/:ro
+    - ../files/:/srv/studlan/files/:ro
+    - ../locale/:/srv/studlan/locale/:ro
     ports:
     - "8000:8080"
