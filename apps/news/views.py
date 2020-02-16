@@ -14,7 +14,7 @@ def main(request, page):
     if len(active_lans) > 0:
         articles = Article.objects.filter(relevant_to__in=active_lans).order_by('-pinned', '-pub_date')
     else:
-        return redirect('archive')
+        return redirect('archive_main')
 
     paginator = Paginator(articles, 10)  # Articles per page
     streams = Stream.objects.filter(active=True).order_by('-pk')[:1]
