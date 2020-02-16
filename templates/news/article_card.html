@@ -1,0 +1,10 @@
+{% load i18n %}
+{% load markdown_deux_tags %}
+
+<div class="article">
+    <h3><a href="{{ article.get_absolute_url }}">{{ article.get_translation.translated_title }}</a></h3>
+    {% include "news/article_tags.html" %}
+    <div class="article-content">
+        {{ article.get_translation.translated_body|striptags|markdown|truncatewords:100 }}
+    </div>
+</div>

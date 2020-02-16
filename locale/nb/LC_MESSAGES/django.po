@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-03 10:12+0100\n"
+"POT-Creation-Date: 2020-02-05 05:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1674,20 +1674,23 @@ msgstr "Sponsorer"
 msgid "News Archive"
 msgstr "Nyhetsarkiv"
 
+msgid "No news."
+msgstr "Ingen nyheter."
+
+msgid "Pinned"
+msgstr "Festet"
+
 msgid "Home"
 msgstr "Hjem"
 
 msgid "Go to LAN page"
 msgstr "Gå til LAN-side"
 
-msgid "Pinned"
-msgstr "Festet"
+msgid "News archive"
+msgstr "Nyhetsarkiv"
 
-msgid "Archive"
-msgstr "Arkiv"
-
-msgid "Ticket Purchase for"
-msgstr "Billettkjøp for"
+msgid "Ticket Purchase"
+msgstr "Billettkjøp"
 
 msgid "Ticket type"
 msgstr "Billettype"
