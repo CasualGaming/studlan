@@ -1,23 +1,24 @@
 # Development
+
 ## Setup
+
 ### Tools
+
 * [Git](https://git-scm.com) or [GitHub for Windows](https://windows.github.com/)
-* Python 2.7 w/ pip and friends (see section below)
+* Python 2 w/ pip and friends (see section below)
 * Docker and Docker Compose (optional)
 * Travis Tool (optional)
 
 ### Installing Python 2 Virtualenv
-Download and install Python 2.7 and Python 2 pip.
-Be careful with `python` and `pip` on Windows, as both Python 2 and 3 use the same names for the programs.
 
-```
-# Linux
-sudo pip install --upgrade pip virtualenv setuptools wheel
-# Windows
-py -2 -m pip install --upgrade pip virtualenv setuptools wheel
-```
+Download and install Python 2 and Python 2 pip.
+Be careful with `python` and `pip` since either version (2 or 3) may use the name without version and it's not consistent across OSes.
+
+- Linux: ´sudo pip install --upgrade pip virtualenv setuptools wheel´
+- Windows: ´py -2 -m pip install --upgrade pip virtualenv setuptools wheel´
 
 ### Configuring Git
+
 If using CLI (not some GUI app):
 ```
 git config --global core.autocrlf false
@@ -26,10 +27,13 @@ git config --global user.email <email-address>
 ```
 
 ### (Optional) Installing and Configuring Docker
+
 Install both Docker and Docker Compose (combined app on Windows).
-On Linux, add yourself to the `docker` group and then re-log, so that you can run Docker commands as non-root.
+On Linux, add yourself to the `docker` group and then log out and in.
+This allows you to run Docker commands as non-root (don't do this on servers).
 
 ### (Optional) Installing Travis Tool
+
 Optional, used for encrypting Travis CI secrets and files and stuff.
 ```
 sudo apt install ruby-dev rubygems
@@ -39,11 +43,12 @@ sudo gem install travis
 Alternatively, on Windows, use the GitHub for Windows app to setup everything
 
 ## Running
-### Run with Virtualenv
-This is the intended way to run the app and most scripts in `manage/`. Run `manage/setup.sh` (to setup the virtual environment, add the temporary settings file, migrate the Django DB, add an admin user, etc.). The username and password of the added admin user is "batman" and "manbat". The DB file and log files are located in `.local/venv/`. The local settings file is located at `studlan/settings/local.py`.
 
-### Tools
-Most of these use venv and therefore requires `manage/setup.sh` to be run first (once).
+This method uses Virtualenv and does not require Docker. Run `manage/setup.sh` (to setup the virtual environment, add the temporary settings file, migrate the Django DB, add an admin user, etc.). The username and password of the added admin user is "batman" and "manbat". The DB file and log files are located in `.local/venv/`. The local settings file is located at `studlan/settings/local.py`.
+
+## Tools
+
+Most of these use venv and therefore require `manage/setup.sh` to be run first (once).
 
 * Cleanup some unimportant local files (Python caches, logs, ...): `manage/clean-lightly.py`
 * Cleanup all local files (DB, config, Python caches, logs, ...): `manage/clean-all.py`
@@ -53,17 +58,21 @@ Most of these use venv and therefore requires `manage/setup.sh` to be run first 
 * Make migrations (after model changes): `manage/make-migrations.py`
 * Make translations (updates `locale/nb/django.po`): `manage/make-translations.py`
 
-### Upgrading Dependencies
+## Upgrading Dependencies
+
 * This project uses pip-tools with all-dep pinning.
 * Run `manage/update-deps.sh` to update dependencies.
 * Go through all dep updates (as shown in by the script or git diff), read the changelogs for the changes, and make sure they don't mess things up.
 
-### Run with Docker
-This way is intended just for testing Docker stuff.
+## Making Changes
+
+* If you're committing code changes, run `manage/check.sh` first to make sure the formatting is correct and that tests still pass.
+* If you're adding/changing/fixing features, add it to the changelog.
+
+## Run with Docker
+
+Building and running the app in Docker is intended just for testing Docker stuff.
+Running the different tools still require Virtualenv to be set up.
 
 * Setup: `manage/docker/setup.sh` (first time or after project change)
 * Run server: `manage/docker/run.sh`
-
-## Making Changes
-* If you're committing code changes, run `manage/check.sh` first to make sure the formatting is correct and that tests still pass.
-* If you're adding/changing/fixing features, add it to the changelog.
