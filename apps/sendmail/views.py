@@ -27,6 +27,12 @@ def sendmail_send(request):
     else:
         form = SendMessageForm()
 
+    if Mail.objects.filter(done_sending=False).exists():
+        messages.warning(request, _(u'There are currently mails that are being sent. Please wait before sending a new mail. '
+                                    u'If you believe this is incorrect, please check the admin panel and delete any old, unfinished mails.'))
+    else:
+        messages.info(request, _(u'There are currently no mails that are being sent.'))
+
     template_context['form'] = form
     return render(request, 'sendmail/send.html', template_context)
 
