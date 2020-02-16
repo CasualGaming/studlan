@@ -16,6 +16,7 @@ INSTALLED_APPS = (
     # third party apps
     'markdown_deux',
     'postman',
+    'anymail',
 
     # django apps
     'django.contrib.admin',
@@ -140,10 +141,16 @@ MARKDOWN_DEUX_STYLES = {
 
 # Email defaults
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# Mailgun
-EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
-MAILGUN_ACCESS_KEY = ''
-MAILGUN_SERVER_NAME = ''
+EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+ANYMAIL = {
+    'MAILGUN_API_KEY': '',
+    'MAILGUN_SENDER_DOMAIN': '',
+}
+STUDLAN_FROM_MAIL = ''
+DEFAULT_FROM_EMAIL = STUDLAN_FROM_MAIL
+REGISTER_FROM_MAIL = STUDLAN_FROM_MAIL
+SERVER_EMAIL = STUDLAN_FROM_MAIL
+SUPPORT_MAIL = ''
 
 # Postman
 # Used for internal invitation messages
@@ -214,3 +221,12 @@ for settings_module in ['local']:  # local last
         exec(u'from {0} import *'.format(settings_module))  # noqa: S102
     except ImportError as e:
         print(u'Could not import settings for "{0}" : {1}'.format(settings_module, str(e)))  # noqa: T001
+
+# Compatibility
+# When django-anymail[mailgun] replaced django-mailgun
+if EMAIL_BACKEND == 'django_mailgun.MailgunBackend':
+    EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+if 'MAILGUN_ACCESS_KEY' in globals() and not ANYMAIL['MAILGUN_API_KEY']:
+    ANYMAIL['MAILGUN_API_KEY'] = MAILGUN_ACCESS_KEY
+if 'MAILGUN_SERVER_NAME' in globals() and not ANYMAIL['MAILGUN_SENDER_DOMAIN']:
+    ANYMAIL['MAILGUN_SENDER_DOMAIN'] = MAILGUN_SERVER_NAME

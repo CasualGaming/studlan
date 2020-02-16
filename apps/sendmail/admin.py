@@ -7,7 +7,8 @@ from .models import Mail
 
 class MailAdmin(admin.ModelAdmin):
 
-    list_display = ['subject', 'sent_time']
+    list_display = ['subject', 'sent_time', 'recipients_total', 'successful_mails', 'failed_mails', 'done_sending']
+    ordering = ['-sent_time']
 
     # Prevent creation
     def has_add_permission(self, request, obj=None):

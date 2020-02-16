@@ -57,10 +57,10 @@
             <div class="alert alert-warning" role="alert">
                 {% blocktrans trimmed with user_count=mail_recipient_count %}
                 <strong>Warning!</strong> You have chosen to send this message to a lot of people (around {{ user_count }}).
-                This may take a long time. As a rough estimate, 100 recipients takes about a minute.
+                This may take a long time. As a rough estimate, 100 recipients takes about 30 seconds.
                 You may time out while waiting, but the emails should still get sent in even if you go to another page.
                 Don't try to submit again or refresh this page while waiting, though!
-                (Hopefully this will get improved in the future.)
+                You can check the admin panel for status updates.
                 {% endblocktrans %}
             </div>
             {% endif %}

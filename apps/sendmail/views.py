@@ -76,6 +76,7 @@ def sendmail_send(request):
                         message.recipient_teams = teams
                     if competitions:
                         message.recipient_competitions = competitions
+                message.recipients_total = all_recipient_count
                 message.save()
 
                 # Prepare mail
@@ -90,8 +91,11 @@ def sendmail_send(request):
                 mail_connection = django_mail.get_connection()
                 mail_connection.open()
 
+                counter = 0
                 for user in all_recipients:
+                    counter += 1
                     if not user.email:
+                        message.failed_mails += 1
                         continue
 
                     email_message = django_mail.EmailMultiAlternatives(
@@ -102,9 +106,21 @@ def sendmail_send(request):
                         connection=mail_connection,
                     )
                     email_message.attach_alternative(html_message, 'text/html')
-                    email_message.send(fail_silently=True)
+                    try:
+                        email_message.send()
+                        message.successful_mails += 1
+                    except Exception:
+                        message.failed_mails += 1
+                        continue
+
+                    # Save the the message stats regularly so that the sending process can be kept track of
+                    if counter % 10 == 0:
+                        message.save()
 
                 mail_connection.close()
+
+                message.done_sending = True
+                message.save()
 
                 # Show empty form
                 form = SendMessageForm()

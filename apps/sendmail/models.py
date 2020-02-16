@@ -39,6 +39,10 @@ class Mail(models.Model):
     recipient_teams = models.ManyToManyField(Team, verbose_name=_(u'recipient teams'), blank=True)
     recipient_competitions = models.ManyToManyField(Competition, verbose_name=_(u'recipient competitions'), blank=True)
     recipient_users = models.ManyToManyField(User, verbose_name=_(u'recipient users'), blank=True)
+    recipients_total = models.IntegerField(_(u'total number of recipients'), default=0, help_text=_(u'Sum of all unique users that should receive the mail.'))
+    successful_mails = models.IntegerField(_(u'successful mails'), default=0, help_text=_(u'How many of the mails were sent successfully.'))
+    failed_mails = models.IntegerField(_(u'failed mails'), default=0, help_text=_(u'How many of the mails were not sent because of some failure.'))
+    done_sending = models.BooleanField(_(u'done sending'), default=False, help_text=_(u'If all mails have been attempted sent.'))
 
     class Meta:
         verbose_name = _(u'mail')
