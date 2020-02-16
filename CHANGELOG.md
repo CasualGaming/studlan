@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added LAN list for seatings.
 - Added LAN list for schedules.
+- Added optional URL slug for LANs.
 
 ### Changed
 - Show users with tickets or seats on arrivals page even if they haven't attended.

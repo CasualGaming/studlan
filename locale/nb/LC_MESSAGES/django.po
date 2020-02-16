@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-05 05:04+0100\n"
+"POT-Creation-Date: 2020-02-16 17:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -497,6 +497,21 @@ msgstr "Oversettelse"
 msgid "Translations"
 msgstr "Oversettelser"
 
+msgid "Image"
+msgstr "Bilde"
+
+msgid "Video"
+msgstr "Video"
+
+msgid "Stream"
+msgstr "Stream"
+
+msgid "slug"
+msgstr "slug"
+
+msgid "Optional. Must be alphanumeric and start with a letter."
+msgstr "Valgfritt. Må være alfanumerisk og starte med en bokstav."
+
 msgid "start date"
 msgstr "startdato"
 
@@ -512,11 +527,17 @@ msgstr "kartlenke"
 msgid "URL for an embedded map."
 msgstr "URL til et innebygget kart."
 
-msgid "video link"
-msgstr "videolenke"
+msgid "media link"
+msgstr "medialenke"
 
-msgid "URL for an embedded video."
-msgstr "URL til en innebygget video."
+msgid "URL for embedded media."
+msgstr "URL for innebygget media."
+
+msgid "media type"
+msgstr "mediatype"
+
+msgid "Type of the optional embedded media."
+msgstr "Type for det valgfritte innebygde mediet."
 
 msgid "upcoming"
 msgstr "kommende"
@@ -1386,6 +1407,18 @@ msgstr "Veksle navigasjon"
 msgid "Language"
 msgstr "Språk"
 
+msgid "Upcoming LANs"
+msgstr "Kommende LAN"
+
+msgid "Time"
+msgstr "Tid"
+
+msgid "No current or upcoming LANs."
+msgstr "Ingen nåværende eller kommende LAN."
+
+msgid "Previous LANs"
+msgstr "Tidligere LAN"
+
 msgid "Activity"
 msgstr "Aktivitet"
 
@@ -1473,17 +1506,8 @@ msgstr ""
 "<strong>Konkurransen er full.</strong>Den hadde bare plass til "
 "%(competition_max_participants)s deltagere, og den grensen er nådd."
 
-msgid "Time"
-msgstr "Tid"
-
 msgid "Compo Count"
 msgstr "Antall compoer"
-
-msgid "No current or upcoming LANs."
-msgstr "Ingen nåværende eller kommende LAN."
-
-msgid "Previous LANs"
-msgstr "Tidligere LAN"
 
 msgid "Start Time"
 msgstr "Starttid"

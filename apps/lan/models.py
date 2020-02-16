@@ -3,6 +3,7 @@
 from datetime import datetime
 
 from django.contrib.auth.models import User
+from django.core.validators import RegexValidator
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _, ugettext_noop
@@ -11,6 +12,10 @@ from translatable.models import TranslatableModel, get_translation_model
 
 
 class LAN(TranslatableModel):
+
+    # Slug must start with letter to avoid ambiguity with the ID
+    SLUG_REGEX = r'[a-zA-Z][a-zA-Z0-9]*'
+    FULL_SLUG_REGEX = r'^' + SLUG_REGEX + r'$'
 
     MEDIA_TYPE_IMAGE = 'image'
     MEDIA_TYPE_VIDEO = 'video'
@@ -21,6 +26,10 @@ class LAN(TranslatableModel):
         (MEDIA_TYPE_STREAM, _(u'Stream')),
     )
 
+    slug = models.SlugField(
+        _(u'slug'), db_index=True, blank=True, validators=[RegexValidator(regex=FULL_SLUG_REGEX)],
+        help_text=_(u'Optional. Must be alphanumeric and start with a letter.'),
+    )
     title = models.CharField(_(u'title'), max_length=100)
     start_date = models.DateTimeField(_(u'start date'))
     end_date = models.DateTimeField(_(u'end date'))
@@ -62,6 +71,8 @@ class LAN(TranslatableModel):
             return None
 
     def get_absolute_url(self):
+        if self.slug:
+            return reverse('lan_details_slug', kwargs={'lan_slug': self.slug})
         return reverse('lan_details', kwargs={'lan_id': self.id})
 
     def __unicode__(self):

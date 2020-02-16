@@ -28,9 +28,19 @@ def listing(request):
     return render(request, 'lan/list.html', context)
 
 
-def details(request, lan_id):
+def details_id(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
+    if lan.slug:
+        return redirect(lan)
+    return details(request, lan)
 
+
+def details_slug(request, lan_slug):
+    lan = get_object_or_404(LAN, slug=lan_slug)
+    return details(request, lan)
+
+
+def details(request, lan):
     if lan.end_date > datetime.now():
         active = True
     else:
