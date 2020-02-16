@@ -1,9 +1,10 @@
+# studlan
+
 [![GitHub release](https://img.shields.io/github/release/CasualGaming/studlan.svg)](https://github.com/CasualGaming/studlan/releases)
 [![Build Status](https://travis-ci.org/CasualGaming/studlan.svg?branch=master)](https://travis-ci.org/CasualGaming/studlan)
 [![Snyk](https://snyk.io/test/github/CasualGaming/studlan/badge.svg)](https://snyk.io/test/github/CasualGaming/studlan)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?branch=master&project=CasualGaming_studlan&metric=alert_status)](https://sonarcloud.io/dashboard?id=CasualGaming_studlan)
 
-# studlan
 LAN-party event management system.
 
 * [Demo](https://studlan.casualgaming.dev)
@@ -13,12 +14,14 @@ LAN-party event management system.
 * [SonarCloud](https://sonarcloud.io/dashboard?id=CasualGaming_studlan)
 
 ## Docs
+
 * [Development](docs/development.md)
 * [Releasing](docs/releasing.md)
 * [Deployment](docs/deployment.md)
 * [Docker Image](docs/docker-image.md)
 
 ## Features
+
 * News
 * Activites
 	* Used for having several competitions under the same activity (usually a game).
