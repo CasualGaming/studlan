@@ -56,7 +56,7 @@ def lan_compos(request, lan_id):
     context['lotteries'] = Lottery.objects.filter(lan=lan)
 
     breadcrumbs = (
-        (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
+        (lan, lan.get_absolute_url()),
         (_(u'Competitions'), ''),
     )
     context['breadcrumbs'] = breadcrumbs
@@ -99,7 +99,7 @@ def activity_details_filtered(request, lan_id, activity_id):
     context['lan'] = lan
 
     breadcrumbs = (
-        (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
+        (lan, lan.get_absolute_url()),
         (_(u'Competitions'), ''),
     )
     context['breadcrumbs'] = breadcrumbs
@@ -130,7 +130,7 @@ def competition_details(request, competition_id):
     context['use_challonge'] = use_challonge
 
     breadcrumbs = (
-        (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
+        (lan, lan.get_absolute_url()),
         (_(u'Competitions'), reverse('competitions_lan_compos', kwargs={'lan_id': lan.id})),
         (unicode(competition), ''),
     )
@@ -374,7 +374,7 @@ def schedule_details(request, lan_id):
     else:
         context['cal_src'] = None
     context['breadcrumbs'] = (
-        (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
+        (lan, lan.get_absolute_url()),
         (_(u'Schedule'), ''),
     )
 

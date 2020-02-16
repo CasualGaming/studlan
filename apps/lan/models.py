@@ -13,7 +13,6 @@ from translatable.models import TranslatableModel, get_translation_model
 
 class LAN(TranslatableModel):
 
-    # Slug must start with letter to avoid ambiguity with the ID
     SLUG_REGEX = r'[a-zA-Z][a-zA-Z0-9]*'
     FULL_SLUG_REGEX = r'^' + SLUG_REGEX + r'$'
 

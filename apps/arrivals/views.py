@@ -4,7 +4,6 @@ from datetime import datetime
 
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext as _
@@ -65,7 +64,8 @@ def arrivals(request, lan_id):
     users = sorted(list(users_set), key=lambda user: user.username)
 
     breadcrumbs = (
-        (lan, reverse('lan_details', kwargs={'lan_id': lan.id})), (_(u'Arrivals'), ''),
+        (lan, lan.get_absolute_url()),
+        (_(u'Arrivals'), ''),
     )
     context = {
         'breadcrumbs': breadcrumbs,
