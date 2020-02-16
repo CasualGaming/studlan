@@ -59,10 +59,6 @@ msgstr "Endret status for bruker \"{user}\" ved LAN \"{lan}\" til \"NOT paid\""
 msgid "Arrivals"
 msgstr "Ankomster"
 
-#, python-brace-format
-msgid "{user} was not found in attendees for {lan}."
-msgstr "{user} ble ikke funnet i ankomstlisten for {lan}."
-
 msgid "Authentication"
 msgstr "Autentisering"
 
@@ -720,10 +716,6 @@ msgstr "Ingen kvalifiserte deltagere."
 msgid "Miscellaneous"
 msgstr "Diverse"
 
-#, python-brace-format
-msgid "{0}, seat {1}"
-msgstr "{0}, sete {1}"
-
 msgid "News"
 msgstr "Nyheter"
 
@@ -1168,6 +1160,9 @@ msgstr "Registrer ankomster"
 msgid "Attending:"
 msgstr "Deltar:"
 
+msgid "Reserved seats:"
+msgstr "Reserverte seter:"
+
 msgid "Paid:"
 msgstr "Betalt:"
 
@@ -1205,20 +1200,21 @@ msgstr "Fullt navn"
 msgid "Email Address"
 msgstr "E-postadresse"
 
-msgid "Paid"
-msgstr "Betalt"
+msgid "Ticket/Paid"
+msgstr "Billett/betalt"
 
 msgid "Arrived"
 msgstr "Ankommet"
+
+#, python-format
+msgid "%(seating_title)s, seat %(seat_placement)s"
+msgstr "%(seating_title)s, sete %(seat_placement)s"
 
 msgid "Toggle"
 msgstr "Vende"
 
 msgid "Export to Excel sheet"
 msgstr "Eksporter til Excel-ark"
-
-msgid "There are no attendees for this LAN."
-msgstr "Det er ingen deltagere for dette LAN-et."
 
 msgid "Manual Register"
 msgstr "Registrer manuelt"

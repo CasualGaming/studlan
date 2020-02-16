@@ -96,13 +96,7 @@ div#btn-profile {
     color: red;
 }
 
-.paid
-{
-    cursor:pointer;
-}
-
-.arrived
-{
+.toggle {
     cursor:pointer;
 }
 
