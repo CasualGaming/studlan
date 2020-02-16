@@ -7,6 +7,26 @@
 {% trans "Home" %}
 {% endblock title %} 
 {% block content %}
+{% if stream %}
+<div class="row">
+    <div class="col-md-9">
+        <div class="stream">
+            {% if stream.visible_title %}
+            <h3 class="stream-title">{{ stream.visible_title }}</h3>
+            {% endif %}
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" title="Stream" src="{{ stream.link | safe }}" allowfullscreen></iframe>
+            </div>
+            {% if stream.description %}
+            <div class="stream-desc">
+                {{ stream.description | markdown }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
 <div class="row">
     <div class="col-md-9">
         {% if lans.count == 1 %}
@@ -17,15 +37,18 @@
     </div>
 </div>
 
+{% if lans.count == 1 %}
+{% include "lan/media.html" with lan=lans.0 %}
 <div class="row">
-    {% if lans.count == 1 %}
     <div class="col-md-6 col-xs-7">
         <p class="lead">{{ lans.0.start_date|date }} – {{ lans.0.end_date|date }}</p>
     </div>
     <div class="col-md-3 col-xs-5">
         <a class="btn btn-primary pull-right" href="{{ lans.0.get_absolute_url }}">{% trans "Go to LAN page" %}</a>
     </div>
-    {% else %}
+</div>
+{% else %}
+<div class="row">
     <div class="col-md-9">
         <table class="table table-bordered table-hover click-table">
             <tbody>
@@ -37,26 +60,6 @@
                 {% endfor %}
             </tbody>
         </table>
-    </div>
-    {% endif %}
-</div>
-
-{% if stream %}
-<div class="row">
-    <div class="col-md-9">
-        <div class="stream">
-            {% if stream.visible_title %}
-            <h3 class="stream-title">{{ stream.visible_title }}</h3>
-            {% endif %}
-            <div class="stream-content embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" title="Stream" src="{{ stream.link|safe }}" allowfullscreen></iframe>
-            </div>
-            {% if stream.description %}
-            <div class="stream-desc">
-                {{ stream.description | markdown }}
-            </div>
-            {% endif %}
-        </div>
     </div>
 </div>
 {% endif %}
