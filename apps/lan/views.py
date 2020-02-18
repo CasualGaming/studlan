@@ -21,10 +21,11 @@ def home(request):
 
 
 def listing(request):
-    upcoming_lans = LAN.objects.filter(end_date__gte=datetime.now())
-    previous_lans = LAN.objects.filter(end_date__lt=datetime.now())
+    context = {}
+    context['upcoming'] = LAN.objects.filter(end_date__gte=datetime.now()).order_by('start_date')
+    context['previous'] = LAN.objects.filter(end_date__lt=datetime.now()).order_by('-start_date')
 
-    return render(request, 'lan/list.html', {'upcoming': upcoming_lans, 'previous': previous_lans})
+    return render(request, 'lan/list.html', context)
 
 
 def details(request, lan_id):

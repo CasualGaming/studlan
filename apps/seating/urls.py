@@ -2,11 +2,12 @@
 
 from django.conf.urls import url
 
-from .views import leave_seat, main, seating_details, seating_list, seating_map, take_seat
+from .views import lan_list, leave_seat, main, seating_details, seating_list, seating_map, take_seat
 
 
 urlpatterns = [
     url(r'^$', main, name='seatings'),
+    url(r'^list/$', lan_list, name='seating_lan_list'),
     url(r'^(?P<lan_id>\d+)/$', seating_details, name='seating_details'),
     url(r'^(?P<lan_id>\d+)/(?P<seating_id>\d+)/$', seating_details, name='seating_details'),
     url(r'^(?P<lan_id>\d+)/(?P<seating_id>\d+)/(?P<seat_id>\d+)/$', seating_details, name='seating_details'),

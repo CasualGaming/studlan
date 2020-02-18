@@ -1,25 +1,17 @@
-{% extends "base.html" %}
-
 {% load i18n %}
 
-{% block title %}
-{% trans "LAN List" %}
-{% endblock title %}
-
-{% block content %}
-<div class="row">
-    <div class="col-md-9">
-        <h1 class="page-header">{% trans "LANs" %}</h1>
-    </div>
-</div>
-
-{% if upcoming %}
+{% if upcoming_lans %}
 <div class="row">
     <div class="col-md-9">
         <table class="table table-bordered table-hover click-table">
+            <caption hidden>{% trans "Upcoming LANs" %}</caption>
+            <thead>
+                <th scope="col" class="col-md-4">{% trans "LAN" %}</th>
+                <th scope="col" class="col-md-3">{% trans "Time" %}</th>
+            </thead>
             <tbody>
-                {% for lan in upcoming %}
-                <tr onclick="document.location='{{ lan.get_absolute_url }}';">
+                {% for lan in upcoming_lans %}
+                <tr onclick="document.location='{% url object_view_name lan.id %}';">
                     <td class="underline">{{ lan }}</td>
                     <td>{{ lan.start_date|date }} – {{ lan.end_date|date }}</td>
                 </tr>
@@ -36,19 +28,19 @@
 </div>
 {% endif %}
 
-{% if previous %}
+{% if previous_lans %}
 <div class="row">
     <div class="col-md-9">
         <h3>{% trans "Previous LANs" %}</h2>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-9">
-        <table class="table table-bordered table-hover click-table">
+        <table class="table table-bordered table-striped table-hover click-table">
+            <caption hidden>{% trans "Previous LANs" %}</caption>
+            <thead>
+                <th scope="col" class="col-md-4">{% trans "LAN" %}</th>
+                <th scope="col" class="col-md-3">{% trans "Time" %}</th>
+            </thead>
             <tbody>
-                {% for lan in previous %}
-                <tr onclick="document.location='{{ lan.get_absolute_url }}';">
+                {% for lan in previous_lans %}
+                <tr onclick="document.location='{% url object_view_name lan.id %}';">
                     <td class="underline">{{ lan }}</td>
                     <td>{{ lan.start_date|date }} – {{ lan.end_date|date }}</td>
                 </tr>
@@ -58,4 +50,3 @@
     </div>
 </div>
 {% endif %}
-{% endblock content %}
