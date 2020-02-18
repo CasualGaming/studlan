@@ -6,15 +6,13 @@
 {% block content %}
 <div class="row">
     <div class="col-md-9">
-        <h1>{% trans "Competitions" %}</h1>
-        <p class="lead">{% trans "Select a LAN to view competitions for it." %}</p>
+        <h1 class="page-header">{% trans "Competitions" %}</h1>
     </div>
 </div>
 
 {% if upcoming_lans %}
 <div class="row">
     <div class="col-md-9">
-        <h2>{% trans "LANs" %}</h2>
         <table class="table table-bordered table-hover click-table">
             <thead>
                 <th class="col-md-4">{% trans "LAN" %}</th>
@@ -36,7 +34,7 @@
 {% else %}
 <div class="row">
     <div class="col-md-9">
-        <div class="alert alert-warning">{% trans "No current or upcoming LANs." %}</div>
+        <div class="alert alert-info">{% trans "No current or upcoming LANs." %}</div>
     </div>
 </div>
 {% endif %}
@@ -44,7 +42,7 @@
 {% if previous_lans %}
 <div class="row">
     <div class="col-md-9">
-        <h2>{% trans "Previous LANs" %}</h2>
+        <h3>{% trans "Previous LANs" %}</h2>
         <table class="table table-bordered table-striped table-hover click-table">
             <thead>
                 <th class="col-md-4">{% trans "LAN" %}</th>
