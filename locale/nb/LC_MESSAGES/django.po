@@ -1841,11 +1841,8 @@ msgstr "Utilgjengelig sete"
 msgid "There are no seatings for this LAN."
 msgstr "Det er ingen setekart for dette LAN-et."
 
-msgid "No current sponsors."
-msgstr "Ingen nåværende sponsorer."
-
-msgid "Previous Sponsors"
-msgstr "Tidligere sponsorer"
+msgid "No sponsored LANs."
+msgstr "Ingen sponsede LAN."
 
 msgid "Create team"
 msgstr "Nytt lag"
