@@ -884,8 +884,8 @@ msgstr "%(seating)s, sete %(seat)d"
 msgid "(Available)"
 msgstr "(Ledig)"
 
-msgid "Sponsor"
-msgstr "Sponsor"
+msgid "Partner"
+msgstr "Partner"
 
 msgid "name"
 msgstr "navn"
@@ -896,29 +896,29 @@ msgstr "banner-URL"
 msgid "website"
 msgstr "nettsted"
 
-msgid "sponsor"
-msgstr "sponsorer"
+msgid "partner"
+msgstr "partner"
 
-msgid "sponsors"
-msgstr "sponsorer"
+msgid "partners"
+msgstr "partnere"
 
-msgid "sponsor translation"
-msgstr "sponsoroversettelse"
+msgid "partner translation"
+msgstr "partneroversettelse"
 
-msgid "sponsor translations"
-msgstr "sponsoroversettelser"
+msgid "partner translations"
+msgstr "partneroversettelser"
 
 msgid "priority"
 msgstr "prioritet"
 
-msgid "Higher priority means closer to the top of the sponsor list."
-msgstr "Høyere prioritet betyr nærmere toppen av sponsorlisten."
+msgid "Higher priority means closer to the top of the partner list."
+msgstr "Høyere prioritet betyr nærmere toppen av partnerlisten."
 
-msgid "sponsor relation"
-msgstr "sponsorrelasjon"
+msgid "partner relation"
+msgstr "partnerrelasjon"
 
-msgid "sponsor relations"
-msgstr "sponsorrelasjoner"
+msgid "partner relations"
+msgstr "partnerrelasjoner"
 
 msgid "Team"
 msgstr "Lag"
@@ -1687,8 +1687,8 @@ msgstr "E-sport"
 msgid "Teams"
 msgstr "Lag"
 
-msgid "Sponsors"
-msgstr "Sponsorer"
+msgid "Partners"
+msgstr "Partnere"
 
 msgid "News Archive"
 msgstr "Nyhetsarkiv"
@@ -1863,11 +1863,11 @@ msgstr "Utilgjengelig sete"
 msgid "This LAN does not have any seatings."
 msgstr "Dette LAN-et har ingen aktive setekart."
 
-msgid "No current sponsors."
-msgstr "Ingen nåværende sponsorer."
+msgid "No LANs with partners."
+msgstr "Ingen LAN med partnere."
 
-msgid "Previous Sponsors"
-msgstr "Tidligere sponsorer"
+msgid "No sponsored LANs."
+msgstr "Ingen sponsede LAN."
 
 msgid "Create team"
 msgstr "Nytt lag"
