@@ -97,7 +97,7 @@ div#btn-profile {
 }
 
 .toggle {
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .arrival-filter-group {
@@ -530,4 +530,9 @@ div#btn-profile {
 .lottery-winner {
     font-weight: bold;
     font-size: 150%;
+}
+
+.toggle[value="True"]>.toggle-false,
+.toggle[value="False"]>.toggle-true {
+    display: none;
 }

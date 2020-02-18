@@ -61,8 +61,13 @@ function toggle(username, type, previousValue, label)
             updateTable();
         },
         error: function(res) {
-            alert("Failed to toggle.");
-            console.log("Failed to toggle: (status " + res['status'] + ") " + res['responseText']);
+            let responseMessage = res['responseText'];
+            if (!responseMessage) {
+                responseMessage = "No response.";
+            }
+            let message = "Failed to toggle: " + responseMessage;
+            alert(message);
+            console.log(message);
         },
         crossDomain: false
     });

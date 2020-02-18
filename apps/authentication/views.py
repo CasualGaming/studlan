@@ -123,7 +123,7 @@ def direct_register(request):
             cleaned = form.cleaned_data
 
             if lan is None:
-                messages.error(request, _(u'No upcoming LAN was found.'))
+                messages.error(request, _(u'No upcoming LANs.'))
                 return HttpResponseRedirect('/auth/direct_register')
 
             # Create user
@@ -175,11 +175,11 @@ def verify(request, token):
             user.save()
             rt.delete()
 
-            messages.success(request, _(u'User {user} successfully activated. You can now log in.').format(user=user))
+            messages.success(request, _(u'User {user} was successfully activated. You can now log in.').format(user=user))
 
             return redirect('auth_login')
         else:
-            messages.error(request, _(u'The token has expired. Please use the password recovery to get a new token.'))
+            messages.error(request, _(u'The activation link has expired. Please use the password recovery form to get a new link.'))
             return HttpResponseRedirect('/')
 
 
@@ -254,10 +254,10 @@ def set_password(request, token=None):
                     return HttpResponseRedirect('/')
             else:
                 form = ChangePasswordForm()
-                messages.success(request, _(u'Please insert your new password.'))
+                messages.info(request, _(u'Please set a new password.'))
 
             return render(request, 'auth/set_password.html', {'form': form, 'token': token})
 
         else:
-            messages.error(request, _(u'The link has expired. Please use the password recovery to get a new one.'))
+            messages.error(request, _(u'The recovery link has expired. Please use the password recovery form to get a new link.'))
             return HttpResponseRedirect('/')

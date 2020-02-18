@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added LAN list for schedules.
 
 ### Changed
+- Made message severities more appropriate.
+- Made arrivals toggle error messages more verbose.
 - Separated sponsor list into different LANs.
 - Renamed "sponsor" to "partner".
 - Show users with tickets or seats on arrivals page even if they haven't attended.

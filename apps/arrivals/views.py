@@ -90,29 +90,27 @@ def toggle(request, lan_id):
     toggle_type = request.POST.get('type')
     previous_value = request.POST.get('prev')
 
-    lan = get_object_or_404(LAN, pk=lan_id)
-    user = get_object_or_404(User, username=username)
-    try:
-        attendee = Attendee.objects.get(lan=lan, user=user)
+    lan = LAN.objects.filter(pk=lan_id).first()
+    if lan is None:
+        return HttpResponse(status=404, content=_('LAN not found.'))
 
-        # Has paid
-        if int(toggle_type) == 0:
-            # Reject if user has ticket
-            if lan.has_ticket(user):
-                return HttpResponse(status=409)
-            attendee.has_paid = flip_string_bool(previous_value)
-        # Has arrived
-        elif int(toggle_type) == 1:
-            attendee.arrived = flip_string_bool(previous_value)
-        else:
-            return HttpResponse(status=400)
+    user = User.objects.filter(username=username).first()
+    if user is None:
+        return HttpResponse(status=404, content=_('User not found.'))
 
-        attendee.save()
+    attendee = Attendee.objects.filter(lan=lan, user=user).first()
+    if attendee is None:
+        return HttpResponse(status=404, content=_('The user is not attending the LAN.'))
 
-        return HttpResponse(status=200)
+    if int(toggle_type) == 0:
+        attendee.has_paid = flip_string_bool(previous_value)
+    elif int(toggle_type) == 1:
+        attendee.arrived = flip_string_bool(previous_value)
+    else:
+        return HttpResponse(status=400, content=_('Invalid toggle type.'))
 
-    except Attendee.DoesNotExist:
-        return HttpResponse(status=404)
+    attendee.save()
+    return HttpResponse(status=200)
 
 
 def flip_string_bool(val):

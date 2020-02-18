@@ -8,7 +8,7 @@
 {% endblock title %}
 
 {% block script %}
-<script type="text/javascript" src="{% static 'js/seating.js' %}"></script>
+<script src="{% static 'js/seating.js' %}"></script>
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 {% endblock script %}
 
@@ -118,9 +118,11 @@
             </script>
         {% endif %}
     {% else %}
-        <div class="col-md-9">
-                <div class="alert alert-warning">{% trans "There are no seatings for this LAN." %}</div>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="alert alert-info">{% trans "This LAN does not have any seatings." %}</div>
             </div>
+        </div>
     {% endif %}
 
 {% endblock content %}
