@@ -3,14 +3,14 @@
 {% load markdown_deux_tags %} 
 
 {% block title %} 
-{% trans "Sponsors" %}
+{% trans "Partners" %}
 {% endblock title %} 
 
 {% block content %}
 
 <div class="row">
     <div class="col-md-9">
-        <h1 class="page-header">{% trans "Sponsors" %}</h1>
+        <h1 class="page-header">{% trans "Partners" %}</h1>
         {% for lan in lans %}
         {% if not forloop.first %}
         <br />
@@ -22,7 +22,7 @@
         {% endwith %}
         {% endfor %}
         {% empty %}
-        <div class="alert alert-info">{% trans "No sponsored LANs." %}</div>
+        <div class="alert alert-info">{% trans "No LANs with partners." %}</div>
         {% endfor %}
     </div>
 </div>
