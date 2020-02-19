@@ -7,10 +7,12 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import pgettext, ugettext as _
+from django.views.decorators.http import require_POST, require_safe
 
 from apps.lan.models import Attendee, Directions, LAN, Ticket
 
 
+@require_safe
 def home(request):
     lans = LAN.objects.filter(end_date__gte=datetime.now())
     if lans.count() == 1:
@@ -20,6 +22,7 @@ def home(request):
         return redirect('lan_listing')
 
 
+@require_safe
 def listing(request):
     context = {}
     context['upcoming_lans'] = LAN.objects.filter(end_date__gte=datetime.now()).order_by('start_date')
@@ -28,6 +31,7 @@ def listing(request):
     return render(request, 'lan/list.html', context)
 
 
+@require_safe
 def details(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
 
@@ -53,6 +57,7 @@ def details(request, lan_id):
     return render(request, 'lan/details.html', {'lan': lan, 'status': status, 'active': active, 'ticket_types': ticket_types, 'ticket': user_tickets, 'directions': directions})
 
 
+@require_POST
 @login_required
 def attend(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
@@ -75,6 +80,7 @@ def attend(request, lan_id):
     return redirect(lan)
 
 
+@require_POST
 @login_required
 def unattend(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
@@ -102,6 +108,7 @@ def unattend(request, lan_id):
     return redirect(lan)
 
 
+@require_safe
 @permission_required('lan.export_paying_participants')
 def list_paid(request, lan_id):
     import xlwt
