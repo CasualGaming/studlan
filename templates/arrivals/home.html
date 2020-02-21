@@ -14,30 +14,7 @@
         </div>
     </div>
 
-    {% if lans %}
-    <div class="row">
-        <div class="col-md-9">
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <th>{% trans "LAN" %}</th>
-                    <th>{% trans "Arrivals" %}</th>
-                </thead>
-                <tbody>
-                    {% for lan in lans %}
-                    <tr>
-                        <td><a href="{{ lan.get_absolute_url }}">{{ lan }}</a></td>
-                        <td><a href="{% url 'arrivals' lan.id %}">{% trans "Arrivals" %}</a></td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-    {% else %}
-    <div class="row">
-        <div class="col-md-9">
-            <p class="alert alert-info">No LANs have been created.</p>
-        </div>
-    </div>
-    {% endif %}
+    {% with object_view_name="arrivals" %}
+    {% include "common/lan_list.html" %}
+    {% endwith %}
 {% endblock content %}
