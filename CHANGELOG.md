@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+
+## [v1.7.0] - 2020-02-21
+### Added
 - Added LAN list for seatings.
 - Added LAN list for schedules.
 
@@ -18,10 +32,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Show users with tickets or seats on arrivals page even if they haven't attended.
 - Replaced LAN banner video with LAN banner media which supports images as well.
   It is also shown on the front page together with the usual brief LAN info.
-
-### Deprecated
-
-### Removed
 
 ### Fixed
 - Removed duplicates in sponsor sidebar for when the same sponsor is related to multiple upcoming LANs.
