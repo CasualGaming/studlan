@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, render
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST, require_safe
@@ -18,13 +18,10 @@ from apps.seating.models import Seat
 @require_safe
 @permission_required('lan.register_arrivals')
 def home(request):
-    lans = LAN.objects.filter(end_date__gte=datetime.now())
-    if lans.count() == 1:
-        return redirect('arrivals', lan_id=lans[0].id)
-    else:
-        lans = LAN.objects.all()
-
-    return render(request, 'arrivals/home.html', {'lans': lans})
+    context = {}
+    context['upcoming_lans'] = LAN.objects.filter(end_date__gte=datetime.now()).order_by('start_date')
+    context['previous_lans'] = LAN.objects.filter(end_date__lt=datetime.now()).order_by('-start_date')
+    return render(request, 'arrivals/home.html', context)
 
 
 @require_safe
@@ -55,11 +52,12 @@ def arrivals(request, lan_id):
     # Seats
     seats = Seat.objects.filter(user__isnull=False, seating__lan=lan)
     user_seats = {}
+    user_seats_count = 0
     for serial_user in seats.values('user').distinct():
         user = seats.filter(user=serial_user['user'])[0].user
         users_set.add(user)
         user_seats[user] = seats.filter(user=user)
-        user_seats_count = len(user_seats[user])
+        user_seats_count += len(user_seats[user])
 
     # Users
     users = sorted(list(users_set), key=lambda user: user.username)
