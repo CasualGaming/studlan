@@ -61,8 +61,13 @@ function toggle(username, type, previousValue, label)
             updateTable();
         },
         error: function(res) {
-            alert("Failed to toggle.");
-            console.log("Failed to toggle: " + res['responseText']);
+            let responseMessage = res['responseText'];
+            if (!responseMessage) {
+                responseMessage = "No response.";
+            }
+            let message = "Failed to toggle: " + responseMessage;
+            alert(message);
+            console.log(message);
         },
         crossDomain: false
     });
@@ -72,13 +77,13 @@ $(document).ready(function()
 {
      $('tr').each(function(i, row)
     {
-        $(row).find('.paid').click(function()
+        $(row).find('.paid.toggle').click(function()
         {
             var username = $(row).find('.username').text();
             var prev = $(this).attr('value');
             toggle(username, TYPE_PAID, prev, this);
         });
-        $(row).find('.arrived').click(function()
+        $(row).find('.arrived.toggle').click(function()
         {
             var username = $(row).find('.username').text();
             var prev = $(this).attr('value');

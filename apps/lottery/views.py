@@ -27,7 +27,7 @@ def details(request, lottery_id):
         last_winner = None
 
     breadcrumbs = (
-        (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
+        (lan, lan.get_absolute_url()),
         (_(u'Competitions'), reverse('competitions_lan_compos', kwargs={'lan_id': lan.id})),
         (unicode(lottery), ''),
     )

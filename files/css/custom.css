@@ -96,14 +96,8 @@ div#btn-profile {
     color: red;
 }
 
-.paid
-{
-    cursor:pointer;
-}
-
-.arrived
-{
-    cursor:pointer;
+.toggle {
+    cursor: pointer;
 }
 
 .arrival-filter-group {
@@ -463,7 +457,8 @@ div#btn-profile {
     color: grey;
 }
 
-.lan-video {
+.lan-banner {
+    width: 100%;
     margin-bottom: 20px;
 }
 
@@ -494,12 +489,14 @@ div#btn-profile {
     margin-bottom: 10px;
 }
 
-.article-content {
+.article-content,
+.lan-desctiption {
     line-height: 1.5em;
 }
 
-.lan-desctiption {
-    line-height: 1.5em;
+.article-content img,
+.lan-desctiption img {
+    max-width: 100%;
 }
 
 .inline-button-form {
@@ -543,4 +540,9 @@ div#btn-profile {
 
 .send-message-form textarea {
     resize: vertical;
+}
+
+.toggle[value="True"]>.toggle-false,
+.toggle[value="False"]>.toggle-true {
+    display: none;
 }

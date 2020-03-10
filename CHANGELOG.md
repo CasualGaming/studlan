@@ -21,6 +21,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 
+## [v1.7.0] - 2020-02-21
+### Added
+- Added LAN list for seatings.
+- Added LAN list for schedules.
+- Added optional URL slug for LANs.
+
+### Changed
+- Made message severities more appropriate.
+- Made arrivals toggle error messages more verbose.
+- Separated sponsor list into different LANs.
+- Renamed "sponsor" to "partner".
+- Show users with tickets or seats on arrivals page even if they haven't attended.
+- Replaced LAN banner video with LAN banner media which supports images as well.
+  It is also shown on the front page together with the usual brief LAN info.
+
+### Fixed
+- Removed duplicates in sponsor sidebar for when the same sponsor is related to multiple upcoming LANs.
+- Fixed users with multiple tickets or seats causing error 500.
+- Fixed ticket paid status in arrivals being clickable.
+- Fixed enter-to-submit for ticket purchase form.
+- Fixed ticket purchase form not getting disabled when submitted with valid data.
+- Fixed Markdown images in the LAN descriptions and article contents not being contained.
+- Fixed news archive pagination.
+
+### Security
+- Fixed alias CSRF vulnerability.
+- Fixed logout CSRF vulnerability.
+- Fixed LAN attendance CSRF vulnerability.
+
+
 ## [v1.6.1] - 2019-10-17
 ### Fixed
 - Fixed server error when viewing team competition page when not logged in.

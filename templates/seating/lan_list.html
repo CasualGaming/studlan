@@ -3,17 +3,17 @@
 {% load i18n %}
 
 {% block title %}
-{% trans "LAN List" %}
+{% trans "Seating" %}
 {% endblock title %}
 
 {% block content %}
 <div class="row">
     <div class="col-md-9">
-        <h1 class="page-header">{% trans "LANs" %}</h1>
+        <h1 class="page-header">{% trans "Seatings" %}</h1>
     </div>
 </div>
 
-{% with object_view_name="lan_details" %}
+{% with object_view_name="seating_details" %}
 {% include "common/lan_list.html" %}
 {% endwith %}
 {% endblock content %}

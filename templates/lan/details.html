@@ -25,15 +25,7 @@
 </div>
 {% endif %}
 
-{% if lan.video_link %}
-<div class="row">
-    <div class="col-md-9">
-        <div class="embed-responsive embed-responsive-16by9 lan-video">
-            <iframe class="embed-responsive-item" title="Video" src="{{ lan.video_link|safe }}" allowfullscreen></iframe>
-        </div>
-    </div>
-</div>
-{% endif %}
+{% include "lan/media.html" with lan=lan %}
 
 <div class="row">
     <div class="col-md-4">
@@ -99,21 +91,27 @@
         </div>
         {% elif status == 'attending' %}
         <div class="center-on-collapse">
-            <a class="btn btn-danger" href="{% url 'lan_unattend' lan.id %}">
-                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                {% trans "Unattend" %}
-            </a>
+            <form class="form-inline" action="{% url 'lan_unattend' lan.id %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-danger">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    {% trans "Unattend" %}
+                </button>
+            </form>
         </div>
         {% elif status == 'open' %}
         {% if user.profile.has_address %}
         <div class="center-on-collapse">
-            <a class="btn btn-primary" href="{% url 'lan_attend' lan.id %}">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                {% trans "Attend" %}
-            </a>
+            <form class="form-inline" action="{% url 'lan_attend' lan.id %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-primary">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    {% trans "Attend" %}
+                </button>
+            </form>
         </div>
         {% else %}
-        <div class="alert alert-danger">
+        <div class="alert alert-warning">
             {% url 'update_profile' as update_profile_url %}
             {% blocktrans trimmed %}
             Your address and zip code is required in order to sign up for a LAN.
@@ -168,7 +166,7 @@
                     <button type="button" class="btn btn-default disabled">
                         {% trans "Please log in" %}
                     </button>
-                    {% elif ticket %}
+                    {% elif status == 'paid' %}
                     <button type="button" class="btn btn-default disabled">
                         {% trans "You already have a ticket" %}
                     </button>
@@ -190,8 +188,8 @@
             </div>
         </div>
         {% else %}
-        <div class="alert alert-danger">
-            <p>{% trans "No tickets avalible at this time." %}</p>
+        <div class="alert alert-info">
+            <p>{% trans "No tickets are available at this time." %}</p>
         </div>
         {% endif %}
     </div>

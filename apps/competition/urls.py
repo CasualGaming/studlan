@@ -3,7 +3,7 @@
 from django.conf.urls import url
 
 from .views import (activity_details, activity_details_filtered, competition_details, forfeit, join,
-                    lan_compos, lan_list, leave, main, register_score, schedule, start_compo, submit_score)
+                    lan_compos, lan_list, leave, main, register_score, schedule, schedule_details, schedule_lan_list, start_compo, submit_score)
 
 
 urlpatterns = [
@@ -26,5 +26,7 @@ urlpatterns = [
     url(r'^(?P<lan_id>\d+)/activity/(?P<activity_id>\d+)/$', activity_details_filtered, name='activity_details_show_lan'),
 
     # Schedule related
-    url(r'^schedule/', schedule, name='competition_schedule'),
+    url(r'^schedule/$', schedule, name='schedule'),
+    url(r'^schedule/list/$', schedule_lan_list, name='schedule_lan_list'),
+    url(r'^schedule/(?P<lan_id>\d+)/$', schedule_details, name='schedule_details'),
 ]

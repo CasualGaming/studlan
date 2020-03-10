@@ -3,32 +3,27 @@
 {% load markdown_deux_tags %} 
 
 {% block title %} 
-{% trans "Sponsors" %}
+{% trans "Partners" %}
 {% endblock title %} 
 
 {% block content %}
 
 <div class="row">
     <div class="col-md-9">
-        <h1 class="page-header">{% trans "Sponsors" %}</h1>
-        {% if active_sponsors %}
-        {% for sponsor in active_sponsors %}
-        {% include "sponsor/sponsor_panel.html" %}
-        {% endfor %}
-        {% else %}
-        <div class="alert alert-info">{% trans "No current sponsors." %}</div>
+        <h1 class="page-header">{% trans "Partners" %}</h1>
+        {% for lan in lans %}
+        {% if not forloop.first %}
+        <br />
         {% endif %}
-    </div>
-</div>
-
-{% if inactive_sponsors %}
-<div class="row">
-    <div class="col-md-9">
-        <h2>{% trans "Previous Sponsors" %}</h2>
-        {% for sponsor in inactive_sponsors %}
+        <h2>{{ lan }}</h2>
+        {% for sponsor_relation in lan.sponsorrelation_set.all %}
+        {% with sponsor=sponsor_relation.sponsor %}
         {% include "sponsor/sponsor_panel.html" %}
+        {% endwith %}
+        {% endfor %}
+        {% empty %}
+        <div class="alert alert-info">{% trans "No LANs with partners." %}</div>
         {% endfor %}
     </div>
 </div>
-{% endif %}
 {% endblock content%}

@@ -4,6 +4,8 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 
+from apps.lan import views as lan_view
+from apps.lan.models import LAN
 from apps.misc import views as misc_view
 from apps.news import views as news_view
 from apps.sponsor import views as sponsor_view
@@ -33,6 +35,9 @@ urlpatterns = [
     url(r'^misc/remove_alert.html$', misc_view.remove_alert),
     url(r'^misc/change_language$', misc_view.change_language),
     url(r'^sponsors/', sponsor_view.index, name='sponsors'),
+
+    # LAN slug (lowest priority)
+    url(r'^(?P<lan_slug>' + LAN.SLUG_REGEX + r')/$', lan_view.details_slug, name='lan_details_slug'),
 ]
 
 if settings.DEBUG:
