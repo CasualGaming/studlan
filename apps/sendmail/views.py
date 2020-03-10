@@ -51,35 +51,48 @@ def handle_submitted_form(request, old_form, template_context):
 
     subject = fields['subject']
     content = fields['content']
-    everyone = fields['everyone']
-    yourself = fields['yourself']
-    lan_attendees = fields['lan_attendees']
-    lan_attendee_users = User.objects.filter(attendee__lan__in=lan_attendees)
-    lan_payers = fields['lan_payers']
-    lan_payer_users = User.objects.filter(
-        (Q(attendee__lan__in=lan_payers) & Q(attendee__has_paid=True))
-        | Q(ticket__ticket_type__lan__in=lan_payers),
-    )
-    tickets = fields['tickets']
-    ticket_users = User.objects.filter(ticket__ticket_type__in=tickets)
-    teams = fields['teams']
-    team_users = User.objects.filter(Q(newteamleader__in=teams) | Q(new_team_members__in=teams))
-    competitions = fields['competitions']
-    competition_users = User.objects.filter(
-        Q(newteamleader__participant__competition__in=competitions)
-        | Q(new_team_members__participant__competition__in=competitions)
-        | Q(participant__competition__in=competitions),
-    )
-    specific_users = fields['users_parsed']
 
-    # Aggregate users
+    # Build recipient list
+    everyone = fields['everyone']
     if everyone:
         all_recipients = User.objects.all()
     else:
-        # competition_users breaks on "|" but not "union" for some reason
-        all_recipients = lan_attendee_users | lan_payer_users | ticket_users | team_users | specific_users.union(competition_users)
+        all_recipients = User.objects.none()
+
+        yourself = fields['yourself']
         if yourself:
-            all_recipients = all_recipients | User.objects.filter(id=request.user.id)
+            all_recipients = all_recipients.union(request.user)
+
+        lan_attendees = fields['lan_attendees']
+        lan_attendee_users = User.objects.filter(attendee__lan__in=lan_attendees)
+        all_recipients = all_recipients.union(lan_attendee_users)
+
+        lan_payers = fields['lan_payers']
+        lan_payer_users = User.objects.filter(
+            (Q(attendee__lan__in=lan_payers) & Q(attendee__has_paid=True))
+            | Q(ticket__ticket_type__lan__in=lan_payers),
+        )
+        all_recipients = all_recipients.union(lan_payer_users)
+
+        tickets = fields['tickets']
+        ticket_users = User.objects.filter(ticket__ticket_type__in=tickets)
+        all_recipients = all_recipients.union(ticket_users)
+
+        teams = fields['teams']
+        team_users = User.objects.filter(Q(newteamleader__in=teams) | Q(new_team_members__in=teams))
+        all_recipients = all_recipients.union(team_users)
+
+        competitions = fields['competitions']
+        competition_users = User.objects.filter(
+            Q(newteamleader__participant__competition__in=competitions)
+            | Q(new_team_members__participant__competition__in=competitions)
+            | Q(participant__competition__in=competitions),
+        )
+        all_recipients = all_recipients.union(competition_users)
+
+        specific_users = fields['users_parsed']
+        all_recipients = all_recipients.union(specific_users)
+
     all_recipient_count = all_recipients.count()
 
     # The send button was pressed
