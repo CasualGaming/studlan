@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-16 16:50+0100\n"
+"POT-Creation-Date: 2020-02-16 17:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -522,6 +522,12 @@ msgstr "Video"
 msgid "Stream"
 msgstr "Stream"
 
+msgid "slug"
+msgstr "slug"
+
+msgid "Optional. Must be alphanumeric and start with a letter."
+msgstr "Valgfritt. Må være alfanumerisk og starte med en bokstav."
+
 msgid "start date"
 msgstr "startdato"
 
@@ -547,7 +553,7 @@ msgid "media type"
 msgstr "mediatype"
 
 msgid "Type of the optional embedded media."
-msgstr "Typen for det valgfritte innbygde mediet."
+msgstr "Type for det innebygde mediet."
 
 msgid "upcoming"
 msgstr "kommende"
@@ -1423,6 +1429,9 @@ msgstr "Kommende LAN"
 msgid "Time"
 msgstr "Tid"
 
+msgid "No current or upcoming LANs."
+msgstr "Ingen nåværende eller kommende LAN."
+
 msgid "Previous LANs"
 msgstr "Tidligere LAN"
 
@@ -1503,6 +1512,15 @@ msgstr ""
 "deltager. Prøv å finne andre spillere som melder seg på solo, lag et lag, og "
 "meld opp laget. Når du melder deg opp som lag, vil solooppmeldingen "
 "overskrives."
+
+#, python-format
+msgid ""
+"<strong>This competition is full.</strong> This competition only had room "
+"for %(competition_max_participants)s participants, and that limit has been "
+"reached."
+msgstr ""
+"<strong>Konkurransen er full.</strong>Den hadde bare plass til "
+"%(competition_max_participants)s deltagere, og den grensen er nådd."
 
 msgid "The competition is full."
 msgstr "Konkurransen er full."

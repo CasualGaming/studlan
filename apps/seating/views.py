@@ -7,7 +7,6 @@ from bs4 import BeautifulSoup
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext as _
@@ -53,7 +52,7 @@ def main_filtered(request, lan_id):
     context['lan'] = lan
 
     breadcrumbs = (
-        (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
+        (lan, lan.get_absolute_url()),
         (_(u'Seating'), ''),
     )
     context['breadcrumbs'] = breadcrumbs
@@ -117,7 +116,7 @@ def seating_details(request, lan_id, seating_id=None, seat_id=None):
     context['hide_sidebar'] = True
     context['template'] = dom.__str__
     context['breadcrumbs'] = (
-        (lan, reverse('lan_details', kwargs={'lan_id': lan.id})),
+        (lan, lan.get_absolute_url()),
         (_(u'Seating'), ''),
     )
 

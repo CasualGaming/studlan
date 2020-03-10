@@ -52,7 +52,7 @@
     <script>
         var stripe_public_key = '{{ stripe_public_key }}';
         var csrf_token = '{{ csrf_token }}';
-        var lan_url = '{% url 'lan_details' lan.id %}';
+        var lan_url = '{{ lan.get_absolute_url }}';
         var payment_url = '{% url 'payment' ticket_type.id %}';
     </script>
     <script src="https://js.stripe.com/v3/"></script>

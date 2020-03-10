@@ -10,7 +10,6 @@ from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
-from django.urls import reverse
 from django.utils.translation import ugettext as _
 
 import stripe
@@ -41,7 +40,7 @@ def payment(request, ticket_type_id):
         error_response = JsonResponse({'error': ''})
     else:
         # User
-        error_response = redirect('lan_details', lan_id=ticket_type.lan_id)
+        error_response = redirect(ticket_type.lan.get_absolute_url())
 
     if ticket_type.lan.end_date < datetime.now():
         # "The LAN is over" is already visible on the page
@@ -111,7 +110,7 @@ def generate_payment_response(request, ticket_type, intent):
         ticket.save()
 
         lan = ticket.ticket_type.lan
-        lan_link = request.build_absolute_uri(reverse('lan_details', kwargs={'lan_id': lan.id}))
+        lan_link = request.build_absolute_uri(lan.get_absolute_url())
         context = {
             'ticket': ticket,
             'lan': lan,
