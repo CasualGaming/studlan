@@ -100,9 +100,13 @@
                                 {% empty %}
                                 {% if user.id in attendee_users %}
                                 {% if user.id in paid_users %}
-                                <span class="paid toggle label label-success" value="True">{% trans "Toggle" %}</span>
+                                <span class="paid toggle label label-success" value="True">
+                                    {% include "arrivals/toggle_icons.html" %}
+                                </span>
                                 {% else %}
-                                <span class="paid toggle label label-danger" value="False">{% trans "Toggle" %}</span>
+                                <span class="paid toggle label label-danger" value="False">
+                                    {% include "arrivals/toggle_icons.html" %}
+                                </span>
                                 {% endif %}
                                 {% endif %}
                                 {% endfor %}
@@ -110,9 +114,13 @@
                             <td>
                                 {% if user.id in attendee_users %}
                                 {% if user.id in arrived_users %}
-                                <span class="arrived toggle label label-success" value="True">{% trans "Toggle" %}</span>
+                                <span class="arrived toggle label label-success" value="True">
+                                    {% include "arrivals/toggle_icons.html" %}
+                                </span>
                                 {% else %}
-                                <span class="arrived toggle label label-danger" value="False">{% trans "Toggle" %}</span>
+                                <span class="arrived toggle label label-danger" value="False">
+                                    {% include "arrivals/toggle_icons.html" %}
+                                </span>
                                 {% endif %}
                                 {% endif %}
                             </td>

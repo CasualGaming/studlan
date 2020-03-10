@@ -25,8 +25,8 @@ def home(request):
 @require_safe
 def listing(request):
     context = {}
-    context['upcoming'] = LAN.objects.filter(end_date__gte=datetime.now()).order_by('start_date')
-    context['previous'] = LAN.objects.filter(end_date__lt=datetime.now()).order_by('-start_date')
+    context['upcoming_lans'] = LAN.objects.filter(end_date__gte=datetime.now()).order_by('start_date')
+    context['previous_lans'] = LAN.objects.filter(end_date__lt=datetime.now()).order_by('-start_date')
 
     return render(request, 'lan/list.html', context)
 

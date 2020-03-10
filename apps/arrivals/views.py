@@ -5,7 +5,7 @@ from datetime import datetime
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, render
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST, require_safe
@@ -17,13 +17,10 @@ from apps.seating.models import Seat
 @require_safe
 @permission_required('lan.register_arrivals')
 def home(request):
-    lans = LAN.objects.filter(end_date__gte=datetime.now())
-    if lans.count() == 1:
-        return redirect('arrivals', lan_id=lans[0].id)
-    else:
-        lans = LAN.objects.all()
-
-    return render(request, 'arrivals/home.html', {'lans': lans})
+    context = {}
+    context['upcoming_lans'] = LAN.objects.filter(end_date__gte=datetime.now()).order_by('start_date')
+    context['previous_lans'] = LAN.objects.filter(end_date__lt=datetime.now()).order_by('-start_date')
+    return render(request, 'arrivals/home.html', context)
 
 
 @require_safe
@@ -54,11 +51,12 @@ def arrivals(request, lan_id):
     # Seats
     seats = Seat.objects.filter(user__isnull=False, seating__lan=lan)
     user_seats = {}
+    user_seats_count = 0
     for serial_user in seats.values('user').distinct():
         user = seats.filter(user=serial_user['user'])[0].user
         users_set.add(user)
         user_seats[user] = seats.filter(user=user)
-        user_seats_count = len(user_seats[user])
+        user_seats_count += len(user_seats[user])
 
     # Users
     users = sorted(list(users_set), key=lambda user: user.username)
@@ -90,29 +88,27 @@ def toggle(request, lan_id):
     toggle_type = request.POST.get('type')
     previous_value = request.POST.get('prev')
 
-    lan = get_object_or_404(LAN, pk=lan_id)
-    user = get_object_or_404(User, username=username)
-    try:
-        attendee = Attendee.objects.get(lan=lan, user=user)
+    lan = LAN.objects.filter(pk=lan_id).first()
+    if lan is None:
+        return HttpResponse(status=404, content=_('LAN not found.'))
 
-        # Has paid
-        if int(toggle_type) == 0:
-            # Reject if user has ticket
-            if lan.has_ticket(user):
-                return HttpResponse(status=409)
-            attendee.has_paid = flip_string_bool(previous_value)
-        # Has arrived
-        elif int(toggle_type) == 1:
-            attendee.arrived = flip_string_bool(previous_value)
-        else:
-            return HttpResponse(status=400)
+    user = User.objects.filter(username=username).first()
+    if user is None:
+        return HttpResponse(status=404, content=_('User not found.'))
 
-        attendee.save()
+    attendee = Attendee.objects.filter(lan=lan, user=user).first()
+    if attendee is None:
+        return HttpResponse(status=404, content=_('The user is not attending the LAN.'))
 
-        return HttpResponse(status=200)
+    if int(toggle_type) == 0:
+        attendee.has_paid = flip_string_bool(previous_value)
+    elif int(toggle_type) == 1:
+        attendee.arrived = flip_string_bool(previous_value)
+    else:
+        return HttpResponse(status=400, content=_('Invalid toggle type.'))
 
-    except Attendee.DoesNotExist:
-        return HttpResponse(status=404)
+    attendee.save()
+    return HttpResponse(status=200)
 
 
 def flip_string_bool(val):

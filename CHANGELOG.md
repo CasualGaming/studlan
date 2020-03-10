@@ -7,20 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Added LAN list for seatings.
-- Added LAN list for schedules.
-- Added optional URL slug for LANs.
 
 ### Changed
-- Show users with tickets or seats on arrivals page even if they haven't attended.
-- Replaced LAN banner video with LAN banner media which supports images as well.
-  It is also shown on the front page together with the usual brief LAN info.
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+
+### Security
+
+
+## [v1.7.0] - 2020-02-21
+### Added
+- Added LAN list for seatings.
+- Added LAN list for schedules.
+- Added optional URL slug for LANs.
+
+### Changed
+- Made message severities more appropriate.
+- Made arrivals toggle error messages more verbose.
+- Separated sponsor list into different LANs.
+- Renamed "sponsor" to "partner".
+- Show users with tickets or seats on arrivals page even if they haven't attended.
+- Replaced LAN banner video with LAN banner media which supports images as well.
+  It is also shown on the front page together with the usual brief LAN info.
+
+### Fixed
+- Removed duplicates in sponsor sidebar for when the same sponsor is related to multiple upcoming LANs.
 - Fixed users with multiple tickets or seats causing error 500.
 - Fixed ticket paid status in arrivals being clickable.
 - Fixed enter-to-submit for ticket purchase form.

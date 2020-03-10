@@ -7,14 +7,14 @@
 backports.functools-lru-cache==1.6.1  # via soupsieve
 beautifulsoup4==4.8.2
 certifi==2019.11.28       # via requests
-cffi==1.13.2              # via cryptography
+cffi==1.14.0              # via cryptography
 chardet==3.0.4            # via requests
 cryptography==2.8         # via pyopenssl, requests
 django-mailgun==0.9.1
 django-markdown-deux==1.0.5
 django-postman==3.6.2
 django-translatable==0.1.1
-django==1.11.27
+django==1.11.28
 enum34==1.1.6             # via cryptography
 idna==2.8                 # via requests
 ipaddress==1.0.23         # via cryptography

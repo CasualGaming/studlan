@@ -21,28 +21,28 @@ class Sponsor(TranslatableModel):
         return LAN.objects.filter(sponsorrelation__sponsor=self)
 
     class Meta:
-        verbose_name = _(u'sponsor')
-        verbose_name_plural = _(u'sponsors')
+        verbose_name = _(u'partner')
+        verbose_name_plural = _(u'partners')
 
 
-class SponsorTranslation(get_translation_model(Sponsor, 'Sponsor')):
+class SponsorTranslation(get_translation_model(Sponsor, 'Partner')):
     description = models.TextField(_(u'description'))
 
     class Meta:
-        verbose_name = _(u'sponsor translation')
-        verbose_name_plural = _(u'sponsor translations')
+        verbose_name = _(u'partner translation')
+        verbose_name_plural = _(u'partner translations')
 
 
 class SponsorRelation(models.Model):
     lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
-    sponsor = models.ForeignKey(Sponsor, verbose_name=_(u'sponsor'))
+    sponsor = models.ForeignKey(Sponsor, verbose_name=_(u'partner'))
     priority = models.IntegerField(_(u'priority'),
-                                   help_text=_(u'Higher priority means closer to the top of the sponsor list.'))
+                                   help_text=_(u'Higher priority means closer to the top of the partner list.'))
 
     def __unicode__(self):
         return unicode(self.lan) + u' – ' + unicode(self.sponsor)
 
     class Meta:
-        verbose_name = _(u'sponsor relation')
-        verbose_name_plural = _(u'sponsor relations')
+        verbose_name = _(u'partner relation')
+        verbose_name_plural = _(u'partner relations')
         ordering = ['-priority']
