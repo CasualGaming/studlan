@@ -82,6 +82,7 @@ def handle_submitted_form(request, old_form, template_context):
             all_recipients = all_recipients | User.objects.filter(id=request.user.id)
     all_recipient_count = all_recipients.count()
 
+    # The send button was pressed
     if 'send' in old_form.data:
         message = Mail()
         message.form_id = form_id
@@ -105,12 +106,12 @@ def handle_submitted_form(request, old_form, template_context):
         message.save()
 
         # Prepare mail
-        context = {
+        mail_context = {
             'subject': subject,
             'content': content,
         }
-        txt_message = render_to_string('sendmail/email/mail.txt', context, request).strip()
-        html_message = render_to_string('sendmail/email/mail.html', context, request).strip()
+        txt_message = render_to_string('sendmail/email/mail.txt', mail_context, request).strip()
+        html_message = render_to_string('sendmail/email/mail.html', mail_context, request).strip()
 
         # Send all emails using the same connection
         mail_connection = django_mail.get_connection()
@@ -150,9 +151,10 @@ def handle_submitted_form(request, old_form, template_context):
         # Show new form
         messages.success(request, _(u'Successfully attempted to send the message to {user_count} users.').format(user_count=all_recipient_count))
         return SendMessageForm()
+
+    # The preview button was pressed
     else:
-        # Preview
-        context['mail_subject'] = subject
-        context['mail_content'] = content
-        context['mail_recipient_count'] = all_recipient_count
+        template_context['mail_subject'] = subject
+        template_context['mail_content'] = content
+        template_context['mail_recipient_count'] = all_recipient_count
         return old_form
