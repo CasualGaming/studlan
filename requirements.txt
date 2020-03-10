@@ -19,9 +19,9 @@ django-anymail[mailgun]==7.0.0
 django-markdown-deux==1.0.5
 django-postman==3.6.2
 django-translatable==0.1.1
-django==1.11.28
+django==1.11.29
 entrypoints==0.3          # via flake8
-enum34==1.1.6             # via cryptography, flake8, flake8-import-order
+enum34==1.1.9             # via cryptography, flake8, flake8-import-order
 flake8-bandit==2.1.2
 flake8-blind-except==0.1.1
 flake8-builtins==1.4.2
@@ -43,7 +43,7 @@ flake8==3.7.9
 functools32==3.2.3.post2  # via flake8
 gitdb2==2.0.6             # via gitpython
 gitpython==2.1.15         # via bandit
-idna==2.8                 # via requests
+idna==2.9                 # via requests
 ipaddress==1.0.23         # via cryptography
 iso8601==0.1.12           # via pychal
 markdown2==2.3.8
@@ -55,18 +55,19 @@ pillow==6.2.2             # via reportlab
 psycopg2-binary==2.8.4
 pychal==1.8.1
 pycodestyle==2.5.0        # via flake8, flake8-bandit, flake8-debugger, flake8-import-order, flake8-print, flake8-todo
-pycparser==2.19           # via cffi
+pycparser==2.20           # via cffi
 pyflakes==2.1.1           # via flake8
 pyopenssl==19.1.0         # via requests
 pytz==2019.3              # via django, pychal, tzlocal
 pyyaml==5.3               # via bandit
 reportlab==3.5.34
-requests[security]==2.22.0
+requests[security]==2.23.0
 six==1.14.0               # via bandit, cryptography, django-anymail, flake8-print, pyopenssl, stevedore
-smmap2==2.0.5             # via gitdb2
+smmap2==3.0.1             # via gitdb2
+smmap==3.0.1              # via smmap2
 soupsieve==1.9.5          # via beautifulsoup4
 stevedore==1.32.0         # via bandit
-stripe==2.42.0
+stripe==2.43.0
 typing==3.7.4.1           # via flake8
 tzlocal==2.0.0            # via pychal
 urllib3==1.25.8           # via requests
