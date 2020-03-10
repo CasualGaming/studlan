@@ -1,31 +1,16 @@
-### Status
-
-- [ ] Done
-- [ ] Work in progress
-- [ ] Needs testing from others
-
 ### Description
 
+(Brief overview and extra details, not the list of changes.)
+
+### Changes
+
+- 
+
+### Screenshot
+
+(If appropriate.)
 
 ### Checklist
 
-- [ ] The code is linted
-- [ ] My changes requires change to the documentation.
-- [ ] I have updated the documentation.
-- [ ] I have introduced changes to build configuration.
-
-
-### Minor Changes
-
--
--
--
-
-### Breaking Changes
-
--
--
-
-### Other
-
-### Screenshot (if appropriate)
+- [ ] The code is linted (or the code was not modified).
+- [ ] The changelog is updated (or no changes were introduced).
