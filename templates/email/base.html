@@ -9,18 +9,20 @@
     <title>{{ site_name }}</title>
 </head>
 <body>
-    <header>
-        <h1>{{ site_name }}</h1>
-    </header>
-    <div class="content">
-        {% block content %}
-        {% endblock content %}
+    <div class="container" style="max-width: 800px; margin: 0 auto;">
+        <header>
+            <h1>{{ site_name }}</h1>
+        </header>
+        <div class="content">
+            {% block content %}
+            {% endblock content %}
+        </div>
+        <footer>
+            <hr />
+            {% blocktrans with request.get_host as host trimmed %}
+            <p>Sent from <a href="{{ host }}">{{ site_name }}</a>.</p>
+            {% endblocktrans %}
+        </footer>
     </div>
-    <footer>
-        <hr />
-        {% blocktrans with request.get_host as host trimmed %}
-        <p>Sent automatically from <a href="{{ host }}">{{ site_name }}</a>.</p>
-        {% endblocktrans %}
-    </footer>
 </body>
 </html>

@@ -16,6 +16,7 @@ INSTALLED_APPS = (
     # third party apps
     'markdown_deux',
     'postman',
+    'anymail',
 
     # django apps
     'django.contrib.admin',
@@ -37,6 +38,7 @@ INSTALLED_APPS = (
     'apps.news.config.Config',
     'apps.payment.config.Config',
     'apps.seating.config.Config',
+    'apps.sendmail.config.Config',
     'apps.sponsor.config.Config',
     'apps.team.config.Config',
     'apps.userprofile.config.Config',
@@ -73,9 +75,11 @@ TEMPLATES = [
 ]
 
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
-
+ROOT_URLCONF = 'studlan.urls'
+WSGI_APPLICATION = 'studlan.wsgi.application'
 AUTH_PROFILE_MODULE = 'userprofile.UserProfile'
 LOGIN_URL = '/auth/login/'
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 # Locale information
 TIME_ZONE = 'Europe/Oslo'
@@ -84,53 +88,40 @@ SITE_ID = 1
 USE_I18N = True
 USE_L10N = True
 
+LOCALE_PATHS = (
+    os.path.join(PROJECT_ROOT_DIRECTORY, 'locale'),
+)
+
 LANGUAGES = (
     ('nb', u'Norsk'),
     ('en', u'English'),
 )
 
+# Media and static files
 # Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: '/home/media/media.lawrence.com/media/'
 MEDIA_ROOT = ''
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash.
-# Examples: 'http://media.lawrence.com/media/', 'http://example.com/media/'
+# URL that handles the media served from MEDIA_ROOT.
+# Make sure to use a trailing slash.
 MEDIA_URL = ''
-
 # Absolute path to the directory static files should be collected to.
-# Don't put anything in this directory yourself; store your static files
-# in apps' 'static/' subdirectories and in STATICFILES_DIRS.
-# Example: '/home/media/media.lawrence.com/static/'
 STATIC_ROOT = 'static/'
-
 # URL prefix for static files.
-# Example: 'http://media.lawrence.com/static/'
 STATIC_URL = '/static/'
-
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
-# Examples: 'http://foo.com/static/admin/', '/static/admin/'.
 ADMIN_MEDIA_PREFIX = '/static/admin/'
-
 # Additional locations of static files
 STATICFILES_DIRS = [
     os.path.join(PROJECT_ROOT_DIRECTORY, 'files'),
-    # Put strings here, like '/home/html/static' or 'C:/www/django/static'.
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
 ]
-
-# List of finder classes that know how to find static files in
-# various locations.
+# List of finder classes that know how to find static files in various locations.
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
-
+# Security
 CSRF_COOKIE_PATH = '/'
 CSRF_COOKIE_HTTPONLY = True
 CSRF_COOKIE_SECURE = True
@@ -138,14 +129,6 @@ SESSION_COOKIE_SECURE = True
 X_FRAME_OPTIONS = 'DENY'
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
-
-ROOT_URLCONF = 'studlan.urls'
-
-WSGI_APPLICATION = 'studlan.wsgi.application'
-
-LOCALE_PATHS = (
-    os.path.join(PROJECT_ROOT_DIRECTORY, 'locale'),
-)
 
 MARKDOWN_DEUX_STYLES = {
     'default': {
@@ -156,7 +139,21 @@ MARKDOWN_DEUX_STYLES = {
     },
 }
 
+# Email defaults
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+ANYMAIL = {
+    'MAILGUN_API_KEY': '',
+    'MAILGUN_SENDER_DOMAIN': '',
+}
+STUDLAN_FROM_MAIL = ''
+DEFAULT_FROM_EMAIL = STUDLAN_FROM_MAIL
+REGISTER_FROM_MAIL = STUDLAN_FROM_MAIL
+SERVER_EMAIL = STUDLAN_FROM_MAIL
+SUPPORT_MAIL = ''
+
 # Postman
+# Used for internal invitation messages
 POSTMAN_DISALLOW_ANONYMOUS = True
 POSTMAN_DISALLOW_MULTIRECIPIENTS = True
 POSTMAN_DISALLOW_COPIES_ON_REPLY = True
@@ -165,7 +162,7 @@ POSTMAN_AUTO_MODERATE_AS = True
 POSTMAN_SHOW_USER_AS = None
 POSTMAN_QUICKREPLY_QUOTE_BODY = False
 POSTMAN_NOTIFIER_APP = None
-POSTMAN_MAILER_APP = 'mailer'
+POSTMAN_MAILER_APP = None
 
 LOGGING = {
     'version': 1,
@@ -200,6 +197,7 @@ MAX_TEAMS = 10
 # Overiding messagetags to match bootstrap 3
 MESSAGE_TAGS = {message_constants.ERROR: 'danger'}
 
+# Version
 VERSION = 'Unknown version'
 version_file_path = os.path.join(PROJECT_ROOT_DIRECTORY, 'VERSION')
 if os.path.isfile(version_file_path):
@@ -211,6 +209,7 @@ if os.path.isfile(version_file_path):
 
 SHOW_VERSION = False
 
+# Local settings
 # Remember to keep 'local' last, so it can override any setting.
 for settings_module in ['local']:  # local last
     if not os.path.exists(os.path.join(PROJECT_SETTINGS_DIRECTORY, settings_module + '.py')):
@@ -222,3 +221,12 @@ for settings_module in ['local']:  # local last
         exec(u'from {0} import *'.format(settings_module))  # noqa: S102
     except ImportError as e:
         print(u'Could not import settings for "{0}" : {1}'.format(settings_module, str(e)))  # noqa: T001
+
+# Compatibility
+# When django-anymail[mailgun] replaced django-mailgun
+if EMAIL_BACKEND == 'django_mailgun.MailgunBackend':
+    EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+if 'MAILGUN_ACCESS_KEY' in globals() and not ANYMAIL['MAILGUN_API_KEY']:
+    ANYMAIL['MAILGUN_API_KEY'] = MAILGUN_ACCESS_KEY  # noqa: F821 (undefined name)
+if 'MAILGUN_SERVER_NAME' in globals() and not ANYMAIL['MAILGUN_SENDER_DOMAIN']:
+    ANYMAIL['MAILGUN_SENDER_DOMAIN'] = MAILGUN_SERVER_NAME  # noqa: F821 (undefined name)

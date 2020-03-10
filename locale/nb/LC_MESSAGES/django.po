@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-16 17:34+0100\n"
+"POT-Creation-Date: 2020-03-10 06:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -890,6 +890,136 @@ msgstr "%(seating)s, sete %(seat)d"
 msgid "(Available)"
 msgstr "(Ledig)"
 
+msgid "Send-Mail"
+msgstr "Send-Mail"
+
+msgid "Select zero, one or multiple by control-clicking."
+msgstr "Velg null, én eller flere ved å kontroll-klikke."
+
+msgid "All users"
+msgstr "Alle brukere"
+
+msgid "LAN payers"
+msgstr "LAN-betalere"
+
+msgid "Ticket owners"
+msgstr "Billett-eiere"
+
+msgid "Teams"
+msgstr "Lag"
+
+msgid "Individual users"
+msgstr "Individuelle brukere"
+
+msgid "Specify usernames separated by comma. Case sensitive."
+msgstr "Spesifiser brukernavn separert av komma. Versalsensitiv."
+
+msgid "Yourself"
+msgstr "Deg selv"
+
+msgid "Subject"
+msgstr "Emne"
+
+msgid "Content"
+msgstr "Innhold"
+
+msgid ""
+"Markdown formatting is supported. The message will be sent as both HTML and "
+"plaintext, so make sure to add important links as plaintext."
+msgstr ""
+"Markdown-formattering er støttet. Meldingen vil sendes som både HTML og "
+"klartekst, så pass på at alle viktige lenker legges til som klartekst."
+
+msgid "At least one recipient is required."
+msgstr "Minst én mottaker er påkrevd."
+
+#, python-brace-format
+msgid "Users not found: {users}"
+msgstr "Brukere ble ikke funnet: {users}"
+
+msgid "form id"
+msgstr "skjema-ID"
+
+msgid "To prevent sending the same mail twice."
+msgstr "For å forhindre sending av samme e-post flere ganger."
+
+msgid "time sent"
+msgstr "tid sendt"
+
+msgid "subject"
+msgstr "emne"
+
+msgid "recipient everyone"
+msgstr "mottaker alle"
+
+msgid "recipient LANs"
+msgstr "mottaker-LAN"
+
+msgid "recipient tickets"
+msgstr "mottakerbilletter"
+
+msgid "recipient teams"
+msgstr "mottakerlag"
+
+msgid "recipient competitions"
+msgstr "mottakerkonkurranser"
+
+msgid "recipient users"
+msgstr "mottakerbrukere"
+
+msgid "total number of recipients"
+msgstr "Totalt antall mottakere:"
+
+msgid "Sum of all unique users that should receive the mail."
+msgstr "Summen av alle unike brukere som burde motta e-posten."
+
+msgid "successful mails"
+msgstr "vellykkede e-poster"
+
+msgid "How many of the mails were sent successfully."
+msgstr "Hvor manger e-poster som ble sendt vellykket."
+
+msgid "failed mails"
+msgstr "feilede e-poster"
+
+msgid "How many of the mails were not sent because of some failure."
+msgstr "Hvor mange e-poster som ikke ble sendt grunnet en feil."
+
+msgid "done sending"
+msgstr "ferdig sendt"
+
+msgid "If all mails have been attempted sent."
+msgstr "Om alle e-postene har blitt forsøkt sendt."
+
+msgid "mail"
+msgstr "e-post"
+
+msgid "mails"
+msgstr "e-poster"
+
+msgid ""
+"There are currently mails that are being sent. Please wait before sending a "
+"new mail. If you believe this is incorrect, please check the admin panel and "
+"delete any old, unfinished mails."
+msgstr ""
+"Det finnes e-poster som fortsatt holder på å bli utsendt. Vennligst vent før "
+"du sender en ny. Hvis du mener dette er feil, vennligst sjekk admin-panelet "
+"og slett eventuelle gamle og uferdige e-poster."
+
+msgid "There are currently no mails that are being sent."
+msgstr "Det finnes for øyeblikket ingen e-poster som holder på å bli utsendt."
+
+msgid ""
+"The mail has already been sent. If this is a new message, please reload the "
+"page and try again."
+msgstr ""
+"E-posten har allerede blitt sent. Hvis dette er en ny melding, vennligst "
+"last inn siden på nytt og prøv igjen."
+
+#, python-brace-format
+msgid "Successfully attempted to send the message to {user_count} users."
+msgstr "Meldingen ble forsøkt sendt til {user_count} brukere."
+
 msgid "Partner"
 msgstr "Partner"
 
@@ -1429,9 +1559,6 @@ msgstr "Kommende LAN"
 msgid "Time"
 msgstr "Tid"
 
-msgid "No current or upcoming LANs."
-msgstr "Ingen nåværende eller kommende LAN."
-
 msgid "Previous LANs"
 msgstr "Tidligere LAN"
 
@@ -1513,15 +1640,6 @@ msgstr ""
 "meld opp laget. Når du melder deg opp som lag, vil solooppmeldingen "
 "overskrives."
 
-#, python-format
-msgid ""
-"<strong>This competition is full.</strong> This competition only had room "
-"for %(competition_max_participants)s participants, and that limit has been "
-"reached."
-msgstr ""
-"<strong>Konkurransen er full.</strong>Den hadde bare plass til "
-"%(competition_max_participants)s deltagere, og den grensen er nådd."
-
 msgid "The competition is full."
 msgstr "Konkurransen er full."
 
@@ -1552,12 +1670,12 @@ msgid "No schedule for this LAN."
 msgstr "Ingen timetabell for dette LAN-et."
 
 #, python-format
-msgid "<p>Sent automatically from <a href=\"%(host)s\">%(site_name)s</a>.</p>"
-msgstr "<p>Sendt automatisk fra <a href=\"%(host)s\">%(site_name)s</a>.</p>"
+msgid "<p>Sent from <a href=\"%(host)s\">%(site_name)s</a>.</p>"
+msgstr "<p>Sendt fra <a href=\"%(host)s\">%(site_name)s</a>.</p>"
 
 #, python-format
-msgid "Sent automatically from %(site_name)s (%(host)s)."
-msgstr "Sent automatisk fra %(site_name)s (%(host)s)."
+msgid "Sent from %(site_name)s (%(host)s)."
+msgstr "Sent fra %(site_name)s (%(host)s)."
 
 msgid "Support"
 msgstr "Brukerstøtte"
@@ -1701,9 +1819,6 @@ msgstr "Ingen vinnere ennå."
 
 msgid "Esports"
 msgstr "E-sport"
-
-msgid "Teams"
-msgstr "Lag"
 
 msgid "Partners"
 msgstr "Partnere"
@@ -1881,11 +1996,51 @@ msgstr "Utilgjengelig sete"
 msgid "This LAN does not have any seatings."
 msgstr "Dette LAN-et har ingen aktive setekart."
 
+msgid "Send Mail"
+msgstr "Send e-post"
+
+msgctxt "action"
+msgid "Close"
+msgstr "Lukk"
+
+msgid "Recipients"
+msgstr "Mottakere"
+
+msgid "Message"
+msgstr "Melding"
+
+#, python-format
+msgid ""
+"<strong>Warning!</strong> You have chosen to send this message to a lot of "
+"people (around %(user_count)s). This may take a long time. As a rough "
+"estimate, 100 recipients takes about 30 seconds. You may time out while "
+"waiting, but the emails should still get sent in even if you go to another "
+"page. Don't try to submit again or refresh this page while waiting, though! "
+"You can check the admin panel for status updates."
+msgstr ""
+"<strong>Advarsel!</strong> Du har valgt å sende meldingen til veldig "
+"mangepersoner (rundt %(user_count)s). Dette kan ta lang tid. Som et grovt "
+"estimat tar det rundt 30 sekunder for 100 mottakere. Du kan dette ut mens du "
+"venter, men e-postene skal fortsatt bli sendt selv om du går til en annen "
+"side. Ikke prøv å sende inn på nytt eller oppfrisk denne siden mens du "
+"venter! Du kan sjekke admin-panelet for statusoppdateringer."
+
+msgctxt "verb"
+msgid "Preview"
+msgstr "Forhåndsvis"
+
+msgid "Send"
+msgstr "Send"
+
+msgctxt "noun"
+msgid "Preview"
+msgstr "Forhåndsvisning"
+
+msgid "Total number of receivers:"
+msgstr "Totalt antall mottakere:"
+
 msgid "No LANs with partners."
 msgstr "Ingen LAN med partnere."
-
-msgid "No sponsored LANs."
-msgstr "Ingen sponsede LAN."
 
 msgid "Create team"
 msgstr "Nytt lag"
@@ -2076,8 +2231,34 @@ msgstr "Registrer ankonster"
 msgid "Manual registration"
 msgstr "Manuell registrering"
 
+msgid "Send mail"
+msgstr "Send e-post"
+
 msgid "Admin panel"
 msgstr "Adminpanel"
 
 msgid "Log out"
 msgstr "Logg ut"
+
+#~ msgid "Sponsor"
+#~ msgstr "Sponsor"
+
+#~ msgid "No current or upcoming LANs."
+#~ msgstr "Ingen nåværende eller kommende LAN."
+
+#~ msgid ""
+#~ "<strong>This competition is full.</strong> This competition only had room "
+#~ "for %(competition_max_participants)s participants, and that limit has "
+#~ "been reached."
+#~ msgstr ""
+#~ "<strong>Konkurransen er full.</strong>Den hadde bare plass til "
+#~ "%(competition_max_participants)s deltagere, og den grensen er nådd."
+
+#~ msgid "Sponsors"
+#~ msgstr "Sponsorer"
+
+#~ msgid "No current sponsors."
+#~ msgstr "Ingen nåværende sponsorer."
+
+#~ msgid "No sponsored LANs."
+#~ msgstr "Ingen sponsede LAN."

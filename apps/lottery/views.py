@@ -10,8 +10,9 @@ from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_POST, require_safe
 
 from apps.lan.models import Attendee
-from apps.lottery.models import Lottery, LotteryParticipant, LotteryWinner
 from apps.userprofile.models import User
+
+from .models import Lottery, LotteryParticipant, LotteryWinner
 
 
 @require_safe

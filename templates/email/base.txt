@@ -8,5 +8,5 @@
 {% endblock content %}
 --------------------------------------------------
 {% blocktrans with request.get_host as host trimmed %}
-Sent automatically from {{ site_name }} ({{ host }}).
+Sent from {{ site_name }} ({{ host }}).
 {% endblocktrans %}

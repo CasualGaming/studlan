@@ -2,4 +2,3 @@
 
 uwsgi
 psycopg2-binary
-django-mailgun

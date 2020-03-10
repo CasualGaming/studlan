@@ -12,6 +12,7 @@ cffi==1.14.0              # via cryptography
 chardet==3.0.4            # via requests
 configparser==4.0.2       # via entrypoints, flake8
 cryptography==2.8         # via pyopenssl, requests
+django-anymail[mailgun]==7.0.0
 django-markdown-deux==1.0.5
 django-postman==3.6.2
 django-translatable==0.1.1
@@ -57,7 +58,7 @@ pytz==2019.3              # via django, pychal, tzlocal
 pyyaml==5.3               # via bandit
 reportlab==3.5.34
 requests[security]==2.22.0
-six==1.14.0               # via bandit, cryptography, flake8-print, pyopenssl, stevedore
+six==1.14.0               # via bandit, cryptography, django-anymail, flake8-print, pyopenssl, stevedore
 smmap2==2.0.5             # via gitdb2
 soupsieve==1.9.5          # via beautifulsoup4
 stevedore==1.32.0         # via bandit

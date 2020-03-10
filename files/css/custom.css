@@ -490,12 +490,14 @@ div#btn-profile {
 }
 
 .article-content,
-.lan-desctiption {
+.lan-desctiption,
+.email-content {
     line-height: 1.5em;
 }
 
 .article-content img,
-.lan-desctiption img {
+.lan-desctiption img,
+.email-content img {
     max-width: 100%;
 }
 
@@ -530,6 +532,16 @@ div#btn-profile {
 .lottery-winner {
     font-weight: bold;
     font-size: 150%;
+}
+
+.send-message-form input[type="text"],
+.send-message-form textarea,
+.send-message-form select {
+    width: 100%;
+}
+
+.send-message-form textarea {
+    resize: vertical;
 }
 
 .toggle[value="True"]>.toggle-false,

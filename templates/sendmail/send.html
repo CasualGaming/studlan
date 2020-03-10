@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load markdown_deux_tags %} 
+
+{% block title %}
+{% trans "Send Mail" %}
+{% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-9">
+        <h1 class="page-header">{% trans "Send Mail" %}</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-9">
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            {{ error }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="{% trans 'Close' context 'action' %}">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+
+        <form class="send-message-form form-horizontal" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+
+            {% if forloop.first %}
+            <h2>{% trans "Recipients" %}</h2>
+            {% elif field.auto_id == 'id_subject' %}
+            <h2>{% trans "Message" %}</h2>
+            {% endif %}
+
+            {% if field.field.widget.input_type == 'hidden' %}
+            {{ field }}
+            {% else %}
+            <div class="form-group row {% if field.errors %} has-error {% endif %} ">
+                <label for="{{ field.id_for_label }}" class="col-md-2 control-label">{{ field.label }}</label>
+                <div class="col-md-10">
+                    {{ field }}
+                    {% if field.errors %}
+                    <div class="form-error">
+                        {{ field.errors }}
+                    </div>
+                    {% endif %}
+                    {% if field.help_text %}
+                    <div class="help-block">
+                        {{ field.help_text }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+
+            {% if mail_recipient_count > 50 %}
+            <div class="alert alert-warning" role="alert">
+                {% blocktrans trimmed with user_count=mail_recipient_count %}
+                <strong>Warning!</strong> You have chosen to send this message to a lot of people (around {{ user_count }}).
+                This may take a long time. As a rough estimate, 100 recipients takes about 30 seconds.
+                You may time out while waiting, but the emails should still get sent in even if you go to another page.
+                Don't try to submit again or refresh this page while waiting, though!
+                You can check the admin panel for status updates.
+                {% endblocktrans %}
+            </div>
+            {% endif %}
+
+            <div class="form-actions pull-right">
+                <input type="submit" class="btn btn-info" name="preview" value="{% trans "Preview" context "verb" %}" />
+                <input type="submit" class="btn btn-primary" name="send" value="{% trans "Send" %}" />
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if mail_content %}
+<div class="row">
+    <div class="col-md-9">
+        <h2>{% trans "Preview" context "noun" %}</h2>
+        <p>{% trans "Total number of receivers:" %} {{ mail_recipient_count }}</p>
+        <div class="panel panel-default">
+            <div class="panel-heading">{{ mail_subject }}</div>
+            <div class="panel-body email-content">
+                {{ mail_content | striptags | markdown }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock content %}

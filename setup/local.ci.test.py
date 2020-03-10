@@ -19,14 +19,6 @@ DATABASES = {
 }
 SECRET_KEY = '00000000'
 
-STUDLAN_FROM_MAIL = 'example@example.net'
-SUPPORT_MAIL = 'example@example.net'
-DEFAULT_FROM_EMAIL = STUDLAN_FROM_MAIL
-REGISTER_FROM_MAIL = DEFAULT_FROM_EMAIL
-ADMINS = (
-    ('example', 'example@example.net'),
-)
-
 # Recommended settings that require HTTPS
 CSRF_COOKIE_SECURE = False
 SECURE_SSL_REDIRECT = False
@@ -34,12 +26,20 @@ SECURE_HSTS_SECONDS = 0
 SECURE_HSTS_PRELOAD = False
 SESSION_COOKIE_SECURE = False
 
-# Dummy e-mail backend which prints to console
+# Email
+# Use this backend for local testing
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# Mailgun (https://pypi.org/project/django-mailgun/)
-# EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
-# MAILGUN_ACCESS_KEY = 'ACCESS-KEY'
-# MAILGUN_SERVER_NAME = 'SERVER-NAME'
+# Use this backend in production
+#EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+#ANYMAIL = {
+#    'MAILGUN_API_KEY': '',
+#    'MAILGUN_SENDER_DOMAIN': '',
+#}
+STUDLAN_FROM_MAIL = 'no-reply@localhost'
+DEFAULT_FROM_EMAIL = STUDLAN_FROM_MAIL
+REGISTER_FROM_MAIL = STUDLAN_FROM_MAIL
+SERVER_EMAIL = STUDLAN_FROM_MAIL
+SUPPORT_MAIL = 'support@localhost'
 
 # Stripe
 STRIPE_PUBLIC_KEY = ''

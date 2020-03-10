@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
-from apps.lottery.models import Lottery, LotteryParticipant, LotteryTranslation
+from .models import Lottery, LotteryParticipant, LotteryTranslation
 
 
 class LotteryTranslationInlineAdmin(admin.StackedInline):
