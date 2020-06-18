@@ -7,7 +7,6 @@ beautifulsoup4
 xlwt
 django-postman
 requests
-olefile
 markdown2
 pychal
 django-anymail[mailgun]
