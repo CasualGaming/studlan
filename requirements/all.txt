@@ -46,7 +46,6 @@ ipaddress==1.0.23         # via cryptography
 iso8601==0.1.12           # via pychal
 markdown2==2.3.9          # via -r requirements/base.in, django-markdown-deux
 mccabe==0.6.1             # via flake8
-olefile==0.46             # via -r requirements/base.in
 pathlib2==2.3.5           # via importlib-metadata
 pbr==5.4.5                # via stevedore
 pep8-naming==0.11.1       # via -r requirements/test.in

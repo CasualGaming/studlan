@@ -20,7 +20,6 @@ idna==2.9                 # via requests
 ipaddress==1.0.23         # via cryptography
 iso8601==0.1.12           # via pychal
 markdown2==2.3.9          # via -r requirements/base.in, django-markdown-deux
-olefile==0.46             # via -r requirements/base.in
 pillow==6.2.2             # via reportlab
 psycopg2-binary==2.8.5    # via -r requirements/production.in
 pychal==1.9.0             # via -r requirements/base.in
