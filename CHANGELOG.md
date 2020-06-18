@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Added feature for sending emails to multiple users.
+- Added optional URL slug for LANs.
+- Added arrivals table filter for ticket/paid type.
 
 ### Changed
 - Replace the old email backend "django-mailgun" with "django-anymail". (Configuration compatibility code has been added to avoid breaking existing Mailgun configurations.)
@@ -25,7 +27,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added LAN list for seatings.
 - Added LAN list for schedules.
-- Added optional URL slug for LANs.
 
 ### Changed
 - Made message severities more appropriate.

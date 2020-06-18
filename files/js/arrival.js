@@ -108,6 +108,32 @@ let updateTable = function(){
         });
     }
 
+    // Filter paid type
+    let filterPaidType = $("#filter-paid-type-input").val().toLowerCase();
+    const paidTypeManual = "__manual__";
+    if (filterPaidType) {
+        let isPaidTypeManual = filterPaidType === paidTypeManual;
+        let selector = isPaidTypeManual ? "span.manual" : "span.ticket";
+        $(".filterable > tbody > tr:visible").each(function(){
+            if (isPaidTypeManual) {
+                if (!$("td > " + selector, this).length) {
+                    $(this).hide();
+                }
+            } else {
+                let matches = $("td > " + selector, this);
+                let found = false;
+                matches.each(function(_, obj) {
+                    if (obj.getAttribute("ticketType") === filterPaidType) {
+                        found = true;
+                    }
+                });
+                if (!found) {
+                    $(this).hide();
+                }
+            }
+        });
+    }
+
     // Filter arrived
     let filterArrivedRaw = $("#filter-arrived-input").val().toLowerCase();
     if (filterArrivedRaw === "yes" || filterArrivedRaw === "no") {
@@ -141,13 +167,14 @@ let updateTable = function(){
 $(document).ready(function(){
     // Focus filter field
     $("input:text:visible:first").focus();
-    // Remove values if they remain
+    // Remove existing values and add triggers
     $("#filter-text-input").val("");
-    $("#filter-paid-input").val("");
-    $("#filter-arrived-input").val("");
-    // Add triggers
     $("#filter-text-input").keyup(updateTable);
+    $("#filter-paid-input").val("");
     $("#filter-paid-input").change(updateTable);
+    $("#filter-paid-type-input").val("");
+    $("#filter-paid-type-input").change(updateTable);
+    $("#filter-arrived-input").val("");
     $("#filter-arrived-input").change(updateTable);
 });
 });

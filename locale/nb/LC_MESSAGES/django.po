@@ -1,13 +1,13 @@
 # Norwegian, bokmål, translations for studlan.
 # Copyright (C) Casual Gaming
 # This file is distributed under the same license as studlan.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-10 06:44+0100\n"
+"POT-Creation-Date: 2020-06-18 20:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1350,6 +1350,12 @@ msgstr "Ja"
 
 msgid "No"
 msgstr "Nei"
+
+msgid "Paid type:"
+msgstr "Betalt type:"
+
+msgid "Manual"
+msgstr "Manuell"
 
 #, python-brace-format
 msgid "Set {user} to paid?"

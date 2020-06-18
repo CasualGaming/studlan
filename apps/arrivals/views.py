@@ -10,7 +10,7 @@ from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST, require_safe
 
-from apps.lan.models import Attendee, LAN, Ticket
+from apps.lan.models import Attendee, LAN, Ticket, TicketType
 from apps.seating.models import Seat
 
 
@@ -40,7 +40,8 @@ def arrivals(request, lan_id):
     arrived_users = map(lambda d: d['user'], attendees.filter(arrived=True).values('user'))
 
     # Tickets
-    tickets = Ticket.objects.filter(ticket_type__lan=lan)
+    ticket_types = TicketType.objects.filter(lan=lan)
+    tickets = Ticket.objects.filter(ticket_type__in=ticket_types)
     user_tickets = {}
     for serial_user in tickets.values('user').distinct():
         user = tickets.filter(user=serial_user['user'])[0].user
@@ -76,6 +77,7 @@ def arrivals(request, lan_id):
         'user_seats': user_seats,
         'user_seats_count': user_seats_count,
         'user_tickets': user_tickets,
+        'ticket_types': ticket_types,
     }
 
     return render(request, 'arrivals/arrivals.html', context)
