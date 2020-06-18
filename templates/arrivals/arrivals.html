@@ -37,6 +37,14 @@
                     <option value="yes">{% trans "Yes" %}</option>
                     <option value="no">{% trans "No" %}</option>
                 </select>
+                <span>{% trans "Paid type:" %}</span>
+                <select id="filter-paid-type-input">
+                    <option value=""></option>
+                    <option value="__manual__">{% trans "Manual" %}</option>
+                    {% for ticket_type in ticket_types  %}
+                    <option value="{{ ticket_type.id }}">{{ ticket_type }}</option>
+                    {% endfor %}
+                </select>
                 <span>{% trans "Arrived:" %}</span>
                 <select id="filter-arrived-input">
                     <option value=""></option>
@@ -96,15 +104,15 @@
                                 {% if not forloop.first %}
                                 <br />
                                 {% endif %}
-                                <span class="paid label label-primary" value="True">{{ ticket.ticket_type }} </span>
+                                <span class="paid ticket label label-primary" value="True" ticketType="{{ ticket.ticket_type.id }}">{{ ticket.ticket_type }} </span>
                                 {% empty %}
                                 {% if user.id in attendee_users %}
                                 {% if user.id in paid_users %}
-                                <span class="paid toggle label label-success" value="True">
+                                <span class="paid manual toggle label label-success" value="True">
                                     {% include "arrivals/toggle_icons.html" %}
                                 </span>
                                 {% else %}
-                                <span class="paid toggle label label-danger" value="False">
+                                <span class="paid manual toggle label label-danger" value="False">
                                     {% include "arrivals/toggle_icons.html" %}
                                 </span>
                                 {% endif %}
