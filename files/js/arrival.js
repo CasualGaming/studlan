@@ -61,11 +61,10 @@ function toggle(username, type, previousValue, label)
             updateTable();
         },
         error: function(res) {
-            let responseMessage = res['responseText'];
-            if (!responseMessage) {
-                responseMessage = "No response.";
+            let message = res['responseText'];
+            if (!message) {
+                message = "No response.";
             }
-            let message = "Failed to toggle: " + responseMessage;
             alert(message);
             console.log(message);
         },

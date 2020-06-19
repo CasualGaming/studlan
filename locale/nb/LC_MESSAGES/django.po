@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-19 06:05+0200\n"
+"POT-Creation-Date: 2020-06-19 06:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,6 +61,9 @@ msgstr "Ankomster"
 
 msgid "LAN not found."
 msgstr "LAN-et finnes ikke."
+
+msgid "The LAN is ended, arrivals can't be changed."
+msgstr "LAN-et er over, ankomster kan ikke endres."
 
 msgid "User not found."
 msgstr "Brukeren ble ikke funnet."

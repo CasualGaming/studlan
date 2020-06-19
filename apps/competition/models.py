@@ -151,7 +151,7 @@ class Competition(TranslatableModel):
         verbose_name_plural = _(u'competitions')
         ordering = ['status']
         permissions = (
-            ('manage', 'Manage compos and matches'),
+            ('manage', u'Manage compos and matches'),
         )
 
 

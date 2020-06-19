@@ -84,7 +84,7 @@ class Seating(models.Model):
         verbose_name = _(u'seating')
         verbose_name_plural = _(u'seatings')
         permissions = (
-            ('export_seating', 'Can export seating to downloadable file'),
+            ('export_seating', u'Can export seating to downloadable file'),
         )
 
 
