@@ -26,10 +26,7 @@ from apps.userprofile.models import UserProfile
 
 @sensitive_post_parameters()
 def login(request):
-    if request.user.is_authenticated():
-        messages.warning(request, _(u'You\'re already logged in.'))
-        return HttpResponseRedirect('/')
-
+    # Parse next URL
     if request.method == 'POST':
         redirect_url = request.POST.get('next', '/')
     else:
@@ -42,6 +39,12 @@ def login(request):
     if not redirect_url_safe:
         redirect_url = '/'
 
+    # Redirect silently to home if already logged in
+    # This prevents missing permission redirect loops and login redirect chains
+    if request.user.is_authenticated():
+        return HttpResponseRedirect('/')
+
+    # Attempt login or show login form
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.login(request):
