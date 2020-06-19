@@ -87,6 +87,7 @@ class LAN(TranslatableModel):
         permissions = (
             ('export_paying_participants', u'Can export list of paying participants to downloadable file'),
             ('register_arrivals', u'Can show and register arrivals'),
+            ('show_arrivals_statistics', u'Can show statistics about arrivals'),
             ('register_new_user', u'Can directly register a new user'),
         )
 

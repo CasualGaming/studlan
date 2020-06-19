@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-19 06:48+0200\n"
+"POT-Creation-Date: 2020-06-19 09:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,6 +73,9 @@ msgstr "Brukeren deltar ikke på LAN-et."
 
 msgid "Invalid toggle type."
 msgstr "Ugyldig toggle-type."
+
+msgid "Statistics"
+msgstr "Statistikk"
 
 msgid "Authentication"
 msgstr "Autentisering"
@@ -1339,9 +1342,6 @@ msgstr ""
 msgid "Admin Panel"
 msgstr "Adminpanel"
 
-msgid "Register Arrivals"
-msgstr "Registrer ankomster"
-
 msgid "Attending:"
 msgstr "Deltar:"
 
@@ -1401,8 +1401,54 @@ msgstr "Ankommet"
 msgid "%(seating_title)s, seat %(seat_placement)s"
 msgstr "%(seating_title)s, sete %(seat_placement)s"
 
-msgid "Export to Excel sheet"
-msgstr "Eksporter til Excel-ark"
+msgid "Export (Excel)"
+msgstr "Eksporter (Excel)"
+
+msgid "Register Arrivals"
+msgstr "Registrer ankomster"
+
+msgid "Arrivals Statistics"
+msgstr "Ankomststatistikk"
+
+msgid "General"
+msgstr "Generelt"
+
+msgid "Participants are attendees with a ticket or paid status."
+msgstr "Deltakere har billett eller betalt status."
+
+msgid "Participants"
+msgstr "Deltakere"
+
+msgid "Ages"
+msgstr "Aldre"
+
+msgid "Age is counted wrt. the start of the event."
+msgstr "Alder er talt mht. starten av arrangementet."
+
+msgid "Age"
+msgstr "Alder"
+
+msgid "Count"
+msgstr "Antall"
+
+#, python-format
+msgid "%(age)s years"
+msgstr "%(age)s år"
+
+msgid "Tickets"
+msgstr "Billetter"
+
+msgid "Ticket type"
+msgstr "Billettype"
+
+msgid "Non-ticket"
+msgstr "Ikke-billett"
+
+msgid "Includes solo participants and team members."
+msgstr "Inkluderer solodeltakere og lagmedlemmer."
+
+msgid "Participant count"
+msgstr "Deltakerantall"
 
 msgid "Manual Register"
 msgstr "Registrer manuelt"
@@ -1611,7 +1657,7 @@ msgid "Participating Teams"
 msgstr "Deltagende lag"
 
 msgid "Solo Participants"
-msgstr "Solo-deltakere"
+msgstr "Solodeltakere"
 
 msgid "Select team"
 msgstr "Velg lag"
@@ -1731,9 +1777,6 @@ msgstr ""
 msgid "You need to login to sign up for the LAN."
 msgstr "Du må logge deg på for å melde deg opp til LAN-et."
 
-msgid "Tickets"
-msgstr "Billetter"
-
 msgid "Price"
 msgstr "Pris"
 
@@ -1792,9 +1835,6 @@ msgid ""
 msgstr ""
 "Enkel seier (vinnere fjernes fra deltagerlisten for å forhindre å vinne "
 "igjen)"
-
-msgid "Participants"
-msgstr "Solodeltakere"
 
 msgid "Winners"
 msgstr "Vinnere"
@@ -1861,9 +1901,6 @@ msgstr "Nyhetsarkiv"
 
 msgid "Ticket Purchase"
 msgstr "Billettkjøp"
-
-msgid "Ticket type"
-msgstr "Billettype"
 
 msgid "Card holder name"
 msgstr "Navn på kortholder"

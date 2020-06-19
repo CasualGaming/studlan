@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load markdown_deux_tags %}
+{% load misc %}
+{% load static %}
+
+{% block title %}
+{% trans "Arrivals Statistics" %}
+{% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-9">
+        <h1>{% trans "Arrivals Statistics" %}</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-9">
+        <div>
+            <h2>{% trans "General" %}</h2>
+            <p>{% trans "Participants are attendees with a ticket or paid status." %}</p>
+            <p><strong>{% trans "Participants" %}:</strong> {{ participant_count }}</p>
+            <p><strong>{% trans "Arrivals" %}:</strong> {{ arrival_count }} ({% divide arrival_count participant_count %}%)</p>
+        </div>
+
+        <div>
+            <h2 id="age">{% trans "Ages" %}</h2>
+            <p>{% trans "Age is counted wrt. the start of the event." %}</p>
+            <table class="table table-bordered" aria-describedby="age">
+                <thead>
+                    <tr>
+                        <th scope="col">{% trans "Age" %}</th>
+                        <th scope="col">{% trans "Count" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for age, count in age_counts.items %}
+                    <tr>
+                        <th scope="row">{% blocktrans %}{{ age }} years{% endblocktrans %}</th>
+                        <td>{{ count }} ({% divide count participant_count %}%)</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <h2 id="tickets">{% trans "Tickets" %}</h2>
+            <table class="table table-bordered" aria-describedby="tickets">
+                <thead>
+                    <tr>
+                        <th scope="col">{% trans "Ticket type" %}</th>
+                        <th scope="col">{% trans "Count" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket_type, count in ticket_counts %}
+                    <tr>
+                        <th scope="row">{{ ticket_type }}</th>
+                        <td>{{ count }} ({% divide count participant_count %}%)</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <th scope="row">{% trans "Non-ticket" %}</th>
+                        <td>{{ non_ticket_count }} ({% divide non_ticket_count participant_count %}%)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <h2 id="competitions">{% trans "Competitions" %}</h2>
+            <p>{% trans "Includes solo participants and team members." %}</p>
+            <table class="table table-bordered" aria-describedby="competitions">
+                <thead>
+                    <tr>
+                        <th scope="col">{% trans "Competition" %}</th>
+                        <th scope="col">{% trans "Participant count" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for competition, count in competition_counts %}
+                    <tr>
+                        <th scope="row">{{ competition }}</th>
+                        <td>{{ count }} ({% divide count participant_count %}%)</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock content %}
