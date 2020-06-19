@@ -23,8 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-### Security
+- Fixed after-login and after-logout redirect, including unsafe redirecting.
 
+### Security
 
 ## [v1.7.0] - 2020-02-21
 

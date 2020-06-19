@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-18 20:16+0200\n"
+"POT-Creation-Date: 2020-06-19 05:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -157,14 +157,14 @@ msgstr "registrer token"
 msgid "register tokens"
 msgstr "registrer tokens"
 
+msgid "You're already logged in."
+msgstr "Du er allerede logget inn."
+
 msgid "You have successfully logged in."
 msgstr "Du er nå logget inn."
 
 msgid "You have successfully logged out."
-msgstr "Du er nå logget inn."
-
-msgid "You cannot be logged in when registering."
-msgstr "Du kan ikke være innlogget under registrering."
+msgstr "Du er nå logget ut."
 
 msgid "Verify your account"
 msgstr "Verifiser kontoen din"
@@ -179,6 +179,9 @@ msgstr "Ingen kommende LAN."
 
 msgid "Registration successful."
 msgstr "Registrering vellykket."
+
+msgid "You can't do that while logged in."
+msgstr "Du kan ikke gjøre det mens du er logget inn."
 
 #, python-brace-format
 msgid "User {user} was successfully activated. You can now log in."
@@ -2245,26 +2248,3 @@ msgstr "Adminpanel"
 
 msgid "Log out"
 msgstr "Logg ut"
-
-#~ msgid "Sponsor"
-#~ msgstr "Sponsor"
-
-#~ msgid "No current or upcoming LANs."
-#~ msgstr "Ingen nåværende eller kommende LAN."
-
-#~ msgid ""
-#~ "<strong>This competition is full.</strong> This competition only had room "
-#~ "for %(competition_max_participants)s participants, and that limit has "
-#~ "been reached."
-#~ msgstr ""
-#~ "<strong>Konkurransen er full.</strong>Den hadde bare plass til "
-#~ "%(competition_max_participants)s deltagere, og den grensen er nådd."
-
-#~ msgid "Sponsors"
-#~ msgstr "Sponsorer"
-
-#~ msgid "No current sponsors."
-#~ msgstr "Ingen nåværende sponsorer."
-
-#~ msgid "No sponsored LANs."
-#~ msgstr "Ingen sponsede LAN."
