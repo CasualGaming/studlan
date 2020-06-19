@@ -26,19 +26,19 @@
         </div>
 
         <div>
-            <h2>{% trans "Ages" %}</h2>
+            <h2 id="age">{% trans "Ages" %}</h2>
             <p>{% trans "Age is counted wrt. the start of the event." %}</p>
-            <table class="table table-bordered">
+            <table class="table table-bordered" aria-describedby="age">
                 <thead>
                     <tr>
-                        <th>{% trans "Age" %}</th>
-                        <th>{% trans "Count" %}</th>
+                        <th scope="col">{% trans "Age" %}</th>
+                        <th scope="col">{% trans "Count" %}</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for age, count in age_counts.items %}
                     <tr>
-                        <th>{% blocktrans %}{{ age }} years{% endblocktrans %}</th>
+                        <th scope="row">{% blocktrans %}{{ age }} years{% endblocktrans %}</th>
                         <td>{{ count }} ({% divide count participant_count %}%)</td>
                     </tr>
                     {% endfor %}
@@ -47,23 +47,23 @@
         </div>
 
         <div>
-            <h2>{% trans "Tickets" %}</h2>
-            <table class="table table-bordered">
+            <h2 id="tickets">{% trans "Tickets" %}</h2>
+            <table class="table table-bordered" aria-describedby="tickets">
                 <thead>
                     <tr>
-                        <th>{% trans "Ticket type" %}</th>
-                        <th>{% trans "Count" %}</th>
+                        <th scope="col">{% trans "Ticket type" %}</th>
+                        <th scope="col">{% trans "Count" %}</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for ticket_type, count in ticket_counts %}
                     <tr>
-                        <th>{{ ticket_type }}</th>
+                        <th scope="row">{{ ticket_type }}</th>
                         <td>{{ count }} ({% divide count participant_count %}%)</td>
                     </tr>
                     {% endfor %}
                     <tr>
-                        <th>{% trans "Non-ticket" %}</th>
+                        <th scope="row">{% trans "Non-ticket" %}</th>
                         <td>{{ non_ticket_count }} ({% divide non_ticket_count participant_count %}%)</td>
                     </tr>
                 </tbody>
@@ -71,19 +71,19 @@
         </div>
 
         <div>
-            <h2>{% trans "Competitions" %}</h2>
+            <h2 id="competitions">{% trans "Competitions" %}</h2>
             <p>{% trans "Includes solo participants and team members." %}</p>
-            <table class="table table-bordered">
+            <table class="table table-bordered" aria-describedby="competitions">
                 <thead>
                     <tr>
-                        <th>{% trans "Competition" %}</th>
-                        <th>{% trans "Participant count" %}</th>
+                        <th scope="col">{% trans "Competition" %}</th>
+                        <th scope="col">{% trans "Participant count" %}</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for competition, count in competition_counts %}
                     <tr>
-                        <th>{{ competition }}</th>
+                        <th scope="row">{{ competition }}</th>
                         <td>{{ count }} ({% divide count participant_count %}%)</td>
                     </tr>
                     {% endfor %}
