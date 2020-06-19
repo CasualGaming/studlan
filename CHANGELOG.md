@@ -6,13 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+
 ### Added
+
 - Added feature for sending emails to multiple users.
 - Added optional URL slug for LANs.
 - Added arrivals table filter for ticket/paid type.
+- Added user admin panel filter for users with custom permissions.
 
 ### Changed
-- Replace the old email backend "django-mailgun" with "django-anymail". (Configuration compatibility code has been added to avoid breaking existing Mailgun configurations.)
+
+- Replaced the old email backend "django-mailgun" with "django-anymail". (Configuration compatibility code has been added to avoid breaking existing Mailgun configurations.)
+- Made the front page LAN header clickable.
+- Reversed previous LAN lists so newest is on top.
 
 ### Deprecated
 
@@ -20,15 +26,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fixed after-login and after-logout redirect, including unsafe redirecting.
+
 ### Security
 
-
 ## [v1.7.0] - 2020-02-21
+
 ### Added
+
 - Added LAN list for seatings.
 - Added LAN list for schedules.
 
 ### Changed
+
 - Made message severities more appropriate.
 - Made arrivals toggle error messages more verbose.
 - Separated sponsor list into different LANs.
@@ -38,6 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   It is also shown on the front page together with the usual brief LAN info.
 
 ### Fixed
+
 - Removed duplicates in sponsor sidebar for when the same sponsor is related to multiple upcoming LANs.
 - Fixed users with multiple tickets or seats causing error 500.
 - Fixed ticket paid status in arrivals being clickable.
@@ -47,19 +58,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed news archive pagination.
 
 ### Security
+
 - Fixed alias CSRF vulnerability.
 - Fixed logout CSRF vulnerability.
 - Fixed LAN attendance CSRF vulnerability.
 
 
 ## [v1.6.1] - 2019-10-17
+
 ### Fixed
+
 - Fixed server error when viewing team competition page when not logged in.
 - Fixed sponsor title text wrapping.
 
 
 ## [v1.6.0] - 2019-10-16
+
 ### Added
+
 - Added list of participants and winners on lottery page.
 - Added buttons to open and close raffles, including a permission to do so.
 - Added optional payment enforcement to lotteries.- Added more info to compo page info tables and compo list.
@@ -72,6 +88,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Stripe payment descriptions for tickets.
 
 ### Changed
+
 - Merged lottery info page and draw page.
 - Made login, register, recover and set-password pages narrow.
 - Centered narrow pages.
@@ -90,9 +107,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed seating sidebar appearance and added list of applicable ticket types.
 
 ### Removed
+
 - Removed link to lottery drawing from navbar.
 
 ### Fixed
+
 - Fixed misaligned site logo.
 - Fixed navbar overflowing into two rows on medium screens when logged out.
 - Fixed unfair sponsor banner sizes, where some appeared larger than others.
@@ -105,20 +124,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed LAN history list for users only including history with reserved seats.
 
 ### Security
+
 - Fixed lottery CSRF vulnerability.
 
 
 ## [1.5.1] - 2019-08-01
+
 ### Changed
+
 - Removed sponsor sidebar from sponsor page.
 
 ### Fixed
+
 - Fixed missing LAN translations on LAN admin page.
 - Fixed reversed order for sponsor priority.
 
 
 ## [1.5.0] - 2019-07-31
+
 ### Added
+
 - Added version info to the app, shown in the site footer.
 - Added video frame to LAN.
 - Added link(s) to active LAN(s) on front page.
@@ -134,6 +159,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added attendee to admin panel.
 
 ### Changed
+
 - Made footer prettier.
 - Removed user info from sidebar.
 - Made news list pages single-column and less wasteful of space.
@@ -157,12 +183,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update stripe integration to use payment intents and Stripe.js v3 to support SCA.
 
 ### Removed
+
 - Removed unique email check from register form, since email addresses are non-unique.
 - Removed unused sponsor logo field.
 - Removed (moved) sidebar from top of page on small screens.
 - Removed admin arror emails (it was broken anyways, and super spamming).
 
 ### Fixed
+
 - Fixed HTML DOM bug (unclosed tag) in the seating app template.
 - Fixed seating map size inconsistency across browsers.
 - Fixed account recovery sending recovery emails to only one account for a certain email address.
@@ -178,26 +206,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Users cannot remove attendance from a lan if they have paid.
 
 ### Security
+
 - Fixed seating CSRF vulnerability.
 - Fixed team join/leave/etc. CSRF vulnerability.
 - Fixed ticket release date not being properly enforced.
 
 
 ## [1.4.3] - 2019-04-03
+
 ### Fixed
+
 - Fixed internal error when accessing `/profile`.
 
 
 ## [1.4.2] - 2019-04-01
+
 ### Added
+
 - Added button on arrivals page for exporting paying participants for a LAN to an Excel sheet.
 - Added buttons on lottery pages to go between details and drawing pages.
 
 ### Changed
+
 - Replaced all is-staff checks with permission checks.
 - Updated dependencies: stripe
 
 ### Fixed
+
 - Fixed wrong join time and last login time on user profiles.
 - Fixed string encoding error when exporting paying participants for a LAN to an Excel sheet.
 - Fixed internal errors when viewing non-existing lotteries.
@@ -205,22 +240,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [1.4.1] - 2019-03-10
+
 ### Added
+
 - Added command in Docker startup script for deleting expired sessions.
 
 ### Changed
+
 - Hide the full names of users where they aren't needed.
 
 ### Fixed
+
 - Fixed join date on user profiles.
 
 ### Security
+
 - Fix broken auth for the downloadable PDF files for the seating.
 - Replace the drop-down list with all usernames in the team invite section with a text field.
 
 
 ## [1.4.0] - 2019-03-10
+
 ### Added
+
 - Added changelog file.
 - Added HON95/Håvard N. as maintainer.
 - Added Docker image as release medium.
@@ -230,15 +272,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added error log file.
 
 ### Changed
+
 - Replaced build/test/CI/CD tools: Replace a bunch of scripts and stuff, remove Vagrant, remove tox, replace Drone CI with Travis CI, use Docker Hub as image repo.
 - Updated Django from v1.10 to v1.11.
 - Updated dependency Stripe PyPI package from v1 to v2.
 - Changed the user profile slightly. The user's full name is no longer shown publicly.
 
 ### Fixed
+
 - Invalid ZIP codes no longer cause crashes when trying to save.
 - Phone numbers are now required to adhere to an appropriate format.
 
 ### Security
+
 - Replaced lotto RNG with crypto RNG.
 - Added a minimum password length of 8 characters.

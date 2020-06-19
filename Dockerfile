@@ -2,33 +2,36 @@ FROM python:2.7
 
 WORKDIR /srv/studlan
 
-# Required files
+# Install requirements
+COPY requirements/ requirements/
+RUN \
+apt-get update && \
+apt-get install -y gettext && \
+rm -rf /var/lib/apt/lists/* && \
+pip install --no-cache-dir -r requirements/production.txt --upgrade
+
+# Add app files
+COPY studlan studlan
 COPY apps apps
 COPY files files
-COPY locale locale
-COPY requirements requirements
-COPY studlan studlan
 COPY templates templates
-COPY docker-entrypoint.sh ./
+COPY locale locale
 COPY manage.py ./
+COPY docker-entrypoint.sh ./
 COPY uwsgi.ini ./
 RUN mkdir -p log
 
-# Extra files
+# Compile translations
+COPY setup/local.template.py studlan/settings/local.py
+RUN python manage.py compilemessages --locale=nb
+RUN rm -f studlan/settings/local.py
+
+# Add misc files
 COPY CHANGELOG.md ./
 COPY CONTRIBUTORS ./
 COPY LICENSE.txt ./
 COPY MAINTAINERS ./
 COPY VERSION ./
-
-# Install requirements
-RUN apt-get update && apt-get install -y gettext && \
-    pip install -r requirements/production.txt --upgrade
-
-# Compile translations
-COPY setup/local.template.py studlan/settings/local.py
-RUN python manage.py compilemessages --locale=nb && \
-    rm -f studlan/settings/local.py
 
 # HTTP
 EXPOSE 8080

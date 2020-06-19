@@ -472,6 +472,10 @@ div#btn-profile {
     margin-top: 20px;
 }
 
+h1 a, h1 a:link, h1 a:hover, h1 a:active, h1 a:visited {
+    color: black;
+}
+
 .alert {
     margin-top: 10px;
     margin-bottom: 10px;

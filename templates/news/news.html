@@ -30,7 +30,7 @@
 <div class="row">
     <div class="col-md-9">
         {% if lans.count == 1 %}
-        <h1 class="page-header">{{ lans.0 }}</h1>
+        <h1 class="page-header"><a href="{{ lans.0.get_absolute_url }}">{{ lans.0 }}</a></h1>
         {% else %}
         <h1 class="page-header">{% trans "LANs" %}</h1>
         {% endif %}
@@ -44,7 +44,7 @@
         <p class="lead">{{ lans.0.start_date|date }} – {{ lans.0.end_date|date }}</p>
     </div>
     <div class="col-md-3 col-xs-5">
-        <a class="btn btn-primary pull-right" href="{{ lans.0.get_absolute_url }}">{% trans "Go to LAN page" %}</a>
+        <a class="btn btn-primary pull-right" href="{{ lans.0.get_absolute_url }}">{% trans "Show LAN" %}</a>
     </div>
 </div>
 {% else %}

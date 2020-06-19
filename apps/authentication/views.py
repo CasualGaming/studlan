@@ -12,6 +12,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.utils.http import is_safe_url
 from django.utils.translation import ugettext as _
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.http import require_POST
@@ -25,14 +26,27 @@ from apps.userprofile.models import UserProfile
 
 @sensitive_post_parameters()
 def login(request):
-    redirect_url = request.GET.get('next', '')
+    if request.user.is_authenticated():
+        messages.warning(request, _(u'You\'re already logged in.'))
+        return HttpResponseRedirect('/')
+
+    if request.method == 'POST':
+        redirect_url = request.POST.get('next', '/')
+    else:
+        redirect_url = request.GET.get('next', '/')
+    redirect_url_safe = is_safe_url(
+        url=redirect_url,
+        allowed_hosts=settings.ALLOWED_HOSTS,
+        require_https=request.is_secure(),
+    )
+    if not redirect_url_safe:
+        redirect_url = '/'
+
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.login(request):
             messages.success(request, _(u'You have successfully logged in.'))
-            if redirect_url:
-                return HttpResponseRedirect(redirect_url)
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect(redirect_url)
         else:
             form = LoginForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
     else:
@@ -45,72 +59,82 @@ def login(request):
 @require_POST
 @login_required
 def logout(request):
+    redirect_url = request.GET.get('next', '/')
+    redirect_url_safe = is_safe_url(
+        url=redirect_url,
+        allowed_hosts=settings.ALLOWED_HOSTS,
+        require_https=request.is_secure(),
+    )
+    if not redirect_url_safe:
+        redirect_url = '/'
+
     auth.logout(request)
+
     messages.success(request, _(u'You have successfully logged out.'))
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(redirect_url)
 
 
 @sensitive_post_parameters()
 def register(request):
     if request.user.is_authenticated():
-        messages.error(request, _(u'You cannot be logged in when registering.'))
+        messages.warning(request, _(u'You\'re already logged in.'))
         return HttpResponseRedirect('/')
-    else:
-        if request.method == 'POST':
-            form = RegisterForm(request.POST)
-            if form.is_valid():
-                cleaned = form.cleaned_data
 
-                # Create user
-                user = User(
-                    username=cleaned['desired_username'],
-                    first_name=cleaned['first_name'],
-                    last_name=cleaned['last_name'],
-                    email=cleaned['email'],
-                )
-                user.set_password(cleaned['password'])
-                user.is_active = False
-                user.save()
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            cleaned = form.cleaned_data
 
-                # Create userprofile
-                up = UserProfile(
-                    user=user,
-                    nick=cleaned['desired_username'],
-                    date_of_birth=cleaned['date_of_birth'],
-                    zip_code=cleaned['zip_code'],
-                    address=cleaned['address'],
-                    phone=cleaned['phone'],
-                )
-                up.save()
+            # Create user
+            user = User(
+                username=cleaned['desired_username'],
+                first_name=cleaned['first_name'],
+                last_name=cleaned['last_name'],
+                email=cleaned['email'],
+            )
+            user.set_password(cleaned['password'])
+            user.is_active = False
+            user.save()
 
-                # Create the registration token
-                token = uuid.uuid4().hex
-                rt = RegisterToken(user=user, token=token)
-                rt.save()
+            # Create userprofile
+            up = UserProfile(
+                user=user,
+                nick=cleaned['desired_username'],
+                date_of_birth=cleaned['date_of_birth'],
+                zip_code=cleaned['zip_code'],
+                address=cleaned['address'],
+                phone=cleaned['phone'],
+            )
+            up.save()
 
-                link = request.build_absolute_uri(reverse('auth_verify', args=[token]))
-                context = {
-                    'link': link,
-                }
-                txt_message = render_to_string('auth/email/verify_account.txt', context, request).strip()
-                html_message = render_to_string('auth/email/verify_account.html', context, request).strip()
-                send_mail(
-                    subject=_(u'Verify your account'),
-                    from_email=settings.STUDLAN_FROM_MAIL,
-                    recipient_list=[user.email],
-                    message=txt_message,
-                    html_message=html_message,
-                )
+            # Create the registration token
+            token = uuid.uuid4().hex
+            rt = RegisterToken(user=user, token=token)
+            rt.save()
 
-                messages.success(request, _(u'Registration successful. Check your email for verification instructions.'))
+            link = request.build_absolute_uri(reverse('auth_verify', args=[token]))
+            context = {
+                'link': link,
+            }
+            txt_message = render_to_string('auth/email/verify_account.txt', context, request).strip()
+            html_message = render_to_string('auth/email/verify_account.html', context, request).strip()
+            send_mail(
+                subject=_(u'Verify your account'),
+                from_email=settings.STUDLAN_FROM_MAIL,
+                recipient_list=[user.email],
+                message=txt_message,
+                html_message=html_message,
+            )
 
-                return HttpResponseRedirect('/')
-            else:
-                form = RegisterForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
+            messages.success(request, _(u'Registration successful. Check your email for verification instructions.'))
+
+            return HttpResponseRedirect('/')
         else:
-            form = RegisterForm()
+            form = RegisterForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
+    else:
+        form = RegisterForm()
 
-        return render(request, 'auth/register.html', {'form': form})
+    return render(request, 'auth/register.html', {'form': form})
 
 
 @sensitive_post_parameters()
@@ -164,100 +188,103 @@ def direct_register(request):
 
 def verify(request, token):
     if request.user.is_authenticated():
+        messages.error(request, _(u'You can\'t do that while logged in.'))
         return HttpResponseRedirect('/')
+
+    rt = get_object_or_404(RegisterToken, token=token)
+
+    if rt.is_valid:
+        user = getattr(rt, 'user')
+
+        user.is_active = True
+        user.save()
+        rt.delete()
+
+        messages.success(request, _(u'User {user} was successfully activated. You can now log in.').format(user=user))
+
+        return redirect('auth_login')
     else:
-        rt = get_object_or_404(RegisterToken, token=token)
-
-        if rt.is_valid:
-            user = getattr(rt, 'user')
-
-            user.is_active = True
-            user.save()
-            rt.delete()
-
-            messages.success(request, _(u'User {user} was successfully activated. You can now log in.').format(user=user))
-
-            return redirect('auth_login')
-        else:
-            messages.error(request, _(u'The activation link has expired. Please use the password recovery form to get a new link.'))
-            return HttpResponseRedirect('/')
+        messages.error(request, _(u'The activation link has expired. Please use the password recovery form to get a new link.'))
+        return HttpResponseRedirect('/')
 
 
 @sensitive_post_parameters()
 def recover(request):
     if request.user.is_authenticated():
+        messages.error(request, _(u'You can\'t do that while logged in.'))
         return HttpResponseRedirect('/')
-    else:
-        if request.method == 'POST':
-            form = RecoveryForm(request.POST)
-            if form.is_valid():
-                email = form.cleaned_data['email']
-                users = User.objects.filter(email__iexact=email)
 
-                if users.count() == 0:
-                    messages.error(request, _(u'No users are registered with that email address.'))
-                    return HttpResponseRedirect('/')
+    if request.method == 'POST':
+        form = RecoveryForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            users = User.objects.filter(email__iexact=email)
 
-                # Send recovery email to all associated users
-                for user in users.all():
-                    # Create the registration token
-                    token = uuid.uuid4().hex
-                    rt = RegisterToken(user=user, token=token)
-                    rt.save()
-
-                    link = request.build_absolute_uri(reverse('auth_set_password', args=[token]))
-                    context = {
-                        'link': link,
-                        'username': user.username,
-                        'email': user.email,
-                    }
-                    txt_message = render_to_string('auth/email/recover_account.txt', context, request).strip()
-                    html_message = render_to_string('auth/email/recover_account.html', context, request).strip()
-                    send_mail(
-                        subject=_(u'Account recovery'),
-                        from_email=settings.STUDLAN_FROM_MAIL,
-                        recipient_list=[user.email],
-                        message=txt_message,
-                        html_message=html_message,
-                    )
-
-                messages.success(request, _(u'A recovery link has been sent to all users with email address "{email}".').format(email=email))
+            if users.count() == 0:
+                messages.error(request, _(u'No users are registered with that email address.'))
                 return HttpResponseRedirect('/')
-            else:
-                form = RecoveryForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
-        else:
-            form = RecoveryForm()
 
-        return render(request, 'auth/recover.html', {'form': form})
+            # Send recovery email to all associated users
+            for user in users.all():
+                # Create the registration token
+                token = uuid.uuid4().hex
+                rt = RegisterToken(user=user, token=token)
+                rt.save()
+
+                link = request.build_absolute_uri(reverse('auth_set_password', args=[token]))
+                context = {
+                    'link': link,
+                    'username': user.username,
+                    'email': user.email,
+                }
+                txt_message = render_to_string('auth/email/recover_account.txt', context, request).strip()
+                html_message = render_to_string('auth/email/recover_account.html', context, request).strip()
+                send_mail(
+                    subject=_(u'Account recovery'),
+                    from_email=settings.STUDLAN_FROM_MAIL,
+                    recipient_list=[user.email],
+                    message=txt_message,
+                    html_message=html_message,
+                )
+
+            messages.success(request, _(u'A recovery link has been sent to all users with email address "{email}".').format(email=email))
+            return HttpResponseRedirect('/')
+        else:
+            form = RecoveryForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
+    else:
+        form = RecoveryForm()
+
+    return render(request, 'auth/recover.html', {'form': form})
 
 
 @sensitive_post_parameters()
 def set_password(request, token=None):
     if request.user.is_authenticated():
+        messages.error(request, _(u'You can\'t do that while logged in.'))
         return HttpResponseRedirect('/')
-    else:
-        rt = get_object_or_404(RegisterToken, token=token)
 
-        if rt.is_valid:
-            if request.method == 'POST':
-                form = ChangePasswordForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
-                if form.is_valid():
-                    user = getattr(rt, 'user')
+    rt = get_object_or_404(RegisterToken, token=token)
 
-                    user.is_active = True
-                    user.set_password(form.cleaned_data['new_password'])
-                    user.save()
+    if rt.is_valid:
+        if request.method == 'POST':
+            form = ChangePasswordForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
+            if form.is_valid():
+                user = getattr(rt, 'user')
 
-                    rt.delete()
+                user.is_active = True
+                user.set_password(form.cleaned_data['new_password'])
+                user.save()
 
-                    messages.success(request, _(u'Successfully changed password for user {user}. You can now log in.').format(user=user))
-                    return HttpResponseRedirect('/')
-            else:
-                form = ChangePasswordForm()
-                messages.info(request, _(u'Please set a new password.'))
+                rt.delete()
 
-            return render(request, 'auth/set_password.html', {'form': form, 'token': token})
-
+                messages.success(request, _(u'Successfully changed password for user {user}. You can now log in.').format(user=user))
+                return HttpResponseRedirect('/')
         else:
-            messages.error(request, _(u'The recovery link has expired. Please use the password recovery form to get a new link.'))
-            return HttpResponseRedirect('/')
+            form = ChangePasswordForm()
+            messages.info(request, _(u'Please set a new password.'))
+
+        return render(request, 'auth/set_password.html', {'form': form, 'token': token})
+
+    else:
+        messages.error(request, _(u'The recovery link has expired. Please use the password recovery form to get a new link.'))
+        return HttpResponseRedirect('/')

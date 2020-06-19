@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-18 20:16+0200\n"
+"POT-Creation-Date: 2020-06-19 06:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -157,14 +157,14 @@ msgstr "registrer token"
 msgid "register tokens"
 msgstr "registrer tokens"
 
+msgid "You're already logged in."
+msgstr "Du er allerede logget inn."
+
 msgid "You have successfully logged in."
 msgstr "Du er nå logget inn."
 
 msgid "You have successfully logged out."
-msgstr "Du er nå logget inn."
-
-msgid "You cannot be logged in when registering."
-msgstr "Du kan ikke være innlogget under registrering."
+msgstr "Du er nå logget ut."
 
 msgid "Verify your account"
 msgstr "Verifiser kontoen din"
@@ -179,6 +179,9 @@ msgstr "Ingen kommende LAN."
 
 msgid "Registration successful."
 msgstr "Registrering vellykket."
+
+msgid "You can't do that while logged in."
+msgstr "Du kan ikke gjøre det mens du er logget inn."
 
 #, python-brace-format
 msgid "User {user} was successfully activated. You can now log in."
@@ -1197,6 +1200,12 @@ msgstr "Du er ikke medlem av dette laget."
 msgid "You have left team {team}."
 msgstr "Du har forlatt lag {team}."
 
+msgid "custom permissions"
+msgstr "tilpassede tilganger"
+
+msgid "Some"
+msgstr "Noen"
+
 msgid "Successfully activated the selected users."
 msgstr "De valgte brukerene ble aktivert."
 
@@ -1726,7 +1735,7 @@ msgid "Price"
 msgstr "Pris"
 
 msgid "Available tickets"
-msgstr "Tilgjengelig billetter"
+msgstr "Tilgjengelige billetter"
 
 #, python-format
 msgid "Tickets will be released %(release_date)s at %(release_time)s"
@@ -1754,7 +1763,7 @@ msgid "Buy"
 msgstr "Kjøp"
 
 msgid "No tickets are available at this time."
-msgstr "Ingen billetter er tilgjengelig akkurat nå."
+msgstr "Ingen billetter er tilgjengelige akkurat nå."
 
 msgid "LAN List"
 msgstr "LAN-liste"
@@ -1841,8 +1850,8 @@ msgstr "Festet"
 msgid "Home"
 msgstr "Hjem"
 
-msgid "Go to LAN page"
-msgstr "Gå til LAN-side"
+msgid "Show LAN"
+msgstr "Vis LAN"
 
 msgid "News archive"
 msgstr "Nyhetsarkiv"
@@ -2245,26 +2254,3 @@ msgstr "Adminpanel"
 
 msgid "Log out"
 msgstr "Logg ut"
-
-#~ msgid "Sponsor"
-#~ msgstr "Sponsor"
-
-#~ msgid "No current or upcoming LANs."
-#~ msgstr "Ingen nåværende eller kommende LAN."
-
-#~ msgid ""
-#~ "<strong>This competition is full.</strong> This competition only had room "
-#~ "for %(competition_max_participants)s participants, and that limit has "
-#~ "been reached."
-#~ msgstr ""
-#~ "<strong>Konkurransen er full.</strong>Den hadde bare plass til "
-#~ "%(competition_max_participants)s deltagere, og den grensen er nådd."
-
-#~ msgid "Sponsors"
-#~ msgstr "Sponsorer"
-
-#~ msgid "No current sponsors."
-#~ msgstr "Ingen nåværende sponsorer."
-
-#~ msgid "No sponsored LANs."
-#~ msgstr "Ingen sponsede LAN."
