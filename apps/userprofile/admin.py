@@ -28,10 +28,26 @@ class UserProfileInline(admin.StackedInline):
     formset = NoDeleteInline
 
 
+class UserCustomPermissionFilter(admin.SimpleListFilter):
+    title = _(u'custom permissions')
+    parameter_name = u'custom_permissions'
+
+    def lookups(self, request, model_admin):
+        return (
+            (u'some', _(u'Some')),
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == 'some':
+            return queryset.exclude(user_permissions=None)
+        else:
+            return queryset
+
+
 class UserProfileAdmin(UserAdmin):
     inlines = (UserProfileInline,)
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'is_active', 'date_joined', 'last_login')
-    list_filter = ('groups', 'is_staff', 'is_superuser', 'is_active')
+    list_filter = ('groups', 'is_staff', 'is_superuser', 'is_active', UserCustomPermissionFilter)
     filter_horizontal = ('groups',)
     actions = ['activate_users', 'deactivate_users', 'forcefully_logout_users']
 
