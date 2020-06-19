@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-19 05:12+0200\n"
+"POT-Creation-Date: 2020-06-19 05:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1729,7 +1729,7 @@ msgid "Price"
 msgstr "Pris"
 
 msgid "Available tickets"
-msgstr "Tilgjengelig billetter"
+msgstr "Tilgjengelige billetter"
 
 #, python-format
 msgid "Tickets will be released %(release_date)s at %(release_time)s"
@@ -1757,7 +1757,7 @@ msgid "Buy"
 msgstr "Kjøp"
 
 msgid "No tickets are available at this time."
-msgstr "Ingen billetter er tilgjengelig akkurat nå."
+msgstr "Ingen billetter er tilgjengelige akkurat nå."
 
 msgid "LAN List"
 msgstr "LAN-liste"
@@ -1844,8 +1844,8 @@ msgstr "Festet"
 msgid "Home"
 msgstr "Hjem"
 
-msgid "Go to LAN page"
-msgstr "Gå til LAN-side"
+msgid "Show LAN"
+msgstr "Vis LAN"
 
 msgid "News archive"
 msgstr "Nyhetsarkiv"
