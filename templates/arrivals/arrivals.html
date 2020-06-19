@@ -6,7 +6,7 @@
 {% load static %}
 
 {% block title %}
-{% trans "Register Arrivals" %}
+{% trans "Arrivals" %}
 {% endblock title %}
 
 {% block content %}
@@ -60,7 +60,6 @@
                 <!-- Adding token here because using clientside js using the csrfcookie is a security liability -->
                 <input id="token" type="hidden" value="{{ csrf_token }}">
                 <!-- Text used by JS toggle confirm dialogs -->
-                <span id="toggle-text-failed">{% trans "Failed to toggle: " %}</span>
                 <span id="toggle-text-has-paid">{% trans "Set {user} to paid?" %}</span>
                 <span id="toggle-text-has-not-paid">{% trans "Set {user} to NOT paid?" %}</span>
                 <span id="toggle-text-has-arrived">{% trans "Set {user} to arrived?" %}</span>
@@ -138,12 +137,15 @@
                     </tbody>
                 </table>
             </div>
+            <div>
+                {% if perms.lan.show_arrivals_statistics %}
+                <a href="{% url 'arrivals_statistics' lan.id %}" class="btn btn-info">{% trans "Statistics" %}</a>
+                {% endif %}
+                {% if perms.lan.export_paying_participants %}
+                <a href="{% url 'lan_list_paid' lan.id %}" class="btn btn-warning">{% trans "Export (Excel)" %}</a>
+                {% endif %}
+            </div>
         </div>
-        {% if perms.lan.export_paying_participants %}
-        <div class="col-md-9">
-            <a href="{% url 'lan_list_paid' lan.id %}" class="btn btn-info">{% trans "Export to Excel sheet" %}</a>
-        </div>
-        {% endif %}
     </div>
 {% endblock content %}
 

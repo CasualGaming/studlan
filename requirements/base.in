@@ -10,3 +10,4 @@ requests
 markdown2
 pychal
 django-anymail[mailgun]
+python-dateutil

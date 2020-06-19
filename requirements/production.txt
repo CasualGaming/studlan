@@ -35,3 +35,5 @@ tzlocal==2.0.0            # via pychal
 urllib3==1.25.9           # via requests
 uwsgi==2.0.19.1           # via -r requirements/production.in
 xlwt==1.3.0               # via -r requirements/base.in
+
+python-dateutil
