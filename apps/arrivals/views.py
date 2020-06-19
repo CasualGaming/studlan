@@ -92,22 +92,25 @@ def toggle(request, lan_id):
 
     lan = LAN.objects.filter(pk=lan_id).first()
     if lan is None:
-        return HttpResponse(status=404, content=_('LAN not found.'))
+        return HttpResponse(status=404, content=_(u'LAN not found.'))
+
+    if lan.is_ended():
+        return HttpResponse(status=403, content=_(u'The LAN is ended, arrivals can\'t be changed.'))
 
     user = User.objects.filter(username=username).first()
     if user is None:
-        return HttpResponse(status=404, content=_('User not found.'))
+        return HttpResponse(status=404, content=_(u'User not found.'))
 
     attendee = Attendee.objects.filter(lan=lan, user=user).first()
     if attendee is None:
-        return HttpResponse(status=404, content=_('The user is not attending the LAN.'))
+        return HttpResponse(status=404, content=_(u'The user is not attending the LAN.'))
 
     if int(toggle_type) == 0:
         attendee.has_paid = flip_string_bool(previous_value)
     elif int(toggle_type) == 1:
         attendee.arrived = flip_string_bool(previous_value)
     else:
-        return HttpResponse(status=400, content=_('Invalid toggle type.'))
+        return HttpResponse(status=400, content=_(u'Invalid toggle type.'))
 
     attendee.save()
     return HttpResponse(status=200)

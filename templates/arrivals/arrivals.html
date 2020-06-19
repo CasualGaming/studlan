@@ -60,6 +60,7 @@
                 <!-- Adding token here because using clientside js using the csrfcookie is a security liability -->
                 <input id="token" type="hidden" value="{{ csrf_token }}">
                 <!-- Text used by JS toggle confirm dialogs -->
+                <span id="toggle-text-failed">{% trans "Failed to toggle: " %}</span>
                 <span id="toggle-text-has-paid">{% trans "Set {user} to paid?" %}</span>
                 <span id="toggle-text-has-not-paid">{% trans "Set {user} to NOT paid?" %}</span>
                 <span id="toggle-text-has-arrived">{% trans "Set {user} to arrived?" %}</span>

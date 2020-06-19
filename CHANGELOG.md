@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Replaced the old email backend "django-mailgun" with "django-anymail". (Configuration compatibility code has been added to avoid breaking existing Mailgun configurations.)
 - Made the front page LAN header clickable.
 - Reversed previous LAN lists so newest is on top.
+- Prevented changing arrivals for ended LANs.
 
 ### Deprecated
 

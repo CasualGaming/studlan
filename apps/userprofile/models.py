@@ -35,7 +35,7 @@ class UserProfile(models.Model):
         verbose_name = _(u'user profile')
         verbose_name_plural = _(u'user profiles')
         permissions = (
-            ('show_private_info', 'Can show private user info'),
+            ('show_private_info', u'Can show private user info'),
         )
 
 

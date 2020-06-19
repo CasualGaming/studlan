@@ -69,6 +69,9 @@ class LAN(TranslatableModel):
         else:
             return None
 
+    def is_ended(self):
+        return self.end_date < datetime.now()
+
     def get_absolute_url(self):
         if self.slug:
             return reverse('lan_details_slug', kwargs={'lan_slug': self.slug})
@@ -83,7 +86,7 @@ class LAN(TranslatableModel):
         ordering = ['start_date']
         permissions = (
             ('export_paying_participants', u'Can export list of paying participants to downloadable file'),
-            ('register_arrivals', u'Can register arrivals'),
+            ('register_arrivals', u'Can show and register arrivals'),
             ('register_new_user', u'Can directly register a new user'),
         )
 
