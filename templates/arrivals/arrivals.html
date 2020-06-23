@@ -138,9 +138,6 @@
                 </table>
             </div>
             <div>
-                {% if perms.lan.show_arrivals_statistics %}
-                <a href="{% url 'arrivals_statistics' lan.id %}" class="btn btn-info">{% trans "Statistics" %}</a>
-                {% endif %}
                 {% if perms.lan.export_paying_participants %}
                 <a href="{% url 'lan_list_paid' lan.id %}" class="btn btn-warning">{% trans "Export (Excel)" %}</a>
                 {% endif %}

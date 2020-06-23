@@ -30,6 +30,9 @@
                 </a>
             </li>
             <li class="divider"></li>
+            {% if perms.lan.show_arrivals_statistics %}
+            <li><a href="{% url 'statistics_list' %}"><span class="glyphicon glyphicon-stats"></span> {% trans "Statistics" %}</a></li>
+            {% endif %}
             {% if perms.lan.register_arrivals %}
             <li><a href="{% url 'arrival_home' %}"><span class="glyphicon glyphicon-list-alt"></span> {% trans "Register arrivals" %}</a></li>
             {% endif %}
@@ -42,7 +45,7 @@
             {% if user.is_staff %}
             <li><a href="/admin"><span class="glyphicon glyphicon-cog"></span> {% trans "Admin panel" %}</a>
             {% endif %}
-            {% if perms.lan.register_arrivals or perms.lan.register_new_user or user.is_staff %}
+            {% if perms.lan.show_arrivals_statistics or perms.lan.register_arrivals or perms.lan.register_new_user or perms.sendmail.send_mail or user.is_staff %}
             <li class="divider"></li>
             {% endif %}
             <li>
@@ -66,6 +69,9 @@
             </li>
             <li class="divider hidden-md hidden-lg hidden-sm"></li>
             {% if perms.lan.register_arrivals %}
+            <li class="hidden-md hidden-lg hidden-sm"><a href="{% url 'statistics_list' %}"><span class="glyphicon glyphicon-stats"></span> {% trans "Statistics" %}</a></li>
+            {% endif %}
+            {% if perms.lan.register_arrivals %}
             <li class="hidden-md hidden-lg hidden-sm"><a href="{% url 'arrival_home' %}"><span class="glyphicon glyphicon-list-alt"></span> {% trans "Register arrivals" %}</a></li>
             {% endif %}
             {% if perms.lan.register_new_user %}
@@ -77,7 +83,7 @@
             {% if user.is_staff %}
             <li class="hidden-md hidden-lg hidden-sm"><a href="/admin"><span class="glyphicon glyphicon-cog"></span> {% trans "Admin panel" %}</a></li>
             {% endif %}
-            {% if perms.lan.register_arrivals or perms.lan.register_new_user or user.is_staff %}
+            {% if perms.lan.show_arrivals_statistics or perms.lan.register_arrivals or perms.lan.register_new_user or perms.sendmail.send_mail or user.is_staff %}
             <li class="divider hidden-md hidden-lg hidden-sm"></li>
             {% endif %}
             <li class="hidden-md hidden-lg hidden-sm">

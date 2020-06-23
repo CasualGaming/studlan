@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^team/', include('apps.team.urls')),
     url(r'^seating/', include('apps.seating.urls')),
     url(r'^sendmail/', include('apps.sendmail.urls')),
+    url(r'^statistics/', include('apps.statistics.urls')),
     url(r'^messages/', include('postman.urls', namespace='postman')),
 
     # Views

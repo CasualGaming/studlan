@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'apps.seating.config.Config',
     'apps.sendmail.config.Config',
     'apps.sponsor.config.Config',
+    'apps.statistics.config.Config',
     'apps.team.config.Config',
     'apps.userprofile.config.Config',
 )
