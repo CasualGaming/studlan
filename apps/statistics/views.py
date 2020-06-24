@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+from collections import OrderedDict
 from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
@@ -33,11 +34,11 @@ def statistics(request, lan_id):
     participants = set()
     ticket_users = User.objects.filter(ticket__ticket_type__lan=lan)
     participants.update(ticket_users)
-    paid_users = User.objects.filter(attendee__lan=lan).filter(attendee__has_paid=True)
+    paid_users = User.objects.filter(attendee__lan=lan, attendee__has_paid=True)
     participants.update(paid_users)
 
     # Arrivals
-    arrived_attendees = Attendee.objects.filter(lan=lan, user__in=participants, arrived=True)
+    arrived_participants_count = Attendee.objects.filter(lan=lan, user__in=participants, arrived=True).count()
 
     # Participant ages
     age_counts = {}
@@ -47,14 +48,17 @@ def statistics(request, lan_id):
             age_counts[age] += 1
         else:
             age_counts[age] = 1
+    age_counts = OrderedDict(sorted(age_counts.items(), key=lambda t: t[0]))
 
-    # Tickets
+    # Tickets and paid counts
     ticket_counts = []
     ticket_count_total = 0
     for ticket_type in TicketType.objects.filter(lan=lan):
         count = Ticket.objects.filter(ticket_type=ticket_type).count()
         ticket_count_total += count
         ticket_counts.append((ticket_type, count))
+    paid_count = Attendee.objects.filter(lan=lan, has_paid=True).count()
+    ticket_paid_total_count = ticket_count_total + paid_count
 
     # Competitions
     competition_counts = []
@@ -73,11 +77,12 @@ def statistics(request, lan_id):
     context = {
         'breadcrumbs': breadcrumbs,
         'lan': lan,
-        'arrival_count': arrived_attendees.count(),
+        'arrival_count': arrived_participants_count,
         'participant_count': len(participants),
         'age_counts': age_counts,
         'ticket_counts': ticket_counts,
-        'non_ticket_count': len(participants) - ticket_count_total,
+        'paid_count': paid_count,
+        'ticket_paid_total_count': ticket_paid_total_count,
         'competition_counts': competition_counts,
     }
 

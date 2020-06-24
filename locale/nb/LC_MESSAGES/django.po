@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-19 09:15+0200\n"
+"POT-Creation-Date: 2020-06-24 03:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,9 +73,6 @@ msgstr "Brukeren deltar ikke på LAN-et."
 
 msgid "Invalid toggle type."
 msgstr "Ugyldig toggle-type."
-
-msgid "Statistics"
-msgstr "Statistikk"
 
 msgid "Authentication"
 msgstr "Autentisering"
@@ -163,14 +160,14 @@ msgstr "registrer token"
 msgid "register tokens"
 msgstr "registrer tokens"
 
-msgid "You're already logged in."
-msgstr "Du er allerede logget inn."
-
 msgid "You have successfully logged in."
 msgstr "Du er nå logget inn."
 
 msgid "You have successfully logged out."
 msgstr "Du er nå logget ut."
+
+msgid "You're already logged in."
+msgstr "Du er allerede logget inn."
 
 msgid "Verify your account"
 msgstr "Verifiser kontoen din"
@@ -1065,6 +1062,9 @@ msgstr "partnerrelasjon"
 msgid "partner relations"
 msgstr "partnerrelasjoner"
 
+msgid "Statistics"
+msgstr "Statistikk"
+
 msgid "Team"
 msgstr "Lag"
 
@@ -1407,49 +1407,6 @@ msgstr "Eksporter (Excel)"
 msgid "Register Arrivals"
 msgstr "Registrer ankomster"
 
-msgid "Arrivals Statistics"
-msgstr "Ankomststatistikk"
-
-msgid "General"
-msgstr "Generelt"
-
-msgid "Participants are attendees with a ticket or paid status."
-msgstr "Deltakere har billett eller betalt status."
-
-msgid "Participants"
-msgstr "Deltakere"
-
-msgid "Ages"
-msgstr "Aldre"
-
-msgid "Age is counted wrt. the start of the event."
-msgstr "Alder er talt mht. starten av arrangementet."
-
-msgid "Age"
-msgstr "Alder"
-
-msgid "Count"
-msgstr "Antall"
-
-#, python-format
-msgid "%(age)s years"
-msgstr "%(age)s år"
-
-msgid "Tickets"
-msgstr "Billetter"
-
-msgid "Ticket type"
-msgstr "Billettype"
-
-msgid "Non-ticket"
-msgstr "Ikke-billett"
-
-msgid "Includes solo participants and team members."
-msgstr "Inkluderer solodeltakere og lagmedlemmer."
-
-msgid "Participant count"
-msgstr "Deltakerantall"
-
 msgid "Manual Register"
 msgstr "Registrer manuelt"
 
@@ -1777,6 +1734,9 @@ msgstr ""
 msgid "You need to login to sign up for the LAN."
 msgstr "Du må logge deg på for å melde deg opp til LAN-et."
 
+msgid "Tickets"
+msgstr "Billetter"
+
 msgid "Price"
 msgstr "Pris"
 
@@ -1835,6 +1795,9 @@ msgid ""
 msgstr ""
 "Enkel seier (vinnere fjernes fra deltagerlisten for å forhindre å vinne "
 "igjen)"
+
+msgid "Participants"
+msgstr "Deltakere"
 
 msgid "Winners"
 msgstr "Vinnere"
@@ -1901,6 +1864,9 @@ msgstr "Nyhetsarkiv"
 
 msgid "Ticket Purchase"
 msgstr "Billettkjøp"
+
+msgid "Ticket type"
+msgstr "Billettype"
 
 msgid "Card holder name"
 msgstr "Navn på kortholder"
@@ -2096,6 +2062,47 @@ msgstr "Totalt antall mottakere:"
 
 msgid "No LANs with partners."
 msgstr "Ingen LAN med partnere."
+
+msgid "Participants are attendees with a ticket or paid status."
+msgstr "Deltakere har billett eller betalt status."
+
+msgid "Arrived participants"
+msgstr "Ankomte deltagere"
+
+msgid "Ages"
+msgstr "Aldre"
+
+msgid "Age"
+msgstr "Alder"
+
+msgid "Count"
+msgstr "Antall"
+
+#, python-format
+msgid "%(age)s years"
+msgstr "%(age)s år"
+
+msgid "Age is counted wrt. the start of the event."
+msgstr "Alder er talt mht. starten av arrangementet."
+
+msgid "Paid status"
+msgstr "Betalt status"
+
+msgid "Total"
+msgstr "Totalt"
+
+msgid ""
+"Includes duplicate tickets and paid status, as can be seen in &quot;"
+"total&quot;."
+msgstr ""
+"Inkluderer duplikate billetter og betalt status, som sett i &quot;"
+"totalt&quot;."
+
+msgid "Participant count"
+msgstr "Deltakerantall"
+
+msgid "Teams are counted as their member count."
+msgstr "Lag teller som medlemsantallet deres."
 
 msgid "Create team"
 msgstr "Nytt lag"
