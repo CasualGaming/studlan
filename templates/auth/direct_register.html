@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block title %}
-{% trans "Manual Register" %}
+{% trans "Manual Registeration" %}
 {% endblock title %}
 
 {% block content %}
@@ -21,7 +21,7 @@
         {% for error in form.non_field_errors %}
         <p class="form-error">{{ error }}</p>
         {% endfor %}
-        <form id="register-form" class="form-horizontal" method="post" action="{% url 'auth_direct_register' %}">
+        <form id="register-form" class="form-horizontal" method="post">
             {% csrf_token %}
             {% for field in form %} 
             <div class="form-group {% if field.errors %} has-error {% endif %} ">

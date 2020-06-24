@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-24 03:38+0200\n"
+"POT-Creation-Date: 2020-06-24 04:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -177,11 +177,11 @@ msgid ""
 msgstr ""
 "Registrering vellykket. Du mottar snart en e-post med videre instruksjoner."
 
-msgid "No upcoming LANs."
-msgstr "Ingen kommende LAN."
-
 msgid "Registration successful."
 msgstr "Registrering vellykket."
+
+msgid "Manual Registration"
+msgstr "Manuell registrering"
 
 msgid "You can't do that while logged in."
 msgstr "Du kan ikke gjøre det mens du er logget inn."
@@ -1407,15 +1407,15 @@ msgstr "Eksporter (Excel)"
 msgid "Register Arrivals"
 msgstr "Registrer ankomster"
 
-msgid "Manual Register"
-msgstr "Registrer manuelt"
-
-msgid "Manual Registration"
+msgid "Manual Registeration"
 msgstr "Manuell registrering"
 
 #, python-format
 msgid "Register a new user for %(lan)s."
 msgstr "Registrer en ny bruker for %(lan)s."
+
+msgid "No upcoming LANs."
+msgstr "Ingen kommende LAN."
 
 #, python-format
 msgid ""

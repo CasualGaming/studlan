@@ -37,7 +37,7 @@
             <li><a href="{% url 'arrival_home' %}"><span class="glyphicon glyphicon-list-alt"></span> {% trans "Register arrivals" %}</a></li>
             {% endif %}
             {% if perms.lan.register_new_user %}
-            <li><a href="{% url 'auth_direct_register' %}"><span class="glyphicon glyphicon-list"></span> {% trans "Manual registration" %}</a></li>
+            <li><a href="{% url 'auth_direct_register_list' %}"><span class="glyphicon glyphicon-list"></span> {% trans "Manual registration" %}</a></li>
             {% endif %}
             {% if perms.sendmail.send_mail %}
             <li><a href="{% url 'sendmail_send' %}"><span class="glyphicon glyphicon-envelope"></span> {% trans "Send mail" %}</a></li>
@@ -75,7 +75,7 @@
             <li class="hidden-md hidden-lg hidden-sm"><a href="{% url 'arrival_home' %}"><span class="glyphicon glyphicon-list-alt"></span> {% trans "Register arrivals" %}</a></li>
             {% endif %}
             {% if perms.lan.register_new_user %}
-            <li class="hidden-md hidden-lg hidden-sm"><a href="{% url 'auth_direct_register' %}"><span class="glyphicon glyphicon-list"></span> {% trans "Manual registration" %}</a></li>
+            <li class="hidden-md hidden-lg hidden-sm"><a href="{% url 'auth_direct_register_list' %}"><span class="glyphicon glyphicon-list"></span> {% trans "Manual registration" %}</a></li>
             {% endif %}
             {% if perms.sendmail.send_mail %}
             <li class="hidden-md hidden-lg hidden-sm"><a href="{% url 'sendmail_send' %}"><span class="glyphicon glyphicon-envelope"></span> {% trans "Send mail" %}</a></li>
