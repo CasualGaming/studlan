@@ -21,6 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made the front page LAN header clickable.
 - Reversed previous LAN lists so newest is on top.
 - Prevented changing arrivals and manually register users for ended LANs.
+- Made news cards a little prettier and added "read more" link if the content was cut.
+- Made news dates and labels prettier.
+- Made news date optional.
 
 ### Deprecated
 

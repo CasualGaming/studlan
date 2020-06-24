@@ -14,11 +14,18 @@
         <h1 class="page-header">{% trans "News Archive" %}</h1>
 
         {% for article in articles.object_list %}
+        {% if not forloop.first %}  
+        <hr />
+        {% endif %}
         {% include "news/article_card.html" %}
         {% empty %}
         <div class="alert alert-info">{% trans "No news." %}</div>
         {% endfor %}
+    </div>
+</div>
 
+<div class="row news-pagination-container">
+    <div class="col-md-9">
         {% include "news/pagination.html" with news_area='archive' %}
     </div>
 </div>

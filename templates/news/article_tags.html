@@ -2,11 +2,10 @@
 {% load markdown_deux_tags %}
 
 <div class="article-tags">
-    <span class="label label-default">{{ article.pub_date|date:"d/m/Y" }} {{article.pub_date|time:"H:i"}}</span>
     {% if article.pinned %}
-    <span class="label label-default">{% trans "Pinned" %}</span>
+    <span class="label label-info">{% trans "Pinned" %}</span>
     {% endif %}
     {% for lan in article.relevant_to.all %}
-    <span class="label label-default"><a href="{{ lan.get_absolute_url }}">{{ lan }}</a></span>
+    <span class="label label-primary"><a href="{{ lan.get_absolute_url }}">{{ lan }}</a></span>
     {% endfor %}
 </div>
