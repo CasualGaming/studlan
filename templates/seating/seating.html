@@ -7,11 +7,6 @@
 {% trans "Seating" %}
 {% endblock title %}
 
-{% block script %}
-<script src="{% static 'js/seating.js' %}"></script>
-<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-{% endblock script %}
-
 {% block content %}
 <div class="row">
     <div class="col-md-9">
@@ -111,12 +106,7 @@
                 <input class="btn btn-dark" type="submit" value="{% trans "Unavailable seat" %}" disabled/>
             </div>
         </div>
-
-        {% if seat %}
-            <script>
-                $("rect[seat-display='{{ seat }}']").attr("class", " seating-node-search");
-            </script>
-        {% endif %}
+        
     {% else %}
         <div class="row">
             <div class="col-md-9">
@@ -126,3 +116,14 @@
     {% endif %}
 
 {% endblock content %}
+
+{% block script %}
+<script src="{% static 'js/seating.js' %}"></script>
+<script src="{% static 'js/jquery-ui.js' %}"></script>
+
+{% if seat %}
+<script>
+    $("rect[seat-display='{{ seat }}']").attr("class", " seating-node-search");
+</script>
+{% endif %}
+{% endblock script %}

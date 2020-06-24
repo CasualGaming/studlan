@@ -10,10 +10,6 @@
 {{ competition }}
 {% endblock title %}
 
-{% block script %}
-<script src="{% static 'js/competition.js' %}"></script>
-{% endblock script %}
-
 {% block content %}
 {% with competition.use_teams as teamcomp %} 
     <div class="row">
@@ -403,3 +399,7 @@
     </div>
  {% endwith %}
 {% endblock content %}
+
+{% block script %}
+<script src="{% static 'js/competition.js' %}"></script>
+{% endblock script %}
