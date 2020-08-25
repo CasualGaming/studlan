@@ -28,8 +28,8 @@
         {% endif %}
 
         <div class="row">
-            <div class="col-md-9 svg-container">
-                <div id="svg-wrapper">
+            <div class="col-md-9">
+                <div class="seating-svg-wrapper">
                     {{ template|safe }}
                 </div>
             </div>
@@ -104,6 +104,12 @@
                 <input class="btn btn-danger" type="submit" value="{% trans "Taken seat" %}" disabled/>
                 <input class="btn btn-success" type="submit" value="{% trans "Free seat" %}" disabled/>
                 <input class="btn btn-dark" type="submit" value="{% trans "Unavailable seat" %}" disabled/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-9">
+                <div class="alert alert-info">{% trans "If the seating isn't displayed properly, please use a supported browser like Chrome or Firefox." %}</div>
             </div>
         </div>
         
