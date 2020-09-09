@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-09 05:42+0200\n"
+"POT-Creation-Date: 2020-09-09 06:01+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1044,6 +1044,18 @@ msgstr ""
 msgid "Successfully attempted to send the message to {user_count} users."
 msgstr "Meldingen ble forsøkt sendt til {user_count} brukere."
 
+msgid "partner translation"
+msgstr "partneroversettelse"
+
+msgid "partner translations"
+msgstr "partneroversettelser"
+
+msgid "partner relation translation"
+msgstr "partnerrelasjonsoversettelse"
+
+msgid "partner relation translations"
+msgstr "partnerrelasjonsoversettelser"
+
 msgid "Partner"
 msgstr "Partner"
 
@@ -1061,12 +1073,6 @@ msgstr "partner"
 
 msgid "partners"
 msgstr "partnere"
-
-msgid "partner translation"
-msgstr "partneroversettelse"
-
-msgid "partner translations"
-msgstr "partneroversettelser"
 
 msgid "priority"
 msgstr "prioritet"
