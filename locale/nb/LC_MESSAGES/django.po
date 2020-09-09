@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-09 04:45+0200\n"
+"POT-Creation-Date: 2020-09-09 05:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1880,8 +1880,27 @@ msgstr "Nyhetsarkiv"
 msgid "Ticket Purchase"
 msgstr "Billettkjøp"
 
+msgid "Ticket"
+msgstr "Billett"
+
 msgid "Ticket type"
 msgstr "Billettype"
+
+msgid "Description"
+msgstr "Beksrivelse"
+
+msgid "Phone"
+msgstr "Telefon"
+
+#, python-format
+msgid ""
+"By purchasing a ticket, you are confirming that all information above is "
+"correct. If any of it is incorrect, update it now in your <a href="
+"\"%(update_profile_url)s\">profile settings</a>."
+msgstr ""
+"Ved å kjøpe en billett bekrefter du at all informasjonen over er "
+"korrekt. Dersom noe er feil, oppdater det nå i <a href="
+"\"%(update_profile_url)s\">profilinnstillingene</a> dine."
 
 msgid "Card holder name"
 msgstr "Navn på kortholder"
@@ -1979,9 +1998,6 @@ msgstr "Stenger"
 msgctxt "seating status"
 msgid "Closed"
 msgstr "Stengt"
-
-msgid "Ticket"
-msgstr "Billett"
 
 msgctxt "ticket types"
 msgid "None"
@@ -2252,9 +2268,6 @@ msgstr "Privat informasjon"
 
 msgid "This information is only visible to you and select staff users."
 msgstr "Denne informasjonen er bare synlig for deg og utvalgt personale."
-
-msgid "Phone"
-msgstr "Telefon"
 
 msgid "Is staff"
 msgstr "Er personale"
