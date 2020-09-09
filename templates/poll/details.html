@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load markdown_deux_tags %}
+{% load misc %}
+
+{% block title %}
+{{ poll }}
+{% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-9">
+        <h1 id="poll">{{ poll }}</h1>
+
+        {{ poll.get_translation.description | markdown }}
+
+        {% if poll.is_open and not user.is_authenticated %}
+        <div class="alert alert-warning">{% trans "You need to be logged inn to vote." %}</div>
+        {% endif %}
+
+        {% if options %}
+        <table class="table table-bordered" role="presentation">
+            <tbody>
+                {% for option in options %}
+                <tr>
+                    <td>
+                        <strong>{{ option.value }}</strong>
+                    </td>
+                    <td>
+                        {% with option_votes|get_dict_val:option.id as votes %}
+                        {{ votes }} {% trans "vote(s)" %} &ndash; <strong>{% divide_percent votes option_votes_total %}</strong>
+                        {% endwith %}
+                    </td>
+                    {% if poll.is_open and user.is_authenticated %}
+                    <td>
+                        {% if user_participant.option.id == option.id %}
+                        <form action="{% url 'poll_unvote' poll.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger pull-right">{% trans "Unvote" %}</button>
+                        </form>
+                        {% else %}
+                        <form action="{% url 'poll_vote' poll.id option.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success pull-right">{% trans "Vote" %}</button>
+                        </form>
+                        {% endif %}
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="alert alert-info">
+            <p>{% trans "No options have been added." %}</p>
+        </div>
+        {% endif %}
+
+        <div class="poll-content-centered">
+            {% if perms.poll.open_close %}
+            {% if poll.is_open %}
+            {% blocktrans asvar close_poll_line %}Close the poll?{% endblocktrans %}
+            <form class="inline-button-form" action="{% url 'poll_close' poll.id %}" method="post" onsubmit="return confirm('{{ close_poll_line }}');">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">{% trans "Close poll" %}</button>
+            </form>
+            {% else %}
+            {% blocktrans asvar open_poll_line %}Open the poll?{% endblocktrans %}
+            <form class="inline-button-form" action="{% url 'poll_open' poll.id %}" method="post" onsubmit="return confirm('{{ open_poll_line }}');">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">{% trans "Open poll" %}</button>
+            </form>
+            {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

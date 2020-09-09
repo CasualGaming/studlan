@@ -20,6 +20,7 @@ from django.views.decorators.http import require_POST, require_safe
 from apps.competition.models import Activity, Competition, Match, Participant
 from apps.lan.models import Attendee, LAN
 from apps.lottery.models import Lottery
+from apps.poll.models import Poll
 from apps.team.models import Team
 
 
@@ -53,6 +54,7 @@ def lan_compos(request, lan_id):
     context['activities'] = Activity.objects.all()
     context['competitions'] = competitions
     context['active'] = 'all'
+    context['polls'] = Poll.objects.filter(lan=lan)
     context['lotteries'] = Lottery.objects.filter(lan=lan)
 
     breadcrumbs = (

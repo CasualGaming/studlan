@@ -1,13 +1,13 @@
 # Norwegian, bokmål, translations for studlan.
 # Copyright (C) Casual Gaming
 # This file is distributed under the same license as studlan.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-25 14:19+0200\n"
+"POT-Creation-Date: 2020-09-09 07:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -59,20 +59,23 @@ msgstr "Endret status for bruker \"{user}\" ved LAN \"{lan}\" til \"NOT paid\""
 msgid "Arrivals"
 msgstr "Ankomster"
 
+msgid "Invalid toggle type."
+msgstr "Ugyldig toggle-type."
+
 msgid "LAN not found."
 msgstr "LAN-et finnes ikke."
 
 msgid "The LAN is ended, arrivals can't be changed."
 msgstr "LAN-et er over, ankomster kan ikke endres."
 
+msgid "The LAN does not allow manual tickets."
+msgstr "Dette LAN-et tillater ikke manuelle billetter."
+
 msgid "User not found."
 msgstr "Brukeren ble ikke funnet."
 
 msgid "The user is not attending the LAN."
 msgstr "Brukeren deltar ikke på LAN-et."
-
-msgid "Invalid toggle type."
-msgstr "Ugyldig toggle-type."
 
 msgid "Authentication"
 msgstr "Autentisering"
@@ -540,6 +543,9 @@ msgstr "startdato"
 msgid "end date"
 msgstr "sluttdato"
 
+msgid "allow manual payment"
+msgstr "tillat manuell betaling"
+
 msgid "location"
 msgstr "sted"
 
@@ -560,6 +566,18 @@ msgstr "mediatype"
 
 msgid "Type of the optional embedded media."
 msgstr "Type for det innebygde mediet."
+
+msgid "frontpage media link"
+msgstr "fremsidemedialenke"
+
+msgid "URL for embedded media on front page."
+msgstr "URL for innebygd media på fremsiden."
+
+msgid "frontpage media type"
+msgstr "fremsidemediatype"
+
+msgid "Type of the optional embedded media on front page."
+msgstr "Type for det innebygde mediet på fremsiden."
 
 msgid "upcoming"
 msgstr "kommende"
@@ -813,6 +831,42 @@ msgstr "Betalingen ble gjennomført."
 msgid "Payment unsuccessful. Please contact support."
 msgstr "Betaling mislyktes. Vennligst kontakt brukerstøtte."
 
+msgid "poll translation"
+msgstr "avstemningsoversettelse"
+
+msgid "poll translations"
+msgstr "avstemningsoversettelser"
+
+msgid "poll option"
+msgstr "avstemningsvalg"
+
+msgid "poll options"
+msgstr "avstemningsvalg"
+
+msgid "Poll"
+msgstr "Avstemning"
+
+msgid "Require users to have paid for the LAN in order to vote."
+msgstr "Krev at brukere har betalt for LAN-et for å kunne stemme."
+
+msgid "poll"
+msgstr "avstemning"
+
+msgid "polls"
+msgstr "avstemninger"
+
+msgid "value"
+msgstr "verdi"
+
+msgid "option"
+msgstr "valg"
+
+msgid "poll participant"
+msgstr "avstemningsdeltaker"
+
+msgid "poll participants"
+msgstr "avstemningsdeltakere"
+
 msgid "Seating"
 msgstr "Setekart"
 
@@ -1026,6 +1080,18 @@ msgstr ""
 msgid "Successfully attempted to send the message to {user_count} users."
 msgstr "Meldingen ble forsøkt sendt til {user_count} brukere."
 
+msgid "partner translation"
+msgstr "partneroversettelse"
+
+msgid "partner translations"
+msgstr "partneroversettelser"
+
+msgid "partner relation translation"
+msgstr "partnerrelasjonsoversettelse"
+
+msgid "partner relation translations"
+msgstr "partnerrelasjonsoversettelser"
+
 msgid "Partner"
 msgstr "Partner"
 
@@ -1043,12 +1109,6 @@ msgstr "partner"
 
 msgid "partners"
 msgstr "partnere"
-
-msgid "partner translation"
-msgstr "partneroversettelse"
-
-msgid "partner translations"
-msgstr "partneroversettelser"
 
 msgid "priority"
 msgstr "prioritet"
@@ -1673,8 +1733,8 @@ msgstr "Starttid"
 msgid "No competitions for this LAN."
 msgstr "Ingen konkurranser for dette LAN-et."
 
-msgid "Lotteries"
-msgstr "Lotterier"
+msgid "Polls"
+msgstr "Avstemning"
 
 msgctxt "status"
 msgid "Open"
@@ -1683,6 +1743,12 @@ msgstr "Åpen"
 msgctxt "status"
 msgid "Closed"
 msgstr "Stengt"
+
+msgid "No polls for this LAN."
+msgstr "Ingen avstemninger for dette LAN-et."
+
+msgid "Lotteries"
+msgstr "Lotterier"
 
 msgid "No raffles for this LAN."
 msgstr "Ingen trekninger for dette LAN-et."
@@ -1850,11 +1916,11 @@ msgstr "Nyhetsarkiv"
 msgid "No news."
 msgstr "Ingen nyheter."
 
-msgid "Pinned"
-msgstr "Festet"
-
 msgid "Read more &hellip;"
 msgstr "Les mer &hellip;"
+
+msgid "Pinned"
+msgstr "Festet"
 
 msgid "Home"
 msgstr "Hjem"
@@ -1868,8 +1934,27 @@ msgstr "Nyhetsarkiv"
 msgid "Ticket Purchase"
 msgstr "Billettkjøp"
 
+msgid "Ticket"
+msgstr "Billett"
+
 msgid "Ticket type"
 msgstr "Billettype"
+
+msgid "Description"
+msgstr "Beksrivelse"
+
+msgid "Phone"
+msgstr "Telefon"
+
+#, python-format
+msgid ""
+"By purchasing a ticket, you are confirming that all information above is "
+"correct. If any of it is incorrect, update it now in your <a href="
+"\"%(update_profile_url)s\">profile settings</a>."
+msgstr ""
+"Ved å kjøpe en billett bekrefter du at all informasjonen over er korrekt. "
+"Dersom noe er feil, oppdater det nå i <a href=\"%(update_profile_url)s"
+"\">profilinnstillingene</a> dine."
 
 msgid "Card holder name"
 msgstr "Navn på kortholder"
@@ -1951,6 +2036,33 @@ msgstr ""
 msgid "Back to ticket page"
 msgstr "Tilbake til billettside"
 
+msgid "You need to be logged inn to vote."
+msgstr "Du må logge inn for å kunne stemme."
+
+msgid "vote(s)"
+msgstr "stemme(r)"
+
+msgid "Unvote"
+msgstr "Fjern stemme"
+
+msgid "Vote"
+msgstr "Stem"
+
+msgid "No options have been added."
+msgstr "Ingen valg har blitt lagt til."
+
+msgid "Close the poll?"
+msgstr "Lukke avstemningen?"
+
+msgid "Close poll"
+msgstr "Lukk avstemning"
+
+msgid "Open the poll?"
+msgstr "Åpne avstemningen?"
+
+msgid "Open poll"
+msgstr "Åpne avstemning"
+
 msgid "Seatings"
 msgstr "Setekart"
 
@@ -1967,9 +2079,6 @@ msgstr "Stenger"
 msgctxt "seating status"
 msgid "Closed"
 msgstr "Stengt"
-
-msgid "Ticket"
-msgstr "Billett"
 
 msgctxt "ticket types"
 msgid "None"
@@ -2247,9 +2356,6 @@ msgstr "Privat informasjon"
 
 msgid "This information is only visible to you and select staff users."
 msgstr "Denne informasjonen er bare synlig for deg og utvalgt personale."
-
-msgid "Phone"
-msgstr "Telefon"
 
 msgid "Is staff"
 msgstr "Er personale"

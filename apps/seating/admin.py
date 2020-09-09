@@ -13,13 +13,13 @@ class LayoutAdmin(admin.ModelAdmin):
 class SeatingAdmin(admin.ModelAdmin):
     model = Seating
     list_display = ['__unicode__', 'layout']
-    list_filter = ('lan',)
+    list_filter = ['lan']
 
 
 class SeatAdmin(admin.ModelAdmin):
     model = Seat
-    list_display = ('__unicode__', 'user')
-    list_filter = ('seating__lan',)
+    list_display = ['__unicode__', 'user']
+    list_filter = ['seating__lan']
     search_fields = ['=placement', 'user__username']
 
 

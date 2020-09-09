@@ -14,6 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added arrivals table filter for ticket/paid type.
 - Added user admin panel filter for users with custom permissions.
 - Added LAN participant statistics page.
+- Added separate option for LAN media on front page.
+- Added user info on ticket purchase page, to force users to check their info.
+- Added LAN option for allowing manual payments on arrivals page.
+- Added partner relation descriptions, in addition to the existing partner descriptions.
+- Added poll app.
 
 ### Changed
 
@@ -22,8 +27,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Reversed previous LAN lists so newest is on top.
 - Prevented changing arrivals and manually register users for ended LANs.
 - Made news cards a little prettier and added "read more" link if the content was cut.
-- Made news dates and labels prettier.
 - Made news date optional.
+- Improve line and paragraph spacing in LAN descriptions, articles, etc.
+- Change LAN ticket list visually from tabs to panels.
 
 ### Deprecated
 

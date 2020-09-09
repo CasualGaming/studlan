@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^lottery/', include('apps.lottery.urls')),
     url(r'^news/', include('apps.news.urls')),
     url(r'^payment/', include('apps.payment.urls')),
+    url(r'^poll/', include('apps.poll.urls')),
     url(r'^profile/', include('apps.userprofile.urls')),
     url(r'^team/', include('apps.team.urls')),
     url(r'^seating/', include('apps.seating.urls')),

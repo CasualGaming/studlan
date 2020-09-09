@@ -11,6 +11,8 @@
     <div class="row">
         <div class="col-sm-offset-2 col-sm-8 col-md-offset-1 col-md-7">
             <h1>{% trans "Ticket Purchase" %}</h1>
+
+            <h3>{% trans "Ticket" %}</h3>
             <table class="table table-bordered">
                 <tbody>
                     <tr>
@@ -22,12 +24,58 @@
                         <td>{{ ticket_type }}</td>
                     </tr>
                     <tr>
+                        <td><strong>{% trans "Description" %}</strong></td>
+                        <td>{{ ticket_type.get_translation.description }}</td>
+                    </tr>
+                    <tr>
                         <td><strong>{% trans "Price" %}</strong></td>
                         <td>{{ ticket_type.verbose_price }}</td>
                     </tr>
                 </tbody>
             </table>
 
+            <h3>{% trans "User" %}</h3>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td><strong>{% trans "First name" %}</strong></td>
+                        <td>{{ user.first_name }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{% trans "Last name" %}</strong></td>
+                        <td>{{ user.last_name }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{% trans "Email" %}</strong></td>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{% trans "Date of birth" %}</strong></td>
+                        <td>{{ user.profile.date_of_birth }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{% trans "Street address" %}</strong></td>
+                        <td>{{ user.profile.address }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{% trans "Postal code" %}</strong></td>
+                        <td>{{ user.profile.zip_code }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>{% trans "Phone" %}</strong></td>
+                        <td>{{ user.profile.phone }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>
+                {% url 'update_profile' as update_profile_url %}
+                {% blocktrans trimmed %}
+                By purchasing a ticket, you are confirming that all information above is correct.
+                If any of it is incorrect, update it now in your <a href="{{ update_profile_url }}">profile settings</a>.
+                {% endblocktrans %}
+            </p>
+
+            <h3>{% trans "Payment" %}</h3>
             <form id="card-form">
                 <h4>{% trans "Card holder name" %}</h4>
                 <div>

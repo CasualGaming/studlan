@@ -102,3 +102,4 @@ class Seat(models.Model):
     class Meta:
         verbose_name = _(u'seat')
         verbose_name_plural = _(u'seats')
+        ordering = ['seating', 'placement']

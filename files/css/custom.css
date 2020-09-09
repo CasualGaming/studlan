@@ -493,15 +493,8 @@ h1 a, h1 a:link, h1 a:hover, h1 a:active, h1 a:visited {
     margin-bottom: 0;
 }
 
-.article-card .article-tags {
-    margin-top: 0px;
+.article-tags {
     margin-bottom: 10px;
-}
-
-.article-single .article-tags {
-    margin-top: -10px;
-    margin-bottom: 5px;
-    padding-bottom: 10px;
 }
 
 .article-single .article-title small {
@@ -510,7 +503,27 @@ h1 a, h1 a:link, h1 a:hover, h1 a:active, h1 a:visited {
 
 .article-content,
 .lan-desctiption {
-    line-height: 1.5em;
+    line-height: 1.8em;
+}
+
+.article-content p,
+.lan-desctiption p {
+    margin-bottom: 15px;
+}
+
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content h4,
+.article-content h5,
+.article-content h6,
+.lan-desctiption h1,
+.lan-desctiption h2,
+.lan-desctiption h3,
+.lan-desctiption h4,
+.lan-desctiption h5,
+.lan-desctiption h6 {
+    margin-top: 1.5em;
 }
 
 .article-content img,
@@ -519,7 +532,7 @@ h1 a, h1 a:link, h1 a:hover, h1 a:active, h1 a:visited {
 }
 
 .email-content {
-    line-height: 1.5em;
+    line-height: 1.8em;
 }
 
 .email-content img {

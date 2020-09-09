@@ -9,12 +9,7 @@
         {% endif %}
     </h3>
     <div class="article-tags">
-        {% if article.pinned %}
-        <span class="label label-default">{% trans "Pinned" %}</span>
-        {% endif %}
-        {% for lan in article.relevant_to.all %}
-        <span class="label label-primary"><a href="{{ lan.get_absolute_url }}">{{ lan }}</a></span>
-        {% endfor %}
+        {% include "news/article_tags.html" %}
     </div>
     <div class="article-content">
         {% with content=article.get_translation.translated_body|striptags|markdown %}

@@ -32,10 +32,13 @@ class LAN(TranslatableModel):
     title = models.CharField(_(u'title'), max_length=100)
     start_date = models.DateTimeField(_(u'start date'))
     end_date = models.DateTimeField(_(u'end date'))
+    allow_manual_payment = models.BooleanField(_(u'allow manual payment'), default=False)
     location = models.CharField(_(u'location'), max_length=100)
     map_link = models.CharField(_(u'map link'), max_length=300, help_text=_(u'URL for an embedded map.'), blank=True)
     media_link = models.CharField(_(u'media link'), max_length=300, help_text=_(u'URL for embedded media.'), blank=True)
     media_type = models.CharField(_(u'media type'), max_length=10, choices=MEDIA_TYPES, default=MEDIA_TYPE_IMAGE, help_text=_(u'Type of the optional embedded media.'))
+    frontpage_media_link = models.CharField(_(u'frontpage media link'), max_length=300, help_text=_(u'URL for embedded media on front page.'), blank=True)
+    frontpage_media_type = models.CharField(_(u'frontpage media type'), max_length=10, choices=MEDIA_TYPES, default=MEDIA_TYPE_IMAGE, help_text=_(u'Type of the optional embedded media on front page.'))
 
     @property
     def attendees(self):
