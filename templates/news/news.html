@@ -38,7 +38,12 @@
 </div>
 
 {% if lans.count == 1 %}
-{% include "lan/media.html" with lan=lans.0 %}
+{% if lans.0.frontpage_media_link %}
+{% with lan=lans.0 %}
+{% include "lan/media.html" with media_type=lan.frontpage_media_type media_link=lan.frontpage_media_link frontpage=1 %}
+{% endwith %}
+{% endif %}
+
 <div class="row">
     <div class="col-md-6 col-xs-7">
         <p class="lead">{{ lans.0.start_date|date }} – {{ lans.0.end_date|date }}</p>
@@ -66,8 +71,8 @@
 
 <div class="row">
     <div class="col-md-9">
-        <h2>{% trans "News" %}</h3>
         {% for article in articles.object_list %}
+        <hr />
         {% include "news/article_card.html" %}
         {% empty %}
         <div class="alert alert-info">{% trans "No news." %}</div>
@@ -75,12 +80,12 @@
     </div>
 </div>
 
-<div class="row">
+<div class="row news-pagination-container">
     <div class="col-md-6">
         {% include "news/pagination.html" with news_area='news' %}
     </div>
     <div class="col-md-3">
-        <a class="btn btn-primary pull-right" style="margin-top: 20px; margin-bottom: 20px;" href="{% url 'archive_main' %}">
+        <a class="btn btn-primary pull-right" href="{% url 'archive_main' %}">
             <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
             {% trans "News archive" %}
         </a>

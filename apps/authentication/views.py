@@ -8,14 +8,13 @@ from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
-from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.http import is_safe_url
 from django.utils.translation import ugettext as _
 from django.views.decorators.debug import sensitive_post_parameters
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_safe
 
 from apps.authentication.forms import ChangePasswordForm, LoginForm, RecoveryForm, RegisterForm
 from apps.authentication.models import RegisterToken
@@ -42,14 +41,14 @@ def login(request):
     # Redirect silently to home if already logged in
     # This prevents missing permission redirect loops and login redirect chains
     if request.user.is_authenticated():
-        return HttpResponseRedirect('/')
+        return redirect('/')
 
     # Attempt login or show login form
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.login(request):
             messages.success(request, _(u'You have successfully logged in.'))
-            return HttpResponseRedirect(redirect_url)
+            return redirect(redirect_url)
         else:
             form = LoginForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
     else:
@@ -74,14 +73,14 @@ def logout(request):
     auth.logout(request)
 
     messages.success(request, _(u'You have successfully logged out.'))
-    return HttpResponseRedirect(redirect_url)
+    return redirect(redirect_url)
 
 
 @sensitive_post_parameters()
 def register(request):
     if request.user.is_authenticated():
         messages.warning(request, _(u'You\'re already logged in.'))
-        return HttpResponseRedirect('/')
+        return redirect('/')
 
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -131,7 +130,7 @@ def register(request):
 
             messages.success(request, _(u'Registration successful. Check your email for verification instructions.'))
 
-            return HttpResponseRedirect('/')
+            return redirect('/')
         else:
             form = RegisterForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
     else:
@@ -140,18 +139,28 @@ def register(request):
     return render(request, 'auth/register.html', {'form': form})
 
 
+@require_safe
+@permission_required('lan.register_new_user')
+def direct_register_list(request):
+    context = {}
+    context['upcoming_lans'] = LAN.objects.filter(end_date__gte=datetime.now()).order_by('start_date')
+    context['previous_lans'] = LAN.objects.filter(end_date__lt=datetime.now()).order_by('-start_date')
+    return render(request, 'auth/direct_register_list.html', context)
+
+
 @sensitive_post_parameters()
 @permission_required('lan.register_new_user')
-def direct_register(request):
-    lan = LAN.objects.filter(end_date__gte=datetime.now()).first()
+def direct_register(request, lan_id):
+    lan = get_object_or_404(LAN, id=lan_id)
+
+    if lan.is_ended():
+        messages.error(request, _(u'The LAN is ended, arrivals can\'t be changed.'))
+        return redirect('/')
+
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
             cleaned = form.cleaned_data
-
-            if lan is None:
-                messages.error(request, _(u'No upcoming LANs.'))
-                return HttpResponseRedirect('/auth/direct_register')
 
             # Create user
             user = User(
@@ -180,19 +189,30 @@ def direct_register(request):
 
             messages.success(request, _(u'Registration successful.'))
 
-            return HttpResponseRedirect('/auth/direct_register')
+            return redirect('/auth/direct_register')
         else:
             form = RegisterForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
     else:
         form = RegisterForm()
 
-    return render(request, 'auth/direct_register.html', {'form': form, 'lan': lan})
+    breadcrumbs = (
+        (lan, lan.get_absolute_url()),
+        (_(u'Manual Registration'), ''),
+    )
+    context = {
+        'breadcrumbs': breadcrumbs,
+        'lan': lan,
+        'form': form,
+    }
+
+    return render(request, 'auth/direct_register.html', context)
 
 
+@require_safe
 def verify(request, token):
     if request.user.is_authenticated():
         messages.error(request, _(u'You can\'t do that while logged in.'))
-        return HttpResponseRedirect('/')
+        return redirect('/')
 
     rt = get_object_or_404(RegisterToken, token=token)
 
@@ -208,14 +228,14 @@ def verify(request, token):
         return redirect('auth_login')
     else:
         messages.error(request, _(u'The activation link has expired. Please use the password recovery form to get a new link.'))
-        return HttpResponseRedirect('/')
+        return redirect('/')
 
 
 @sensitive_post_parameters()
 def recover(request):
     if request.user.is_authenticated():
         messages.error(request, _(u'You can\'t do that while logged in.'))
-        return HttpResponseRedirect('/')
+        return redirect('/')
 
     if request.method == 'POST':
         form = RecoveryForm(request.POST)
@@ -225,7 +245,7 @@ def recover(request):
 
             if users.count() == 0:
                 messages.error(request, _(u'No users are registered with that email address.'))
-                return HttpResponseRedirect('/')
+                return redirect('/')
 
             # Send recovery email to all associated users
             for user in users.all():
@@ -251,7 +271,7 @@ def recover(request):
                 )
 
             messages.success(request, _(u'A recovery link has been sent to all users with email address "{email}".').format(email=email))
-            return HttpResponseRedirect('/')
+            return redirect('/')
         else:
             form = RecoveryForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
     else:
@@ -264,7 +284,7 @@ def recover(request):
 def set_password(request, token=None):
     if request.user.is_authenticated():
         messages.error(request, _(u'You can\'t do that while logged in.'))
-        return HttpResponseRedirect('/')
+        return redirect('/')
 
     rt = get_object_or_404(RegisterToken, token=token)
 
@@ -281,7 +301,7 @@ def set_password(request, token=None):
                 rt.delete()
 
                 messages.success(request, _(u'Successfully changed password for user {user}. You can now log in.').format(user=user))
-                return HttpResponseRedirect('/')
+                return redirect('/')
         else:
             form = ChangePasswordForm()
             messages.info(request, _(u'Please set a new password.'))
@@ -290,4 +310,4 @@ def set_password(request, token=None):
 
     else:
         messages.error(request, _(u'The recovery link has expired. Please use the password recovery form to get a new link.'))
-        return HttpResponseRedirect('/')
+        return redirect('/')

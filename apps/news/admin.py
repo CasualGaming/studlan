@@ -17,6 +17,8 @@ class ArticleTranslationInlineAdmin(admin.StackedInline):
 
 class ArticleAdmin(admin.ModelAdmin):
     inlines = [ArticleTranslationInlineAdmin]
+    list_display = ['__unicode__', 'pub_date']
+    list_filter = ['relevant_to']
 
 
 admin.site.register(Article, ArticleAdmin)

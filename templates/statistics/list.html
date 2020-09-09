@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load markdown_deux_tags %}
+
+{% block title %}
+{% trans "Statistics" %}
+{% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-9">
+        <h1>{% trans "Statistics" %}</h1>
+    </div>
+</div>
+
+{% with object_view_name="statistics" %}
+{% include "common/lan_list.html" %}
+{% endwith %}
+{% endblock content %}

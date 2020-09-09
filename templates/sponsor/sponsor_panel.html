@@ -9,6 +9,11 @@
         <span class="sponsor-banner-text">{{ sponsor.title }}</span>
         {% endif %}
         </a></h3>
+        {% if sponsor.get_translation.description %}
         <p>{{ sponsor.get_translation.description }}</p>
+        {% endif %}
+        {% if sponsor_relation.get_translation.description %}
+        <p>{{ sponsor_relation.get_translation.description }}</p>
+        {% endif %}
     </div>
 </div>

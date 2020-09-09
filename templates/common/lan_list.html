@@ -39,7 +39,7 @@
                 <th scope="col" class="col-md-3">{% trans "Time" %}</th>
             </thead>
             <tbody>
-                {% for lan in previous_lans reversed %}
+                {% for lan in previous_lans %}
                 <tr onclick="document.location='{% url object_view_name lan.id %}';">
                     <td class="underline">{{ lan }}</td>
                     <td>{{ lan.start_date|date }} – {{ lan.end_date|date }}</td>

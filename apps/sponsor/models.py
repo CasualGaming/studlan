@@ -25,7 +25,7 @@ class Sponsor(TranslatableModel):
         verbose_name_plural = _(u'partners')
 
 
-class SponsorTranslation(get_translation_model(Sponsor, 'Partner')):
+class SponsorTranslation(get_translation_model(Sponsor, 'partner')):
     description = models.TextField(_(u'description'))
 
     class Meta:
@@ -33,7 +33,7 @@ class SponsorTranslation(get_translation_model(Sponsor, 'Partner')):
         verbose_name_plural = _(u'partner translations')
 
 
-class SponsorRelation(models.Model):
+class SponsorRelation(TranslatableModel):
     lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
     sponsor = models.ForeignKey(Sponsor, verbose_name=_(u'partner'))
     priority = models.IntegerField(_(u'priority'),
@@ -46,3 +46,11 @@ class SponsorRelation(models.Model):
         verbose_name = _(u'partner relation')
         verbose_name_plural = _(u'partner relations')
         ordering = ['-priority']
+
+
+class SponsorRelationTranslation(get_translation_model(SponsorRelation, 'partner relation')):
+    description = models.TextField(_(u'description'))
+
+    class Meta:
+        verbose_name = _(u'partner relation translation')
+        verbose_name_plural = _(u'partner relation translations')

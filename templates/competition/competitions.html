@@ -54,6 +54,35 @@
 
 <div class="row">
     <div class="col-md-9">
+        <h2 id="polls">{% trans "Polls" %}</h2>
+        {% if polls %}
+        <table class="table table-bordered table-striped table-hover click-table" aria-describedby="polls">
+            <thead>
+                <th scope="col" class="col-md-1">Status</th>
+                <th scope="col" class="col-md-11">Title</th>
+            </thead>
+            <tbody>
+                {% for poll in polls %}
+                <tr onclick="document.location='{{ poll.get_absolute_url }}';">
+                    {% if poll.is_open %}
+                        <td><label class="label label-success">{% trans "Open" context "status" %}</label></td>
+                    {% else %}
+                        <td><label class="label label-danger">{% trans "Closed" context "status" %}</label></td>
+                    {% endif %}
+                    <td class="underline">{{ poll }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p><em>{% trans "No polls for this LAN." %}</em></p>
+        {% endif %}
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-9">
         <h2 id="lotteries">{% trans "Lotteries" %}</h2>
         {% if lotteries %}
         <table class="table table-bordered table-striped table-hover click-table" aria-describedby="lotteries">
@@ -75,7 +104,7 @@
             </tbody>
         </table>
         {% else %}
-        <div class="alert alert-info">{% trans "No raffles for this LAN." %}</div>
+        <p><em>{% trans "No raffles for this LAN." %}</em></p>
         {% endif %}
     </div>
 </div>

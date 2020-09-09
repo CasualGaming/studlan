@@ -2,18 +2,14 @@
 
 from datetime import datetime
 
-from dateutil.relativedelta import relativedelta
-
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import User
-from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_POST, require_safe
 
-from apps.competition.models import Competition
 from apps.lan.models import Attendee, LAN, Ticket, TicketType
 from apps.seating.models import Seat
 
@@ -93,6 +89,11 @@ def toggle(request, lan_id):
     username = request.POST.get('username')
     toggle_type = request.POST.get('type')
     previous_value = request.POST.get('prev')
+    payment_type = int(toggle_type) == 0
+    arrived_type = int(toggle_type) == 1
+
+    if not payment_type and not arrived_type:
+        return HttpResponse(status=400, content=_(u'Invalid toggle type.'))
 
     lan = LAN.objects.filter(pk=lan_id).first()
     if lan is None:
@@ -100,6 +101,9 @@ def toggle(request, lan_id):
 
     if lan.is_ended():
         return HttpResponse(status=403, content=_(u'The LAN is ended, arrivals can\'t be changed.'))
+
+    if payment_type and not lan.allow_manual_payment:
+        return HttpResponse(status=403, content=_(u'The LAN does not allow manual tickets.'))
 
     user = User.objects.filter(username=username).first()
     if user is None:
@@ -109,13 +113,11 @@ def toggle(request, lan_id):
     if attendee is None:
         return HttpResponse(status=404, content=_(u'The user is not attending the LAN.'))
 
-    if int(toggle_type) == 0:
+    # Update
+    if payment_type:
         attendee.has_paid = flip_string_bool(previous_value)
-    elif int(toggle_type) == 1:
+    elif arrived_type:
         attendee.arrived = flip_string_bool(previous_value)
-    else:
-        return HttpResponse(status=400, content=_(u'Invalid toggle type.'))
-
     attendee.save()
     return HttpResponse(status=200)
 
@@ -125,64 +127,3 @@ def flip_string_bool(val):
         return False
     elif val == 'False':
         return True
-
-
-@require_safe
-@permission_required('lan.show_arrivals_statistics')
-def arrivals_statistics(request, lan_id):
-    lan = get_object_or_404(LAN, pk=lan_id)
-
-    # Participants (paid or ticket)
-    participants = set()
-    ticket_users = User.objects.filter(ticket__ticket_type__lan=lan)
-    participants.update(ticket_users)
-    paid_users = User.objects.filter(attendee__lan=lan).filter(attendee__has_paid=True)
-    participants.update(paid_users)
-
-    # Arrivals
-    arrived_attendees = Attendee.objects.filter(lan=lan, user__in=participants, arrived=True)
-
-    # Participant ages
-    age_counts = {}
-    for participant in participants:
-        age = relativedelta(lan.start_date.date(), participant.profile.date_of_birth).years
-        if age in age_counts:
-            age_counts[age] += 1
-        else:
-            age_counts[age] = 1
-
-    # Tickets
-    ticket_counts = []
-    ticket_count_total = 0
-    for ticket_type in TicketType.objects.filter(lan=lan):
-        count = Ticket.objects.filter(ticket_type=ticket_type).count()
-        ticket_count_total += count
-        ticket_counts.append((ticket_type, count))
-
-    # Competitions
-    competition_counts = []
-    for competition in Competition.objects.filter(lan=lan):
-        count = User.objects.filter(
-            Q(participant__competition=competition)
-            | Q(newteamleader__participant__competition=competition)
-            | Q(new_team_members__participant__competition=competition),
-        ).count()
-        competition_counts.append((competition, count))
-
-    breadcrumbs = (
-        (lan, lan.get_absolute_url()),
-        (_(u'Arrivals'), ''),
-        (_(u'Statistics'), ''),
-    )
-    context = {
-        'breadcrumbs': breadcrumbs,
-        'lan': lan,
-        'arrival_count': arrived_attendees.count(),
-        'participant_count': len(participants),
-        'age_counts': age_counts,
-        'ticket_counts': ticket_counts,
-        'non_ticket_count': len(participants) - ticket_count_total,
-        'competition_counts': competition_counts,
-    }
-
-    return render(request, 'arrivals/statistics.html', context)

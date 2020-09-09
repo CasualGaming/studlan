@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load markdown_deux_tags %}
+
+{% block title %}
+{% trans "Manual Registration" %}
+{% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-9">
+        <h1>{% trans "Manual Registration" %}</h1>
+    </div>
+</div>
+
+{% with object_view_name="auth_direct_register" %}
+{% include "common/lan_list.html" %}
+{% endwith %}
+{% endblock content %}

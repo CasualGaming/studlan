@@ -42,7 +42,8 @@ class TicketTypeAdmin(admin.ModelAdmin):
 
 class TicketAdmin(admin.ModelAdmin):
     model = Ticket
-    list_display = ['__unicode__', 'ticket_type', 'bought_date']
+    list_display = ['__unicode__', 'ticket_type', 'bought_date', 'user']
+    list_filter = ('ticket_type__lan', 'ticket_type')
 
 
 admin.site.register(LAN, LANAdmin)

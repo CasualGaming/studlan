@@ -1,10 +1,22 @@
 {% load i18n %}
 {% load markdown_deux_tags %}
 
-<div class="article">
-    <h3><a href="{{ article.get_absolute_url }}">{{ article.get_translation.translated_title }}</a></h3>
-    {% include "news/article_tags.html" %}
+<div class="article-card">
+    <h3 class="article-title">
+        <a href="{{ article.get_absolute_url }}">{{ article.get_translation.translated_title }}</a>
+        {% if article.pub_date %}
+        <small class="pull-right">{{ article.pub_date }}</small>
+        {% endif %}
+    </h3>
+    <div class="article-tags">
+        {% include "news/article_tags.html" %}
+    </div>
     <div class="article-content">
-        {{ article.get_translation.translated_body|striptags|markdown|truncatewords:100 }}
+        {% with content=article.get_translation.translated_body|striptags|markdown %}
+        {{ content|truncatewords_html:100 }}
+        {% if content|wordcount > 100 %}
+            <p><a href="{{ article.get_absolute_url }}">{% trans "Read more &hellip;" %}</a></p>
+        {% endif %}
+        {% endwith %}
     </div>
 </div>

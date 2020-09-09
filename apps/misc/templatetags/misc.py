@@ -51,5 +51,12 @@ def divide(dividend, divisor):
 
 
 @register.simple_tag
+def divide_percent(dividend, divisor):
+    if divisor == 0:
+        return '0%'
+    return '{val}%'.format(val=(dividend / float(divisor) * 100))
+
+
+@register.simple_tag
 def subtract(minuend, subtrahend):
     return minuend - subtrahend

@@ -23,7 +23,7 @@ footer {
     padding-top: 10px;
     padding-bottom: 10px;
     border-top: 1px solid #DDD;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 @media (max-width:991px) {
@@ -380,7 +380,7 @@ div#btn-profile {
         display: block;
     }
 
-    .center-on-collapse{
+    .center-on-collapse {
         text-align: center;
         margin-bottom: 5px;
     }
@@ -488,19 +488,57 @@ h1 a, h1 a:link, h1 a:hover, h1 a:active, h1 a:visited {
     margin-top: 10px;
 }
 
+.news-pagination-container {
+    margin-top: 20px;
+}
+
+.news-pagination-container .pagination {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 .article-tags {
-    margin-top: 10px;
     margin-bottom: 10px;
 }
 
+.article-single .article-title small {
+    font-size: 0.5em;
+}
+
 .article-content,
-.lan-desctiption,
-.email-content {
-    line-height: 1.5em;
+.lan-desctiption {
+    line-height: 1.8em;
+}
+
+.article-content p,
+.lan-desctiption p {
+    margin-bottom: 15px;
+}
+
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content h4,
+.article-content h5,
+.article-content h6,
+.lan-desctiption h1,
+.lan-desctiption h2,
+.lan-desctiption h3,
+.lan-desctiption h4,
+.lan-desctiption h5,
+.lan-desctiption h6 {
+    margin-top: 1.5em;
 }
 
 .article-content img,
-.lan-desctiption img,
+.lan-desctiption img {
+    max-width: 100%;
+}
+
+.email-content {
+    line-height: 1.8em;
+}
+
 .email-content img {
     max-width: 100%;
 }
