@@ -353,11 +353,7 @@ div#btn-profile {
     max-width: 100%;
 }
 
-.svg-container {
-    position: relative;
-}
-
-.svg-container svg {
+#seating-svg-wrapper svg {
     width: 100%;
 }
 

@@ -19,7 +19,7 @@ $(document).ready(function(){
       };
     });
 
-    var main_svg = $("#svg-wrapper > svg");
+    var main_svg = $("#seating-svg-wrapper > svg");
 
     if (main_svg.attr("viewBox") === undefined){
         main_svg.attr({
@@ -36,9 +36,6 @@ $(document).ready(function(){
 
     var selectedSeat;
     var selectedSeatClass;
-
-
-
 
     $('a > rect').click( function(e) {
         e.preventDefault();

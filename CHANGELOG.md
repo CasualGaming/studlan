@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+
+## [v1.8.0] - 2020-09-09
+
+### Added
+
 - Added feature for sending emails to multiple users.
 - Added optional URL slug for LANs.
 - Added arrivals table filter for ticket/paid type.
@@ -31,15 +46,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improve line and paragraph spacing in LAN descriptions, articles, etc.
 - Change LAN ticket list visually from tabs to panels.
 
-### Deprecated
-
-### Removed
-
 ### Fixed
 
 - Fixed after-login and after-logout redirect, including unsafe redirecting.
 
-### Security
 
 ## [v1.7.0] - 2020-02-21
 
