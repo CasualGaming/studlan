@@ -1,13 +1,13 @@
 # Norwegian, bokmål, translations for studlan.
 # Copyright (C) Casual Gaming
 # This file is distributed under the same license as studlan.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-24 05:24+0200\n"
+"POT-Creation-Date: 2020-09-09 04:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -560,6 +560,18 @@ msgstr "mediatype"
 
 msgid "Type of the optional embedded media."
 msgstr "Type for det innebygde mediet."
+
+msgid "frontpage media link"
+msgstr "fremsidemedialenke"
+
+msgid "URL for embedded media on front page."
+msgstr "URL for innebygd media på fremsiden."
+
+msgid "frontpage media type"
+msgstr "fremsidemediatype"
+
+msgid "Type of the optional embedded media on front page."
+msgstr "Type for det innebygde mediet på fremsiden."
 
 msgid "upcoming"
 msgstr "kommende"
@@ -1850,11 +1862,11 @@ msgstr "Nyhetsarkiv"
 msgid "No news."
 msgstr "Ingen nyheter."
 
-msgid "Pinned"
-msgstr "Festet"
-
 msgid "Read more &hellip;"
 msgstr "Les mer &hellip;"
+
+msgid "Pinned"
+msgstr "Festet"
 
 msgid "Home"
 msgstr "Hjem"

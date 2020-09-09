@@ -25,7 +25,9 @@
 </div>
 {% endif %}
 
-{% include "lan/media.html" with lan=lan %}
+{% if lan.media_link %}
+{% include "lan/media.html" with media_type=lan.media_type media_link=lan.media_link frontpage=0 %}
+{% endif %}
 
 <div class="row">
     <div class="col-md-4">

@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added arrivals table filter for ticket/paid type.
 - Added user admin panel filter for users with custom permissions.
 - Added LAN participant statistics page.
+- Added separate option for LAN media on front page.
 
 ### Changed
 
