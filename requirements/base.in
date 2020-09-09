@@ -5,7 +5,7 @@ reportlab
 stripe
 beautifulsoup4
 xlwt
-django-postman
+django-postman==3.7.0
 requests
 markdown2
 pychal
