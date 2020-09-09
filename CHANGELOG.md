@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made news cards a little prettier and added "read more" link if the content was cut.
 - Made news date optional.
 - Improve line and paragraph spacing in LAN descriptions, articles, etc.
+- Change LAN ticket list visually from tabs to panels.
 
 ### Deprecated
 
