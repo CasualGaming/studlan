@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'apps.misc.config.Config',
     'apps.news.config.Config',
     'apps.payment.config.Config',
+    'apps.poll.config.Config',
     'apps.seating.config.Config',
     'apps.sendmail.config.Config',
     'apps.sponsor.config.Config',

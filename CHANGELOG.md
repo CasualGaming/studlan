@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added user info on ticket purchase page, to force users to check their info.
 - Added LAN option for allowing manual payments on arrivals page.
 - Added partner relation descriptions, in addition to the existing partner descriptions.
+- Added poll app.
 
 ### Changed
 

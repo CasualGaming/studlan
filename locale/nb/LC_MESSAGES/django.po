@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-09 06:01+0200\n"
+"POT-Creation-Date: 2020-09-09 07:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -830,6 +830,42 @@ msgstr "Betalingen ble gjennomført."
 
 msgid "Payment unsuccessful. Please contact support."
 msgstr "Betaling mislyktes. Vennligst kontakt brukerstøtte."
+
+msgid "poll translation"
+msgstr "avstemningsoversettelse"
+
+msgid "poll translations"
+msgstr "avstemningsoversettelser"
+
+msgid "poll option"
+msgstr "avstemningsvalg"
+
+msgid "poll options"
+msgstr "avstemningsvalg"
+
+msgid "Poll"
+msgstr "Avstemning"
+
+msgid "Require users to have paid for the LAN in order to vote."
+msgstr "Krev at brukere har betalt for LAN-et for å kunne stemme."
+
+msgid "poll"
+msgstr "avstemning"
+
+msgid "polls"
+msgstr "avstemninger"
+
+msgid "value"
+msgstr "verdi"
+
+msgid "option"
+msgstr "valg"
+
+msgid "poll participant"
+msgstr "avstemningsdeltaker"
+
+msgid "poll participants"
+msgstr "avstemningsdeltakere"
 
 msgid "Seating"
 msgstr "Setekart"
@@ -1697,8 +1733,8 @@ msgstr "Starttid"
 msgid "No competitions for this LAN."
 msgstr "Ingen konkurranser for dette LAN-et."
 
-msgid "Lotteries"
-msgstr "Lotterier"
+msgid "Polls"
+msgstr "Avstemning"
 
 msgctxt "status"
 msgid "Open"
@@ -1707,6 +1743,12 @@ msgstr "Åpen"
 msgctxt "status"
 msgid "Closed"
 msgstr "Stengt"
+
+msgid "No polls for this LAN."
+msgstr "Ingen avstemninger for dette LAN-et."
+
+msgid "Lotteries"
+msgstr "Lotterier"
 
 msgid "No raffles for this LAN."
 msgstr "Ingen trekninger for dette LAN-et."
@@ -1993,6 +2035,33 @@ msgstr ""
 
 msgid "Back to ticket page"
 msgstr "Tilbake til billettside"
+
+msgid "You need to be logged inn to vote."
+msgstr "Du må logge inn for å kunne stemme."
+
+msgid "vote(s)"
+msgstr "stemme(r)"
+
+msgid "Unvote"
+msgstr "Fjern stemme"
+
+msgid "Vote"
+msgstr "Stem"
+
+msgid "No options have been added."
+msgstr "Ingen valg har blitt lagt til."
+
+msgid "Close the poll?"
+msgstr "Lukke avstemningen?"
+
+msgid "Close poll"
+msgstr "Lukk avstemning"
+
+msgid "Open the poll?"
+msgstr "Åpne avstemningen?"
+
+msgid "Open poll"
+msgstr "Åpne avstemning"
 
 msgid "Seatings"
 msgstr "Setekart"
