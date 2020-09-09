@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Prevented changing arrivals and manually register users for ended LANs.
 - Made news cards a little prettier and added "read more" link if the content was cut.
 - Made news date optional.
+- Improve line and paragraph spacing in LAN descriptions, articles, etc.
 
 ### Deprecated
 
