@@ -12,15 +12,9 @@
     <div class="col-md-9 article-single">
         <h1 class="page-header article-title">
             {{ article.get_translation.translated_title }}
-            {% if article.pub_date %}
-            <br />
-            <small>{{ article.pub_date }}</small>
-            {% endif %}
         </h1>
         <div class="article-tags">
-            {% for lan in article.relevant_to.all %}
-            <span class="label label-primary"><a href="{{ lan.get_absolute_url }}">{{ lan }}</a></span>
-            {% endfor %}
+            {% include "news/article_tags.html" %}
         </div>
         <div class="article-content">
             {{ article.get_translation.translated_body|striptags|markdown }}

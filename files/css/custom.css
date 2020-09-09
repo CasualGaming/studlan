@@ -497,15 +497,8 @@ h1 a, h1 a:link, h1 a:hover, h1 a:active, h1 a:visited {
     margin-bottom: 0;
 }
 
-.article-card .article-tags {
-    margin-top: 0px;
+.article-tags {
     margin-bottom: 10px;
-}
-
-.article-single .article-tags {
-    margin-top: -10px;
-    margin-bottom: 5px;
-    padding-bottom: 10px;
 }
 
 .article-single .article-title small {
