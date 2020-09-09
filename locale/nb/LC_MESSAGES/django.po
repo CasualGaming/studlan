@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-09 05:33+0200\n"
+"POT-Creation-Date: 2020-09-09 05:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -59,20 +59,23 @@ msgstr "Endret status for bruker \"{user}\" ved LAN \"{lan}\" til \"NOT paid\""
 msgid "Arrivals"
 msgstr "Ankomster"
 
+msgid "Invalid toggle type."
+msgstr "Ugyldig toggle-type."
+
 msgid "LAN not found."
 msgstr "LAN-et finnes ikke."
 
 msgid "The LAN is ended, arrivals can't be changed."
 msgstr "LAN-et er over, ankomster kan ikke endres."
 
+msgid "The LAN does not allow manual tickets."
+msgstr "Dette LAN-et tillater ikke manuelle billetter."
+
 msgid "User not found."
 msgstr "Brukeren ble ikke funnet."
 
 msgid "The user is not attending the LAN."
 msgstr "Brukeren deltar ikke på LAN-et."
-
-msgid "Invalid toggle type."
-msgstr "Ugyldig toggle-type."
 
 msgid "Authentication"
 msgstr "Autentisering"
@@ -539,6 +542,9 @@ msgstr "startdato"
 
 msgid "end date"
 msgstr "sluttdato"
+
+msgid "allow manual payment"
+msgstr "tillat manuell betaling"
 
 msgid "location"
 msgstr "sted"
@@ -1898,9 +1904,9 @@ msgid ""
 "correct. If any of it is incorrect, update it now in your <a href="
 "\"%(update_profile_url)s\">profile settings</a>."
 msgstr ""
-"Ved å kjøpe en billett bekrefter du at all informasjonen over er "
-"korrekt. Dersom noe er feil, oppdater det nå i <a href="
-"\"%(update_profile_url)s\">profilinnstillingene</a> dine."
+"Ved å kjøpe en billett bekrefter du at all informasjonen over er korrekt. "
+"Dersom noe er feil, oppdater det nå i <a href=\"%(update_profile_url)s"
+"\">profilinnstillingene</a> dine."
 
 msgid "Card holder name"
 msgstr "Navn på kortholder"

@@ -32,6 +32,7 @@ class LAN(TranslatableModel):
     title = models.CharField(_(u'title'), max_length=100)
     start_date = models.DateTimeField(_(u'start date'))
     end_date = models.DateTimeField(_(u'end date'))
+    allow_manual_payment = models.BooleanField(_(u'allow manual payment'), default=False)
     location = models.CharField(_(u'location'), max_length=100)
     map_link = models.CharField(_(u'map link'), max_length=300, help_text=_(u'URL for an embedded map.'), blank=True)
     media_link = models.CharField(_(u'media link'), max_length=300, help_text=_(u'URL for embedded media.'), blank=True)
