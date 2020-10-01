@@ -26,18 +26,18 @@ LAN-party event management system.
 * Activites
 	* Used for having several competitions under the same activity (usually a game).
 * Competitions
-	* Single User or Team participation
-	* Lotteries with automated drawing
+	* Single User or Team participation.
+	* Lotteries with automated drawing.
 * Teams
 	* Team Leader
-		* Can invite members
+		* Can invite members.
 		* Can sign the team up for competitions or leave them.
 	* Members
-		* Can decline or accept invitations and leave teams
+		* Can decline or accept invitations and leave teams.
 * Tickets and seating
-	* Online payment supported through Stripe
-	* Participants with pre purchased tickets can reserve seats
+	* Online payment supported through Stripe.
+	* Participants with pre purchased tickets can reserve seats.
 		* Seating arrangements are fully customizable through SVG layouts.
-	* Export details of participants per event
+	* Export details of participants per event.
 
 (This list may be slightly outdated.)
