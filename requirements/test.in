@@ -2,7 +2,6 @@
 
 # flake8 and extensions
 flake8
-flake8-bandit
 flake8-blind-except
 flake8-builtins
 flake8-coding

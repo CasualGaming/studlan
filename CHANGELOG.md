@@ -20,6 +20,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 
+## [v1.8.1] - 2020-12-09
+
+### Security
+
+- Upgraded dependencies to vulnerabilities.
+
 ## [v1.8.0] - 2020-09-09
 
 ### Added
