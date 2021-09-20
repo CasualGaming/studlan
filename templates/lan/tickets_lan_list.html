@@ -1,20 +1,17 @@
-{% extends "base.html" %}
-
+{% extends "competition/competition_base.html" %}
 {% load i18n %}
 {% load markdown_deux_tags %}
-
-{% block title %}
-{% trans "Statistics" %}
-{% endblock title %}
+{% load competition_tags %}
 
 {% block content %}
 <div class="row">
     <div class="col-md-9">
-        <h1 class="page-header">{% trans "Statistics" %}</h1>
+        <h1 class="page-header">{% trans "Tickets" %}</h1>
     </div>
 </div>
 
-{% with object_view_name="statistics" %}
+{% with object_view_name="lan_tickets" %}
 {% include "common/lan_list.html" %}
 {% endwith %}
 {% endblock content %}
+

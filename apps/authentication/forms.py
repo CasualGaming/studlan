@@ -33,7 +33,7 @@ class LoginForm(forms.Form):
     def login(self, request):
         try:
             User.objects.get(username=request.POST['username'])
-        except Exception:
+        except Exception:  # noqa: B902: Blind Exception
             return False
         if self.is_valid():
             auth.login(request, self.user)

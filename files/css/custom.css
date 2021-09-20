@@ -32,6 +32,11 @@ footer {
     }
 }
 
+table .label {
+    /* Allow line-breaking labels inside tables, to avoid horizontal scrolling */
+    white-space: normal;
+}
+
 .white-text {
     color: #ccc;
 }
@@ -111,23 +116,18 @@ div#btn-profile {
 }
 
 .navbar-brand-logo {
-    /* Gutter is 15px */
-    padding: 0 15px;
-}
-
-.navbar-brand-logo > div {
+    display: inline-block;
     width: 32px;
     height: 32px;
-    /* Navbar is 50px tall */
-    margin: 9px 0;
+    /* Navbar is 50px tall, gutter is 15px */
+    margin-top: -6px;
     background-image: url("/static/logo/logo_32.png");
     background-size: contain;
     image-rendering: crisp-edges;
 }
 
 .navbar-brand-text {
-    /* Gutter is 15px */
-    margin-left: -15px;
+    vertical-align: top;
 }
 
 .navbar .nav > li > a {
@@ -415,24 +415,24 @@ div#btn-profile {
 }
 
 .seating-node-free {
-    fill:#5CB85C;
+    fill: #5cb85c;
 }
 
 .seating-node-occupied {
-    fill:#C9302C;
+    fill: #d9534f;
 }
 
 .seating-node-self {
-    fill:#EC971F;
+    fill: #f0ad4e;
 }
 
 .seating-node-info {
-    stroke:black;
+    fill: #0275d8;
     stroke-width:2;
 }
 
 .seating-node-search {
-    fill:pink;
+    fill: #5bc0de;
     stroke-width:2;
 }
 

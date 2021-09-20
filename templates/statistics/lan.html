@@ -11,7 +11,7 @@
 {% block content %}
 <div class="row">
     <div class="col-md-9">
-        <h1>{% trans "Statistics" %}</h1>
+        <h1 class="page-header">{% trans "Statistics" %}</h1>
     </div>
 </div>
 
@@ -86,7 +86,7 @@
                     {% for competition, count in competition_counts %}
                     <tr>
                         <th scope="row">{{ competition }}</th>
-                        <td>{{ count }} ({% divide_percent count participant_count %})</td>
+                        <td>{{ count }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>

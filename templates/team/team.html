@@ -5,14 +5,14 @@
 {% load misc %}
 
 {% block title %}
-{{ team }}
+{% trans "Team" %} {{ team }}
 {% endblock title %}
 
 {% block content %}
 <div class="row">
     <div class="col-md-9">
 
-        <h1>{% trans "Team" %} {{ team }}</h1>
+        <h1 class="page-header">{% trans "Team" %} {{ team }}</h1>
 
         <h3 id="members">{% trans "Members" %}</h3>
         <table class="table table-bordered table-striped" aria-describedby="members">

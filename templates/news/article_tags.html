@@ -5,10 +5,12 @@
     {% if article.pinned %}
     <span class="label label-default">{% trans "Pinned" %}</span>
     {% endif %}
-    {% if article.pub_date %}
+    {% if article.pub_date and not hide_pub_date %}
     <span class="label label-info">{{ article.pub_date|date:"d/m/Y" }} {{article.pub_date|time:"H:i"}}</span>
     {% endif %}
+    {% if lans and lans|length > 1 %}
     {% for lan in article.relevant_to.all %}
     <span class="label label-primary"><a href="{{ lan.get_absolute_url }}">{{ lan }}</a></span>
     {% endfor %}
+    {% endif %}
 </div>

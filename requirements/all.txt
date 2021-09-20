@@ -4,67 +4,165 @@
 #
 #    manage/update-deps.sh
 #
-backports.functools-lru-cache==1.6.1  # via soupsieve
+backports.functools-lru-cache==1.6.4
+    # via soupsieve
 beautifulsoup4==4.9.3
-certifi==2020.12.5        # via requests
-cffi==1.14.4              # via cryptography
-chardet==3.0.4            # via requests
-configparser==4.0.2       # via flake8, importlib-metadata
-contextlib2==0.6.0.post1  # via importlib-metadata, zipp
-cryptography==3.3         # via pyopenssl, requests
+    # via -r requirements/base.in
+certifi==2021.5.30
+    # via requests
+chardet==4.0.0
+    # via requests
+click==7.1.2
+    # via pip-tools
+configparser==4.0.2
+    # via
+    #   flake8
+    #   importlib-metadata
+contextlib2==0.6.0.post1
+    # via
+    #   importlib-metadata
+    #   zipp
 django-anymail[mailgun]==7.2.1
+    # via -r requirements/base.in
 django-markdown-deux==1.0.5
+    # via -r requirements/base.in
 django-postman==3.7.0
+    # via -r requirements/base.in
 django-translatable==0.1.1
+    # via -r requirements/base.in
 django==1.11.29
-enum34==1.1.10            # via cryptography, flake8, flake8-import-order
-flake8-blind-except==0.1.1
+    # via
+    #   -r requirements/base.in
+    #   django-anymail
+    #   django-postman
+    #   django-translatable
+enum34==1.1.10
+    # via
+    #   flake8
+    #   flake8-import-order
+flake8-blind-except==0.2.0
+    # via -r requirements/test.in
 flake8-builtins==1.5.3
+    # via -r requirements/test.in
 flake8-coding==1.3.2
+    # via -r requirements/test.in
 flake8-commas==2.0.0
+    # via -r requirements/test.in
 flake8-comprehensions==1.4.1
+    # via -r requirements/test.in
 flake8-debugger==3.2.1
+    # via -r requirements/test.in
 flake8-import-order==0.18.1
+    # via -r requirements/test.in
 flake8-logging-format==0.6.0
+    # via -r requirements/test.in
 flake8-mutable==1.2.0
+    # via -r requirements/test.in
 flake8-pep3101==1.3.0
-flake8-polyfill==1.0.2    # via pep8-naming
+    # via -r requirements/test.in
+flake8-polyfill==1.0.2
+    # via pep8-naming
 flake8-print==3.1.4
-flake8-quotes==3.2.0
+    # via -r requirements/test.in
+flake8-quotes==3.3.0
+    # via -r requirements/test.in
 flake8-string-format==0.3.0
+    # via -r requirements/test.in
 flake8-tidy-imports==1.1.0
+    # via -r requirements/test.in
 flake8-todo==0.7
-flake8==3.8.4
-functools32==3.2.3.post2  # via flake8
-idna==2.10                # via requests
-importlib-metadata==2.1.1  # via flake8
-ipaddress==1.0.23         # via cryptography
-iso8601==0.1.12           # via pychal
+    # via -r requirements/test.in
+flake8==3.9.2
+    # via
+    #   -r requirements/test.in
+    #   flake8-builtins
+    #   flake8-coding
+    #   flake8-commas
+    #   flake8-comprehensions
+    #   flake8-debugger
+    #   flake8-mutable
+    #   flake8-pep3101
+    #   flake8-polyfill
+    #   flake8-print
+    #   flake8-quotes
+    #   flake8-string-format
+    #   flake8-tidy-imports
+    #   pep8-naming
+functools32==3.2.3.post2
+    # via flake8
+idna==2.10
+    # via requests
+importlib-metadata==2.1.1
+    # via flake8
+iso8601==0.1.12
+    # via pychallonge
 markdown2==2.3.10
-mccabe==0.6.1             # via flake8
-pathlib2==2.3.5           # via importlib-metadata
-pep8-naming==0.11.1
-pillow==6.2.2             # via reportlab
+    # via
+    #   -r requirements/base.in
+    #   django-markdown-deux
+mccabe==0.6.1
+    # via flake8
+pathlib2==2.3.6
+    # via importlib-metadata
+pep8-naming==0.12.1
+    # via -r requirements/test.in
+pillow==6.2.2
+    # via reportlab
+pip-tools==5.5.0
+    # via -r requirements/development.in
 psycopg2-binary==2.8.6
-pychal==1.10.0
-pycodestyle==2.6.0        # via flake8, flake8-debugger, flake8-import-order, flake8-print, flake8-todo
-pycparser==2.20           # via cffi
-pyflakes==2.2.0           # via flake8
-pyopenssl==20.0.0         # via requests
-python-dateutil==2.8.1
-pytz==2019.3              # via django, pychal, tzlocal
-reportlab==3.5.56
-requests[security]==2.23.0
-scandir==1.10.0           # via pathlib2
-six==1.15.0               # via cryptography, django-anymail, flake8-print, pathlib2, pyopenssl, python-dateutil
-soupsieve==1.9.6          # via beautifulsoup4
-stripe==2.55.1
-typing==3.7.4.3           # via flake8
-tzlocal==2.0.0            # via pychal
-urllib3==1.25.11          # via requests
+    # via -r requirements/production.in
+pychallonge==1.11.3
+    # via -r requirements/base.in
+pycodestyle==2.7.0
+    # via
+    #   flake8
+    #   flake8-debugger
+    #   flake8-import-order
+    #   flake8-print
+    #   flake8-todo
+pyflakes==2.3.1
+    # via flake8
+python-dateutil==2.8.2
+    # via -r requirements/base.in
+pytz==2019.3
+    # via
+    #   django
+    #   pychallonge
+    #   tzlocal
+reportlab==3.5.59
+    # via -r requirements/base.in
+requests[security]==2.26.0
+    # via
+    #   -r requirements/base.in
+    #   django-anymail
+    #   pychallonge
+    #   stripe
+scandir==1.10.0
+    # via pathlib2
+six==1.16.0
+    # via
+    #   django-anymail
+    #   flake8-print
+    #   pathlib2
+    #   python-dateutil
+soupsieve==1.9.6
+    # via beautifulsoup4
+stripe==2.60.0
+    # via -r requirements/base.in
+typing==3.10.0.0
+    # via flake8
+tzlocal==2.1
+    # via pychallonge
+urllib3==1.26.6
+    # via requests
 uwsgi==2.0.19.1
+    # via -r requirements/production.in
 xlwt==1.3.0
-zipp==1.2.0               # via importlib-metadata
+    # via -r requirements/base.in
+zipp==1.2.0
+    # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
+# pip
 # setuptools

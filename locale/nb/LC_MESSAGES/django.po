@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-09 07:14+0200\n"
+"POT-Creation-Date: 2021-09-20 06:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -690,6 +690,9 @@ msgstr "strømming"
 
 msgid "streams"
 msgstr "strømminger"
+
+msgid "Tickets"
+msgstr "Billetter"
 
 msgid "This LAN has finished and can no longer be attended."
 msgstr "Dette LANet er over og påmeldingen er derfor stengt."
@@ -1380,8 +1383,8 @@ msgstr "Aliaset ble fjernet."
 msgid "Error 404"
 msgstr "Feil 404"
 
-msgid "Error 404: File Not Found"
-msgstr "Feil 404: Filen ble ikke funnet"
+msgid "Page Not Found (404)"
+msgstr "Siden ble ikke funnet (404)"
 
 msgid "<p>We're sorry, but the page you requested could not be found.</p>"
 msgstr "<p>Vi beklager, men vi fant ikke siden du etterspurte.</p>"
@@ -1389,8 +1392,8 @@ msgstr "<p>Vi beklager, men vi fant ikke siden du etterspurte.</p>"
 msgid "Error 500"
 msgstr "Feil 500"
 
-msgid "Error 500: Server Error"
-msgstr "Feil 500: Serverfeil"
+msgid "Server Error (500)"
+msgstr "Serverfeil (500)"
 
 msgid ""
 "<p>We've encountered an internal server error.</p> <p>Administrators have "
@@ -1776,6 +1779,12 @@ msgstr "Sluttid"
 msgid "Location"
 msgstr "Sted"
 
+msgid "View tickets"
+msgstr "Vis billetter"
+
+msgid "LAN List"
+msgstr "LAN-liste"
+
 #, python-format
 msgid "You have a ticket: %(ticket_title)s"
 msgstr "Du har en billett: %(ticket_title)s"
@@ -1799,9 +1808,6 @@ msgstr ""
 
 msgid "You need to login to sign up for the LAN."
 msgstr "Du må logge deg på for å melde deg opp til LAN-et."
-
-msgid "Tickets"
-msgstr "Billetter"
 
 msgid "Price"
 msgstr "Pris"
@@ -1836,9 +1842,6 @@ msgstr "Kjøp"
 
 msgid "No tickets are available at this time."
 msgstr "Ingen billetter er tilgjengelige akkurat nå."
-
-msgid "LAN List"
-msgstr "LAN-liste"
 
 msgctxt "lottery"
 msgid "Open"
@@ -1931,36 +1934,50 @@ msgstr "Vis LAN"
 msgid "News archive"
 msgstr "Nyhetsarkiv"
 
-msgid "Ticket Purchase"
-msgstr "Billettkjøp"
+msgid "Ticket Checkout"
+msgstr "Billettsalg"
 
-msgid "Ticket"
-msgstr "Billett"
+msgid "view LAN"
+msgstr "vis LAN"
 
 msgid "Ticket type"
 msgstr "Billettype"
 
+msgid "view all tickets"
+msgstr "vis alle billetter"
+
 msgid "Description"
 msgstr "Beksrivelse"
 
-msgid "Phone"
-msgstr "Telefon"
+msgid "Your Information"
+msgstr "Din informasjon"
 
 #, python-format
 msgid ""
-"By purchasing a ticket, you are confirming that all information above is "
-"correct. If any of it is incorrect, update it now in your <a href="
+"By purchasing a ticket, you are confirming that all of the information about "
+"you is correct. If not, update it now in your <a href="
 "\"%(update_profile_url)s\">profile settings</a>."
 msgstr ""
-"Ved å kjøpe en billett bekrefter du at all informasjonen over er korrekt. "
-"Dersom noe er feil, oppdater det nå i <a href=\"%(update_profile_url)s"
+"Ved å kjøpe en billett bekrefter du at all informasjonen om deg er korrekt. "
+"Hvis ikke, oppdater det nå i <a href=\"%(update_profile_url)s"
 "\">profilinnstillingene</a> dine."
+
+msgid "Phone"
+msgstr "Telefon"
 
 msgid "Card holder name"
 msgstr "Navn på kortholder"
 
 msgid "Card info"
 msgstr "Kortinformasjon"
+
+msgid ""
+"I accept the rules for the LAN, as described on the LAN page. (Required)"
+msgstr ""
+"Jeg aksepterer reglene for LAN-et, som beskrevet på LAN-siden. (Påkrevd)"
+
+msgid "My information above is correct. (Required)"
+msgstr "Informasjonen min over er korrekt. (Påkrevd)"
 
 msgid "Submit payment"
 msgstr "Send betaling"
@@ -2079,6 +2096,9 @@ msgstr "Stenger"
 msgctxt "seating status"
 msgid "Closed"
 msgstr "Stengt"
+
+msgid "Ticket"
+msgstr "Billett"
 
 msgctxt "ticket types"
 msgid "None"
@@ -2223,12 +2243,15 @@ msgstr "Deltakerantall"
 msgid "Teams are counted as their member count."
 msgstr "Lag teller som medlemsantallet deres."
 
-msgid "Create team"
+msgid "Create Team"
 msgstr "Nytt lag"
 
 msgctxt "team tag"
 msgid "Must be unique!"
 msgstr "Må være unik!"
+
+msgid "Create team"
+msgstr "Nytt lag"
 
 #, python-format
 msgid ""
@@ -2240,7 +2263,7 @@ msgstr ""
 "\"%(team_url)s\"><strong>%(team)s</strong></a>. <br /> Du kan akseptere "
 "eller avslå invitasjonen på lagsiden."
 
-msgid "My teams"
+msgid "My Teams"
 msgstr "Mine lag"
 
 msgid "Members"
@@ -2303,12 +2326,6 @@ msgstr "Ingen lag."
 
 msgid "All Teams"
 msgstr "Alle lag"
-
-msgid "My Teams"
-msgstr "Mine lag"
-
-msgid "Create Team"
-msgstr "Nytt lag"
 
 msgid "History"
 msgstr "Historikk"

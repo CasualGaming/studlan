@@ -12,16 +12,17 @@ IMPORT_FILE="$IMPORT_EXPORT_DIR/import.json.gz"
 EXPORT_FILE="$IMPORT_EXPORT_DIR/export.json.gz"
 
 # Optional env vars
-STUDLAN_UID=${STUDLAN_UID:=}
-STUDLAN_GID=${STUDLAN_GID:=}
-SUPERUSER_USERNAME=${SUPERUSER_USERNAME:=}
-SUPERUSER_EMAIL=${SUPERUSER_EMAIL:=}
-SUPERUSER_PASSWORD=${SUPERUSER_PASSWORD:=}
-SUPERUSER_INACTIVE=${SUPERUSER_INACTIVE:=}
-FLUSH_DATABASE=${FLUSH_DATABASE:=}
-IMPORT_DATABASE=${IMPORT_DATABASE:=}
-EXPORT_DATABASE=${EXPORT_DATABASE:=}
-NO_START=${NO_START:=}
+STUDLAN_UID=${STUDLAN_UID:-}
+STUDLAN_GID=${STUDLAN_GID:-}
+SUPERUSER_USERNAME=${SUPERUSER_USERNAME:-}
+SUPERUSER_EMAIL=${SUPERUSER_EMAIL:-}
+SUPERUSER_PASSWORD=${SUPERUSER_PASSWORD:-}
+SUPERUSER_INACTIVE=${SUPERUSER_INACTIVE:-}
+FLUSH_DATABASE=${FLUSH_DATABASE:-}
+IMPORT_DATABASE=${IMPORT_DATABASE:-}
+EXPORT_DATABASE=${EXPORT_DATABASE:-}
+NO_START=${NO_START:-}
+DJANGO_DEV_SERVER=${DJANGO_DEV_SERVER:-}
 
 echo "Starting studlan v$(cat VERSION)"
 echo
@@ -138,10 +139,18 @@ echo "Chowning all files ..."
 chown -R $STUDLAN_USER:$STUDLAN_GROUP .
 set -e
 
-# Run uWSGI server
+# Maybe don't start
 if [[ $NO_START == "true" ]]; then
     echo "No-start enabled, stopping instead"
     exit 0
 fi
-echo "Done. Starting server ..."
-exec uwsgi --ini uwsgi.ini
+
+# Run prod or dev server
+if [[ $DJANGO_DEV_SERVER != "true" ]]; then
+    echo "Starting uWSGI server ..."
+    exec uwsgi --ini uwsgi.ini
+else
+    echo "Starting Django dev server ..."
+    echo "WARNING: Never use this in prod!"
+    $MANAGE runserver 0.0.0.0:8080
+fi

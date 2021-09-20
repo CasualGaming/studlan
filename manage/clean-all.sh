@@ -20,5 +20,6 @@ rm -f studlan/settings/local.py
 rm -f studlan/settings/local.docker.py
 
 echo "Cleaning Docker ..."
-docker-compose -f setup/docker-compose.dev.yml down
+docker-compose -f setup/docker-compose.full.yml down
 docker-compose -f setup/docker-compose.test.yml down
+docker-compose -f setup/docker-compose.tiny.yml down

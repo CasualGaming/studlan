@@ -1,0 +1,13 @@
+FROM python:2.7
+
+WORKDIR /srv/studlan
+
+# Install requirements
+COPY requirements/ requirements/
+RUN \
+apt-get update && \
+apt-get install -y gettext && \
+rm -rf /var/lib/apt/lists/* && \
+pip install --no-cache-dir -r requirements/development.txt --upgrade
+
+ENTRYPOINT ["/bin/bash"]

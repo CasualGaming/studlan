@@ -4,6 +4,7 @@ version: '3.3'
 services:
   app:
     container_name: studlan-test-app
+    image: studlan
     build:
       context: ..
     environment:
