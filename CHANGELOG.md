@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Changed which news labels are shown on front page and archive page.
+
 ### Deprecated
 
 ### Removed

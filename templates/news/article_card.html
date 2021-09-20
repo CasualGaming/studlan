@@ -9,7 +9,9 @@
         {% endif %}
     </h3>
     <div class="article-tags">
+        {% with hide_pub_date="true" %}
         {% include "news/article_tags.html" %}
+        {% endwith %}
     </div>
     <div class="article-content">
         {% with content=article.get_translation.translated_body|striptags|markdown %}
