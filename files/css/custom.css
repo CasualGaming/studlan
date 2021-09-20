@@ -32,6 +32,11 @@ footer {
     }
 }
 
+table .label {
+    /* Allow line-breaking labels inside tables, to avoid horizontal scrolling */
+    white-space: normal;
+}
+
 .white-text {
     color: #ccc;
 }
