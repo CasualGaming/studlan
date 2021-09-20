@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Replaced the outdated pychal library with pychallonge (pychal was a fork of pychallonge but was since merged back into it).
+- Fixed ugly percentage formatting in statistics and remove percentage from competition statistics.
 
 ### Security
 

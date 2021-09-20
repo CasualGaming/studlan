@@ -54,7 +54,7 @@ def divide(dividend, divisor):
 def divide_percent(dividend, divisor):
     if divisor == 0:
         return '0%'
-    return '{val}%'.format(val=(dividend / float(divisor) * 100))
+    return '{val:.2f}%'.format(val=(dividend / float(divisor) * 100))
 
 
 @register.simple_tag
