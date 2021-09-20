@@ -9,16 +9,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+
+## [v1.9.0] - 2021-09-20
+
+### Added
+
 - Added required checkboxes on the ticket checkout page for accepting the LAN rules and confirming that the user information is correct.
 - Added separate page for tickets, including a navbar entry.
 
 ### Changed
 
 - Changed which news labels are shown on front page and archive page.
-
-### Deprecated
-
-### Removed
+- Updated default seatmap colors.
 
 ### Fixed
 
