@@ -1,6 +1,7 @@
 django
 django-markdown-deux
 django-translatable
+# Warning: reportlab and its dependency Pillow (the last version supporting Python 2) suffers from various minor severity DoS-attacks, so avoid using it for user-specified data.
 reportlab
 stripe
 beautifulsoup4
@@ -8,6 +9,6 @@ xlwt
 django-postman==3.7.0
 requests
 markdown2
-pychal
+pychallonge
 django-anymail[mailgun]
 python-dateutil
