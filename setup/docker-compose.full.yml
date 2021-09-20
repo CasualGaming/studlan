@@ -11,6 +11,7 @@ services:
     - SUPERUSER_EMAIL=batman@localhost
     - SUPERUSER_PASSWORD=manbat
     - SUPERUSER_INACTIVE=false
+    - DJANGO_DEV_SERVER=${DJANGO_DEV_SERVER:-}
     volumes:
     - ../.local/docker-full/local.py:/srv/studlan/studlan/settings/local.py:ro
     - ../.local/docker-full/db.sqlite3:/srv/studlan/db.sqlite3:rw

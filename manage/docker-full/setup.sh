@@ -31,13 +31,5 @@ fi
 echo "0.0.0-SNAPSHOT" > VERSION
 
 echo
-echo "Removing any previous Docker Compose setup ..."
-$DC down
-
-echo
 echo "Building image ..."
 $DC build app
-
-echo
-echo "Creating containers ..."
-$DC up --no-start

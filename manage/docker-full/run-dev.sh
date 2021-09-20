@@ -22,4 +22,6 @@ if [[ ! -e $DB_FILE ]]; then
     exit -1
 fi
 
-$DC up --no-recreate
+export DJANGO_DEV_SERVER=true
+$DC up
+$DC down
