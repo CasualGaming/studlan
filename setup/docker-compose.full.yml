@@ -3,6 +3,7 @@ version: '3.6'
 services:
   app:
     container_name: studlan-dev-app
+    image: studlan
     build:
       context: ..
     environment:
@@ -11,9 +12,9 @@ services:
     - SUPERUSER_PASSWORD=manbat
     - SUPERUSER_INACTIVE=false
     volumes:
-    - ../studlan/settings/local.docker.py:/srv/studlan/studlan/settings/local.py:ro
-    - ../.local/docker/db.sqlite3:/srv/studlan/db.sqlite3:rw
-    - ../.local/docker/log:/srv/studlan/log:rw
+    - ../.local/docker-full/local.py:/srv/studlan/studlan/settings/local.py:ro
+    - ../.local/docker-full/db.sqlite3:/srv/studlan/db.sqlite3:rw
+    - ../.local/docker-full/log:/srv/studlan/log:rw
     # Source dirs, in case of changes
     - ../apps/:/srv/studlan/apps/:ro
     - ../studlan/:/srv/studlan/studlan/:ro

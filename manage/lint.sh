@@ -4,11 +4,9 @@
 
 set -eu
 
-# Activate venv and deactivate on exit
-# Allow undefined vars
+# Activate venv
 set +u
 source "$(dirname "$BASH_SOURCE[0]")/activate-venv.sh"
-trap deactivate EXIT
 set -u
 
 # Run flake8 static code analysis

@@ -7,11 +7,9 @@ export CUSTOM_COMPILE_COMMAND="manage/update-deps.sh"
 
 set -eu
 
-# Activate venv and deactivate on exit
-# Allow undefined vars
+# Activate venv
 set +u
 source "$(dirname "$BASH_SOURCE[0]")/activate-venv.sh"
-trap deactivate EXIT
 set -u
 
 # Install pip-tools (needs to be inside venv to prevent conflict between the Python 2 and 3 versions)
@@ -21,6 +19,7 @@ pip install pip-tools
 cp requirements/all.txt requirements/all.old.txt
 
 echo "Updating requirements files ..."
+pip cache purge
 pip-compile --quiet --upgrade requirements/development.in
 pip-compile --quiet --upgrade requirements/production.in
 pip-compile --quiet --upgrade requirements/test.in

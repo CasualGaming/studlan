@@ -1,11 +1,17 @@
 #!/bin/bash
 
 # Notes:
+# - Call this scrupt by sourcing it, not by running it normally.
 # - Do not use "set -u" before sourcing this script, virtualenv's activate script may trigger it.
 # - Make sure the user bin dir is added to PATH
 
 SYSTEM_PACKAGES="virtualenv setuptools wheel"
 VENV_DIR=".venv"
+
+# Exit early if inside Docker, no need for venv then
+if [[ -e /.dockerenv ]]; then
+    return
+fi
 
 # Windows uses "python" and "pip" for both Python 2 and 3
 # Linux uses "python" and "pip" for Python 2 only

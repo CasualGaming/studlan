@@ -1,12 +1,15 @@
 #!/bin/bash
 
+# Setup simple Docker image with requirements pre-installed to speed up simple dev commands.
+# Run this command before running any "non-full" Docker management commands in here and rerun it after changing the requirements.
+
 LOCAL_DIR=".local/docker"
 LOG_DIR="$LOCAL_DIR/log"
 CONFIG_FILE="studlan/settings/local.docker.py"
 CONFIG_TEMPLATE_FILE="setup/local.docker.dev.py"
 DB_FILE="$LOCAL_DIR/db.sqlite3"
-DC_FILE="setup/docker-compose.dev.yml"
-DC="docker-compose -f $DC_FILE"
+DOCKER_FILE="setup/Dockerfile.dev"
+DOCKER_IMAGE="studlan-tiny"
 
 set -eu
 
@@ -29,13 +32,5 @@ fi
 echo "0.0.0-SNAPSHOT" > VERSION
 
 echo
-echo "Removing any previous Docker Compose setup ..."
-$DC down
-
-echo
-echo "Building image ..."
-$DC build app
-
-echo
-echo "Creating containers ..."
-$DC up --no-start
+echo "Creating tiny Docker image ..."
+docker build -f "$DOCKER_FILE" -t "$DOCKER_IMAGE" .
