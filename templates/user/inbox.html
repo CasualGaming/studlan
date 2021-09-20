@@ -1,17 +1,17 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
 {% load i18n %}
-{% load markdown_deux_tags %} 
+{% load markdown_deux_tags %}
 {% load misc %}
-{% load profile_tags %} 
+{% load profile_tags %}
 
-{% block title %} 
+{% block title %}
 {% trans "Inbox" %}
-{% endblock title %} 
+{% endblock title %}
 
 {% block content %}
 <div class="row">
     <div class="col-md-9">
-         <h1>{% trans "Inbox" %}</h1>
+        <h1 class="page-header">{% trans "Inbox" %}</h1>
 
         {% if postman_messages %}
         {% for pm in postman_messages %}

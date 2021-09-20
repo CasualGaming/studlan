@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Setup for running the full application.
+# Setup for running certain management tasks.
 
 set -eu
 

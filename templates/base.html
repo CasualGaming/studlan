@@ -13,7 +13,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         <title>
-            {{ site_name }} –
+            {{ site_name }} |
+            {% if lan %}{{ lan }}:{% endif %}
             {% block title %}
             {% endblock title %}
         </title>

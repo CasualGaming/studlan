@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added required checkboxes on the ticket checkout page for accepting the LAN rules and confirming that the user information is correct.
+- Added separate page for tickets, including a navbar entry.
+
 ### Changed
 
 ### Deprecated
@@ -17,14 +20,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Replaced the outdated pychal library with pychallonge (pychal was a fork of pychallonge but was since merged back into it).
+
 ### Security
 
+- Upgraded vulnerable dependencies.
 
 ## [v1.8.1] - 2020-12-09
 
 ### Security
 
-- Upgraded dependencies to vulnerabilities.
+- Upgraded vulnerable dependencies.
 
 ## [v1.8.0] - 2020-09-09
 
@@ -55,7 +61,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fixed after-login and after-logout redirect, including unsafe redirecting.
-
 
 ## [v1.7.0] - 2020-02-21
 
@@ -90,14 +95,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed logout CSRF vulnerability.
 - Fixed LAN attendance CSRF vulnerability.
 
-
 ## [v1.6.1] - 2019-10-17
 
 ### Fixed
 
 - Fixed server error when viewing team competition page when not logged in.
 - Fixed sponsor title text wrapping.
-
 
 ## [v1.6.0] - 2019-10-16
 
@@ -154,7 +157,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed lottery CSRF vulnerability.
 
-
 ## [1.5.1] - 2019-08-01
 
 ### Changed
@@ -165,7 +167,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed missing LAN translations on LAN admin page.
 - Fixed reversed order for sponsor priority.
-
 
 ## [1.5.0] - 2019-07-31
 
@@ -238,13 +239,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed team join/leave/etc. CSRF vulnerability.
 - Fixed ticket release date not being properly enforced.
 
-
 ## [1.4.3] - 2019-04-03
 
 ### Fixed
 
 - Fixed internal error when accessing `/profile`.
-
 
 ## [1.4.2] - 2019-04-01
 
@@ -265,7 +264,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed internal errors when viewing non-existing lotteries.
 - Fixed wrong font for username in top bar.
 
-
 ## [1.4.1] - 2019-03-10
 
 ### Added
@@ -284,7 +282,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix broken auth for the downloadable PDF files for the seating.
 - Replace the drop-down list with all usernames in the team invite section with a text field.
-
 
 ## [1.4.0] - 2019-03-10
 

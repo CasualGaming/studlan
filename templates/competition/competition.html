@@ -11,10 +11,10 @@
 {% endblock title %}
 
 {% block content %}
-{% with competition.use_teams as teamcomp %} 
+{% with competition.use_teams as teamcomp %}
     <div class="row">
         <div class="col-md-9">
-            <h1>{{ competition }}</h1>
+            <h1 class="page-header">{{ competition }}</h1>
         </div>
     </div>
 
@@ -219,7 +219,7 @@
                                     {% else %}
                                         <td class="underline">{{ user }}</td>
                                     {% endif %}
-                                </tr>   
+                                </tr>
                             {% endfor %}
                         </tbody>
                     </table>
@@ -374,7 +374,7 @@
                     Try to find other players that sign up solo, make a team and sign up as a team.
                     When you sign up as a team, your solo participation will be overriden.
                     {% endblocktrans %}
-                </div>  
+                </div>
             </div>
         </div>
         {% endif %}

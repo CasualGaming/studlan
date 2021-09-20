@@ -4,24 +4,23 @@
 {% load static %}
 
 {% block title %}
-{{ lan }}
+{% trans 'Ticket Checkout' %}
 {% endblock title %}
 
 {% block content %}
     <div class="row">
         <div class="col-sm-offset-2 col-sm-8 col-md-offset-1 col-md-7">
-            <h1>{% trans "Ticket Purchase" %}</h1>
+            <h1 class="page-header">{% trans "Ticket Checkout" %}</h1>
 
-            <h3>{% trans "Ticket" %}</h3>
             <table class="table table-bordered">
                 <tbody>
                     <tr>
                         <td><strong>{% trans "LAN" %}</strong></td>
-                        <td>{{ lan }}</td>
+                        <td>{{ lan }} (<a href="{{ lan.get_absolute_url }}">{% trans "view LAN" %}</a>)</td>
                     </tr>
                     <tr>
                         <td><strong>{% trans "Ticket type" %}</strong></td>
-                        <td>{{ ticket_type }}</td>
+                        <td>{{ ticket_type }} (<a href="{% url 'lan_tickets' lan_id=lan.id %}">{% trans "view all tickets" %}</a>)</td>
                     </tr>
                     <tr>
                         <td><strong>{% trans "Description" %}</strong></td>
@@ -34,7 +33,14 @@
                 </tbody>
             </table>
 
-            <h3>{% trans "User" %}</h3>
+            <h3>{% trans "Your Information" %}</h3>
+            <p>
+                {% url 'update_profile' as update_profile_url %}
+                {% blocktrans trimmed %}
+                By purchasing a ticket, you are confirming that all of the information about you is correct.
+                If not, update it now in your <a href="{{ update_profile_url }}">profile settings</a>.
+                {% endblocktrans %}
+            </p>
             <table class="table table-bordered">
                 <tbody>
                     <tr>
@@ -67,13 +73,6 @@
                     </tr>
                 </tbody>
             </table>
-            <p>
-                {% url 'update_profile' as update_profile_url %}
-                {% blocktrans trimmed %}
-                By purchasing a ticket, you are confirming that all information above is correct.
-                If any of it is incorrect, update it now in your <a href="{{ update_profile_url }}">profile settings</a>.
-                {% endblocktrans %}
-            </p>
 
             <h3>{% trans "Payment" %}</h3>
             <form id="card-form">
@@ -81,16 +80,26 @@
                 <div>
                     <input class="form-control" id="cardholder-name" name="cardholder-name" placeholder="{% trans "Card holder name" %}" type="text" required/>
                 </div>
-                <br>
+                <br />
                 <h4>{% trans "Card info" %}</h4>
                 <div class="form-control" id="card-element"></div>
-                <br>
+                <br />
+                <div>
+                    <input id="accept-rules" name="accept-rules" type="checkbox" required/>
+                    <label for="accept-rules">{% trans "I accept the rules for the LAN, as described on the LAN page. (Required)" %}</label>
+                </div>
+                <br />
+                <div>
+                    <input id="correct-information" name="correct-information" type="checkbox" required/>
+                    <label for="correct-information">{% trans "My information above is correct. (Required)" %}</label>
+                </div>
+                <br />
                 <div>
                     <button class="btn btn-success" id="card-button">{% trans "Submit payment" %}</button>
                 </div>
                 <input type="submit" id="test-submit" style="display: none" />
             </form>
-            <br>
+            <br />
             <a href="{% url 'payment_info' ticket_type.id %}">{% trans "About our payment security" %}</a>
         </div>
     </div>

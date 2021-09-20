@@ -51,11 +51,41 @@ def details(request, lan):
     else:
         active = False
 
+    directions = Directions.objects.filter(lan=lan)
+
+    return render(request, 'lan/details.html', {'lan': lan, 'active': active, 'directions': directions})
+
+
+@require_safe
+def ticket_list_home(request):
+    lans = LAN.objects.filter(end_date__gte=datetime.now())
+    if lans.count() == 1:
+        next_lan = lans[0]
+        return redirect('lan_tickets', lan_id=next_lan.id)
+    else:
+        return redirect('lan_tickets_lan_list')
+
+
+@require_safe
+def ticket_list_lan_list(request):
+    context = {}
+    context['upcoming_lans'] = LAN.objects.filter(end_date__gte=datetime.now()).order_by('start_date')
+    context['previous_lans'] = LAN.objects.filter(end_date__lt=datetime.now()).order_by('-start_date')
+
+    return render(request, 'lan/tickets_lan_list.html', context)
+
+
+@require_safe
+def ticket_list(request, lan_id):
+    lan = get_object_or_404(LAN, pk=lan_id)
+    if lan.end_date > datetime.now():
+        active = True
+    else:
+        active = False
+
     ticket_types = lan.tickettype_set.all().order_by('-priority', '-price')
 
     user_tickets = Ticket.objects.filter(user=request.user.id, ticket_type__in=ticket_types)
-
-    directions = Directions.objects.filter(lan=lan)
 
     if request.user in lan.attendees:
         if request.user in lan.paid_attendees or user_tickets:
@@ -65,7 +95,12 @@ def details(request, lan):
     else:
         status = 'open'
 
-    return render(request, 'lan/details.html', {'lan': lan, 'status': status, 'active': active, 'ticket_types': ticket_types, 'ticket': user_tickets, 'directions': directions})
+    breadcrumbs = (
+        (lan, lan.get_absolute_url()),
+        (_(u'Tickets'), ''),
+    )
+
+    return render(request, 'lan/tickets.html', {'breadcrumbs': breadcrumbs, 'lan': lan, 'status': status, 'active': active, 'ticket_types': ticket_types, 'ticket': user_tickets})
 
 
 @require_POST
@@ -75,7 +110,7 @@ def attend(request, lan_id):
 
     if lan.end_date < datetime.now():
         messages.error(request, _(u'This LAN has finished and can no longer be attended.'))
-        return redirect(lan)
+        return redirect('lan_tickets', lan_id=lan.id)
 
     if not request.user.profile.has_address():
         messages.error(request, _(u'You need to fill in your address and postal code in order to sign up for a LAN.'))
@@ -88,7 +123,7 @@ def attend(request, lan_id):
 
             messages.success(request, _(u'Successfully added you to attendee list for {lan}.').format(lan=lan))
 
-    return redirect(lan)
+    return redirect('lan_tickets', lan_id=lan.id)
 
 
 @require_POST
@@ -98,25 +133,25 @@ def unattend(request, lan_id):
 
     if lan.start_date < datetime.now():
         messages.error(request, _(u'This LAN has already started, you can\'t retract your signup.'))
-        return redirect(lan)
+        return redirect('lan_tickets', lan_id=lan.id)
 
     if request.user not in lan.attendees:
         messages.error(request, _(u'You are not in the attendee list for the LAN.'))
-        return redirect(lan)
+        return redirect('lan_tickets', lan_id=lan.id)
 
     ticket_types = lan.tickettype_set.all().order_by('-priority', '-price')
     user_tickets = Ticket.objects.filter(user=request.user.id, ticket_type__in=ticket_types)
 
     if request.user in lan.paid_attendees or user_tickets:
         messages.error(request, _(u'You cannot remove attendance since you have paid for a ticket to the LAN.'))
-        return redirect(lan)
+        return redirect('lan_tickets', lan_id=lan.id)
     else:
         attendee = Attendee.objects.get(lan=lan, user=request.user)
         attendee.delete()
 
         messages.success(request, _(u'Successfully removed you from attendee list for {lan}.').format(lan=lan))
 
-    return redirect(lan)
+    return redirect('lan_tickets', lan_id=lan.id)
 
 
 @require_safe

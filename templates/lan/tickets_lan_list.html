@@ -1,0 +1,62 @@
+{% extends "competition/competition_base.html" %}
+{% load i18n %}
+{% load markdown_deux_tags %}
+{% load competition_tags %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-9">
+        <h1 class="page-header">{% trans "Tickets" %}</h1>
+    </div>
+</div>
+
+{% if upcoming_lans %}
+<div class="row">
+    <div class="col-md-9">
+        <table class="table table-bordered table-hover click-table">
+            <thead>
+                <th class="col-md-4">{% trans "LAN" %}</th>
+                <th class="col-md-3">{% trans "Time" %}</th>
+            </thead>
+            <tbody>
+                {% for lan in upcoming_lans %}
+                <tr onclick="document.location='{% url "lan_tickets" lan.id %}';">
+                    <td class="underline">{{ lan }}</td>
+                    <td>{{ lan.start_date|date }} – {{ lan.end_date|date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<div class="row">
+    <div class="col-md-9">
+        <div class="alert alert-info">{% trans "No upcoming LANs." %}</div>
+    </div>
+</div>
+{% endif %}
+
+{% if previous_lans %}
+<div class="row">
+    <div class="col-md-9">
+        <h3>{% trans "Previous LANs" %}</h2>
+        <table class="table table-bordered table-striped table-hover click-table">
+            <thead>
+                <th class="col-md-4">{% trans "LAN" %}</th>
+                <th class="col-md-3">{% trans "Time" %}</th>
+            </thead>
+            <tbody>
+                {% for lan in previous_lans %}
+                <tr onclick="document.location='{% url "lan_tickets" lan.id %}';">
+                    <td class="underline">{{ lan }}</td>
+                    <td>{{ lan.start_date|date }} – {{ lan.end_date|date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endblock content %}
+

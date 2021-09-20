@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load markdown_deux_tags %}
+{% load static %}
+
+{% block title %}
+{% trans 'Tickets' %}
+{% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-9">
+        <h1 class="page-header">{% trans "Tickets" %}</h1>
+    </div>
+</div>
+
+{% if not active %}
+<div class="row">
+    <div class="col-md-9">
+        <div class="alert alert-info">
+            <p>{% trans "The LAN is over." %}</p>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="row">
+    <div class="col-md-9">
+        {% if active and user.is_authenticated %}
+        {% if status == 'paid' and ticket %}
+        <div class="center-on-collapse">
+            <a class="btn btn-success disabled center-on-collapse long-text-button" href="#">
+                {% blocktrans with ticket_title=ticket.0.ticket_type.get_translation.title trimmed %}
+                You have a ticket: {{ ticket_title }}
+                {% endblocktrans %}
+            </a>
+        </div>
+        {% elif status == 'paid' %}
+        {# If the user has no real ticket, but the attendance is marked as "paid" #}
+        <div class="center-on-collapse">
+            <a class="btn btn-success disabled center-on-collapse long-text-button" href="#">
+                {% trans "You have a ticket." %}
+            </a>
+        </div>
+        {% elif status == 'attending' %}
+        <div class="center-on-collapse">
+            <form class="form-inline" action="{% url 'lan_unattend' lan.id %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-danger">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    {% trans "Unattend" %}
+                </button>
+            </form>
+        </div>
+        {% elif status == 'open' %}
+        {% if user.profile.has_address %}
+        <div class="center-on-collapse">
+            <form class="form-inline" action="{% url 'lan_attend' lan.id %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-primary">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    {% trans "Attend" %}
+                </button>
+            </form>
+        </div>
+        {% else %}
+        <div class="alert alert-warning">
+            {% url 'update_profile' as update_profile_url %}
+            {% blocktrans trimmed %}
+            Your address and zip code is required in order to sign up for a LAN.
+            Go to your <a href="{{ update_profile_url }}">profile</a> to add the information.
+            {% endblocktrans %}
+        </div>
+        {% endif %}{# user.profile.has_address #}
+        {% endif %} {# status == ... #}
+        {% elif not user.is_authenticated %}
+        <div class="alert alert-warning">
+            {% trans "You need to login to sign up for the LAN." %}
+        </div>
+        {% endif %}{# active and user.is_authenticated #}
+        <br />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-9">
+        {% if ticket_types %}
+        {% for ticket_type in ticket_types %}
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ ticket_type.get_translation.title }}</h3>
+            </div>
+            <div class="panel-body">
+                <p>{{ ticket_type.get_translation.description }}</p>
+                <p><strong>{% trans "Price" %}:</strong> {{ ticket_type.verbose_price }}</p>
+                <p><strong>{% trans "Available tickets" %}:</strong> {{ ticket_type.number_of_free_seats }}/{{ ticket_type.number_of_seats }}</p>
+            </div>
+            <div class="panel-footer">
+                {% if not ticket_type.is_available %}
+                <button type="button" class="btn btn-default disabled">
+                    {% blocktrans with release_date=ticket_type.available_from|date release_time=ticket_type.available_from|time trimmed %}
+                    Tickets will be released {{ release_date }} at {{ release_time }}
+                    {% endblocktrans %}
+                </button>
+                {% elif not active %}
+                <button type="button" class="btn btn-default disabled">
+                    {% trans "The LAN is over" %}
+                </button>
+                {% elif ticket_type.number_of_free_seats == 0 %}
+                <button type="button" class="btn btn-danger disabled">
+                    {% trans "Sold out" %}
+                </button>
+                {% elif not user.is_authenticated %}
+                <button type="button" class="btn btn-default disabled">
+                    {% trans "Please log in" %}
+                </button>
+                {% elif status == 'paid' %}
+                <button type="button" class="btn btn-default disabled">
+                    {% trans "You already have a ticket" %}
+                </button>
+                {% elif status == 'open' %}
+                <button type="button" class="btn btn-warning disabled">
+                    {% trans "You must attend first" %}
+                </button>
+                {% elif not user.profile.has_address %}
+                <button type="button" class="btn btn-warning disabled">
+                    {% trans "Missing address in user profile" %}
+                </button>
+                {% else %}
+                <a class="btn btn-success" href="{% url 'payment' ticket_type.id %}">
+                    {% trans "Buy" %}
+                </a>
+                {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+        {% else %}
+        <div class="alert alert-info">
+            <p>{% trans "No tickets are available at this time." %}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock content %}
