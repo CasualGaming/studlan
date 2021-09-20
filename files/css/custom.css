@@ -415,24 +415,24 @@ div#btn-profile {
 }
 
 .seating-node-free {
-    fill:#5CB85C;
+    fill: #5cb85c;
 }
 
 .seating-node-occupied {
-    fill:#C9302C;
+    fill: #d9534f;
 }
 
 .seating-node-self {
-    fill:#EC971F;
+    fill: #f0ad4e;
 }
 
 .seating-node-info {
-    stroke:black;
+    fill: #0275d8;
     stroke-width:2;
 }
 
 .seating-node-search {
-    fill:pink;
+    fill: #5bc0de;
     stroke-width:2;
 }
 
