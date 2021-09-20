@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from smtplib import SMTPException
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
@@ -148,7 +150,7 @@ def handle_submitted_form(request, old_form, template_context):
             try:
                 email_message.send()
                 message.successful_mails += 1
-            except Exception:
+            except SMTPException:
                 message.failed_mails += 1
                 continue
 

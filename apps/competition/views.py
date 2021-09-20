@@ -431,7 +431,7 @@ def start_compo(request, competition_id):
             competition.status = 3
             competition.save()
             messages.success(request, _(u'Tournament has started.'))
-        except Exception:
+        except Exception:  # noqa: B902: Blind Exception
             messages.error(request, _(u'Something went wrong.'))
 
     return redirect(competition)

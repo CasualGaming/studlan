@@ -27,9 +27,6 @@ def main(request, page):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         articles = paginator.page(paginator.num_pages)
-    except Exception:
-        # If no page is given, show the first
-        articles = paginator.page(1)
 
     if len(streams) > 0:
         return render(request, 'news/news.html', {'lans': active_lans, 'articles': articles, 'page': page, 'stream': streams[0],
@@ -58,7 +55,4 @@ def archive(request, page):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         articles = paginator.page(paginator.num_pages)
-    except Exception:
-        # If no page is given, show the first
-        articles = paginator.page(1)
     return render(request, 'news/archive.html', {'articles': articles, 'page': page, 'languages': settings.LANGUAGES})
