@@ -14,6 +14,10 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      # - name: Cache dependencies
+      #   TODO
       - name: Setup python environment
         uses: actions/setup-python@v2
         with:
