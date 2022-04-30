@@ -33,5 +33,3 @@ jobs:
         run: flake8
       - name: Validate Docker image
         run: manage/ci/validate-docker.sh
-
-yolo
