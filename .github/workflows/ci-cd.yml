@@ -34,6 +34,7 @@ jobs:
           python-version: '${{ env.PYTHON_VERSION }}'
       - name: Install requirements
         run: |
+          echo $PATH
           apt-get update && apt-get install gettext
           gettext --version
           msgfmt --version
