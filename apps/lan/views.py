@@ -158,15 +158,17 @@ def unattend(request, lan_id):
 @permission_required('lan.export_paying_participants')
 def list_paid(request, lan_id):
     import xlwt
+
     lan = get_object_or_404(LAN, pk=lan_id)
 
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = u'attachment; filename=paying-participants_lan-{0}.xls'.format(lan_id)
 
     doc = xlwt.Workbook(encoding='UTF-8')
-    sheet = doc.add_sheet(_(u'Paying participants'))
+    sheet = doc.add_sheet(u'Paying participants')
+    row = 0
 
-    def write(sheet, person, row, payment_type):
+    def write(sheet, person, row, payment_type, payment_date):
         profile = person.profile
         sheet.write(row, 0, u'{0} {1}'.format(person.first_name, person.last_name))
         sheet.write(row, 1, u'{0}.{1}.{2}'.format(profile.date_of_birth.day, profile.date_of_birth.month, profile.date_of_birth.year))
@@ -174,16 +176,15 @@ def list_paid(request, lan_id):
         sheet.write(row, 3, profile.zip_code)
         sheet.write(row, 4, person.email)
         sheet.write(row, 5, payment_type)
-
-    row = 0
+        sheet.write(row, 6, u'{0}.{1}.{2}'.format(payment_date.day, payment_date.month, payment_date.year))
 
     for user in lan.paid_attendees:
-        write(sheet, user, row, pgettext(u'payment type', u'cash'))
+        write(sheet, user, row, pgettext(u'payment type', u'cash'), lan.start_date)
         row += 1
 
     tickets = lan.tickets()
     for ticket in tickets:
-        write(sheet, ticket.user, row, pgettext(u'payment type', u'ticket'))
+        write(sheet, ticket.user, row, pgettext(u'payment type', u'ticket'), ticket.bought_date)
         row += 1
 
     doc.save(response)
