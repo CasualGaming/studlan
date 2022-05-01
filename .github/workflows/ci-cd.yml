@@ -24,8 +24,8 @@ jobs:
   validate:
     runs-on: ubuntu-20.04
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      # - name: Checkout code
+      #   uses: actions/checkout@v3
       # - name: Cache dependencies
       #   TODO
       - name: Setup python environment
@@ -34,20 +34,18 @@ jobs:
           python-version: '${{ env.PYTHON_VERSION }}'
       - name: Install requirements
         run: |
-          sudo apt-get update && sudo apt-get install gettext
-          dpkg -l | grep gettext
-          which gettext
-          which msgfmt
+          sudo apt-get update
+          sudo apt-get install gettext
           python -m pip install --upgrade pip virtualenv setuptools wheel
           python -m pip install -r requirements/test.txt
       - name: Validate Django project
-        run: manage/ci/validate-django.sh
+        run: manage/ci/django-validate.sh
       - name: Test
-        run: manage/ci/test.sh
+        run: manage/ci/django-test.sh
       - name: Lint
         run: flake8
       - name: Validate Docker image
-        run: manage/ci/validate-docker.sh
+        run: manage/ci/docker-validate.sh
 
 #   publish:
 #     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
@@ -77,9 +75,9 @@ jobs:
 #   # Requires tag "vX.Y.Z" without suffix
 #   if: (tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$)
 #   install: echo "${TRAVIS_TAG#v}" > VERSION
-#   script: manage/ci/deploy-registry.sh stable $TRAVIS_TAG
+#   script: manage/ci/deploy-publish.sh stable $TRAVIS_TAG
 # - stage: deploy-registry
 #   name: Deploy to registry (bleeding)
 #   if: (branch = master)
 #   install: echo "0.0.0-SNAPSHOT+$(TZ=Etc/GMT date "+%Y-%m-%dT%H:%M:%SZ")" > VERSION
-#   script: manage/ci/deploy-registry.sh bleeding
+#   script: manage/ci/deploy-publish.sh bleeding
