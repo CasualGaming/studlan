@@ -22,7 +22,7 @@ on:
 
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -34,6 +34,7 @@ jobs:
           python-version: '${{ env.PYTHON_VERSION }}'
       - name: Install requirements
         run: |
+          apt update && apt install gettext
           python -m pip install --upgrade pip
           python -m pip install -r requirements/test.txt
       - name: Validate Django project
@@ -48,7 +49,7 @@ jobs:
 #   publish:
 #     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
 #     needs: build
-#     runs-on: ubuntu-latest
+#     runs-on: ubuntu-20.04
 #     steps:
 #       - name: Set up QEMU
 #         uses: docker/setup-qemu-action@v1
