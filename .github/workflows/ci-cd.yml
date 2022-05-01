@@ -35,6 +35,7 @@ jobs:
       - name: Install requirements
         run: |
           apt-get update && apt-get install gettext
+          dpkg -l | grep gettext
           which gettext
           which msgfmt
           gettext --version
