@@ -1,15 +1,13 @@
 # studlan
 
 [![GitHub release](https://img.shields.io/github/release/CasualGaming/studlan.svg)](https://github.com/CasualGaming/studlan/releases)
-[![Build status](https://github.com/CasualGaming/studlan/actions/workflows/validate.yml/badge.svg)](https://github.com/CasualGaming/studlan/actions/workflows/validate.yml)
+[![Build status](https://github.com/CasualGaming/studlan/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/CasualGaming/studlan/actions/workflows/ci-cd.yml)
 [![Quality Gate status](https://sonarcloud.io/api/project_badges/measure?branch=master&project=CasualGaming_studlan&metric=alert_status)](https://sonarcloud.io/dashboard?id=CasualGaming_studlan)
 
 LAN-party event management system.
 
 * [Demo](https://studlan.casualgaming.dev)
 * [Docker Hub](https://hub.docker.com/r/casualgaming/studlan)
-* [Travis CI](https://travis-ci.com/CasualGaming/studlan)
-* [Snyk](https://snyk.io/test/github/CasualGaming/studlan)
 * [SonarCloud](https://sonarcloud.io/dashboard?id=CasualGaming_studlan)
 
 ## Docs
