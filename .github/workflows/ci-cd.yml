@@ -36,7 +36,8 @@ jobs:
         run: |
           apt-get update && apt-get install gettext
           gettext --version
-          python -m pip install --upgrade pip
+          msgfmt --version
+          python -m pip install --upgrade pip virtualenv setuptools wheel
           python -m pip install -r requirements/test.txt
       - name: Validate Django project
         run: manage/ci/validate-django.sh

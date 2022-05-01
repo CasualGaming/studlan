@@ -14,7 +14,7 @@
 Download and install Python 2 and Python 2 pip.
 Be careful with `python` and `pip` since either version (2 or 3) may use the name without version and it's not consistent across OSes.
 
-- Linux: ´sudo pip install --upgrade pip virtualenv setuptools wheel´
+- Linux: ´sudo python -m pip install --upgrade pip virtualenv setuptools wheel´
 - Windows: ´py -2 -m pip install --upgrade pip virtualenv setuptools wheel´
 
 #### On Newer Systems without Python 2 Support
