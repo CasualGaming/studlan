@@ -5,6 +5,7 @@
 name: CI/CD (validate)
 
 env:
+  DOCKER_REPO: casualgaming/studlan
   PYTHON_VERSION: "2.7"
 
 on:
@@ -15,10 +16,6 @@ on:
   release:
     types: [published]
   workflow_dispatch: {}
-
-# TODO check event types on jobs
-# TODO split docker into "build"
-# TODO check release for publish
 
 jobs:
   validate:
