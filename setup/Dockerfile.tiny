@@ -8,6 +8,6 @@ RUN \
 apt-get update && \
 apt-get install -y gettext && \
 rm -rf /var/lib/apt/lists/* && \
-pip install --no-cache-dir -r requirements/development.txt --upgrade
+python -m pip install --no-cache-dir -r requirements/development.txt --upgrade
 
 ENTRYPOINT ["/bin/bash"]

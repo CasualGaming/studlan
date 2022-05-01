@@ -19,10 +19,16 @@ if [[ $(uname -s) == "MINGW"* ]]; then
     PIP2_CMD="py -2 -m pip"
     VENV_CMD="py -2 -m virtualenv"
     VENV_ACTIVATE_SCRIPT="$VENV_DIR/Scripts/activate"
-else
-    PIP2_CMD="pip"
+elif [[ $(uname -s) == "Linux" && $(uname -r) == *"arch"* ]]; then
+    echo "Arch no longer supports this" >&2
+    exit 1
+elif [[ $(uname -s) == "Linux" ]]; then
+    PIP2_CMD="python -m pip"
     VENV_CMD="virtualenv -p $(which python)"
     VENV_ACTIVATE_SCRIPT="$VENV_DIR/bin/activate"
+else
+    echo "Unknown OS" >&2
+    exit 1
 fi
 
 # Create venv if missing

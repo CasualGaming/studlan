@@ -8,7 +8,7 @@ RUN \
 apt-get update && \
 apt-get install -y gettext && \
 rm -rf /var/lib/apt/lists/* && \
-pip install --no-cache-dir -r requirements/production.txt --upgrade
+python -m pip install --no-cache-dir -r requirements/production.txt --upgrade
 
 # Add app files
 COPY studlan studlan

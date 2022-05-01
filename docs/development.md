@@ -17,6 +17,22 @@ Be careful with `python` and `pip` since either version (2 or 3) may use the nam
 - Linux: ´sudo pip install --upgrade pip virtualenv setuptools wheel´
 - Windows: ´py -2 -m pip install --upgrade pip virtualenv setuptools wheel´
 
+#### On Newer Systems without Python 2 Support
+
+Python 2 w/ pip is no longer available on e.g. Arch Linux. To get around that, just do stuff inside an interactive Docker container instead.
+
+```sh
+# Debian 10 still has support
+docker run --rm -it -v $PWD:/project debian:10
+
+# Now inside the container
+apt update
+apt install python python2 gettext
+
+# Project stuff
+manage/setup.sh
+```
+
 ### Configuring Git
 
 If using CLI (not some GUI app):
