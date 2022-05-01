@@ -1,0 +1,79 @@
+# Required secrets:
+# - DOCKER_USERNAME (for publish)
+# - DOCKER_PASSWORD (for publish)
+
+name: CI/CD (validate)
+
+env:
+  PYTHON_VERSION: 2.7
+
+on:
+  push:
+    branches: ["*"]
+  pull_request:
+    branches: ["*"]
+  release:
+    types: [published]
+  workflow_dispatch: {}
+
+# TODO check event types on jobs
+# TODO split docker into "build"
+# TODO check release for publish
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      # - name: Cache dependencies
+      #   TODO
+      - name: Setup python environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: '${{ env.PYTHON_VERSION }}'
+      - name: Install requirements
+        run: pip install -r requirements/test.txt
+      - name: Validate Django project
+        run: manage/ci/validate-django.sh
+      - name: Test
+        run: manage/ci/test.sh
+      - name: Lint
+        run: flake8
+      - name: Validate Docker image
+        run: manage/ci/validate-docker.sh
+
+#   publish:
+#     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+#     needs: build
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Set up QEMU
+#         uses: docker/setup-qemu-action@v1
+#       - name: Set up Docker Buildx
+#         uses: docker/setup-buildx-action@v1
+#       - name: Login to DockerHub
+#         uses: docker/login-action@v1
+#         with:
+#           username: ${{ secrets.DOCKER_USERNAME }}
+#           password: ${{ secrets.DOCKER_PASSWORD }}
+#       - name: Build and push
+#         uses: docker/build-push-action@v2
+#         with:
+#           push: true
+#           tags: ${{ env.DOCKER_IMAGE }}:latest
+
+# Old Travis CI stuff
+
+# # Stage: Deploy to registry
+# - stage: deploy-registry
+#   name: Deploy to registry (stable)
+#   # Requires tag "vX.Y.Z" without suffix
+#   if: (tag =~ ^v[0-9]+\.[0-9]+\.[0-9]+$)
+#   install: echo "${TRAVIS_TAG#v}" > VERSION
+#   script: manage/ci/deploy-registry.sh stable $TRAVIS_TAG
+# - stage: deploy-registry
+#   name: Deploy to registry (bleeding)
+#   if: (branch = master)
+#   install: echo "0.0.0-SNAPSHOT+$(TZ=Etc/GMT date "+%Y-%m-%dT%H:%M:%SZ")" > VERSION
+#   script: manage/ci/deploy-registry.sh bleeding
