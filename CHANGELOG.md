@@ -20,6 +20,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 
+## [v1.9.1] - 2022-05-01
+
+### Fixed
+
+- Added missing ticket purchase date to Excel export.
+
+
 ## [v1.9.0] - 2021-09-20
 
 ### Added
