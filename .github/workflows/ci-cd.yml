@@ -22,7 +22,7 @@ on:
 
 jobs:
   validate:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -34,12 +34,10 @@ jobs:
           python-version: '${{ env.PYTHON_VERSION }}'
       - name: Install requirements
         run: |
-          apt-get update && apt-get install gettext
+          sudo apt-get update && sudo apt-get install gettext
           dpkg -l | grep gettext
           which gettext
           which msgfmt
-          gettext --version
-          msgfmt --version
           python -m pip install --upgrade pip virtualenv setuptools wheel
           python -m pip install -r requirements/test.txt
       - name: Validate Django project
@@ -54,7 +52,7 @@ jobs:
 #   publish:
 #     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
 #     needs: build
-#     runs-on: ubuntu-18.04
+#     runs-on: ubuntu-20.04
 #     steps:
 #       - name: Set up QEMU
 #         uses: docker/setup-qemu-action@v1
