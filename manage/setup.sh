@@ -13,7 +13,7 @@ source "$(dirname "$BASH_SOURCE[0]")/activate-venv.sh"
 set -u
 
 echo "Installing requirements ..."
-pip install -r requirements/development.txt
+python -m pip install -r requirements/development.txt
 
 # Add config file and exit if missing
 if [[ ! -e $CONFIG_FILE ]]; then
