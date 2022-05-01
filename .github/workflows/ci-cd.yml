@@ -46,7 +46,7 @@ jobs:
 
   publish-bleeding:
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-    needs: check
+    needs: validate
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout code
