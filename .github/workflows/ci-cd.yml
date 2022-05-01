@@ -34,8 +34,9 @@ jobs:
           python-version: '${{ env.PYTHON_VERSION }}'
       - name: Install requirements
         run: |
-          echo $PATH
           apt-get update && apt-get install gettext
+          fine / -name gettext
+          fine / -name msgfmt
           gettext --version
           msgfmt --version
           python -m pip install --upgrade pip virtualenv setuptools wheel
