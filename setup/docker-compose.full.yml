@@ -1,7 +1,7 @@
 version: '3.6'
 
 services:
-  app:
+  studlan:
     container_name: studlan-dev-app
     image: studlan
     build:

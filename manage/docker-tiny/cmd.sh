@@ -29,7 +29,7 @@ if [[ ! -e $DB_FILE ]]; then
     exit -1
 fi
 
-$DC run --rm app <<< "$cmds"
+$DC run --rm -T studlan <<<"$cmds"
 
 echo
 echo "Success (seemingly)!"

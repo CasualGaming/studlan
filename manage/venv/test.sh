@@ -2,7 +2,7 @@
 
 # Run Django tests.
 
-MANAGE="manage/manage.sh"
+MANAGE="manage/venv/manage.sh"
 
 set -eu
 

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-"$(dirname "$0")/cmd.sh" manage/make-migrations.sh
+"$(dirname "$0")/cmd.sh" manage/venv/make-migrations.sh

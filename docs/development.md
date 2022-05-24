@@ -11,27 +11,13 @@
 
 ### Installing Python 2 Virtualenv
 
+**Warning:** Python 2 w/ pip is no longer available on e.g. Arch Linux. Skip this step.
+
 Download and install Python 2 and Python 2 pip.
 Be careful with `python` and `pip` since either version (2 or 3) may use the name without version and it's not consistent across OSes.
 
 - Linux: ´sudo python -m pip install --upgrade pip virtualenv setuptools wheel´
 - Windows: ´py -2 -m pip install --upgrade pip virtualenv setuptools wheel´
-
-#### On Newer Systems without Python 2 Support
-
-Python 2 w/ pip is no longer available on e.g. Arch Linux. To get around that, just do stuff inside an interactive Docker container instead.
-
-```sh
-# Debian 10 still has support
-docker run --rm -it -v $PWD:/project debian:10
-
-# Now inside the container
-apt update
-apt install python python2 gettext
-
-# Project stuff
-manage/setup.sh
-```
 
 ### Configuring Git
 
@@ -58,37 +44,45 @@ sudo gem install travis
 
 Alternatively, on Windows, use the GitHub for Windows app to setup everything
 
-## Running
+## Run with Virtualenv
 
-This method uses Virtualenv and does not require Docker. Run `manage/setup.sh` (to setup the virtual environment, add the temporary settings file, migrate the Django DB, add an admin user, etc.). The username and password of the added admin user is "batman" and "manbat". The DB file and log files are located in `.local/venv/`. The local settings file is located at `studlan/settings/local.py`.
+This method uses Virtualenv and does not require Docker. Run `manage/venv/setup.sh` (to setup the virtual environment, add the temporary settings file, migrate the Django DB, add an admin user, etc.). The username and password of the added admin user is "batman" and "manbat". The DB file and log files are located in `.local/venv/`. The local settings file is located at `studlan/settings/local.py`.
 
-## Tools
+### Tools
 
-Most of these use venv and therefore require `manage/setup.sh` to be run first (once).
+Most of these use venv and therefore require `manage/venv/setup.sh` to be run first (once).
 
-* Cleanup some unimportant local files (Python caches, logs, ...): `manage/clean-lightly.py`
-* Cleanup all local files (DB, config, Python caches, logs, ...): `manage/clean-all.py`
-* Run linter (check source formatting): `manage/lint.py`
-* Run tests: `manage/test.py`
+* Cleanup some unimportant local files (Python caches, logs, ...): `manage/venv/clean-lightly.py`
+* Cleanup all local files (DB, config, Python caches, logs, ...): `manage/venv/clean-all.py`
+* Run linter (check source formatting): `manage/venv/lint.py`
+* Run tests: `manage/venv/test.py`
 * Run some checks (like the linter, tests, some validation): `manage/check.py`
-* Make migrations (after model changes): `manage/make-migrations.py`
-* Make translations (updates `locale/nb/django.po`): `manage/make-translations.py`
+* Make migrations (after model changes): `manage/venv/make-migrations.py`
+* Make translations (updates `locale/nb/django.po`): `manage/venv/make-translations.py`
 
-## Upgrading Dependencies
+### Upgrading Dependencies
 
 * This project uses pip-tools with all-dep pinning.
-* Run `manage/update-deps.sh` to update dependencies.
+* Run `manage/venv/update-deps.sh` to update dependencies.
 * Go through all dep updates (as shown in by the script or git diff), read the changelogs for the changes, and make sure they don't mess things up.
 
-## Making Changes
+### Making Changes
 
-* If you're committing code changes, run `manage/check.sh` first to make sure the formatting is correct and that tests still pass.
+* If you're committing code changes, run `manage/venv/check.sh` first to make sure the formatting is correct and that tests still pass.
 * If you're adding/changing/fixing features, add it to the changelog.
 
-## Run with Docker
+## Run with Docker (tiny)
 
-Building and running the app in Docker is intended just for testing Docker stuff.
-Running the different tools still require Virtualenv to be set up.
+This method is pretty much a Docker shim for the Virtualenv method, providing much of the same scripts. Use this if Python 2 or Virtualenv isn't an option.
 
-* Setup: `manage/docker/setup.sh` (first time or after project change)
-* Run server: `manage/docker/run.sh`
+* Setup: `manage/docker-tiny/setup.sh`
+* Run dev server: `manage/docker-tiny/run.sh`
+* See the Virtualenv section, this method has clones of most tools from there.
+
+## Run with Docker (full)
+
+This method is more self-contained and production-like.
+Don't use it if you don't need to, it's generally not practical during development, use the tiny Docker method instead.
+
+* Setup: `manage/docker-full/setup.sh` (first time or after project change)
+* Run server: `manage/docker-full/run-{prod,dev}.sh`

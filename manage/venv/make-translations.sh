@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LOCAL_DIR=".local/venv"
-MANAGE="manage/manage.sh"
+MANAGE="manage/venv/manage.sh"
 
 set -eu
 

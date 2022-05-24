@@ -1,3 +1,3 @@
 #!/bin/bash
 
-"$(dirname "$0")/cmd.sh" manage/lint.sh
+"$(dirname "$0")/cmd.sh" manage/venv/lint.sh
