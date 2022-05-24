@@ -5,6 +5,8 @@ services:
     image: studlan-tiny
     build:
       context: ..
+      args:
+        python_requirements: requirements/development.txt
     environment:
     - SUPERUSER_USERNAME=batman
     - SUPERUSER_EMAIL=batman@localhost

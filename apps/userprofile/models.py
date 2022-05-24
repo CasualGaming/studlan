@@ -14,6 +14,7 @@ class UserProfile(models.Model):
     address = models.CharField(_(u'street address'), max_length=100)
     zip_code = models.CharField(_(u'postal code'), max_length=4)
     phone = models.CharField(_(u'phone number'), max_length=20)
+    marketing_optin = models.BooleanField(_(u'marketing opt-in'), default=False, help_text=_(u'Accept marketing emails about future LANs and stuff.'))
 
     def __unicode__(self):
         return self.user.username

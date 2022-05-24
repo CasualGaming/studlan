@@ -8,7 +8,7 @@ echo "Running some checks. This will stop on the first error, or print \"success
 
 echo
 echo "Running linter ..."
-manage/lint.sh
+manage/venv/lint.sh
 
 echo
 echo "Checking migrations ..."
@@ -25,7 +25,7 @@ $MANAGE check --deploy --fail-level=ERROR
 
 echo
 echo "Running tests ..."
-manage/test.sh
+manage/venv/test.sh
 
 echo
 echo "Collecting static files ..."

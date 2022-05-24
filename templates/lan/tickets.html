@@ -27,6 +27,7 @@
 
 <div class="row">
     <div class="col-md-9">
+        <p>{% trans 'Press "attend" to receive email updates about the LAN.' %}</p>
         {% if active and user.is_authenticated %}
         {% if status == 'paid' and ticket %}
         <div class="center-on-collapse">

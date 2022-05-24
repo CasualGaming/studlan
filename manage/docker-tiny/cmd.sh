@@ -29,7 +29,8 @@ if [[ ! -e $DB_FILE ]]; then
     exit -1
 fi
 
+# Run in temporary container, using same mounts etc.
 $DC run --rm -T studlan /bin/bash <<<"$cmds"
 
 echo
-echo "Success (seemingly)!"
+echo "Success (maybe)!"

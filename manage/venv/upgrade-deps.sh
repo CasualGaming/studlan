@@ -3,7 +3,7 @@
 # Note: Make sure you have only the Python 2 version of pip-tools installed.
 # If you only have the Python 3 version, the deps will get messed up without errors.
 
-export CUSTOM_COMPILE_COMMAND="manage/update-deps.sh"
+export CUSTOM_COMPILE_COMMAND="manage/{venv,docker-tiny}/update-deps.sh"
 
 set -eu
 

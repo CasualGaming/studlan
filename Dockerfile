@@ -1,5 +1,7 @@
 FROM python:2.7
 
+ARG python_requirements=requirements/production.txt
+
 WORKDIR /srv/studlan
 
 # Install requirements
@@ -8,7 +10,7 @@ RUN \
 apt-get update && \
 apt-get install -y gettext && \
 rm -rf /var/lib/apt/lists/* && \
-python -m pip install --no-cache-dir -r requirements/production.txt --upgrade
+python -m pip install --no-cache-dir -r "$python_requirements" --upgrade
 
 # Add app files
 COPY studlan studlan

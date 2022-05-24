@@ -41,7 +41,3 @@ $DC build studlan
 echo
 echo "Creating containers ..."
 $DC up --no-start
-
-echo
-echo "Installing dev stuff in container ..."
-$DC run studlan python -m pip install --no-cache-dir -r requirements/development.txt --upgrade

@@ -6,9 +6,6 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from apps.competition.models import Competition
-from apps.lan.models import LAN, TicketType
-from apps.team.models import Team
 from apps.userprofile.models import User
 
 
@@ -21,7 +18,8 @@ class SendMail(models.Model):
         managed = False
 
         permissions = (
-            ('send_mail', u'Can send mails to users'),
+            ('list', u'Can list mails'),
+            ('send', u'Can send mails'),
         )
 
 
@@ -30,28 +28,42 @@ class Mail(models.Model):
     A mail sent using the Send-Mail feature.
     """
 
-    form_id = models.UUIDField(_(u'form id'), null=True, blank=True, help_text=_(u'To prevent sending the same mail twice.'))
-    sent_time = models.DateTimeField(_(u'time sent'), default=datetime.now)
-    subject = models.CharField(_(u'subject'), max_length=80)
+    uid = models.UUIDField(_(u'ID'), primary_key=True, help_text=_(u'Specified UUID, prevents accidentally sending same mail multiple times.'))
+    created_time = models.DateTimeField(_(u'time sent'), default=datetime.now)
+    subject = models.CharField(_(u'subject'), max_length=100)
     content = models.TextField(_(u'content'))
-    recipient_everyone = models.BooleanField(_(u'recipient everyone'), default=False, help_text=_(u'Pinned articles are shown before non-pinned ones.'))
-    recipient_lans = models.ManyToManyField(LAN, verbose_name=_(u'recipient LANs'), blank=True)
-    recipient_tickets = models.ManyToManyField(TicketType, verbose_name=_(u'recipient tickets'), blank=True)
-    recipient_teams = models.ManyToManyField(Team, verbose_name=_(u'recipient teams'), blank=True)
-    recipient_competitions = models.ManyToManyField(Competition, verbose_name=_(u'recipient competitions'), blank=True)
-    recipient_users = models.ManyToManyField(User, verbose_name=_(u'recipient users'), blank=True)
-    recipients_total = models.IntegerField(_(u'total number of recipients'), default=0, help_text=_(u'Sum of all unique users that should receive the mail.'))
-    successful_mails = models.IntegerField(_(u'successful mails'), default=0, help_text=_(u'How many of the mails were sent successfully.'))
-    failed_mails = models.IntegerField(_(u'failed mails'), default=0, help_text=_(u'How many of the mails were not sent because of some failure.'))
-    done_sending = models.BooleanField(_(u'done sending'), default=False, help_text=_(u'If all mails have been attempted sent.'))
 
     class Meta:
         verbose_name = _(u'mail')
         verbose_name_plural = _(u'mails')
-        ordering = ['-sent_time']
+        ordering = ['-created_time']
 
     def __unicode__(self):
-        return self.subject
+        return '{subject} ({time})'.format(subject=self.subject, time=self.created_time)
 
     def get_absolute_url(self):
         return reverse('sendmail_mail', kwargs={'id': self.id})
+
+    def recipient_count(self):
+        return MailRecipient.objects.filter(mail=self.uid).count()
+
+    def is_sending_complete(self):
+        return not MailRecipient.objects.filter(mail=self.uid, sent_time=None).exists()
+
+
+class MailRecipient(models.Model):
+    """
+    A recipient of a specific mail.
+    """
+
+    mail = models.ForeignKey(Mail, verbose_name=_(u'mail'))
+    user = models.ForeignKey(User, verbose_name=_(u'user'))
+    sent_time = models.DateTimeField(_(u'time sent'), blank=True, null=True, help_text=_(u'Time the email was sent. Unset if not sent yet.'))
+
+    class Meta:
+        verbose_name = _(u'mail recipient')
+        verbose_name_plural = _(u'mail recipients')
+        ordering = ['-sent_time']
+
+    def __unicode__(self):
+        return '{mail_id} ({user})'.format(mail_id=self.mail, user=self.user)

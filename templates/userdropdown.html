@@ -39,13 +39,13 @@
             {% if perms.lan.register_new_user %}
             <li><a href="{% url 'auth_direct_register_list' %}"><span class="glyphicon glyphicon-list"></span> {% trans "Manual registration" %}</a></li>
             {% endif %}
-            {% if perms.sendmail.send_mail %}
-            <li><a href="{% url 'sendmail_send' %}"><span class="glyphicon glyphicon-envelope"></span> {% trans "Send mail" %}</a></li>
+            {% if perms.sendmail.list %}
+            <li><a href="{% url 'sendmail_list' %}"><span class="glyphicon glyphicon-envelope"></span> {% trans "Mails" %}</a></li>
             {% endif %}
             {% if user.is_staff %}
             <li><a href="/admin"><span class="glyphicon glyphicon-cog"></span> {% trans "Admin panel" %}</a>
             {% endif %}
-            {% if perms.lan.show_arrivals_statistics or perms.lan.register_arrivals or perms.lan.register_new_user or perms.sendmail.send_mail or user.is_staff %}
+            {% if perms.lan.show_arrivals_statistics or perms.lan.register_arrivals or perms.lan.register_new_user or perms.sendmail.list or user.is_staff %}
             <li class="divider"></li>
             {% endif %}
             <li>
@@ -77,13 +77,13 @@
             {% if perms.lan.register_new_user %}
             <li class="hidden-md hidden-lg hidden-sm"><a href="{% url 'auth_direct_register_list' %}"><span class="glyphicon glyphicon-list"></span> {% trans "Manual registration" %}</a></li>
             {% endif %}
-            {% if perms.sendmail.send_mail %}
-            <li class="hidden-md hidden-lg hidden-sm"><a href="{% url 'sendmail_send' %}"><span class="glyphicon glyphicon-envelope"></span> {% trans "Send mail" %}</a></li>
+            {% if perms.sendmail.list %}
+            <li class="hidden-md hidden-lg hidden-sm"><a href="{% url 'sendmail_list' %}"><span class="glyphicon glyphicon-envelope"></span> {% trans "Mails" %}</a></li>
             {% endif %}
             {% if user.is_staff %}
             <li class="hidden-md hidden-lg hidden-sm"><a href="/admin"><span class="glyphicon glyphicon-cog"></span> {% trans "Admin panel" %}</a></li>
             {% endif %}
-            {% if perms.lan.show_arrivals_statistics or perms.lan.register_arrivals or perms.lan.register_new_user or perms.sendmail.send_mail or user.is_staff %}
+            {% if perms.lan.show_arrivals_statistics or perms.lan.register_arrivals or perms.lan.register_new_user or perms.sendmail.list or user.is_staff %}
             <li class="divider hidden-md hidden-lg hidden-sm"></li>
             {% endif %}
             <li class="hidden-md hidden-lg hidden-sm">
