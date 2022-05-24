@@ -73,7 +73,9 @@ Most of these use venv and therefore require `manage/venv/setup.sh` to be run fi
 
 ## Run with Docker (tiny)
 
-This method is pretty much a Docker shim for the Virtualenv method, providing much of the same scripts. Use this if Python 2 or Virtualenv isn't an option.
+This method is pretty much a Docker shim for the Virtualenv method, providing much of the same scripts.
+Supports hot-reloading.
+Use this if Python 2 or Virtualenv isn't an option.
 
 * Setup: `manage/docker-tiny/setup.sh`
 * Run dev server: `manage/docker-tiny/run.sh`
