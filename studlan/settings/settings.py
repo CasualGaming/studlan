@@ -34,7 +34,6 @@ INSTALLED_APPS = (
     'apps.competition.config.Config',
     'apps.lan.config.Config',
     'apps.lottery.config.Config',
-    'apps.misc.config.Config',
     'apps.news.config.Config',
     'apps.payment.config.Config',
     'apps.poll.config.Config',
@@ -44,6 +43,7 @@ INSTALLED_APPS = (
     'apps.statistics.config.Config',
     'apps.team.config.Config',
     'apps.userprofile.config.Config',
+    'apps.misc.config.Config',
 )
 
 MIDDLEWARE_CLASSES = (

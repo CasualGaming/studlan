@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MANAGE="manage/manage.sh"
+MANAGE="manage/venv/manage.sh"
 
 set -eu
 

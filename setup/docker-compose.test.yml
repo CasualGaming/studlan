@@ -2,7 +2,7 @@
 version: '3.3'
 
 services:
-  app:
+  studlan:
     container_name: studlan-test-app
     image: studlan
     build:

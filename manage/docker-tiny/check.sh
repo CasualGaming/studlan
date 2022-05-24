@@ -1,3 +1,3 @@
 #!/bin/bash
 
-"$(dirname "$0")/cmd.sh" manage/check.sh
+"$(dirname "$0")/cmd.sh" manage/venv/check.sh

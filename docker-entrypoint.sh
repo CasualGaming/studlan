@@ -21,6 +21,7 @@ SUPERUSER_INACTIVE=${SUPERUSER_INACTIVE:-}
 FLUSH_DATABASE=${FLUSH_DATABASE:-}
 IMPORT_DATABASE=${IMPORT_DATABASE:-}
 EXPORT_DATABASE=${EXPORT_DATABASE:-}
+NO_CHOWN=${NO_CHOWN:-}
 NO_START=${NO_START:-}
 DJANGO_DEV_SERVER=${DJANGO_DEV_SERVER:-}
 
@@ -134,10 +135,12 @@ fi
 
 # Setup permissions and stuff
 # Note: Volumes from vboxsf cannot be chowned
-set +e
-echo "Chowning all files ..."
-chown -R $STUDLAN_USER:$STUDLAN_GROUP .
-set -e
+if [[ $NO_CHOWN != "true" ]]; then
+    set +e
+    echo "Chowning all files ..."
+    chown -R $STUDLAN_USER:$STUDLAN_GROUP .
+    set -e
+fi
 
 # Maybe don't start
 if [[ $NO_START == "true" ]]; then

@@ -32,4 +32,4 @@ echo "0.0.0-SNAPSHOT" > VERSION
 
 echo
 echo "Building image ..."
-$DC build app
+$DC build studlan
