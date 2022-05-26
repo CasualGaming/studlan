@@ -13,12 +13,7 @@ PROJECT_ROOT_DIRECTORY = os.path.normpath(os.path.join(PROJECT_SETTINGS_DIRECTOR
 DEBUG = False
 
 INSTALLED_APPS = (
-    # third party apps
-    'markdown_deux',
-    'postman',
-    'anymail',
-
-    # django apps
+    # Django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -27,7 +22,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # studlan apps
+    # Studlan apps
     'apps.api.config.Config',
     'apps.arrivals.config.Config',
     'apps.authentication.config.Config',
@@ -44,6 +39,11 @@ INSTALLED_APPS = (
     'apps.team.config.Config',
     'apps.userprofile.config.Config',
     'apps.misc.config.Config',
+
+    # Third-party apps
+    'markdown_deux',
+    'postman',
+    'anymail',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -83,10 +83,15 @@ AUTH_PROFILE_MODULE = 'userprofile.UserProfile'
 LOGIN_URL = '/auth/login/'
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
+SITE_ID = 1
+# SITE_NAME = Example
+# ALLOWED_HOSTS = [
+#     SITE_HOST
+# ]
+
 # Locale information
 TIME_ZONE = 'Europe/Oslo'
 LANGUAGE_CODE = 'en-us'
-SITE_ID = 1
 USE_I18N = True
 USE_L10N = True
 
@@ -183,12 +188,25 @@ LOGGING = {
             'backupCount': 5,
             'formatter': 'standard',
         },
+        'sendmail_file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'log/sendmail.log',
+            'maxBytes': 5 * 1024 * 1024,  # 5 MB
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
     },
     'loggers': {
         'django': {
             'handlers': ['error_file'],
-            'level': 'INFO',
-            'propagate': True,
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'sendmail': {
+            'handlers': ['sendmail_file'],
+            'level': 'DEBUG',
+            'propagate': False,
         },
     },
 }

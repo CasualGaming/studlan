@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Reworked custom email sending.
+- Made to/from addresses in emails pretty.
+- Made the site domain in emails use the site framework domain, so make sure it's set properly.
 
 ### Deprecated
 
@@ -22,6 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Security
+
+- Run Django management tasks in the Docker entrypoint as the app user instead of root.
 
 
 ## [v1.9.1] - 2022-05-01

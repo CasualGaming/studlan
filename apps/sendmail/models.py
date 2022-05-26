@@ -19,6 +19,7 @@ class SendMail(models.Model):
 
         permissions = (
             ('list', u'Can list mails'),
+            ('view', u'Can view mails'),
             ('send', u'Can send mails'),
         )
 
@@ -28,8 +29,11 @@ class Mail(models.Model):
     A mail sent using the Send-Mail feature.
     """
 
-    uid = models.UUIDField(_(u'ID'), primary_key=True, help_text=_(u'Specified UUID, prevents accidentally sending same mail multiple times.'))
+    uuid = models.UUIDField(_(u'UUID'), primary_key=True, help_text=_(u'UUID specified by the sender, prevents accidentally sending same mail multiple times.'))
     created_time = models.DateTimeField(_(u'time sent'), default=datetime.now)
+    sender = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='+', verbose_name=_(u'sender'))
+    # Should be compatible with settings.LANGUAGES
+    language = models.CharField(_(u'language'), max_length=100)
     subject = models.CharField(_(u'subject'), max_length=100)
     content = models.TextField(_(u'content'))
 
@@ -42,13 +46,13 @@ class Mail(models.Model):
         return '{subject} ({time})'.format(subject=self.subject, time=self.created_time)
 
     def get_absolute_url(self):
-        return reverse('sendmail_mail', kwargs={'id': self.id})
+        return reverse('sendmail_view', kwargs={'mail_uuid': self.uuid})
 
     def recipient_count(self):
-        return MailRecipient.objects.filter(mail=self.uid).count()
+        return MailRecipient.objects.filter(mail=self).count()
 
-    def is_sending_complete(self):
-        return not MailRecipient.objects.filter(mail=self.uid, sent_time=None).exists()
+    def is_sending_finished(self):
+        return not MailRecipient.objects.filter(mail=self, sent_time=None).exists()
 
 
 class MailRecipient(models.Model):
@@ -56,8 +60,8 @@ class MailRecipient(models.Model):
     A recipient of a specific mail.
     """
 
-    mail = models.ForeignKey(Mail, verbose_name=_(u'mail'))
-    user = models.ForeignKey(User, verbose_name=_(u'user'))
+    mail = models.ForeignKey(Mail, on_delete=models.CASCADE, related_name='recipients', verbose_name=_(u'mail'))
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+', verbose_name=_(u'user'))
     sent_time = models.DateTimeField(_(u'time sent'), blank=True, null=True, help_text=_(u'Time the email was sent. Unset if not sent yet.'))
 
     class Meta:
@@ -66,4 +70,4 @@ class MailRecipient(models.Model):
         ordering = ['-sent_time']
 
     def __unicode__(self):
-        return '{mail_id} ({user})'.format(mail_id=self.mail, user=self.user)
+        return '{mail_uuid} ({user})'.format(mail_uuid=self.mail, user=self.user)

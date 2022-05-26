@@ -3,6 +3,8 @@
 import uuid
 
 from django import forms
+from django.conf import settings
+from django.utils.html import strip_tags
 from django.utils.translation import ugettext_lazy as _
 
 from apps.competition.models import Competition
@@ -15,7 +17,11 @@ class SendMessageForm(forms.Form):
     _select_multiple_help = _(u'Select zero, one or multiple by control-clicking.')
     _select_multiple_size = '5'
 
-    mail_uid = forms.UUIDField(
+    language = forms.ChoiceField(
+        label=_(u'Language'),
+        required=True,
+        choices=settings.LANGUAGES)
+    mail_uuid = forms.UUIDField(
         required=True,
         initial=uuid.uuid4().hex,
         widget=forms.HiddenInput())
@@ -109,4 +115,7 @@ class SendMessageForm(forms.Form):
                 missing_users_string = u'{0}, {1}'.format(missing_users_string, username)
         if missing_users_string:
             self.add_error(None, _(u'Users not found: {users}').format(users=missing_users_string))
-        cleaned_data['recipient_users_parsed'] = found_users_qs
+        cleaned_data['recipient_users'] = found_users_qs
+
+        # Clean content
+        cleaned_data['content'] = strip_tags(cleaned_data.get('content'))

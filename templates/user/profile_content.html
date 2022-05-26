@@ -52,11 +52,11 @@
                 </tr>
                 <tr>
                     <td>{% trans "Marketing opt-in" %}</td>
-                    <td>{{ profile.marketing_optin }}</td>
+                    <td>{% if profile.marketing_optin %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</td>
                 </tr>
                 <tr>
                     <td>{% trans "Is staff" %}</td>
-                    <td>{{ quser.is_staff }}</td>
+                    <td>{% if quser.is_staff %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</td>
                 </tr>
                 <tr>
                     <td>{% trans "Join date" %}</td>

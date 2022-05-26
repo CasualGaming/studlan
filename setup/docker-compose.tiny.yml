@@ -12,11 +12,10 @@ services:
     - SUPERUSER_EMAIL=batman@localhost
     - SUPERUSER_PASSWORD=manbat
     - SUPERUSER_INACTIVE=false
-    - NO_CHOWN=true
     - DJANGO_DEV_SERVER=true
     volumes:
     - ../.local/docker-tiny/local.py:/srv/studlan/studlan/settings/local.py:ro
-    - ../.local/docker-tiny/db.sqlite3:/srv/studlan/db.sqlite3:rw
+    - ../.local/docker-tiny/db/:/srv/studlan/db/:rw
     - ../.local/docker-tiny/log:/srv/studlan/log:rw
     # Source dirs, in case of changes
     - ../requirements/:/srv/studlan/requirements/:rw

@@ -7,7 +7,7 @@ from .models import Mail, MailRecipient
 
 class MailAdmin(admin.ModelAdmin):
 
-    list_display = ['uid', 'subject', 'created_time', 'is_sending_complete']
+    list_display = ['uuid', 'subject', 'language', 'created_time', 'sender', 'is_sending_finished']
     ordering = ['-created_time']
 
     # Prevent creation

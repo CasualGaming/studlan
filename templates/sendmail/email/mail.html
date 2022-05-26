@@ -1,7 +1,7 @@
-{% extends "email/base.html" %}
+{% extends "common/email/base.html" %}
 
 {% load markdown_deux_tags %}
 
-{% block body %}
-{{ body | striptags | markdown }}
-{% endblock body %}
+{% block content %}
+{{ content | striptags | markdown }}
+{% endblock content %}

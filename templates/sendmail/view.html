@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load markdown_deux_tags %}
+
+{% block title %}
+{% trans "Send Mail" %}
+{% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-9">
+        <h1 class="page-header">{% trans "View Mail" %}</h1>
+        <p><strong>{% trans "Created" %}:</strong> {{ mail.created_time }}</p>
+        <p><strong>{% trans "Sender" %}:</strong> {{ mail.sender }}</p>
+        <p><strong>{% trans "Language code" %}:</strong> {{ mail.language }}</p>
+        <p><strong>{% trans "Recipients" %}:</strong> {{ mail.recipient_count }}</p>
+        <p><strong>{% trans "Sending complete" %}:</strong> {% if mail.is_sending_finished %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</p>
+        <div class="panel panel-default">
+            <div class="panel-heading">{{ mail.subject }}</div>
+            <div class="panel-body email-content">
+                {{ mail.content | striptags | markdown }}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

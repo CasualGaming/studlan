@@ -8,7 +8,7 @@ WORKDIR /srv/studlan
 COPY requirements/ requirements/
 RUN \
 apt-get update && \
-apt-get install -y gettext && \
+apt-get install -y gettext cron && \
 rm -rf /var/lib/apt/lists/* && \
 python -m pip install --no-cache-dir -r "$python_requirements" --upgrade
 

@@ -35,21 +35,25 @@
             Showing {{ mail_count }} of {{ mail_total_count }} mails.
             {% endblocktrans %}
         </p>
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover click-table">
             <caption hidden>{% trans "Mails" %}</caption>
             <thead>
-                <th scope="col" class="col-md-4">{% trans "Subject" %}</th>
+                <th scope="col" class="col-md-5">{% trans "Subject" %}</th>
+                <th scope="col" class="col-md-1">{% trans "Language code" %}</th>
                 <th scope="col" class="col-md-2">{% trans "Created" %}</th>
+                <th scope="col" class="col-md-2">{% trans "Sender" %}</th>
                 <th scope="col" class="col-md-1">{% trans "Recipients" %}</th>
                 <th scope="col" class="col-md-1">{% trans "Sending complete" %}</th>
             </thead>
             <tbody>
                 {% for mail in mails %}
-                <tr>
+                <tr onclick="document.location='{% url "sendmail_view" mail.uuid %}';">
                     <td>{{ mail.subject }}</td>
+                    <td>{{ mail.language }}</td>
                     <td>{{ mail.created_time }}</td>
+                    <td>{{ mail.sender }}</td>
                     <td>{{ mail.recipient_count }}</td>
-                    <td>{{ mail.is_sending_complete }}</td>
+                    <td>{% if mail.is_sending_finished %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</td>
                 </tr>
                 {% endfor %}
             </tbody>

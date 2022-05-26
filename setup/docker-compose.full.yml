@@ -14,7 +14,7 @@ services:
     - DJANGO_DEV_SERVER=${DJANGO_DEV_SERVER:-}
     volumes:
     - ../.local/docker-full/local.py:/srv/studlan/studlan/settings/local.py:ro
-    - ../.local/docker-full/db.sqlite3:/srv/studlan/db.sqlite3:rw
+    - ../.local/docker-full/db/:/srv/studlan/db/:rw
     - ../.local/docker-full/log:/srv/studlan/log:rw
     # Source dirs, in case of changes
     - ../apps/:/srv/studlan/apps/:ro

@@ -3,7 +3,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.db.models import Q
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext as _
 from django.views.decorators.http import require_safe
 
@@ -24,6 +24,14 @@ def sendmail_list(request):
     return render(request, 'sendmail/list.html', {'mails': mails, 'mail_count': mail_count, 'mail_total_count': mail_total_count})
 
 
+@require_safe
+@login_required
+@permission_required('sendmail.view')
+def sendmail_view(request, mail_uuid):
+    mail = get_object_or_404(Mail, pk=mail_uuid)
+    return render(request, 'sendmail/view.html', {'mail': mail})
+
+
 @login_required
 @permission_required('sendmail.send')
 def sendmail_send(request):
@@ -31,6 +39,7 @@ def sendmail_send(request):
     form = SendMessageForm()
 
     if request.method == 'POST':
+        # Validate and send if ok, otherwise return it again
         current_form = SendMessageForm(request.POST, error_class=InlineSpanErrorList)
         form = handle_send_form(request, current_form, template_context)
         if form is None:
@@ -45,12 +54,13 @@ def handle_send_form(request, form, template_context):
         return form
 
     fields = form.cleaned_data
-    mail_uid = fields['mail_uid']
+    mail_uuid = fields['mail_uuid']
+    mail_language = fields['language']
     mail_subject = fields['subject']
     mail_content = fields['content']
 
     # Reject duplicate message
-    if Mail.objects.filter(uid=mail_uid).exists():
+    if Mail.objects.filter(uuid=mail_uuid).exists():
         messages.error(request, _(u'The mail has already been sent. If this is a new message, please reload the page and try again.'))
         return form
 
@@ -62,7 +72,9 @@ def handle_send_form(request, form, template_context):
     if 'send' in form.data:
         # Create mail
         mail = Mail()
-        mail.uid = mail_uid
+        mail.uuid = mail_uuid
+        mail.language = mail_language
+        mail.sender = request.user
         mail.subject = mail_subject
         mail.content = mail_content
         mail.save()
@@ -123,7 +135,7 @@ def build_recipient_list(request, fields):
     )
     all_recipients = all_recipients.union(competition_users)
 
-    specific_users = fields['recipient_users_parsed']
+    specific_users = fields['recipient_users']
     all_recipients = all_recipients.union(specific_users)
 
     yourself = fields['recipient_yourself']

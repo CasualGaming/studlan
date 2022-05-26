@@ -2,11 +2,13 @@
 
 set -e # Exit on error
 set -u # Treat undefined variables as errors
+set -o pipefail # Don't ignore fails in pipe
 
 # Constants
-MANAGE="python manage.py"
 STUDLAN_USER="studlan"
 STUDLAN_GROUP="studlan"
+MANAGE="python manage.py"
+MANAGE_AS_USER="runuser -u $STUDLAN_USER -g $STUDLAN_GROUP -- $MANAGE"
 IMPORT_EXPORT_DIR="import_export"
 IMPORT_FILE="$IMPORT_EXPORT_DIR/import.json.gz"
 EXPORT_FILE="$IMPORT_EXPORT_DIR/export.json.gz"
@@ -21,7 +23,6 @@ SUPERUSER_INACTIVE=${SUPERUSER_INACTIVE:-}
 FLUSH_DATABASE=${FLUSH_DATABASE:-}
 IMPORT_DATABASE=${IMPORT_DATABASE:-}
 EXPORT_DATABASE=${EXPORT_DATABASE:-}
-NO_CHOWN=${NO_CHOWN:-}
 NO_START=${NO_START:-}
 DJANGO_DEV_SERVER=${DJANGO_DEV_SERVER:-}
 
@@ -35,33 +36,58 @@ if [[ ! -e $APP_SETTINGS_FILE ]]; then
     exit -1
 fi
 
-# Collect static files
+# Add group and user to run the app
+if ! grep -q "^${STUDLAN_GROUP}:" /etc/group; then
+    if [[ ! -z $STUDLAN_GID ]]; then
+        groupadd -r -g "$STUDLAN_GID" $STUDLAN_GROUP
+    else
+        groupadd -r $STUDLAN_GROUP
+    fi
+fi
+if ! grep -q "^${STUDLAN_USER}:" /etc/passwd; then
+    if [[ ! -z $STUDLAN_UID ]]; then
+        useradd -r -g studlan -u "$STUDLAN_UID" $STUDLAN_USER
+    else
+        useradd -r -g $STUDLAN_GROUP $STUDLAN_USER
+    fi
+    echo "Added user: $(id studlan)"
+fi
+
+# Setup log dir and files
+mkdir -p log
+chown -R $STUDLAN_USER:$STUDLAN_GROUP log
+
+# Collect static files (as root)
 echo "Collecting static files ..."
-$MANAGE collectstatic --noinput --clear
+mkdir static
+chown -R $STUDLAN_USER:$STUDLAN_GROUP static
+$MANAGE_AS_USER collectstatic --noinput --clear
+chown -R root:root static
+echo
 
 # Optionally flush database
 if [[ $FLUSH_DATABASE == "true" ]]; then
     echo "Flushing the database ..."
-    $MANAGE flush --noinput
+    $MANAGE_AS_USER flush --noinput
 fi
 
 # Run migration, but skip initial if matching table names already exist
 echo "Migrating database ..."
-$MANAGE migrate --fake-initial
+$MANAGE_AS_USER migrate --fake-initial
 echo
 
 # Optionally import database
 if [[ $IMPORT_DATABASE == "true" ]]; then
     echo "Importing from $IMPORT_FILE ..."
     if [[ -f $IMPORT_FILE ]]; then
-        $MANAGE loaddata $IMPORT_FILE
+        $MANAGE_AS_USER loaddata $IMPORT_FILE
     else
         echo "Error: Import file not found: $IMPORT_FILE" 1>&2
     fi
 fi
 
 # Clear expired sessions
-$MANAGE clearsessions
+$MANAGE_AS_USER clearsessions
 
 # Optionally add superuser
 # Warning: These should be trusted to avoid code injection
@@ -73,7 +99,7 @@ if [[ ! -z $SUPERUSER_USERNAME ]]; then
     else
         SUPERUSER_ACTIVE="True"
     fi
-    $MANAGE shell << END
+    $MANAGE_AS_USER shell << END
 # Python 2
 from django.contrib.auth import get_user_model;
 
@@ -103,7 +129,7 @@ fi
 
 # Validate
 echo "Checking validity ..."
-$MANAGE check --deploy --fail-level=ERROR
+$MANAGE_AS_USER check --deploy --fail-level=ERROR
 echo
 
 # Optionally export database
@@ -113,40 +139,22 @@ if [[ $EXPORT_DATABASE == "true" ]]; then
     touch $EXPORT_FILE
     chmod 600 $EXPORT_FILE
     # Exclude contenttypes and auth.Permission while using natural foreign keys to prevent IntegrityError on import
-    $MANAGE dumpdata --natural-foreign --exclude=contenttypes --exclude=auth.Permission --format=json --indent=2 | gzip > $EXPORT_FILE
+    $MANAGE_AS_USER dumpdata --natural-foreign --exclude=contenttypes --exclude=auth.Permission --format=json --indent=2 | gzip > $EXPORT_FILE
 fi
 
-# Add group and user to run the app
-if ! grep -q "^${STUDLAN_GROUP}:" /etc/group; then
-    if [[ ! -z $STUDLAN_GID ]]; then
-        groupadd -r -g "$STUDLAN_GID" $STUDLAN_GROUP
-    else
-        groupadd -r $STUDLAN_GROUP
-    fi
-fi
-if ! grep -q "^${STUDLAN_USER}:" /etc/passwd; then
-    if [[ ! -z $STUDLAN_UID ]]; then
-        useradd -r -g studlan -u "$STUDLAN_UID" $STUDLAN_USER
-    else
-        useradd -r -g $STUDLAN_GROUP $STUDLAN_USER
-    fi
-    echo "Added user: $(id studlan)"
-fi
-
-# Setup permissions and stuff
-# Note: Volumes from vboxsf cannot be chowned
-if [[ $NO_CHOWN != "true" ]]; then
-    set +e
-    echo "Chowning all files ..."
-    chown -R $STUDLAN_USER:$STUDLAN_GROUP .
-    set -e
-fi
+# Setup cron jobs
+echo "0 0 * * * studlan cd '$PWD' && /usr/local/bin/python ./manage.py clearsessions >> log/cron-clearsessions.log 2>&1" > /etc/cron.d/studlan-clearsessions
+echo "* * * * * studlan cd '$PWD' && /usr/local/bin/python ./manage.py sendmail >> log/cron-sendmail.log 2>&1" > /etc/cron.d/studlan-sendmail
+echo
 
 # Maybe don't start
 if [[ $NO_START == "true" ]]; then
     echo "No-start enabled, stopping instead"
     exit 0
 fi
+
+echo "Starting cron daemon ..."
+/etc/init.d/cron start
 
 # Run prod or dev server
 if [[ $DJANGO_DEV_SERVER != "true" ]]; then
@@ -155,5 +163,5 @@ if [[ $DJANGO_DEV_SERVER != "true" ]]; then
 else
     echo "Starting Django dev server ..."
     echo "WARNING: Never use this in prod!"
-    $MANAGE runserver 0.0.0.0:8080
+    $MANAGE_AS_USER runserver 0.0.0.0:8080
 fi

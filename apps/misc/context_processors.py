@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.conf import settings
+from django.contrib.sites.models import Site
 
 
 def build_full_app_name():
@@ -15,6 +16,7 @@ def build_full_app_name():
 def global_variables(request):
     return {
         'site_name': getattr(settings, 'SITE_NAME', ''),
+        'site_host': Site.objects.get_current().domain,
         'app_version': getattr(settings, 'VERSION', ''),
         'support_mail': getattr(settings, 'SUPPORT_MAIL', ''),
         'stripe_public_key': getattr(settings, 'STRIPE_PUBLIC_KEY', ''),

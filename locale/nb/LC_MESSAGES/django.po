@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-20 06:33+0200\n"
+"POT-Creation-Date: 2022-05-26 06:29+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -724,9 +724,6 @@ msgstr "Du kan ikke avmelde deg siden du har betalt for en billett til LAN-et."
 msgid "Successfully removed you from attendee list for {lan}."
 msgstr "Du ble fjernet fra deltagerlisten for {lan}."
 
-msgid "Paying participants"
-msgstr "Betalende deltagere"
-
 msgctxt "payment type"
 msgid "cash"
 msgstr "cash"
@@ -959,8 +956,33 @@ msgstr "Send-Mail"
 msgid "Select zero, one or multiple by control-clicking."
 msgstr "Velg null, én eller flere ved å kontroll-klikke."
 
+msgid "Language"
+msgstr "Språk"
+
+msgid "Subject"
+msgstr "Emne"
+
+msgid "Content"
+msgstr "Innhold"
+
+msgid ""
+"Markdown formatting is supported. The message will be sent as both HTML and "
+"plaintext, so make sure to add important links as plaintext."
+msgstr ""
+"Markdown-formattering er støttet. Meldingen vil sendes som både HTML og "
+"klartekst, så pass på at alle viktige lenker legges til som klartekst."
+
+msgid "All users (marketing)"
+msgstr "Alle brukere (markedsføring)"
+
+msgid "Send to users which have opted in to marketing emails."
+msgstr "Send til brukere som har meldt seg på merkedsførings-e-poster."
+
 msgid "All users"
 msgstr "Alle brukere"
+
+msgid "Send to all users. Never use for marketing purposes!"
+msgstr "Send til alle brukere. Bruk aldri for markedsføringsformål!"
 
 msgid "LAN payers"
 msgstr "LAN-betalere"
@@ -980,18 +1002,8 @@ msgstr "Spesifiser brukernavn separert av komma. Versalsensitiv."
 msgid "Yourself"
 msgstr "Deg selv"
 
-msgid "Subject"
-msgstr "Emne"
-
-msgid "Content"
-msgstr "Innhold"
-
-msgid ""
-"Markdown formatting is supported. The message will be sent as both HTML and "
-"plaintext, so make sure to add important links as plaintext."
-msgstr ""
-"Markdown-formattering er støttet. Meldingen vil sendes som både HTML og "
-"klartekst, så pass på at alle viktige lenker legges til som klartekst."
+msgid "Send to yourself."
+msgstr "Send til deg selv."
 
 msgid "At least one recipient is required."
 msgstr "Minst én mottaker er påkrevd."
@@ -1000,59 +1012,27 @@ msgstr "Minst én mottaker er påkrevd."
 msgid "Users not found: {users}"
 msgstr "Brukere ble ikke funnet: {users}"
 
-msgid "form id"
-msgstr "skjema-ID"
+msgid "UUID"
+msgstr "UUID"
 
-msgid "To prevent sending the same mail twice."
-msgstr "For å forhindre sending av samme e-post flere ganger."
+msgid ""
+"UUID specified by the sender, prevents accidentally sending same mail "
+"multiple times."
+msgstr ""
+"UUID spesifisert av avsenderen, forhindrer utilsiktet sending av samme post "
+"flere ganger."
 
 msgid "time sent"
 msgstr "tid sendt"
 
+msgid "sender"
+msgstr "avsender"
+
+msgid "language"
+msgstr "språk"
+
 msgid "subject"
 msgstr "emne"
-
-msgid "recipient everyone"
-msgstr "mottaker alle"
-
-msgid "recipient LANs"
-msgstr "mottaker-LAN"
-
-msgid "recipient tickets"
-msgstr "mottakerbilletter"
-
-msgid "recipient teams"
-msgstr "mottakerlag"
-
-msgid "recipient competitions"
-msgstr "mottakerkonkurranser"
-
-msgid "recipient users"
-msgstr "mottakerbrukere"
-
-msgid "total number of recipients"
-msgstr "Totalt antall mottakere:"
-
-msgid "Sum of all unique users that should receive the mail."
-msgstr "Summen av alle unike brukere som burde motta e-posten."
-
-msgid "successful mails"
-msgstr "vellykkede e-poster"
-
-msgid "How many of the mails were sent successfully."
-msgstr "Hvor manger e-poster som ble sendt vellykket."
-
-msgid "failed mails"
-msgstr "feilede e-poster"
-
-msgid "How many of the mails were not sent because of some failure."
-msgstr "Hvor mange e-poster som ikke ble sendt grunnet en feil."
-
-msgid "done sending"
-msgstr "ferdig sendt"
-
-msgid "If all mails have been attempted sent."
-msgstr "Om alle e-postene har blitt forsøkt sendt."
 
 msgid "mail"
 msgstr "e-post"
@@ -1060,17 +1040,14 @@ msgstr "e-post"
 msgid "mails"
 msgstr "e-poster"
 
-msgid ""
-"There are currently mails that are being sent. Please wait before sending a "
-"new mail. If you believe this is incorrect, please check the admin panel and "
-"delete any old, unfinished mails."
-msgstr ""
-"Det finnes e-poster som fortsatt holder på å bli utsendt. Vennligst vent før "
-"du sender en ny. Hvis du mener dette er feil, vennligst sjekk admin-panelet "
-"og slett eventuelle gamle og uferdige e-poster."
+msgid "Time the email was sent. Unset if not sent yet."
+msgstr "Tid e-posten ble sendt. Ikke satt dersom den ikke er sendt."
 
-msgid "There are currently no mails that are being sent."
-msgstr "Det finnes for øyeblikket ingen e-poster som holder på å bli utsendt."
+msgid "mail recipient"
+msgstr "postmottaker"
+
+msgid "mail recipients"
+msgstr "postmottakere"
 
 msgid ""
 "The mail has already been sent. If this is a new message, please reload the "
@@ -1080,8 +1057,8 @@ msgstr ""
 "last inn siden på nytt og prøv igjen."
 
 #, python-brace-format
-msgid "Successfully attempted to send the message to {user_count} users."
-msgstr "Meldingen ble forsøkt sendt til {user_count} brukere."
+msgid "Successfully created the message with {user_count} recipient(s)."
+msgstr "Meldingen ble laget med {user_count} mottaker(e)."
 
 msgid "partner translation"
 msgstr "partneroversettelse"
@@ -1334,6 +1311,12 @@ msgstr "postnummer"
 
 msgid "phone number"
 msgstr "telefonnummer"
+
+msgid "marketing opt-in"
+msgstr "påmelding for markedsføring"
+
+msgid "Accept marketing emails about future LANs and stuff."
+msgstr "Aksepter markedsførings-e-poster om fremtidige LAN og greier."
 
 msgid "user profile"
 msgstr "brukerprofil"
@@ -1634,8 +1617,13 @@ msgstr "Bytt passord"
 msgid "Toggle navigation"
 msgstr "Veksle navigasjon"
 
-msgid "Language"
-msgstr "Språk"
+#, python-format
+msgid "<p>Sent from <a href=\"https://%(site_host)s/\">%(site_name)s</a>.</p>"
+msgstr "<p>Sendt fra <a href=\"https://%(site_host)s/\">%(site_name)s</a>.</p>"
+
+#, python-format
+msgid "Sent from %(site_name)s (https://%(site_host)s/)."
+msgstr "Sent fra %(site_name)s (https://%(site_host)s/)."
 
 msgid "Upcoming LANs"
 msgstr "Kommende LAN"
@@ -1759,14 +1747,6 @@ msgstr "Ingen trekninger for dette LAN-et."
 msgid "No schedule for this LAN."
 msgstr "Ingen timetabell for dette LAN-et."
 
-#, python-format
-msgid "<p>Sent from <a href=\"%(host)s\">%(site_name)s</a>.</p>"
-msgstr "<p>Sendt fra <a href=\"%(host)s\">%(site_name)s</a>.</p>"
-
-#, python-format
-msgid "Sent from %(site_name)s (%(host)s)."
-msgstr "Sent fra %(site_name)s (%(host)s)."
-
 msgid "Support"
 msgstr "Brukerstøtte"
 
@@ -1784,6 +1764,9 @@ msgstr "Vis billetter"
 
 msgid "LAN List"
 msgstr "LAN-liste"
+
+msgid "Press \"attend\" to receive email updates about the LAN."
+msgstr "Trykk \"delta\" for å motta e-postoppdateringer angående LAN-et."
 
 #, python-format
 msgid "You have a ticket: %(ticket_title)s"
@@ -2156,34 +2139,68 @@ msgstr ""
 msgid "This LAN does not have any seatings."
 msgstr "Dette LAN-et har ingen aktive setekart."
 
+msgid "Mail List"
+msgstr "E-postliste"
+
+msgid "Mails"
+msgstr "E-poster"
+
+msgid "New mail"
+msgstr "Ny e-post"
+
+#, python-format
+msgid "Showing %(mail_count)s of %(mail_total_count)s mails."
+msgstr "Viser %(mail_count)s av %(mail_total_count)s e-poster."
+
+msgid "Language code"
+msgstr "Språkkode"
+
+msgid "Created"
+msgstr "Opprettet"
+
+msgid "Sender"
+msgstr "Avsender"
+
+msgid "Recipients"
+msgstr "Mottakere"
+
+msgid "Sending complete"
+msgstr "Sending fullført"
+
+msgid "No mails."
+msgstr "Ingen e-poster."
+
 msgid "Send Mail"
 msgstr "Send e-post"
+
+msgid ""
+"Mails are sent periodically. It may take some minutes before the sending "
+"starts."
+msgstr ""
+"E-poster sendes periodisk. Det kan ta noen minutter før sendingen starter."
+
+msgid ""
+"<strong>About marketing emails:</strong> If the purpose of the mail is "
+"marketing, only send it to users which have opted in to it (select the \"all "
+"users (marketing)\"), or users attending the (upcoming) LAN. If the "
+"marketing content is highly relevant for LAN participants, you may also "
+"select the LAN in the list. Never send marketing content to old LAN "
+"participants etc.!"
+msgstr ""
+
+msgctxt "noun"
+msgid "Preview"
+msgstr "Forhåndsvisning"
+
+msgid "Total number of receivers:"
+msgstr "Totalt antall mottakere:"
 
 msgctxt "action"
 msgid "Close"
 msgstr "Lukk"
 
-msgid "Recipients"
-msgstr "Mottakere"
-
 msgid "Message"
 msgstr "Melding"
-
-#, python-format
-msgid ""
-"<strong>Warning!</strong> You have chosen to send this message to a lot of "
-"people (around %(user_count)s). This may take a long time. As a rough "
-"estimate, 100 recipients takes about 30 seconds. You may time out while "
-"waiting, but the emails should still get sent in even if you go to another "
-"page. Don't try to submit again or refresh this page while waiting, though! "
-"You can check the admin panel for status updates."
-msgstr ""
-"<strong>Advarsel!</strong> Du har valgt å sende meldingen til veldig "
-"mangepersoner (rundt %(user_count)s). Dette kan ta lang tid. Som et grovt "
-"estimat tar det rundt 30 sekunder for 100 mottakere. Du kan dette ut mens du "
-"venter, men e-postene skal fortsatt bli sendt selv om du går til en annen "
-"side. Ikke prøv å sende inn på nytt eller oppfrisk denne siden mens du "
-"venter! Du kan sjekke admin-panelet for statusoppdateringer."
 
 msgctxt "verb"
 msgid "Preview"
@@ -2192,12 +2209,8 @@ msgstr "Forhåndsvis"
 msgid "Send"
 msgstr "Send"
 
-msgctxt "noun"
-msgid "Preview"
-msgstr "Forhåndsvisning"
-
-msgid "Total number of receivers:"
-msgstr "Totalt antall mottakere:"
+msgid "View Mail"
+msgstr "Vis e-post"
 
 msgid "No LANs with partners."
 msgstr "Ingen LAN med partnere."
@@ -2374,6 +2387,9 @@ msgstr "Privat informasjon"
 msgid "This information is only visible to you and select staff users."
 msgstr "Denne informasjonen er bare synlig for deg og utvalgt personale."
 
+msgid "Marketing opt-in"
+msgstr "Markedsføringspåmelding"
+
 msgid "Is staff"
 msgstr "Er personale"
 
@@ -2425,9 +2441,6 @@ msgstr "Registrer ankonster"
 
 msgid "Manual registration"
 msgstr "Manuell registrering"
-
-msgid "Send mail"
-msgstr "Send e-post"
 
 msgid "Admin panel"
 msgstr "Adminpanel"

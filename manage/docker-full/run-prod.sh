@@ -6,7 +6,7 @@ set -eu
 
 LOCAL_DIR=".local/docker-full"
 CONFIG_FILE="$LOCAL_DIR/local.py"
-DB_FILE="$LOCAL_DIR/db.sqlite3"
+DB_FILE="$LOCAL_DIR/db/db.sqlite3"
 DC_FILE="setup/docker-compose.full.yml"
 DC="docker-compose -f $DC_FILE"
 
