@@ -59,7 +59,7 @@ chown -R $STUDLAN_USER:$STUDLAN_GROUP log
 
 # Collect static files (as root)
 echo "Collecting static files ..."
-mkdir static
+mkdir -p static
 chown -R $STUDLAN_USER:$STUDLAN_GROUP static
 $MANAGE_AS_USER collectstatic --noinput --clear
 chown -R root:root static
@@ -139,7 +139,7 @@ if [[ $EXPORT_DATABASE == "true" ]]; then
     touch $EXPORT_FILE
     chmod 600 $EXPORT_FILE
     # Exclude contenttypes and auth.Permission while using natural foreign keys to prevent IntegrityError on import
-    $MANAGE_AS_USER dumpdata --natural-foreign --exclude=contenttypes --exclude=auth.Permission --format=json --indent=2 | gzip > $EXPORT_FILE
+    $MANAGE_AS_USER dumpdata --natural-foreign --exclude=contenttypes --exclude=auth.Permission --exclude=sendmail.SendMail --format=json --indent=2 | gzip > $EXPORT_FILE
 fi
 
 # Setup cron jobs
