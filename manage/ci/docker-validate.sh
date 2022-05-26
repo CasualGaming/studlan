@@ -25,10 +25,6 @@ chmod 777 "$(dirname "$DB_FILE")"
 touch "$DB_FILE"
 chmod 666 "$DB_FILE"
 
-# TODO remove
-ls -ld "$(dirname "$DB_FILE")"
-ls -l "$DB_FILE"
-
 # Add version file
 echo "0.0.0-SNAPSHOT" > VERSION
 
