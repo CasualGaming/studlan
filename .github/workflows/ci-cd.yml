@@ -38,8 +38,6 @@ jobs:
           python -m pip install -r requirements/test.txt
       - name: Validate Django project
         run: manage/ci/django-validate.sh
-      - name: Test
-        run: manage/ci/django-test.sh
       - name: Lint
         run: flake8
       - name: Validate Docker image

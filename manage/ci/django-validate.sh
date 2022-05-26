@@ -1,18 +1,39 @@
 #!/bin/bash
 
+set -eu -o pipefail
+
+LOCAL_DIR=".local/ci"
+LOG_DIR="$LOCAL_DIR/log"
+CONFIG_FILE="studlan/settings/local.py"
+CONFIG_TEMPLATE_FILE="setup/local.ci.py"
+DB_FILE="$LOCAL_DIR/db/db.sqlite3"
+MANAGE="python manage.py"
+
 if [[ $CI != "true" ]]; then
     echo "Error: This isn't a CI environment" 2>&1
     exit -1
 fi
 
-set -eu # Exit on error and undefined var is error
+mkdir -p "$LOCAL_DIR"
+mkdir -p "$LOG_DIR"
 
-MANAGE="python manage.py"
+# Add config file and exit if missing
+if [[ ! -e $CONFIG_FILE ]]; then
+    echo "Creating new config file ..."
+    cp "$CONFIG_TEMPLATE_FILE" "$CONFIG_FILE"
+fi
 
-[[ ! -e log ]] && mkdir -p log
+# Create DB file so Docker doesn't make it a directory
+if [[ ! -e $DB_FILE ]]; then
+    echo "Creating DB file ..."
+    mkdir -p "$(dirname "$DB_FILE")"
+    chmod 777 "$(dirname "$DB_FILE")"
+    touch "$DB_FILE"
+    chmod 666 "$DB_FILE"
+fi
 
-# Add temporary config
-cp setup/local.ci.test.py studlan/settings/local.py
+# Add version file
+echo "0.0.0-SNAPSHOT" > VERSION
 
 # Validate
 $MANAGE check --deploy --fail-level=ERROR
@@ -29,3 +50,6 @@ $MANAGE makemigrations --dry-run --check --no-input
 
 # Compiling translations
 $MANAGE compilemessages --locale=nb
+
+# Run Django tests
+$MANAGE test
