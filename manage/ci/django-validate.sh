@@ -2,7 +2,7 @@
 
 set -eu -o pipefail
 
-LOCAL_DIR=".local/ci"
+LOCAL_DIR="."
 LOG_DIR="$LOCAL_DIR/log"
 CONFIG_FILE="studlan/settings/local.py"
 CONFIG_TEMPLATE_FILE="setup/local.ci.py"
