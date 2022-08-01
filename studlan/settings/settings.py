@@ -180,11 +180,19 @@ LOGGING = {
         },
     },
     'handlers': {
-        'error_file': {
+        'warning_file': {
             'level': 'WARNING',
             'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'log/warning.log',
+            'maxBytes': 8 * 1024 * 1024,  # 8 MB
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
+        'error_file': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.RotatingFileHandler',
             'filename': 'log/error.log',
-            'maxBytes': 5 * 1024 * 1024,  # 5 MB
+            'maxBytes': 8 * 1024 * 1024,  # 8 MB
             'backupCount': 5,
             'formatter': 'standard',
         },
@@ -192,14 +200,14 @@ LOGGING = {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': 'log/sendmail.log',
-            'maxBytes': 5 * 1024 * 1024,  # 5 MB
+            'maxBytes': 8 * 1024 * 1024,  # 8 MB
             'backupCount': 5,
             'formatter': 'standard',
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['error_file'],
+            'handlers': ['warning_file', 'error_file'],
             'level': 'DEBUG',
             'propagate': False,
         },
