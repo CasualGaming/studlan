@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/bash
 
 set -e # Exit on error
 set -u # Treat undefined variables as errors
@@ -139,6 +139,7 @@ if [[ $EXPORT_DATABASE == "true" ]]; then
     touch $EXPORT_FILE
     chmod 600 $EXPORT_FILE
     # Exclude contenttypes and auth.Permission while using natural foreign keys to prevent IntegrityError on import
+    # Exclude sendmail.SendMail because it's an unmanaged model, which "dumpdata" struggles to find in the database
     $MANAGE_AS_USER dumpdata --natural-foreign --exclude=contenttypes --exclude=auth.Permission --exclude=sendmail.SendMail --format=json --indent=2 | gzip > $EXPORT_FILE
 fi
 
@@ -163,5 +164,5 @@ if [[ $DJANGO_DEV_SERVER != "true" ]]; then
 else
     echo "Starting Django dev server ..."
     echo "WARNING: Never use this in prod!"
-    $MANAGE_AS_USER runserver 0.0.0.0:8080
+    exec $MANAGE_AS_USER runserver 0.0.0.0:8080
 fi

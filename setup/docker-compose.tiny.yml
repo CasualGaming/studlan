@@ -8,26 +8,26 @@ services:
       args:
         python_requirements: requirements/development.txt
     environment:
-    - SUPERUSER_USERNAME=batman
-    - SUPERUSER_EMAIL=batman@localhost
-    - SUPERUSER_PASSWORD=manbat
-    - SUPERUSER_INACTIVE=false
-    - DJANGO_DEV_SERVER=true
+      - SUPERUSER_USERNAME=batman
+      - SUPERUSER_EMAIL=batman@localhost
+      - SUPERUSER_PASSWORD=manbat
+      - SUPERUSER_INACTIVE=false
+      - DJANGO_DEV_SERVER=true
     volumes:
-    - ../.local/docker-tiny/local.py:/srv/studlan/studlan/settings/local.py:ro
-    - ../.local/docker-tiny/db/:/srv/studlan/db/:rw
-    - ../.local/docker-tiny/log:/srv/studlan/log:rw
-    # Source dirs, in case of changes
-    - ../requirements/:/srv/studlan/requirements/:rw
-    - ../requirements.txt:/srv/studlan/requirements.txt:rw
-    - ../studlan/:/srv/studlan/studlan/:ro
-    - ../apps/:/srv/studlan/apps/:rw
-    - ../files/:/srv/studlan/files/:ro
-    - ../templates/:/srv/studlan/templates/:rw
-    - ../locale/:/srv/studlan/locale/:rw
-    - ../manage/:/srv/studlan/manage/:ro
-    - ../.flake8:/srv/studlan/.flake8:ro
-    - ../manage.py:/srv/studlan/manage.py:ro
-    - ../uwsgi.ini:/srv/studlan/uwsgi.ini:ro
+      - ../.local/docker-tiny/local.py:/srv/studlan/studlan/settings/local.py:ro
+      - ../.local/docker-tiny/db/:/srv/studlan/db/:rw
+      - ../.local/docker-tiny/log:/srv/studlan/log:rw
+      # Source dirs, in case of changes
+      - ../requirements/:/srv/studlan/requirements/:rw
+      - ../requirements.txt:/srv/studlan/requirements.txt:rw
+      - ../studlan/:/srv/studlan/studlan/:ro
+      - ../apps/:/srv/studlan/apps/:rw
+      - ../files/:/srv/studlan/files/:ro
+      - ../templates/:/srv/studlan/templates/:rw
+      - ../locale/:/srv/studlan/locale/:rw
+      - ../manage/:/srv/studlan/manage/:ro
+      - ../.flake8:/srv/studlan/.flake8:ro
+      - ../manage.py:/srv/studlan/manage.py:ro
+      - ../uwsgi.ini:/srv/studlan/uwsgi.ini:ro
     ports:
-    - "8000:8080"
+      - "8080:8080"

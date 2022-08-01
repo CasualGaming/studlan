@@ -22,6 +22,7 @@ COPY manage.py ./
 COPY docker-entrypoint.sh ./
 COPY uwsgi.ini ./
 RUN mkdir -p log
+RUN chmod +x docker-entrypoint.sh
 
 # Compile translations
 COPY setup/local.template.py studlan/settings/local.py
@@ -40,4 +41,4 @@ EXPOSE 8080
 # uWSGI
 EXPOSE 8081
 
-CMD ["/bin/bash", "docker-entrypoint.sh"]
+CMD ["./docker-entrypoint.sh"]

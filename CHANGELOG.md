@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fixed graceful shutdown for production mode.
+
 ### Security
 
 - Run Django management tasks in the Docker entrypoint as the app user instead of root.
