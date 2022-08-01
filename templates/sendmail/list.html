@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}
+{% trans "Mail List" %}
+{% endblock title %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-9">
+        <h1 class="page-header">{% trans "Mails" %}</h1>
+    </div>
+</div>
+
+{% if perms.sendmail.send %}
+<div class="row">
+    <div class="col-md-9">
+        <p>
+            <a href="{% url 'sendmail_send' %}" class="btn btn-primary">
+                <span class="glyphicon glyphicon-film" aria-hidden="true"></span>
+                {% trans "New mail" %}
+            </a>
+        </p>
+    </div>
+</div>
+{% endif %}
+
+{% if mails %}
+<div class="row">
+    <div class="col-md-9">
+        <p>
+            {% blocktrans trimmed %}
+            Showing {{ mail_count }} of {{ mail_total_count }} mails.
+            {% endblocktrans %}
+        </p>
+        <table class="table table-bordered table-hover click-table">
+            <caption hidden>{% trans "Mails" %}</caption>
+            <thead>
+                <th scope="col" class="col-md-5">{% trans "Subject" %}</th>
+                <th scope="col" class="col-md-1">{% trans "Language code" %}</th>
+                <th scope="col" class="col-md-2">{% trans "Created" %}</th>
+                <th scope="col" class="col-md-2">{% trans "Sender" %}</th>
+                <th scope="col" class="col-md-1">{% trans "Recipients" %}</th>
+                <th scope="col" class="col-md-1">{% trans "Sending complete" %}</th>
+            </thead>
+            <tbody>
+                {% for mail in mails %}
+                <tr onclick="document.location='{% url "sendmail_view" mail.uuid %}';">
+                    <td>{{ mail.subject }}</td>
+                    <td>{{ mail.language }}</td>
+                    <td>{{ mail.created_time }}</td>
+                    <td>{{ mail.sender }}</td>
+                    <td>{{ mail.recipient_count }}</td>
+                    <td>{% if mail.is_sending_finished %}{% trans "Yes" %}{% else %}{% trans "No" %}{% endif %}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% else %}
+<div class="row">
+    <div class="col-md-9">
+        <div class="alert alert-info">{% trans "No mails." %}</div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock content %}

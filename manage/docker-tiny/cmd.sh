@@ -7,7 +7,7 @@ set -eu
 
 LOCAL_DIR=".local/docker-tiny"
 CONFIG_FILE="$LOCAL_DIR/local.py"
-DB_FILE="$LOCAL_DIR/db.sqlite3"
+DB_FILE="$LOCAL_DIR/db/db.sqlite3"
 DC_FILE="setup/docker-compose.tiny.yml"
 DC="docker-compose -f $DC_FILE"
 
@@ -29,7 +29,8 @@ if [[ ! -e $DB_FILE ]]; then
     exit -1
 fi
 
+# Run in temporary container, using same mounts etc.
 $DC run --rm -T studlan /bin/bash <<<"$cmds"
 
 echo
-echo "Success (seemingly)!"
+echo "Success (maybe)!"

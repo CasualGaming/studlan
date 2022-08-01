@@ -106,6 +106,7 @@ def register(request):
                 zip_code=cleaned['zip_code'],
                 address=cleaned['address'],
                 phone=cleaned['phone'],
+                marketing_optin=cleaned['marketing_optin'],
             )
             up.save()
 
@@ -114,16 +115,21 @@ def register(request):
             rt = RegisterToken(user=user, token=token)
             rt.save()
 
+            # Render templates
             link = request.build_absolute_uri(reverse('auth_verify', args=[token]))
             context = {
                 'link': link,
             }
             txt_message = render_to_string('auth/email/verify_account.txt', context, request).strip()
             html_message = render_to_string('auth/email/verify_account.html', context, request).strip()
+
+            # Send mail
+            from_address = u'"{name}" <{address}>'.format(name=settings.SITE_NAME, address=settings.DEFAULT_FROM_EMAIL)
+            to_address = u'"{name}" <{address}>'.format(name=user.get_full_name(), address=user.email)
             send_mail(
+                from_email=from_address,
+                recipient_list=[to_address],
                 subject=_(u'Verify your account'),
-                from_email=settings.STUDLAN_FROM_MAIL,
-                recipient_list=[user.email],
                 message=txt_message,
                 html_message=html_message,
             )
@@ -254,6 +260,7 @@ def recover(request):
                 rt = RegisterToken(user=user, token=token)
                 rt.save()
 
+                # Render templates
                 link = request.build_absolute_uri(reverse('auth_set_password', args=[token]))
                 context = {
                     'link': link,
@@ -262,10 +269,14 @@ def recover(request):
                 }
                 txt_message = render_to_string('auth/email/recover_account.txt', context, request).strip()
                 html_message = render_to_string('auth/email/recover_account.html', context, request).strip()
+
+                # Send mail
+                from_address = u'"{name}" <{address}>'.format(name=settings.SITE_NAME, address=settings.DEFAULT_FROM_EMAIL)
+                to_address = u'"{name}" <{address}>'.format(name=user.get_full_name(), address=user.email)
                 send_mail(
+                    from_email=from_address,
+                    recipient_list=[to_address],
                     subject=_(u'Account recovery'),
-                    from_email=settings.STUDLAN_FROM_MAIL,
-                    recipient_list=[user.email],
                     message=txt_message,
                     html_message=html_message,
                 )

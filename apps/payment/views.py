@@ -103,25 +103,31 @@ def generate_payment_response(request, ticket_type, intent):
         })
     elif intent.status == 'succeeded':
 
+        # Create ticket
         ticket = Ticket()
         ticket.user = request.user
         ticket.ticket_type = ticket_type
         ticket.bought_date = datetime.now()
         ticket.save()
 
+        # Render templates
         lan = ticket.ticket_type.lan
         lan_link = request.build_absolute_uri(lan.get_absolute_url())
         context = {
-            'ticket': ticket,
             'lan': lan,
             'lan_link': lan_link,
+            'ticket': ticket,
         }
         txt_message = render_to_string('payment/email/ticket_receipt.txt', context, request).strip()
         html_message = render_to_string('payment/email/ticket_receipt.html', context, request).strip()
+
+        # Send mail
+        from_address = u'"{name}" <{address}>'.format(name=settings.SITE_NAME, address=settings.DEFAULT_FROM_EMAIL)
+        to_address = u'"{name}" <{address}>'.format(name=ticket.user.get_full_name(), address=ticket.user.email)
         send_mail(
+            from_email=from_address,
+            recipient_list=[to_address],
             subject=_(u'Ticket confirmation'),
-            from_email=settings.STUDLAN_FROM_MAIL,
-            recipient_list=[ticket.user.email],
             message=txt_message,
             html_message=html_message,
         )

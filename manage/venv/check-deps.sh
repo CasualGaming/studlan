@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export CUSTOM_COMPILE_COMMAND="manage/update-deps.sh"
+export CUSTOM_COMPILE_COMMAND="manage/{venv,docker-tiny}/update-deps.sh"
 
 set -eu
 

@@ -2,7 +2,7 @@
 
 LOCAL_DIR=".local/venv"
 CONFIG_FILE="studlan/settings/local.py"
-CONFIG_TEMPLATE_FILE="setup/local.venv.dev.py"
+CONFIG_TEMPLATE_FILE="setup/local.venv.py"
 MANAGE="manage/venv/manage.sh"
 
 set -eu

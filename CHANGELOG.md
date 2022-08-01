@@ -9,7 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added marketing email opt-in for users on sign-up and profile pages.
+
 ### Changed
+
+- Reworked custom email sending.
+- Made to/from addresses in emails pretty.
+- Made the site domain in emails use the site framework domain, so make sure it's set properly.
+- Updated default logging settings.
+- Made age check fail for people over 150 years.
 
 ### Deprecated
 
@@ -17,7 +25,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fixed graceful shutdown for production mode.
+
 ### Security
+
+- Make Django management tasks in the Docker entrypoint run as the app user instead of root.
 
 
 ## [v1.9.1] - 2022-05-01

@@ -9,11 +9,12 @@ from django.utils.translation import ugettext_lazy as _
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, verbose_name=_(u'user'), related_name='profile')
-    nick = models.CharField(_(u'nick'), max_length=20, help_text=_(u'Specify a nick name (display name).'), db_index=True)
+    nick = models.CharField(_(u'nick'), max_length=20, db_index=True, help_text=_(u'Your display name. Should be equal or similar to your username.'))
     date_of_birth = models.DateField(_(u'date of birth'), default=date.today)
     address = models.CharField(_(u'street address'), max_length=100)
     zip_code = models.CharField(_(u'postal code'), max_length=4)
     phone = models.CharField(_(u'phone number'), max_length=20)
+    marketing_optin = models.BooleanField(_(u'marketing opt-in'), default=False, help_text=_(u'Receive emails about upcoming LANs and stuff.'))
 
     def __unicode__(self):
         return self.user.username

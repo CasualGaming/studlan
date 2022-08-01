@@ -1,9 +1,9 @@
 {% load i18n %}
 
-{% get_current_language as LANGUAGE_CODE %}
+{% get_current_language as auto_language_code %}
 
 <!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE }}">
+<html lang="{{ language_code|default:auto_language_code }}">
 <head>
     <meta charset="utf-8" />
     <title>{{ site_name }}</title>
@@ -19,8 +19,8 @@
         </div>
         <footer>
             <hr />
-            {% blocktrans with request.get_host as host trimmed %}
-            <p>Sent from <a href="{{ host }}">{{ site_name }}</a>.</p>
+            {% blocktrans trimmed %}
+            <p>Sent from <a href="https://{{ site_host }}/">{{ site_name }}</a>.</p>
             {% endblocktrans %}
         </footer>
     </div>

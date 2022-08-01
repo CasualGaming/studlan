@@ -1,12 +1,10 @@
 {% load i18n %}
 
-{% get_current_language as LANGUAGE_CODE %}
-
 {{ site_name }}
 --------------------------------------------------
 {% block content %}
 {% endblock content %}
 --------------------------------------------------
-{% blocktrans with request.get_host as host trimmed %}
-Sent from {{ site_name }} ({{ host }}).
+{% blocktrans trimmed %}
+Sent from {{ site_name }} (https://{{ site_host }}/).
 {% endblocktrans %}
