@@ -12,3 +12,4 @@ markdown2
 pychallonge
 django-anymail[mailgun]
 python-dateutil
+django-pglocks

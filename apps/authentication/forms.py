@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import datetime
-import re
-
 from django import forms
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext, ugettext_lazy as _
+
+from apps.userprofile.models import UserProfile
 
 
 class LoginForm(forms.Form):
@@ -83,40 +82,29 @@ class RegisterForm(forms.Form):
         if self.is_valid():
             cleaned_data = self.cleaned_data
 
-            # Profile check must be consistent with RegisterForm
-
             # Check username
             username = cleaned_data['desired_username']
-            if User.objects.filter(username=username).count() > 0:
-                self.add_error('desired_username', ugettext(u'There is already a user with that username.'))
-            if not re.match('^[a-zA-Z0-9_-]+$', username):
-                self.add_error('desired_username',
-                               ugettext(u'Your desired username contains illegal characters. Valid: a-Z 0-9 - _'))
-
-            # ZIP code digits only
-            zip_code = cleaned_data['zip_code']
-            if len(zip_code) != 4 or not zip_code.isdigit():
-                self.add_error('zip_code', ugettext(u'The postal code must be a 4 digit number.'))
+            username_error = UserProfile.check_username(username)
+            if username_error:
+                self.add_error('desired_username', username_error)
 
             # Check date of birth
-            now = datetime.date.today()
-            date = cleaned_data['date_of_birth']
-            if date == now:
-                self.add_error('date_of_birth', ugettext(u'You seem to have been born today, that doesn\'t seem right.'))
-            if date >= now:
-                self.add_error('date_of_birth', ugettext(u'You seem to be from the future, that doesn\'t seem right.'))
-            if date < now.replace(year=(now.year - 150)):
-                self.add_error('date_of_birth', ugettext(u'You seem to be over 150 years old, that doesn\'t seem right.'))
+            date_of_birth = cleaned_data['date_of_birth']
+            date_of_birth_error = UserProfile.check_date_of_birth(date_of_birth)
+            if date_of_birth_error:
+                self.add_error('date_of_birth', date_of_birth_error)
 
             # ZIP code digits only
             zip_code = cleaned_data['zip_code']
-            if len(zip_code) != 4 or not zip_code.isdigit():
-                self.add_error('zip_code', ugettext(u'The postal code must be a 4 digit number.'))
+            zip_code_error = UserProfile.check_zip_code(zip_code)
+            if zip_code_error:
+                self.add_error('zip_code', zip_code_error)
 
             # Phone number digits and plus only
             phone = cleaned_data['phone']
-            if not re.match('^((\\+|00)[0-9]{2})?[0-9]{8,10}$', phone):
-                self.add_error('phone', ugettext(u'The phone number must consist of an optional country code followed by 8–10 digits (no spaces or symbols, but "+" allowed in country code).'))
+            phone_error = UserProfile.check_phone(phone)
+            if phone_error:
+                self.add_error('phone', phone_error)
 
             # Check passwords match
             if cleaned_data['password'] != cleaned_data['repeat_password']:

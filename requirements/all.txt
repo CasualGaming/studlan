@@ -26,6 +26,8 @@ django-anymail[mailgun]==7.2.1
     # via -r requirements/base.in
 django-markdown-deux==1.0.5
     # via -r requirements/base.in
+django-pglocks==1.0.4
+    # via -r requirements/base.in
 django-postman==3.7.0
     # via -r requirements/base.in
 django-translatable==0.1.1
@@ -129,6 +131,7 @@ scandir==1.10.0
 six==1.16.0
     # via
     #   django-anymail
+    #   django-pglocks
     #   pathlib2
     #   python-dateutil
 soupsieve==1.9.6

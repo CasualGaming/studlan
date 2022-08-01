@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import datetime
-import re
-
 from django import forms
-from django.utils.translation import ugettext, ugettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 
 from apps.userprofile.models import UserProfile
 
@@ -25,31 +22,28 @@ class UserProfileForm(forms.ModelForm):
         cleaned_data = super(UserProfileForm, self).clean()
         if self.is_valid():
 
-            # Profile check must be consistent with RegisterForm
-
             # Check nick
             nick = cleaned_data['nick']
-            if not re.match('^[a-zA-Z0-9_-]+$', nick):
-                self.add_error('nick', ugettext(u'Your desired nickname contains illegal characters. Valid: a-Z 0-9 - _'))
+            nick_error = UserProfile.check_nick(nick)
+            if nick_error:
+                self.add_error('nick', nick_error)
 
             # Check date of birth
-            now = datetime.date.today()
-            date = cleaned_data['date_of_birth']
-            if date == now:
-                self.add_error('date_of_birth', ugettext(u'You seem to have been born today, that doesn\'t seem right.'))
-            if date >= now:
-                self.add_error('date_of_birth', ugettext(u'You seem to be from the future, that doesn\'t seem right.'))
-            if date < now.replace(year=(now.year - 150)):
-                self.add_error('date_of_birth', ugettext(u'You seem to be over 150 years old, that doesn\'t seem right.'))
+            date_of_birth = cleaned_data['date_of_birth']
+            date_of_birth_error = UserProfile.check_date_of_birth(date_of_birth)
+            if date_of_birth_error:
+                self.add_error('date_of_birth', date_of_birth_error)
 
             # ZIP code digits only
             zip_code = cleaned_data['zip_code']
-            if len(zip_code) != 4 or not zip_code.isdigit():
-                self.add_error('zip_code', ugettext(u'The postal code must be a 4 digit number.'))
+            zip_code_error = UserProfile.check_zip_code(zip_code)
+            if zip_code_error:
+                self.add_error('zip_code', zip_code_error)
 
             # Phone number digits and plus only
             phone = cleaned_data['phone']
-            if not re.match('^((\\+|00)[0-9]{2})?[0-9]{8,10}$', phone):
-                self.add_error('phone', ugettext(u'The phone number must consist of an optional country code followed by 8–10 digits (no spaces or symbols, but "+" allowed in country code).'))
+            phone_error = UserProfile.check_phone(phone)
+            if phone_error:
+                self.add_error('phone', phone_error)
 
             return cleaned_data

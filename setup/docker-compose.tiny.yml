@@ -2,7 +2,7 @@ version: '3.6'
 
 services:
   studlan:
-    image: studlan-tiny
+    container_name: studlan-tiny-studlan
     build:
       context: ..
       args:
