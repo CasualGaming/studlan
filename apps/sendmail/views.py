@@ -2,6 +2,7 @@
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
+from django.db import DatabaseError, transaction
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import ugettext as _
@@ -68,8 +69,15 @@ def handle_send_form(request, form, template_context):
     recipient_users = build_recipient_list(request, fields)
     recipients_count = recipient_users.count()
 
-    # Send (create) the mail if "send" was presses
-    if 'send' in form.data:
+    # If "send" wasn't pressed, show existing form but with preview
+    if 'send' not in form.data:
+        template_context['mail_subject'] = mail_subject
+        template_context['mail_content'] = mail_content
+        template_context['mail_recipient_count'] = recipients_count
+        return form
+
+    # Send mail
+    with transaction.atomic():
         # Create mail
         mail = Mail()
         mail.uuid = mail_uuid
@@ -86,15 +94,9 @@ def handle_send_form(request, form, template_context):
             recipient.user = user
             recipient.save()
 
-        # Show new form
-        messages.success(request, _(u'Successfully created the message with {user_count} recipient(s).').format(user_count=recipients_count))
-        return None
-
-    # Show existing form, but with previes
-    template_context['mail_subject'] = mail_subject
-    template_context['mail_content'] = mail_content
-    template_context['mail_recipient_count'] = recipients_count
-    return form
+    # Show new form
+    messages.success(request, _(u'Successfully created the message with {user_count} recipient(s).').format(user_count=recipients_count))
+    return None
 
 
 def build_recipient_list(request, fields):

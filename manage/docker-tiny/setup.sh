@@ -7,7 +7,7 @@ set -eu -o pipefail
 LOCAL_DIR=".local/docker-tiny"
 LOG_DIR="$LOCAL_DIR/log"
 CONFIG_FILE="$LOCAL_DIR/local.py"
-CONFIG_TEMPLATE_FILE="setup/local.docker.py"
+CONFIG_TEMPLATE_FILE="setup/local.docker-tiny.py"
 DB_FILE="$LOCAL_DIR/db/db.sqlite3"
 DC_FILE="setup/docker-compose.tiny.yml"
 DC="docker-compose -f $DC_FILE"

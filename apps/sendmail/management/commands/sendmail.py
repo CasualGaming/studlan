@@ -8,8 +8,10 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core import mail as django_mail
 from django.core.management.base import BaseCommand
-from django.db import transaction
+from django.db import connection, transaction
 from django.template.loader import render_to_string
+
+from django_pglocks import advisory_lock
 
 from apps.sendmail.models import Mail, MailRecipient
 
@@ -23,34 +25,36 @@ class Command(BaseCommand):
 
         sendmail_logger.debug('Checking for pending mail')
 
-        # Repeat as long as there's more mails that aren't done sending
-        while True:
+        # If using Postgres (as in prod), use a PG advisory lock
+        if connection.vendor == 'postgresql':
+            with advisory_lock(lock_id='sendmail_send', wait=False) as acquired:
+                if not acquired:
+                    sendmail_logger.debug('Another instance is already running, exiting')
+                    return
+                self.send_pending_mails()
+        else:
+            self.send_pending_mails()
 
-            # Begin transaction to allow locking on mails
-            with transaction.atomic():
 
-                # Find some mail with unsent recipient mails and lock it
-                # The locking should prevent race conditions among recipient mails
-                next_mails = Mail.objects.select_for_update().filter(recipients__sent_time=None)[:1]
-                if len(next_mails) == 0:
-                    break
-                mail = next_mails[0]
+    def send_pending_mails(self):
+        # Get pending mails
+            pending_mails = Mail.objects.filter(recipients__sent_time=None)
+            if len(pending_mails) == 0:
+                return
 
-                # Get pending recipients mails
-                recipients = MailRecipient.objects.filter(mail=mail, sent_time=None)
-                if recipients.count() == 0:
-                    break
+            sendmail_logger.debug('Found pending mails to send')
 
-                # Open shared mail connection
-                mail_connection = django_mail.get_connection()
-                mail_connection.open()
+            # Open shared mail connection
+            mail_connection = django_mail.get_connection()
+            mail_connection.open()
 
-                # Send the mails
-                for recipient in recipients:
+            # Try to send mails to recipients of all pending mails
+            for mail in pending_mails:
+                for recipient in MailRecipient.objects.filter(mail=mail, sent_time=None):
                     self.send_recipient_mail(mail, recipient, mail_connection)
 
-                # Close shared mail connection
-                mail_connection.close()
+            # Close shared mail connection
+            mail_connection.close()
 
     def send_recipient_mail(self, mail, recipient, mail_connection):
         sendmail_logger.info('Sending mail "%s" to user "%s"', mail.uuid, recipient.user.username)
