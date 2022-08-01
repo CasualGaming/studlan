@@ -8,7 +8,7 @@ from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core import mail as django_mail
 from django.core.management.base import BaseCommand
-from django.db import connection, transaction
+from django.db import connection
 from django.template.loader import render_to_string
 
 from django_pglocks import advisory_lock
@@ -35,26 +35,25 @@ class Command(BaseCommand):
         else:
             self.send_pending_mails()
 
-
     def send_pending_mails(self):
         # Get pending mails
-            pending_mails = Mail.objects.filter(recipients__sent_time=None)
-            if len(pending_mails) == 0:
-                return
+        pending_mails = Mail.objects.filter(recipients__sent_time=None)
+        if len(pending_mails) == 0:
+            return
 
-            sendmail_logger.debug('Found pending mails to send')
+        sendmail_logger.debug('Found pending mails to send')
 
-            # Open shared mail connection
-            mail_connection = django_mail.get_connection()
-            mail_connection.open()
+        # Open shared mail connection
+        mail_connection = django_mail.get_connection()
+        mail_connection.open()
 
-            # Try to send mails to recipients of all pending mails
-            for mail in pending_mails:
-                for recipient in MailRecipient.objects.filter(mail=mail, sent_time=None):
-                    self.send_recipient_mail(mail, recipient, mail_connection)
+        # Try to send mails to recipients of all pending mails
+        for mail in pending_mails:
+            for recipient in MailRecipient.objects.filter(mail=mail, sent_time=None):
+                self.send_recipient_mail(mail, recipient, mail_connection)
 
-            # Close shared mail connection
-            mail_connection.close()
+        # Close shared mail connection
+        mail_connection.close()
 
     def send_recipient_mail(self, mail, recipient, mail_connection):
         sendmail_logger.info('Sending mail "%s" to user "%s"', mail.uuid, recipient.user.username)
