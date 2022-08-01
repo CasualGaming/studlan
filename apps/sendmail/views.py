@@ -100,7 +100,7 @@ def handle_send_form(request, form, template_context):
 def build_recipient_list(request, fields):
     all_recipients = User.objects.none()
 
-    everyone = fields['recipient_everyone']
+    everyone = fields['recipient_everyone_marketing']
     if everyone:
         all_recipients = User.objects.filter(profile__marketing_optin=True)
 

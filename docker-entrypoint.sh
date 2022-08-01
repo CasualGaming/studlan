@@ -145,7 +145,7 @@ fi
 
 # Setup cron jobs
 echo "0 0 * * * studlan cd '$PWD' && /usr/local/bin/python ./manage.py clearsessions >> log/cron-clearsessions.log 2>&1" > /etc/cron.d/studlan-clearsessions
-echo "* * * * * studlan cd '$PWD' && /usr/local/bin/python ./manage.py sendmail >> log/cron-sendmail.log 2>&1" > /etc/cron.d/studlan-sendmail
+echo "*/5 * * * * studlan cd '$PWD' && /usr/local/bin/python ./manage.py sendmail >> log/cron-sendmail.log 2>&1" > /etc/cron.d/studlan-sendmail
 echo
 
 # Maybe don't start

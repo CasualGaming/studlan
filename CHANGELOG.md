@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added marketing email opt-in for users.
+- Added marketing email opt-in for users on sign-up and profile pages.
 
 ### Changed
 

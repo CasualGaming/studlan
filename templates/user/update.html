@@ -21,9 +21,16 @@
                 <label class="col-md-2 control-label">{{ field.label }}</label>
                 <div class="col-md-10">
                     {{ field }}
+                    {% if field.errors %}
                     <div class="form-error">
                         {{ field.errors }}
                     </div>
+                    {% endif %}
+                    {% if field.help_text %}
+                    <div class="help-block">
+                        {{ field.help_text }}
+                    </div>
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}

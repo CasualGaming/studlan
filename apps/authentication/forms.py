@@ -65,6 +65,7 @@ class RegisterForm(forms.Form):
     phone = forms.CharField(label=_(u'Phone number'), max_length=20,
                             widget=forms.TextInput(
                                 attrs={'class': 'form-control', 'placeholder': _(u'Phone number'), 'type': 'number'}))
+    marketing_optin = forms.BooleanField(label=_(u'Receive emails about upcoming LANs etc. (marketing)'), required=False)
     email = forms.EmailField(label=_(u'Email address'), max_length=50,
                              widget=forms.EmailInput(
                                  attrs={'class': 'form-control', 'placeholder': _(u'Email address'), 'type': 'text'}))

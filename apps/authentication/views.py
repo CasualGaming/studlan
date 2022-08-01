@@ -106,6 +106,7 @@ def register(request):
                 zip_code=cleaned['zip_code'],
                 address=cleaned['address'],
                 phone=cleaned['phone'],
+                marketing_optin=cleaned['marketing_optin'],
             )
             up.save()
 

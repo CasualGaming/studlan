@@ -23,7 +23,7 @@ class SendMessageForm(forms.Form):
         choices=settings.LANGUAGES)
     mail_uuid = forms.UUIDField(
         required=True,
-        initial=uuid.uuid4().hex,
+        initial=uuid.uuid4,
         widget=forms.HiddenInput())
     subject = forms.CharField(
         label=_(u'Subject'),

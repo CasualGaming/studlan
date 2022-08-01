@@ -27,7 +27,6 @@
 
 <div class="row">
     <div class="col-md-9">
-        <p>{% trans 'Press "attend" to receive email updates about the LAN.' %}</p>
         {% if active and user.is_authenticated %}
         {% if status == 'paid' and ticket %}
         <div class="center-on-collapse">
@@ -46,6 +45,7 @@
         </div>
         {% elif status == 'attending' %}
         <div class="center-on-collapse">
+            <p>{% trans '"Unattend" to stop receiving email updates about the LAN.' %}</p>
             <form class="form-inline" action="{% url 'lan_unattend' lan.id %}" method="POST">
                 {% csrf_token %}
                 <button class="btn btn-danger">
@@ -57,6 +57,7 @@
         {% elif status == 'open' %}
         {% if user.profile.has_address %}
         <div class="center-on-collapse">
+            <p>{% trans '"Attend" to receive email updates about the LAN.' %}</p>
             <form class="form-inline" action="{% url 'lan_attend' lan.id %}" method="POST">
                 {% csrf_token %}
                 <button class="btn btn-primary">
@@ -69,7 +70,7 @@
         <div class="alert alert-warning">
             {% url 'update_profile' as update_profile_url %}
             {% blocktrans trimmed %}
-            Your address and zip code is required in order to sign up for a LAN.
+            Your address and zip code is required in order to attend the LAN.
             Go to your <a href="{{ update_profile_url }}">profile</a> to add the information.
             {% endblocktrans %}
         </div>
@@ -77,7 +78,7 @@
         {% endif %} {# status == ... #}
         {% elif not user.is_authenticated %}
         <div class="alert alert-warning">
-            {% trans "You need to login to sign up for the LAN." %}
+            {% trans "You need to login to attend the LAN." %}
         </div>
         {% endif %}{# active and user.is_authenticated #}
         <br />
@@ -93,7 +94,7 @@
                 <h3 class="panel-title">{{ ticket_type.get_translation.title }}</h3>
             </div>
             <div class="panel-body">
-                <p>{{ ticket_type.get_translation.description }}</p>
+                <p>{{ ticket_type.get_translation.description }}</p>
                 <p><strong>{% trans "Price" %}:</strong> {{ ticket_type.verbose_price }}</p>
                 <p><strong>{% trans "Available tickets" %}:</strong> {{ ticket_type.number_of_free_seats }}/{{ ticket_type.number_of_seats }}</p>
             </div>
