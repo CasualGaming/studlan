@@ -35,6 +35,11 @@ echo "Removing any previous Docker Compose setup ..."
 $DC down
 
 echo
+echo "Purging build cache ..."
+# Required since it sometimes ignores changes in e.g. the requirements files
+docker builder prune -af
+
+echo
 echo "Building image ..."
 $DC build studlan
 

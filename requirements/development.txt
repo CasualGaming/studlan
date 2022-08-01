@@ -78,7 +78,6 @@ flake8==3.9.2
     #   flake8-quotes
     #   flake8-string-format
     #   flake8-tidy-imports
-    #   pep8-naming
 functools32==3.2.3.post2
     # via flake8
 idna==2.10
@@ -95,8 +94,6 @@ mccabe==0.6.1
     # via flake8
 pathlib2==2.3.7.post1
     # via importlib-metadata
-pep8-naming==0.13.1
-    # via -r requirements/test.in
 pillow==6.2.2
     # via reportlab
 pip-tools==5.5.0
