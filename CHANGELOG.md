@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made to/from addresses in emails pretty.
 - Made the site domain in emails use the site framework domain, so make sure it's set properly.
 - Updated default logging settings.
+- Made age check fail for people over 150 years.
 
 ### Deprecated
 

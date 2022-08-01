@@ -56,6 +56,15 @@ class RegisterForm(forms.Form):
     date_of_birth = forms.DateField(label=_(u'Date of birth'),
                                     widget=forms.TextInput(
                                         attrs={'class': 'form-control', 'placeholder': u'YYYY-MM-DD', 'type': 'date'}))
+    address = forms.CharField(label=_(u'Address'), max_length=50,
+                              widget=forms.TextInput(
+                                  attrs={'class': 'form-control', 'placeholder': _(u'Address'), 'type': 'text'}))
+    zip_code = forms.CharField(label=_(u'Postal code'), max_length=4,
+                               widget=forms.TextInput(
+                                   attrs={'class': 'form-control', 'placeholder': _(u'Postal code'), 'type': 'number'}))
+    phone = forms.CharField(label=_(u'Phone number'), max_length=20,
+                            widget=forms.TextInput(
+                                attrs={'class': 'form-control', 'placeholder': _(u'Phone number'), 'type': 'number'}))
     email = forms.EmailField(label=_(u'Email address'), max_length=50,
                              widget=forms.EmailInput(
                                  attrs={'class': 'form-control', 'placeholder': _(u'Email address'), 'type': 'text'}))
@@ -67,35 +76,13 @@ class RegisterForm(forms.Form):
                                                                         'placeholder': _(u'Repeat password'),
                                                                         'type': 'password'}),
                                       label=_(u'Repeat password'))
-    address = forms.CharField(label=_(u'Address'), max_length=50,
-                              widget=forms.TextInput(
-                                  attrs={'class': 'form-control', 'placeholder': _(u'Address'), 'type': 'text'}))
-    zip_code = forms.CharField(label=_(u'Postal code'), max_length=4,
-                               widget=forms.TextInput(
-                                   attrs={'class': 'form-control', 'placeholder': _(u'Postal code'), 'type': 'number'}))
-    phone = forms.CharField(label=_(u'Phone number'), max_length=20,
-                            widget=forms.TextInput(
-                                attrs={'class': 'form-control', 'placeholder': _(u'Phone number'), 'type': 'number'}))
 
     def clean(self):
         super(RegisterForm, self).clean()
         if self.is_valid():
             cleaned_data = self.cleaned_data
 
-            # Check date of birth
-            # currently only checks that it is not after today
-            date = cleaned_data['date_of_birth']
-            if date >= datetime.date.today():
-                self.add_error('date_of_birth',
-                               ugettext(u'You seem to be from the future, please enter a more believable date of birth.'))
-
-            # Check passwords match
-            if cleaned_data['password'] != cleaned_data['repeat_password']:
-                self.add_error('repeat_password', [ugettext(u'Passwords did not match.')])
-
-            # Check passwords strength
-            if len(cleaned_data['password']) < 8:
-                self.add_error('password', [ugettext(u'Password must be at least 8 characters long.')])
+            # Profile check must be consistent with RegisterForm
 
             # Check username
             username = cleaned_data['desired_username']
@@ -109,6 +96,34 @@ class RegisterForm(forms.Form):
             zip_code = cleaned_data['zip_code']
             if len(zip_code) != 4 or not zip_code.isdigit():
                 self.add_error('zip_code', ugettext(u'The postal code must be a 4 digit number.'))
+
+            # Check date of birth
+            now = datetime.date.today()
+            date = cleaned_data['date_of_birth']
+            if date == now:
+                self.add_error('date_of_birth', ugettext(u'You seem to have been born today, that doesn\'t seem right.'))
+            if date >= now:
+                self.add_error('date_of_birth', ugettext(u'You seem to be from the future, that doesn\'t seem right.'))
+            if date < now.replace(year=(now.year - 150)):
+                self.add_error('date_of_birth', ugettext(u'You seem to be over 150 years old, that doesn\'t seem right.'))
+
+            # ZIP code digits only
+            zip_code = cleaned_data['zip_code']
+            if len(zip_code) != 4 or not zip_code.isdigit():
+                self.add_error('zip_code', ugettext(u'The postal code must be a 4 digit number.'))
+
+            # Phone number digits and plus only
+            phone = cleaned_data['phone']
+            if not re.match('^((\\+|00)[0-9]{2})?[0-9]{8,10}$', phone):
+                self.add_error('phone', ugettext(u'The phone number must consist of an optional country code followed by 8–10 digits (no spaces or symbols, but "+" allowed in country code).'))
+
+            # Check passwords match
+            if cleaned_data['password'] != cleaned_data['repeat_password']:
+                self.add_error('repeat_password', [ugettext(u'Passwords did not match.')])
+
+            # Check passwords strength
+            if len(cleaned_data['password']) < 8:
+                self.add_error('password', [ugettext(u'Password must be at least 8 characters long.')])
 
             return cleaned_data
 
