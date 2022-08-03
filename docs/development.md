@@ -4,8 +4,9 @@
 
 ### Tools
 
-* [Git](https://git-scm.com) or [GitHub for Windows](https://windows.github.com/)
-* Python 2 w/ pip and friends (see section below)
+* Git
+* Python 2 w/ pip and friends
+* GNU gettext
 * Docker and Docker Compose (optional)
 * Travis Tool (optional)
 
@@ -21,12 +22,29 @@ Be careful with `python` and `pip` since either version (2 or 3) may use the nam
 
 ### Configuring Git
 
+- Linux: `apt install git`
+- Windows: [Git](https://git-scm.com) or [GitHub for Windows](https://windows.github.com/)
+
 If using CLI (not some GUI app):
 ```
 git config --global core.autocrlf false
 git config --global user.name <username>
 git config --global user.email <email-address>
 ```
+
+### Installing Python 2 Virtualenv
+
+Download and install Python 2 and Python 2 pip.
+Be careful with `python` and `pip` since either version (2 or 3) may use the name without version and it's not consistent across OSes.
+
+- Linux: ´sudo pip install --upgrade pip virtualenv setuptools wheel´
+- Windows: ´py -2 -m pip install --upgrade pip virtualenv setuptools wheel´
+
+### Installing GNU gettext
+
+Required for compiling translations.
+
+- Linux: ´sudo apt install gettext´
 
 ### (Optional) Installing and Configuring Docker
 
