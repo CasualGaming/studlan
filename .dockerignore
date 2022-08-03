@@ -10,6 +10,7 @@ __pycache__
 .git/
 /.github/
 /log/
+/.local
 
 # Django
 /static/
