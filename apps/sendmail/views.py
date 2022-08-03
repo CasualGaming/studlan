@@ -144,4 +144,4 @@ def build_recipient_list(request, fields):
     if yourself:
         all_recipients = all_recipients.union(User.objects.filter(id=request.user.id))
 
-    return all_recipients
+    return all_recipients.distinct()

@@ -56,36 +56,38 @@ class Competition(TranslatableModel):
                                                'The challonge url will be generated after starting the competition.')
     team_size = models.IntegerField(_(u'team size'), default=5, blank=True)
     start_time = models.DateTimeField(_(u'start time'), null=True, blank=True)
-
     tournament_format = models.CharField(
         _(u'tournament format'), max_length=20, null=True, blank=True, choices=TOURNAMENT_FORMATS,
         help_text='Only set this field if the Challonge integration is being used for this competition.')
-
     max_participants = models.SmallIntegerField(
         _(u'maximum participants'), default=0, help_text=_(u'The maximum number of participants allowed for a competition.'
                                                            ' Restricts participants based on competition type. 0 means'
                                                            ' infinite participants are allowed.'))
-
     use_teams = models.BooleanField(
         _(u'use teams'), default=False, help_text=_(u'If checked, participants will be ignored, and will '
                                                     'instead use teams. If left unchecked teams will be ignored, '
                                                     'and participants will be used.'))
-
     enforce_team_size = models.BooleanField(
         _(u'enforce teams'), default=False, help_text=_(u'If checked, teams will require x members (specified in team_size)'
                                                         ' before being able to sign up.'))
-
     enforce_payment = models.BooleanField(
         _(u'enforce payment'), default=False, help_text=_(u'If checked, teams will require x members (specified in team_size)'
                                                           ' with valid tickets before being able to sign up.'))
-
     require_alias = models.BooleanField(
         _(u'require alias'), default=False, help_text=_(u'If checked, players will need to register an alias for the '
                                                         'activity that the competition belongs to.'))
-
     max_match_points = models.SmallIntegerField(
         _(u'maximum match points'), default=1, help_text=_(u'This number represents how many points are needed to win '
                                                            'a match. E.g. 3 in a BO 5 or 16 in BO 30'))
+
+    def __unicode__(self):
+        return u'{0} – {1}'.format(self.lan, self.get_translation().translated_title)
+
+    def title(self):
+        return self.get_translation().translated_title
+
+    def description(self):
+        return self.get_translation().translated_description
 
     def get_teams(self):
         if self.use_teams:
@@ -158,9 +160,6 @@ class Competition(TranslatableModel):
 class CompetitionTranslation(get_translation_model(Competition, 'competition')):
     translated_title = models.CharField(_(u'title'), max_length=50)
     translated_description = models.TextField(_(u'description'))
-
-    def __unicode__(self):
-        return self.translated_title
 
     class Meta:
         verbose_name = _(u'competition translation')

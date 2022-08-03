@@ -6,4 +6,4 @@ MANAGE="manage/venv/manage.sh"
 set -eu
 
 echo "Making translation text file ..."
-$MANAGE makemessages --no-location --locale=nb
+$MANAGE makemessages --no-location --no-wrap --locale=nb
