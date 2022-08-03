@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-- Make Django management tasks in the Docker entrypoint run as the app user instead of root.
+- Made Django management tasks in the Docker entrypoint run as the app user instead of root.
 
 
 ## [v1.9.1] - 2022-05-01
