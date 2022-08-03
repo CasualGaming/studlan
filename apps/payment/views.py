@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+import logging
 from datetime import datetime
 
 from django.conf import settings
@@ -15,6 +16,9 @@ from django.utils.translation import ugettext as _
 import stripe
 
 from apps.lan.models import Ticket, TicketType
+
+
+payment_logger = logging.getLogger('payment')
 
 
 def payment_info_static(request):
@@ -103,10 +107,13 @@ def generate_payment_response(request, ticket_type, intent):
         })
     elif intent.status == 'succeeded':
         make_ticket(request, ticket_type)
+        payment_logger.info('Successful purchase of ticket "%s" "%s" for user "%s".', ticket_type.lan, ticket_type, request.user)
         return JsonResponse({'success': True})
     else:
+        payment_logger.info('Failed purchase of ticket "%s" "%s" for user "%s".', ticket_type.lan, ticket_type, request.user, intent.status)
         messages.error(request, _(u'Payment unsuccessful. Please contact support.'))
         return JsonResponse({'error': 'Invalid PaymentIntent status'})
+
 
 def make_ticket(request, ticket_type):
     # Create ticket
