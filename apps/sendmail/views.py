@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import logging
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.db import transaction
@@ -13,6 +15,9 @@ from apps.userprofile.models import User
 
 from .forms import SendMessageForm
 from .models import Mail, MailRecipient
+
+
+sendmail_logger = logging.getLogger('sendmail')
 
 
 @require_safe
@@ -67,7 +72,7 @@ def handle_send_form(request, form, template_context):
 
     # Build recipient list
     recipient_users = build_recipient_list(request, fields)
-    recipients_count = recipient_users.count()
+    recipients_count = len(recipient_users)
 
     # If "send" wasn't pressed, show existing form but with preview
     if 'send' not in form.data:
@@ -94,6 +99,8 @@ def handle_send_form(request, form, template_context):
             recipient.user = user
             recipient.save()
 
+        sendmail_logger.info('Prepared mail "%s" with %d recipients.', mail.uuid, recipients_count)
+
     # Show new form
     messages.success(request, _(u'Successfully created the message with {user_count} recipient(s).').format(user_count=recipients_count))
     return None
@@ -102,18 +109,22 @@ def handle_send_form(request, form, template_context):
 def build_recipient_list(request, fields):
     all_recipients = User.objects.none()
 
+    # Everyone (marketing)
     everyone = fields['recipient_everyone_marketing']
     if everyone:
         all_recipients = User.objects.filter(profile__marketing_optin=True)
 
+    # Everyone
     everyone = fields['recipient_everyone']
     if everyone:
         all_recipients = User.objects.all()
 
+    # LAN attendees
     lan_attendees = fields['recipient_lan_attendees']
     lan_attendee_users = User.objects.filter(attendee__lan__in=lan_attendees)
     all_recipients = all_recipients.union(lan_attendee_users)
 
+    # LAN payers
     lan_payers = fields['recipient_lan_payers']
     lan_payer_users = User.objects.filter(
         (Q(attendee__lan__in=lan_payers) & Q(attendee__has_paid=True))
@@ -121,14 +132,17 @@ def build_recipient_list(request, fields):
     )
     all_recipients = all_recipients.union(lan_payer_users)
 
+    # Tickets
     tickets = fields['recipient_tickets']
     ticket_users = User.objects.filter(ticket__ticket_type__in=tickets)
     all_recipients = all_recipients.union(ticket_users)
 
+    # Teams
     teams = fields['recipient_teams']
     team_users = User.objects.filter(Q(newteamleader__in=teams) | Q(new_team_members__in=teams))
     all_recipients = all_recipients.union(team_users)
 
+    # Competitions
     competitions = fields['recipient_competitions']
     competition_users = User.objects.filter(
         Q(newteamleader__participant__competition__in=competitions)
@@ -137,11 +151,16 @@ def build_recipient_list(request, fields):
     )
     all_recipients = all_recipients.union(competition_users)
 
+    # Specific users
     specific_users = fields['recipient_users']
     all_recipients = all_recipients.union(specific_users)
 
+    # Yourself
     yourself = fields['recipient_yourself']
     if yourself:
         all_recipients = all_recipients.union(User.objects.filter(id=request.user.id))
 
-    return all_recipients.distinct()
+    # Resolve queryset and get rid of duplicates (which appear for some reason)
+    all_recipients_set = set(all_recipients)
+
+    return all_recipients_set
