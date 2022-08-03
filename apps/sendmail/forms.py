@@ -54,13 +54,13 @@ class SendMessageForm(forms.Form):
         label=_(u'LAN payers'),
         queryset=LAN.objects.all(),
         required=False,
-        help_text=format_lazy(u'{0} {1}', _(u'Users which paid by the door (i.e. no ticket), if allowed for the LAN. Appropriate for LAN updates.'), _select_multiple_help),
+        help_text=format_lazy(u'{0} {1}', _(u'Users which paid by the door (i.e. no ticket) (if allowed for the LAN). Appropriate for LAN updates.'), _select_multiple_help),
         widget=forms.SelectMultiple(attrs={'size': _select_multiple_size}))
     recipient_tickets = forms.ModelMultipleChoiceField(
         label=_(u'Ticket owners'),
         queryset=TicketType.objects.all(),
         required=False,
-        help_text=format_lazy(u'{0} {1}', _(u'Users which bought/received a ticket for the event. Appropriate for LAN updates.'), _select_multiple_help),
+        help_text=format_lazy(u'{0} {1}', _(u'Users which bought/received a ticket for the LAN. Appropriate for LAN updates.'), _select_multiple_help),
         widget=forms.SelectMultiple(attrs={'size': _select_multiple_size}))
     recipient_teams = forms.ModelMultipleChoiceField(
         label=_(u'Teams'),

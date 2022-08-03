@@ -39,6 +39,7 @@ class LAN(TranslatableModel):
     media_type = models.CharField(_(u'media type'), max_length=10, choices=MEDIA_TYPES, default=MEDIA_TYPE_IMAGE, help_text=_(u'Type of the optional embedded media.'))
     frontpage_media_link = models.CharField(_(u'frontpage media link'), max_length=300, help_text=_(u'URL for embedded media on front page.'), blank=True)
     frontpage_media_type = models.CharField(_(u'frontpage media type'), max_length=10, choices=MEDIA_TYPES, default=MEDIA_TYPE_IMAGE, help_text=_(u'Type of the optional embedded media on front page.'))
+    rules_link = models.CharField(_(u'rules link'), max_length=300, help_text=_(u'URL to rules which users have to accept to buy tickets.'), blank=True)
 
     @property
     def attendees(self):
@@ -141,9 +142,11 @@ class TicketType(TranslatableModel):
 
     lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
     price = models.IntegerField(_(u'price'), default=50)
-    priority = models.IntegerField(_(u'prioity'), default=0, help_text=_(u'In what priority the tickets will show, higher number will show first.'))
+    priority = models.IntegerField(_(u'priority'), default=0, help_text=_(u'In what priority the tickets will show, higher number will show first.'))
     available_from = models.DateTimeField(_(u'release date'), default=datetime.now, help_text=_(u'When the tickets will be made available.'))
     number_of_seats = models.IntegerField(_(u'seats'))
+    frame_background_color = models.CharField(_(u'frame background color'), max_length=50, blank=True)
+    frame_foreground_color = models.CharField(_(u'frame foreground color'), max_length=50, blank=True)
 
     @property
     def verbose_price(self):

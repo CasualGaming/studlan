@@ -196,6 +196,14 @@ LOGGING = {
             'backupCount': 5,
             'formatter': 'standard',
         },
+        'payment_file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': 'log/payment.log',
+            'maxBytes': 8 * 1024 * 1024,  # 8 MB
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
         'sendmail_file': {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
@@ -208,6 +216,11 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['warning_file', 'error_file'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'payment': {
+            'handlers': ['payment_file'],
             'level': 'DEBUG',
             'propagate': False,
         },

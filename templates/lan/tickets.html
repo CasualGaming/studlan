@@ -30,18 +30,20 @@
         {% if active and user.is_authenticated %}
         {% if status == 'paid' and ticket %}
         <div class="center-on-collapse">
-            <a class="btn btn-success disabled center-on-collapse long-text-button" href="#">
+            <div class="alert alert-success">
                 {% blocktrans with ticket_title=ticket.0.ticket_type.get_translation.title trimmed %}
                 You have a ticket: {{ ticket_title }}
                 {% endblocktrans %}
-            </a>
+            </div>
         </div>
         {% elif status == 'paid' %}
         {# If the user has no real ticket, but the attendance is marked as "paid" #}
         <div class="center-on-collapse">
-            <a class="btn btn-success disabled center-on-collapse long-text-button" href="#">
-                {% trans "You have a ticket." %}
-            </a>
+            <div class="alert alert-success">
+                {% blocktrans trimmed %}
+                You have a ticket.
+                {% endblocktrans %}
+            </div>
         </div>
         {% elif status == 'attending' %}
         <div class="center-on-collapse">
@@ -67,12 +69,17 @@
             </form>
         </div>
         {% else %}
-        <div class="alert alert-warning">
-            {% url 'update_profile' as update_profile_url %}
-            {% blocktrans trimmed %}
-            Your address and zip code is required in order to attend the LAN.
-            Go to your <a href="{{ update_profile_url }}">profile</a> to add the information.
-            {% endblocktrans %}
+        <div class="center-on-collapse">
+            <div class="alert alert-warning">
+                {% url 'update_profile' as update_profile_url %}
+                {% blocktrans trimmed %}
+                Your address and zip code is required in order to attend the LAN.
+                Go to your <a href="{{ update_profile_url }}">profile</a> to add the information.
+                {% endblocktrans %}
+            </div>
+            <a class="btn btn-success disabled long-text-button" href="#">
+                {% trans "Attend" %}
+            </a>
         </div>
         {% endif %}{# user.profile.has_address #}
         {% endif %} {# status == ... #}
@@ -89,8 +96,16 @@
     <div class="col-md-9">
         {% if ticket_types %}
         {% for ticket_type in ticket_types %}
+        {% if ticket_type.frame_background_color and ticket_type.frame_foreground_color %}
+        <div class="panel" style="border-color: {{ ticket_type.frame_background_color }}">
+            <div class="panel-heading" style="background-color: {{ ticket_type.frame_background_color }}; color: {{ ticket_type.frame_foreground_color }}">
+        {% elif ticket_type.frame_background_color %}
+        <div class="panel" style="border-color: {{ ticket_type.frame_background_color }}">
+            <div class="panel-heading" style="background-color: {{ ticket_type.frame_background_color }}">
+        {% else %}
         <div class="panel panel-primary">
             <div class="panel-heading">
+        {% endif %}
                 <h3 class="panel-title">{{ ticket_type.get_translation.title }}</h3>
             </div>
             <div class="panel-body">
