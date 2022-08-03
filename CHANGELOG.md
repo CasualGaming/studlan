@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+
+## [v1.10.0] - 2022-08-03
+
+### Added
+
 - Added marketing email opt-in for users on sign-up and profile pages.
 - Added payment logging.
 - Added optional colored borders for ticket on the ticket page.
@@ -23,10 +38,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made age check fail for people over 150 years.
 - Made frontpage redirect to LAN instead of showing news, and replace LAN button on navbar with news button.
 
-### Deprecated
-
-### Removed
-
 ### Fixed
 
 - Fixed graceful shutdown for production mode.
@@ -34,7 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-- Make Django management tasks in the Docker entrypoint run as the app user instead of root.
+- Made Django management tasks in the Docker entrypoint run as the app user instead of root.
 
 
 ## [v1.9.1] - 2022-05-01
