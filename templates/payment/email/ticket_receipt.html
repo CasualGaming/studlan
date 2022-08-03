@@ -5,11 +5,9 @@
 {% block content %}
 {% with ticket_type_title=ticket.ticket_type.get_translation.title lan_title=lan.title user_full_name=ticket.user.get_full_name user=ticket.user %}
 {% blocktrans %}
-<p>
-    This is a confirmation on your purchase of a ticket of type {{ ticket_type_title }} for {{ lan_title }}.
-    The ticket is linked to {{ user_full_name }} ({{ user }}).
-    More information about the LAN can be found here: <a href="{{ lan_link }}">{{ lan_title }}</a>
-</p>
+<p>Thanks for purchasing a ticket for {{ lan_title }}! Your "{{ ticket_type_title }}" ticket is linked to {{ user_full_name }} ({{ user }}).<p>
+<p>Remember to bring some form of ID when arriving, so we can make sure you are the owner of this ticket.</p>
+<p>More information about the LAN can be found here: <a href="{{ lan_link }}">{{ lan_title }}</a></p>
 {% endblocktrans %}
 {% endwith %}
 {% endblock content %}

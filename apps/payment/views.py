@@ -102,42 +102,43 @@ def generate_payment_response(request, ticket_type, intent):
             'payment_intent_client_secret': intent.client_secret,
         })
     elif intent.status == 'succeeded':
-
-        # Create ticket
-        ticket = Ticket()
-        ticket.user = request.user
-        ticket.ticket_type = ticket_type
-        ticket.bought_date = datetime.now()
-        ticket.save()
-
-        # Render templates
-        lan = ticket.ticket_type.lan
-        lan_link = request.build_absolute_uri(lan.get_absolute_url())
-        context = {
-            'lan': lan,
-            'lan_link': lan_link,
-            'ticket': ticket,
-        }
-        txt_message = render_to_string('payment/email/ticket_receipt.txt', context, request).strip()
-        html_message = render_to_string('payment/email/ticket_receipt.html', context, request).strip()
-
-        # Send mail
-        from_address = u'"{name}" <{address}>'.format(name=settings.SITE_NAME, address=settings.DEFAULT_FROM_EMAIL)
-        to_address = u'"{name}" <{address}>'.format(name=ticket.user.get_full_name(), address=ticket.user.email)
-        send_mail(
-            from_email=from_address,
-            recipient_list=[to_address],
-            subject=_(u'Ticket confirmation'),
-            message=txt_message,
-            html_message=html_message,
-        )
-
-        messages.success(
-            request,
-            _(u'Payment complete.'),
-        )
-
+        make_ticket(request, ticket_type)
         return JsonResponse({'success': True})
     else:
         messages.error(request, _(u'Payment unsuccessful. Please contact support.'))
         return JsonResponse({'error': 'Invalid PaymentIntent status'})
+
+def make_ticket(request, ticket_type):
+    # Create ticket
+    ticket = Ticket()
+    ticket.user = request.user
+    ticket.ticket_type = ticket_type
+    ticket.bought_date = datetime.now()
+    ticket.save()
+
+    # Render templates
+    lan = ticket.ticket_type.lan
+    lan_link = request.build_absolute_uri(lan.get_absolute_url())
+    context = {
+        'lan': lan,
+        'lan_link': lan_link,
+        'ticket': ticket,
+    }
+    txt_message = render_to_string('payment/email/ticket_receipt.txt', context, request).strip()
+    html_message = render_to_string('payment/email/ticket_receipt.html', context, request).strip()
+
+    # Send mail
+    from_address = u'"{name}" <{address}>'.format(name=settings.SITE_NAME, address=settings.DEFAULT_FROM_EMAIL)
+    to_address = u'"{name}" <{address}>'.format(name=ticket.user.get_full_name(), address=ticket.user.email)
+    send_mail(
+        from_email=from_address,
+        recipient_list=[to_address],
+        subject=_(u'Ticket receipt'),
+        message=txt_message,
+        html_message=html_message,
+    )
+
+    messages.success(
+        request,
+        _(u'Payment complete.'),
+    )

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-03 11:29+0200\n"
+"POT-Creation-Date: 2022-08-03 12:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -519,6 +519,12 @@ msgstr "fremsidemediatype"
 msgid "Type of the optional embedded media on front page."
 msgstr "Type for det innebygde mediet på fremsiden."
 
+msgid "rules link"
+msgstr "regellenke"
+
+msgid "URL to rules which users have to accept to buy tickets."
+msgstr "URL til regler som brukere må akseptere for å kjøpe billetter."
+
 msgid "upcoming"
 msgstr "kommende"
 
@@ -551,6 +557,9 @@ msgstr "LAN-deltagere"
 
 msgid "price"
 msgstr "pris"
+
+msgid "priority"
+msgstr "prioritet"
 
 msgid "In what priority the tickets will show, higher number will show first."
 msgstr "I hvilken prioritet billettene vil vises. Høyere nummer vises først."
@@ -756,8 +765,8 @@ msgstr "Alle billettene er utsolgte."
 msgid "You must attend first to buy a ticket for this LAN."
 msgstr "Du må melde deg opp før du kan kjøpe en billett for dette LAN-et."
 
-msgid "Ticket confirmation"
-msgstr "Billettbekreftelse"
+msgid "Ticket receipt"
+msgstr "Billettkvittering"
 
 msgid "Payment complete."
 msgstr "Betalingen ble gjennomført."
@@ -1016,9 +1025,6 @@ msgstr "partner"
 
 msgid "partners"
 msgstr "partnere"
-
-msgid "priority"
-msgstr "prioritet"
 
 msgid "Higher priority means closer to the top of the partner list."
 msgstr "Høyere prioritet betyr nærmere toppen av partnerlisten."
@@ -1827,12 +1833,23 @@ msgstr "Beksrivelse"
 msgid "Your Information"
 msgstr "Din informasjon"
 
-#, python-format
-msgid "By purchasing a ticket, you are confirming that all of the information about you is correct. If not, update it now in your <a href=\"%(update_profile_url)s\">profile settings</a>."
-msgstr "Ved å kjøpe en billett bekrefter du at all informasjonen om deg er korrekt. Hvis ikke, oppdater det nå i <a href=\"%(update_profile_url)s\">profilinnstillingene</a> dine."
-
 msgid "Phone"
 msgstr "Telefon"
+
+msgid "Update profile"
+msgstr "Oppdater profil"
+
+msgid "My profile information is correct. (Required)"
+msgstr "Informasjonen min er korrekt. (Påkrevd)"
+
+msgid "Rules"
+msgstr "Regler"
+
+msgid "Read rules"
+msgstr "Les regler"
+
+msgid "I accept the rules for the LAN. (Required)"
+msgstr "Jeg aksepterer reglene for LAN-et. (Påkrevd)"
 
 msgid "Card holder name"
 msgstr "Navn på kortholder"
@@ -1840,44 +1857,36 @@ msgstr "Navn på kortholder"
 msgid "Card info"
 msgstr "Kortinformasjon"
 
-msgid "I accept the rules for the LAN, as described on the LAN page. (Required)"
-msgstr "Jeg aksepterer reglene for LAN-et, som beskrevet på LAN-siden. (Påkrevd)"
-
-msgid "My information above is correct. (Required)"
-msgstr "Informasjonen min over er korrekt. (Påkrevd)"
-
 msgid "Submit payment"
 msgstr "Send betaling"
 
 msgid "About our payment security"
 msgstr "Om betalingssikkerheten vår"
 
-#, python-format
 msgid ""
 "\n"
-"<p>\n"
-"    This is a confirmation on your purchase of a ticket of type %(ticket_type_title)s for %(lan_title)s.\n"
-"    The ticket is linked to %(user_full_name)s (%(user)s).\n"
-"    More information about the LAN can be found here: <a href=\"%(lan_link)s\">%(lan_title)s</a>\n"
-"</p>\n"
+"<p>Thanks for purchasing a ticket for %(lan_title)s! Your \"%(ticket_type_title)s\" ticket is linked to %(user_full_name)s (%(user)s).<p>\n"
+"<p>Remember to bring some form of ID when arriving, so we can make sure you are the owner of this ticket.</p>\n"
+"<p>More information about the LAN can be found here: <a href=\"%(lan_link)s\">%(lan_title)s</a></p>\n"
 msgstr ""
 "\n"
-"<p>\n"
-"    Dette er en bekreftelse for kjøp av en billett av type %(ticket_type_title)s for %(lan_title)s.\n"
-"    Billetten er lenket til %(user_full_name)s (%(user)s).\n"
-"    Mer informasjon om LAN-et kan finnes her: <a href=\"%(lan_link)s\">%(lan_title)s</a>\n"
-"</p>\n"
+"<p>Takk for kjøpet av en billett for %(lan_title)s! Billetten din \"%(ticket_type_title)s\" er tilknyttet %(user_full_name)s (%(user)s).<p>\n"
+"<p>Husk å ta med ID når du ankommer, slik vi kan forsikre oss om at du er eieren av billetten.</p>\n"
+"<p>Mer informasjon om LAN-et kan finnes her: <a href=\"%(lan_link)s\">%(lan_title)s</a></p>\n"
 
-#, python-format
 msgid ""
 "\n"
-"This is a confirmation on your purchase of a ticket of type %(ticket_type_title)s for %(lan_title)s.\n"
-"The ticket is linked to %(user_full_name)s (%(user)s).\n"
+"Thanks for purchasing a ticket for %(lan_title)s! Your \"%(ticket_type_title)s\" ticket is linked to %(user_full_name)s (%(user)s).\n"
+"\n"
+"Remember to bring some form of ID when arriving, so we can make sure you are the owner of this ticket.\n"
+"\n"
 "More information about the LAN can be found here: %(lan_title)s (%(lan_link)s)\n"
 msgstr ""
 "\n"
-"Dette er en bekreftelse for kjøp av en billett av type %(ticket_type_title)s for %(lan_title)s.\n"
-"Billetten er lenket til %(user_full_name)s (%(user)s).\n"
+"Takk for kjøpet av en billett for %(lan_title)s! Billetten din \"%(ticket_type_title)s\" er tilknyttet %(user_full_name)s (%(user)s).\n"
+"\n"
+"Husk å ta med ID når du ankommer, slik vi kan forsikre oss om at du er eieren av billetten.\n"
+"\n"
 "Mer informasjon om LAN-et kan finnes her: %(lan_title)s (%(lan_link)s)\n"
 
 msgid "Payment Security"
@@ -2280,3 +2289,9 @@ msgstr "Adminpanel"
 
 msgid "Log out"
 msgstr "Logg ut"
+
+#~ msgid "Ticket confirmation"
+#~ msgstr "Billettbekreftelse"
+
+#~ msgid "By purchasing a ticket, you are confirming that all of the information about you is correct. If not, update it now in your <a href=\"%(update_profile_url)s\">profile settings</a>."
+#~ msgstr "Ved å kjøpe en billett bekrefter du at all informasjonen om deg er korrekt. Hvis ikke, oppdater det nå i <a href=\"%(update_profile_url)s\">profilinnstillingene</a> dine."
