@@ -12,95 +12,100 @@
         <div class="col-sm-offset-2 col-sm-8 col-md-offset-1 col-md-7">
             <h1 class="page-header">{% trans "Ticket Checkout" %}</h1>
 
-            <table class="table table-bordered">
-                <tbody>
-                    <tr>
-                        <td><strong>{% trans "LAN" %}</strong></td>
-                        <td>{{ lan }} (<a href="{{ lan.get_absolute_url }}">{% trans "view LAN" %}</a>)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>{% trans "Ticket type" %}</strong></td>
-                        <td>{{ ticket_type }} (<a href="{% url 'lan_tickets' lan_id=lan.id %}">{% trans "view all tickets" %}</a>)</td>
-                    </tr>
-                    <tr>
-                        <td><strong>{% trans "Description" %}</strong></td>
-                        <td>{{ ticket_type.get_translation.description }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>{% trans "Price" %}</strong></td>
-                        <td>{{ ticket_type.verbose_price }}</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3>{% trans "Your Information" %}</h3>
-            <p>
-                {% url 'update_profile' as update_profile_url %}
-                {% blocktrans trimmed %}
-                By purchasing a ticket, you are confirming that all of the information about you is correct.
-                If not, update it now in your <a href="{{ update_profile_url }}">profile settings</a>.
-                {% endblocktrans %}
-            </p>
-            <table class="table table-bordered">
-                <tbody>
-                    <tr>
-                        <td><strong>{% trans "First name" %}</strong></td>
-                        <td>{{ user.first_name }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>{% trans "Last name" %}</strong></td>
-                        <td>{{ user.last_name }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>{% trans "Email" %}</strong></td>
-                        <td>{{ user.email }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>{% trans "Date of birth" %}</strong></td>
-                        <td>{{ user.profile.date_of_birth }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>{% trans "Street address" %}</strong></td>
-                        <td>{{ user.profile.address }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>{% trans "Postal code" %}</strong></td>
-                        <td>{{ user.profile.zip_code }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>{% trans "Phone" %}</strong></td>
-                        <td>{{ user.profile.phone }}</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3>{% trans "Payment" %}</h3>
             <form id="card-form">
-                <h4>{% trans "Card holder name" %}</h4>
+
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td><strong>{% trans "LAN" %}</strong></td>
+                            <td>{{ lan }} (<a href="{{ lan.get_absolute_url }}">{% trans "view LAN" %}</a>)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{% trans "Ticket type" %}</strong></td>
+                            <td>{{ ticket_type }} (<a href="{% url 'lan_tickets' lan_id=lan.id %}">{% trans "view all tickets" %}</a>)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{% trans "Description" %}</strong></td>
+                            <td>{{ ticket_type.get_translation.description }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{% trans "Price" %}</strong></td>
+                            <td>{{ ticket_type.verbose_price }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>{% trans "Your Information" %}</h3>
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td><strong>{% trans "First name" %}</strong></td>
+                            <td>{{ user.first_name }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{% trans "Last name" %}</strong></td>
+                            <td>{{ user.last_name }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{% trans "Email" %}</strong></td>
+                            <td>{{ user.email }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{% trans "Date of birth" %}</strong></td>
+                            <td>{{ user.profile.date_of_birth }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{% trans "Street address" %}</strong></td>
+                            <td>{{ user.profile.address }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{% trans "Postal code" %}</strong></td>
+                            <td>{{ user.profile.zip_code }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>{% trans "Phone" %}</strong></td>
+                            <td>{{ user.profile.phone }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>
+                    <a href="{% url 'update_profile' %}" class="btn btn-info" target="_blank">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        {% trans "Update profile" %}
+                    </a>
+                </p>
+                <div>
+                    <input id="correct-information" name="correct-information" type="checkbox" required/>
+                    <label for="correct-information">{% trans "My profile information is correct. (Required)" %}</label>
+                </div>
+
+                {% if lan.rules_link %}
+                <h3>{% trans "Rules" %}</h3>
+                <p>
+                    <a href="{{ lan.rules_link }}" class="btn btn-info" target="_blank" rel="noopener noreferrer">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        {% trans "Read rules" %}
+                    </a>
+                </p>
+                <div>
+                    <input id="accept-rules" name="accept-rules" type="checkbox" required/>
+                    <label for="accept-rules">{% trans "I accept the rules for the LAN. (Required)" %}</label>
+                </div>
+                {% endif %}
+
+                <h3>{% trans "Payment" %}</h3>
+                <label>{% trans "Card holder name" %}</label>
                 <div>
                     <input class="form-control" id="cardholder-name" name="cardholder-name" placeholder="{% trans "Card holder name" %}" type="text" required/>
                 </div>
                 <br />
-                <h4>{% trans "Card info" %}</h4>
+                <label>{% trans "Card info" %}</label>
                 <div class="form-control" id="card-element"></div>
                 <br />
-                <div>
-                    <input id="accept-rules" name="accept-rules" type="checkbox" required/>
-                    <label for="accept-rules">{% trans "I accept the rules for the LAN, as described on the LAN page. (Required)" %}</label>
-                </div>
-                <br />
-                <div>
-                    <input id="correct-information" name="correct-information" type="checkbox" required/>
-                    <label for="correct-information">{% trans "My information above is correct. (Required)" %}</label>
-                </div>
-                <br />
-                <div>
-                    <button class="btn btn-success" id="card-button">{% trans "Submit payment" %}</button>
-                </div>
-                <input type="submit" id="test-submit" style="display: none" />
+                <p><button class="btn btn-primary" id="card-button">{% trans "Submit payment" %}</button></p>
+                <p><input type="submit" id="test-submit" style="display: none" /></p>
+                <p><a href="{% url 'payment_info' ticket_type.id %}"><i>{% trans "About our payment security" %}</i></a></p>
             </form>
-            <br />
-            <a href="{% url 'payment_info' ticket_type.id %}">{% trans "About our payment security" %}</a>
         </div>
     </div>
 {% endblock content %}

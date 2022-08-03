@@ -552,9 +552,6 @@ msgstr "LAN-deltagere"
 msgid "price"
 msgstr "pris"
 
-msgid "prioity"
-msgstr "prioritet"
-
 msgid "In what priority the tickets will show, higher number will show first."
 msgstr "I hvilken prioritet billettene vil vises. Høyere nummer vises først."
 
