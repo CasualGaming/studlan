@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Made the site domain in emails use the site framework domain, so make sure it's set properly.
 - Updated default logging settings.
 - Made age check fail for people over 150 years.
+- Made frontpage redirect to LAN instead of showing news, and replace LAN button on navbar with news button.
 
 ### Deprecated
 
@@ -28,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fixed graceful shutdown for production mode.
+- Fixed navbar overflow for medium screen sizes.
 
 ### Security
 

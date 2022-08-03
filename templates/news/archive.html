@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% load i18n %}
-{% load markdown_deux_tags %} 
+{% load markdown_deux_tags %}
 
 {% block title %}
 {% trans "News Archive" %}
@@ -12,9 +12,8 @@
 <div class="row">
     <div class="col-md-9">
         <h1 class="page-header">{% trans "News Archive" %}</h1>
-
         {% for article in articles.object_list %}
-        {% if not forloop.first %}  
+        {% if not forloop.first %}
         <hr />
         {% endif %}
         {% include "news/article_card.html" %}

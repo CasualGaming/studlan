@@ -9,7 +9,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import pgettext, ugettext as _
 from django.views.decorators.http import require_POST, require_safe
 
-from apps.lan.models import Attendee, Directions, LAN, Ticket
+from apps.lan.models import Attendee, Directions, LAN, Stream, Ticket
 
 
 @require_safe
@@ -53,7 +53,12 @@ def details(request, lan):
 
     directions = Directions.objects.filter(lan=lan)
 
-    return render(request, 'lan/details.html', {'lan': lan, 'active': active, 'directions': directions})
+    stream = None
+    streams = Stream.objects.filter(active=True).order_by('-pk')[:1]
+    if len(streams) > 0:
+        stream = streams[0]
+
+    return render(request, 'lan/details.html', {'lan': lan, 'active': active, 'directions': directions, 'stream': stream})
 
 
 @require_safe

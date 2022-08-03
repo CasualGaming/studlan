@@ -3,11 +3,11 @@
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.views.generic.base import RedirectView
 
 from apps.lan import views as lan_view
 from apps.lan.models import LAN
 from apps.misc import views as misc_view
-from apps.news import views as news_view
 from apps.sponsor import views as sponsor_view
 
 urlpatterns = [
@@ -33,7 +33,7 @@ urlpatterns = [
     url(r'^messages/', include('postman.urls', namespace='postman')),
 
     # Views
-    url(r'^$', news_view.main, name='root', kwargs={'page': 1}),
+    url(r'^$', RedirectView.as_view(url='/lan', permanent=False), name='root'),
     url(r'^misc/remove_alert.html$', misc_view.remove_alert),
     url(r'^misc/change_language$', misc_view.change_language),
     url(r'^sponsors/', sponsor_view.index, name='sponsors'),
