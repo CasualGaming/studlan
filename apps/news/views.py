@@ -5,7 +5,7 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.datetime_safe import datetime
 
-from apps.lan.models import LAN, Stream
+from apps.lan.models import LAN
 from apps.news.models import Article
 
 
@@ -17,7 +17,6 @@ def main(request, page):
         return redirect('archive_main')
 
     paginator = Paginator(articles, 10)  # Articles per page
-    streams = Stream.objects.filter(active=True).order_by('-pk')[:1]
 
     try:
         articles = paginator.page(page)
@@ -28,11 +27,7 @@ def main(request, page):
         # If page is out of range (e.g. 9999), deliver last page of results.
         articles = paginator.page(paginator.num_pages)
 
-    if len(streams) > 0:
-        return render(request, 'news/news.html', {'lans': active_lans, 'articles': articles, 'page': page, 'stream': streams[0],
-                                                  'languages': settings.LANGUAGES})
-    else:
-        return render(request, 'news/news.html', {'lans': active_lans, 'articles': articles, 'page': page, 'languages': settings.LANGUAGES})
+    return render(request, 'news/news.html', {'lans': active_lans, 'articles': articles, 'page': page, 'languages': settings.LANGUAGES})
 
 
 def single(request, article_id):

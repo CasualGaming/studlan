@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+{% load markdown_deux_tags %}
+
+{% block title %}
+{% trans "Home" %}
+{% endblock title %}
+
+{% block content %}
+{% if stream %}
+<div class="row">
+    <div class="col-md-9">
+        <div class="stream">
+            {% if stream.visible_title %}
+            <h3 class="stream-title">{{ stream.visible_title }}</h3>
+            {% endif %}
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" title="Stream" src="{{ stream.link | safe }}" allowfullscreen></iframe>
+            </div>
+            {% if stream.description %}
+            <div class="stream-desc">
+                {{ stream.description | markdown }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="row">
+    <div class="col-md-9">
+        {% if lans.count == 1 %}
+        <h1 class="page-header"><a href="{{ lans.0.get_absolute_url }}">{{ lans.0 }}</a></h1>
+        {% else %}
+        <h1 class="page-header">{% trans "LANs" %}</h1>
+        {% endif %}
+    </div>
+</div>
+
+{% if lans.count == 1 %}
+{% if lans.0.frontpage_media_link %}
+{% with lan=lans.0 %}
+{% include "lan/media.html" with media_type=lan.frontpage_media_type media_link=lan.frontpage_media_link frontpage=1 %}
+{% endwith %}
+{% endif %}
+
+<div class="row">
+    <div class="col-md-6 col-xs-7">
+        <p class="lead">{{ lans.0.start_date|date }} – {{ lans.0.end_date|date }}</p>
+    </div>
+    <div class="col-md-3 col-xs-5">
+        <a class="btn btn-primary pull-right" href="{{ lans.0.get_absolute_url }}">{% trans "Show LAN" %}</a>
+    </div>
+</div>
+{% else %}
+<div class="row">
+    <div class="col-md-9">
+        <table class="table table-bordered table-hover click-table">
+            <tbody>
+                {% for lan in lans %}
+                <tr onclick="document.location='{{ lan.get_absolute_url }}';">
+                    <td class="col-md-6 underline">{{ lan }}</td>
+                    <td class="col-md-3">{{ lan.start_date|date }} – {{ lan.end_date|date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+
+<div class="row">
+    <div class="col-md-9">
+        {% for article in articles.object_list %}
+        <hr />
+        {% include "news/article_card.html" %}
+        {% empty %}
+        <div class="alert alert-info">{% trans "No news." %}</div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="row news-pagination-container">
+    <div class="col-md-6">
+        {% include "news/pagination.html" with news_area='news' %}
+    </div>
+    <div class="col-md-3">
+        <a class="btn btn-primary pull-right" href="{% url 'archive_main' %}">
+            <span class="glyphicon glyphicon-folder-close" aria-hidden="true"></span>
+            {% trans "News archive" %}
+        </a>
+    </div>
+</div>
+{% endblock content %}

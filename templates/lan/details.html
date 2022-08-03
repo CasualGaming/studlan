@@ -24,7 +24,9 @@
 </div>
 {% endif %}
 
-{% if lan.media_link %}
+{% if stream %}
+{% include "lan/stream.html" %}
+{% elif lan.media_link %}
 {% include "lan/media.html" with media_type=lan.media_type media_link=lan.media_link frontpage=0 %}
 {% endif %}
 

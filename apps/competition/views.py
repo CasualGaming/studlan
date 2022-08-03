@@ -347,11 +347,14 @@ def translate_competitions(competitions):
 def schedule(request):
     lans = LAN.objects.filter(end_date__gt=datetime.now()).order_by('-start_date')
 
-    if lans.count() == 1:
-        next_lan = lans[0]
-        return redirect('schedule_details', lan_id=next_lan.id)
-    else:
+    if lans.count() != 1:
         return redirect('schedule_lan_list')
+
+    lan = lans[0]
+    if lan.schedule_link:
+        return redirect(lan.schedule_link)
+
+    return redirect('schedule_details', lan_id=lan.id)
 
 
 @require_safe
