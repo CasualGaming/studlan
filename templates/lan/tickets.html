@@ -96,8 +96,16 @@
     <div class="col-md-9">
         {% if ticket_types %}
         {% for ticket_type in ticket_types %}
+        {% if ticket_type.frame_background_color and ticket_type.frame_foreground_color %}
+        <div class="panel" style="border-color: {{ ticket_type.frame_background_color }}">
+            <div class="panel-heading" style="background-color: {{ ticket_type.frame_background_color }}; color: {{ ticket_type.frame_foreground_color }}">
+        {% elif ticket_type.frame_background_color %}
+        <div class="panel" style="border-color: {{ ticket_type.frame_background_color }}">
+            <div class="panel-heading" style="background-color: {{ ticket_type.frame_background_color }}">
+        {% else %}
         <div class="panel panel-primary">
             <div class="panel-heading">
+        {% endif %}
                 <h3 class="panel-title">{{ ticket_type.get_translation.title }}</h3>
             </div>
             <div class="panel-body">

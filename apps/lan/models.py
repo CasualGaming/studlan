@@ -145,6 +145,8 @@ class TicketType(TranslatableModel):
     priority = models.IntegerField(_(u'priority'), default=0, help_text=_(u'In what priority the tickets will show, higher number will show first.'))
     available_from = models.DateTimeField(_(u'release date'), default=datetime.now, help_text=_(u'When the tickets will be made available.'))
     number_of_seats = models.IntegerField(_(u'seats'))
+    frame_background_color = models.CharField(_(u'frame background color'), max_length=50, blank=True)
+    frame_foreground_color = models.CharField(_(u'frame foreground color'), max_length=50, blank=True)
 
     @property
     def verbose_price(self):

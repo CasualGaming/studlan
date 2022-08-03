@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-03 12:10+0200\n"
+"POT-Creation-Date: 2022-08-03 13:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -573,6 +573,12 @@ msgstr "Når billettene vil gjøres offentlige."
 msgid "seats"
 msgstr "seter"
 
+msgid "frame background color"
+msgstr "rammebakgrunnsfarge"
+
+msgid "frame foreground color"
+msgstr "rammeforgrunnsfarge"
+
 #, python-brace-format
 msgid "{price}kr"
 msgstr "{price}kr"
@@ -765,14 +771,14 @@ msgstr "Alle billettene er utsolgte."
 msgid "You must attend first to buy a ticket for this LAN."
 msgstr "Du må melde deg opp før du kan kjøpe en billett for dette LAN-et."
 
+msgid "Payment unsuccessful. Please contact support."
+msgstr "Betaling mislyktes. Vennligst kontakt brukerstøtte."
+
 msgid "Ticket receipt"
 msgstr "Billettkvittering"
 
 msgid "Payment complete."
 msgstr "Betalingen ble gjennomført."
-
-msgid "Payment unsuccessful. Please contact support."
-msgstr "Betaling mislyktes. Vennligst kontakt brukerstøtte."
 
 msgid "poll translation"
 msgstr "avstemningsoversettelse"
@@ -1863,6 +1869,7 @@ msgstr "Send betaling"
 msgid "About our payment security"
 msgstr "Om betalingssikkerheten vår"
 
+#, python-format
 msgid ""
 "\n"
 "<p>Thanks for purchasing a ticket for %(lan_title)s! Your \"%(ticket_type_title)s\" ticket is linked to %(user_full_name)s (%(user)s).<p>\n"
@@ -1874,6 +1881,7 @@ msgstr ""
 "<p>Husk å ta med ID når du ankommer, slik vi kan forsikre oss om at du er eieren av billetten.</p>\n"
 "<p>Mer informasjon om LAN-et kan finnes her: <a href=\"%(lan_link)s\">%(lan_title)s</a></p>\n"
 
+#, python-format
 msgid ""
 "\n"
 "Thanks for purchasing a ticket for %(lan_title)s! Your \"%(ticket_type_title)s\" ticket is linked to %(user_full_name)s (%(user)s).\n"
