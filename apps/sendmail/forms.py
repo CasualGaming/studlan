@@ -5,6 +5,7 @@ import uuid
 from django import forms
 from django.conf import settings
 from django.utils.html import strip_tags
+from django.utils.text import format_lazy
 from django.utils.translation import ugettext_lazy as _
 
 from apps.competition.models import Competition
@@ -47,19 +48,19 @@ class SendMessageForm(forms.Form):
         label=_(u'LAN attendees'),
         queryset=LAN.objects.all(),
         required=False,
-        help_text=_select_multiple_help,
+        help_text=format_lazy(u'{0} {1}', _(u'Users which pressed "attend". Appropriate for public LAN updates.'), _select_multiple_help),
         widget=forms.SelectMultiple(attrs={'size': _select_multiple_size}))
     recipient_lan_payers = forms.ModelMultipleChoiceField(
         label=_(u'LAN payers'),
         queryset=LAN.objects.all(),
         required=False,
-        help_text=_select_multiple_help,
+        help_text=format_lazy(u'{0} {1}', _(u'Users which paid by the door (i.e. no ticket), if allowed for the LAN. Appropriate for LAN updates.'), _select_multiple_help),
         widget=forms.SelectMultiple(attrs={'size': _select_multiple_size}))
     recipient_tickets = forms.ModelMultipleChoiceField(
         label=_(u'Ticket owners'),
         queryset=TicketType.objects.all(),
         required=False,
-        help_text=_select_multiple_help,
+        help_text=format_lazy(u'{0} {1}', _(u'Users which bought/received a ticket for the event. Appropriate for LAN updates.'), _select_multiple_help),
         widget=forms.SelectMultiple(attrs={'size': _select_multiple_size}))
     recipient_teams = forms.ModelMultipleChoiceField(
         label=_(u'Teams'),

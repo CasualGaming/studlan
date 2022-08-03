@@ -7,14 +7,14 @@
 {% load static %}
 
 {% block title %}
-{{ competition }}
+{{ competition.title }}
 {% endblock title %}
 
 {% block content %}
 {% with competition.use_teams as teamcomp %}
     <div class="row">
         <div class="col-md-9">
-            <h1 class="page-header">{{ competition }}</h1>
+            <h1 class="page-header">{{ competition.title }}</h1>
         </div>
     </div>
 
@@ -394,7 +394,7 @@
     <div class="row">
         <div class="col-md-9">
             <hr />
-            <p>{{ competition.get_translation.translated_description|markdown }}</p>
+            <p>{{ competition.description|markdown }}</p>
         </div>
     </div>
  {% endwith %}

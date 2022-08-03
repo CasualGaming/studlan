@@ -56,12 +56,12 @@ class Command(BaseCommand):
         mail_connection.close()
 
     def send_recipient_mail(self, mail, recipient, mail_connection):
-        sendmail_logger.info('Sending mail "%s" to user "%s"', mail.uuid, recipient.user.username)
-
         # Ignore if user doesn't have an email address
         if not recipient.user.email:
             sendmail_logger.warning('Unable to send mail "%s" to user "%s": Missing e-mail address', mail.uuid, recipient.user.username)
             return
+
+        sendmail_logger.info('Sending mail "%s" to user "%s" at "%s".', mail.uuid, recipient.user.username, recipient.user.email)
 
         # Render mail
         mail_context = {

@@ -134,7 +134,7 @@ def competition_details(request, competition_id):
     breadcrumbs = (
         (lan, lan.get_absolute_url()),
         (_(u'Competitions'), reverse('competitions_lan_compos', kwargs={'lan_id': lan.id})),
-        (unicode(competition), ''),
+        (competition.title(), ''),
     )
     context['breadcrumbs'] = breadcrumbs
 
