@@ -40,6 +40,7 @@ class LAN(TranslatableModel):
     frontpage_media_link = models.CharField(_(u'frontpage media link'), max_length=300, help_text=_(u'URL for embedded media on front page.'), blank=True)
     frontpage_media_type = models.CharField(_(u'frontpage media type'), max_length=10, choices=MEDIA_TYPES, default=MEDIA_TYPE_IMAGE, help_text=_(u'Type of the optional embedded media on front page.'))
     rules_link = models.CharField(_(u'rules link'), max_length=300, help_text=_(u'URL to rules which users have to accept to buy tickets.'), blank=True)
+    schedule_link = models.CharField(_(u'schedule link'), max_length=300, help_text=_(u'URL to an alternative schedule page.'), blank=True)
 
     @property
     def attendees(self):

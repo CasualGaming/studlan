@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-03 15:12+0200\n"
+"POT-Creation-Date: 2022-08-03 15:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -524,6 +524,12 @@ msgstr "regellenke"
 
 msgid "URL to rules which users have to accept to buy tickets."
 msgstr "URL til regler som brukere må akseptere for å kjøpe billetter."
+
+msgid "schedule link"
+msgstr "tidsplanslenke"
+
+msgid "URL to an alternative schedule page."
+msgstr "URL til en alternativ tidsplanslenke."
 
 msgid "upcoming"
 msgstr "kommende"
@@ -1655,7 +1661,7 @@ msgid "No raffles for this LAN."
 msgstr "Ingen trekninger for dette LAN-et."
 
 msgid "No schedule for this LAN."
-msgstr "Ingen timetabell for dette LAN-et."
+msgstr "Ingen tidsplan for dette LAN-et."
 
 msgid "Support"
 msgstr "Brukerstøtte"
