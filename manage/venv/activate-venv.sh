@@ -13,8 +13,8 @@ if [[ -e /.dockerenv ]]; then
     return
 fi
 
-# Windows uses "python" and "pip" for both Python 2 and 3
-# Linux uses "python" and "pip" for Python 2 only
+# Windows uses "python" and "pip" for both Python 2 and 3.
+# Linux typically uses "python"/"python2" and "pip" for Python 2.
 if [[ $(uname -s) == "MINGW"* ]]; then
     PIP2_CMD="py -2 -m pip"
     VENV_CMD="py -2 -m virtualenv"
@@ -23,8 +23,9 @@ elif [[ $(uname -s) == "Linux" && $(uname -r) == *"arch"* ]]; then
     echo "Arch no longer supports this" >&2
     exit 1
 elif [[ $(uname -s) == "Linux" ]]; then
-    PIP2_CMD="python -m pip"
-    VENV_CMD="virtualenv -p $(which python)"
+    PYTHON="$(which python2)" || PYTHON="$(which python)"
+    PIP2_CMD="$PYTHON -m pip"
+    VENV_CMD="virtualenv -p $PYTHON"
     VENV_ACTIVATE_SCRIPT="$VENV_DIR/bin/activate"
 else
     echo "Unknown OS" >&2
