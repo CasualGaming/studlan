@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-03 15:18+0200\n"
+"POT-Creation-Date: 2022-08-04 15:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -837,14 +837,17 @@ msgstr "setekartmal"
 msgid "seating layouts"
 msgstr "setekartmaler"
 
-msgid "This field is automatically updated to match the chosen layout. Change the chosen layout to alter this field."
-msgstr "Dette feltet oppdateres automatisk for å matche malen. Endre malen for å oppdatere dette feltet."
+msgid "For ordering of seatings, higher number will show first."
+msgstr "For rekkefølge av setekart, høyere nummer vises først."
 
 msgid "closing date"
 msgstr "stengningsdato"
 
 msgid "layout"
 msgstr "mal"
+
+msgid "This field is automatically updated to match the chosen layout. Change the chosen layout to alter this field."
+msgstr "Dette feltet oppdateres automatisk for å matche malen. Endre malen for å oppdatere dette feltet."
 
 msgid "seating"
 msgstr "setekart"
@@ -1675,9 +1678,6 @@ msgstr "Sluttid"
 msgid "Location"
 msgstr "Sted"
 
-msgid "View tickets"
-msgstr "Vis billetter"
-
 msgid "LAN List"
 msgstr "LAN-liste"
 
@@ -2303,9 +2303,3 @@ msgstr "Adminpanel"
 
 msgid "Log out"
 msgstr "Logg ut"
-
-#~ msgid "Ticket confirmation"
-#~ msgstr "Billettbekreftelse"
-
-#~ msgid "By purchasing a ticket, you are confirming that all of the information about you is correct. If not, update it now in your <a href=\"%(update_profile_url)s\">profile settings</a>."
-#~ msgstr "Ved å kjøpe en billett bekrefter du at all informasjonen om deg er korrekt. Hvis ikke, oppdater det nå i <a href=\"%(update_profile_url)s\">profilinnstillingene</a> dine."

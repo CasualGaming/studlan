@@ -63,7 +63,7 @@ def main_filtered(request, lan_id):
 @require_safe
 def seating_details(request, lan_id, seating_id=None, seat_id=None):
     lan = get_object_or_404(LAN, pk=lan_id)
-    seatings = Seating.objects.filter(lan=lan)
+    seatings = Seating.objects.filter(lan=lan).order_by('-priority')
 
     if not seating_id:
         if seatings:

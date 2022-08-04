@@ -39,11 +39,12 @@ class Seating(models.Model):
     lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
     title = models.CharField(_(u'title'), max_length=50)
     desc = models.CharField(_(u'description'), max_length=250)
-    number_of_seats = models.IntegerField(_(u'number of seats'), default=0, help_text=_(u'This field is automatically updated '
-                                          'to match the chosen layout. Change the chosen layout to alter this field.'))
+    priority = models.IntegerField(_(u'priority'), default=0, help_text=_(u'For ordering of seatings, higher number will show first.'))
     closing_date = models.DateTimeField(_(u'closing date'))
     layout = models.ForeignKey(Layout, verbose_name=_(u'layout'))
     ticket_types = models.ManyToManyField(TicketType, verbose_name=_(u'ticket types'), blank=True, related_name='ticket_types')
+    number_of_seats = models.IntegerField(_(u'number of seats'), default=0, help_text=_(u'This field is automatically updated '
+                                          'to match the chosen layout. Change the chosen layout to alter this field.'))
 
     def save(self, *args, **kwargs):
         if not self.pk:
