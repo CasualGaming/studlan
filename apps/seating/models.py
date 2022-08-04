@@ -43,17 +43,13 @@ class Seating(models.Model):
     closing_date = models.DateTimeField(_(u'closing date'))
     layout = models.ForeignKey(Layout, verbose_name=_(u'layout'))
     ticket_types = models.ManyToManyField(TicketType, verbose_name=_(u'ticket types'), blank=True, related_name='ticket_types')
-    number_of_seats = models.IntegerField(_(u'number of seats'), default=0, help_text=_(u'This field is automatically updated '
+    number_of_seats = models.IntegerField(_(u'number of seats'), default=0, editable=False, help_text=_(u'This field is automatically updated '
                                           'to match the chosen layout. Change the chosen layout to alter this field.'))
 
     def save(self, *args, **kwargs):
-        if not self.pk:
-            self.number_of_seats = self.layout.number_of_seats
-            super(Seating, self).save(*args, **kwargs)
-            self.populate_seats()
-        else:
-            self.number_of_seats = self.layout.number_of_seats
-            super(Seating, self).save(*args, **kwargs)
+        self.number_of_seats = self.layout.number_of_seats
+        super(Seating, self).save(*args, **kwargs)
+        self.populate_seats()
 
     def get_user_registered(self):
         return map(lambda x: getattr(x, 'user'), Seat.objects.filter(~Q(user=None), Q(seating=self)))
@@ -77,9 +73,10 @@ class Seating(models.Model):
         return reverse('seating_details', kwargs={'lan_id': self.lan.id, 'seating_id': self.id})
 
     def populate_seats(self):
-        for k in range(0, self.number_of_seats):
-            seat = Seat(seating=self, placement=k + 1)
-            seat.save()
+        for k in range(1, self.number_of_seats + 1):
+            if not Seat.objects.filter(seating=self, placement=k).exists():
+                seat = Seat(seating=self, placement=k)
+                seat.save()
 
     class Meta:
         verbose_name = _(u'seating')

@@ -26,6 +26,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added seating priority, to avoid unpredictable ordering of seating tabs.
 
+### Changed
+
+- Made seatings automatically add more seats if the layout is changed to one with more seats.
+
 
 ## [v1.10.0] - 2022-08-03
 
