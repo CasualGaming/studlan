@@ -20,6 +20,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 
+## [v1.10.2] - 2022-09-17
+
+### Added
+
+- Added cumulative age counts in statistics page.
+
+### Changed
+
+- Allow Markdown in ticket descriptions on the ticket page.
+
+### Fixed
+
+- Fixed typo in statistics page permission, preventing non-superusers from accessing it.
+
+
 ## [v1.10.1] - 2022-08-04
 
 ### Added
