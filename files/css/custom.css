@@ -101,10 +101,6 @@ div#btn-profile {
     color: red;
 }
 
-.toggle {
-    cursor: pointer;
-}
-
 .arrival-filter-group {
     display: block;
     padding: 10px 0;
@@ -582,7 +578,13 @@ h1 a, h1 a:link, h1 a:hover, h1 a:active, h1 a:visited {
     resize: vertical;
 }
 
-.toggle[value="True"]>.toggle-false,
-.toggle[value="False"]>.toggle-true {
+.toggle > * {
+    cursor: pointer;
     display: none;
+}
+
+.toggle[value="True"] > .toggle-true,
+.toggle[value="False"] > .toggle-false,
+.toggle[value=""] > .toggle-invalid {
+    display: inline-block;
 }

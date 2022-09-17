@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-09-17 19:34+0200\n"
+"POT-Creation-Date: 2022-09-17 22:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1376,6 +1376,9 @@ msgstr "Sett {user} til betalt?"
 msgid "Set {user} to NOT paid?"
 msgstr "Sett {user} til IKKE betalt?"
 
+msgid "User {user} is invalid, call an admin."
+msgstr "Bruker {user} er ugyldig, ring en admin."
+
 #, python-brace-format
 msgid "Set {user} to arrived?"
 msgstr "Sett {user} til ankommet?"
@@ -1387,8 +1390,8 @@ msgstr "Sett {user} til IKKE ankommet?"
 msgid "Full Name"
 msgstr "Fullt navn"
 
-msgid "Email Address"
-msgstr "E-postadresse"
+msgid "Age"
+msgstr "Alder"
 
 msgid "Ticket/Paid"
 msgstr "Billett/betalt"
@@ -2096,9 +2099,6 @@ msgstr "Ankomte deltagere"
 
 msgid "Ages"
 msgstr "Aldre"
-
-msgid "Age"
-msgstr "Alder"
 
 msgid "Count (exact)"
 msgstr "Antall (eksakt)"

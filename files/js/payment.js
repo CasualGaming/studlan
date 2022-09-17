@@ -55,7 +55,7 @@ cardForm.addEventListener('submit', function(ev) {
 function handleServerResponse(response) {
   if (response.error) {
     setTimeout(function () {
-                window.location.href = lan_url;
+                window.location.reload();
           }, 100);
   } else if (response.requires_action) {
     stripe.handleCardAction(
@@ -63,7 +63,7 @@ function handleServerResponse(response) {
     ).then(function(result) {
       if (result.error) {
           setTimeout(function () {
-                window.location.href = lan_url;
+                window.location.reload();
           }, 100);
       } else {
         fetch(payment_url, {
@@ -77,7 +77,7 @@ function handleServerResponse(response) {
     });
   } else {
       setTimeout(function () {
-           window.location.href = lan_url;
+           window.location.href = success_url;
       }, 100);
   }
 }

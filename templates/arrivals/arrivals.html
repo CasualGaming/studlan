@@ -62,8 +62,10 @@
                 <!-- Text used by JS toggle confirm dialogs -->
                 <span id="toggle-text-has-paid">{% trans "Set {user} to paid?" %}</span>
                 <span id="toggle-text-has-not-paid">{% trans "Set {user} to NOT paid?" %}</span>
+                <span id="toggle-text-has-paid-invalid">{% trans "User {user} is invalid, call an admin." %}</span>
                 <span id="toggle-text-has-arrived">{% trans "Set {user} to arrived?" %}</span>
                 <span id="toggle-text-has-not-arrived">{% trans "Set {user} to NOT arrived?" %}</span>
+                <span id="toggle-text-has-arrived-invalid">{% trans "User {user} is invalid, call an admin." %}</span>
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered table-striped filterable">
@@ -71,7 +73,7 @@
                         <tr>
                             <th>{% trans "Username" %}</th>
                             <th>{% trans "Full Name" %}</th>
-                            <th>{% trans "Email Address" %}</th>
+                            <th>{% trans "Age" %}</th>
                             <th>{% trans "Seat" %}</th>
                             <th>{% trans "Ticket/Paid" %}</th>
                             <th>{% trans "Arrived" %}</th>
@@ -82,7 +84,7 @@
                         <tr>
                             <td class="username"><a href="{% url 'public_profile' user %}" target="_blank">{{ user.username }}</a></td>
                             <td class="name">{{ user.get_full_name }}</td>
-                            <td class="email">{{ user.email }}</td>
+                            <td class="age">{{ user|age_at_lan:lan }}</td>
                             <td>
                                 {% for seat in user_seats|get_dict_val:user %}
                                 {% if not forloop.first %}
@@ -130,6 +132,10 @@
                                     {% include "arrivals/toggle_icons.html" %}
                                 </span>
                                 {% endif %}
+                                {% else %}
+                                <span class="arrived toggle label label-warning" value="">
+                                    {% include "arrivals/toggle_icons.html" %}
+                                </span>
                                 {% endif %}
                             </td>
                         </tr>

@@ -2,7 +2,7 @@
 $(function() {
 /* AJAX SETUP FOR CSRF */
 
-//Getting the cookie from the html because the csrfcookie has security flaws when used 
+//Getting the cookie from the html because the csrfcookie has security flaws when used
 //with client side js
 function getToken(){
     var csrftoken = $('#token').val();
@@ -27,6 +27,7 @@ const TYPE_PAID = 0;
 const TYPE_ARRIVED = 1;
 const VALUE_YES = "True"
 const VALUE_NO = "False"
+const VALUE_INVALID = ""
 
 function toggle(username, type, previousValue, label)
 {
@@ -35,12 +36,22 @@ function toggle(username, type, previousValue, label)
         question_id = "toggle-text-has-paid";
     } else if (type == TYPE_PAID && previousValue == VALUE_YES) {
         question_id = "toggle-text-has-not-paid";
+    } else if (type == TYPE_PAID && previousValue == VALUE_INVALID) {
+        question_id = "toggle-text-has-paid-invalid";
     } else if (type == TYPE_ARRIVED && previousValue == VALUE_NO) {
         question_id = "toggle-text-has-arrived";
     } else if (type == TYPE_ARRIVED && previousValue == VALUE_YES) {
         question_id = "toggle-text-has-not-arrived";
+    } else if (type == TYPE_ARRIVED && previousValue == VALUE_INVALID) {
+        question_id = "toggle-text-has-arrived-invalid";
     }
     let question = $("#" + question_id).text().replace("{user}", username);
+
+    if (previousValue == VALUE_INVALID) {
+        alert(question);
+        return;
+    }
+
     if (!confirm(question))
         return;
 
@@ -88,7 +99,7 @@ $(document).ready(function()
             var prev = $(this).attr('value');
             toggle(username, TYPE_ARRIVED, prev, this);
         });
-    });     
+    });
 });
 
 let updateTable = function(){

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from dateutil.relativedelta import relativedelta
+
 from django.template import Library
 
 
@@ -41,6 +43,11 @@ def get_user_ticket(tickets, user):
 @register.filter
 def get_dict_val(dictionary, key):
     return dictionary.get(key)
+
+
+@register.filter
+def age_at_lan(user, lan):
+    return relativedelta(lan.start_date.date(), user.profile.date_of_birth).years
 
 
 @register.simple_tag

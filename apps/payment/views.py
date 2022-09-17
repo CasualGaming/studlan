@@ -86,7 +86,6 @@ def payment(request, ticket_type_id):
         except stripe.error.CardError as e:
             messages.error(request, _(e.user_message))
             return JsonResponse({'error': e.user_message})
-
         return generate_payment_response(request, ticket_type, intent)
     else:
         return render(

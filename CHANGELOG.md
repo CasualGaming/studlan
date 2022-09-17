@@ -20,6 +20,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 
+## [v1.10.3] - 2022-09-17
+
+### Added
+
+- Added error icon and message on the arrivals page for users without an associated attendee object.
+
+### Changed
+
+- Replaced email address with age on the arrivals page.
+- Make failed ticket purchases reload the purchase page and successful purchases redirect to the seatmap page.
+
+
 ## [v1.10.2] - 2022-09-17
 
 ### Added
