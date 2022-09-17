@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-08-04 15:58+0200\n"
+"POT-Creation-Date: 2022-09-17 19:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2100,8 +2100,14 @@ msgstr "Aldre"
 msgid "Age"
 msgstr "Alder"
 
-msgid "Count"
-msgstr "Antall"
+msgid "Count (exact)"
+msgstr "Antall (eksakt)"
+
+msgid "Count (cumulative down)"
+msgstr "Antall (kumulativt ned)"
+
+msgid "Count (cumulative up)"
+msgstr "Antall (kumulativt opp)"
 
 #, python-format
 msgid "%(age)s years"
@@ -2109,6 +2115,9 @@ msgstr "%(age)s år"
 
 msgid "Age is counted wrt. the start of the event."
 msgstr "Alder er talt mht. starten av arrangementet."
+
+msgid "Count"
+msgstr "Antall"
 
 msgid "Paid status"
 msgstr "Betalt status"

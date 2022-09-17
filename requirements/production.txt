@@ -64,11 +64,11 @@ six==1.16.0
     #   python-dateutil
 soupsieve==1.9.6
     # via beautifulsoup4
-stripe==3.5.0
+stripe==4.1.0
     # via -r requirements/base.in
 tzlocal==2.1
     # via pychallonge
-urllib3==1.26.11
+urllib3==1.26.12
     # via requests
 uwsgi==2.0.20
     # via -r requirements/production.in

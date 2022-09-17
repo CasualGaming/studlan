@@ -57,7 +57,7 @@ flake8-comprehensions==1.4.1
     # via -r requirements/test.in
 flake8-import-order==0.18.1
     # via -r requirements/test.in
-flake8-logging-format==0.6.0
+flake8-logging-format==0.7.5
     # via -r requirements/test.in
 flake8-mutable==1.2.0
     # via -r requirements/test.in
@@ -139,7 +139,7 @@ six==1.16.0
     #   python-dateutil
 soupsieve==1.9.6
     # via beautifulsoup4
-stripe==3.5.0
+stripe==4.1.0
     # via -r requirements/base.in
 typing==3.10.0.0
     # via
@@ -147,7 +147,7 @@ typing==3.10.0.0
     #   pathlib2
 tzlocal==2.1
     # via pychallonge
-urllib3==1.26.11
+urllib3==1.26.12
     # via requests
 uwsgi==2.0.20
     # via -r requirements/production.in
