@@ -109,7 +109,7 @@
                 <h3 class="panel-title">{{ ticket_type.get_translation.title }}</h3>
             </div>
             <div class="panel-body">
-                <p>{{ ticket_type.get_translation.description }}</p>
+                <p>{{ ticket_type.get_translation.description|markdown }}</p>
                 <p><strong>{% trans "Price" %}:</strong> {{ ticket_type.verbose_price }}</p>
                 <p><strong>{% trans "Available tickets" %}:</strong> {{ ticket_type.number_of_free_seats }}/{{ ticket_type.number_of_seats }}</p>
             </div>

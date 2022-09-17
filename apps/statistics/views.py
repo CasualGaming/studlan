@@ -17,7 +17,7 @@ from apps.lan.models import Attendee, LAN, Ticket, TicketType
 
 
 @require_safe
-@permission_required('lan.show_statistics')
+@permission_required('lan.show_arrivals_statistics')
 def statistics_list(request):
     context = {}
     context['upcoming_lans'] = LAN.objects.filter(end_date__gte=datetime.now()).order_by('start_date')
@@ -26,7 +26,7 @@ def statistics_list(request):
 
 
 @require_safe
-@permission_required('lan.show_statistics')
+@permission_required('lan.show_arrivals_statistics')
 def statistics(request, lan_id):
     lan = get_object_or_404(LAN, pk=lan_id)
 
@@ -49,6 +49,19 @@ def statistics(request, lan_id):
         else:
             age_counts[age] = 1
     age_counts = OrderedDict(sorted(age_counts.items(), key=lambda t: t[0]))
+
+    # Cumulative participant ages
+    age_counts_cum_down = {}
+    age_counts_cum_up = {}
+    for age in age_counts:
+        age_counts_cum_down[age] = 0
+        age_counts_cum_up[age] = 0
+    for age1 in age_counts:
+        for age2 in age_counts:
+            if age2 <= age1:
+                age_counts_cum_down[age1] += age_counts[age2]
+            if age2 >= age1:
+                age_counts_cum_up[age1] += age_counts[age2]
 
     # Tickets and paid counts
     ticket_counts = []
@@ -80,6 +93,8 @@ def statistics(request, lan_id):
         'arrival_count': arrived_participants_count,
         'participant_count': len(participants),
         'age_counts': age_counts,
+        'age_counts_cum_down': age_counts_cum_down,
+        'age_counts_cum_up': age_counts_cum_up,
         'ticket_counts': ticket_counts,
         'paid_count': paid_count,
         'ticket_paid_total_count': ticket_paid_total_count,

@@ -29,14 +29,18 @@
                 <thead>
                     <tr>
                         <th class="col-md-8" scope="col">{% trans "Age" %}</th>
-                        <th class="col-md-4" scope="col">{% trans "Count" %}</th>
+                        <th class="col-md-4" scope="col">{% trans "Count (exact)" %}</th>
+                        <th class="col-md-4" scope="col">{% trans "Count (cumulative down)" %}</th>
+                        <th class="col-md-4" scope="col">{% trans "Count (cumulative up)" %}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for age, count in age_counts.items %}
+                    {% for age in age_counts %}
                     <tr>
                         <th scope="row">{% blocktrans %}{{ age }} years{% endblocktrans %}</th>
-                        <td>{{ count }} ({% divide_percent count participant_count %})</td>
+                        <td>{{ age_counts|get_dict_val:age }} ({% divide_percent age_counts|get_dict_val:age participant_count %})</td>
+                        <td>{{ age_counts_cum_down|get_dict_val:age }} ({% divide_percent age_counts_cum_down|get_dict_val:age participant_count %})</td>
+                        <td>{{ age_counts_cum_up|get_dict_val:age }} ({% divide_percent age_counts_cum_up|get_dict_val:age participant_count %})</td>
                     </tr>
                     {% endfor %}
                 </tbody>
