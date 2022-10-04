@@ -52,5 +52,10 @@ CHALLONGE_INTEGRATION_ENABLED = False
 CHALLONGE_API_USERNAME = ''
 CHALLONGE_API_KEY = ''
 
+# Plausible
+PLAUSIBLE_ENABLE = False
+PLAUSIBLE_LOCAL_DOMAIN = 'localhost'
+PLAUSIBLE_REMOTE_DOMAIN = 'localhost'
+
 # Show studlan version in footer
 SHOW_VERSION = False
