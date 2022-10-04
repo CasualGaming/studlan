@@ -20,6 +20,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 
+## [v1.10.4] - 2022-10-04
+
+### Added
+
+- Added Plausible support for anonymous analytics.
+
 ## [v1.10.3] - 2022-09-17
 
 ### Added

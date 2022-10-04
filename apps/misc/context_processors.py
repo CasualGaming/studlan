@@ -20,5 +20,8 @@ def global_variables(request):
         'app_version': getattr(settings, 'VERSION', ''),
         'support_mail': getattr(settings, 'SUPPORT_MAIL', ''),
         'stripe_public_key': getattr(settings, 'STRIPE_PUBLIC_KEY', ''),
+        'plausible_enable': getattr(settings, 'PLAUSIBLE_ENABLE', ''),
+        'plausible_local_domain': getattr(settings, 'PLAUSIBLE_LOCAL_DOMAIN', ''),
+        'plausible_remote_domain': getattr(settings, 'PLAUSIBLE_REMOTE_DOMAIN', ''),
         'full_app_name': build_full_app_name,
     }

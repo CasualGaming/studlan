@@ -64,7 +64,7 @@ six==1.16.0
     #   python-dateutil
 soupsieve==1.9.6
     # via beautifulsoup4
-stripe==4.1.0
+stripe==4.2.0
     # via -r requirements/base.in
 tzlocal==2.1
     # via pychallonge

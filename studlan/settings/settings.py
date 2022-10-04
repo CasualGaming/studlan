@@ -238,6 +238,11 @@ MAX_TEAMS = 10
 # Overiding messagetags to match bootstrap 3
 MESSAGE_TAGS = {message_constants.ERROR: 'danger'}
 
+# Plausible
+PLAUSIBLE_ENABLE = False
+PLAUSIBLE_LOCAL_DOMAIN = 'localhost'
+PLAUSIBLE_REMOTE_DOMAIN = 'localhost'
+
 # Version
 VERSION = 'Unknown version'
 version_file_path = os.path.join(PROJECT_ROOT_DIRECTORY, 'VERSION')

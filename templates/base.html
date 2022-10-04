@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load misc %}
 {% load static %}
 {% load tz %}
 
@@ -26,6 +27,10 @@
         <script src="{% static 'js/jquery.fitvids.js' %}"></script>
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
         <script src="{% static 'js/custom.js' %}"></script>
+
+        {% if plausible_enable %}
+        <script defer data-domain="{{ plausible_local_domain }}" src="https://{{ plausible_remote_domain }}/js/plausible.js"></script>
+        {% endif %}
     </head>
 
     <body>
