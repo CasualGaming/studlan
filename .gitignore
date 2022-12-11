@@ -1,6 +1,11 @@
 # Studlan ignores
 #
 
+db.sqlite3
+
+# Nix build output
+result
+
 static/
 dev.db
 .idea/
@@ -287,3 +292,7 @@ celerybeat-schedule
 /.local/
 /VERSION
 /seating-layout.svg
+
+### direnv ###
+.direnv
+.envrc
