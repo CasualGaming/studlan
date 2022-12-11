@@ -104,7 +104,8 @@
             ]))
         ];
       };
-
+    }))
+    // {
       nixosModules.default = {
         pkgs,
         lib,
@@ -148,7 +149,7 @@
       # Container NixOS configuration intended for testing the
       # module above
       nixosConfigurations.container = nixpkgs.lib.nixosSystem {
-        inherit system;
+        system = "aarch64-linux";
         modules = [
           self.nixosModule
           ({
@@ -165,5 +166,5 @@
           })
         ];
       };
-    }));
+    };
 }
