@@ -104,5 +104,66 @@
             ]))
         ];
       };
+
+      nixosModules.default = {
+        pkgs,
+        lib,
+        config,
+      }: let
+        cfg = config.services.studlan;
+      in {
+        options = with lib; {
+          enable = mkEnableOption "Enable studlan";
+          port = mkOption {
+            type = types.port;
+            default = 8000;
+          };
+        };
+        config = {
+          services.uwsgi = {
+            enable = true;
+            plugins = ["python3"];
+            instance = {
+              type = "emperor";
+              vassals.studlan = lib.mkIf cfg.enable {
+                type = "normal";
+                master = true;
+                workers = 2;
+                http = ":${toString cfg.port}";
+                module = "wsgi:application";
+                chdir = pkgs.writeTextDir "wsgi.py" ''
+                  from flask import Flask
+                  application = Flask(__name__)
+                  @application.route("/")
+                  def hello():
+                      return "Hello World!"
+                '';
+                pythonPackages = self: with self; [studlan];
+              };
+            };
+          };
+        };
+      };
+
+      # Container NixOS configuration intended for testing the
+      # module above
+      nixosConfigurations.container = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          self.nixosModule
+          ({
+            pkgs,
+            config,
+            ...
+          }: {
+            # Only allow this to boot as a container
+            boot.isContainer = true;
+
+            networking.firewall.allowedTCPPorts = [config.services.studlan.port];
+
+            services.studlan.enable = true;
+          })
+        ];
+      };
     }));
 }
