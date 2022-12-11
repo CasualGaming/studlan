@@ -10,12 +10,11 @@ def remove_alert(request):
     return HttpResponse('')
 
 
-def handler404(request):
-    return render(request, '404.html')
+def handler404(request, exception, template_name="404.html"):
+    return render(request, template_name, 404)
 
-
-def handler500(request):
-    return render(request, '500.html')
+def handler500(request, *args, **argv):
+    return render(request, '500.html', status=500)
 
 
 def change_language(request):

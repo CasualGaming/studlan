@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='seating',
             name='layout',
-            field=models.ForeignKey(default=1, to='seating.Layout'),
+            field=models.ForeignKey(default=1, to='seating.Layout', on_delete=models.CASCADE),
             preserve_default=False,
         ),
     ]

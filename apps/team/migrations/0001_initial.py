@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('title', models.CharField(max_length=50, verbose_name=b'title')),
                 ('tag', models.CharField(unique=True, max_length=10, verbose_name=b'tag')),
-                ('leader', models.ForeignKey(related_name='newteamleader', to=settings.AUTH_USER_MODEL)),
+                ('leader', models.ForeignKey(related_name='newteamleader', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
                 ('members', models.ManyToManyField(related_name='new_team_members', through='team.Member', to=settings.AUTH_USER_MODEL)),
             ],
             options={
@@ -40,13 +40,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='member',
             name='team',
-            field=models.ForeignKey(to='team.Team'),
+            field=models.ForeignKey(to='team.Team', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='member',
             name='user',
-            field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AlterUniqueTogether(

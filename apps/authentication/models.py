@@ -8,7 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class RegisterToken(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     token = models.CharField(_(u'token'), max_length=32)
     created = models.DateTimeField(_(u'created'), editable=False, auto_now_add=True)
 

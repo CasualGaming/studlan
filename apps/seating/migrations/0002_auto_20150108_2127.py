@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='seating',
             name='layout',
-            field=models.ForeignKey(blank=True, to='seating.Layout', null=True),
+            field=models.ForeignKey(blank=True, to='seating.Layout', null=True, on_delete=models.CASCADE),
             preserve_default=True,
         ),
     ]

@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
                 ('language', models.CharField(max_length=15, verbose_name='language', choices=[(b'nb', 'Norsk'), (b'en', 'English')])),
                 ('translated_title', models.CharField(max_length=50, verbose_name=b'title')),
                 ('translated_body', models.TextField(verbose_name=b'body')),
-                ('model', models.ForeignKey(related_name='translations', verbose_name=b'Article', to='news.Article')),
+                ('model', models.ForeignKey(related_name='translations', verbose_name=b'Article', to='news.Article', on_delete=models.CASCADE)),
             ],
             options={
                 'abstract': False,

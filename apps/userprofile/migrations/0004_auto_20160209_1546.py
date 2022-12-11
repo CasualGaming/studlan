@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('description', models.CharField(help_text=b'Short description', max_length=100, verbose_name='nick')),
                 ('profile_url', models.URLField(null=True, verbose_name=b'Challonge url', blank=True)),
-                ('activity', models.ForeignKey(related_name='alias_type', to='competition.Activity')),
+                ('activity', models.ForeignKey(related_name='alias_type', to='competition.Activity', on_delete=models.CASCADE)),
             ],
             options={
             },
@@ -39,13 +39,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='alias',
             name='alias_type',
-            field=models.ForeignKey(to='userprofile.AliasType'),
+            field=models.ForeignKey(to='userprofile.AliasType', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='alias',
             name='user',
-            field=models.ForeignKey(related_name='alias', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(related_name='alias', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AlterUniqueTogether(

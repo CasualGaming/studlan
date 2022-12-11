@@ -9,7 +9,7 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, verbose_name=_(u'user'), related_name='profile')
+    user = models.OneToOneField(User, verbose_name=_(u'user'), related_name='profile', on_delete=models.CASCADE)
     nick = models.CharField(_(u'nick'), max_length=20, db_index=True, help_text=_(u'Your display name. Should be equal or similar to your username.'))
     date_of_birth = models.DateField(_(u'date of birth'), default=datetime.date.today)
     address = models.CharField(_(u'street address'), max_length=100)
@@ -90,9 +90,9 @@ class AliasType(models.Model):
 
 
 class Alias(models.Model):
-    alias_type = models.ForeignKey(AliasType, verbose_name=_(u'alias type'))
+    alias_type = models.ForeignKey(AliasType, verbose_name=_(u'alias type'), on_delete=models.CASCADE)
     nick = models.CharField(_(u'nickname'), max_length=40)
-    user = models.ForeignKey(User, verbose_name=_(u'user'), related_name='alias')
+    user = models.ForeignKey(User, verbose_name=_(u'user'), related_name='alias', on_delete=models.CASCADE)
 
     def __unicode__(self):
         return self.nick

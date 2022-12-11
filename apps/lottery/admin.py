@@ -4,20 +4,12 @@ from django.conf import settings
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
-from .models import Lottery, LotteryParticipant, LotteryTranslation
+from .models import Lottery, LotteryParticipant
 
-
-class LotteryTranslationInlineAdmin(admin.StackedInline):
-    verbose_name = _(u'Translation')
-    verbose_name_plural = _(u'Translations')
-    model = LotteryTranslation
-    max_num = len(settings.LANGUAGES)
-    extra = 1
 
 
 class LotteryAdmin(admin.ModelAdmin):
-    inlines = [LotteryTranslationInlineAdmin]
-    list_display = ['__unicode__', 'lan']
+    list_display = ['lan']
 
 
 class LotteryParticipantAdmin(admin.ModelAdmin):

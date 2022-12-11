@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ('zip_code', models.CharField(max_length=4, verbose_name=b'Zip code')),
                 ('phone', models.CharField(max_length=20, verbose_name=b'Phone number')),
                 ('ntnu_username', models.CharField(max_length=20, null=True, verbose_name=b'NTNU username', blank=True)),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, unique=True)),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, unique=True, on_delete=models.CASCADE)),
             ],
             options={
             },

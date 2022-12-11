@@ -4,15 +4,8 @@ from django.conf import settings
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
-from .models import Poll, PollOption, PollParticipant, PollTranslation
+from .models import Poll, PollOption, PollParticipant
 
-
-class PollTranslationInlineAdmin(admin.StackedInline):
-    verbose_name = _(u'poll translation')
-    verbose_name_plural = _(u'poll translations')
-    model = PollTranslation
-    max_num = len(settings.LANGUAGES)
-    extra = 1
 
 
 class PollOptionInlineAdmin(admin.StackedInline):
@@ -23,8 +16,8 @@ class PollOptionInlineAdmin(admin.StackedInline):
 
 
 class PollAdmin(admin.ModelAdmin):
-    inlines = [PollTranslationInlineAdmin, PollOptionInlineAdmin]
-    list_display = ['__unicode__', 'lan']
+    inlines = [PollOptionInlineAdmin]
+    list_display = ['lan']
 
 
 class PollParticipantAdmin(admin.ModelAdmin):

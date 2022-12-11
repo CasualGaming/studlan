@@ -18,9 +18,9 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('token', models.CharField(verbose_name=b'token', max_length=32, editable=False)),
-                ('invitee', models.ForeignKey(related_name='Invitee', to=settings.AUTH_USER_MODEL)),
-                ('team', models.ForeignKey(to='team.Team')),
-                ('team_leader', models.ForeignKey(related_name='Team Leader', to=settings.AUTH_USER_MODEL)),
+                ('invitee', models.ForeignKey(related_name='Invitee', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
+                ('team', models.ForeignKey(to='team.Team', on_delete=models.CASCADE)),
+                ('team_leader', models.ForeignKey(related_name='Team Leader', to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)),
             ],
             options={
             },

@@ -46,13 +46,12 @@ INSTALLED_APPS = (
     'anymail',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -264,7 +263,7 @@ for settings_module in ['local']:  # local last
             sys.stderr.write('You need to add the settings file "studlan/settings/local.py".\n')
         sys.exit(1)
     try:
-        exec(u'from {0} import *'.format(settings_module))  # noqa: S102
+        exec(u'from .{0} import *'.format(settings_module))  # noqa: S102
     except ImportError as e:
         print(u'Could not import settings for "{0}" : {1}'.format(settings_module, str(e)))  # noqa: T001
 

@@ -7,7 +7,7 @@ from django.utils.translation import ugettext, ugettext_lazy as _
 
 class Key(models.Model):
     content = models.CharField(_(u'key'), max_length=32, editable=False)
-    owner = models.ForeignKey(User)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __unicode__(self):
         return ugettext(u'API key for {owner}').format(owner=self.owner)

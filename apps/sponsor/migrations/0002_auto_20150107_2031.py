@@ -17,8 +17,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('priority', models.IntegerField(help_text=b'higher priority means closer to the top of the sponsor list.', verbose_name=b'priority')),
-                ('lan', models.ForeignKey(to='lan.LAN')),
-                ('sponsor', models.ForeignKey(to='sponsor.Sponsor')),
+                ('lan', models.ForeignKey(to='lan.LAN', on_delete=models.CASCADE)),
+                ('sponsor', models.ForeignKey(to='sponsor.Sponsor', on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ['-priority'],
@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('language', models.CharField(max_length=15, verbose_name='language', choices=[(b'nb', 'Norsk'), (b'en', 'English')])),
                 ('description', models.TextField(verbose_name=b'description')),
-                ('model', models.ForeignKey(related_name='translations', verbose_name=b'Sponsor', to='sponsor.Sponsor')),
+                ('model', models.ForeignKey(related_name='translations', verbose_name=b'Sponsor', to='sponsor.Sponsor', on_delete=models.CASCADE)),
             ],
             options={
                 'abstract': False,

@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='seating',
             name='ticket_type',
-            field=models.ForeignKey(blank=True, to='lan.TicketType', null=True),
+            field=models.ForeignKey(blank=True, to='lan.TicketType', null=True, on_delete=models.CASCADE),
             preserve_default=True,
         ),
     ]

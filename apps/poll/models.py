@@ -5,13 +5,11 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from translatable.models import TranslatableModel, get_translation_model
-
 from apps.lan.models import LAN
 
 
-class Poll(TranslatableModel):
-    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
+class Poll(models.Model):
+    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'), on_delete=models.CASCADE)
     is_open = models.BooleanField(_(u'open'), default=False)
     enforce_payment = models.BooleanField(_(u'enforce payment'), default=False, help_text=_(u'Require users to have paid for the LAN in order to vote.'))
 
@@ -26,20 +24,9 @@ class Poll(TranslatableModel):
         )
 
 
-class PollTranslation(get_translation_model(Poll, 'poll')):
-    title = models.CharField(_(u'title'), max_length=50)
-    description = models.TextField(_(u'description'))
-
-    def __unicode__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = _(u'poll translation')
-        verbose_name_plural = _(u'poll translations')
-
 
 class PollOption(models.Model):
-    poll = models.ForeignKey(Poll, verbose_name=_(u'poll'), editable=False)
+    poll = models.ForeignKey(Poll, verbose_name=_(u'poll'), editable=False, on_delete=models.CASCADE)
     value = models.CharField(_(u'value'), max_length=50)
 
     def __unicode__(self):
@@ -51,9 +38,9 @@ class PollOption(models.Model):
 
 
 class PollParticipant(models.Model):
-    poll = models.ForeignKey(Poll, verbose_name=_(u'poll'))
-    user = models.ForeignKey(User, verbose_name=_(u'user'))
-    option = models.ForeignKey(PollOption, verbose_name=_(u'option'))
+    poll = models.ForeignKey(Poll, verbose_name=_(u'poll'), on_delete=models.CASCADE)
+    user = models.ForeignKey(User, verbose_name=_(u'user'), on_delete=models.CASCADE)
+    option = models.ForeignKey(PollOption, verbose_name=_(u'option'), on_delete=models.CASCADE)
 
     def __unicode__(self):
         return unicode(self.user)

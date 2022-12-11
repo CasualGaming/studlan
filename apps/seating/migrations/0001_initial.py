@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
                 ('number_of_seats', models.IntegerField(verbose_name=b'number of seats')),
                 ('closing_date', models.DateTimeField(verbose_name=b'closing date')),
                 ('template', models.TextField(null=True, verbose_name=b'SVG layout for seating', blank=True)),
-                ('lan', models.ForeignKey(to='lan.LAN')),
+                ('lan', models.ForeignKey(to='lan.LAN', on_delete=models.CASCADE)),
             ],
             options={
             },
@@ -41,13 +41,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='seat',
             name='seating',
-            field=models.ForeignKey(to='seating.Seating'),
+            field=models.ForeignKey(to='seating.Seating', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='seat',
             name='user',
-            field=models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True),
+            field=models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE),
             preserve_default=True,
         ),
     ]

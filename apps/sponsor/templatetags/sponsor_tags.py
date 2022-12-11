@@ -10,7 +10,7 @@ from apps.sponsor.models import SponsorRelation
 register = template.Library()
 
 
-@register.assignment_tag
+@register.simple_tag
 def upcoming_lan_sponsors():
     relations = SponsorRelation.objects.filter(lan__end_date__gte=datetime.now()).select_related('sponsor').order_by('-priority')
     sponsors = []

@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='aliastype',
             name='activity',
-            field=models.ForeignKey(related_name='alias_type', to='competition.Activity', unique=True),
+            field=models.ForeignKey(related_name='alias_type', to='competition.Activity', unique=True, on_delete=models.CASCADE),
             preserve_default=True,
         ),
     ]

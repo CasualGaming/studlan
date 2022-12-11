@@ -6,8 +6,6 @@ from django.db.models import Q
 from django.urls import reverse
 from django.utils.translation import pgettext_lazy, ugettext, ugettext_lazy as _
 
-from translatable.models import TranslatableModel, get_translation_model
-
 from apps.lan.models import LAN
 from apps.userprofile.models import AliasType
 
@@ -30,7 +28,7 @@ class Activity(models.Model):
         ordering = ['title']
 
 
-class Competition(TranslatableModel):
+class Competition(models.Model):
     STATUSES = (
         (1, pgettext_lazy(u'competition status', u'Open')),
         (2, pgettext_lazy(u'competition status', u'Closed')),
@@ -49,8 +47,8 @@ class Competition(TranslatableModel):
     )
 
     status = models.SmallIntegerField(_(u'status'), choices=STATUSES)
-    activity = models.ForeignKey(Activity, verbose_name=_(u'activity'))
-    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
+    activity = models.ForeignKey(Activity, verbose_name=_(u'activity'), on_delete=models.CASCADE)
+    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'), on_delete=models.CASCADE)
     challonge_url = models.CharField(_(u'Challonge URL'), max_length=50, null=True, blank=True,
                                      help_text='Do not set this field if challonge integration is enabled. '
                                                'The challonge url will be generated after starting the competition.')
@@ -80,14 +78,6 @@ class Competition(TranslatableModel):
         _(u'maximum match points'), default=1, help_text=_(u'This number represents how many points are needed to win '
                                                            'a match. E.g. 3 in a BO 5 or 16 in BO 30'))
 
-    def __unicode__(self):
-        return u'{0} – {1}'.format(self.lan, self.get_translation().translated_title)
-
-    def title(self):
-        return self.get_translation().translated_title
-
-    def description(self):
-        return self.get_translation().translated_description
 
     def get_teams(self):
         if self.use_teams:
@@ -157,19 +147,11 @@ class Competition(TranslatableModel):
         )
 
 
-class CompetitionTranslation(get_translation_model(Competition, 'competition')):
-    translated_title = models.CharField(_(u'title'), max_length=50)
-    translated_description = models.TextField(_(u'description'))
-
-    class Meta:
-        verbose_name = _(u'competition translation')
-        verbose_name_plural = _(u'competition translations')
-
 
 class Participant(models.Model):
-    user = models.ForeignKey(User, verbose_name=_(u'user'), null=True)
-    team = models.ForeignKey('team.Team', verbose_name=_(u'team'), null=True)
-    competition = models.ForeignKey(Competition, verbose_name=_(u'competition'))
+    user = models.ForeignKey(User, verbose_name=_(u'user'), null=True, on_delete=models.CASCADE)
+    team = models.ForeignKey('team.Team', verbose_name=_(u'team'), null=True, on_delete=models.CASCADE)
+    competition = models.ForeignKey(Competition, verbose_name=_(u'competition'), on_delete=models.CASCADE)
     cid = models.CharField(_(u'cid'), max_length=50, null=True, blank=True)
 
     def __unicode__(self):
@@ -196,14 +178,14 @@ class Participant(models.Model):
 
 class Match(models.Model):
     matchid = models.CharField(_(u'match ID'), max_length=50)
-    player1 = models.ForeignKey(Participant, verbose_name=_(u'player 1'), related_name='player1', null=True)
-    player2 = models.ForeignKey(Participant, verbose_name=_(u'player 2'), related_name='player2', null=True)
-    competition = models.ForeignKey(Competition, verbose_name=_(u'competition'))
+    player1 = models.ForeignKey(Participant, verbose_name=_(u'player 1'), related_name='player1', null=True, on_delete=models.CASCADE)
+    player2 = models.ForeignKey(Participant, verbose_name=_(u'player 2'), related_name='player2', null=True, on_delete=models.CASCADE)
+    competition = models.ForeignKey(Competition, verbose_name=_(u'competition'), on_delete=models.CASCADE)
     p1_reg_score = models.CharField(_(u'p1 reg score'), max_length=50, null=True, blank=True)
     p2_reg_score = models.CharField(_(u'p2 reg score'), max_length=50, null=True, blank=True)
     final_score = models.CharField(_(u'final score'), max_length=50, null=True, blank=True)
     state = models.CharField(_(u'state'), max_length=50)
-    winner = models.ForeignKey(Participant, verbose_name=_(u'winner'), related_name='winner', null=True, blank=True)
+    winner = models.ForeignKey(Participant, verbose_name=_(u'winner'), related_name='winner', null=True, blank=True, on_delete=models.CASCADE)
 
     def get_p1(self):
         if self.player1:

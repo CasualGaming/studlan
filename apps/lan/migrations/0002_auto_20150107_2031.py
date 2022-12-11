@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('language', models.CharField(max_length=15, verbose_name='language', choices=[(b'nb', 'Norsk'), (b'en', 'English')])),
                 ('description', models.TextField(verbose_name=b'description')),
-                ('model', models.ForeignKey(related_name='translations', verbose_name=b'LAN', to='lan.LAN')),
+                ('model', models.ForeignKey(related_name='translations', verbose_name=b'LAN', to='lan.LAN', on_delete=models.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -45,7 +45,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('price', models.IntegerField(default=50, verbose_name=b'Price')),
                 ('number_of_seats', models.IntegerField(verbose_name=b'Seats')),
-                ('lan', models.ForeignKey(to='lan.LAN')),
+                ('lan', models.ForeignKey(to='lan.LAN', on_delete=models.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -59,7 +59,7 @@ class Migration(migrations.Migration):
                 ('language', models.CharField(max_length=15, verbose_name='language', choices=[(b'nb', 'Norsk'), (b'en', 'English')])),
                 ('title', models.CharField(max_length=50, verbose_name=b'Title')),
                 ('description', models.TextField(null=True, verbose_name=b'Description', blank=True)),
-                ('model', models.ForeignKey(related_name='translations', verbose_name=b'TicketType', to='lan.TicketType')),
+                ('model', models.ForeignKey(related_name='translations', verbose_name=b'TicketType', to='lan.TicketType', on_delete=models.CASCADE)),
             ],
             options={
                 'abstract': False,
@@ -69,13 +69,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='ticket',
             name='ticket_type',
-            field=models.ForeignKey(to='lan.TicketType'),
+            field=models.ForeignKey(to='lan.TicketType', on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='ticket',
             name='user',
-            field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE),
             preserve_default=True,
         ),
         migrations.RemoveField(

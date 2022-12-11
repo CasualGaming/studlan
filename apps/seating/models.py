@@ -36,12 +36,12 @@ class Layout(models.Model):
 
 
 class Seating(models.Model):
-    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
+    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'), on_delete=models.CASCADE)
     title = models.CharField(_(u'title'), max_length=50)
     desc = models.CharField(_(u'description'), max_length=250)
     priority = models.IntegerField(_(u'priority'), default=0, help_text=_(u'For ordering of seatings, higher number will show first.'))
     closing_date = models.DateTimeField(_(u'closing date'))
-    layout = models.ForeignKey(Layout, verbose_name=_(u'layout'))
+    layout = models.ForeignKey(Layout, verbose_name=_(u'layout'), on_delete=models.CASCADE)
     ticket_types = models.ManyToManyField(TicketType, verbose_name=_(u'ticket types'), blank=True, related_name='ticket_types')
     number_of_seats = models.IntegerField(_(u'number of seats'), default=0, editable=False, help_text=_(u'This field is automatically updated '
                                           'to match the chosen layout. Change the chosen layout to alter this field.'))
@@ -87,8 +87,8 @@ class Seating(models.Model):
 
 
 class Seat(models.Model):
-    user = models.ForeignKey(User, verbose_name=_(u'user'), null=True, blank=True)
-    seating = models.ForeignKey(Seating, verbose_name=_(u'seating'))
+    user = models.ForeignKey(User, verbose_name=_(u'user'), null=True, blank=True, on_delete=models.CASCADE)
+    seating = models.ForeignKey(Seating, verbose_name=_(u'seating'), on_delete=models.CASCADE)
     placement = models.IntegerField(_(u'placement ID'), help_text=_(u'A unique ID within the seating.'))
 
     def __unicode__(self):

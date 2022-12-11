@@ -12,7 +12,7 @@ class Team(models.Model):
     title = models.CharField(_(u'title'), max_length=50)
     tag = models.CharField(_(u'tag'), max_length=10, unique=True)
     # Warning: Leader is (generally?) not included in members
-    leader = models.ForeignKey(User, verbose_name=_(u'leader'), blank=False, related_name='newteamleader')
+    leader = models.ForeignKey(User, verbose_name=_(u'leader'), blank=False, related_name='newteamleader', on_delete=models.CASCADE)
     members = models.ManyToManyField(User, verbose_name=_(u'members'), related_name='new_team_members', through='Member')
 
     @property

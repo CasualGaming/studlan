@@ -8,10 +8,8 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _, ugettext_noop
 
-from translatable.models import TranslatableModel, get_translation_model
 
-
-class LAN(TranslatableModel):
+class LAN(models.Model):
 
     SLUG_REGEX = r'[a-zA-Z][a-zA-Z0-9]*'
     FULL_SLUG_REGEX = r'^' + SLUG_REGEX + r'$'
@@ -97,17 +95,10 @@ class LAN(TranslatableModel):
         )
 
 
-class LANTranslation(get_translation_model(LAN, 'LAN')):
-    description = models.TextField(_(u'description'))
-
-    class Meta:
-        verbose_name = _(u'LAN translation')
-        verbose_name_plural = _(u'LAN translations')
-
 
 class Attendee(models.Model):
-    user = models.ForeignKey(User, verbose_name=_(u'user'))
-    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
+    user = models.ForeignKey(User, verbose_name=_(u'user'), on_delete=models.CASCADE)
+    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'), on_delete=models.CASCADE)
     has_paid = models.BooleanField(_(u'has paid'), default=False)
     arrived = models.BooleanField(_(u'has arrived'), default=False)
 
@@ -138,10 +129,10 @@ class Attendee(models.Model):
         index_together = ['user', 'lan']
 
 
-class TicketType(TranslatableModel):
+class TicketType(models.Model):
     # Note: "seats" in this context means "tickets" or "spots", not actual seats.
 
-    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
+    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'), on_delete=models.CASCADE)
     price = models.IntegerField(_(u'price'), default=50)
     priority = models.IntegerField(_(u'priority'), default=0, help_text=_(u'In what priority the tickets will show, higher number will show first.'))
     available_from = models.DateTimeField(_(u'release date'), default=datetime.now, help_text=_(u'When the tickets will be made available.'))
@@ -170,21 +161,11 @@ class TicketType(TranslatableModel):
         verbose_name_plural = _(u'ticket types')
 
 
-class TicketTypeTranslation(get_translation_model(TicketType, 'TicketType')):
-    title = models.CharField(_(u'title'), max_length=50)
-    description = models.TextField(_(u'description'), blank=True)
-
-    def __unicode__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = _(u'ticket type translation')
-        verbose_name_plural = _(u'ticket type translation')
 
 
 class Ticket(models.Model):
-    user = models.ForeignKey(User, verbose_name=_(u'user'))
-    ticket_type = models.ForeignKey(TicketType, verbose_name=_(u'ticket type'))
+    user = models.ForeignKey(User, verbose_name=_(u'user'), on_delete=models.CASCADE)
+    ticket_type = models.ForeignKey(TicketType, verbose_name=_(u'ticket type'), on_delete=models.CASCADE)
     bought_date = models.DateField(_(u'bought date'))
     valid = models.BooleanField(_(u'is valid'), default=True)
     invalid_date = models.DateField(_(u'invalid date'), null=True, blank=True)
@@ -200,7 +181,7 @@ class Ticket(models.Model):
 
 
 class Directions(models.Model):
-    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
+    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'), on_delete=models.CASCADE)
     title = models.CharField(_(u'title'), max_length=100, null=True)
     description = models.TextField(_(u'description'), null=True, blank=True, help_text=_(u'Directions.'))
 

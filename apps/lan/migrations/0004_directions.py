@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('description', models.TextField(verbose_name=b'directions')),
-                ('lan', models.ForeignKey(to='lan.LAN')),
+                ('lan', models.ForeignKey(to='lan.LAN', on_delete=models.CASCADE)),
             ],
             options={
             },

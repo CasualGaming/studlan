@@ -3,12 +3,11 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from translatable.models import TranslatableModel, get_translation_model
 
 from apps.lan.models import LAN
 
 
-class Sponsor(TranslatableModel):
+class Sponsor(models.Model):
     title = models.CharField(_(u'name'), max_length=50)
     banner = models.CharField(_(u'banner URL'), max_length=100, blank=True,
                               help_text=_(u'Use a mirrored image of at least a height of 150px.'))
@@ -25,17 +24,10 @@ class Sponsor(TranslatableModel):
         verbose_name_plural = _(u'partners')
 
 
-class SponsorTranslation(get_translation_model(Sponsor, 'partner')):
-    description = models.TextField(_(u'description'))
 
-    class Meta:
-        verbose_name = _(u'partner translation')
-        verbose_name_plural = _(u'partner translations')
-
-
-class SponsorRelation(TranslatableModel):
-    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
-    sponsor = models.ForeignKey(Sponsor, verbose_name=_(u'partner'))
+class SponsorRelation(models.Model):
+    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'), on_delete=models.CASCADE)
+    sponsor = models.ForeignKey(Sponsor, verbose_name=_(u'partner'), on_delete=models.CASCADE)
     priority = models.IntegerField(_(u'priority'),
                                    help_text=_(u'Higher priority means closer to the top of the partner list.'))
 
@@ -46,11 +38,3 @@ class SponsorRelation(TranslatableModel):
         verbose_name = _(u'partner relation')
         verbose_name_plural = _(u'partner relations')
         ordering = ['-priority']
-
-
-class SponsorRelationTranslation(get_translation_model(SponsorRelation, 'partner relation')):
-    description = models.TextField(_(u'description'))
-
-    class Meta:
-        verbose_name = _(u'partner relation translation')
-        verbose_name_plural = _(u'partner relation translations')

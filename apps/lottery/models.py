@@ -5,13 +5,11 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from translatable.models import TranslatableModel, get_translation_model
-
 from apps.lan.models import LAN
 
 
-class Lottery(TranslatableModel):
-    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'))
+class Lottery(models.Model):
+    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'), on_delete=models.CASCADE)
     registration_open = models.BooleanField(_(u'open'), default=False)
     multiple_winnings = models.BooleanField(_(u'multiple winnings'), default=False, help_text=_(u'Allows a user to win more than one time.'))
     enforce_payment = models.BooleanField(_(u'enforce payment'), default=False, help_text=_(u'Require users to have paid for the LAN in order to participate.'))
@@ -42,21 +40,11 @@ class Lottery(TranslatableModel):
         )
 
 
-class LotteryTranslation(get_translation_model(Lottery, 'lottery')):
-    title = models.CharField(_(u'title'), max_length=50)
-    description = models.TextField(_(u'description'))
-
-    def __unicode__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = _(u'lottery translation')
-        verbose_name_plural = _(u'lottery translations')
 
 
 class LotteryParticipant(models.Model):
-    lottery = models.ForeignKey(Lottery, verbose_name=_(u'lottery'), editable=False)
-    user = models.ForeignKey(User, verbose_name=_(u'user'), editable=False)
+    lottery = models.ForeignKey(Lottery, verbose_name=_(u'lottery'), editable=False, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, verbose_name=_(u'user'), editable=False, on_delete=models.CASCADE)
 
     def __unicode__(self):
         return unicode(self.user)
@@ -67,8 +55,8 @@ class LotteryParticipant(models.Model):
 
 
 class LotteryWinner(models.Model):
-    lottery = models.ForeignKey(Lottery, verbose_name=_(u'lottery'), editable=False)
-    user = models.ForeignKey(User, verbose_name=_(u'user'), editable=False)
+    lottery = models.ForeignKey(Lottery, verbose_name=_(u'lottery'), editable=False, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, verbose_name=_(u'user'), editable=False, on_delete=models.CASCADE)
 
     def __unicode__(self):
         return unicode(self.user)
