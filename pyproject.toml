@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "studlan"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "2.2.28"
+django-anymail = {version = "7.2.1", extras = ["mailgun"]}
+django-postman = "3.7.0"
+pychallonge = "1.11.5"
+stripe = "4.2.0"
+beautifulsoup4 = "^4.11.1"
+reportlab = "3.5.59"
+python-dateutil = "2.8.2"
+django-markdown-deux = "^1.0.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
