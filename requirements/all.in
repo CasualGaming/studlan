@@ -1,4 +1,0 @@
--r base.in
--r development.in
--r production.in
--r test.in
