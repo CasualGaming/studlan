@@ -6,4 +6,4 @@ from django.utils.translation import ugettext_lazy as _
 
 class Config(AppConfig):
     name = 'apps.sendmail'
-    verbose_name = _(u'Send-Mail')
+    verbose_name = _('Send-Mail')

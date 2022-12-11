@@ -47,7 +47,7 @@ def login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.login(request):
-            messages.success(request, _(u'You have successfully logged in.'))
+            messages.success(request, _('You have successfully logged in.'))
             return redirect(redirect_url)
         else:
             form = LoginForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
@@ -72,14 +72,14 @@ def logout(request):
 
     auth.logout(request)
 
-    messages.success(request, _(u'You have successfully logged out.'))
+    messages.success(request, _('You have successfully logged out.'))
     return redirect(redirect_url)
 
 
 @sensitive_post_parameters()
 def register(request):
     if request.user.is_authenticated():
-        messages.warning(request, _(u'You\'re already logged in.'))
+        messages.warning(request, _('You\'re already logged in.'))
         return redirect('/')
 
     if request.method == 'POST':
@@ -124,17 +124,17 @@ def register(request):
             html_message = render_to_string('auth/email/verify_account.html', context, request).strip()
 
             # Send mail
-            from_address = u'"{name}" <{address}>'.format(name=settings.SITE_NAME, address=settings.DEFAULT_FROM_EMAIL)
-            to_address = u'"{name}" <{address}>'.format(name=user.get_full_name(), address=user.email)
+            from_address = '"{name}" <{address}>'.format(name=settings.SITE_NAME, address=settings.DEFAULT_FROM_EMAIL)
+            to_address = '"{name}" <{address}>'.format(name=user.get_full_name(), address=user.email)
             send_mail(
                 from_email=from_address,
                 recipient_list=[to_address],
-                subject=_(u'Verify your account'),
+                subject=_('Verify your account'),
                 message=txt_message,
                 html_message=html_message,
             )
 
-            messages.success(request, _(u'Registration successful. Check your email for verification instructions.'))
+            messages.success(request, _('Registration successful. Check your email for verification instructions.'))
 
             return redirect('/')
         else:
@@ -160,7 +160,7 @@ def direct_register(request, lan_id):
     lan = get_object_or_404(LAN, id=lan_id)
 
     if lan.is_ended():
-        messages.error(request, _(u'The LAN is ended, arrivals can\'t be changed.'))
+        messages.error(request, _('The LAN is ended, arrivals can\'t be changed.'))
         return redirect('/')
 
     if request.method == 'POST':
@@ -193,7 +193,7 @@ def direct_register(request, lan_id):
             attendee = Attendee(lan=lan, user=user)
             attendee.save()
 
-            messages.success(request, _(u'Registration successful.'))
+            messages.success(request, _('Registration successful.'))
 
             return redirect('/auth/direct_register')
         else:
@@ -203,7 +203,7 @@ def direct_register(request, lan_id):
 
     breadcrumbs = (
         (lan, lan.get_absolute_url()),
-        (_(u'Manual Registration'), ''),
+        (_('Manual Registration'), ''),
     )
     context = {
         'breadcrumbs': breadcrumbs,
@@ -217,7 +217,7 @@ def direct_register(request, lan_id):
 @require_safe
 def verify(request, token):
     if request.user.is_authenticated():
-        messages.error(request, _(u'You can\'t do that while logged in.'))
+        messages.error(request, _('You can\'t do that while logged in.'))
         return redirect('/')
 
     rt = get_object_or_404(RegisterToken, token=token)
@@ -229,18 +229,18 @@ def verify(request, token):
         user.save()
         rt.delete()
 
-        messages.success(request, _(u'User {user} was successfully activated. You can now log in.').format(user=user))
+        messages.success(request, _('User {user} was successfully activated. You can now log in.').format(user=user))
 
         return redirect('auth_login')
     else:
-        messages.error(request, _(u'The activation link has expired. Please use the password recovery form to get a new link.'))
+        messages.error(request, _('The activation link has expired. Please use the password recovery form to get a new link.'))
         return redirect('/')
 
 
 @sensitive_post_parameters()
 def recover(request):
     if request.user.is_authenticated():
-        messages.error(request, _(u'You can\'t do that while logged in.'))
+        messages.error(request, _('You can\'t do that while logged in.'))
         return redirect('/')
 
     if request.method == 'POST':
@@ -250,7 +250,7 @@ def recover(request):
             users = User.objects.filter(email__iexact=email)
 
             if users.count() == 0:
-                messages.error(request, _(u'No users are registered with that email address.'))
+                messages.error(request, _('No users are registered with that email address.'))
                 return redirect('/')
 
             # Send recovery email to all associated users
@@ -271,17 +271,17 @@ def recover(request):
                 html_message = render_to_string('auth/email/recover_account.html', context, request).strip()
 
                 # Send mail
-                from_address = u'"{name}" <{address}>'.format(name=settings.SITE_NAME, address=settings.DEFAULT_FROM_EMAIL)
-                to_address = u'"{name}" <{address}>'.format(name=user.get_full_name(), address=user.email)
+                from_address = '"{name}" <{address}>'.format(name=settings.SITE_NAME, address=settings.DEFAULT_FROM_EMAIL)
+                to_address = '"{name}" <{address}>'.format(name=user.get_full_name(), address=user.email)
                 send_mail(
                     from_email=from_address,
                     recipient_list=[to_address],
-                    subject=_(u'Account recovery'),
+                    subject=_('Account recovery'),
                     message=txt_message,
                     html_message=html_message,
                 )
 
-            messages.success(request, _(u'A recovery link has been sent to all users with email address "{email}".').format(email=email))
+            messages.success(request, _('A recovery link has been sent to all users with email address "{email}".').format(email=email))
             return redirect('/')
         else:
             form = RecoveryForm(request.POST, auto_id=True, error_class=InlineSpanErrorList)
@@ -294,7 +294,7 @@ def recover(request):
 @sensitive_post_parameters()
 def set_password(request, token=None):
     if request.user.is_authenticated():
-        messages.error(request, _(u'You can\'t do that while logged in.'))
+        messages.error(request, _('You can\'t do that while logged in.'))
         return redirect('/')
 
     rt = get_object_or_404(RegisterToken, token=token)
@@ -311,14 +311,14 @@ def set_password(request, token=None):
 
                 rt.delete()
 
-                messages.success(request, _(u'Successfully changed password for user {user}. You can now log in.').format(user=user))
+                messages.success(request, _('Successfully changed password for user {user}. You can now log in.').format(user=user))
                 return redirect('/')
         else:
             form = ChangePasswordForm()
-            messages.info(request, _(u'Please set a new password.'))
+            messages.info(request, _('Please set a new password.'))
 
         return render(request, 'auth/set_password.html', {'form': form, 'token': token})
 
     else:
-        messages.error(request, _(u'The recovery link has expired. Please use the password recovery form to get a new link.'))
+        messages.error(request, _('The recovery link has expired. Please use the password recovery form to get a new link.'))
         return redirect('/')

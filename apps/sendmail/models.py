@@ -18,9 +18,9 @@ class SendMail(models.Model):
         managed = False
 
         permissions = (
-            ('list', u'Can list mails'),
-            ('view', u'Can view mails'),
-            ('send', u'Can send mails'),
+            ('list', 'Can list mails'),
+            ('view', 'Can view mails'),
+            ('send', 'Can send mails'),
         )
 
 
@@ -29,17 +29,17 @@ class Mail(models.Model):
     A mail sent using the Send-Mail feature.
     """
 
-    uuid = models.UUIDField(_(u'UUID'), primary_key=True, help_text=_(u'UUID specified by the sender, prevents accidentally sending same mail multiple times.'))
-    created_time = models.DateTimeField(_(u'time sent'), default=datetime.now)
-    sender = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='+', verbose_name=_(u'sender'))
+    uuid = models.UUIDField(_('UUID'), primary_key=True, help_text=_('UUID specified by the sender, prevents accidentally sending same mail multiple times.'))
+    created_time = models.DateTimeField(_('time sent'), default=datetime.now)
+    sender = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='+', verbose_name=_('sender'))
     # Should be compatible with settings.LANGUAGES
-    language = models.CharField(_(u'language'), max_length=100)
-    subject = models.CharField(_(u'subject'), max_length=100)
-    content = models.TextField(_(u'content'))
+    language = models.CharField(_('language'), max_length=100)
+    subject = models.CharField(_('subject'), max_length=100)
+    content = models.TextField(_('content'))
 
     class Meta:
-        verbose_name = _(u'mail')
-        verbose_name_plural = _(u'mails')
+        verbose_name = _('mail')
+        verbose_name_plural = _('mails')
         ordering = ['-created_time']
 
     def __unicode__(self):
@@ -60,13 +60,13 @@ class MailRecipient(models.Model):
     A recipient of a specific mail.
     """
 
-    mail = models.ForeignKey(Mail, on_delete=models.CASCADE, related_name='recipients', verbose_name=_(u'mail'))
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+', verbose_name=_(u'user'))
-    sent_time = models.DateTimeField(_(u'time sent'), blank=True, null=True, help_text=_(u'Time the email was sent. Unset if not sent yet.'))
+    mail = models.ForeignKey(Mail, on_delete=models.CASCADE, related_name='recipients', verbose_name=_('mail'))
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+', verbose_name=_('user'))
+    sent_time = models.DateTimeField(_('time sent'), blank=True, null=True, help_text=_('Time the email was sent. Unset if not sent yet.'))
 
     class Meta:
-        verbose_name = _(u'mail recipient')
-        verbose_name_plural = _(u'mail recipients')
+        verbose_name = _('mail recipient')
+        verbose_name_plural = _('mail recipients')
         ordering = ['-sent_time']
 
     def __unicode__(self):

@@ -8,10 +8,10 @@ from apps.lan.models import LAN
 
 
 class Sponsor(models.Model):
-    title = models.CharField(_(u'name'), max_length=50)
-    banner = models.CharField(_(u'banner URL'), max_length=100, blank=True,
-                              help_text=_(u'Use a mirrored image of at least a height of 150px.'))
-    website = models.URLField(_(u'website'), max_length=200)
+    title = models.CharField(_('name'), max_length=50)
+    banner = models.CharField(_('banner URL'), max_length=100, blank=True,
+                              help_text=_('Use a mirrored image of at least a height of 150px.'))
+    website = models.URLField(_('website'), max_length=200)
 
     def __unicode__(self):
         return self.title
@@ -20,21 +20,21 @@ class Sponsor(models.Model):
         return LAN.objects.filter(sponsorrelation__sponsor=self)
 
     class Meta:
-        verbose_name = _(u'partner')
-        verbose_name_plural = _(u'partners')
+        verbose_name = _('partner')
+        verbose_name_plural = _('partners')
 
 
 
 class SponsorRelation(models.Model):
-    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'), on_delete=models.CASCADE)
-    sponsor = models.ForeignKey(Sponsor, verbose_name=_(u'partner'), on_delete=models.CASCADE)
-    priority = models.IntegerField(_(u'priority'),
-                                   help_text=_(u'Higher priority means closer to the top of the partner list.'))
+    lan = models.ForeignKey(LAN, verbose_name=_('LAN'), on_delete=models.CASCADE)
+    sponsor = models.ForeignKey(Sponsor, verbose_name=_('partner'), on_delete=models.CASCADE)
+    priority = models.IntegerField(_('priority'),
+                                   help_text=_('Higher priority means closer to the top of the partner list.'))
 
     def __unicode__(self):
-        return unicode(self.lan) + u' – ' + unicode(self.sponsor)
+        return str(self.lan) + ' – ' + str(self.sponsor)
 
     class Meta:
-        verbose_name = _(u'partner relation')
-        verbose_name_plural = _(u'partner relations')
+        verbose_name = _('partner relation')
+        verbose_name_plural = _('partner relations')
         ordering = ['-priority']

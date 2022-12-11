@@ -15,11 +15,11 @@ from apps.userprofile.models import User
 
 
 class SendMessageForm(forms.Form):
-    _select_multiple_help = _(u'Select zero, one or multiple by control-clicking.')
+    _select_multiple_help = _('Select zero, one or multiple by control-clicking.')
     _select_multiple_size = '5'
 
     language = forms.ChoiceField(
-        label=_(u'Language'),
+        label=_('Language'),
         required=True,
         choices=settings.LANGUAGES)
     mail_uuid = forms.UUIDField(
@@ -27,61 +27,61 @@ class SendMessageForm(forms.Form):
         initial=uuid.uuid4,
         widget=forms.HiddenInput())
     subject = forms.CharField(
-        label=_(u'Subject'),
+        label=_('Subject'),
         required=True,
         max_length=100)
     content = forms.CharField(
-        label=_(u'Content'),
+        label=_('Content'),
         required=True,
         strip=True,
-        help_text=_(u'Markdown formatting is supported. The message will be sent as both HTML and plaintext, so make sure to add important links as plaintext.'),
+        help_text=_('Markdown formatting is supported. The message will be sent as both HTML and plaintext, so make sure to add important links as plaintext.'),
         widget=forms.Textarea)
     recipient_everyone_marketing = forms.BooleanField(
-        label=_(u'All users (marketing)'),
+        label=_('All users (marketing)'),
         required=False,
-        help_text=_(u'Send to users which have opted in to marketing emails.'))
+        help_text=_('Send to users which have opted in to marketing emails.'))
     recipient_everyone = forms.BooleanField(
-        label=_(u'All users'),
+        label=_('All users'),
         required=False,
-        help_text=_(u'Send to all users. Never use for marketing purposes!'))
+        help_text=_('Send to all users. Never use for marketing purposes!'))
     recipient_lan_attendees = forms.ModelMultipleChoiceField(
-        label=_(u'LAN attendees'),
+        label=_('LAN attendees'),
         queryset=LAN.objects.all(),
         required=False,
-        help_text=format_lazy(u'{0} {1}', _(u'Users which pressed "attend". Appropriate for public LAN updates.'), _select_multiple_help),
+        help_text=format_lazy('{0} {1}', _('Users which pressed "attend". Appropriate for public LAN updates.'), _select_multiple_help),
         widget=forms.SelectMultiple(attrs={'size': _select_multiple_size}))
     recipient_lan_payers = forms.ModelMultipleChoiceField(
-        label=_(u'LAN payers'),
+        label=_('LAN payers'),
         queryset=LAN.objects.all(),
         required=False,
-        help_text=format_lazy(u'{0} {1}', _(u'Users which paid by the door (i.e. no ticket) (if allowed for the LAN). Appropriate for LAN updates.'), _select_multiple_help),
+        help_text=format_lazy('{0} {1}', _('Users which paid by the door (i.e. no ticket) (if allowed for the LAN). Appropriate for LAN updates.'), _select_multiple_help),
         widget=forms.SelectMultiple(attrs={'size': _select_multiple_size}))
     recipient_tickets = forms.ModelMultipleChoiceField(
-        label=_(u'Ticket owners'),
+        label=_('Ticket owners'),
         queryset=TicketType.objects.all(),
         required=False,
-        help_text=format_lazy(u'{0} {1}', _(u'Users which bought/received a ticket for the LAN. Appropriate for LAN updates.'), _select_multiple_help),
+        help_text=format_lazy('{0} {1}', _('Users which bought/received a ticket for the LAN. Appropriate for LAN updates.'), _select_multiple_help),
         widget=forms.SelectMultiple(attrs={'size': _select_multiple_size}))
     recipient_teams = forms.ModelMultipleChoiceField(
-        label=_(u'Teams'),
+        label=_('Teams'),
         queryset=Team.objects.all(),
         required=False,
         help_text=_select_multiple_help,
         widget=forms.SelectMultiple(attrs={'size': _select_multiple_size}))
     recipient_competitions = forms.ModelMultipleChoiceField(
-        label=_(u'Competitions'),
+        label=_('Competitions'),
         queryset=Competition.objects.all(),
         required=False,
         help_text=_select_multiple_help,
         widget=forms.SelectMultiple(attrs={'size': _select_multiple_size}))
     recipient_users = forms.CharField(
-        label=_(u'Individual users'),
+        label=_('Individual users'),
         required=False,
-        help_text=_(u'Specify usernames separated by comma. Case sensitive.'))
+        help_text=_('Specify usernames separated by comma. Case sensitive.'))
     recipient_yourself = forms.BooleanField(
-        label=_(u'Yourself'),
+        label=_('Yourself'),
         required=False,
-        help_text=_(u'Send to yourself.'))
+        help_text=_('Send to yourself.'))
 
     def clean(self):
         cleaned_data = super(SendMessageForm, self).clean()
@@ -98,24 +98,24 @@ class SendMessageForm(forms.Form):
             or cleaned_data.get('recipient_competitions')
             or cleaned_data.get('recipient_users')
         ):
-            self.add_error(None, _(u'At least one recipient is required.'))
+            self.add_error(None, _('At least one recipient is required.'))
 
         # Parse users string
         users_raw = cleaned_data.get('recipient_users')
-        users_raw = users_raw.replace(u' ', u'')
-        users_raw = users_raw.split(u',')
+        users_raw = users_raw.replace(' ', '')
+        users_raw = users_raw.split(',')
         found_users_qs = User.objects.none()
-        missing_users_string = u''
+        missing_users_string = ''
         for username in users_raw:
             user_qs = User.objects.filter(username=username)
             if user_qs:
                 found_users_qs = found_users_qs | user_qs
-            elif missing_users_string == u'':
+            elif missing_users_string == '':
                 missing_users_string = username
             else:
-                missing_users_string = u'{0}, {1}'.format(missing_users_string, username)
+                missing_users_string = '{0}, {1}'.format(missing_users_string, username)
         if missing_users_string:
-            self.add_error(None, _(u'Users not found: {users}').format(users=missing_users_string))
+            self.add_error(None, _('Users not found: {users}').format(users=missing_users_string))
         cleaned_data['recipient_users'] = found_users_qs
 
         # Clean content

@@ -28,8 +28,8 @@ def details(request, lottery_id):
 
     breadcrumbs = (
         (lan, lan.get_absolute_url()),
-        (_(u'Competitions'), reverse('competitions_lan_compos', kwargs={'lan_id': lan.id})),
-        (unicode(lottery), ''),
+        (_('Competitions'), reverse('competitions_lan_compos', kwargs={'lan_id': lan.id})),
+        (str(lottery), ''),
     )
 
     return render(request, 'lottery/details.html', {'breadcrumbs': breadcrumbs, 'lottery': lottery,
@@ -48,11 +48,11 @@ def sign_up(request, lottery_id):
     if lottery.enforce_payment:
         attendance = Attendee.objects.filter(lan=lottery.lan, user=request.user)
         if not attendance:
-            messages.error(request, _(u'You are not signed up for the LAN.'))
+            messages.error(request, _('You are not signed up for the LAN.'))
             return redirect(lottery)
         has_paid = attendance[0].has_paid or lottery.lan.has_ticket(request.user)
         if not has_paid:
-            messages.error(request, _(u'You have not paid for the LAN.'))
+            messages.error(request, _('You have not paid for the LAN.'))
             return redirect(lottery)
 
     LotteryParticipant.objects.create(user=request.user, lottery=lottery)
@@ -93,7 +93,7 @@ def draw(request, lottery_id):
     participants = lottery.lotteryparticipant_set.all()
 
     if len(participants) < 1:
-        messages.error(request, _(u'No eligible participants.'))
+        messages.error(request, _('No eligible participants.'))
         return redirect(lottery)
 
     rand = SystemRandom()

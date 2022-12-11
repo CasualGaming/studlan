@@ -9,11 +9,11 @@ from apps.lan.models import Attendee
 
 
 class Team(models.Model):
-    title = models.CharField(_(u'title'), max_length=50)
-    tag = models.CharField(_(u'tag'), max_length=10, unique=True)
+    title = models.CharField(_('title'), max_length=50)
+    tag = models.CharField(_('tag'), max_length=10, unique=True)
     # Warning: Leader is (generally?) not included in members
-    leader = models.ForeignKey(User, verbose_name=_(u'leader'), blank=False, related_name='newteamleader', on_delete=models.CASCADE)
-    members = models.ManyToManyField(User, verbose_name=_(u'members'), related_name='new_team_members', through='Member')
+    leader = models.ForeignKey(User, verbose_name=_('leader'), blank=False, related_name='newteamleader', on_delete=models.CASCADE)
+    members = models.ManyToManyField(User, verbose_name=_('members'), related_name='new_team_members', through='Member')
 
     @property
     def full_member_count(self):
@@ -58,37 +58,37 @@ class Team(models.Model):
         return paid
 
     def __unicode__(self):
-        return u'[{0}] {1}'.format(self.tag, self.title)
+        return '[{0}] {1}'.format(self.tag, self.title)
 
     class Meta:
-        verbose_name = _(u'team')
-        verbose_name_plural = _(u'teams')
+        verbose_name = _('team')
+        verbose_name_plural = _('teams')
         ordering = ['tag', 'title']
         permissions = (
-            ('show_invitations', u'Show users invited to teams'),
+            ('show_invitations', 'Show users invited to teams'),
         )
 
 
 class Member(models.Model):
-    team = models.ForeignKey(Team, verbose_name=_(u'team'), on_delete=models.CASCADE)
-    user = models.ForeignKey(User, verbose_name=_(u'user'), on_delete=models.CASCADE)
-    date_joined = models.DateTimeField(_(u'date joined'), auto_now_add=True)
+    team = models.ForeignKey(Team, verbose_name=_('team'), on_delete=models.CASCADE)
+    user = models.ForeignKey(User, verbose_name=_('user'), on_delete=models.CASCADE)
+    date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
 
     def __unicode__(self):
         return self.user.username
 
     class Meta:
-        verbose_name = _(u'team member')
-        verbose_name_plural = _(u'team members')
+        verbose_name = _('team member')
+        verbose_name_plural = _('team members')
         unique_together = ('team', 'user')
         ordering = ['user']
 
 
 class Invitation(models.Model):
-    team = models.ForeignKey(Team, verbose_name=_(u'team'), on_delete=models.CASCADE)
-    invitee = models.ForeignKey(User, verbose_name=_(u'invitee'), on_delete=models.CASCADE)
-    token = models.CharField(_(u'token'), max_length=32, editable=False)
+    team = models.ForeignKey(Team, verbose_name=_('team'), on_delete=models.CASCADE)
+    invitee = models.ForeignKey(User, verbose_name=_('invitee'), on_delete=models.CASCADE)
+    token = models.CharField(_('token'), max_length=32, editable=False)
 
     class Meta:
-        verbose_name = _(u'team invitation')
-        verbose_name_plural = _(u'team invitations')
+        verbose_name = _('team invitation')
+        verbose_name_plural = _('team invitations')

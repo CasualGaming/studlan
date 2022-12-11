@@ -9,8 +9,8 @@ from django.utils.translation import ugettext_lazy as _
 
 class RegisterToken(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    token = models.CharField(_(u'token'), max_length=32)
-    created = models.DateTimeField(_(u'created'), editable=False, auto_now_add=True)
+    token = models.CharField(_('token'), max_length=32)
+    created = models.DateTimeField(_('created'), editable=False, auto_now_add=True)
 
     @property
     def is_valid(self):
@@ -19,5 +19,5 @@ class RegisterToken(models.Model):
         return now < self.created + valid_period
 
     class Meta:
-        verbose_name = _(u'register token')
-        verbose_name_plural = _(u'register tokens')
+        verbose_name = _('register token')
+        verbose_name_plural = _('register tokens')

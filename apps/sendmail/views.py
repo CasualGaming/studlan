@@ -67,7 +67,7 @@ def handle_send_form(request, form, template_context):
 
     # Reject duplicate message
     if Mail.objects.filter(uuid=mail_uuid).exists():
-        messages.error(request, _(u'The mail has already been sent. If this is a new message, please reload the page and try again.'))
+        messages.error(request, _('The mail has already been sent. If this is a new message, please reload the page and try again.'))
         return form
 
     # Build recipient list
@@ -102,7 +102,7 @@ def handle_send_form(request, form, template_context):
         sendmail_logger.info('Prepared mail "%s" with %d recipients.', mail.uuid, recipients_count)
 
     # Show new form
-    messages.success(request, _(u'Successfully created the message with {user_count} recipient(s).').format(user_count=recipients_count))
+    messages.success(request, _('Successfully created the message with {user_count} recipient(s).').format(user_count=recipients_count))
     return None
 
 

@@ -53,7 +53,7 @@ def main_filtered(request, lan_id):
 
     breadcrumbs = (
         (lan, lan.get_absolute_url()),
-        (_(u'Seating'), ''),
+        (_('Seating'), ''),
     )
     context['breadcrumbs'] = breadcrumbs
 
@@ -97,11 +97,11 @@ def seating_details(request, lan_id, seating_id=None, seat_id=None):
             else:
                 children[0]['class'] = ' seating-node-occupied'
                 children[0]['status'] = 'occupied'
-                children[0]['seat-user'] = unicode(seat.user.username)
+                children[0]['seat-user'] = str(seat.user.username)
 
                 # Separate title element for chrome support
                 title = dom.new_tag('title')
-                title.string = unicode(seat.user.username)
+                title.string = str(seat.user.username)
                 tag.append(title)
 
     dom.encode('utf-8')
@@ -117,7 +117,7 @@ def seating_details(request, lan_id, seating_id=None, seat_id=None):
     context['template'] = dom.__str__
     context['breadcrumbs'] = (
         (lan, lan.get_absolute_url()),
-        (_(u'Seating'), ''),
+        (_('Seating'), ''),
     )
 
     return render(request, 'seating/seating.html', context)
@@ -129,7 +129,7 @@ def take_seat(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
     lan = seating.lan
     if not seating.is_open():
-        messages.error(request, _(u'The seating is closed.'))
+        messages.error(request, _('The seating is closed.'))
         return redirect(seating)
 
     seat_id = get_post_seat_id(request, seating)
@@ -157,13 +157,13 @@ def take_seat(request, seating_id):
                             os.save()
                 seat.user = request.user
                 seat.save()
-                messages.success(request, _(u'You have reserved your seat.'))
+                messages.success(request, _('You have reserved your seat.'))
             else:
-                messages.error(request, _(u'That seat is already taken.'))
+                messages.error(request, _('That seat is already taken.'))
         else:
-            messages.warning(request, _(u'Your ticket does not work in this seating area.'))
+            messages.warning(request, _('Your ticket does not work in this seating area.'))
     else:
-        messages.warning(request, _(u'You need a ticket before reserving a seat.'))
+        messages.warning(request, _('You need a ticket before reserving a seat.'))
         return redirect(lan)
     return redirect(seating)
 
@@ -173,7 +173,7 @@ def take_seat(request, seating_id):
 def leave_seat(request, seating_id):
     seating = get_object_or_404(Seating, pk=seating_id)
     if not seating.is_open():
-        messages.error(request, _(u'The seating is closed.'))
+        messages.error(request, _('The seating is closed.'))
         return redirect(seating)
 
     seat_id = get_post_seat_id(request, seating)
@@ -184,21 +184,21 @@ def leave_seat(request, seating_id):
     if seat.user == request.user:
         seat.user = None
         seat.save()
-        messages.success(request, _(u'You have unreserved your seat.'))
+        messages.success(request, _('You have unreserved your seat.'))
     else:
-        messages.error(request, _(u'This is not your seat.'))
+        messages.error(request, _('This is not your seat.'))
     return redirect(seating)
 
 
 def get_post_seat_id(request, seating):
     seat_id_str = request.POST.get('seat')
     if not seat_id_str:
-        messages.error(request, _(u'No seat was specified.'))
+        messages.error(request, _('No seat was specified.'))
         return None
     try:
         seat_id = int(seat_id_str)
     except ValueError:
-        messages.error(request, _(u'Illegal seat.'))
+        messages.error(request, _('Illegal seat.'))
         return None
     return seat_id
 
@@ -249,12 +249,12 @@ def seating_list(request, seating_id):
             p.setFont('Times-Roman', 20)
             p.drawCentredString(page_width_center, page_height - 90, seating.title)
             p.setFont('Helvetica', 14)
-            p.drawCentredString(page_width_center, 40, '{0} {1}'.format(_(u'Page'), page_num))
+            p.drawCentredString(page_width_center, 40, '{0} {1}'.format(_('Page'), page_num))
             # For seat text
             p.setFont('Helvetica', 14)
 
-        occupant = unicode(seat.user) if seat.user else ''
-        p.drawString(x_offset, cursor, u'{0} {1}: {2}'.format(_(u'Seat'), seat.placement, occupant))
+        occupant = str(seat.user) if seat.user else ''
+        p.drawString(x_offset, cursor, '{0} {1}: {2}'.format(_('Seat'), seat.placement, occupant))
 
         cursor -= 20
 
@@ -286,14 +286,14 @@ def seating_map(request, seating_id):
         p.setFont('Times-Roman', 40)
         p.drawCentredString(page_width_center, y_offset + 310, lan.title)
         p.setFont('Times-Roman', 35)
-        text = _(u'%(seating)s, seat %(seat)d') % {'seating': seating.title, 'seat': seat.placement}
+        text = _('%(seating)s, seat %(seat)d') % {'seating': seating.title, 'seat': seat.placement}
         p.drawCentredString(page_width_center, y_offset + 250, text)
         if seat.user:
             p.setFont('Helvetica', 40)
-            occupant = unicode(seat.user)
+            occupant = str(seat.user)
         else:
             p.setFont('Helvetica', 40)
-            occupant = _(u'(Available)')
+            occupant = _('(Available)')
         p.drawCentredString(page_width_center, y_offset + 150, occupant)
 
         if new_page:

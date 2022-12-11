@@ -11,11 +11,11 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         fields = ('nick', 'date_of_birth', 'address', 'zip_code', 'phone', 'marketing_optin')
         widgets = {
-            'nick': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _(u'Nickname'), 'type': 'text'}),
+            'nick': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Nickname'), 'type': 'text'}),
             'date_of_birth': forms.TextInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _(u'Street address'), 'type': 'text'}),
-            'zip_code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _(u'Postal code'), 'type': 'number'}),
-            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _(u'Phone number'), 'type': 'tel'}),
+            'address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Street address'), 'type': 'text'}),
+            'zip_code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Postal code'), 'type': 'number'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Phone number'), 'type': 'tel'}),
             'marketing_optin': forms.CheckboxInput()}
 
     def clean(self):

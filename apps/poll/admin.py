@@ -9,8 +9,8 @@ from .models import Poll, PollOption, PollParticipant
 
 
 class PollOptionInlineAdmin(admin.StackedInline):
-    verbose_name = _(u'poll option')
-    verbose_name_plural = _(u'poll options')
+    verbose_name = _('poll option')
+    verbose_name_plural = _('poll options')
     model = PollOption
     extra = 1
 

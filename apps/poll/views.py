@@ -29,8 +29,8 @@ def details(request, poll_id):
 
     breadcrumbs = (
         (lan, lan.get_absolute_url()),
-        (_(u'Competitions'), reverse('competitions_lan_compos', kwargs={'lan_id': lan.id})),
-        (unicode(poll), ''),
+        (_('Competitions'), reverse('competitions_lan_compos', kwargs={'lan_id': lan.id})),
+        (str(poll), ''),
     )
     context = {
         'breadcrumbs': breadcrumbs,
@@ -56,11 +56,11 @@ def vote(request, poll_id, option_id):
     if poll.enforce_payment:
         attendance = Attendee.objects.filter(lan=poll.lan, user=request.user)
         if not attendance:
-            messages.error(request, _(u'You are not signed up for the LAN.'))
+            messages.error(request, _('You are not signed up for the LAN.'))
             return redirect(poll)
         has_paid = attendance[0].has_paid or poll.lan.has_ticket(request.user)
         if not has_paid:
-            messages.error(request, _(u'You have not paid for the LAN.'))
+            messages.error(request, _('You have not paid for the LAN.'))
             return redirect(poll)
 
     # Create or update vote

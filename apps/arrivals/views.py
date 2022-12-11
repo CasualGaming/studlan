@@ -33,11 +33,11 @@ def arrivals(request, lan_id):
 
     # Attendees (incl. paid and arrived)
     attendees = Attendee.objects.filter(lan=lan)
-    users_set.update(map(lambda o: o.user, attendees))
-    attendee_users = map(lambda d: d['user'], attendees.values('user'))
-    paid_users = map(lambda d: d['user'], attendees.filter(has_paid=True).values('user'))
+    users_set.update([o.user for o in attendees])
+    attendee_users = [d['user'] for d in attendees.values('user')]
+    paid_users = [d['user'] for d in attendees.filter(has_paid=True).values('user')]
     total_paid_count += len(paid_users)
-    arrived_users = map(lambda d: d['user'], attendees.filter(arrived=True).values('user'))
+    arrived_users = [d['user'] for d in attendees.filter(arrived=True).values('user')]
 
     # Tickets
     ticket_types = TicketType.objects.filter(lan=lan)
@@ -64,7 +64,7 @@ def arrivals(request, lan_id):
 
     breadcrumbs = (
         (lan, lan.get_absolute_url()),
-        (_(u'Arrivals'), ''),
+        (_('Arrivals'), ''),
     )
     context = {
         'breadcrumbs': breadcrumbs,
@@ -93,25 +93,25 @@ def toggle(request, lan_id):
     arrived_type = int(toggle_type) == 1
 
     if not payment_type and not arrived_type:
-        return HttpResponse(status=400, content=_(u'Invalid toggle type.'))
+        return HttpResponse(status=400, content=_('Invalid toggle type.'))
 
     lan = LAN.objects.filter(pk=lan_id).first()
     if lan is None:
-        return HttpResponse(status=404, content=_(u'LAN not found.'))
+        return HttpResponse(status=404, content=_('LAN not found.'))
 
     if lan.is_ended():
-        return HttpResponse(status=403, content=_(u'The LAN is ended, arrivals can\'t be changed.'))
+        return HttpResponse(status=403, content=_('The LAN is ended, arrivals can\'t be changed.'))
 
     if payment_type and not lan.allow_manual_payment:
-        return HttpResponse(status=403, content=_(u'The LAN does not allow manual tickets.'))
+        return HttpResponse(status=403, content=_('The LAN does not allow manual tickets.'))
 
     user = User.objects.filter(username=username).first()
     if user is None:
-        return HttpResponse(status=404, content=_(u'User not found.'))
+        return HttpResponse(status=404, content=_('User not found.'))
 
     attendee = Attendee.objects.filter(lan=lan, user=user).first()
     if attendee is None:
-        return HttpResponse(status=404, content=_(u'The user is not attending the LAN.'))
+        return HttpResponse(status=404, content=_('The user is not attending the LAN.'))
 
     # Update
     if payment_type:

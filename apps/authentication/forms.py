@@ -10,12 +10,12 @@ from apps.userprofile.models import UserProfile
 
 class LoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control',
-                                                             'placeholder': _(u'Username'), 'type': 'text'}),
-                               label=_(u'Username'), max_length=50)
+                                                             'placeholder': _('Username'), 'type': 'text'}),
+                               label=_('Username'), max_length=50)
     password = forms.CharField(widget=forms.PasswordInput(render_value=False, attrs={'class': 'form-control',
-                                                                                     'placeholder': _(u'Password'),
+                                                                                     'placeholder': _('Password'),
                                                                                      'type': 'password'}),
-                               label=_(u'Password'))
+                               label=_('Password'))
     user = None
 
     def clean(self):
@@ -26,7 +26,7 @@ class LoginForm(forms.Form):
         if auth_user and auth_user.is_active:
             self.user = auth_user
         else:
-            self.add_error('__all__', ugettext(u'Login failed! Either the account does not exist, it is inactive, or the username–password combination is incorrect.'))
+            self.add_error('__all__', ugettext('Login failed! Either the account does not exist, it is inactive, or the username–password combination is incorrect.'))
         return self.cleaned_data
 
     def login(self, request):
@@ -42,40 +42,40 @@ class LoginForm(forms.Form):
 
 
 class RegisterForm(forms.Form):
-    desired_username = forms.CharField(label=_(u'Desired username'), max_length=20,
+    desired_username = forms.CharField(label=_('Desired username'), max_length=20,
                                        widget=forms.TextInput(
-                                           attrs={'class': 'form-control', 'placeholder': _(u'Username'),
+                                           attrs={'class': 'form-control', 'placeholder': _('Username'),
                                                   'type': 'text'}))
-    first_name = forms.CharField(label=_(u'First name'), max_length=50,
+    first_name = forms.CharField(label=_('First name'), max_length=50,
                                  widget=forms.TextInput(
-                                     attrs={'class': 'form-control', 'placeholder': _(u'First name'), 'type': 'text'}))
-    last_name = forms.CharField(label=_(u'Last name'), max_length=50,
+                                     attrs={'class': 'form-control', 'placeholder': _('First name'), 'type': 'text'}))
+    last_name = forms.CharField(label=_('Last name'), max_length=50,
                                 widget=forms.TextInput(
-                                    attrs={'class': 'form-control', 'placeholder': _(u'Last name'), 'type': 'text'}))
-    date_of_birth = forms.DateField(label=_(u'Date of birth'),
+                                    attrs={'class': 'form-control', 'placeholder': _('Last name'), 'type': 'text'}))
+    date_of_birth = forms.DateField(label=_('Date of birth'),
                                     widget=forms.TextInput(
-                                        attrs={'class': 'form-control', 'placeholder': u'YYYY-MM-DD', 'type': 'date'}))
-    address = forms.CharField(label=_(u'Address'), max_length=50,
+                                        attrs={'class': 'form-control', 'placeholder': 'YYYY-MM-DD', 'type': 'date'}))
+    address = forms.CharField(label=_('Address'), max_length=50,
                               widget=forms.TextInput(
-                                  attrs={'class': 'form-control', 'placeholder': _(u'Address'), 'type': 'text'}))
-    zip_code = forms.CharField(label=_(u'Postal code'), max_length=4,
+                                  attrs={'class': 'form-control', 'placeholder': _('Address'), 'type': 'text'}))
+    zip_code = forms.CharField(label=_('Postal code'), max_length=4,
                                widget=forms.TextInput(
-                                   attrs={'class': 'form-control', 'placeholder': _(u'Postal code'), 'type': 'number'}))
-    phone = forms.CharField(label=_(u'Phone number'), max_length=20,
+                                   attrs={'class': 'form-control', 'placeholder': _('Postal code'), 'type': 'number'}))
+    phone = forms.CharField(label=_('Phone number'), max_length=20,
                             widget=forms.TextInput(
-                                attrs={'class': 'form-control', 'placeholder': _(u'Phone number'), 'type': 'number'}))
-    marketing_optin = forms.BooleanField(label=_(u'Receive emails about upcoming LANs etc. (marketing)'), required=False)
-    email = forms.EmailField(label=_(u'Email address'), max_length=50,
+                                attrs={'class': 'form-control', 'placeholder': _('Phone number'), 'type': 'number'}))
+    marketing_optin = forms.BooleanField(label=_('Receive emails about upcoming LANs etc. (marketing)'), required=False)
+    email = forms.EmailField(label=_('Email address'), max_length=50,
                              widget=forms.EmailInput(
-                                 attrs={'class': 'form-control', 'placeholder': _(u'Email address'), 'type': 'text'}))
+                                 attrs={'class': 'form-control', 'placeholder': _('Email address'), 'type': 'text'}))
     password = forms.CharField(widget=forms.PasswordInput(render_value=False,
-                                                          attrs={'class': 'form-control', 'placeholder': _(u'Password'),
-                                                                 'type': 'password'}), label=_(u'Password'))
+                                                          attrs={'class': 'form-control', 'placeholder': _('Password'),
+                                                                 'type': 'password'}), label=_('Password'))
     repeat_password = forms.CharField(widget=forms.PasswordInput(render_value=False,
                                                                  attrs={'class': 'form-control',
-                                                                        'placeholder': _(u'Repeat password'),
+                                                                        'placeholder': _('Repeat password'),
                                                                         'type': 'password'}),
-                                      label=_(u'Repeat password'))
+                                      label=_('Repeat password'))
 
     def clean(self):
         super(RegisterForm, self).clean()
@@ -108,30 +108,30 @@ class RegisterForm(forms.Form):
 
             # Check passwords match
             if cleaned_data['password'] != cleaned_data['repeat_password']:
-                self.add_error('repeat_password', [ugettext(u'Passwords did not match.')])
+                self.add_error('repeat_password', [ugettext('Passwords did not match.')])
 
             # Check passwords strength
             if len(cleaned_data['password']) < 8:
-                self.add_error('password', [ugettext(u'Password must be at least 8 characters long.')])
+                self.add_error('password', [ugettext('Password must be at least 8 characters long.')])
 
             return cleaned_data
 
 
 class RecoveryForm(forms.Form):
-    email = forms.EmailField(label=_(u'Email'), max_length=50,
+    email = forms.EmailField(label=_('Email'), max_length=50,
                              widget=forms.EmailInput(
-                                 attrs={'class': 'form-control', 'placeholder': _(u'Email'), 'type': 'text'}))
+                                 attrs={'class': 'form-control', 'placeholder': _('Email'), 'type': 'text'}))
 
 
 class ChangePasswordForm(forms.Form):
     new_password = forms.CharField(widget=forms.PasswordInput(render_value=False,
                                                               attrs={'class': 'form-control',
-                                                                     'placeholder': _(u'Password'),
-                                                                     'type': 'password'}), label=_(u'New password'))
+                                                                     'placeholder': _('Password'),
+                                                                     'type': 'password'}), label=_('New password'))
     repeat_password = forms.CharField(widget=forms.PasswordInput(render_value=False,
                                                                  attrs={'class': 'form-control',
-                                                                        'placeholder': _(u'Repeat password'),
-                                                                        'type': 'password'}), label=_(u'Repeat new password'))
+                                                                        'placeholder': _('Repeat password'),
+                                                                        'type': 'password'}), label=_('Repeat new password'))
 
     def clean(self):
         super(ChangePasswordForm, self).clean()
@@ -140,10 +140,10 @@ class ChangePasswordForm(forms.Form):
 
             # Check passwords match
             if cleaned_data['new_password'] != cleaned_data['repeat_password']:
-                self._errors['repeat_password'] = self.error_class(ugettext(u'Passwords did not match.'))
+                self._errors['repeat_password'] = self.error_class(ugettext('Passwords did not match.'))
 
             # Check passwords strength
             if len(cleaned_data['new_password']) < 8:
-                self.add_error('new_password', [ugettext(u'Password must be at least 8 characters long.')])
+                self.add_error('new_password', [ugettext('Password must be at least 8 characters long.')])
 
             return cleaned_data

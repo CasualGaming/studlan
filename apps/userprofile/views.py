@@ -105,10 +105,10 @@ def add_alias(request):
     try:
         alias.full_clean()
     except ValidationError:
-        messages.error(request, _(u'Invalid alias. Max length is 40 characters.'))
+        messages.error(request, _('Invalid alias. Max length is 40 characters.'))
         return redirect('/profile/alias')
     alias.save()
-    messages.success(request, _(u'The alias was added.'))
+    messages.success(request, _('The alias was added.'))
 
     return redirect('/profile/alias')
 
@@ -119,10 +119,10 @@ def remove_alias(request, alias_id):
     alias = get_object_or_404(Alias, pk=alias_id)
 
     if alias.user != request.user:
-        messages.error(request, _(u'You can only remove your own aliases.'))
+        messages.error(request, _('You can only remove your own aliases.'))
         return redirect('/profile/alias')
 
     alias.delete()
-    messages.success(request, _(u'The alias was removed.'))
+    messages.success(request, _('The alias was removed.'))
 
     return redirect('/profile/alias')

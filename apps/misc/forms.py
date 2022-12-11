@@ -10,5 +10,5 @@ class InlineSpanErrorList(ErrorList):
 
     def as_spans(self):
         if not self:
-            return u''
-        return mark_safe(''.join([u'<span class="help-inline alert alert-error">{0}</span>'.format(e) for e in self]))  # noqa: S308, S703: Potential XSS
+            return ''
+        return mark_safe(''.join(['<span class="help-inline alert alert-error">{0}</span>'.format(e) for e in self]))  # noqa: S308, S703: Potential XSS

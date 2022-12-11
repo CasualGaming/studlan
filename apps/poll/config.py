@@ -6,4 +6,4 @@ from django.utils.translation import ugettext_lazy as _
 
 class Config(AppConfig):
     name = 'apps.poll'
-    verbose_name = _(u'Poll')
+    verbose_name = _('Poll')

@@ -11,10 +11,10 @@ from apps.userprofile.models import AliasType
 
 
 class Activity(models.Model):
-    title = models.CharField(_(u'title'), max_length=50)
-    image_url = models.CharField(_(u'image URL'), max_length=100, blank=True,
-                                 help_text=_(u'Use a mirrored image of at least a height of 150px.'))
-    desc = models.TextField(_(u'description'), blank=True)
+    title = models.CharField(_('title'), max_length=50)
+    image_url = models.CharField(_('image URL'), max_length=100, blank=True,
+                                 help_text=_('Use a mirrored image of at least a height of 150px.'))
+    desc = models.TextField(_('description'), blank=True)
 
     def __unicode__(self):
         return self.title
@@ -23,17 +23,17 @@ class Activity(models.Model):
         return reverse('activity_details', kwargs={'activity_id': self.id})
 
     class Meta:
-        verbose_name = _(u'activity')
-        verbose_name_plural = _(u'activities')
+        verbose_name = _('activity')
+        verbose_name_plural = _('activities')
         ordering = ['title']
 
 
 class Competition(models.Model):
     STATUSES = (
-        (1, pgettext_lazy(u'competition status', u'Open')),
-        (2, pgettext_lazy(u'competition status', u'Closed')),
-        (3, pgettext_lazy(u'competition status', u'In progress')),
-        (4, pgettext_lazy(u'competition status', u'Finished')),
+        (1, pgettext_lazy('competition status', 'Open')),
+        (2, pgettext_lazy('competition status', 'Closed')),
+        (3, pgettext_lazy('competition status', 'In progress')),
+        (4, pgettext_lazy('competition status', 'Finished')),
     )
     STATUS_LABELS = [
         'success',
@@ -42,51 +42,51 @@ class Competition(models.Model):
         'danger',
     ]
     TOURNAMENT_FORMATS = (
-        ('single elimination', _(u'Single elimination')),
-        ('double elimination', _(u'Double elimination')),
+        ('single elimination', _('Single elimination')),
+        ('double elimination', _('Double elimination')),
     )
 
-    status = models.SmallIntegerField(_(u'status'), choices=STATUSES)
-    activity = models.ForeignKey(Activity, verbose_name=_(u'activity'), on_delete=models.CASCADE)
-    lan = models.ForeignKey(LAN, verbose_name=_(u'LAN'), on_delete=models.CASCADE)
-    challonge_url = models.CharField(_(u'Challonge URL'), max_length=50, null=True, blank=True,
+    status = models.SmallIntegerField(_('status'), choices=STATUSES)
+    activity = models.ForeignKey(Activity, verbose_name=_('activity'), on_delete=models.CASCADE)
+    lan = models.ForeignKey(LAN, verbose_name=_('LAN'), on_delete=models.CASCADE)
+    challonge_url = models.CharField(_('Challonge URL'), max_length=50, null=True, blank=True,
                                      help_text='Do not set this field if challonge integration is enabled. '
                                                'The challonge url will be generated after starting the competition.')
-    team_size = models.IntegerField(_(u'team size'), default=5, blank=True)
-    start_time = models.DateTimeField(_(u'start time'), null=True, blank=True)
+    team_size = models.IntegerField(_('team size'), default=5, blank=True)
+    start_time = models.DateTimeField(_('start time'), null=True, blank=True)
     tournament_format = models.CharField(
-        _(u'tournament format'), max_length=20, null=True, blank=True, choices=TOURNAMENT_FORMATS,
+        _('tournament format'), max_length=20, null=True, blank=True, choices=TOURNAMENT_FORMATS,
         help_text='Only set this field if the Challonge integration is being used for this competition.')
     max_participants = models.SmallIntegerField(
-        _(u'maximum participants'), default=0, help_text=_(u'The maximum number of participants allowed for a competition.'
+        _('maximum participants'), default=0, help_text=_('The maximum number of participants allowed for a competition.'
                                                            ' Restricts participants based on competition type. 0 means'
                                                            ' infinite participants are allowed.'))
     use_teams = models.BooleanField(
-        _(u'use teams'), default=False, help_text=_(u'If checked, participants will be ignored, and will '
+        _('use teams'), default=False, help_text=_('If checked, participants will be ignored, and will '
                                                     'instead use teams. If left unchecked teams will be ignored, '
                                                     'and participants will be used.'))
     enforce_team_size = models.BooleanField(
-        _(u'enforce teams'), default=False, help_text=_(u'If checked, teams will require x members (specified in team_size)'
+        _('enforce teams'), default=False, help_text=_('If checked, teams will require x members (specified in team_size)'
                                                         ' before being able to sign up.'))
     enforce_payment = models.BooleanField(
-        _(u'enforce payment'), default=False, help_text=_(u'If checked, teams will require x members (specified in team_size)'
+        _('enforce payment'), default=False, help_text=_('If checked, teams will require x members (specified in team_size)'
                                                           ' with valid tickets before being able to sign up.'))
     require_alias = models.BooleanField(
-        _(u'require alias'), default=False, help_text=_(u'If checked, players will need to register an alias for the '
+        _('require alias'), default=False, help_text=_('If checked, players will need to register an alias for the '
                                                         'activity that the competition belongs to.'))
     max_match_points = models.SmallIntegerField(
-        _(u'maximum match points'), default=1, help_text=_(u'This number represents how many points are needed to win '
+        _('maximum match points'), default=1, help_text=_('This number represents how many points are needed to win '
                                                            'a match. E.g. 3 in a BO 5 or 16 in BO 30'))
 
 
     def get_teams(self):
         if self.use_teams:
-            return map(lambda x: getattr(x, 'team'), Participant.objects.filter(~Q(team=None), Q(competition=self)))
+            return [getattr(x, 'team') for x in Participant.objects.filter(~Q(team=None), Q(competition=self))]
         else:
             return []
 
     def get_users(self):
-        return map(lambda x: getattr(x, 'user'), Participant.objects.filter(~Q(user=None), Q(competition=self)))
+        return [getattr(x, 'user') for x in Participant.objects.filter(~Q(user=None), Q(competition=self))]
 
     def get_participants(self):
         participants = Participant.objects.filter(competition=self)
@@ -139,26 +139,26 @@ class Competition(models.Model):
         return competitions
 
     class Meta:
-        verbose_name = _(u'competition')
-        verbose_name_plural = _(u'competitions')
+        verbose_name = _('competition')
+        verbose_name_plural = _('competitions')
         ordering = ['status']
         permissions = (
-            ('manage', u'Manage compos and matches'),
+            ('manage', 'Manage compos and matches'),
         )
 
 
 
 class Participant(models.Model):
-    user = models.ForeignKey(User, verbose_name=_(u'user'), null=True, on_delete=models.CASCADE)
-    team = models.ForeignKey('team.Team', verbose_name=_(u'team'), null=True, on_delete=models.CASCADE)
-    competition = models.ForeignKey(Competition, verbose_name=_(u'competition'), on_delete=models.CASCADE)
-    cid = models.CharField(_(u'cid'), max_length=50, null=True, blank=True)
+    user = models.ForeignKey(User, verbose_name=_('user'), null=True, on_delete=models.CASCADE)
+    team = models.ForeignKey('team.Team', verbose_name=_('team'), null=True, on_delete=models.CASCADE)
+    competition = models.ForeignKey(Competition, verbose_name=_('competition'), on_delete=models.CASCADE)
+    cid = models.CharField(_('cid'), max_length=50, null=True, blank=True)
 
     def __unicode__(self):
         if self.user:
             return self.user.username
         else:
-            return unicode(self.team)
+            return str(self.team)
 
     def is_team(self):
         if self.user:
@@ -167,8 +167,8 @@ class Participant(models.Model):
             return True
 
     class Meta:
-        verbose_name = _(u'competition participant')
-        verbose_name_plural = _(u'competition participants')
+        verbose_name = _('competition participant')
+        verbose_name_plural = _('competition participants')
         unique_together = (
             ('user', 'competition'),
             ('team', 'competition'),
@@ -177,15 +177,15 @@ class Participant(models.Model):
 
 
 class Match(models.Model):
-    matchid = models.CharField(_(u'match ID'), max_length=50)
-    player1 = models.ForeignKey(Participant, verbose_name=_(u'player 1'), related_name='player1', null=True, on_delete=models.CASCADE)
-    player2 = models.ForeignKey(Participant, verbose_name=_(u'player 2'), related_name='player2', null=True, on_delete=models.CASCADE)
-    competition = models.ForeignKey(Competition, verbose_name=_(u'competition'), on_delete=models.CASCADE)
-    p1_reg_score = models.CharField(_(u'p1 reg score'), max_length=50, null=True, blank=True)
-    p2_reg_score = models.CharField(_(u'p2 reg score'), max_length=50, null=True, blank=True)
-    final_score = models.CharField(_(u'final score'), max_length=50, null=True, blank=True)
-    state = models.CharField(_(u'state'), max_length=50)
-    winner = models.ForeignKey(Participant, verbose_name=_(u'winner'), related_name='winner', null=True, blank=True, on_delete=models.CASCADE)
+    matchid = models.CharField(_('match ID'), max_length=50)
+    player1 = models.ForeignKey(Participant, verbose_name=_('player 1'), related_name='player1', null=True, on_delete=models.CASCADE)
+    player2 = models.ForeignKey(Participant, verbose_name=_('player 2'), related_name='player2', null=True, on_delete=models.CASCADE)
+    competition = models.ForeignKey(Competition, verbose_name=_('competition'), on_delete=models.CASCADE)
+    p1_reg_score = models.CharField(_('p1 reg score'), max_length=50, null=True, blank=True)
+    p2_reg_score = models.CharField(_('p2 reg score'), max_length=50, null=True, blank=True)
+    final_score = models.CharField(_('final score'), max_length=50, null=True, blank=True)
+    state = models.CharField(_('state'), max_length=50)
+    winner = models.ForeignKey(Participant, verbose_name=_('winner'), related_name='winner', null=True, blank=True, on_delete=models.CASCADE)
 
     def get_p1(self):
         if self.player1:
@@ -194,7 +194,7 @@ class Match(models.Model):
             else:
                 return self.player1.user
         else:
-            return ugettext(u'TBA')
+            return ugettext('TBA')
 
     def get_p2(self):
         if self.player2:
@@ -203,7 +203,7 @@ class Match(models.Model):
             else:
                 return self.player2.user
         else:
-            return ugettext(u'TBA')
+            return ugettext('TBA')
 
     def get_compo(self):
         return self.competition.activity.title
@@ -225,5 +225,5 @@ class Match(models.Model):
         return False
 
     class Meta:
-        verbose_name = _(u'competition match')
-        verbose_name_plural = _(u'competition matches')
+        verbose_name = _('competition match')
+        verbose_name_plural = _('competition matches')

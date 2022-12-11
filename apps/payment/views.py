@@ -51,23 +51,23 @@ def payment(request, ticket_type_id):
         return error_response
 
     if ticket_type.lan.has_ticket(request.user) or request.user in ticket_type.lan.paid_attendees:
-        messages.warning(request, _(u'You already have a ticket for this LAN.'))
+        messages.warning(request, _('You already have a ticket for this LAN.'))
         return error_response
 
     if not ticket_type.is_available():
-        messages.warning(request, _(u'This ticket is not yet available.'))
+        messages.warning(request, _('This ticket is not yet available.'))
         return error_response
 
     if ticket_type.is_sold_out():
-        messages.warning(request, _(u'All tickets have sold out.'))
+        messages.warning(request, _('All tickets have sold out.'))
         return error_response
 
     if request.user not in ticket_type.lan.attendees:
-        messages.error(request, _(u'You must attend first to buy a ticket for this LAN.'))
+        messages.error(request, _('You must attend first to buy a ticket for this LAN.'))
         return error_response
 
     if request.method == 'POST':
-        description = u'{lan} {ticket} ticket for {user}'.format(ticket=ticket_type, lan=ticket_type.lan, user=request.user)
+        description = '{lan} {ticket} ticket for {user}'.format(ticket=ticket_type, lan=ticket_type.lan, user=request.user)
         json_data = json.loads(request.body)
         intent = None
         try:
@@ -110,7 +110,7 @@ def generate_payment_response(request, ticket_type, intent):
         return JsonResponse({'success': True})
     else:
         payment_logger.info('Failed purchase of ticket "%s" "%s" for user "%s".', ticket_type.lan, ticket_type, request.user, intent.status)
-        messages.error(request, _(u'Payment unsuccessful. Please contact support.'))
+        messages.error(request, _('Payment unsuccessful. Please contact support.'))
         return JsonResponse({'error': 'Invalid PaymentIntent status'})
 
 
@@ -134,17 +134,17 @@ def make_ticket(request, ticket_type):
     html_message = render_to_string('payment/email/ticket_receipt.html', context, request).strip()
 
     # Send mail
-    from_address = u'"{name}" <{address}>'.format(name=settings.SITE_NAME, address=settings.DEFAULT_FROM_EMAIL)
-    to_address = u'"{name}" <{address}>'.format(name=ticket.user.get_full_name(), address=ticket.user.email)
+    from_address = '"{name}" <{address}>'.format(name=settings.SITE_NAME, address=settings.DEFAULT_FROM_EMAIL)
+    to_address = '"{name}" <{address}>'.format(name=ticket.user.get_full_name(), address=ticket.user.email)
     send_mail(
         from_email=from_address,
         recipient_list=[to_address],
-        subject=_(u'Ticket receipt'),
+        subject=_('Ticket receipt'),
         message=txt_message,
         html_message=html_message,
     )
 
     messages.success(
         request,
-        _(u'Payment complete.'),
+        _('Payment complete.'),
     )

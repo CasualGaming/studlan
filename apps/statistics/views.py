@@ -48,7 +48,7 @@ def statistics(request, lan_id):
             age_counts[age] += 1
         else:
             age_counts[age] = 1
-    age_counts = OrderedDict(sorted(age_counts.items(), key=lambda t: t[0]))
+    age_counts = OrderedDict(sorted(list(age_counts.items()), key=lambda t: t[0]))
 
     # Cumulative participant ages
     age_counts_cum_down = {}
@@ -85,7 +85,7 @@ def statistics(request, lan_id):
 
     breadcrumbs = (
         (lan, lan.get_absolute_url()),
-        (_(u'Statistics'), ''),
+        (_('Statistics'), ''),
     )
     context = {
         'breadcrumbs': breadcrumbs,

@@ -99,8 +99,8 @@ LOCALE_PATHS = (
 )
 
 LANGUAGES = (
-    ('nb', u'Norsk'),
-    ('en', u'English'),
+    ('nb', 'Norsk'),
+    ('en', 'English'),
 )
 
 # Media and static files
@@ -258,14 +258,14 @@ SHOW_VERSION = False
 # Remember to keep 'local' last, so it can override any setting.
 for settings_module in ['local']:  # local last
     if not os.path.exists(os.path.join(PROJECT_SETTINGS_DIRECTORY, settings_module + '.py')):
-        sys.stderr.write(u'Could not find settings module "{0}".\n'.format(settings_module))
+        sys.stderr.write('Could not find settings module "{0}".\n'.format(settings_module))
         if settings_module == 'local':
             sys.stderr.write('You need to add the settings file "studlan/settings/local.py".\n')
         sys.exit(1)
     try:
-        exec(u'from .{0} import *'.format(settings_module))  # noqa: S102
+        exec('from .{0} import *'.format(settings_module))  # noqa: S102
     except ImportError as e:
-        print(u'Could not import settings for "{0}" : {1}'.format(settings_module, str(e)))  # noqa: T001
+        print(('Could not import settings for "{0}" : {1}'.format(settings_module, str(e))))  # noqa: T001
 
 # Compatibility
 # When django-anymail[mailgun] replaced django-mailgun

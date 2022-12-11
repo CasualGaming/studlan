@@ -29,12 +29,12 @@ class UserProfileInline(admin.StackedInline):
 
 
 class UserCustomPermissionFilter(admin.SimpleListFilter):
-    title = _(u'custom permissions')
-    parameter_name = u'custom_permissions'
+    title = _('custom permissions')
+    parameter_name = 'custom_permissions'
 
     def lookups(self, request, model_admin):
         return (
-            (u'some', _(u'Some')),
+            ('some', _('Some')),
         )
 
     def queryset(self, request, queryset):
@@ -53,16 +53,16 @@ class UserProfileAdmin(UserAdmin):
 
     def activate_users(self, request, queryset):
         queryset.update(is_active=True)
-        messages.success(request, _(u'Successfully activated the selected users.'))
+        messages.success(request, _('Successfully activated the selected users.'))
 
     def deactivate_users(self, request, queryset):
         for user in queryset:
             if user.id == request.user.id:
-                messages.warning(request, _(u'You cannot deactivate yourself! No actions were performed.'))
+                messages.warning(request, _('You cannot deactivate yourself! No actions were performed.'))
                 return
 
         queryset.update(is_active=False)
-        messages.success(request, _(u'Successfully deactivated the selected users.'))
+        messages.success(request, _('Successfully deactivated the selected users.'))
 
     def forcefully_logout_users(self, request, queryset):
         # Works only with session engine
@@ -77,11 +77,11 @@ class UserProfileAdmin(UserAdmin):
                     session.delete()
                     count += 1
 
-        messages.success(request, _(u'Successfully invalidated {count} user sessions.').format(count=count))
+        messages.success(request, _('Successfully invalidated {count} user sessions.').format(count=count))
 
-    activate_users.short_description = _(u'Activate')
-    deactivate_users.short_description = _(u'Deactivate')
-    forcefully_logout_users.short_description = _(u'Forcefully log out')
+    activate_users.short_description = _('Activate')
+    deactivate_users.short_description = _('Deactivate')
+    forcefully_logout_users.short_description = _('Forcefully log out')
 
 
 admin.site.register(User, UserProfileAdmin)

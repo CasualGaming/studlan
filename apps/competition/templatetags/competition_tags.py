@@ -51,12 +51,12 @@ class UserInRenderer(template.Node):
     def render(self, context):
         user = context['request'].user
 
-        string = '<li class="sidebar-header"><a href="#">' + _(u'My competitions') + '</a></li>'
+        string = '<li class="sidebar-header"><a href="#">' + _('My competitions') + '</a></li>'
         count = 0
 
         for competition in Competition.objects.filter(~Q(status=4)):
             if competition.has_participant(user):
-                string += '<li><a href="' + competition.get_absolute_url() + '">' + unicode(competition) + '</a></li>'
+                string += '<li><a href="' + competition.get_absolute_url() + '">' + str(competition) + '</a></li>'
                 count += 1
 
         if not count:

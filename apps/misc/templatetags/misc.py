@@ -27,12 +27,12 @@ def get_range(value):
 
     Instead of 3 one may use the variable set in the sviews
     """
-    return range(value)
+    return list(range(value))
 
 
 @register.filter
 def get_range1(value):
-    return range(1, value + 1)
+    return list(range(1, value + 1))
 
 
 @register.filter

@@ -17,7 +17,7 @@ from apps.userprofile.models import UserProfile
 def change_arrived(request, api_key, lan_id, username, status):
     keys = Key.objects.filter(content=api_key)
     if len(keys) != 1:
-        messages.error(request, _(u'Invalid API key.'))
+        messages.error(request, _('Invalid API key.'))
         return redirect('/')
     else:
         lan = get_object_or_404(LAN, pk=lan_id)
@@ -28,13 +28,13 @@ def change_arrived(request, api_key, lan_id, username, status):
         if status == '1':
             attendee.arrived = True
             attendee.save()
-            messages.success(request, _(u'Changed status for user "{user}" at LAN "{lan}" to "arrived"').format(user=user, lan=lan))
+            messages.success(request, _('Changed status for user "{user}" at LAN "{lan}" to "arrived"').format(user=user, lan=lan))
         elif status == '0':
             attendee.arrived = False
             attendee.save()
-            messages.success(request, _(u'Changed status for user "{user}" at LAN "{lan}" to "NOT arrived"').format(user=user, lan=lan))
+            messages.success(request, _('Changed status for user "{user}" at LAN "{lan}" to "NOT arrived"').format(user=user, lan=lan))
         else:
-            messages.warning(request, _(u'Status "{status}" unrecognized.').format(status=status))
+            messages.warning(request, _('Status "{status}" unrecognized.').format(status=status))
 
         return redirect('/')
 
@@ -43,7 +43,7 @@ def change_arrived(request, api_key, lan_id, username, status):
 def change_paid(request, api_key, lan_id, username, status):
     keys = Key.objects.filter(content=api_key)
     if len(keys) != 1:
-        messages.error(request, _(u'Invalid API key.'))
+        messages.error(request, _('Invalid API key.'))
         return redirect('/')
     else:
         lan = get_object_or_404(LAN, pk=lan_id)
@@ -54,13 +54,13 @@ def change_paid(request, api_key, lan_id, username, status):
         if status == '1':
             attendee.has_paid = True
             attendee.save()
-            messages.success(request, _(u'Changed status for user "{user}" at LAN "{lan}" to "paid"').format(user=user, lan=lan))
+            messages.success(request, _('Changed status for user "{user}" at LAN "{lan}" to "paid"').format(user=user, lan=lan))
         elif status == '0':
             attendee.has_paid = False
             attendee.save()
-            messages.success(request, _(u'Changed status for user "{user}" at LAN "{lan}" to "NOT paid"').format(user=user, lan=lan))
+            messages.success(request, _('Changed status for user "{user}" at LAN "{lan}" to "NOT paid"').format(user=user, lan=lan))
         else:
-            messages.warning(request, _(u'Status "{status}" unrecognized.').format(status=status))
+            messages.warning(request, _('Status "{status}" unrecognized.').format(status=status))
 
         return redirect('/')
 
@@ -70,7 +70,7 @@ def check_status(request, api_key, lan_id, username):
     keys = Key.objects.filter(content=api_key)
     response_data = {}
     if len(keys) != 1:
-        messages.error(request, _(u'Invalid API key.'))
+        messages.error(request, _('Invalid API key.'))
         return redirect('/')
     else:
         lan = get_object_or_404(LAN, pk=lan_id)

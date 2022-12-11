@@ -77,8 +77,8 @@ class Command(BaseCommand):
         html_message = render_to_string('sendmail/email/mail.html', mail_context).strip()
 
         # Send mail
-        from_address = u'"{name}" <{address}>'.format(name=settings.SITE_NAME, address=settings.DEFAULT_FROM_EMAIL)
-        to_address = u'"{name}" <{address}>'.format(name=recipient.user.get_full_name(), address=recipient.user.email)
+        from_address = '"{name}" <{address}>'.format(name=settings.SITE_NAME, address=settings.DEFAULT_FROM_EMAIL)
+        to_address = '"{name}" <{address}>'.format(name=recipient.user.get_full_name(), address=recipient.user.email)
         email_message = django_mail.EmailMultiAlternatives(
             connection=mail_connection,
             from_email=from_address,
