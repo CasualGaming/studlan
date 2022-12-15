@@ -5,12 +5,12 @@ import sys
 
 from django.contrib.messages import constants as message_constants
 
+from environs import Env
+
 # Directory that contains this file.
 PROJECT_SETTINGS_DIRECTORY = os.path.dirname(globals()['__file__'])
 # Root directory. Contains manage.py
 PROJECT_ROOT_DIRECTORY = os.path.normpath(os.path.join(PROJECT_SETTINGS_DIRECTORY, '..', '..'))
-
-DEBUG = False
 
 INSTALLED_APPS = (
     # Django apps
@@ -145,18 +145,6 @@ MARKDOWN_DEUX_STYLES = {
     },
 }
 
-# Email defaults
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
-ANYMAIL = {
-    'MAILGUN_API_KEY': '',
-    'MAILGUN_SENDER_DOMAIN': '',
-}
-STUDLAN_FROM_MAIL = ''
-DEFAULT_FROM_EMAIL = STUDLAN_FROM_MAIL
-REGISTER_FROM_MAIL = STUDLAN_FROM_MAIL
-SERVER_EMAIL = STUDLAN_FROM_MAIL
-SUPPORT_MAIL = ''
 
 # Postman
 # Used for internal invitation messages
@@ -231,16 +219,9 @@ LOGGING = {
     },
 }
 
-# Max teams a user can lead
-MAX_TEAMS = 10
 
 # Overiding messagetags to match bootstrap 3
 MESSAGE_TAGS = {message_constants.ERROR: 'danger'}
-
-# Plausible
-PLAUSIBLE_ENABLE = False
-PLAUSIBLE_LOCAL_DOMAIN = 'localhost'
-PLAUSIBLE_REMOTE_DOMAIN = 'localhost'
 
 # Version
 VERSION = 'Unknown version'
@@ -252,20 +233,63 @@ if os.path.isfile(version_file_path):
     if (content):
         VERSION = content
 
-SHOW_VERSION = False
+env = Env()
+env.read_env()
 
-# Local settings
-# Remember to keep 'local' last, so it can override any setting.
-for settings_module in ['local']:  # local last
-    if not os.path.exists(os.path.join(PROJECT_SETTINGS_DIRECTORY, settings_module + '.py')):
-        sys.stderr.write('Could not find settings module "{0}".\n'.format(settings_module))
-        if settings_module == 'local':
-            sys.stderr.write('You need to add the settings file "studlan/settings/local.py".\n')
-        sys.exit(1)
-    try:
-        exec('from .{0} import *'.format(settings_module))  # noqa: S102
-    except ImportError as e:
-        print(('Could not import settings for "{0}" : {1}'.format(settings_module, str(e))))  # noqa: T001
+with env.prefixed("STUDLAN_"):
+    DEBUG = env.bool("DEBUG", default=False)
+
+    SITE_NAME = env.str("SITE_NAME", default="example")
+
+    ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
+
+    DATABASES = {"default": env.dj_db_url("DATABASE_URL")}
+
+    SECRET_KEY = env.str("SECRET_KEY")
+
+    # Recommended settings that require HTTPS
+    CSRF_COOKIE_SECURE = env.bool("CSRF_COOKIE_SECURE", default=False)
+    SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=False)
+    SECURE_HSTS_SECONDS = env.int("SECURE_HSTS_SECONDS", default=0)
+    SECURE_HSTS_PRELOAD = env.bool("SECURE_HSTS_PRELOAD", default=False)
+    SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", default=False)
+
+    # Email
+    # Use this backend for local testing
+    EMAIL_BACKEND = env.str("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
+    # Use this backend in production
+    # EMAIL_BACKEND = 'anymail.backends.mailgun.EmailBackend'
+    ANYMAIL = {
+        'MAILGUN_API_KEY': env.str("ANYMAIL_MAILGUN_API_KEY", default=""),
+        'MAILGUN_SENDER_DOMAIN': env.str("ANYMAIL_MAILGUN_SENDER_DOMAIN", default=""),
+    }
+    STUDLAN_FROM_MAIL = env.str("STUDLAN_FROM_MAIL", default="")
+    DEFAULT_FROM_EMAIL = STUDLAN_FROM_MAIL
+    REGISTER_FROM_MAIL = STUDLAN_FROM_MAIL
+    SERVER_EMAIL = STUDLAN_FROM_MAIL
+    SUPPORT_MAIL = env.str("SUPPORT_MAIL", default="")
+
+    # Stripe
+    STRIPE_PUBLIC_KEY = env.str("STRIPE_PUBLIC_KEY", default="")
+    STRIPE_PRIVATE_KEY = env.str("STRIPE_PRIVATE_KEY", default="")
+
+    # Cal src attribute from the google embedded iframe
+    GOOGLE_CAL_SRC = env.str("GOOGLE_CAL_SRC", default="")
+
+    # challonge credentials
+    CHALLONGE_INTEGRATION_ENABLED = env.bool("CHALLONGE_INTEGRATION_ENABLED", default=False)
+    CHALLONGE_API_USERNAME = env.str("CHALLONGE_API_USERNAME", default="")
+    CHALLONGE_API_KEY = env.str("CHALLONGE_API_KEY", default="")
+
+    # Plausible
+    PLAUSIBLE_ENABLE = env.bool("PLAUSIBLE_ENABLE", default=False)
+    PLAUSIBLE_LOCAL_DOMAIN = env.str("PLAUSIBLE_LOCAL_DOMAIN", default='localhost')
+    PLAUSIBLE_REMOTE_DOMAIN = env.str("PLAUSIBLE_REMOTE_DOMAIN", default='localhost')
+
+    # Show studlan version in footer
+    SHOW_VERSION = env.bool("SHOW_VERSION", default=False)
+
+    MAX_TEAMS = env.int("MAX_TEAMS", 10)
 
 # Compatibility
 # When django-anymail[mailgun] replaced django-mailgun
