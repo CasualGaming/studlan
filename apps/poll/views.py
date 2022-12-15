@@ -18,7 +18,7 @@ def details(request, poll_id):
     lan = poll.lan
     options = PollOption.objects.filter(poll=poll)
     participants = PollParticipant.objects.filter(poll=poll)
-    user_participant = participants.filter(user=request.user).first() if request.user.is_authenticated() else None
+    user_participant = participants.filter(user=request.user).first() if request.user.is_authenticated else None
 
     option_votes = {}
     option_votes_total = 0

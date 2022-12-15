@@ -40,7 +40,7 @@ def login(request):
 
     # Redirect silently to home if already logged in
     # This prevents missing permission redirect loops and login redirect chains
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return redirect('/')
 
     # Attempt login or show login form
@@ -78,7 +78,7 @@ def logout(request):
 
 @sensitive_post_parameters()
 def register(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         messages.warning(request, _('You\'re already logged in.'))
         return redirect('/')
 
@@ -216,7 +216,7 @@ def direct_register(request, lan_id):
 
 @require_safe
 def verify(request, token):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         messages.error(request, _('You can\'t do that while logged in.'))
         return redirect('/')
 
@@ -239,7 +239,7 @@ def verify(request, token):
 
 @sensitive_post_parameters()
 def recover(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         messages.error(request, _('You can\'t do that while logged in.'))
         return redirect('/')
 
@@ -293,7 +293,7 @@ def recover(request):
 
 @sensitive_post_parameters()
 def set_password(request, token=None):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         messages.error(request, _('You can\'t do that while logged in.'))
         return redirect('/')
 

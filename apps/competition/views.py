@@ -143,7 +143,7 @@ def competition_details(request, competition_id):
     context['teams'] = teams
     context['users'] = users
 
-    if request.user.is_authenticated() and competition.has_participant(request.user):
+    if request.user.is_authenticated and competition.has_participant(request.user):
         p = None
         if request.user in users:
             context['participating'] = 'solo'
@@ -176,7 +176,7 @@ def competition_details(request, competition_id):
                 if 1 < competition.status < 4:
                     messages.warning(request, _('You have no current match, please check the brackets for more information.'))
 
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         owned_teams = Team.objects.filter(leader=request.user)
         context['owned_teams'] = owned_teams
         context['participating_owned_teams'] = owned_teams.filter(participant__competition=competition)
